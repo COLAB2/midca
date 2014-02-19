@@ -1,0 +1,5 @@
+#ignore compiled pyc files
+*.pyc
+
+#ignore temporary backup files
+*~

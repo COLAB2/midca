@@ -1,0 +1,16 @@
+Compact notation of tree:
+
+clear(-A),on(A,-B),table(B) ? 
++--yes: triangle(A) ? 
+|       +--yes: [scen_003] 1000.0 [[scen_001:0.0,scen_002:0.0,scen_003:1000.0]]
+|       +--no:  [scen_002] 1000.0 [[scen_001:0.0,scen_002:1000.0,scen_003:0.0]]
++--no:  [scen_001] 1000.0 [[scen_001:1000.0,scen_002:0.0,scen_003:0.0]]
+
+Equivalent prolog program:
+
+class([scen_003]) :- clear(A),on(A,B),table(B),triangle(A), !.
+% 1000.0/1000.0=1.0
+class([scen_002]) :- clear(A),on(A,B),table(B), !.
+% 1000.0/1000.0=1.0
+class([scen_001]).
+% 1000.0/1000.0=1.0
