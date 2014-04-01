@@ -54,7 +54,7 @@ class Exec:
 		res = self.get_action(world, verbose)
 		try:
 			action, plan = res
-			self.mem._add(self.memKeys.MEM_ACTIONS, action)
+			self.mem.add(self.memKeys.MEM_ACTIONS, action)
 			self.mem.set(self.memKeys.MEM_CURRENT_PLAN, plan)
 			if verbose == 1:
 				print "Executing action " + str(action)
@@ -63,6 +63,6 @@ class Exec:
 		except TypeError: #no action found
 			if verbose >= 1:
 				print "No action selected; all plans are complete or invalid."
-			self.mem._add(self.memKeys.MEM_ACTIONS, None)
+			self.mem.add(self.memKeys.MEM_ACTIONS, None)
 			self.mem.set(self.memKeys.MEM_CURRENT_PLAN, None)
 		

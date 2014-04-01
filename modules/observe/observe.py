@@ -21,7 +21,7 @@ class SimpleObserver:
 		world = self.observe()
 		if not world:
 			raise Exception("World obervation failed.")
-		self.mem._add(self.memKeys.MEM_STATES, world)
+		self.mem.add(self.memKeys.MEM_STATES, world)
 		repr = str(self.world_repr(world))
 		if verbose == 2:
 			print "World observed: \n" + str(repr)

@@ -32,8 +32,8 @@ class AnomalyAnalyzer:
 			self.gng.update(vector)
 			self.numUpdates += 1
 		if self.mem.get(self.memKeys.MEM_ANOM)[-1]:
-			self.mem._add(self.memKeys.MEM_NODES, (self.last_node(), self.numUpdates))
-			self.mem._add(self.memKeys.MEM_ANOM_TYPE, self.anomaly_type())
+			self.mem.add(self.memKeys.MEM_NODES, (self.last_node(), self.numUpdates))
+			self.mem.add(self.memKeys.MEM_ANOM_TYPE, self.anomaly_type())
 			if verbose >= 1:
 				print "Anomaly type = " + str(self.anomaly_type())
 			if verbose >= 2:

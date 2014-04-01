@@ -28,7 +28,7 @@ class AnomalyDetector:
 		return False
 	
 	def clear(self):
-		self.mem._clear(self.memKeys.MEM_ADIST)
+		self.mem.remove(self.memKeys.MEM_ADIST)
 	
 	def add_WP(self, windowStart, threshold = 0.5, size = None):
 		if not self.mem.get("worldStates"):
@@ -81,7 +81,7 @@ class ADNoter:
 	def run(self, verbose = 2):
 		world = self.mem.get(self.memKeys.MEM_STATES)[-1]
 		self.update(world)
-		self.mem._add(self.memKeys.MEM_ANOM, self.anomalous())
+		self.mem.add(self.memKeys.MEM_ANOM, self.anomalous())
 		if verbose >= 1 and self.anomalous():
 			print "Anomaly detected."
 		elif verbose >= 2 and not self.anomalous():

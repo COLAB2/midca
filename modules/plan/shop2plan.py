@@ -123,5 +123,5 @@ class Shop2Planner:
 				print str(step),
 			print
 		#save plan
-		self.mem._add(midca_inst.MEM_PLANS, plan)
+		self.mem.add(midca_inst.MEM_PLANS, plan)
 		

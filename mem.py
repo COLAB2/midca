@@ -20,7 +20,7 @@ class Memory:
 		else:
 			self.knowledge[structname] = val #assignment
 	
-	def _add(self, structname, val):
+	def add(self, structname, val):
 		if not structname in self.knowledge:
 			self.knowledge[structname] = [val]
 		elif hasattr(self.knowledge[structname], "append"):
@@ -45,16 +45,12 @@ class Memory:
 			elif hasattr(struct, "update"):
 				struct.update(val)
 	
-	def _clear(self, structname):
+	def remove(self, structname):
 		if structname in self.knowledge:
 			del self.knowledge[structname]
 	
 	def clear(self):
 		self.knowledge.clear()
-	
-	def _init(self, structname, val):
-		_clear(structname)
-		_update(structname, val)
 	
 	def get(self, structname):
 		if structname in self.knowledge:

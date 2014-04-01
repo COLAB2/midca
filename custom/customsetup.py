@@ -11,9 +11,10 @@ import sys, time
 sys.path.append("../")
 import socket
 from modules import *
+from modules import dummy
 from worldsim import domainread, stateread
 
-PHASES = ["Observation", "Note", "Evaluation", "Assess", "Goal Selection", "Intend", "Planning", "Action Selection"]
+PHASES = ["Dummy", "Observation", "Note", "Evaluation", "Assess", "Goal Selection", "Intend", "Planning", "Action Selection"]
 
 SOCKET_R_PORT = 5156
 SOCKET_W_PORT = 5151
@@ -63,6 +64,9 @@ def get_modules(options):
 	
 	#execution
 	modules["Action Selection"] = execute.execute.Exec()
+	
+	#dummy, testing.
+	modules["Dummy"] = dummy.Dummy()
 	
 	return modules
 

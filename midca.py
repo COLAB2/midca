@@ -1,6 +1,6 @@
-import phasemanager, sys
+import phasemanager, sys, setup
 from custom import customsetup, memconstants
-from custom.option import options, setup
+from custom.option import options
 
 def run(midca):
 	while 1:
