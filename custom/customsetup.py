@@ -14,7 +14,7 @@ from modules import *
 from modules import dummy
 from worldsim import domainread, stateread
 
-PHASES = ["Dummy", "Observation", "Note", "Evaluation", "Assess", "Goal Selection", "Intend", "Planning", "Action Selection"]
+PHASES = ["Observation", "Note", "Evaluation", "Assess", "Goal Selection", "Intend", "Planning", "Action Selection"]
 
 SOCKET_R_PORT = 5156
 SOCKET_W_PORT = 5151
