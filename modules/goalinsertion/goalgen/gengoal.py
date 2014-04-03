@@ -176,7 +176,7 @@ class XPGoalGen:
 
 			with open(self.logfile, 'a') as f:
 				f.write(text)
-				f.write("\n\n")
+				f.write("\n%s\n" % ("*"*75))
 
 			if text != "None\n":
 				if verbose >= 2:
