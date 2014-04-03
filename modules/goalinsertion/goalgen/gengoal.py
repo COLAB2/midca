@@ -152,7 +152,7 @@ class ArsonistCatcher:
 class XPGoalGen:
 
 	bufferSize = 2000000000
-	logfile = os.path.expanduser('~/meta-aqua-%s-output.log' % datetime.now().strftime('%Y-%M-%d'))
+	logfile = os.path.expanduser('~/meta-aqua-%s-output.log' % datetime.now().strftime('%Y-%m-%d'))
 
 	def __init__(self, mem, memKeys):
 		self.counter = 0
