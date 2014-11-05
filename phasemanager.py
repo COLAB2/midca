@@ -77,7 +77,7 @@ class MIDCA:
 				print "Initializing " + phase.name + " module...",
 			module.init(self.world, self.mem, self.memKeys)
 			print "done."
-			'''
+			
 			except AttributeError:
 				if verbose >= 2:
 					print "\nPhase " + phase.name + " has no init function."
@@ -85,7 +85,7 @@ class MIDCA:
 				if verbose >= 1:
 					print "\nPhase " + phase.name + " initialization failed."
 				raise e
-			'''
+			
 	
 	def start(self, verbose = 1):
 		if verbose >= 1:
