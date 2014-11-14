@@ -68,6 +68,7 @@ class GoalGraph:
 		if not self.roots
 	
 	def _removeNode(self, delNode):
+		self.numGoals -= 1
 		if delNode in self.roots:
 			self.roots.remove(delNode)
 			for node in self.getAllNodes():
@@ -165,7 +166,7 @@ class GoalGraph:
 		return "Goals: " + str([str(goal) + " " for goal in self.getAllGoals()])
 	
 	def getUnrestrictedGoals(self):
-		return list(self.roots)
+		return [node.goal for node in self.roots]
 	
 	#returns the plan associated with the most root [unrestricted] nodes. If there is no plan associated with any of them, will return None. Ties are broken arbitrarily.
 	def getBestPlan(self):
