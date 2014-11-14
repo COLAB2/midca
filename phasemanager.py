@@ -1,6 +1,8 @@
 import copy, time, datetime
 from mem import Memory
 
+MAX_MODULES_PER_PHASE = 100
+
 class Module:
 	
 	pass
@@ -9,20 +11,23 @@ class Phase:
 	
 	def __init__(self, name):
 		self.name = name
+	
+	def __str__(self):
+		return self.name
 
 class MIDCA:
 
-	def __init__(self, world, simulator, options, memKeys, verbose = 2):
+	def __init__(self, world, simulator, options, verbose = 2):
 		self.world = world
 		self.mem = Memory()
-		self.memKeys = memKeys
 		self.phases = []
 		self.modules = {}
 		self.add_module("Simulation", simulator)
-		self.phasei = -1
+		self.phaseNum = 0
 		self.twoSevenWarning = False
 		self.verbose = verbose
 		self.options = options
+		self.displayFunction = None
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -45,42 +50,48 @@ class MIDCA:
 		if phaseOrIndex not in self.phases:
 			raise KeyError("phase " + str(phaseOrIndex) + " not in phase list.")
 		self.phases.insert(self.phases.index(phaseOrIndex), phase)
+		self.modules[phase] = []
 	
 	def append_phase(self, phase):
 		self.insert_phase(phase, len(self.phases) - 1)
 	
-	def assign_module(self, phase, module):
+	def append_module(self, phase, module):
+		self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
+	
+	def insert_module(self, phase, module, i):
 		if isinstance(phase, str):
 			phase = self.phase_by_name(phase)
 		if phase not in self.phases:
-			raise KeyError("phase " + str(phaseOrIndex) + " not in phase list.")
+			raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
 		if not hasattr(module, "run"):
 			raise AttributeError("All modules must a 'run' function")
-		self.modules[phase] = module
+		if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
+			raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
+		self.modules[phase].insert(i, module)
 	
-	def add_module(self, phase, module):
-		self.append_phase(phase)
-		self.assign_module(phase, module)
+	def clearPhase(self, phase):
+		self.modules[phase] = []
 	
-	def get_module(self, phase):
+	def get_modules(self, phase):
 		if isinstance(phase, str):
 			phase = self.phase_by_name(phase)
 		if phase in self.modules:
 			return self.modules[phase]
-		return None
+		else:
+			raise ValueError("No such phase as " + str(phase))
 	
 	def init(self, verbose = 2):
 		self.mem = Memory()
 		for phase, module in self.modules.items():
-			#try:
-			if verbose >= 2:
-				print "Initializing " + phase.name + " module...",
-			module.init(self.world, self.mem, self.memKeys)
-			print "done."
+			try:
+				if verbose >= 2:
+					print "Initializing " + phase.name + " module...",
+				module.init(self.world, self.mem)
+				print "done."
 			
 			except AttributeError:
 				if verbose >= 2:
-					print "\nPhase " + phase.name + " has no init function."
+					print "\nPhase " + phase.name + " has no init function. Skipping init."
 			except Exception as e:
 				if verbose >= 1:
 					print "\nPhase " + phase.name + " initialization failed."
@@ -90,17 +101,19 @@ class MIDCA:
 	def start(self, verbose = 1):
 		if verbose >= 1:
 			print "starting execution"
-		self.phasei = 0
+		self.phaseNum = 1
 	
 	def next_phase(self, verbose = 2):
-		if self.phasei < 0:
+		if self.phaseNum <= 0:
 			self.start()
 		else:
-			self.phasei = self.phasei % len(self.phases)
+			self.phasei = (self.phaseNum - 1) % len(self.phases)
 			if verbose >= 2:
 				print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
-			self.modules[self.phases[self.phasei]].run(verbose)
-			self.phasei += 1
+			self.modules[self.phases[self.phasei]].run(self.phaseNum, verbose)
+			if self.phases[self.phasei].name == "Simulation" and self.displayFunction:
+				self.displayFunction(self.world)
+			self.phaseNum += 1
 		
 	
 	def one_cycle(self, verbose = 1, pause = 0.5):
@@ -120,7 +133,38 @@ class MIDCA:
 	def several_cycles(self, num, verbose = 1, pause = 0.01):
 		for i in range(num):
 			self.one_cycle(verbose, pause)
-		
+	
+	#MIDCA will call this function after the Simulator phase. The function should take one input, which will be whatever is stored in self.world.
+	def set_display_function(self, function):
+		self.displayFunction = function
+	
+	def run(self):
+		while 1:
+			print "MIDCA is starting. Please enter commands, or '?' + enter for help."
+			val = raw_input()
+			if val == "q":
+				break
+			elif val == "skip":
+				midca.one_cycle(verbose = 0, pause = 0)
+				print "cycle finished"
+			elif val == "show":
+				if self.displayFunction:
+					self.displayFunction(self.world)
+				else:
+					print "No display function set. See Midca.set_display_function()"				
+			elif val.startswith("skip"):
+				try:
+					num = int(val[4:].strip())
+					for i in range(num):
+						midca.one_cycle(verbose = 0, pause = 0)
+					print str(num) + " cycles finished."
+				except ValueError:
+					print "Usage: 'skip n', where n is an integer"
+			elif val == "?" or val == "help":
+				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n ? or help -> show this list of commands \n"
+			else:
+				midca.next_phase()
+		print "MIDCA is quitting."
 	
 
 if __name__ == "__main__":

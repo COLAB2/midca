@@ -1,5 +1,12 @@
 
+
+
 class Memory:
+	
+	STATES = "__world states"
+	GOALS = "__goals"
+	PLANS = "__plans"
+	ACTIONS = "__actions"
 	
 	def __init__(self, args = {}):
 		self.knowledge = {}

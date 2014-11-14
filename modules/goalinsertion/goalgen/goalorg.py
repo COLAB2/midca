@@ -1,38 +1,6 @@
 import heapq
 
-class GoalSet:
-	
-	def __init__(self, goals, priority = None):
-		self.goals = set(goals)
-		if priority:
-			self.priority = priority
-		else:
-			self.priority = max([goal.priority for goal in goals])
-	
-	def __hash__(self):
-		return hash(tuple(self.goals))
-	
-	def __iter__(self):
-		return self.goals.__iter__()
-	
-	def __contains__(self, val):
-		return val in self.goals
-	
-	def __str__(self):
-		return str([str(goal) + " " for goal in self.goals]) + "set priority-" + str(self.priority)
-	
-	def __lt__(self, other):
-		return self.priority > other.priority
-	def __eq__(self, other):
-		return hasattr(other, "goals") and self.goals == other.goals
-	def __ne__(self, other):
-		return not self == other
-	def __gt__(self, other):
-		return other<self
-	def __ge__(self, other):
-		return not self<other
-	def __le__(self, other):
-		return not other<self
+
 
 class GoalQueue:
 	
