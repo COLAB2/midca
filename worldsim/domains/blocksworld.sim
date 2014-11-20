@@ -1,6 +1,6 @@
+#simple blocksworld domain with triangular blocks added.
 
 type(BLOCK)
-type(ARSONIST)
 
 predicate(clear, [blk], [BLOCK])
 predicate(holding, [blk], [BLOCK])
@@ -9,10 +9,6 @@ predicate(on, [blk1, blk2], [BLOCK, BLOCK])
 predicate(on-table, [blk], [BLOCK])
 predicate(block, [blk], [BLOCK])
 predicate(triangle, [blk], [BLOCK])
-predicate(table, [blk], [BLOCK])
-predicate(onfire, [blk], [BLOCK])
-predicate(arsonist, [ars], [ARSONIST])
-predicate(free, [ars], [ARSONIST])
 
 operator(stack, 
 args = [(topblk, BLOCK), (btmblk, BLOCK)], 
@@ -61,34 +57,3 @@ results = [
 	condition(on-table, [blk], negate = True),
 	condition(arm-empty, [], negate = True)])
 
-operator(putoutfire,
-args = [(blk, BLOCK)],
-preconditions = [
-	condition(onfire, [blk])],
-results = [
-	condition(onfire, [blk], negate = True)])
-
-operator(catchfire,
-args = [(blk, BLOCK)],
-preconditions = [
-	condition(onfire, [blk], negate = True)],
-results = [
-	condition(onfire, [blk])])
-
-operator(lightonfire,
-args = [(arsonist, ARSONIST), (blk, BLOCK)],
-preconditions = [
-	condition(onfire, [blk], negate = True),
-	condition(free, [arsonist])],
-results = [
-	condition(onfire, [blk])])
-
-operator(apprehend,
-args = [(arsonist, ARSONIST)],
-preconditions = [
-	condition(free, [arsonist])],
-results = [
-	condition(free, [arsonist], negate = True)])
-	
-operator(searchfor,
-args = [(arsonist, ARSONIST)])

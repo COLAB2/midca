@@ -7,7 +7,7 @@ from midca.modules import note
 
 #add a module in the interpret phase to perform A-distance and check for anomalies.
 myMidca.append_module(phase = "interpret", 
-					  module = "note.ADistanceAnomalyNoter(threshold = 0.3))
+					  module = note.ADistanceAnomalyNoter(threshold = 0.3))
 
 
 myMidca.init() #initialize modules

@@ -17,17 +17,17 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, simulator, options, verbose = 2):
+	def __init__(self, world, options, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
 		self.modules = {}
-		self.add_module("Simulation", simulator)
-		self.phaseNum = 0
+		self.phaseNum = 1
 		self.twoSevenWarning = False
 		self.verbose = verbose
 		self.options = options
 		self.displayFunction = None
+		self.initialized = False
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -96,24 +96,16 @@ class MIDCA:
 				if verbose >= 1:
 					print "\nPhase " + phase.name + " initialization failed."
 				raise e
-			
-	
-	def start(self, verbose = 1):
-		if verbose >= 1:
-			print "starting execution"
-		self.phaseNum = 1
+		self.initialized = True
 	
 	def next_phase(self, verbose = 2):
-		if self.phaseNum <= 0:
-			self.start()
-		else:
-			self.phasei = (self.phaseNum - 1) % len(self.phases)
-			if verbose >= 2:
-				print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
-			self.modules[self.phases[self.phasei]].run(self.phaseNum, verbose)
-			if self.phases[self.phasei].name == "Simulation" and self.displayFunction:
-				self.displayFunction(self.world)
-			self.phaseNum += 1
+		self.phasei = (self.phaseNum - 1) % len(self.phases)
+		if verbose >= 2:
+			print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
+		self.modules[self.phases[self.phasei]].run(self.phaseNum, verbose)
+		if self.phasei == 0 and self.displayFunction:
+			self.displayFunction(self.world)
+		self.phaseNum += 1
 		
 	
 	def one_cycle(self, verbose = 1, pause = 0.5):
@@ -134,13 +126,15 @@ class MIDCA:
 		for i in range(num):
 			self.one_cycle(verbose, pause)
 	
-	#MIDCA will call this function after the Simulator phase. The function should take one input, which will be whatever is stored in self.world.
+	#MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.world.
 	def set_display_function(self, function):
 		self.displayFunction = function
 	
 	def run(self):
+		if not self.initialized:
+			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running."
 		while 1:
-			print "MIDCA is starting. Please enter commands, or '?' + enter for help."
+			print "MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 			val = raw_input()
 			if val == "q":
 				break

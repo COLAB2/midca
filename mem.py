@@ -4,7 +4,8 @@
 class Memory:
 	
 	STATES = "__world states"
-	GOALS = "__goals"
+	GOAL_GRAPH = "__goals"
+	CURRENT_GOALS = "__current goals"
 	PLANS = "__plans"
 	ACTIONS = "__actions"
 	

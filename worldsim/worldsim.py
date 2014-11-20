@@ -330,19 +330,22 @@ class World:
 		return True
 	
 	#convenience method for operating with MIDCA
-	def action_applicable(self, midcaAction):
-		operator = self.operators[midcaAction.op]
-		args = [self.objects[arg] for arg in midcaAction.args]
+	def midca_action_applicable(self, midcaAction):
+		try:
+			operator = self.operators[midcaAction.op]
+			args = [self.objects[arg] for arg in midcaAction.args]
+		except KeyError:
+			return False
 		return self.is_applicable(operator.instantiate(args))
 
-	def apply(self, action):
+	def apply(self, simAction):
 		for i in range(len(action.results)):
 			if action.postPos[i]:
 				self.add_atom(action.results[i])
 			else:
 				self.remove_atom(action.results[i])
 	
-	def apply_action(self, opname, argnames):
+	def apply_named_action(self, opName, argNames):
 		args = []
 		for name in argnames:
 			if name not in self.objects:
@@ -350,10 +353,70 @@ class World:
 			args.append(self.objects[name])
 		if opname not in self.operators:
 			raise Exception("Operator " + opname + " DNE")
-		action = self.operators[opname].instantiate(args)
-		if not self.is_applicable(action):
+		simAction = self.operators[opname].instantiate(args)
+		if not self.is_applicable(simAction):
 			raise Exception("Preconditions not met.")
-		self.apply(action)
+		self.apply(simAction)
+	
+	#convenience method for operating with MIDCA
+	def apply_midca_action(self, midcaAction):
+		opname = midcaAction.op.name
+		argnames = [str(arg) for arg in midcaAction.args]
+		self.apply_named_action(opname, argnames)
+	
+	#interprets a MIDCA goal as a predicate statement. Expects the predciate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
+	def midcaGoalAsAtom(self, goal):
+		try:
+			predName = str(goal['predicate'])
+		except KeyError:
+			try:
+				predName = str(goal['Predicate'])
+			except KeyError:
+				try:
+					predName = str(goal[0])
+				except KeyError:
+					raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a predicate name.")
+		try:
+			predicate = self.predicates[predName]
+		except KeyError:
+			raise ValueError("Predicate " + predName + " not in domain.")
+		
+		args = [] #args for new atom
+		#check if predicate took first spot in arg list
+		if goal.args[0] != "predicate":
+			nextArgI = 0
+		else:
+			nextArgI = 1
+		for i in range(len(predicate.argNames)):
+			if nextArgI < len(goal.args):
+				try:
+					args.append(self.objects[str(goal.args[nextArgI])])
+					nextArgI += 1
+				except KeyError:
+					raise ValueError("Object " + str(goal.args[nextArgI]) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
+			else:
+				if predicate.argNames[i] in goal.kwargs:
+					try:
+						value = goal.kwargs[predicate.argNames[i]]
+						args.append(self.objects[str(value)])
+					except KeyError:
+						raise ValueError("Object " + str(value) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
+				else:
+					raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a value for argument " + argNames[i])
+		assert len(args) == len(predicate.argNames) #sanity check
+		return Atom(predicate, args)
+	
+	def plan_correct(self, plan):
+		testWorld = self.copy()
+		for action in plan.get_remaining_steps():
+			if not testWorld.midca_action_applicable(action):
+				return False
+			testWorld.apply_midca_action(action)
+		for goal in plan.goals:
+			achieved = testWorld.atom_true(self.midcaGoalAsAtom(goal))
+			if not achieved:
+				return False
+		return True
 
 	def __str__(self):
 		s = "[\n"
