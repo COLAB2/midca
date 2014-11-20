@@ -1,3 +1,4 @@
+
 from midca.examples import configurations
 
 #instantiates a preset version of MIDCA with basic versions of several phases. 

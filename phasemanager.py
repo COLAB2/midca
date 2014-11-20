@@ -2,10 +2,6 @@ import copy, time, datetime
 from mem import Memory
 
 MAX_MODULES_PER_PHASE = 100
-
-class Module:
-	
-	pass
 	
 class Phase:
 	
@@ -14,10 +10,16 @@ class Phase:
 	
 	def __str__(self):
 		return self.name
+	
+	def __eq__(self, other):
+		return type(self) == type(other) and self.name == other.name
+	
+	def __hash__(self):
+		return hash(self.name)
 
 class MIDCA:
 
-	def __init__(self, world, options, verbose = 2):
+	def __init__(self, world, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -25,7 +27,6 @@ class MIDCA:
 		self.phaseNum = 1
 		self.twoSevenWarning = False
 		self.verbose = verbose
-		self.options = options
 		self.displayFunction = None
 		self.initialized = False
 	
@@ -44,6 +45,7 @@ class MIDCA:
 			phaseOrIndex = self.phase_by_name(phaseOrIndex)
 		elif isinstance(phaseOrIndex, int):
 			self.phases.insert(phaseOrIndex, phase)
+			self.modules[phase] = []
 			return
 		if not isinstance(phaseOrIndex, Phase):
 			raise KeyError(str(phase) + " is not a valid phase or index.")
@@ -53,7 +55,7 @@ class MIDCA:
 		self.modules[phase] = []
 	
 	def append_phase(self, phase):
-		self.insert_phase(phase, len(self.phases) - 1)
+		self.insert_phase(phase, len(self.phases) + 1)
 	
 	def append_module(self, phase, module):
 		self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
@@ -82,27 +84,31 @@ class MIDCA:
 	
 	def init(self, verbose = 2):
 		self.mem = Memory()
-		for phase, module in self.modules.items():
-			try:
-				if verbose >= 2:
-					print "Initializing " + phase.name + " module...",
-				module.init(self.world, self.mem)
-				print "done."
-			
-			except AttributeError:
-				if verbose >= 2:
-					print "\nPhase " + phase.name + " has no init function. Skipping init."
-			except Exception as e:
-				if verbose >= 1:
-					print "\nPhase " + phase.name + " initialization failed."
-				raise e
+		for phase, modules in self.modules.items():
+			i = 0
+			for module in modules:
+				i += 1
+				try:
+					if verbose >= 2:
+						print "Initializing " + phase.name + " module " + str(i) + "...",
+					module.init(self.world, self.mem)
+					print "done."
+				
+				except AttributeError:
+					if verbose >= 2:
+						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function. Skipping init."
+				except Exception as e:
+					if verbose >= 1:
+						print "\nPhase " + phase.name + " module " + str(i) + "initialization failed."
+					raise e
 		self.initialized = True
 	
 	def next_phase(self, verbose = 2):
 		self.phasei = (self.phaseNum - 1) % len(self.phases)
 		if verbose >= 2:
 			print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
-		self.modules[self.phases[self.phasei]].run(self.phaseNum, verbose)
+		for module in self.modules[self.phases[self.phasei]]:
+			module.run((self.phaseNum - 1) / len(self.phases), verbose)
 		if self.phasei == 0 and self.displayFunction:
 			self.displayFunction(self.world)
 		self.phaseNum += 1
@@ -132,14 +138,14 @@ class MIDCA:
 	
 	def run(self):
 		if not self.initialized:
-			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running."
+			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
 		while 1:
 			print "MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 			val = raw_input()
 			if val == "q":
 				break
 			elif val == "skip":
-				midca.one_cycle(verbose = 0, pause = 0)
+				self.one_cycle(verbose = 0, pause = 0)
 				print "cycle finished"
 			elif val == "show":
 				if self.displayFunction:
@@ -150,14 +156,14 @@ class MIDCA:
 				try:
 					num = int(val[4:].strip())
 					for i in range(num):
-						midca.one_cycle(verbose = 0, pause = 0)
+						self.one_cycle(verbose = 0, pause = 0)
 					print str(num) + " cycles finished."
 				except ValueError:
 					print "Usage: 'skip n', where n is an integer"
 			elif val == "?" or val == "help":
 				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n ? or help -> show this list of commands \n"
 			else:
-				midca.next_phase()
+				self.next_phase()
 		print "MIDCA is quitting."
 	
 
