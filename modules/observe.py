@@ -1,4 +1,3 @@
-from utils import blockstate, scene
 
 class PerfectOberver:
 
