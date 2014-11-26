@@ -12,7 +12,14 @@ class SimpleEval:
 			goqls = []
 		if goals:
 			for goal in goals:
-				if not world.atom_true(world.midcaGoalAsAtom(goal)):
+				try:
+					if not world.atom_true(world.midcaGoalAsAtom(goal)):
+						if verbose >= 2:
+							print "Not all goals achieved;", goal, "is not true."
+						return
+				except ValueError:
+					if verbose >= 1:
+						print "Could not test goal", goal, ". It does not seem to be a valid world state"
 					return
 			if verbose >= 1:
 				print "All current goals achieved. Removing them from goal graph"
@@ -23,7 +30,7 @@ class SimpleEval:
 			goalGraph.removeOldPlans()
 			newNumPlans = len(goalGraph.plans)
 			if numPlans != newNumPlans and verbose >= 1:
-				print "removing", newNumPlans - numPlans, "plans that no longer apply."
+				print "removing", numPlans - newNumPlans, "plans that no longer apply."
 		else:
 			if verbose >= 2:
 				print "No current goals. Skipping eval"

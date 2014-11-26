@@ -14,14 +14,14 @@ class Argument:
 		self.name = name
 		self.check = checkFunc
 		self.type = type
-		if self.strRep:
+		if strRep:
 			self.__str__ = strRep
 	
 	def valid(self, value):
 		if self.type and not isinstance(value, self.type):
 			return False
-		if self.checkFunc:
-			return self.checkFunc(value)
+		if self.check:
+			return self.check(value)
 		return True #no checkFunc; assume valid
 	
 	#default implementation
@@ -79,10 +79,10 @@ class Action:
 			for i in range(len(self.args)):
 				if self.op.args[i].name == item:
 					return self.args[i]
-		raise KeyError(str(item) + " is neither an index nor the name of an argument"
+		raise KeyError(str(item) + " is neither an index nor the name of an argument")
 	
 	def __str__(self):
-		s = self.op + "("
+		s = self.op.name + "("
 		for arg in self.args:
 			s += str(arg) + ", "
 		s = s[:-2] + ")"

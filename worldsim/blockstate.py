@@ -1,7 +1,5 @@
-import sys
-sys.path.append("../")
 from block import Block
-from worldsim import worldsim
+import worldsim
 
 def b(name):
 	return "b" + str(name)

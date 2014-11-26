@@ -1,5 +1,6 @@
 from _plan.pyhop121 import pyhop, methods, operators
 import plans
+import collections
 
 class PyHopPlanner:
 	
@@ -16,7 +17,7 @@ class PyHopPlanner:
 		self.mem = mem
 		#load operators from world. Note that using this simple method MIDCA will not check the types or values of arguments, though it will check for plan validity.
 		#Also, this method depends on the default MIDCA world simulator.
-		self.operators = {op.name: plans.Operator(op.name, op.objNames) for op in world.operators.values()}
+		self.operators = {op.name: plans.Operator(op.name, op.objnames) for op in world.operators.values()}
 	
 	#this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
@@ -27,15 +28,15 @@ class PyHopPlanner:
 				print "No goals received by planner. Skipping planning."
 			return
 		try:
-			plan = self.mem.get(self.mem.GOAL_GRAPH).getPlan(goals)
+			midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
 		except AttributeError:
-			plan = None
-		if plan:
+			midcaPlan = None
+		if midcaPlan:
 			if verbose >= 2:
 				print "Old plan retrieved. Checking validity...",
-			valid = world.plan_correct(plan)
+			valid = world.plan_correct(midcaPlan)
 			if not valid:
-				plan = None 
+				midcaPlan = None 
 				#if plan modification is added to MIDCA, do it here.
 				if verbose >= 2:
 					print "invalid."
@@ -46,18 +47,18 @@ class PyHopPlanner:
 		if not isinstance(goals, collections.Iterable):
 			goals = [goals]
 		
-		if not plan:
+		if not midcaPlan:
 			#use pyhop to generate new plan
 			if verbose >= 2:
 				print "Planning..."
 			try:
-				pyhopState = pyhop_state_from_world(world)
+				pyhopState = self.pyhop_state_from_world(world)
 			except Exception:
-				raise ValueError("Could not generate a valid pyhop state from current world state")
+				print "Could not generate a valid pyhop state from current world state. Skipping planning"
 			try:
-				pyhopTasks = pyhop_tasks_from_goals(goals)
+				pyhopTasks = self.pyhop_tasks_from_goals(goals)
 			except Exception:
-				raise ValueError("Could not generate a valid pyhop goal set from current goals")
+				print "Could not generate a valid pyhop task from current goal set. Skipping planning"
 			try:
 				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
 			except Exception:
@@ -70,18 +71,15 @@ class PyHopPlanner:
 					print
 				return
 			#change from pyhop plan to MIDCA plan
-			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], list(action[1:])) for action in pyhopPlan], goals)
+			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
 			
 			if verbose >= 1:
 				print "Planning complete."
 			if verbose >= 2:
-				print "Plan: ",
-				for step in plan:
-					print str(step),
-				print
+				print "Plan: ", midcaPlan
 			#save new plan
-			if plan:
-				self.mem.get(self.mem.GOAL_GRAPH).addPlan(plan)
+			if midcaPlan:
+				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
 	def pyhop_state_from_world(self, world, name = "state"):
 		s = pyhop.State(name)

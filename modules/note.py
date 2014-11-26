@@ -1,5 +1,5 @@
 import copy
-from adist import ADistance, ChangeFinder, WindowPair, Interval
+from _adist import ADistance, ChangeFinder, WindowPair, Interval
 
 '''
 See class ADistanceAnomalyNoter
@@ -133,7 +133,7 @@ class AnomalyDetector:
 			aDist = ADistWrapper(threshold)
 		aDist.init(world)
 		self.mem.add(A_DIST_KEY, aDist)
-		self.dimension = len(adistadapt.get_pred_names(world))
+		self.dimension = len(get_pred_names(world))
 	
 	def update(self, world):
 		self.mem.update_all(A_DIST_KEY, world)
@@ -209,7 +209,7 @@ class ADistanceAnomalyNoter:
 	def anomalous(self):
 		return self.detector.anomalous()
 	
-	def run(self, verbose = 2):
+	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
 		self.update(world)
 		self.mem.add(ANOMALY_STATE_KEY, self.anomalous())

@@ -50,8 +50,9 @@ class SimpleAct:
 				if verbose == 1:
 					print "Action selected:", action
 				elif verbose >= 2:
-					print "Selection action", action, "from plan:\n", plan
+					print "Selected action", action, "from plan:\n", plan
 				self.mem.add(self.mem.ACTIONS, [action])
+				plan.advance()
 		else:
 			if verbose >= 1:
 				print "No valid plan found that achieves any current goals. MIDCA will not select an action this cycle."

@@ -20,7 +20,7 @@ class Goal:
 				raise KeyError(str(val) + " is not a valid key or index.")
 	
 	def __str__(self):
-		s = "Goal(".join([(str(arg) + ", " for arg in self.args]).join([str(key) + ": " + str(value) + ", " for key, value in self.kwargs.items()])
+		s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in self.kwargs.items()])
 		if self.args or self.kwargs:
 			return s[:-2] + ")"
 		else:
@@ -48,15 +48,17 @@ class GoalGraph:
 	The single constructor argument gives a function that takes two goals as input and should return a +/- value indicating precedence. If goal1 should be achieved before goal2, goalCompareFunction(goal1, goal2) < 0.
 	'''
 	
-	def __init__(self, goalCompareFunction):
-		self.roots = []
+	def __init__(self, goalCompareFunction = None):
+		self.roots = set()
 		self.cmp = goalCompareFunction
+		if not self.cmp:
+			self.cmp = lambda goal1, goal2: 0
 		self.numGoals = 0
 		self.plans = set()
 	
 	#note not symmetrical - finds goals that are specifications of current goal, but not generalizations.
 	def consistentGoal(self, first, second):
-		for i in len(first.args):
+		for i in range(len(first.args)):
 			if first.args[i] != "?" and first.args[i] != second.args[i]:
 				return False
 		for key, val in first.kwargs.items():
@@ -64,29 +66,33 @@ class GoalGraph:
 				return False
 		return True
 	
+	def add(self, goal):
+		self.insert(goal)
+	
 	#inserts a goal into the graph using the graph's comparator
 	def insert(self, goal):
 		newNode = GoalNode(goal)
 		self.numGoals += 1
 		if not self.roots:
-			self.roots.append(newNode)
+			self.roots.add(newNode)
 		for node in self._getAllNodes():
 			cmpVal = self.cmp(newNode, node)
 			if cmpVal < 0:
 				newNode.addChild(node)
 			elif cmpVal > 0:
 				node.addChild(newNode)
-		self.roots = [node for node in self.roots if node not in newNode.children]
+		self.roots = {node for node in self.roots if node not in newNode.children}
 		if not newNode.parents:
 			self.roots.add(newNode)
-		if not self.roots
+		if not self.roots:
+			raise ValueError("Adding a goal that creates a cycle in the graph. Now no goals can be achieved.")
 	
 	def _removeNode(self, delNode):
 		self.numGoals -= 1
 		if delNode in self.roots:
 			self.roots.remove(delNode)
 			for node in self._getAllNodes():
-				if delNode = node.parents:
+				if delNode == node.parents:
 					node.parents.remove(delNode)
 					if not node.parents:
 						self.roots.add(node)

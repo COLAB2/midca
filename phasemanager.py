@@ -1,5 +1,6 @@
 import copy, time, datetime
 from mem import Memory
+import goals
 
 MAX_MODULES_PER_PHASE = 100
 	
@@ -19,7 +20,7 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, verbose = 2):
+	def __init__(self, world, verbose = 2, display = None):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -27,7 +28,7 @@ class MIDCA:
 		self.phaseNum = 1
 		self.twoSevenWarning = False
 		self.verbose = verbose
-		self.displayFunction = None
+		self.display = display
 		self.initialized = False
 	
 	def phase_by_name(self, name):
@@ -60,6 +61,7 @@ class MIDCA:
 	def append_module(self, phase, module):
 		self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
 	
+	#note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
 	def insert_module(self, phase, module, i):
 		if isinstance(phase, str):
 			phase = self.phase_by_name(phase)
@@ -70,6 +72,18 @@ class MIDCA:
 		if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
 			raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
 		self.modules[phase].insert(i, module)
+	
+	def removeModule(self, phase, i):
+		if isinstance(phase, str):
+			phase = self.phase_by_name(phase)
+		if phase not in self.modules:
+			raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
+		modules = self.modules[phase]
+		if i < 0 or i >= len(modules):
+			raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
+		else:
+			modules.pop(i)
+		
 	
 	def clearPhase(self, phase):
 		self.modules[phase] = []
@@ -84,7 +98,8 @@ class MIDCA:
 	
 	def init(self, verbose = 2):
 		self.mem = Memory()
-		for phase, modules in self.modules.items():
+		for phase in self.phases:
+			modules = self.modules[phase]
 			i = 0
 			for module in modules:
 				i += 1
@@ -94,25 +109,26 @@ class MIDCA:
 					module.init(self.world, self.mem)
 					print "done."
 				
-				except AttributeError:
-					if verbose >= 2:
-						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function. Skipping init."
 				except Exception as e:
-					if verbose >= 1:
-						print "\nPhase " + phase.name + " module " + str(i) + "initialization failed."
-					raise e
+					print e
+					if verbose >= 2:
+						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init."
+		self.initGoalGraph()
+		print "Goal Graph initialized. To use goal ordering, call initGoalGraph manually with a custom goal comparator"
 		self.initialized = True
+	
+	def initGoalGraph(self, cmpFunc = None):
+		self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
 	
 	def next_phase(self, verbose = 2):
 		self.phasei = (self.phaseNum - 1) % len(self.phases)
 		if verbose >= 2:
 			print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
 		for module in self.modules[self.phases[self.phasei]]:
-			module.run((self.phaseNum - 1) / len(self.phases), verbose)
-		if self.phasei == 0 and self.displayFunction:
-			self.displayFunction(self.world)
+			retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
 		self.phaseNum += 1
-		
+		if retVal == "continue":
+			self.next_phase(verbose)
 	
 	def one_cycle(self, verbose = 1, pause = 0.5):
 		for i in range(len(self.phases)):
@@ -139,8 +155,8 @@ class MIDCA:
 	def run(self):
 		if not self.initialized:
 			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
+		print "\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 		while 1:
-			print "MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 			val = raw_input()
 			if val == "q":
 				break
@@ -148,8 +164,8 @@ class MIDCA:
 				self.one_cycle(verbose = 0, pause = 0)
 				print "cycle finished"
 			elif val == "show":
-				if self.displayFunction:
-					self.displayFunction(self.world)
+				if self.display:
+					self.display(self.world)
 				else:
 					print "No display function set. See Midca.set_display_function()"				
 			elif val.startswith("skip"):
@@ -162,6 +178,8 @@ class MIDCA:
 					print "Usage: 'skip n', where n is an integer"
 			elif val == "?" or val == "help":
 				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n ? or help -> show this list of commands \n"
+			elif val:
+				print "command not understood"
 			else:
 				self.next_phase()
 		print "MIDCA is quitting."

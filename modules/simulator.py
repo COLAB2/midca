@@ -1,4 +1,4 @@
-import sys, random, worldsim
+import sys, random, worldsim, goals
 
 class MidcaActionSimulator:
 	
@@ -16,10 +16,10 @@ class MidcaActionSimulator:
 			return
 		if actions:
 			for action in actions:
-				if world.midca_action_applicable(action):
+				if self.world.midca_action_applicable(action):
 					if verbose >= 2:
 						print "simulating MIDCA action:", action
-					world.apply_midca_action(action)
+					self.world.apply_midca_action(action)
 				else:
 					if verbose >= 1:
 						print "MIDCA-selected action", action, "illegal in current world state. Skipping"
@@ -29,6 +29,56 @@ class MidcaActionSimulator:
 
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]
 
+from worldsim import blockstate, scene
+
+class ASCIIWorldViewer:
+	
+	def init(self, world, mem):
+		self.world = world
+	
+	def run(self, cycle, verbose = 2):
+		if verbose >= 2:
+			blocks = blockstate.get_block_list(self.world)
+			print str(scene.Scene(blocks))
+
+class WorldChanger:
+	
+	def init(self, world, mem):
+		self.world = world
+	
+	def parseGoal(self, txt):
+		if not txt.endswith(")"):
+			print "Error reading input. Atom must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+			return None
+		try:
+			predicateName = txt[:txt.index("(")]
+			args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+			goal = goals.Goal(*args, predicate = predicateName)
+			return goal
+		except Exception:
+			print "Error reading input. Atom must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+			return None
+	
+	def run(self, cycle, verbose = 2):
+		if verbose == 0:
+			return
+		while True:
+			val = raw_input("If you wish to change the state, please input the desired atom to flip. Otherwise, press enter to continue\n")
+			if not val:
+				return "continue"
+			goal = self.parseGoal(val.strip())
+			if goal:
+				try:
+					atom = self.world.midcaGoalAsAtom(goal)
+					if self.world.atom_true(atom):
+						self.world.remove_atom(atom)
+						print "Atom", atom, "was true and is now false"
+					else:
+						self.world.add_atom(atom)
+						print "Atom", atom, "was false and is now true"
+				except ValueError:
+					 "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
+					
 class ArsonSimulator:
 	
 	def __init__(self, arsonChance = 0.5, arsonStart = 10):

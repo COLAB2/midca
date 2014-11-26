@@ -332,28 +332,29 @@ class World:
 	#convenience method for operating with MIDCA
 	def midca_action_applicable(self, midcaAction):
 		try:
-			operator = self.operators[midcaAction.op]
+			operator = self.operators[midcaAction.op.name]
 			args = [self.objects[arg] for arg in midcaAction.args]
 		except KeyError:
 			return False
-		return self.is_applicable(operator.instantiate(args))
+		action = operator.instantiate(args)
+		return self.is_applicable(action)
 
 	def apply(self, simAction):
-		for i in range(len(action.results)):
-			if action.postPos[i]:
-				self.add_atom(action.results[i])
+		for i in range(len(simAction.results)):
+			if simAction.postPos[i]:
+				self.add_atom(simAction.results[i])
 			else:
-				self.remove_atom(action.results[i])
+				self.remove_atom(simAction.results[i])
 	
 	def apply_named_action(self, opName, argNames):
 		args = []
-		for name in argnames:
+		for name in argNames:
 			if name not in self.objects:
 				raise Exception("Object " + name + " DNE")
 			args.append(self.objects[name])
-		if opname not in self.operators:
+		if opName not in self.operators:
 			raise Exception("Operator " + opname + " DNE")
-		simAction = self.operators[opname].instantiate(args)
+		simAction = self.operators[opName].instantiate(args)
 		if not self.is_applicable(simAction):
 			raise Exception("Preconditions not met.")
 		self.apply(simAction)
@@ -387,7 +388,7 @@ class World:
 			nextArgI = 0
 		else:
 			nextArgI = 1
-		for i in range(len(predicate.argNames)):
+		for i in range(len(predicate.argnames)):
 			if nextArgI < len(goal.args):
 				try:
 					args.append(self.objects[str(goal.args[nextArgI])])
@@ -395,16 +396,19 @@ class World:
 				except KeyError:
 					raise ValueError("Object " + str(goal.args[nextArgI]) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
 			else:
-				if predicate.argNames[i] in goal.kwargs:
+				if predicate.argnames[i] in goal.kwargs:
 					try:
-						value = goal.kwargs[predicate.argNames[i]]
+						value = goal.kwargs[predicate.argnames[i]]
 						args.append(self.objects[str(value)])
 					except KeyError:
 						raise ValueError("Object " + str(value) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
 				else:
-					raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a value for argument " + argNames[i])
-		assert len(args) == len(predicate.argNames) #sanity check
-		return Atom(predicate, args)
+					raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a value for argument " + predicate.argnames[i])
+		assert len(args) == len(predicate.argnames) #sanity check
+		try:
+			return Atom(predicate, args)
+		except Exception:
+			raise ValueError(str(predicate) + str(args) + " does not seem to be a valid state")
 	
 	def plan_correct(self, plan):
 		testWorld = self.copy()

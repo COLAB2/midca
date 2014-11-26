@@ -1,11 +1,11 @@
 import os
 import sys
 sys.path.append("../")
-from utils.block import Block
+from worldsim.block import Block
 from Tree_Fire.Tree import Tree as TreeFire
 from Tree_3_Scen.Tree import Tree as TreeStack
-from goal import Goal
-from utils import blockstate
+from goals import Goal
+from worldsim import blockstate
 from XP_Goal.parser import *
 from XP_Goal.traverser import *
 from datetime import datetime
