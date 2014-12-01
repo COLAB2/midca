@@ -1,4 +1,5 @@
-import sys, random, worldsim, goals
+import sys, random
+from MIDCA import worldsim, goals
 
 class MidcaActionSimulator:
 	

@@ -1,5 +1,5 @@
-from _plan.pyhop121 import pyhop, methods, operators
-import plans
+from _plan import pyhop, methods, operators
+from MIDCA import plans
 import collections
 
 class PyHopPlanner:

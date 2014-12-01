@@ -1,17 +1,12 @@
-import sys
-from custom import customsetup, memconstants
-import phasemanager
-import socket, subprocess, time
+#!/usr/bin/env python
 
-def initialize(options):	
-		
-	midca = phasemanager.MIDCA(customsetup.read_world(), customsetup.get_world_sim(options), options, memconstants)
-		
-	modules = customsetup.get_modules(options)
-	
-	for phase in customsetup.PHASES:
-		if phase in modules:
-			midca.add_module(phase, modules[phase])
-	midca.init()
-	customsetup.custom_init(midca)
-	return midca
+from distutils.core import setup
+
+setup(name='MIDCA',
+      version='2.0',
+      description='Metacognitive Integrated Dual-Cycle Architecture',
+      author='Matt Paisner',
+      author_email='matthew.paisner@gmail.com',
+      packages=['MIDCA', 'MIDCA.worldsim', 'MIDCA.examples', 'MIDCA.modules', 'MIDCA.modules._adist', 'MIDCA.modules._plan'],
+      package_dir={"": ".."}
+     )

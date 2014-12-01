@@ -1,5 +1,5 @@
 import copy
-from _adist import ADistance, ChangeFinder, WindowPair, Interval
+from MIDCA.modules._adist import ADistance, ChangeFinder, WindowPair, Interval
 
 '''
 See class ADistanceAnomalyNoter

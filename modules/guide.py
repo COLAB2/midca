@@ -1,4 +1,4 @@
-import goals
+from MIDCA import goals
 
 class UserGoalInput:
 	

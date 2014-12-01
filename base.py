@@ -20,16 +20,14 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, verbose = 2, display = None):
+	def __init__(self, world, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
 		self.modules = {}
-		self.phaseNum = 1
-		self.twoSevenWarning = False
 		self.verbose = verbose
-		self.display = display
 		self.initialized = False
+		self.phaseNum = 1
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -127,11 +125,68 @@ class MIDCA:
 		for module in self.modules[self.phases[self.phasei]]:
 			retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
 		self.phaseNum += 1
-		if retVal == "continue":
+		return retVal
+	
+class PhaseManager:
+	
+	def __init__(self, world, verbose = 2, display = None, storeHistory = False):
+		self.midca = MIDCA(world, verbose)
+		self.mem = self.midca.mem
+		self.storeHistory = storeHistory
+		self.history = []
+		self.display = display
+		self.twoSevenWarning = False
+	
+	'''
+	convenience functions which wrap MIDCA functions
+	'''
+	def phase_by_name(self, name):
+		return self.midca.phase_by_name(name)
+	
+	def insert_phase(self, phase, phaseOrIndex):
+		self.midca.insert_phase(phase, phaseOrIndex)
+	
+	def append_phase(self, phase):
+		self.midca.append_phase(phase)
+	
+	def get_phases(self):
+		return self.midca.phases
+	
+	def append_module(self, phase, module):
+		self.midca.append_module(phase, module)
+	
+	def insert_module(self, phase, module, i):
+		self.midca.insert_module(phase, module, i)
+	
+	def removeModule(self, phase, i):
+		self.midca.removeModule(phase, i)
+	
+	def clearPhase(self, phase):
+		self.midca.clearPhase(phase)
+	
+	def get_modules(self, phase):
+		return self.midca.get_modules(phase)
+	
+	def init(self, verbose = 2):
+		self.midca.init(verbose)
+	
+	def initGoalGraph(self, cmpFunc = None):
+		self.midca.initGoalGraph(cmpFunc)
+	
+	
+	'''
+	functions for advancing through phases and complete cycles.
+	'''
+
+	def next_phase(self, verbose = 2):
+		if self.storeHistory:
+			self.history.append(copy.deepcopy(self.midca))
+		val = self.midca.next_phase(verbose)
+		if val == "continue":
 			self.next_phase(verbose)
 	
 	def one_cycle(self, verbose = 1, pause = 0.5):
-		for i in range(len(self.phases)):
+		for i in range(len(self.midca.phases)):
 			t1 = datetime.datetime.today()
 			self.next_phase(verbose)
 			t2 = datetime.datetime.today()
@@ -148,12 +203,13 @@ class MIDCA:
 		for i in range(num):
 			self.one_cycle(verbose, pause)
 	
-	#MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.world.
+	#MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.midca.world.
 	def set_display_function(self, function):
-		self.displayFunction = function
-	
+		self.display = function
+
+	#function which runs MIDCA with a text UI
 	def run(self):
-		if not self.initialized:
+		if not self.midca.initialized:
 			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
 		print "\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 		while 1:
@@ -165,9 +221,9 @@ class MIDCA:
 				print "cycle finished"
 			elif val == "show":
 				if self.display:
-					self.display(self.world)
+					self.display(self.midca.world)
 				else:
-					print "No display function set. See Midca.set_display_function()"				
+					print "No display function set. See PhaseManager.set_display_function()"				
 			elif val.startswith("skip"):
 				try:
 					num = int(val[4:].strip())
@@ -183,7 +239,6 @@ class MIDCA:
 			else:
 				self.next_phase()
 		print "MIDCA is quitting."
-	
 
 if __name__ == "__main__":
 	l = [1, 2]

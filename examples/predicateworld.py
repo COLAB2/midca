@@ -1,6 +1,6 @@
-import phasemanager
-from worldsim import domainread, stateread, worldsim, blockstate, scene
-from modules import simulator, observe, note, guide, evaluate, intend, planning, act
+from MIDCA import base
+from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
+from MIDCA.modules import simulator, observe, note, guide, evaluate, intend, planning, act
 
 def asqiiDisplay(world):
 	blocks = blockstate.get_block_list(world)
@@ -9,7 +9,7 @@ def asqiiDisplay(world):
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None):
 	world = domainread.load_domain(domainFile)
 	stateread.apply_state_file(world, stateFile)
-	myMidca = phasemanager.MIDCA(world, display = asqiiDisplay)
+	myMidca = midca.PhaseManager(world, display = asqiiDisplay)
 	for phase in ["Simulate", "Observe", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)
 

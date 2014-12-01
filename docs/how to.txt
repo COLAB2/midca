@@ -1,0 +1,20 @@
+Note: as with most files in this module, this one is intended to be read with word wrap enabled.
+
+MIDCA how-to's: This document is intended to provide a guide to the specifics of using the MIDCA module for programmers. For a broader overview, please see the overview file in this folder. This document assumes that MIDCA has been properly installed using the setup.py file. All code should be run using python 2.7.
+
+How to...
+
+1) Create and populate a MIDCA object:
+
+#the MIDCA.base python module contains the central MIDCA class definitions: MIDCA and PhaseManager
+from MIDCA import base
+
+'''
+MIDCA requires a world representation to be passed to the constructor. This represents the world state at the start of the run. The world can be represented in any form, though most built-in modules assume the use of MIDCA's worldsim module which models and simulates actions in symbolic domains modeled using predcate logic. The example below employs that module; note that files representing the domain and the state must be provided by the user.
+'''
+from MIDCA.worldsim import domainread, stateread, worldsim
+world = domainread.load_domain("myDomainFilename")
+stateread.apply_state_file(world, "myStateFilename")
+
+#create a MIDCA object
+myMidca = base.MIDCA
