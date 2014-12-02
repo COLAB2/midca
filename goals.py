@@ -19,6 +19,22 @@ class Goal:
 				#not an index
 				raise KeyError(str(val) + " is not a valid key or index.")
 	
+	def __contains__(self, item):
+		try:
+			val = self[item]
+			return True
+		except KeyError:
+			return False
+	
+	def __setitem__(self, key, item):
+		if isinstance(key, int): 
+			if key < len(self.args):
+				self.args[key] = item
+			else:
+				raise IndexError(str(key) + " is out of range for args of " + str(self))
+		else:
+			self.kwargs[key] = item
+	
 	def __str__(self):
 		s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in self.kwargs.items()])
 		if self.args or self.kwargs:
@@ -59,7 +75,7 @@ class GoalGraph:
 	#note not symmetrical - finds goals that are specifications of current goal, but not generalizations.
 	def consistentGoal(self, first, second):
 		for i in range(len(first.args)):
-			if first.args[i] != "?" and first.args[i] != second.args[i]:
+			if first.args[i] != "?" and (len(second.args) <= i or first.args[i] != second.args[i]):
 				return False
 		for key, val in first.kwargs.items():
 			if key not in second.kwargs or second.kwargs[key] != val:

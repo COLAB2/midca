@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 import MIDCA
 from MIDCA.examples import predicateworld
+from MIDCA.modules import simulator
 import inspect, os
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -8,6 +9,8 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
+
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True

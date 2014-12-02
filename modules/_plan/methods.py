@@ -126,7 +126,7 @@ def put_out_m(state, b1):
 	if state.fire[b1]:
 		return [("putoutfire", b1)]
 	else:
-		return False
+		return []
 
 def quick_apprehend_m(state, perp):
 	if state.free[perp]:

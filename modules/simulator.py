@@ -67,6 +67,8 @@ class WorldChanger:
 			val = raw_input("If you wish to change the state, please input the desired atom to flip. Otherwise, press enter to continue\n")
 			if not val:
 				return "continue"
+			elif val == 'q':
+				return val
 			goal = self.parseGoal(val.strip())
 			if goal:
 				try:
@@ -83,8 +85,8 @@ class WorldChanger:
 class ArsonSimulator:
 	
 	def __init__(self, arsonChance = 0.5, arsonStart = 10):
-		self.chance = 0.5
-		self.start = 10
+		self.chance = arsonChance
+		self.start = arsonStart
 	
 	def init(self, world, mem):
 		self.mem = mem
@@ -114,8 +116,10 @@ class ArsonSimulator:
 					if verbose >= 2:
 						print "Simulating action: lightonfire(" + str(arsonist) + ", " + str(block) + ")"
 				except Exception:
-					print "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
+					if verbose >= 1:
+						print "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
 			except IndexError:
-				print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
+				if verbose >= 1:
+					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
 
 	

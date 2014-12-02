@@ -1,6 +1,48 @@
 
 class Event:
 	
+class Event:
+	
+	def __init__(self, cycle, phase, module, data):
+		self.context = (cycle, phase, module)
+		self.data = data
+	
+	def log(self, logger):
+		...
+	
+class Observation(Event):
+	
+	def log(self, logger):
+		...
+
+class Action(Event)
+
+
+class InternalEvent(Event):
+
+	class GoalEvent(InternalEvent)
+
+		class GoalGenerated(GoalEvent)
+		class GoalCompleted(GoalEvent)
+		class GoalDeleted(GoalEvent)
+
+		class GoalSelected(GoalEvent)
+		class GoalUnselected(GoalEvent)
+
+
+	class PlanEvent(InternalEvent)
+
+		...continue plan events like goals...
+
+
+	#next two would not be logged automatically but could be called in code. Or perhaps functions can be decorated with automatic logging calls.
+	class ComputationEvent(InternalEvent)
+	class InferenceEvent(InternalEvent)
+
+-pointers to memory locations
+-register functions with MIDCA (as certain event types), then call them with args as keys to MIDCA memory. Logged automatically.
+-html logging output
+
 	def __init__(self, cycle, phase, module, data):
 		self.context = (cycle, phase, module)
 		self.data = data

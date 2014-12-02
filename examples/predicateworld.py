@@ -9,7 +9,7 @@ def asqiiDisplay(world):
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None):
 	world = domainread.load_domain(domainFile)
 	stateread.apply_state_file(world, stateFile)
-	myMidca = midca.PhaseManager(world, display = asqiiDisplay)
+	myMidca = base.PhaseManager(world, display = asqiiDisplay)
 	for phase in ["Simulate", "Observe", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)
 

@@ -13,7 +13,10 @@ class SimpleEval:
 		if goals:
 			for goal in goals:
 				try:
-					if not world.atom_true(world.midcaGoalAsAtom(goal)):
+					achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+					if 'negate' in goal and goal['negate']:
+						achieved = not achieved
+					if not achieved:
 						if verbose >= 2:
 							print "Not all goals achieved;", goal, "is not true."
 						return

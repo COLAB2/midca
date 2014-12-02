@@ -56,6 +56,18 @@ class MIDCA:
 	def append_phase(self, phase):
 		self.insert_phase(phase, len(self.phases) + 1)
 	
+	def remove_phase(self, phaseOrName):
+		if isinstance(phaseOrName, str):
+			phase = self.phase_by_name(phaseOrName)
+		else:
+			phase = phaseOrName
+		try:
+			self.phases.remove(phase)
+			del self.modules[phase]
+		except ValueError:
+			raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
+		#if there is a KeyError, something has gone very wrong.
+	
 	def append_module(self, phase, module):
 		self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
 	
@@ -95,7 +107,6 @@ class MIDCA:
 			raise ValueError("No such phase as " + str(phase))
 	
 	def init(self, verbose = 2):
-		self.mem = Memory()
 		for phase in self.phases:
 			modules = self.modules[phase]
 			i = 0
@@ -111,12 +122,13 @@ class MIDCA:
 					print e
 					if verbose >= 2:
 						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init."
-		self.initGoalGraph()
+		self.initGoalGraph(overwrite = False)
 		print "Goal Graph initialized. To use goal ordering, call initGoalGraph manually with a custom goal comparator"
 		self.initialized = True
 	
-	def initGoalGraph(self, cmpFunc = None):
-		self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
+	def initGoalGraph(self, cmpFunc = None, overwrite = True):
+		if overwrite or not self.mem.get(self.mem.GOAL_GRAPH):
+			self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
 	
 	def next_phase(self, verbose = 2):
 		self.phasei = (self.phaseNum - 1) % len(self.phases)
@@ -150,7 +162,7 @@ class PhaseManager:
 		self.midca.append_phase(phase)
 	
 	def get_phases(self):
-		return self.midca.phases
+		return [phase.name for phase in self.midca.phases]
 	
 	def append_module(self, phase, module):
 		self.midca.append_module(phase, module)
@@ -158,10 +170,10 @@ class PhaseManager:
 	def insert_module(self, phase, module, i):
 		self.midca.insert_module(phase, module, i)
 	
-	def removeModule(self, phase, i):
+	def remove_module(self, phase, i):
 		self.midca.removeModule(phase, i)
 	
-	def clearPhase(self, phase):
+	def clear_phase(self, phase):
 		self.midca.clearPhase(phase)
 	
 	def get_modules(self, phase):
@@ -172,8 +184,6 @@ class PhaseManager:
 	
 	def initGoalGraph(self, cmpFunc = None):
 		self.midca.initGoalGraph(cmpFunc)
-	
-	
 	'''
 	functions for advancing through phases and complete cycles.
 	'''
@@ -182,8 +192,7 @@ class PhaseManager:
 		if self.storeHistory:
 			self.history.append(copy.deepcopy(self.midca))
 		val = self.midca.next_phase(verbose)
-		if val == "continue":
-			self.next_phase(verbose)
+		return val
 	
 	def one_cycle(self, verbose = 1, pause = 0.5):
 		for i in range(len(self.midca.phases)):
@@ -237,7 +246,11 @@ class PhaseManager:
 			elif val:
 				print "command not understood"
 			else:
-				self.next_phase()
+				val = self.next_phase()
+				if val == "continue":
+					self.next_phase()
+				elif val == "q":
+					break
 		print "MIDCA is quitting."
 
 if __name__ == "__main__":

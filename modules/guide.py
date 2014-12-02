@@ -14,9 +14,17 @@ class UserGoalInput:
 			print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
 			return None
 		try:
+			if txt.startswith('!'):
+				negate = True
+				txt = txt[1:]
+			else:
+				negate = False
 			predicateName = txt[:txt.index("(")]
 			args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
-			goal = goals.Goal(*args, predicate = predicateName)
+			if negate:
+				goal = goals.Goal(*args, predicate = predicateName, negate = True)
+			else:
+				goal = goals.Goal(*args, predicate = predicateName)
 			return goal
 		except Exception:
 			print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
@@ -44,6 +52,8 @@ class UserGoalInput:
 			val = raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
 			if not val:
 				return "continue"
+			elif val == 'q':
+				return val
 			goal = self.parseGoal(val.strip())
 			if goal:
 				world = self.mem.get(self.mem.STATES)[-1]
