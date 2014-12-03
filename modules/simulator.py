@@ -30,7 +30,7 @@ class MidcaActionSimulator:
 
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]
 
-from worldsim import blockstate, scene
+from MIDCA.worldsim import blockstate, scene
 
 class ASCIIWorldViewer:
 	
