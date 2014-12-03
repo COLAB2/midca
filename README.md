@@ -4,7 +4,7 @@ README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture. Note tha
 
 2) MIDCA is written for python 2.7; currently it will not run with other python versions. 
 
-3) To install MIDCA, run the setup.py file in this folder using python 2.7.
+3) To install MIDCA, run the setup.py file in this folder using python 2.7. Use the install option, so "python setup.py install" assumign 2.7 is your default python.
 
 4) For a simple interactive version of MIDCA, run examples/simple_run.py
 
