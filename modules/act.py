@@ -10,36 +10,36 @@ class SimpleAct:
 	def init(self, world, mem):
 		self.mem = mem
 	
-	def get_next_plan(self):
-		currentGoals = self.mem.get(self.mem.CURRENT_GOALS)
-		#try to retrieve a plan that achieves all goals in current goal set
-		plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(currentGoals)
-		if plan:
-			return plan
-		else:
-			#try to retrieve a plan that achieves at least one goal in current goal set.
-			plan = self.mem.get(self.mem.GOAL_GRAPH).getBestPlan(currentGoals)
-		return plan
-	
-	def get_valid_plan(self, world, verbose):
+	#returns the plan that achieves the most current goals, based on simulation.
+	def get_best_plan(self, world, goals, verbose):
 		plan = None
-		while not plan:
-			plan = self.get_next_plan()
-			if not plan:
-				return None #no plan retrieved; no action given
-			if not world.plan_correct(plan):
-				if verbose >= 1:
-					print "Retrieved plan incorrect. Trying again."
+		goalsAchieved = set()
+		goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+		for nextPlan in goalGraph.allMatchingPlans(goals):
+			achieved = world.goals_achieved(nextPlan, goals)
+			if len(achieved) > len(goalsAchieved):
+				goalsAchieved = achieved
+				plan = nextPlan
+			if len(achieved) == len(goals):
+				break
+			elif verbose >= 1:
+				print "Retrieved plan does not achieve all goals. Trying again."
 				if verbose >= 2:
-					print "Plan:", str(plan)
-					print "Goals:", [str(goal) for goal in plan.goals]
-				self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
-				plan = None
+					print "Plan:", str(nextPlan)
+					print "Goals achieved:", [str(goal) for goal in achieved]
+		if not plan and verbose >= 1:
+			print "No valid plan found that achieves any current goals. MIDCA will not select an action this cycle."
+		elif len(goalsAchieved) < len(goals) and verbose >= 1:
+			print "Best plan does not achieve all goals."
+			if verbose >= 2:
+				print "Plan:", str(plan)
+				print "Goals achieved:", [str(goal) for goal in goalsAchieved]
 		return plan
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
-		plan = self.get_valid_plan(world, verbose)
+		goals = self.mem.get(self.mem.CURRENT_GOALS)
+		plan = self.get_best_plan(world, goals, verbose)
 		if plan:
 			action = plan.get_next_step()
 			if not action:

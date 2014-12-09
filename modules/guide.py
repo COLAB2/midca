@@ -1,4 +1,6 @@
 from MIDCA import goals
+from _goalgen import tf_3_scen, tf_fire
+from MIDCA.worldsim import blockstate
 
 class UserGoalInput:
 	
@@ -63,5 +65,58 @@ class UserGoalInput:
 					self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 					print "Goal added."
 
+class TFStack:
+
+	def init(self, world, mem):
+		self.tree = tf_3_scen.Tree()
+		self.mem = mem
+	
+	def stackingGoalsExist(self):
+		graph = self.mem.get(self.mem.GOAL_GRAPH)
+		for goal in graph.getAllGoals():
+			if goal['predicate'] == "on":
+				return True
+		return False
+	
+	def run(self, cycle, verbose = 2):
+		if self.stackingGoalsExist():
+			if verbose >= 2:
+				print "MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation"
+			return
+		world = self.mem.get(self.mem.STATES)[-1]
+		blocks = blockstate.get_block_list(world)
+		goal = self.tree.givegoal(blocks)
+		if goal:
+			if verbose >= 2:
+				print "TF-Tree goal generated:", goal
+			self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+
+class TFFire:
+
+	def init(self, world, mem):
+		self.tree = tf_fire.Tree()
+		self.mem = mem
+	
+	def fireGoalExists(self):
+		graph = self.mem.get(self.mem.GOAL_GRAPH)
+		for goal in graph.getAllGoals():
+			if goal['predicate'] == "onfire":
+				return True
+		return False
+	
+	def run(self, cycle, verbose = 2):
+		world = self.mem.get(self.mem.STATES)[-1]
+		blocks = blockstate.get_block_list(world)
+		goal = self.tree.givegoal(blocks)
+		if goal:
+			inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+			if verbose >= 2:
+				print "TF-Tree goal generated:", goal,
+				if inserted:
+					print
+				else:
+					print ". This goal was already in the graph."
+			
+	
 
 	

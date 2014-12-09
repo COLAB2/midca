@@ -41,6 +41,7 @@ class Goal:
 			return s[:-2] + ")"
 		else:
 			return s + ")"
+	
 
 class GoalNode:
 	
@@ -82,17 +83,22 @@ class GoalGraph:
 				return False
 		return True
 	
+	def sameGoal(self, goal1, goal2): 
+		return type(goal1) == type(goal2) and goal1.args == goal2.args and goal1.kwargs == goal2.kwargs
+	
 	def add(self, goal):
 		self.insert(goal)
 	
 	#inserts a goal into the graph using the graph's comparator
 	def insert(self, goal):
+		if goal in self:
+			return False
 		newNode = GoalNode(goal)
 		self.numGoals += 1
 		if not self.roots:
 			self.roots.add(newNode)
 		for node in self._getAllNodes():
-			cmpVal = self.cmp(newNode, node)
+			cmpVal = self.cmp(newNode.goal, node.goal)
 			if cmpVal < 0:
 				newNode.addChild(node)
 			elif cmpVal > 0:
@@ -102,15 +108,17 @@ class GoalGraph:
 			self.roots.add(newNode)
 		if not self.roots:
 			raise ValueError("Adding a goal that creates a cycle in the graph. Now no goals can be achieved.")
+		return True
 	
 	def _removeNode(self, delNode):
 		self.numGoals -= 1
+		allNodes = self._getAllNodes()
 		if delNode in self.roots:
 			self.roots.remove(delNode)
-			for node in self._getAllNodes():
-				if delNode == node.parents:
+			for node in allNodes:
+				if delNode in node.parents:
 					node.parents.remove(delNode)
-					if not node.parents:
+					if not node.parents and node != delNode:
 						self.roots.add(node)
 				if delNode in node.children:
 					node.children.remove(delNode)
@@ -120,7 +128,6 @@ class GoalGraph:
 		if not delNode:
 			return
 		self._removeNode(delNode)
-		self.remove(goal) #in case goal added more than once
 	
 	def addPlan(self, plan):
 		self.plans.add(plan)
@@ -148,6 +155,27 @@ class GoalGraph:
 	
 	def removeOldPlans(self, requireAllGoals = True):
 		self.plans = {plan for plan in self.plans if self.planCurrent(plan, requireAllGoals)}
+	
+	def numMatchingGoals(self, plan, goals):
+		num = 0
+		for goal in goals:
+			found = False
+			for planGoal in plan.goals:
+				if self.sameGoal(goal, planGoal):
+					found = True
+					break
+			if found:
+				num += 1
+		return num
+	
+	#returns all plan whose goalset contains any of given goals. Will return them in order of how many given goals they achieve, ties broken by minimizing extra goals. Note that this ordering may break if a plan has more than a thousand goals.
+	def allMatchingPlans(self, goals):
+		matches = []
+		for plan in self.plans:
+			if self.numMatchingGoals(plan, goals) > 0:
+				matches.append(plan)
+		matches.sort(key = lambda plan: -self.numMatchingGoals(plan, goals) + len(plan.goals) * 0.001)
+		return matches
 	
 	#returns a plan whose goalset contains all given goals. If more than one plan does, returns one of those with minimum extraneous goals. Ties are broken arbitrarily. If there is no candidate, returns None.
 	def getMatchingPlan(self, goals):
@@ -256,7 +284,7 @@ class GoalGraph:
 		
 	def __contains__(self, goal):
 		for _goal in self.getAllGoals():
-			if self.consistentGoal(goal, _goal):
+			if self.sameGoal(goal, _goal):
 				return True
 		return False
 	

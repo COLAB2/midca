@@ -1,14 +1,44 @@
+from datetime import datetime
+
+class Logger:
+	
+	def __init__(self):
+		self.events = []
+	
+	def memAccess(self, key):
+		
+
+
+ACCESS = "Access" #when could read, write, or both
+READ = "Read"
+WRITE = "Write"
+
+EVENT = "Event"
+START = "Start"
+END = "End"
 
 class Event:
 	
-class Event:
+	def __init__(self, eventType = INSTANT, **kwargs):
+		self.eventType = eventType
+		for key, val in kwargs:
+			setattr(self, key, val)
+		self.dir = set(kwargs.keys())
+		self.dir.add('eventType')
 	
-	def __init__(self, cycle, phase, module, data):
-		self.context = (cycle, phase, module)
-		self.data = data
+	def __dir__(self):
+		return self.dir
+
+class MemEvent(Event):
 	
-	def log(self, logger):
-		...
+	def __init__(self, memKey, memAccessType = ACCESS, **kwargs):
+		newKwargs = dict(kwargs)
+		newKwargs['memKey'] = memKey
+		newKwargs['memAccessType'] = memAccessType
+		Event.__init__(self, eventType = INSTANT, **newKwargs)
+	
+	def __str__(self):
+		s = "Memory " + self.
 	
 class Observation(Event):
 	

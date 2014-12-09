@@ -123,12 +123,16 @@ class MIDCA:
 					if verbose >= 2:
 						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init."
 		self.initGoalGraph(overwrite = False)
-		print "Goal Graph initialized. To use goal ordering, call initGoalGraph manually with a custom goal comparator"
 		self.initialized = True
 	
 	def initGoalGraph(self, cmpFunc = None, overwrite = True):
 		if overwrite or not self.mem.get(self.mem.GOAL_GRAPH):
 			self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
+			print "Goal Graph initialized.",
+			if cmpFunc:
+				print
+			else:
+				print "To use goal ordering, call initGoalGraph manually with a custom goal comparator"
 	
 	def next_phase(self, verbose = 2):
 		self.phasei = (self.phaseNum - 1) % len(self.phases)

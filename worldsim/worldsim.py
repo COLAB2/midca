@@ -414,16 +414,27 @@ class World:
 		testWorld = self.copy()
 		for action in plan.get_remaining_steps():
 			if not testWorld.midca_action_applicable(action):
-				print action
 				return False
 			testWorld.apply_midca_action(action)
-		for goal in plan.goals:
+		return True
+	
+	def goals_achieved(self, plan, goalSet):
+		testWorld = self.copy()
+		achievedGoals = set()
+		for action in plan.get_remaining_steps():
+			if not testWorld.midca_action_applicable(action):
+				break
+			testWorld.apply_midca_action(action)
+		for goal in goalSet:
 			achieved = testWorld.atom_true(self.midcaGoalAsAtom(goal))
 			if 'negate' in goal and goal['negate']:
 				achieved = not achieved
-			if not achieved:
-				return False
-		return True
+			if achieved:
+				achievedGoals.add(goal)
+		return achievedGoals
+	
+	def plan_goals_achieved(self, plan):
+		return self.goals_achieved(plan, plan.goals)
 
 	def __str__(self):
 		s = "[\n"

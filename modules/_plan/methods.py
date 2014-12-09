@@ -23,7 +23,7 @@ def is_done(b1,state,goal):
 def status(b1,state,goal):
     if is_done(b1,state,goal):
         return 'done'
-    elif not state.clear[b1]:
+    elif not (state.clear[b1] or state.pos[b1] == "in-arm"):
         return 'inaccessible'
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
         return 'move-to-table'
@@ -79,7 +79,10 @@ def move1(state,b1,dest):
     """
     Generate subtasks to get b1 and put it at dest.
     """
-    return [('get', b1), ('put', b1,dest)]
+    if state.pos[b1] == "in-arm":
+    	return [('put', b1,dest)]
+    else:
+    	return [('get', b1), ('put', b1,dest)]
 
 ### methods for "get"
 
@@ -132,13 +135,13 @@ def quick_apprehend_m(state, perp):
 	if state.free[perp]:
 		return [("apprehend", perp)]
 	else:
-		return False
+		return []
 
 def long_apprehend_m(state, perp):
 	if state.free[perp]:
 		return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
 	else:
-		return False
+		return []
 
 def declare_methods(longApprehend = True):
 	if longApprehend:

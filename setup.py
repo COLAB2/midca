@@ -7,6 +7,6 @@ setup(name='MIDCA',
       description='Metacognitive Integrated Dual-Cycle Architecture',
       author='Matt Paisner',
       author_email='matthew.paisner@gmail.com',
-      packages=['MIDCA', 'MIDCA.worldsim', 'MIDCA.examples', 'MIDCA.modules', 'MIDCA.modules._adist', 'MIDCA.modules._plan'],
+      packages=['MIDCA', 'MIDCA.worldsim', 'MIDCA.examples', 'MIDCA.modules', 'MIDCA.modules._adist', 'MIDCA.modules._plan', 'MIDCA.modules._goalgen'],
       package_dir={"": ".."}
      )

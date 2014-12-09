@@ -42,6 +42,17 @@ class PyHopPlanner:
 					print "invalid."
 			elif verbose >= 2:
 				print "valid."
+			if valid:
+				if verbose >= 2:
+					print "checking to see if all goals are achieved...",
+				achieved = world.plan_goals_achieved(midcaPlan)
+				if verbose >= 2:
+					if len(achieved) == len(midcaPlan.goals):
+						print "yes"
+					else:
+						print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+				if len(achieved) != len(midcaPlan.goals):
+					midcaPlan = None #triggers replanning.
 		
 		#ensure goals is a collection to simplify things later.
 		if not isinstance(goals, collections.Iterable):
@@ -63,7 +74,7 @@ class PyHopPlanner:
 				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
 			except Exception:
 				pyhopPlan = None
-			if not pyhopPlan:
+			if not pyhopPlan and pyhopPlan != []:
 				if verbose >= 1:
 					print "Planning failed for ",
 					for goal in goals:
