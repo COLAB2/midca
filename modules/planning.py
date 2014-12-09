@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators
+from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish
 from MIDCA import plans
 import collections
 
@@ -9,9 +9,14 @@ class PyHopPlanner:
 	Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
 	'''
 	
-	def __init__(self):
+	def __init__(self, extinguishers = False):
 		#declares pyhop methods. This is where the planner should be given the domain information it needs.
-		methods.declare_methods()
+		if extinguishers:
+			methods_extinguish.declare_methods()
+			operators_extinguish.declare_ops()
+		else:
+			methods.declare_methods()
+			operators.declare_ops()
 	
 	def init(self, world, mem):
 		self.mem = mem
@@ -99,6 +104,8 @@ class PyHopPlanner:
 		s.holding = False
 		s.fire = {}
 		s.free = {}
+		s.fire_ext_avail = set()
+		s.holdingfireext = None
 		blocks = []
 		for objname in world.objects:
 			if world.objects[objname].type.name == "BLOCK" and objname != "table":
@@ -110,6 +117,10 @@ class PyHopPlanner:
 				s.clear[atom.args[0].name] = True
 			elif atom.predicate.name == "holding":
 				s.holding = atom.args[0].name
+			elif atom.predicate.name == "fire-extinguisher":
+				s.fire_ext_avail.add(atom.args[0].name)
+			elif atom.predicate.name == "holdingextinguisher":
+				s.holdingfireext = atom.args[0].name
 			elif atom.predicate.name == "arm-empty":
 				s.holding = False
 			elif atom.predicate.name == "on":

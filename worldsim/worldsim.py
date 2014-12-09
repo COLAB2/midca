@@ -311,12 +311,17 @@ class World:
 	
 	def remove_object(self, object):
 		if object in self.objects:
+			actualObject = self.objects[object]
 			del(self.objects[object])
+			self.atoms = [atom for atom in self.atoms if actualObject not in atom.args]
+			return True
 		else:
 			for key in self.objects:
 				if self.objects[key] == object:
 					del(self.objects[key])
-					break
+					self.atoms = [atom for atom in self.atoms if object not in atom.args]
+					return True
+		return False
 	
 	def get_possible_objects(predicate, arg):
 		return self.objects.values() #not, obviously, a good implementation

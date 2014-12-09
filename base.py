@@ -1,6 +1,7 @@
 import copy, time, datetime
 from mem import Memory
 import goals
+from worldsim import stateread
 
 MAX_MODULES_PER_PHASE = 100
 	
@@ -220,13 +221,20 @@ class PhaseManager:
 	def set_display_function(self, function):
 		self.display = function
 
+	def clearWorldState(self):
+		self.midca.world.objects = {}
+		self.midca.world.atoms = []
+	
+	def applyStateChange(self, stateStr):
+		stateread.apply_state_str(self.midca.world, stateStr)
+
 	#function which runs MIDCA with a text UI
 	def run(self):
 		if not self.midca.initialized:
 			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
 		print "\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
 		while 1:
-			val = raw_input()
+			val = raw_input("Next MIDCA command:  ")
 			if val == "q":
 				break
 			elif val == "skip":
@@ -234,7 +242,10 @@ class PhaseManager:
 				print "cycle finished"
 			elif val == "show":
 				if self.display:
-					self.display(self.midca.world)
+					try:
+						self.display(self.midca.world)
+					except Exception as e:
+						print "Error displaying world"
 				else:
 					print "No display function set. See PhaseManager.set_display_function()"				
 			elif val.startswith("skip"):
@@ -245,8 +256,39 @@ class PhaseManager:
 					print str(num) + " cycles finished."
 				except ValueError:
 					print "Usage: 'skip n', where n is an integer"
+			elif val == "change":
+				print "Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line."
+				while True:
+					input = raw_input("Next change:  ")
+					if not input:
+						break
+					elif input == "clear":
+						self.clearWorldState()
+						print "World state cleared"
+					elif input == "file":
+						print "Enter the name of a valid state file, or leave blank to cancel."
+						filename = raw_input()
+						if filename == "":
+							print "File load cancelled"
+							continue
+						s = ""
+						try:
+							s = open(filename).read()
+						except IOError:
+							print "Cannot open file"
+						try:
+							self.applyStateChange(s)
+							print "State loaded"
+						except exception as e:
+							print "Error loading state. State may be partially loaded: ", str(e)
+					else:
+						try:
+							self.applyStateChange(input)
+							print "Change applied"
+						except Exception as e:
+							print e
 			elif val == "?" or val == "help":
-				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n ? or help -> show this list of commands \n"
+				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n ? or help -> show this list of commands \n"
 			elif val:
 				print "command not understood"
 			else:

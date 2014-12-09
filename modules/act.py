@@ -28,7 +28,7 @@ class SimpleAct:
 					print "Plan:", str(nextPlan)
 					print "Goals achieved:", [str(goal) for goal in achieved]
 		if not plan and verbose >= 1:
-			print "No valid plan found that achieves any current goals. MIDCA will not select an action this cycle."
+			print "No valid plan found that achieves any current goals."
 		elif len(goalsAchieved) < len(goals) and verbose >= 1:
 			print "Best plan does not achieve all goals."
 			if verbose >= 2:
@@ -55,6 +55,6 @@ class SimpleAct:
 				plan.advance()
 		else:
 			if verbose >= 1:
-				print "No valid plan found that achieves any current goals. MIDCA will not select an action this cycle."
+				print "MIDCA will not select an action this cycle."
 			self.mem.add(self.mem.ACTIONS, [])
 		
