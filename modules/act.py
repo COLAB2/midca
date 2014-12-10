@@ -27,7 +27,7 @@ class SimpleAct:
 				if verbose >= 2:
 					print "Plan:", str(nextPlan)
 					print "Goals achieved:", [str(goal) for goal in achieved]
-		if not plan and verbose >= 1:
+		if plan == None and verbose >= 1:
 			print "No valid plan found that achieves any current goals."
 		elif len(goalsAchieved) < len(goals) and verbose >= 1:
 			print "Best plan does not achieve all goals."
@@ -40,7 +40,7 @@ class SimpleAct:
 		world = self.mem.get(self.mem.STATES)[-1]
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
 		plan = self.get_best_plan(world, goals, verbose)
-		if plan:
+		if plan != None:
 			action = plan.get_next_step()
 			if not action:
 				if verbose >= 1:

@@ -94,7 +94,7 @@ class PyHopPlanner:
 			if verbose >= 2:
 				print "Plan: ", midcaPlan
 			#save new plan
-			if midcaPlan:
+			if midcaPlan != None:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
 	def pyhop_state_from_world(self, world, name = "state"):
@@ -160,10 +160,12 @@ class PyHopPlanner:
 				args.pop(0)
 			if predicate == "on":
 				blkgoals.pos[args[0]] = args[1]
-			elif predicate == "onfire" and goal['negate'] == True:
+			elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:
 				alltasks.append(("put_out", args[0]))
-			elif goal.predicate == "free" and goal['negate'] == True:
+			elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
 				alltasks.append(("catch_arsonist", args[0]))
+			else:
+				raise Exception("No task corresponds to predicate " + predicate)
 		if blkgoals.pos:
 			alltasks.append(("move_blocks", blkgoals))
 		return alltasks	
