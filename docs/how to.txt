@@ -64,6 +64,12 @@ myMidca.init()
 
 myMidca.run()
 
+II. Understanding how MIDCA works from the code
 
+1) Start with the base.py file. The method PhaseManager.run() defines the behavior of MIDCA in interactive mode, and following the association between user inputs and associated function calls should give a good idea of what MIDCA is doing.
+
+2) Each module is defined independently and they interact only through memory. In the mem.py file, the Memory class has a list of constants that define keys for the default MIDCA memory structures (e.g. the goal graph, observed world states). The built-in MIDCA modules generally interact only through reading/writing to these keys.
+
+3) To understand MIDCA behavior at a more fine-grained level, it is necessary to look through module by module to see what each one is doing. Check the MIDCA object to see what modules it runs in each phase (see docs above - printing a module should show the file and class name of its implementation), then go to the file in the modules folder to see what it does. Note especially calls to the memory structure (self.mem), since these are the I/O.
 
 

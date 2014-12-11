@@ -23,6 +23,10 @@ class UserGoalInput:
 				negate = False
 			predicateName = txt[:txt.index("(")]
 			args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+			#use on-table predicate
+			if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
+				predicateName = 'on-table'
+				args = args[:1]
 			if negate:
 				goal = goals.Goal(*args, predicate = predicateName, negate = True)
 			else:
@@ -67,6 +71,10 @@ class UserGoalInput:
 
 class TFStack:
 
+	'''
+	MIDCA module that generates goals to stack blocks using Michael Maynord's TF-Trees. These trees are trained to cycle through 3 specific states; behavior is unknown for other states. See implementation in modules/_goalgen/tf_3_scen.py for details.
+	'''
+
 	def init(self, world, mem):
 		self.tree = tf_3_scen.Tree()
 		self.mem = mem
@@ -93,6 +101,10 @@ class TFStack:
 
 class TFFire:
 
+	'''
+	MIDCA module that generates goals to put out fires using Michael Maynord's TF-Trees. The behavior is as follows: if any fires exist, a single goal will be generated to put out a fire on some block that is currently burning. Otherwise no goal will be generated.
+	'''
+
 	def init(self, world, mem):
 		self.tree = tf_fire.Tree()
 		self.mem = mem
@@ -116,7 +128,40 @@ class TFFire:
 					print
 				else:
 					print ". This goal was already in the graph."
-			
+
+class ReactiveApprehend:
 	
+	'''
+	MIDCA module that generates a goal to apprehend an arsonist if there is one who is free and there is a fire in the current world state. This is designed to simulate the behavior of the Meta-AQUA system.
+	'''
+	
+	def init(self, world, mem):
+		self.mem = mem
+	
+	def free_arsonist(self):
+		world = self.mem.get(self.mem.STATES)[-1]
+		for atom in world.atoms:
+			if atom.predicate.name == "free" and atom.args[0].type.name == "ARSONIST":
+				return atom.args[0].name
+		return False
+	
+	def is_fire(self):
+		world = self.mem.get(self.mem.STATES)[-1]
+		for atom in world.atoms:
+			if atom.predicate.name == "onfire":
+				return True
+		return False
+	
+	def run(self, cycle, verbose = 2):
+		arsonist = self.free_arsonist()
+		if arsonist and self.is_fire():
+			goal = goals.Goal(arsonist, predicate = "free", negate = True)
+			inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+			if verbose >= 2:
+				print "Meta-AQUA simulation goal generated:", goal,
+				if inserted:
+					print
+				else:
+					print ". This goal was already in the graph."
 
 	

@@ -122,4 +122,29 @@ class ArsonSimulator:
 				if verbose >= 1:
 					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
 
+SCORE = "Score"
+
+class FireReset:
 	
+	'''
+	MIDCA module that puts out all fires whenever MIDCA's score is updated to indicate that a tower has been completed. Note that this module will do nothing unless the the SCORE memory value is being updated by evaluate.Scorer.
+	'''
+	
+	def init(self, world, mem):
+		self.world = world
+		self.mem = mem
+		self.numTowers = 0
+	
+	def put_out_fires(self):
+		self.world.atoms = [atom for atom in self.world.atoms if atom.predicate.name != "onfire"]
+	
+	def run(self, cycle, verbose = 2):
+		score = self.mem.get(SCORE)
+		if not score:
+			return
+		if score.towers == self.numTowers:
+			return
+		self.numTowers = score.towers
+		if verbose >= 2:
+			print "Since a tower was just completed, putting out all fires."
+		self.put_out_fires()

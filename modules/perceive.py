@@ -1,5 +1,5 @@
 
-class PerfectOberver:
+class PerfectObserver:
 
 	'''
 	MIDCA Module which copies a complete world state. It is designed to interact with the built-in MIDCA world simulator. To extend this to work with other representations, modify the observe method so that it returns an object representing the current known world state.

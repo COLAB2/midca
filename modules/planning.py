@@ -160,6 +160,8 @@ class PyHopPlanner:
 				args.pop(0)
 			if predicate == "on":
 				blkgoals.pos[args[0]] = args[1]
+			elif predicate == 'on-table':
+				blkgoals.pos[args[0]] = 'table'
 			elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:
 				alltasks.append(("put_out", args[0]))
 			elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
