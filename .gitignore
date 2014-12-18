@@ -33,3 +33,7 @@ nosetests.xml
 
 #ignore temporary backup files
 *~
+
+#ignore MIDCA log files
+log/**
+_log/**
