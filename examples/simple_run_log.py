@@ -10,6 +10,9 @@ MIDCA_ROOT = thisDir + "/../"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
 
+myMidca.logger.logOutput()
+myMidca.mem.enableLogging(myMidca.logger)
+
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.init()

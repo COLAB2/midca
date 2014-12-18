@@ -1,5 +1,5 @@
 
-
+from MIDCA.logging import Event
 
 class Memory:
 	
@@ -13,6 +13,7 @@ class Memory:
 		self.knowledge = {}
 		self.clear()
 		self.update(args)
+		self.logger = None
 
 	#Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
 	def _update(self, structname, val):
@@ -27,6 +28,7 @@ class Memory:
 			self.knowledge[structname].update(val) #generic update
 		else:
 			self.knowledge[structname] = val #assignment
+		self.logAccess(structname)
 	
 	def add(self, structname, val):
 		if not structname in self.knowledge:
@@ -35,9 +37,11 @@ class Memory:
 			self.knowledge[structname].append(val)
 		else:
 			self.knowledge[structname] = [self.knowledge[structname], val]
+		self.logAccess(structname)
 	
 	def set(self, structname, val):
 		self.knowledge[structname] = val
+		self.logAccess(structname)
 	
 	def update(self, args):
 		for structname, val in args.items():
@@ -52,8 +56,10 @@ class Memory:
 						item.update(val)
 			elif hasattr(struct, "update"):
 				struct.update(val)
+		self.logAccess(structname)
 	
 	def remove(self, structname):
+		self.logAccess(structname)
 		if structname in self.knowledge:
 			del self.knowledge[structname]
 	
@@ -61,6 +67,26 @@ class Memory:
 		self.knowledge.clear()
 	
 	def get(self, structname):
+		self.logAccess(structname)
 		if structname in self.knowledge:
 			return self.knowledge[structname]
 		return None
+	
+	def enableLogging(self, logger):
+		self.logger = logger
+	
+	def logAccess(self, key):
+		if self.logger:
+			self.logger.logEvent(MemAccessEvent(key))
+
+class MemAccessEvent(Event):
+
+	def __init__(self, keyAccessed):
+		self.keys = ['log', 'Memory Access']
+		self.loggable = True
+		self.memKey = keyAccessed
+	
+	def __str__(self):
+		return "Memory access at key " + str(self.memKey)
+	
+	

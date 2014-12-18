@@ -1,7 +1,8 @@
-import copy, time, datetime
-from mem import Memory
-import goals
-from worldsim import stateread
+from __future__ import print_function
+import copy, time, datetime, sys
+from MIDCA.mem import Memory
+from MIDCA import goals, logging
+from MIDCA.worldsim import stateread
 
 MAX_MODULES_PER_PHASE = 100
 	
@@ -29,6 +30,7 @@ class MIDCA:
 		self.verbose = verbose
 		self.initialized = False
 		self.phaseNum = 1
+		self.logger = logging.Logger()
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -115,33 +117,41 @@ class MIDCA:
 				i += 1
 				try:
 					if verbose >= 2:
-						print "Initializing " + phase.name + " module " + str(i) + "...",
+						print("Initializing " + phase.name + " module " + str(i) + "...",)
 					module.init(self.world, self.mem)
-					print "done."
+					print("done.")
 				
 				except Exception as e:
-					print e
+					print(e)
 					if verbose >= 2:
-						print "\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init."
+						print("\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init.")
 		self.initGoalGraph(overwrite = False)
 		self.initialized = True
 	
 	def initGoalGraph(self, cmpFunc = None, overwrite = True):
 		if overwrite or not self.mem.get(self.mem.GOAL_GRAPH):
 			self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
-			print "Goal Graph initialized.",
+			print("Goal Graph initialized.",)
 			if cmpFunc:
-				print
+				print()
 			else:
-				print "To use goal ordering, call initGoalGraph manually with a custom goal comparator"
+				print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 	
 	def next_phase(self, verbose = 2):
 		self.phasei = (self.phaseNum - 1) % len(self.phases)
+		if self.phasei == 0:
+			self.logger.logEvent(logging.CycleStartEvent((self.phaseNum - 1) / len(self.phases)))
 		if verbose >= 2:
-			print "\n****** Starting", self.phases[self.phasei].name, "Phase ******\n"
+			print("****** Starting", self.phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+			self.logger.logEvent(logging.PhaseStartEvent(self.phases[self.phasei].name))
 		for module in self.modules[self.phases[self.phasei]]:
+			self.logger.logEvent(logging.ModuleStartEvent(module))
 			retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+			self.logger.logEvent(logging.ModuleEndEvent(module))
+		self.logger.logEvent(logging.PhaseEndEvent(self.phases[self.phasei].name))
 		self.phaseNum += 1
+		if (self.phaseNum - 1) % len(self.phases) == 0:
+			self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
 		return retVal
 	
 class PhaseManager:
@@ -153,6 +163,7 @@ class PhaseManager:
 		self.history = []
 		self.display = display
 		self.twoSevenWarning = False
+		self.logger = self.midca.logger
 	
 	'''
 	convenience functions which wrap MIDCA functions
@@ -209,7 +220,7 @@ class PhaseManager:
 					time.sleep(pause - (t2 - t1).total_seconds())
 			except AttributeError:
 				if not self.twoSevenWarning:
-					print '\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m'
+					print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
 					self.twoSevenWarning = True
 				time.sleep(pause)
 	
@@ -232,74 +243,76 @@ class PhaseManager:
 	def run(self):
 		if not self.midca.initialized:
 			raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
-		print "\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase."
+		print("\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.")
 		while 1:
-			val = raw_input("Next MIDCA command:  ")
+			print("Next MIDCA command:  ", file = sys.stderr, end = "")
+			val = raw_input()
+			print
 			if val == "q":
 				break
 			elif val == "skip":
 				self.one_cycle(verbose = 0, pause = 0)
-				print "cycle finished"
+				print("cycle finished")
 			elif val == "show":
 				if self.display:
 					try:
 						self.display(self.midca.world)
 					except Exception as e:
-						print "Error displaying world"
+						print("Error displaying world")
 				else:
-					print "No display function set. See PhaseManager.set_display_function()"				
+					print("No display function set. See PhaseManager.set_display_function()"	)			
 			elif val.startswith("skip"):
 				try:
 					num = int(val[4:].strip())
 					for i in range(num):
 						self.one_cycle(verbose = 0, pause = 0)
-					print str(num) + " cycles finished."
+					print(str(num) + " cycles finished.")
 				except ValueError:
-					print "Usage: 'skip n', where n is an integer"
+					print("Usage: 'skip n', where n is an integer")
+			elif val == "log":
+				print("Input the text to add to MIDCA's log file. Leave empty and press enter to cancel\n", file = sys.stderr)
+				txt = raw_input()
+				if txt:
+					self.logger.log(txt)
 			elif val == "change":
-				print "Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line."
+				print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
 				while True:
 					input = raw_input("Next change:  ")
 					if not input:
 						break
 					elif input == "clear":
 						self.clearWorldState()
-						print "World state cleared"
+						print("World state cleared")
 					elif input == "file":
-						print "Enter the name of a valid state file, or leave blank to cancel."
+						print("Enter the name of a valid state file, or leave blank to cancel.")
 						filename = raw_input()
 						if filename == "":
-							print "File load cancelled"
+							print("File load cancelled")
 							continue
 						s = ""
 						try:
 							s = open(filename).read()
 						except IOError:
-							print "Cannot open file"
+							print("Cannot open file")
 						try:
 							self.applyStateChange(s)
-							print "State loaded"
+							print("State loaded")
 						except exception as e:
-							print "Error loading state. State may be partially loaded: ", str(e)
+							print("Error loading state. State may be partially loaded: ", str(e))
 					else:
 						try:
 							self.applyStateChange(input)
-							print "Change applied"
+							print("Change applied")
 						except Exception as e:
-							print e
+							print(e)
 			elif val == "?" or val == "help":
-				print "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n ? or help -> show this list of commands \n"
+				print("interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n log -> log some text \n ? or help -> show this list of commands \n")
 			elif val:
-				print "command not understood"
+				print("command not understood")
 			else:
 				val = self.next_phase()
 				if val == "continue":
 					self.next_phase()
 				elif val == "q":
 					break
-		print "MIDCA is quitting."
-
-if __name__ == "__main__":
-	l = [1, 2]
-	l.insert(2, 3)
-	print l
+		print("MIDCA is quitting.")

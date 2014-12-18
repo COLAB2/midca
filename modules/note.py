@@ -173,7 +173,7 @@ class AnomalyDetector:
 				aDist.update(states[i])	
 		self.mem.add(A_DIST_KEY, aDist)
 	
-	def __str__(self):
+	def long_str(self):
 		s = ""
 		n = 1
 		for aDist in self.mem.get(self.memKeys.MEM_ADIST):
@@ -221,6 +221,9 @@ class ADistanceAnomalyNoter:
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):
 		s = str(self.detector)
-		return s[s.rindex("\n") + 1:]
+		try:
+			return s[s.rindex("\n") + 1:]
+		except ValueError:
+			return s
 	
 			
