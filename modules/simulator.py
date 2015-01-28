@@ -2,7 +2,7 @@ import sys, random
 from MIDCA import worldsim, goals
 
 # I am not sure where this should go
-def loadTickFile(fil_name):
+def loadTickFile(file_name):
         # a tick file is stored as a dictionary where keys are
         # integers representing current 'round' of the
         # simulation and the values are an array of functions
@@ -104,11 +104,11 @@ class WorldChanger:
 					
 class ArsonSimulator:
 	
-	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile=False):
+	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile = False):
 		self.chance = arsonChance
 		self.start = arsonStart
                 if tickFile:
-                        self.tick_events = load_tick_file(tick_file)
+                        self.tick_events = load_tick_file(tickFile)
 
 	def init(self, world, mem):
 		self.mem = mem

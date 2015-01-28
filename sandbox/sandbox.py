@@ -41,7 +41,7 @@ extinguisher_state = "worldsim/states/extinguisher_state.sim"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + extinguisher_domain, stateFile = MIDCA_ROOT + extinguisher_state, extinguish=True)
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2,tickFile=sampleTickFile), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2, tickFile = sampleTickFile), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
