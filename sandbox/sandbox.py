@@ -4,7 +4,6 @@
 # This file runs MIDCA in a sandbox like fashion, alllowing the user
 # to specific resources and goals, and record data.
 
-
 # 1. First I'm going to get a simple sandbox demo up and running with
 # a few fire extinguishers and fires, where I also collect the data,
 # and produce a csv file.
@@ -23,6 +22,8 @@ from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide
 import inspect, os
 
+sampleTickFile = 'sample_tick_events.csv'
+
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
@@ -40,7 +41,7 @@ extinguisher_state = "worldsim/states/extinguisher_state.sim"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + extinguisher_domain, stateFile = MIDCA_ROOT + extinguisher_state, extinguish=True)
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2,tickFile=sampleTickFile), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 

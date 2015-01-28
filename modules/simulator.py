@@ -1,6 +1,26 @@
 import sys, random
 from MIDCA import worldsim, goals
 
+# I am not sure where this should go
+def loadTickFile(fil_name):
+        # a tick file is stored as a dictionary where keys are
+        # integers representing current 'round' of the
+        # simulation and the values are an array of functions
+        # to be executed, in the order they are given from
+        # left to right. These functions must be defined in
+        # the arsonist class that will use the tick file.
+        tick_events = {}
+        with open(file_name) as f:
+                lines = f.readlines()
+                for line in lines:
+                        tokens = line.split(',')
+                        curr_tick = tokens[0]
+                        self.tick_events[curr_tick] = [*tokens[1:]]
+                        if verbose >= 2: print "processed line: " + line
+                        print "self.tick_events: " + str(self.tick_events)
+
+        # TODO - add code here to see if all functions from tick_events file exist in the agent, and if not, produce a useful error message
+
 class MidcaActionSimulator:
 	
 	def init(self, world, mem):
@@ -84,14 +104,17 @@ class WorldChanger:
 					
 class ArsonSimulator:
 	
-	def __init__(self, arsonChance = 0.5, arsonStart = 10):
+	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile=False):
 		self.chance = arsonChance
 		self.start = arsonStart
-	
+                if tickFile:
+                        self.tick_events = load_tick_file(tick_file)
+
 	def init(self, world, mem):
 		self.mem = mem
 		self.world = world
 	
+                
 	def free_arsonist(self):
 		for atom in self.world.atoms:
 			if atom.predicate.name == "free":
