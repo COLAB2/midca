@@ -1,8 +1,23 @@
 import sys, random
 from MIDCA import worldsim, goals
 
-# I am not sure where this should go
-def loadTickFile(file_name):
+## Tick File Code (not sure if I should make a seperate module)
+from optparse import OptionParser
+import inspect
+import xml.etree.ElementTree as ET
+
+def load_tick_file_csv(calling_instance, file_name, verbose = 2):
+        """Reads in a tick file from a csv and assumes all functions take no
+           arguments (if you want to use arguments to functions, use
+           the alternative function: load_tick_file_xml)
+
+        """
+        valid_methods = []
+        for data in inspect.getmembers(calling_instance, predicate=inspect.ismethod):
+                #print "data is " + str(data)
+                if not data[0].startswith('__'): # ignore class only methods
+                        valid_methods.append(data[0])
+        
         # a tick file is stored as a dictionary where keys are
         # integers representing current 'round' of the
         # simulation and the values are an array of functions
@@ -13,13 +28,43 @@ def loadTickFile(file_name):
         with open(file_name) as f:
                 lines = f.readlines()
                 for line in lines:
-                        tokens = line.split(',')
-                        curr_tick = tokens[0]
-                        self.tick_events[curr_tick] = [*tokens[1:]]
+                        tokens = line.strip().split(',')
+                        curr_tick = int(tokens[0])
+                        tick_events[curr_tick] = tokens[1:]
                         if verbose >= 2: print "processed line: " + line
-                        print "self.tick_events: " + str(self.tick_events)
+                        print "self.tick_events: " + str(tick_events)
 
-        # TODO - add code here to see if all functions from tick_events file exist in the agent, and if not, produce a useful error message
+        return tick_events
+
+def load_tick_file_xml(calling_instance, file_name, verbose = 2):
+        valid_methods = []
+        for data in inspect.getmembers(calling_instance, predicate=inspect.ismethod):
+                #print "data is " + str(data)
+                if not data[0].startswith('__'): # ignore class only methods
+                        valid_methods.append(data[0])
+        
+        # a tick file is stored as a dictionary where keys are
+        # integers representing current 'round' of the
+        # simulation and the values are an array of functions
+        # to be executed, in the order they are given from
+        # left to right. These functions must be defined in
+        # the arsonist class that will use the tick file.
+        tick_events = {}
+        
+        
+        
+        with open(file_name) as f:
+                lines = f.readlines()
+                for line in lines:
+                        tokens = line.strip().split(',')
+                        curr_tick = int(tokens[0])
+                        tick_events[curr_tick] = tokens[1:]
+                        if verbose >= 2: print "processed line: " + line
+                        print "self.tick_events: " + str(tick_events)
+
+        return tick_events
+
+## End Tick File 
 
 class MidcaActionSimulator:
 	
@@ -108,7 +153,7 @@ class ArsonSimulator:
 		self.chance = arsonChance
 		self.start = arsonStart
                 if tickFile:
-                        self.tick_events = load_tick_file(tickFile)
+                        self.tick_events = load_tick_file(self,tickFile)
 
 	def init(self, world, mem):
 		self.mem = mem
@@ -130,6 +175,7 @@ class ArsonSimulator:
 		return res
 	
 	def run(self, cycle, verbose = 2):
+                print("Cycle is "+str(cycle))
 		arsonist = self.free_arsonist()
 		if arsonist and cycle > self.start and random.random() < self.chance:
 			try:
@@ -144,6 +190,24 @@ class ArsonSimulator:
 			except IndexError:
 				if verbose >= 1:
 					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
+
+        def start_random_fire():
+		if arsonist and cycle > self.start and random.random() < self.chance:
+			try:
+				block = random.choice(self.get_unlit_blocks())
+				try:
+					self.world.apply_named_action("lightonfire", [arsonist, block])
+                                        if verbose >= 2:
+						print "Simulating action: lightonfire(" + str(arsonist) + ", " + str(block) + ")"
+				except Exception:
+					if verbose >= 1:
+						print "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
+			except IndexError:
+				if verbose >= 1:
+					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)                
+
+        def add_fire_extinguisher():
+        def remove_fire_extinguisher():
 
 SCORE = "Score"
 
