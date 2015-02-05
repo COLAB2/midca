@@ -21,8 +21,9 @@ import MIDCA
 from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide
 import inspect, os
+import xml.etree.ElementTree as ET
 
-sampleTickFile = 'sample_tick_events.csv'
+sampleTickFile = 'sandbox/sample_tick_events.csv'
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 

@@ -6,6 +6,16 @@ from optparse import OptionParser
 import inspect
 import xml.etree.ElementTree as ET
 
+
+## data structure tick.events is a dictionary
+## key is an integer of the cycle
+## value is the following:
+##   a list of lists, where the inner lists are composed of functions followed by their args
+##
+## For example: {5:[[start_random_fire,D_],[start_random_fire[B_,C_]]}
+## This means that at tick 5, first a start_random_fire(D_) will be called and then
+## start_random_fire(B_,C_) will be called
+
 def load_tick_file_csv(calling_instance, file_name, verbose = 2):
         """Reads in a tick file from a csv and assumes all functions take no
            arguments (if you want to use arguments to functions, use
@@ -30,7 +40,11 @@ def load_tick_file_csv(calling_instance, file_name, verbose = 2):
                 for line in lines:
                         tokens = line.strip().split(',')
                         curr_tick = int(tokens[0])
-                        tick_events[curr_tick] = tokens[1:]
+                        curr_funcs = []
+                        print "tokens[1:] is ", str(tokens[1:])
+                        for f in tokens[1:]:
+                                curr_funcs.append([f])
+                        tick_events[curr_tick] = curr_funcs
                         if verbose >= 2: print "processed line: " + line
                         print "self.tick_events: " + str(tick_events)
 
@@ -50,8 +64,6 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
         # left to right. These functions must be defined in
         # the arsonist class that will use the tick file.
         tick_events = {}
-        
-        
         
         with open(file_name) as f:
                 lines = f.readlines()
@@ -148,12 +160,16 @@ class WorldChanger:
 					 "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
 					
 class ArsonSimulator:
-	
 	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile = False):
 		self.chance = arsonChance
 		self.start = arsonStart
                 if tickFile:
-                        self.tick_events = load_tick_file(self,tickFile)
+                        if tickFile.endswith(".csv"):
+                                self.tick_events = load_tick_file_csv(self,tickFile)
+                        elif tickFile.endswith(".xml"):
+                                self.tick_events = load_tick_file_xml(self,tickFile)
+                        else:
+                                print "Tick event file name:", tickFile, " does not appear to be a csv or xml file, please use an appropriate file ending."
 
 	def init(self, world, mem):
 		self.mem = mem
@@ -174,8 +190,48 @@ class ArsonSimulator:
 				res.append(objectname)
 		return res
 	
+
+        # here random refers to a random block, not a random fire - a
+        # fire is gaurunteed to occur on a block unless all blocks are
+        # on fire
+        def start_random_fire(self,verbose=2):
+                change_str = "onfire()"
+                #                try:
+                block = random.choice(self.get_unlit_blocks())
+                change_str = change_str[0:len(change_str)-1] # remove last paren
+                change_str += block + ")"
+                worldsim.stateread.apply_state_str(self.world, change_str)
+                if verbose >= 2:
+                        print "Applying Change: ", change_str
+ #               except Exception:
+ #                       if verbose >= 1:
+ #                               print "Failed Applying Change: ", change_str
+
+        #def add_fire_extinguisher():
+                
+        #def remove_fire_extinguisher():
+
+
 	def run(self, cycle, verbose = 2):
                 print("Cycle is "+str(cycle))
+
+                # execute events from the tick file
+                if cycle in self.tick_events.keys():
+                        for func_list in self.tick_events[cycle]:
+                                print "func_list is ", func_list
+                                                                        
+                                func_name = func_list[0] + "("
+                                func_str = "self."
+                                func_str += func_name + "("
+                                for arg in func_list[1:]:
+                                        func_str += arg + ","
+                                func_str = func_str[0:len(func_str)-1] # remove the trailing comma
+                                func_str += ")"
+
+                                print "About to eval: ", func_str
+                                eval(func_str)
+                
+                
 		arsonist = self.free_arsonist()
 		if arsonist and cycle > self.start and random.random() < self.chance:
 			try:
@@ -191,23 +247,7 @@ class ArsonSimulator:
 				if verbose >= 1:
 					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
 
-        def start_random_fire():
-		if arsonist and cycle > self.start and random.random() < self.chance:
-			try:
-				block = random.choice(self.get_unlit_blocks())
-				try:
-					self.world.apply_named_action("lightonfire", [arsonist, block])
-                                        if verbose >= 2:
-						print "Simulating action: lightonfire(" + str(arsonist) + ", " + str(block) + ")"
-				except Exception:
-					if verbose >= 1:
-						print "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
-			except IndexError:
-				if verbose >= 1:
-					print "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)                
 
-        def add_fire_extinguisher():
-        def remove_fire_extinguisher():
 
 SCORE = "Score"
 
