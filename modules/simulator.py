@@ -240,8 +240,22 @@ class ArsonSimulator:
                         if verbose >= 1:
                                 print "Failed Applying Change: ", change_str
 
-        #def add_fire_extinguisher():
+        # TODO
+        def start_fire(self,block,verbose=2):
+                assert isinstance(block,str)
+                change_str = "onfire("+str(block)+")" 
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str
                 
+        # TODO
+        #def add_fire_extinguisher():
+              
+        # TODO
         #def remove_fire_extinguisher():
 
 
