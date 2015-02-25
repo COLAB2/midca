@@ -89,7 +89,7 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
                         curr_func_with_args.append(signature)
                         #for child_arg in child_func_call:
                                 #curr_func_with_args.append(arg)
-                funcs_this_tick.append(curr_func_with_args)
+                        funcs_this_tick.append(curr_func_with_args)
                 tick_events[tick] = funcs_this_tick
                         
         return tick_events
