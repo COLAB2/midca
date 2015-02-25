@@ -79,6 +79,7 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
                 assert child_event.tag == 'event'
                 tick = int(child_event.attrib['tick'])
                 funcs_this_tick = []
+                print "---------------------- Tick " + str(tick) + " ----------------------------"
                 for child_func_call in child_event.iter('function'):
                         curr_func_with_args = []
                         print "child_func_call is " + str(child_func_call)
@@ -88,15 +89,21 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
                         print "valid methods are " + str(valid_methods)
                         assert signature in valid_methods
                         curr_func_with_args.append(signature)
+                        print "Current children of child_func_call are "+str(list(child_func_call))
                         for child_arg in child_func_call.iter('arg'):
                                 arg_type = child_arg.attrib['type']
                                 arg = child_arg.text
                                 print "arg is " + str(arg) + " and arg_type is " + str(arg_type)
                                 print "eval string is: "+ arg_type+"(\""+arg+"\")"
                                 correctly_typed_arg = eval(arg_type+"(\""+arg+"\")")
+
+                                # need extra quotes around string data types
+                                if arg_type == 'str':
+                                        correctly_typed_arg = "\"" + correctly_typed_arg + "\""
                                 curr_func_with_args.append(correctly_typed_arg)
                         funcs_this_tick.append(curr_func_with_args)
                 tick_events[tick] = funcs_this_tick
+                print "Just added for tick : "+ str(tick) + str(funcs_this_tick)
                         
         return tick_events
 
@@ -219,7 +226,7 @@ class ArsonSimulator:
         # fire is gaurunteed to occur on a block unless all blocks are
         # on fire
         def start_random_fire(self,tempvar=0,tempvar2="default",verbose=2):
-                print "tempvar is " + tempvar + " and is of type " + str(type(tempvar))
+                print "tempvar is " + str(tempvar) + " and is of type " + str(type(tempvar))
                 print "tempvar2 is " + tempvar2 + " and is of type " + str(type(tempvar2))
                 change_str = "onfire()"
                 try:
@@ -249,9 +256,12 @@ class ArsonSimulator:
                                 func_name = func_list[0]
                                 func_str = "self."
                                 func_str += func_name + "("
-                                for arg in func_list[1:]:
+                                args = func_list[1:]
+                                for arg in args:
                                         func_str += str(arg) + ","
-                                func_str = func_str[0:len(func_str)-1] # remove the trailing comma
+                                if len(args) > 0:
+                                        # remove the trailing comma (only if args is > 0)
+                                        func_str = func_str[0:len(func_str)-1] 
                                 func_str += ")"
 
                                 print "About to eval: ", func_str
