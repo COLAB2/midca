@@ -22,6 +22,9 @@ def load_tick_file_csv(calling_instance, file_name, verbose = 2):
            the alternative function: load_tick_file_xml)
 
         """
+        # this is a safety check to ensure that every call to eval
+        # only happens on a function that is part of the simulator
+        # class
         valid_methods = []
         for data in inspect.getmembers(calling_instance, predicate=inspect.ismethod):
                 #print "data is " + str(data)
@@ -51,6 +54,8 @@ def load_tick_file_csv(calling_instance, file_name, verbose = 2):
         return tick_events
 
 def load_tick_file_xml(calling_instance, file_name, verbose = 2):
+        # the following code block checks that only valid class
+        # functions can be called (small security check)
         valid_methods = []
         for data in inspect.getmembers(calling_instance, predicate=inspect.ismethod):
                 #print "data is " + str(data)
@@ -65,15 +70,28 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
         # the arsonist class that will use the tick file.
         tick_events = {}
         
-        with open(file_name) as f:
-                lines = f.readlines()
-                for line in lines:
-                        tokens = line.strip().split(',')
-                        curr_tick = int(tokens[0])
-                        tick_events[curr_tick] = tokens[1:]
-                        if verbose >= 2: print "processed line: " + line
-                        print "self.tick_events: " + str(tick_events)
-
+        # this is where we parse the xml
+        tree = ET.parse(file_name)
+        root = tree.getroot()
+        assert root.tag == 'events'
+        
+        for child_event in root:
+                assert child_event.tag == 'event'
+                tick = int(child_event.attrib['tick'])
+                funcs_this_tick = []
+                for child_func_call in child_event:
+                        curr_func_with_args = []
+                        assert child_func_call.tag == 'function'
+                        signature = child_func_call.attrib['signature']
+                        print "signature is " + str(signature)
+                        print "valid methods are " + str(valid_methods)
+                        assert signature in valid_methods
+                        curr_func_with_args.append(signature)
+                        #for child_arg in child_func_call:
+                                #curr_func_with_args.append(arg)
+                funcs_this_tick.append(curr_func_with_args)
+                tick_events[tick] = funcs_this_tick
+                        
         return tick_events
 
 ## End Tick File 
@@ -196,16 +214,16 @@ class ArsonSimulator:
         # on fire
         def start_random_fire(self,verbose=2):
                 change_str = "onfire()"
-                #                try:
-                block = random.choice(self.get_unlit_blocks())
-                change_str = change_str[0:len(change_str)-1] # remove last paren
-                change_str += block + ")"
-                worldsim.stateread.apply_state_str(self.world, change_str)
-                if verbose >= 2:
-                        print "Applying Change: ", change_str
- #               except Exception:
- #                       if verbose >= 1:
- #                               print "Failed Applying Change: ", change_str
+                try:
+                        block = random.choice(self.get_unlit_blocks())
+                        change_str = change_str[0:len(change_str)-1] # remove last paren
+                        change_str += block + ")"
+                        worldsim.stateread.apply_state_str(self.world, change_str)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str
 
         #def add_fire_extinguisher():
                 
