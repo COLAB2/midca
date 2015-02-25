@@ -240,7 +240,6 @@ class ArsonSimulator:
                         if verbose >= 1:
                                 print "Failed Applying Change: ", change_str
 
-        # TODO
         def start_fire(self,block,verbose=2):
                 assert isinstance(block,str)
                 change_str = "onfire("+str(block)+")" 
@@ -252,11 +251,43 @@ class ArsonSimulator:
                         if verbose >= 1:
                                 print "Failed Applying Change: ", change_str
                 
-        # TODO
-        #def add_fire_extinguisher():
+        def add_fire_extinguisher(self,fire_ext_name,verbose=2):
+                assert isinstance(fire_ext_name,str)
+                change_str = "FIRE-EXTINGUISHER("+str(fire_ext_name)+")" 
+                change_str2 = "fire-extinguisher("+str(fire_ext_name)+")" 
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str                
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str2)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str2
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str2                
               
-        # TODO
-        #def remove_fire_extinguisher():
+        def remove_fire_extinguisher(self,fire_ext_name,verbose=2):
+                assert isinstance(fire_ext_name,str)
+                change_str = "!FIRE-EXTINGUISHER("+str(fire_ext_name)+")" 
+                change_str2 = "!fire-extinguisher("+str(fire_ext_name)+")" 
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str                
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str2)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str2
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str2                
 
 
 	def run(self, cycle, verbose = 2):
