@@ -79,16 +79,22 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
                 assert child_event.tag == 'event'
                 tick = int(child_event.attrib['tick'])
                 funcs_this_tick = []
-                for child_func_call in child_event:
+                for child_func_call in child_event.iter('function'):
                         curr_func_with_args = []
+                        print "child_func_call is " + str(child_func_call)
                         assert child_func_call.tag == 'function'
                         signature = child_func_call.attrib['signature']
                         print "signature is " + str(signature)
                         print "valid methods are " + str(valid_methods)
                         assert signature in valid_methods
                         curr_func_with_args.append(signature)
-                        #for child_arg in child_func_call:
-                                #curr_func_with_args.append(arg)
+                        for child_arg in child_func_call.iter('arg'):
+                                arg_type = child_arg.attrib['type']
+                                arg = child_arg.text
+                                print "arg is " + str(arg) + " and arg_type is " + str(arg_type)
+                                print "eval string is: "+ arg_type+"(\""+arg+"\")"
+                                correctly_typed_arg = eval(arg_type+"(\""+arg+"\")")
+                                curr_func_with_args.append(correctly_typed_arg)
                         funcs_this_tick.append(curr_func_with_args)
                 tick_events[tick] = funcs_this_tick
                         
@@ -212,7 +218,9 @@ class ArsonSimulator:
         # here random refers to a random block, not a random fire - a
         # fire is gaurunteed to occur on a block unless all blocks are
         # on fire
-        def start_random_fire(self,verbose=2):
+        def start_random_fire(self,tempvar=0,tempvar2="default",verbose=2):
+                print "tempvar is " + tempvar + " and is of type " + str(type(tempvar))
+                print "tempvar2 is " + tempvar2 + " and is of type " + str(type(tempvar2))
                 change_str = "onfire()"
                 try:
                         block = random.choice(self.get_unlit_blocks())
@@ -238,11 +246,11 @@ class ArsonSimulator:
                         for func_list in self.tick_events[cycle]:
                                 print "func_list is ", func_list
                                                                         
-                                func_name = func_list[0] + "("
+                                func_name = func_list[0]
                                 func_str = "self."
                                 func_str += func_name + "("
                                 for arg in func_list[1:]:
-                                        func_str += arg + ","
+                                        func_str += str(arg) + ","
                                 func_str = func_str[0:len(func_str)-1] # remove the trailing comma
                                 func_str += ")"
 
