@@ -71,5 +71,25 @@ for i in range(20):
 
 
 
+'''
+Sandbox Code:
+  The following code is used to create a 'Sandbox' object that will run MIDCA under varying conditions
+'''
+
+class Sandbox:
+        
+        def __init__(self):
+                self.resource_configurations = []
+                self.goal_configurations = []
+        
+        def sample_run(self):
+                min_fire_ext = 0
+                max_fire_ext = 10
+                min_fires = 0
+                max_fires = 10
+                min_goals = 0
+                max_goals = 10
+                
+                curr_start_state = 
 
 
