@@ -80,28 +80,33 @@ def load_tick_file_xml(calling_instance, file_name, verbose = 2):
                 tick = int(child_event.attrib['tick'])
                 funcs_this_tick = []
                 print "---------------------- Tick " + str(tick) + " ----------------------------"
-                for child_func_call in child_event.iter('function'):
+                for child_func_call in child_event:
                         curr_func_with_args = []
+                        change_str = ""
                         print "child_func_call is " + str(child_func_call)
-                        assert child_func_call.tag == 'function'
-                        signature = child_func_call.attrib['signature']
-                        print "signature is " + str(signature)
-                        print "valid methods are " + str(valid_methods)
-                        assert signature in valid_methods
-                        curr_func_with_args.append(signature)
-                        print "Current children of child_func_call are "+str(list(child_func_call))
-                        for child_arg in child_func_call.iter('arg'):
-                                arg_type = child_arg.attrib['type']
-                                arg = child_arg.text
-                                print "arg is " + str(arg) + " and arg_type is " + str(arg_type)
-                                print "eval string is: "+ arg_type+"(\""+arg+"\")"
-                                correctly_typed_arg = eval(arg_type+"(\""+arg+"\")")
+                        if child_func_call.tag == 'function':
+                                signature = child_func_call.attrib['signature']
+                                print "signature is " + str(signature)
+                                print "valid methods are " + str(valid_methods)
+                                assert signature in valid_methods
+                                curr_func_with_args.append(signature)
+                                print "Current children of child_func_call are "+str(list(child_func_call))
+                                for child_arg in child_func_call.iter('arg'):
+                                        arg_type = child_arg.attrib['type']
+                                        arg = child_arg.text
+                                        print "arg is " + str(arg) + " and arg_type is " + str(arg_type)
+                                        print "eval string is: "+ arg_type+"(\""+arg+"\")"
+                                        correctly_typed_arg = eval(arg_type+"(\""+arg+"\")")
 
-                                # need extra quotes around string data types
-                                if arg_type == 'str':
-                                        correctly_typed_arg = "\"" + correctly_typed_arg + "\""
-                                curr_func_with_args.append(correctly_typed_arg)
-                        funcs_this_tick.append(curr_func_with_args)
+                                        # need extra quotes around string data types
+                                        if arg_type == 'str':
+                                                correctly_typed_arg = "\"" + correctly_typed_arg + "\""
+                                        curr_func_with_args.append(correctly_typed_arg)
+                                funcs_this_tick.append(curr_func_with_args)
+                        elif child_func_call.tag == 'change':
+                                change_str = child_func_call.text
+                                print "change_str is "+change_str
+                                funcs_this_tick.append(change_str)
                 tick_events[tick] = funcs_this_tick
                 print "Just added for tick : "+ str(tick) + str(funcs_this_tick)
                         
@@ -206,6 +211,16 @@ class ArsonSimulator:
 		self.mem = mem
 		self.world = world
 	
+
+        def applychange(self, change_str):
+                try:
+                        worldsim.stateread.apply_state_str(self.world, change_str)
+                        if verbose >= 2:
+                                print "Applying Change: ", change_str
+                except Exception:
+                        if verbose >= 1:
+                                print "Failed Applying Change: ", change_str
+                
                 
 	def free_arsonist(self):
 		for atom in self.world.atoms:
@@ -295,8 +310,8 @@ class ArsonSimulator:
 
                 # execute events from the tick file
                 if cycle in self.tick_events.keys():
-                        for func_list in self.tick_events[cycle]:
-                                print "func_list is ", func_list
+                        for curr_tick_events in self.tick_events[cycle]:
+                                print "curr_tick_events for cycle "+str(cycle)+ " is "+ str(curr_tick_events)
                                                                         
                                 func_name = func_list[0]
                                 func_str = "self."

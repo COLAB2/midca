@@ -24,6 +24,7 @@ import inspect, os
 import xml.etree.ElementTree as ET
 
 sampleTickFile = 'sandbox/sample_tick_events.xml'
+#sampleTickFile = 'sandbox/no_events_tick_file.csv'
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
@@ -35,8 +36,8 @@ arsonist_domain = "worldsim/domains/arsonist.sim"
 arsonist_state = "worldsim/states/defstate_fire.sim"
 
 ## Arsonist with extinguisher domain ##
-extinguisher_domain = "worldsim/domains/arsonist_extinguish.sim"
-extinguisher_state = "worldsim/states/extinguisher_state.sim"
+extinguisher_domain = "worldsim/domains/arsonist_extinguish_single_charge.sim"
+extinguisher_state = "worldsim/states/extinguisher_state_single_charge.sim"
 
 ##### END [Initial Domain and State Files] #####
 
@@ -90,6 +91,5 @@ class Sandbox:
                 min_goals = 0
                 max_goals = 10
                 
-                curr_start_state = 
 
 
