@@ -212,7 +212,7 @@ class ArsonSimulator:
 		self.world = world
 	
 
-        def applychange(self, change_str):
+        def apply_change(self, change_str,verbose=2):
                 try:
                         worldsim.stateread.apply_state_str(self.world, change_str)
                         if verbose >= 2:
@@ -310,24 +310,30 @@ class ArsonSimulator:
 
                 # execute events from the tick file
                 if cycle in self.tick_events.keys():
-                        for curr_tick_events in self.tick_events[cycle]:
-                                print "curr_tick_events for cycle "+str(cycle)+ " is "+ str(curr_tick_events)
-                                                                        
-                                func_name = func_list[0]
-                                func_str = "self."
-                                func_str += func_name + "("
-                                args = func_list[1:]
-                                for arg in args:
-                                        func_str += str(arg) + ","
-                                if len(args) > 0:
-                                        # remove the trailing comma (only if args is > 0)
-                                        func_str = func_str[0:len(func_str)-1] 
-                                func_str += ")"
+                        for curr_event in self.tick_events[cycle]:
+                                print "curr_tick_events for cycle "+str(cycle)+ " is "+ str(curr_event)
+                                
+                                if isinstance(curr_event, str): # we know its a manual change
+                                        print "we know curr_event is a string"
+                                        self.apply_change(curr_event)
+                                        
+                                elif isinstance(curr_event,list):
+                                        print "we know curr_event is a list"
+                                        func_name = curr_event[0]
+                                        func_str = "self."
+                                        func_str += func_name + "("
+                                        args = curr_event[1:]
+                                        for arg in args:
+                                                func_str += str(arg) + ","
+                                        if len(args) > 0:
+                                                # remove the trailing comma (only if args is > 0)
+                                                func_str = func_str[0:len(func_str)-1] 
+                                        func_str += ")"
+                                        
+                                        print "About to eval: ", func_str
+                                        eval(func_str)
+                # end tick file modifications
 
-                                print "About to eval: ", func_str
-                                eval(func_str)
-                
-                
 		arsonist = self.free_arsonist()
 		if arsonist and cycle > self.start and random.random() < self.chance:
 			try:
