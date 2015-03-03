@@ -106,6 +106,7 @@ class PyHopPlanner:
 		s.free = {}
 		s.fire_ext_avail = set()
 		s.holdingfireext = None
+                s.fire_ext_charges = {}
 		blocks = []
 		for objname in world.objects:
 			if world.objects[objname].type.name == "BLOCK" and objname != "table":
@@ -119,6 +120,8 @@ class PyHopPlanner:
 				s.holding = atom.args[0].name
 			elif atom.predicate.name == "fire-extinguisher":
 				s.fire_ext_avail.add(atom.args[0].name)
+                        elif atom.predicate.name == "notempty":
+                                s.fire_ext_charges[atom.args[0].name] = 1
 			elif atom.predicate.name == "holdingextinguisher":
 				s.holdingfireext = atom.args[0].name
 			elif atom.predicate.name == "arm-empty":
