@@ -1,4 +1,17 @@
 
+class ROSObserver:
+
+	def __init__(self, obervationQueue, queueLock):
+		self.observations = obervationQueue
+		self.queueLock = queueLock
+	
+	def init(self, world, mem):
+		self.mem = mem
+	
+	
+	
+	
+
 class PerfectObserver:
 
 	'''
