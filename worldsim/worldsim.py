@@ -276,7 +276,7 @@ class World:
 	def copy(self):
 		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
 	
-	def is_true(self, predname, argnames):
+	def is_true(self, predname, argnames = []):
 		try:
 			args = [self.objects[name] for name in argnames]
 			return self.atom_true(Atom(self.predicates[predname], args))
@@ -290,12 +290,15 @@ class World:
 		if atom not in self.atoms:
 			self.atoms.append(atom)
 	
-	def add_fact(self, predname, argnames):
+	def add_fact(self, predname, argnames = []):
 		self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 	
 	def remove_atom(self, atom):
 		if atom in self.atoms:
 			self.atoms.remove(atom)
+	
+	def remove_fact(self, predname, argnames = []):
+		self.remove_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 	
 	def add_object(self, object):
 		self.objects[object.name] = object

@@ -144,6 +144,7 @@ class StdoutDirector:
         		self.logger.log(event)
         	self.current = ""
         self.stdout.write(s)
+        self.stdout.flush()
     
     def flush(self):
         self.stdout.flush()
