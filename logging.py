@@ -1,6 +1,7 @@
 from __future__ import print_function
 from datetime import datetime
 import os, sys, copy
+import platform, string
 
 class Logger:
 	
@@ -12,14 +13,20 @@ class Logger:
 		
 		Keys are both the filenames of actual log files and keys that will be passed to the logger to tell it where to log things. If no keys are passed in the default key will be "log"
 		'''
+		this_os = platform.platform()   
 		self.events = []
 		self.defaultKey = "log"
 		self.working = False
 		self.filesStayOpen = filesStayOpen
 		self.startTime = datetime.now()
+		
+		
 		self.timeStr = str(self.startTime)
 		if self.startTime.microsecond > 0:
 			self.timeStr = self.timeStr[:-7]
+		
+		if "window" in this_os.lower():
+		 	self.timeStr = string.replace(self.timeStr, ':', '_').replace("-", "_")
 		
 		#create log dir if it does not exist. If there is a file at ./log, try ./_log. If neither works, fail and print an error message.
 		folderFound = False
