@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish
+from _plan import pyhop, methods, operators, methods_extinguish_single_charge, operators_extinguish_single_charge
 from MIDCA import plans
 import collections
 
@@ -12,8 +12,8 @@ class PyHopPlanner:
 	def __init__(self, extinguishers = False):
 		#declares pyhop methods. This is where the planner should be given the domain information it needs.
 		if extinguishers:
-			methods_extinguish.declare_methods()
-			operators_extinguish.declare_ops()
+			methods_extinguish_single_charge.declare_methods()
+			operators_extinguish_single_charge.declare_ops()
 		else:
 			methods.declare_methods()
 			operators.declare_ops()
@@ -76,7 +76,7 @@ class PyHopPlanner:
 			except Exception:
 				print "Could not generate a valid pyhop task from current goal set. Skipping planning"
 			try:
-				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
+				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 4)
 			except Exception:
 				pyhopPlan = None
 			if not pyhopPlan and pyhopPlan != []:
@@ -145,7 +145,11 @@ class PyHopPlanner:
 				s.pos[block] = "in-arm"
                 print "s.pos: ", s.pos
                 print "s.clear: ", s.clear
-                print "s.holdingextinguisher: ", 
+                print "s.holdingfireext: ", str(s.holdingfireext)
+                print "s.fire_ext_charges: ", s.fire_ext_charges
+                print "s.fire: ", s.fire
+                print "s.fire_ext_avail: ", s.fire_ext_avail
+                print "s.holding: ", s.holding
 
 		return s
 	
