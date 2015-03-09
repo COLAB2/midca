@@ -1,0 +1,34 @@
+BLOCK(A_)
+BLOCK(B_)
+BLOCK(C_)
+BLOCK(table)
+BLOCK(D_)
+ARSONIST(Gui Montag)
+FIRE-EXTINGUISHER(Fire Extinguisher 1)
+empty(Fire Extinguisher 1)
+FIRE-EXTINGUISHER(Fire Extinguisher 2)
+notempty(Fire Extinguisher 2)
+
+holdingextinguisher(Fire Extinguisher 1)
+
+on(B_, A_)
+on(D_, B_)
+on-table(A_)
+on-table(C_)
+
+onfire(A_)
+
+block(A_)
+block(B_)
+block(C_)
+triangle(D_)
+table(table)
+fire-extinguisher(Fire Extinguisher 1)
+fire-extinguisher(Fire Extinguisher 2)
+
+clear(C_)
+clear(D_)
+arm-empty()
+
+free(Gui Montag)
+arsonist(Gui Montag)

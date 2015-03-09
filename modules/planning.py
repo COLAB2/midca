@@ -143,6 +143,10 @@ class PyHopPlanner:
 				s.fire[block] = False
 			if block not in s.pos:
 				s.pos[block] = "in-arm"
+                print "s.pos: ", s.pos
+                print "s.clear: ", s.clear
+                print "s.holdingextinguisher: ", 
+
 		return s
 	
 	#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
