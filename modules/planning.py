@@ -122,6 +122,8 @@ class PyHopPlanner:
 				s.fire_ext_avail.add(atom.args[0].name)
                         elif atom.predicate.name == "notempty":
                                 s.fire_ext_charges[atom.args[0].name] = 1
+                        elif atom.predicate.name == "empty":
+                                s.fire_ext_charges[atom.args[0].name] = 0
 			elif atom.predicate.name == "holdingextinguisher":
 				s.holdingfireext = atom.args[0].name
 			elif atom.predicate.name == "arm-empty":

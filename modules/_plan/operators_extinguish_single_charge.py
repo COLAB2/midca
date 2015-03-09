@@ -4,7 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 import sys
-sys.path.append("../")
+#sys.path.append("../")
 import pyhop
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
@@ -19,6 +19,8 @@ The blocks-world operators use three state variables:
 - clear[b] = False if a block is on b or the hand is holding b, else True.
 - holding = name of the block being held, or False if the hand is empty.
 """
+
+#print "We have just begun"
 
 def pickup(state,b):
     if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
@@ -94,3 +96,7 @@ what the operators are. Note that the operator names are *not* quoted.
 """
 def declare_ops():
 	pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor, pickup_extinguisher, putdown_extinguisher)
+
+
+declare_ops()
+#print "We made it this far"

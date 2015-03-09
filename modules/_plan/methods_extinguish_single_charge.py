@@ -128,15 +128,17 @@ def put_m(state,b1,b2):
 def put_out_m(state, b1):
 	if state.fire[b1]:
             print "state.holdingfireext = " + str(state.holdingfireext)
-            print "state.fire_ext_charges = " + str(state.fire_ext_charges[state.holdingfireext])
-		if state.holdingfireext and state.fire_ext_charges[state.holdingfireext] > 0:
-			return [("putoutfire", b1, state.holdingfireext)]
-elif state.holdingfireext and not state.fire_ext_charges[state.holdingfireext] > 0:
-			return [("putdown_extinguisher",state.holdingfireext),("put_out_m", b1)]    
-		elif state.fire_ext_avail:
-                    valid_fire_exts = filter(lambda x: state.fire_ext_charges[x] > 0, list(state.fire_ext_avail))
-			ext = random.choice(valid_fire_exts)
-			return [('get_extinguisher', ext), ("putoutfire", b1, ext)]
+            if state.holdingfireext:
+                print "state.fire_ext_charges = " + str(state.fire_ext_charges[state.holdingfireext])
+            if state.holdingfireext and state.fire_ext_charges[state.holdingfireext] > 0:
+                return [("putoutfire", b1, state.holdingfireext)]
+            elif state.holdingfireext and state.fire_ext_charges[state.holdingfireext] <= 0:
+                print "Should be returning here"
+                return [("putdown_extinguisher",state.holdingfireext),("put_out", b1)]    
+            elif state.fire_ext_avail:
+                valid_fire_exts = filter(lambda x: state.fire_ext_charges[x] > 0, list(state.fire_ext_avail))
+                ext = random.choice(valid_fire_exts)
+                return [('get_extinguisher', ext), ("putoutfire", b1, ext)]
 	else:
 		return []
 
@@ -173,3 +175,4 @@ def declare_methods(longApprehend = True):
 	pyhop.declare_methods('get_extinguisher',get_extinguisher_m)
         
 
+#declare_methods()
