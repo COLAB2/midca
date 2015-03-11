@@ -10,7 +10,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+#tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.init()
 myMidca.run()

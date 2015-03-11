@@ -22,7 +22,7 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, verbose = 2):
+	def __init__(self, world, logenabled = True, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -31,6 +31,9 @@ class MIDCA:
 		self.initialized = False
 		self.phaseNum = 1
 		self.logger = logging.Logger()
+		if not logenabled:
+			print ("Logging disabled")
+			self.logger.working = False
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -96,10 +99,16 @@ class MIDCA:
 			raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
 		else:
 			modules.pop(i)
-		
-	
-	def clearPhase(self, phase):
-		self.modules[phase] = []
+			
+	def clearPhase(self, phaseOrName):
+		if isinstance(phaseOrName, str):
+			phase = self.phase_by_name(phaseOrName)
+		else:
+			phase = phaseOrName
+		try:
+			self.modules[phase] = []
+		except ValueError:
+			raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
 	
 	def get_modules(self, phase):
 		if isinstance(phase, str):

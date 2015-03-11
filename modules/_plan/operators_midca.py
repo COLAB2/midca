@@ -21,7 +21,8 @@ The blocks-world operators use three state variables:
 """
 
 def pickup(state,b):
-    if state.is_true("on-table", [b]) and state.is_true("clear", [b]) and not state.is_true("arm-empty", []):
+    print "pickop_op", b
+    if state.is_true("on-table", [b]) and state.is_true("clear", [b]) and state.is_true("arm-empty"):
         state.add_fact("holding", [b])
         state.remove_fact("clear", [b])
         state.remove_fact("on-table", [b])

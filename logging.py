@@ -58,8 +58,9 @@ class Logger:
 					f.write("Log file for run starting at " + self.timeStr + "\n")
 				except IOError as e:
 					self.writeError(e, filename = os.path.join(self.thisRunDir, key), txt = "Log file for run starting at " + self.timeStr)
-			if not self.files:
-				self.working = False
+					self.working = False
+			if not self.working:
+				print ("Logger disabled")
 			else:
 				print("Logger: logging this run in " + self.thisRunDir, file = sys.stderr)
 			if not self.filesStayOpen:
@@ -102,6 +103,8 @@ class Logger:
 			raise ValueError("log must get a string or an Event object")
 	
 	def _write(self, txt, key):
+		if not self.working:
+			return
 		if key not in self.files or not self.files[key] or self.files[key].closed:
 			try:
 				self.openFile(key)
