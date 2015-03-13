@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish
+from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca
 from MIDCA import plans
 import collections
 
@@ -167,13 +167,13 @@ class PyHopPlanner2:
 			except Exception:
 				print "Could not generate a valid pyhop state from current world state. Skipping planning"
 			try:
-				pyhopTasks = self.pyhop_tasks_from_goals(goals)
+				pyhopTasks = pyhop_tasks_from_goals(goals)
 			except Exception:
 				print "Could not generate a valid pyhop task from current goal set. Skipping planning"
-			try:
-				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
-			except Exception:
-				pyhopPlan = None
+			#try:
+			pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
+			#except Exception:
+				#pyhopPlan = None
 			if not pyhopPlan and pyhopPlan != []:
 				if verbose >= 1:
 					print "Planning failed for ",
@@ -192,7 +192,7 @@ class PyHopPlanner2:
 			if midcaPlan != None:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
-def pyhop_state_from_world(self, world, name = "state"):
+def pyhop_state_from_world(world, name = "state"):
 	s = pyhop.State(name)
 	s.pos = {}
 	s.clear = {}
@@ -236,7 +236,7 @@ def pyhop_state_from_world(self, world, name = "state"):
 	return s
 	
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def pyhop_tasks_from_goals(self, goals):
+def pyhop_tasks_from_goals(goals):
 	alltasks = []
 	blkgoals = pyhop.Goal("goals")
 	blkgoals.pos = {}
