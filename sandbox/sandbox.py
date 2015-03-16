@@ -23,8 +23,9 @@ from MIDCA.modules import simulator, guide
 import inspect, os
 import xml.etree.ElementTree as ET
 
-#sampleTickFile = 'sandbox/sample_tick_events.xml'
-sampleTickFile = 'sandbox/no_events_tick_file.csv'
+
+sampleTickFile = 'sandbox/sample_tick_events.xml'
+#sampleTickFile = 'sandbox/no_events_tick_file.csv'
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
