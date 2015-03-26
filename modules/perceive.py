@@ -1,4 +1,4 @@
-
+from trace import CogTrace
 class PerfectObserver:
 
 	'''
@@ -20,6 +20,15 @@ class PerfectObserver:
 		self.mem.add(self.mem.STATES, world)
 		if verbose >= 1:
 			print "World observed."
+
+                # trace at cog level
+                trace_str = "Input: NONE\nOutput:"
+                trace_str += str(world)
+                trace = CogTrace()
+                trace.addphase(cycle,"PerfectObserver",trace_str)
+                
+
+                
 
 class MAReport:
 	
