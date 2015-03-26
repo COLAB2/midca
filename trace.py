@@ -26,4 +26,6 @@ class CogTrace:
             self.trace[cycle][phase] = data                    
 
     def printtrace(self):
-        for
+        for cycle in self.trace.keys():
+            for phase in self.trace[cycle].keys():
+                print "[cycle "+str(cycle)+"][phase "+str(phase)+"] "+str(data)
