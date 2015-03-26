@@ -34,6 +34,11 @@ class MIDCA:
 		if not logenabled:
 			print ("Logging disabled")
 			self.logger.working = False
+		else:
+			self.logger.start()
+			if self.logger.working:
+				self.logger.logOutput()
+				self.mem.enableLogging(self.logger)
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:

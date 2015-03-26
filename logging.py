@@ -12,10 +12,17 @@ class Logger:
 		
 		Keys are both the filenames of actual log files and keys that will be passed to the logger to tell it where to log things. If no keys are passed in the default key will be "log"
 		'''
+		self.keys = keys
+		self.filesStayOpen = filesStayOpen
+	
+	def start(self):
+		'''
+		Creates the folder where log files will be stored and creates file(s)
+		'''
+		
 		self.events = []
 		self.defaultKey = "log"
-		self.working = False
-		self.filesStayOpen = filesStayOpen
+		self.working = False	
 		self.startTime = datetime.now()
 		self.timeStr = str(self.startTime)
 		if self.startTime.microsecond > 0:
@@ -50,9 +57,9 @@ class Logger:
 				print("Logger: error creating log directory: " + str(e), file = sys.stderr)
 			
 			#now create the individual log file(s)
-			self.files = {key: None for key in keys}
+			self.files = {key: None for key in self.keys}
 			self.working = True
-			for key in keys:
+			for key in self.keys:
 				try:
 					f = self.openFile(key)
 					f.write("Log file for run starting at " + self.timeStr + "\n")
