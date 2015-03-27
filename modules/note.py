@@ -211,12 +211,24 @@ class ADistanceAnomalyNoter:
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
+                prevworld = copy.deepcopy(world) # for trace
 		self.update(world)
+                currworld = copy.deepcopy(world) # for trace
 		self.mem.add(ANOMALY_STATE_KEY, self.anomalous())
 		if verbose >= 1 and self.anomalous():
 			print "Anomaly detected."
 		elif verbose >= 2 and not self.anomalous():
 			print "No anomaly detected."
+
+                # trace at cog level
+                trace_str = "INPUT:\n"
+                trace_str += "  Old World State: " + str(prevworld)+"\n"
+                trace_str += "  New World State: " + str(currworld)+"\n"
+                trace_str += "OUTPUT:\n"
+                trace_str += "  Anomaly Detected: "+str(self.anomalous())+"\n"
+
+                trace = self.mem.trace
+                trace.addphase(cycle,self.__class__.__name__,trace_str)
 	
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):

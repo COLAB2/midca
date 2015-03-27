@@ -14,6 +14,7 @@ class Memory:
 		self.clear()
 		self.update(args)
 		self.logger = None
+                self.trace = None
 
 	#Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
 	def _update(self, structname, val):
@@ -78,6 +79,11 @@ class Memory:
 	def logAccess(self, key):
 		if self.logger:
 			self.logger.logEvent(MemAccessEvent(key))
+                        
+        def enableTracing(self, trace):
+                self.trace = trace
+                
+
 
 class MemAccessEvent(Event):
 

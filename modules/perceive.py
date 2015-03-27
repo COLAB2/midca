@@ -22,13 +22,11 @@ class PerfectObserver:
 			print "World observed."
 
                 # trace at cog level
-                trace_str = "Input: NONE\nOutput:"
+                trace_str = "INPUT: NONE\nOUTPUT:"
                 trace_str += str(world)
-                trace = CogTrace()
-                trace.addphase(cycle,"PerfectObserver",trace_str)
-                
+                trace = self.mem.trace
+                trace.addphase(cycle,self.__class__.__name__,trace_str)
 
-                
 
 class MAReport:
 	
