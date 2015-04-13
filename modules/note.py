@@ -228,7 +228,8 @@ class ADistanceAnomalyNoter:
                 trace_str += "  Anomaly Detected: "+str(self.anomalous())+"\n"
 
                 trace = self.mem.trace
-                trace.addphase(cycle,self.__class__.__name__,trace_str)
+                if trace:
+                        trace.addphase(cycle,self.__class__.__name__,trace_str)
 	
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):

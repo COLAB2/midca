@@ -25,7 +25,8 @@ class PerfectObserver:
                 trace_str = "INPUT: NONE\nOUTPUT:"
                 trace_str += str(world)
                 trace = self.mem.trace
-                trace.addphase(cycle,self.__class__.__name__,trace_str)
+                if trace:
+                        trace.addphase(cycle,self.__class__.__name__,trace_str)
 
 
 class MAReport:

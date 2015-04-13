@@ -34,15 +34,19 @@ class PyHopPlanner:
 
                 trace_str = "INPUT:\n  WORLD:"
                 trace_str += str(input_world)
-                trace_str += "  GOALS: "
-                trace_str += str(input_goals)
+                trace_str += "  GOALS:\n "
+                if goals:
+                        for g in input_goals:
+                                trace_str += "    " + str(g) + "\n"
                 trace_str += "\nOUTPUT:\n  "
                 trace = self.mem.trace
 
 		if not goals:
 			if verbose >= 2:
 				print "No goals received by planner. Skipping planning."
-                        trace.addphase(cycle,self.__class__.__name__,trace_str)
+                       
+                        
+                        if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
 			return
 		try:
 			midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -98,7 +102,7 @@ class PyHopPlanner:
 						print goal, " ",
 					print
                                 trace_str += "  Planning failed for goals" 
-                                trace.addphase(cycle,self.__class__.__name__,trace_str)
+                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
 				return
 			#change from pyhop plan to MIDCA plan
 			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
@@ -112,7 +116,7 @@ class PyHopPlanner:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
                                 
                                 trace_str += "  Plan: " + str(midcaPlan) 
-                                trace.addphase(cycle,self.__class__.__name__,trace_str)
+                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
                 
 
 	def pyhop_state_from_world(self, world, name = "state"):

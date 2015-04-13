@@ -40,6 +40,16 @@ class SimpleAct:
 		world = self.mem.get(self.mem.STATES)[-1]
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
 		plan = self.get_best_plan(world, goals, verbose)
+
+                trace_str = "INPUT:\n"
+                trace_str += "  world:" + str(world)+"\n"
+                trace_str += "  goals:\n"
+                if goals:
+                        for g in goals:
+                                trace_str += "    "+str(g)+"\n"
+                trace_str += "  plan:"  + str(plan)+"\n"
+                trace_str += "OUTPUT:\n"
+
 		if plan != None:
 			action = plan.get_next_step()
 			if not action:
@@ -53,8 +63,13 @@ class SimpleAct:
 					print "Selected action", action, "from plan:\n", plan
 				self.mem.add(self.mem.ACTIONS, [action])
 				plan.advance()
+                                trace_str += "  action selected: "+str(action)
 		else:
 			if verbose >= 1:
 				print "MIDCA will not select an action this cycle."
 			self.mem.add(self.mem.ACTIONS, [])
+                        trace_str += "  no action selected"
+                trace = self.mem.trace
+                if trace:
+                        trace.addphase(cycle, self.__class__.__name__,trace_str)
 		

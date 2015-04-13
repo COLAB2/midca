@@ -54,6 +54,7 @@ class UserGoalInput:
 	def run(self, cycle, verbose = 2):
 		if verbose == 0:
 			return #if skipping, no user input
+                goals_entered = []
 		while True:
 			val = raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
 			if not val:
@@ -68,6 +69,14 @@ class UserGoalInput:
 				else:
 					self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 					print "Goal added."
+                                        goals_entered.append(goal)
+                # trace at cog level
+                trace_str = "INPUT # from user:\n"
+                trace_str += "  new goals: "+ str(goals_entered)+"\n"
+                trace_str += "OUTPUT # new goal graph:\n" + str(self.mem.GOAL_GRAPH)
+                
+                trace = self.mem.trace
+                trace.addphase(cycle,self.__class__.__name__,trace_str)
 
 class TFStack:
 

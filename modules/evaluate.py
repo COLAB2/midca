@@ -7,11 +7,19 @@ class SimpleEval:
 		self.mem = mem
 	
 	def run(self, cycle, verbose = 2):
+                changes_str = "" # for trace
+                trace_str = "INPUT:\n" # for trace
 		world = self.mem.get(self.mem.STATES)[-1]
+                trace_str += "  world: "+str(world) # for trace
 		try:
 			goals = self.mem.get(self.mem.CURRENT_GOALS)
+                        trace_str += "  goals:"
+                        if goals:
+                                for g in goals:
+                                        trace_str += "    "+str(g)+"\n"
+
 		except KeyError:
-			goqls = []
+			goals = []
 		if goals:
 			for goal in goals:
 				try:
@@ -31,14 +39,22 @@ class SimpleEval:
 			goalGraph = self.mem.get(self.mem.GOAL_GRAPH)		
 			for goal in goals:
 				goalGraph.remove(goal)
+                                changes_str += "\n  Removed goal "+str(goal) # for trace
 			numPlans = len(goalGraph.plans)
 			goalGraph.removeOldPlans()
 			newNumPlans = len(goalGraph.plans)
 			if numPlans != newNumPlans and verbose >= 1:
 				print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                        changes_str += "\n  Removed "+str(numPlans-newNumPlans) # for trace
 		else:
 			if verbose >= 2:
 				print "No current goals. Skipping eval"
+                # for trace
+                trace_str += "\nOUTPUT:\n"
+                trace_str += changes_str
+                trace = self.mem.trace
+                if trace:
+                        trace.addphase(cycle,self.__class__.__name__,trace_str)
 
 LAST_SCORED_GOAL = "Last Scored Goal"
 SCORE = "Score"

@@ -31,10 +31,11 @@ class CogTrace:
             #print("Fresh insert of data for phase "+str(phase)+" in cycle "+str(cycle)+ " to " + str(data))
             self.trace[cycle][phase] = data                    
 
+
     def printtrace(self):
         for cycle in self.trace.keys():
             for phase in self.trace[cycle].keys():
-                print("[cycle  "+str(cycle)+"][phase "+str(phase)+"]\n"+str(self.trace[cycle][phase]))
+                print("---------------------------------------------\n[cycle  "+str(cycle)+"][phase "+str(phase)+"]\n---------------------------------------------\n\n"+str(self.trace[cycle][phase]))
 
 
 
