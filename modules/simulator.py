@@ -89,7 +89,7 @@ class ArsonSimulator:
 	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile = False):
 		self.chance = arsonChance
 		self.start = arsonStart
-                self.customrun = customrun.CustomRun(self, tickFile)
+                self.customrun = customrun.CustomRun(self, tickFile,0)
                 #self.tick_events = customrun.load_custom_run_xml(self,tickFile)
 
 	def init(self, world, mem):
@@ -126,8 +126,6 @@ class ArsonSimulator:
         # fire is gaurunteed to occur on a block unless all blocks are
         # on fire
         def start_random_fire(self,tempvar=0,tempvar2="default",verbose=2):
-                print "tempvar is " + str(tempvar) + " and is of type " + str(type(tempvar))
-                print "tempvar2 is " + tempvar2 + " and is of type " + str(type(tempvar2))
                 change_str = "onfire()"
                 try:
                         block = random.choice(self.get_unlit_blocks())
@@ -190,12 +188,12 @@ class ArsonSimulator:
                                 print "Failed Applying Change: ", change_str2                
 
 
-	def run(self, cycle, verbose = 2):
+	def run(self, cycle, verbose = 0):
                 print("Cycle is "+str(cycle))
                 
                 eval_stmts = self.customrun.run_events_on_cycle(cycle, self) 
                 for eval_item in eval_stmts:
-                        print "Now eval'ing item: "+str(eval_item)
+                        if verbose >= 3: print "Now eval'ing item: "+str(eval_item)
                         eval(eval_item)
 
                 
