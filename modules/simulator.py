@@ -1,9 +1,7 @@
 import sys, random
 from MIDCA import worldsim, goals
-
-## Tick File Code (not sure if I should make a seperate module)
+from MIDCA.customrun import customrun
 from optparse import OptionParser
-import customrun
 
 
 class MidcaActionSimulator:
@@ -91,7 +89,8 @@ class ArsonSimulator:
 	def __init__(self, arsonChance = 0.5, arsonStart = 10, tickFile = False):
 		self.chance = arsonChance
 		self.start = arsonStart
-                self.tick_events = customrun.load_custom_run_xml(self,tickFile)
+                self.customrun = customrun.CustomRun(self, tickFile)
+                #self.tick_events = customrun.load_custom_run_xml(self,tickFile)
 
 	def init(self, world, mem):
 		self.mem = mem
@@ -194,7 +193,11 @@ class ArsonSimulator:
 	def run(self, cycle, verbose = 2):
                 print("Cycle is "+str(cycle))
                 
-                customrun.run_events_on_cycle(cycle, self)
+                eval_stmts = self.customrun.run_events_on_cycle(cycle, self) 
+                for eval_item in eval_stmts:
+                        print "Now eval'ing item: "+str(eval_item)
+                        eval(eval_item)
+
                 
 		arsonist = self.free_arsonist()
 		if arsonist and cycle > self.start and random.random() < self.chance:
