@@ -1,3 +1,6 @@
+import copy
+import shlex, subprocess
+
 
 class Goal:
 	
@@ -45,11 +48,15 @@ class Goal:
 
 class GoalNode:
 	
+        id = 1
+
 	def __init__(self, goal):
 		self.goal = goal
 		self.parents = set()
 		self.children = set()
 		self.plan = None
+                self.id = GoalNode.id
+                GoalNode.id += 1
 	
 	def addChild(self, node):
 		self.children.add(node)
@@ -60,7 +67,7 @@ class GoalNode:
 
         def dotStr(self):
                 """ Nice string format for labeling the graph in the pdf drawing """
-                return str(self.goal)
+                return str(self.goal) 
 
 class GoalGraph:
 	
@@ -317,21 +324,34 @@ class GoalGraph:
                    vulnerability if the filename of the pdf passed in
                    is prepended with malicious code.
 
+                   To-do list:
+                   - put everything in a directory
+
                 """
 
                 assert(pdf_filename.endswith(".pdf"))
 
                 # get the filename for dot by removing '.pdf'
-                dotfilename = copy.deepcopy(pdf_filename[0:-4]) 
+                dotfilename = copy.deepcopy(pdf_filename[0:-4]) + ".dot"
                 dotfilestr = "digraph\n{\n"
+
+                for node in self._getAllNodes():
+                        dotfilestr += "  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]\n"
+
+                dotfilestr += "\n"
+
                 for node in self._getAllNodes():
                         for node_child in node.children:
-                                dotfilestr += "  " + node.dotStr() + " -> " + node_child.dotStr() + "\n"
+                                dotfilestr += "  Goal" + str(node.id) + " -> Goal" + str(node_child.id) + " \n"
                 
+                dotfilestr += "\n}\n"
                 f = open(dotfilename, 'w')
                 f. write(dotfilestr)
                 f.close()
+                #print "Wrote dot file to " + dotfilename
                 genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
-                exec(genPDFCommand)
-                
+                dot_output = subprocess.check_output(shlex.split(genPDFCommand))
+                #print "dot_output = " + str(dot_output)
+                subprocess.call(shlex.split("rm "+dotfilename))
+                print "Drawing of current goal graph written to " + pdf_filename
                 

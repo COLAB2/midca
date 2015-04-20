@@ -274,6 +274,14 @@ class PhaseManager:
 				txt = raw_input()
 				if txt:
 					self.logger.log(txt)
+                        elif val == "drawgoalgraph":
+                                print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
+                                txt = raw_input()
+                                if txt:
+                                        self.mem.get(self.mem.GOAL_GRAPH).writeToPDF(txt)
+                                else:
+                                        self.mem.get(self.mem.GOAL_GRAPH).writeToPDF()
+                                        
 			elif val == "change":
 				print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
 				while True:

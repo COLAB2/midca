@@ -23,6 +23,7 @@ def preferFire(goal1, goal2):
 		return 1
 	return 0
 
+
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.initGoalGraph(cmpFunc = preferFire)
