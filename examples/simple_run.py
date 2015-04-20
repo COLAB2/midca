@@ -4,13 +4,17 @@ from MIDCA.examples import predicateworld
 from MIDCA.logging import Logger
 import inspect, os
 
+'''
+This script runs a simple version of MIDCA in blocksworld in which fires do not start, all goals are input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
+'''
+
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+#tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.init()
 myMidca.run()
