@@ -58,6 +58,10 @@ class GoalNode:
 	def setPlan(self, plan):
 		self.plan = plan
 
+        def dotStr(self):
+                """ Nice string format for labeling the graph in the pdf drawing """
+                return str(self.goal)
+
 class GoalGraph:
 	
 	'''
@@ -294,3 +298,40 @@ class GoalGraph:
 	def getUnrestrictedGoals(self):
 		return [node.goal for node in self.roots]
 	
+        def writeToPDF(self, pdf_filename="goalgraph.pdf"):
+                """Requires the 'dot' command be installed on the current system. To
+                   install on unix simply type 'sudo apt-get install
+                   graphviz'
+
+                   The filename must end in .pdf . A temporary .dot
+                   file will be made and then removed to create the
+                   pdf file. The path for the pdf file will be the
+                   same for the .dot file.
+
+                   Since this function traverses the graph, it is
+                   important that there is not a cycle. If there is,
+                   then one of the relationships in the cycle may not
+                   described in the graph
+
+                   Note that this could create a potential security
+                   vulnerability if the filename of the pdf passed in
+                   is prepended with malicious code.
+
+                """
+
+                assert(pdf_filename.endswith(".pdf"))
+
+                # get the filename for dot by removing '.pdf'
+                dotfilename = copy.deepcopy(pdf_filename[0:-4]) 
+                dotfilestr = "digraph\n{\n"
+                for node in self._getAllNodes():
+                        for node_child in node.children:
+                                dotfilestr += "  " + node.dotStr() + " -> " + node_child.dotStr() + "\n"
+                
+                f = open(dotfilename, 'w')
+                f. write(dotfilestr)
+                f.close()
+                genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
+                exec(genPDFCommand)
+                
+                
