@@ -21,7 +21,7 @@ def is_done(b1,state,goal):
 def status(b1,state,goal):
     if is_done(b1,state,goal):
         return 'done'
-    elif not state.clear[b1]:
+    elif not (state.clear[b1] or state.pos[b1] == "in-arm"):
         return 'inaccessible'
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
         return 'move-to-table'
@@ -69,7 +69,6 @@ def moveb_m(state,goal):
 """
 declare_methods must be called once for each taskname. Below, 'declare_methods('get',get_m)' tells Pyhop that 'get' has one method, get_m. Notice that 'get' is a quoted string, and get_m is the actual function.
 """
-pyhop.declare_methods('move_blocks',moveb_m)
 
 
 ### methods for "move_one"
@@ -78,28 +77,37 @@ def move1(state,b1,dest):
     """
     Generate subtasks to get b1 and put it at dest.
     """
-    return [('get', b1), ('put', b1,dest)]
-
-pyhop.declare_methods('move_one',move1)
-
+    if state.pos[b1] == "in-arm":
+    	return [('put', b1,dest)]
+    else:
+    	return [('get', b1), ('put', b1,dest)]
 
 ### methods for "get"
 
-def get_m(state,b1):
-    """
-    Generate either a pickup or an unstack subtask for b1.
-    """
-    if state.clear[b1]:
-        if state.pos[b1] == 'table':
-                return [('pickup',b1)]
-        else:
-                return [('unstack',b1,state.pos[b1])]
-    else:
-        return False
+def get_by_unstack(state,b1):
+    """Generate a pickup subtask."""
+    if state.clear[b1]: return [('unstack_task',b1)]
+    return False
 
-pyhop.declare_methods('get',get_m)
+def get_by_pickup(state,b1):
+    """Generate a pickup subtask."""
+    if state.clear[b1]: return [('pickup_task',b1)]
+    return False
+    
+### methods for "pickup_task"
 
+def pickup_m(state,b1):
+    """Generate a pickup subtask."""
+    if state.clear[b1]: return [('pickup',b1)]
+    return False
 
+### methods for "unstack_task"
+
+def unstack_m(state,b1):
+    """Generate a pickup subtask."""
+    if state.clear[b1]: return [('unstack',b1,state.pos[b1])]
+    return False
+    
 ### methods for "put"
 
 def put_m(state,b1,b2):
@@ -115,6 +123,34 @@ def put_m(state,b1,b2):
     else:
         return False
 
-pyhop.declare_methods('put',put_m)
+def put_out_m(state, b1):
+	if state.fire[b1]:
+		return [("putoutfire", b1)]
+	else:
+		return []
 
+def quick_apprehend_m(state, perp):
+	if state.free[perp]:
+		return [("apprehend", perp)]
+	else:
+		return []
+
+def long_apprehend_m(state, perp):
+	if state.free[perp]:
+		return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
+	else:
+		return []
+
+def declare_methods(longApprehend = True):
+	if longApprehend:
+		pyhop.declare_methods("catch_arsonist", long_apprehend_m)
+	else:
+		pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
+	pyhop.declare_methods("put_out", put_out_m)
+	pyhop.declare_methods('put',put_m)
+	pyhop.declare_methods('unstack_task',unstack_m)
+	pyhop.declare_methods('pickup_task',pickup_m)
+	pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
+	pyhop.declare_methods('move_one',move1)
+	pyhop.declare_methods('move_blocks',moveb_m)
 
