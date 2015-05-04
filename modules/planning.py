@@ -1,21 +1,21 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish
+from _plan import pyhop, methods_broken, operators, methods_broken_extinguish_broken, operators_extinguish
 from MIDCA import plans
 import collections
 import copy 
 class PyHopPlanner:
 	
 	'''
-	MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
-	Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
+	MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods_broken to generate plans; these are defined in the methods_broken python module and declared in the constructor for this class.
+	Note that this module uses has several methods_broken to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
 	'''
 	
 	def __init__(self, extinguishers = False):
-		#declares pyhop methods. This is where the planner should be given the domain information it needs.
+		#declares pyhop methods_broken. This is where the planner should be given the domain information it needs.
 		if extinguishers:
-			methods_extinguish.declare_methods()
+			methods_broken_extinguish_broken.declare_methods_broken()
 			operators_extinguish.declare_ops()
 		else:
-			methods.declare_methods()
+			methods_broken.declare_methods_broken()
 			operators.declare_ops()
 	
 	def init(self, world, mem):
