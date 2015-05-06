@@ -1,5 +1,6 @@
 import rospy
 from geometry_msgs.msg import Point
+from std_msgs.msg import String
 from MIDCA.modules._robot_world import world_repr
 
 class RosMidca:
@@ -96,8 +97,27 @@ class FixedObjectLocationHandler(IncomingMsgHandler):
 			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
 		self.mem.add(self.memKey, world_repr.DetectionEvent(id = self.objID, 
 		loc = pointMsg))
-		 
+
+class UtteranceHandler(IncomingMsgHandler):
 	
-class OutgoingMsgHandler(self, topic, msgType):
-	self.topic = topic
-	self.msgType = msgType
+	def __init__(self, topic, midcaObject, memKey = None):
+		callback = lambda strMsg: self.store_utterance(strMsg)
+		msgType = String
+		super(UtteranceHandler, self).__init__(topic, msgType, callback, midcaObject)
+		if memKey:
+			self.memKey = memKey
+		else:
+			self.memKey = self.mem.ROS_WORDS_HEARD
+	
+	def store_utterance(self, utterance):
+		if not self.mem:
+			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+		self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
+	
+class OutgoingMsgHandler:
+	
+	def __init__(Self, topic, msgType):
+		self.topic = topic
+		self.msgType = msgType
+		self.publisher = None
+		self.subscriber = None

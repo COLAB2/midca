@@ -1,21 +1,33 @@
+from MIDCA.modules._robot_world import world_repr
 
 class ROSObserver:
-
-	def __init__(self, obervationQueue, queueLock):
-		self.observations = obervationQueue
-		self.queueLock = queueLock
 	
 	def init(self, world, mem):
 		self.mem = mem
+		self.mem.set(self.mem.STATES, world_repr.SimpleWorld())
 	
-	
-	
+	def run(self, cycle, verbose = 2):
+		detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
+		utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
+		world = self.mem.get_and_lock(self.mem.STATES)
+		for event in detectionEvents:
+			world.sighting(event)
+		for event in utteranceEvents:
+			world.utterance(event)
+		self.mem.unlock(self.mem.STATES)
+		if verbose > 1:
+			print "World observed:", len(detectionEvents), "new detection events and",
+			len(utteranceEvents), "utterances"
+			
 	
 
 class PerfectObserver:
 
 	'''
-	MIDCA Module which copies a complete world state. It is designed to interact with the built-in MIDCA world simulator. To extend this to work with other representations, modify the observe method so that it returns an object representing the current known world state.
+	MIDCA Module which copies a complete world state. It is designed to interact with the 
+	built-in MIDCA world simulator. To extend this to work with other representations, 
+	modify the observe method so that it returns an object representing the current known 
+	world state.
 	'''
 
 	def init(self, world, mem):

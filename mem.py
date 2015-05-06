@@ -4,6 +4,11 @@ import threading
 
 class Memory:
 	
+	'''
+	To do: in theory, a lock could be deleted in between when its existence is checked
+	and when it is acquired. At some point this needs to be fixed.
+	'''
+	
 	#if necessary for efficiency, these keys should be numbers or enum constants.
 	STATES = "__world states"
 	GOAL_GRAPH = "__goals"
@@ -110,6 +115,33 @@ class Memory:
 			if structname in self.knowledge:
 				return self.knowledge[structname]
 			return None
+	
+	def get_and_clear(self, structname):
+		with self.mainLock:
+			if structname not in self.locks:
+				return None #if there is knowledge stored there must be a lock.
+		with self.locks[structname]:
+			self.logAccess(structname)
+			val = self.knowledge[structname]
+			del self.knowledge[structname]
+			del self.locks[structname]
+			return val
+	
+	def get_and_lock(self, structname):
+		with self.mainLock:
+			if structname not in self.locks:
+				self.locks[structname] = threading.Lock()
+				self.locks[structname].acquire()
+				return None
+		self.locks[structname].acquire()
+		self.logAccess(structname)
+		return self.knowledge(structname)
+	
+	def unlock(self, structname):
+		try:
+			self.locks[structname].release()
+		except KeyError:
+			pass
 	
 	def enableLogging(self, logger):
 		self.logger = logger

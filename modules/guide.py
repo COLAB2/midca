@@ -1,4 +1,4 @@
-from MIDCA import goals
+from MIDCA import goals, time
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.worldsim import blockstate
 
@@ -164,4 +164,33 @@ class ReactiveApprehend:
 				else:
 					print ". This goal was already in the graph."
 
+class InstructionReceiver:
+	
+	def init(self, world, mem):
+		self.mem = mem
+		self.lastTime = time.now()
+	
+	def run(self, cycle, verbose = 2):
+		world = self.mem.get_and_lock(self.mem.STATES)
+		i = len(world.utterances)
+		while i > 0:
+			if self.lastTime - world.utterances[i - 1].time > 0:
+				break
+			i -= 1
+		newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
+		self.mem.unlock(self.mem.STATES)
+		#now add goals based on new utterances
+		for utterance in newUtterances:
+			if verbose >= 2:
+				print "received utterance:", utterance
+			if utterance == "point to the quad":
+				goal = goals.Goal(objective = "show-loc", subject = "self", 
+				directObject = "quad", indirectObject = "observer")
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
 	

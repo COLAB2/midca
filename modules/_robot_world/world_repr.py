@@ -28,6 +28,12 @@ class DetectionEvent:
 		self.id = id
 		self.type = type
 		self.loc = loc
+
+class UtteranceEvent:
+	
+	def __init__(self, utterance):
+		self.time = time.now()
+		self.utterance = utterance
 	
 class SimpleWorld:
 	
@@ -44,6 +50,10 @@ class SimpleWorld:
 	def __init__(self):
 		self.sightings = {}
 		self.objectsByID = {}
+		self.utterances = []
+	
+	def utterance(self, utteranceEvent):
+		self.utterances.append(utteranceEvent)
 	
 	def sighting(self, detectionEvent):
 		id = detectionEvent.id

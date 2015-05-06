@@ -1,5 +1,16 @@
 
 
+class AsynchronousAct:
+	
+	'''
+	MIDCA module that "executes" plans in which the individual actions will be conducted
+	asynchronously. This was originally designed to allow MIDCA to work as a robot
+	controller in communication with ROS sensor and effector nodes.
+	'''
+	
+	def init(self, world, mem):
+		self.mem = mem
+
 class SimpleAct:
 	
 	'''

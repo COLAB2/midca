@@ -1,0 +1,2 @@
+
+1) Create a MidcaModule class which saves self.mem in the init function and raises a not-implemented error in the run method. Modify all existing modules to inherit from this class.
