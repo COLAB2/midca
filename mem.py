@@ -11,13 +11,16 @@ class Memory:
 	
 	#if necessary for efficiency, these keys should be numbers or enum constants.
 	STATES = "__world states"
+	STATE = "__current state"
 	GOAL_GRAPH = "__goals"
 	CURRENT_GOALS = "__current goals"
 	PLANS = "__plans"
 	ACTIONS = "__actions"
+	FEEDBACK = "__feedback"
 	#ROS constants used by rosrun classes and related modules in act and perceive.
 	ROS_OBJS_DETECTED = "__detected object queue"
 	ROS_WORDS_HEARD = "__words heard queue"
+	ROS_FEEDBACK = "__ros feedback"
 	
 	def __init__(self, args = {}):
 		self.knowledge = {}

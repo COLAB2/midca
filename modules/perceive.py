@@ -1,23 +1,27 @@
 from MIDCA.modules._robot_world import world_repr
+from MIDCA import rosrun
 
 class ROSObserver:
 	
 	def init(self, world, mem):
 		self.mem = mem
-		self.mem.set(self.mem.STATES, world_repr.SimpleWorld())
+		self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 	
 	def run(self, cycle, verbose = 2):
 		detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
 		utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
-		world = self.mem.get_and_lock(self.mem.STATES)
+		feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
+		world = self.mem.get_and_lock(self.mem.STATE)
 		for event in detectionEvents:
 			world.sighting(event)
 		for event in utteranceEvents:
 			world.utterance(event)
-		self.mem.unlock(self.mem.STATES)
+		for msg in feedback:
+			self.mem.add(self.mem.FEEDBACK, rosrun.msg_as_dict(msg))
+		self.mem.unlock(self.mem.STATE)
 		if verbose > 1:
-			print "World observed:", len(detectionEvents), "new detection events and",
-			len(utteranceEvents), "utterances"
+			print "World observed:", len(detectionEvents), "new detection events,",
+			len(utteranceEvents), "utterances and", len(feedback), "feedback msgs"
 			
 	
 

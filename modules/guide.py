@@ -171,14 +171,13 @@ class InstructionReceiver:
 		self.lastTime = time.now()
 	
 	def run(self, cycle, verbose = 2):
-		world = self.mem.get_and_lock(self.mem.STATES)
+		world = self.mem.get(self.mem.STATE)
 		i = len(world.utterances)
 		while i > 0:
 			if self.lastTime - world.utterances[i - 1].time > 0:
 				break
 			i -= 1
 		newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
-		self.mem.unlock(self.mem.STATES)
 		#now add goals based on new utterances
 		for utterance in newUtterances:
 			if verbose >= 2:

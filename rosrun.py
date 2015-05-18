@@ -2,6 +2,51 @@ import rospy
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
 from MIDCA.modules._robot_world import world_repr
+from MIDCA import time
+
+rosMidca = None
+nextID = 0
+
+def send_msg(topic, msg):
+	if not rosMidca:
+		raise Exception("RosMidca object has not been initialized and no messages can be \
+		sent")
+	return rosMidca.send_msg(topic, msg)
+
+def next_id(self):
+	global nextID
+	id = nextID
+	nextID += 1
+	return id
+
+def dict_as_msg(d):
+	s = ""
+	for key, value in d.items():
+		s += str(key) + ": " + str(value) + " | "
+	if s:
+		s = s[:-3] #remove last ' | '
+	return String(data = s)
+
+def msg_as_dict(msg):
+	info = {}
+	info["received_at"] = time.now()
+	for pair in msg.split("|"):
+		pair = pair.strip()
+		if not pair:
+			continue #ignore whitespace; e.g. after final '|'
+		try:
+			key, value = pair.split(":")
+		except:
+			raise Exception("Improperly formatted feedback received: " + s)
+			return
+		key = key.strip()
+		value = value.strip()
+		try:
+			value = float(value)
+		except:
+			pass #not a number; fine.
+		info[key] = value
+	return info		
 
 class RosMidca:
 	
@@ -12,12 +57,22 @@ class RosMidca:
 		self.outgoingMsgHandlers = outgoingMsgHandlers
 		self.dynamicPublishers = False
 	
+	def run_midca(self, minCycleRate = 0, maxPhaseLength = 30):
+		self.midca.init()
+		while not rospy.is_shutdown():
+			try:
+				time.run_for(maxPhaseLength, self.midca.next_phase, verbose = 0)
+			except rospy.ROSInterruptException:
+				break
+	
 	def ros_connect(self):
 		rospy.init_node("MIDCA")
 		for handler in self.incomingMsgHandlers:
 			handler.subscriber = rospy.Subscriber(handler.topic, handler.msgType, handler.callback)
 		for handler in self.outgoingMsgHandlers:
 			handler.publisher = rospy.Publisher(handler.topic, handler.msgType)
+		global rosMidca
+		rosMidca = self
 	
 
 	def send_msg(self, topic, msg):
@@ -30,6 +85,7 @@ class RosMidca:
 		also be possible to have one handler implement both behaviors, but this might not
 		be desirable.
 		'''
+		sent = False
 		for handler in self.outgoingMsgHandlers:
 			if handler.topic == topic:
 				if handler.publisher == None:
@@ -54,7 +110,8 @@ class RosMidca:
 					if convertedMsg:
 						rospy.loginfo("Midca sending msg: " + str(convertedMsg))
 						handler.publisher.publish(convertedMsg)
-				
+						sent = True
+		return sent		
 	
 
 class IncomingMsgHandler:
@@ -113,6 +170,38 @@ class UtteranceHandler(IncomingMsgHandler):
 		if not self.mem:
 			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
 		self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
+
+class FeedbackHandler(IncomingMsgHandler):
+	
+	'''
+	Handler that accepts feedback from ROS about commands issued. String is formatted as:
+	argName: value | argName: value | ...
+	Where argName is a string and value can be a string or number - if float(value) 
+	succeeds it is interpreted as a number; otherwise a string.
+	Common args are ('cmd_id': name of command issued by MIDCA), ('time': time at which MIDCA
+	sent the command as reported by MIDCA), ('code': code representing success, 
+	different failure types, in-progress, etc.) cmd and time are intended to uniquely 
+	identify the command which is being referred to. 
+	'''
+	
+	def __init__(self, topic, midcaObject, memKey = None):
+		callback = lambda strMsg: self.store_feedback(strMsg)
+		msgType = String
+		super(UtteranceHandler, self).__init__(topic, msgType, callback, midcaObject)
+		if memKey:
+			self.memKey = memKey
+		else:
+			self.memKey = self.mem.ROS_FEEDBACK
+	
+	def store_feedback(self, msg):
+		if not self.mem:
+			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+		s = msg.data		
+		try:
+			self.mem.add(self.memKey, s)
+		except:
+			print "Error reading feedback: ", s, " - format should be key: value | key : \
+			 value..."
 	
 class OutgoingMsgHandler:
 	

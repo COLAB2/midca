@@ -116,6 +116,11 @@ class SimpleWorld:
 					return detectionEven.type
 		return None
 	
+	def all_sightings(self, objectOrID):
+		object = self.get_object(objectOrID)
+		if object and object in sightings:
+			return sightings[object]
+	
 	def location_history(self, objectOrID):
 		'''
 		returns a list of tuples (loc, time) for the locations of the designated object.

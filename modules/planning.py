@@ -1,7 +1,8 @@
 from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish
 from MIDCA import plans
 import collections
-import traceback
+import traceback	
+from MIDCA.modules._plan.asynch import asynch
 
 class GenericPyhopPlanner:
 	
@@ -34,18 +35,48 @@ class GenericPyhopPlanner:
 	def init(self, world, mem):
 		self.mem = mem
 	
-	def run(self, cycle, verbose = 2):
-		states = self.mem.get(self.mem.STATES)
-		if hasattr(states, "__len__"): #is a list of states not a single state
-			if len(states) == 0 or not states[-1]:
+	def get_old_plan(self, state, goals, verbose = 2):
+		try:
+			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+			try:
+				valid = self.validate_plan(state, plan)
+				if verbose >= 2:
+					if valid:
+						print "Old plan found that tests as valid:", plan
+					else:
+						print "Old plan found that tests as invalid:", plan
+			except:
+				if verbose >= 2:
+					print "Error validating plan:", plan
+				valid = False
+		except:
+			print "Error checking for old plans"
+			plan = None
+			valid = False
+		if valid:
+			return plan
+		return None
+	
+	def get_new_plan(self, state, goals, verbose = 2):
+		if verbose >= 2:
+				print "Planning..."
+			try:
+				plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
+				#note: MIDCA does not convert its state and goals to pyhop state and
+				#goal objects. Therefore, pyhop will not print correctly if verbose is
+				#set to other than 0.
+			except:
 				if verbose >= 1:
-					print "No world state loaded. Skipping planning.
-				return
-			else:
-				state = states[-1] #pick most recent state
-		else: #assumed to be a single world state unless None
+					print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
+				return None
+		return plan
+	
+	def run(self, cycle, verbose = 2):
+		state = self.mem.get(self.mem.STATE)
+		if not state:
+			states  = self.mem.get(self.mem.STATES)
 			if states:
-				state = states
+				state = states[-1]
 			else:
 				if verbose >= 1:
 					print "No world state loaded. Skipping planning.
@@ -57,34 +88,16 @@ class GenericPyhopPlanner:
 			if verbose >= 2:
 				print "No goals received by planner. Skipping planning."
 			return
-		
-		try:
-			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
-			try:
-				valid = self.validate_plan(state, plan)
-				if valid:
-					print "Old plan found that tests as valid:", plan, "Will not replan" 
-				else:
-					print "Old plan found that tests as invalid:", plan, "Will replan"
-			except:
-				print "Error validating plan:", plan, "Will replan"
-				valid = False
-		except:
-			print "Error checking for old plans. Will plan from scratch."
-			plan = None
-			valid = False
-		
-		if not plan or not valid:
-			if verbose >= 2:
-				print "Planning..."
-			try:
-				plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
-				#note: MIDCA does not convert its state and goals to pyhop state and
-				#goal objects. Therefore, pyhop will not print correctly if verbose is
-				#set to other than 0.
-			except:
-				print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
-				return
+		plan = self.get_old_plan(state, goals, verbose)
+		if verbose > 2:
+			if plan:
+				print "Will not replan"
+			else:
+				print "Will replan"	
+		if not plan:
+			plan = self.get_old_plan(state, goals, verbose)
+		if not plan:
+			return
 		midcaPlan = plans.Plan(plan, goals) 
 		if verbose >= 1:
 				print "Planning complete."
@@ -93,8 +106,51 @@ class GenericPyhopPlanner:
 		#save new plan
 		if midcaPlan != None:
 			self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
-		
 
+class AsynchPyhopPlanner(GenericPyhopPlanner):
+	
+	'''
+	This planner is the same as the GenericPyhopPlanner, but it returns an asynchronous
+	plan.
+	'''
+	
+	def run(self, cycle, verbose = 2):
+		state = self.mem.get(self.mem.STATE)
+		if not state:
+			states  = self.mem.get(self.mem.STATES)
+			if states:
+				state = states[-1]
+			else:
+				if verbose >= 1:
+					print "No world state loaded. Skipping planning.
+				return
+		#now state is the most recent (or only) state and is non-null
+		
+		goals = self.mem.get(self.mem.CURRENT_GOALS)
+		if not goals:
+			if verbose >= 2:
+				print "No goals received by planner. Skipping planning."
+			return
+		plan = self.get_old_plan(state, goals, verbose)
+		if verbose > 2:
+			if plan:
+				print "Will not replan"
+			else:
+				print "Will replan"	
+		if not plan:
+			plan = self.get_old_plan(state, goals, verbose)
+		if not plan:
+			return
+		midcaPlan = plans.Plan(plan, goals)
+		asynchPlan = asynch.asynch_plan(self.mem, midcaPlan)
+		if verbose >= 1:
+				print "Planning complete."
+			if verbose >= 2:
+				print "Plan: ", asynchPlan
+		#save new plan
+		if asynchPlan != None:
+			self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
+	
 class PyHopPlanner:
 	
 	'''
