@@ -29,7 +29,7 @@ class GenericPyhopPlanner:
 		if plan_validator:
 			self.validate_plan = plan_validator
 		else:
-			self.validate_plan = lambda state, plan: return not plan.finished()
+			self.validate_plan = lambda state, plan: not plan.finished()
 			#note by default plans execute to completion unless goals change.
 	
 	def init(self, world, mem):
@@ -59,7 +59,7 @@ class GenericPyhopPlanner:
 	
 	def get_new_plan(self, state, goals, verbose = 2):
 		if verbose >= 2:
-				print "Planning..."
+			print "Planning..."
 			try:
 				plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
 				#note: MIDCA does not convert its state and goals to pyhop state and
@@ -79,7 +79,7 @@ class GenericPyhopPlanner:
 				state = states[-1]
 			else:
 				if verbose >= 1:
-					print "No world state loaded. Skipping planning.
+					print "No world state loaded. Skipping planning."
 				return
 		#now state is the most recent (or only) state and is non-null
 		
@@ -100,7 +100,7 @@ class GenericPyhopPlanner:
 			return
 		midcaPlan = plans.Plan(plan, goals) 
 		if verbose >= 1:
-				print "Planning complete."
+			print "Planning complete."
 			if verbose >= 2:
 				print "Plan: ", midcaPlan
 		#save new plan
@@ -122,7 +122,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
 				state = states[-1]
 			else:
 				if verbose >= 1:
-					print "No world state loaded. Skipping planning.
+					print "No world state loaded. Skipping planning."
 				return
 		#now state is the most recent (or only) state and is non-null
 		
@@ -144,7 +144,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
 		midcaPlan = plans.Plan(plan, goals)
 		asynchPlan = asynch.asynch_plan(self.mem, midcaPlan)
 		if verbose >= 1:
-				print "Planning complete."
+			print "Planning complete."
 			if verbose >= 2:
 				print "Plan: ", asynchPlan
 		#save new plan

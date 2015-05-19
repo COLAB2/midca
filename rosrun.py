@@ -89,8 +89,8 @@ class RosMidca:
 		for handler in self.outgoingMsgHandlers:
 			if handler.topic == topic:
 				if handler.publisher == None:
-					rospy.logerr("publisher for topic " + str(topic) " has not been \
-					initialized. Msg " + str(msg) + " Will not be sent.")
+					rospy.logerr("publisher for topic " + str(topic) + " has not been " +
+					"initialized. Msg " + str(msg) + " Will not be sent.")
 				else:
 					if hasattr(handler, "convert_outgoing_msg"):
 						try:
@@ -102,7 +102,7 @@ class RosMidca:
 					else:
 						if not isinstance(msg, handler.msgType):
 							rospy.logerr("No message conversion function specified and msg " +
-							str(msg) " is of type " + str(type(msg)) + " where " + 
+							str(msg) + " is of type " + str(type(msg)) + " where " + 
 							str(handler.msgType) + " was expected. Msg will not be sent.")
 							convertedMsg = None
 						else:
@@ -205,7 +205,7 @@ class FeedbackHandler(IncomingMsgHandler):
 	
 class OutgoingMsgHandler:
 	
-	def __init__(Self, topic, msgType):
+	def __init__(self, topic, msgType):
 		self.topic = topic
 		self.msgType = msgType
 		self.publisher = None
