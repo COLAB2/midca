@@ -7,7 +7,7 @@ def now():
 def epoch():
 	return datetime.utcfromtimestamp(0)
 
-def run_for(self, timeout, func, *args, **kwargs):
+def run_for(timeout, func, *args, **kwargs):
 	'''
 	runs a function for timeout seconds or until it terminates. If not completed, the
 	process will be terminated after timeout.

@@ -24,7 +24,6 @@ class Memory:
 	
 	def __init__(self, args = {}):
 		self.knowledge = {}
-		self.clear()
 		self.update(args)
 		self.logger = None
 		self.mainLock = threading.Lock() #to synchronize lock creation
@@ -138,7 +137,7 @@ class Memory:
 				return None
 		self.locks[structname].acquire()
 		self.logAccess(structname)
-		return self.knowledge(structname)
+		return self.knowledge[structname]
 	
 	def unlock(self, structname):
 		try:

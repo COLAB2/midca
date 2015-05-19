@@ -25,6 +25,7 @@ class GenericPyhopPlanner:
 		except:
 			print "Error declaring pyhop methods and operators. This planner will be \
 			disabled"
+			traceback.print_exc()
 			self.working = False
 		if plan_validator:
 			self.validate_plan = plan_validator

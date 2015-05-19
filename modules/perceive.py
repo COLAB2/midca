@@ -12,6 +12,12 @@ class ROSObserver:
 		utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
 		feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
 		world = self.mem.get_and_lock(self.mem.STATE)
+		if not detectionEvents:
+			detectionEvents = []
+		if not utteranceEvents:
+			utteranceEvents = []
+		if not feedback:
+			feedback = []
 		for event in detectionEvents:
 			world.sighting(event)
 		for event in utteranceEvents:

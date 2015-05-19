@@ -61,7 +61,7 @@ class RosMidca:
 		self.midca.init()
 		while not rospy.is_shutdown():
 			try:
-				time.run_for(maxPhaseLength, self.midca.next_phase, verbose = 0)
+				time.run_for(maxPhaseLength, self.midca.next_phase, verbose = 2)
 			except rospy.ROSInterruptException:
 				break
 	
@@ -70,7 +70,7 @@ class RosMidca:
 		for handler in self.incomingMsgHandlers:
 			handler.subscriber = rospy.Subscriber(handler.topic, handler.msgType, handler.callback)
 		for handler in self.outgoingMsgHandlers:
-			handler.publisher = rospy.Publisher(handler.topic, handler.msgType)
+			handler.publisher = rospy.Publisher(handler.topic, handler.msgType, queue_size = 10)
 		global rosMidca
 		rosMidca = self
 	
@@ -114,7 +114,7 @@ class RosMidca:
 		return sent		
 	
 
-class IncomingMsgHandler:
+class IncomingMsgHandler(object):
 	
 	def __init__(self, topic, msgType, callback, midcaObject = None):
 		if midcaObject:
@@ -187,7 +187,7 @@ class FeedbackHandler(IncomingMsgHandler):
 	def __init__(self, topic, midcaObject, memKey = None):
 		callback = lambda strMsg: self.store_feedback(strMsg)
 		msgType = String
-		super(UtteranceHandler, self).__init__(topic, msgType, callback, midcaObject)
+		super(FeedbackHandler, self).__init__(topic, msgType, callback, midcaObject)
 		if memKey:
 			self.memKey = memKey
 		else:
@@ -203,7 +203,7 @@ class FeedbackHandler(IncomingMsgHandler):
 			print "Error reading feedback: ", s, " - format should be key: value | key : \
 			 value..."
 	
-class OutgoingMsgHandler:
+class OutgoingMsgHandler(object):
 	
 	def __init__(self, topic, msgType):
 		self.topic = topic

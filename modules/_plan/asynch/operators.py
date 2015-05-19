@@ -20,4 +20,4 @@ def block_until_complete(state):
 	return state
 
 def declare_ops():
-	pyhop.declare_operators(block_until_seen_op, point_at_op, block_until_complete_op)
+	pyhop.declare_operators(block_until_seen, point_at, block_until_complete)

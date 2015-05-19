@@ -34,7 +34,7 @@ def allowed_sighting_wait(objectID):
 '''
 
 def get_asynch_action(midcaAction):
-	raise ArgumentException("midca action " + str(midcaAction) " does not translate to a \
+	raise ArgumentException("midca action " + str(midcaAction)  + " does not translate to a \
 	valid asynchronous action.")
 
 def asynch_plan(mem, midcaPlan):
@@ -51,7 +51,7 @@ def asynch_plan(mem, midcaPlan):
 			cmdID = rosrun.next_id()
 			actions.append(DoPoint(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1], allowed_sighting_wait(midcaAction[1]),
-			POINT_TOPIC, cmd_id))
+			POINT_TOPIC, cmd_id)))
 		else:
 			if verbose >= 1:
 				print "MIDCA action", midcaAction, "does not correspond to an asynch",
