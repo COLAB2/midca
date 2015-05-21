@@ -1,8 +1,10 @@
 import rospy
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import PointStamped
 from std_msgs.msg import String
 from MIDCA.modules._robot_world import world_repr
 from MIDCA import time
+
+FEEDBACK_TOPIC = "midcaFeedback"
 
 rosMidca = None
 nextID = 0
@@ -57,13 +59,15 @@ class RosMidca:
 		self.outgoingMsgHandlers = outgoingMsgHandlers
 		self.dynamicPublishers = False
 	
-	def run_midca(self, minCycleRate = 0, maxPhaseLength = 30):
+	def run_midca(self, cycleRate = 10, maxPhaseLength = 30):
 		self.midca.init()
+		cycleRate = rospy.Rate(cycleRate)
 		while not rospy.is_shutdown():
 			try:
-				time.run_for(maxPhaseLength, self.midca.next_phase, verbose = 2)
+				self.midca.next_phase(verbose = 2)
 			except rospy.ROSInterruptException:
 				break
+			cycleRate.sleep()
 	
 	def ros_connect(self):
 		rospy.init_node("MIDCA")
@@ -140,7 +144,7 @@ class FixedObjectLocationHandler(IncomingMsgHandler):
 	
 	def __init__(self, topic, objID, midcaObject, memKey = None):
 		callback = lambda pointMsg: self.store_location(pointMsg)
-		msgType = Point
+		msgType = PointStamped
 		super(FixedObjectLocationHandler, self).__init__(topic, msgType, callback,
 		midcaObject)
 		self.objID = objID
@@ -153,7 +157,7 @@ class FixedObjectLocationHandler(IncomingMsgHandler):
 		if not self.mem:
 			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
 		self.mem.add(self.memKey, world_repr.DetectionEvent(id = self.objID, 
-		loc = pointMsg))
+		loc = pointMsg.point))
 
 class UtteranceHandler(IncomingMsgHandler):
 	

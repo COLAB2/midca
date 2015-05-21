@@ -1,17 +1,55 @@
+from MIDCA import time
 
-
+class EvalPointingFromFeedback:
+	
+	def init(self, world, mem):
+		self.mem = mem
+		self.lastCheck = time.epoch()
+	
+	def run(self, cycle, verbose = 2):
+		world = self.mem.get(self.mem.STATE)
+		
 
 class SimpleEval:
 	
 	def init(self, world, mem):
 		self.mem = mem
+		try:
+			goals = self.mem.get(self.mem.CURRENT_GOALS)
+		except KeyError:
+			goals = []
+		if not goals:
+			if verbose >= 2:
+				print "No current goals. Skipping eval"
+		else:
+			goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+			plan = goalGraph.getMatchingPlan(goals)
+			if not plan:
+				if verbose >= 2:
+					print "No plan found that achieves all current goals. " +
+					"Skipping eval based on plan completion"
+			else:
+				if plan.finished():
+					if verbose >= 1:
+						print "Plan:", plan. "complete. Removing its goals"
+					for goal in plan.goals:
+						goalGraph.remove(goal)
+					numPlans = len(goalGraph.plans)
+					goalGraph.removeOldPlans()
+					newNumPlans = len(goalGraph.plans)
+					if numPlans != newNumPlans and verbose >= 1:
+						print "removing", numPlans - newNumPlans, 
+						"plans that no longer apply."
+				else:
+					if verbose >= 2:
+						print "Plan:", plan, "not complete"
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
 		try:
 			goals = self.mem.get(self.mem.CURRENT_GOALS)
 		except KeyError:
-			goqls = []
+			goals = []
 		if goals:
 			for goal in goals:
 				try:

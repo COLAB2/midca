@@ -2,14 +2,19 @@ from MIDCA import rosrun, time, plans
 import traceback
 from geometry_msgs.msg import PointStamped
 
+END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
+NS_COLOR_CODE = END_COLOR_CODE
 IN_PROGRESS = 1
+IP_COLOR_CODE = '\033[92m'
 COMPLETE = 2
+C_COLOR_CODE = '\033[94m'
 FAILED = 3
+F_COLOR_CODE = '\033[91m'
 
 FEEDBACK_KEY = "code"
 CMD_ID_KEY = "cmd_id"
-POINT_TOPIC = "point_cmds"
+POINT_TOPIC = "point_cmd"
 
 #set this to change output for all asynch actions.
 verbose = 2
@@ -91,6 +96,21 @@ class AsynchPlan(plans.Plan):
 			elif action.status == IN_PROGRESS:
 				status = IN_PROGRESS
 		return status
+	
+	def __str__(self):
+		s = ""
+		for action in self.actions:
+			if action.status == NOT_STARTED:
+				s += NS_COLOR_CODE
+			elif action.status == IN_PROGRESS:
+				s += IP_COLOR_CODE
+			elif action.status == FAILED:
+				s += F_COLOR_CODE
+			elif action.status == COMPLETE:
+				s += C_COLOR_CODE
+			
+			s += str(action) + " "
+		return s[:-1] + END_COLOR_CODE
 
 class AsynchAction:
 	

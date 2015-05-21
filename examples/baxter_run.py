@@ -30,7 +30,7 @@ myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
-	rosrun.FixedObjectLocationHandler("quad_position", "quad", myMidca),
+	rosrun.FixedObjectLocationHandler("quad_pos", "quad", myMidca),
 	rosrun.UtteranceHandler("cmds_received", myMidca),
 	rosrun.FeedbackHandler("feedback", myMidca)],
 	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.POINT_TOPIC, String)])
