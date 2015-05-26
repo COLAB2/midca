@@ -30,8 +30,9 @@ class GenericPyhopPlanner:
 		if plan_validator:
 			self.validate_plan = plan_validator
 		else:
-			self.validate_plan = lambda state, plan: not plan.finished()
-			#note by default plans execute to completion unless goals change.
+			self.validate_plan = lambda state, plan: asynch.FAILED not in [action.status for action in plan]
+			#note by default plans execute to completion unless goals 
+			#change or an action fails.
 	
 	def init(self, world, mem):
 		self.mem = mem

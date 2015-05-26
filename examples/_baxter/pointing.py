@@ -10,7 +10,7 @@ import time
 import rospy
 
 # baxter_interface - Baxter Python API
-#import baxter_interface
+import baxter_interface
 
 #Message carrying location of target
 from geometry_msgs.msg import Point
@@ -73,7 +73,7 @@ def point_callback(data, cmd_id = 'point_def_id'):
         #limb.move_to_joint_positions(angles) #blocking
     else:
         rospy.loginfo("Point: target out of pointing range " + str(data))
-        midca_feedback(cmd_id = d['cmd_id'], code = asynch.FAILED)
+        midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
 
 def fake_point(data):
 	print("pretending to point")
@@ -84,6 +84,7 @@ def fake_point(data):
 	midca_feedback(cmd_id = d['cmd_id'], code = asynch.COMPLETE)
 
 def msg_callback(data):
+    print("got msg:", data)
     msg = data.data
     d = rosrun.msg_as_dict(msg)
     if not 'x' in d and 'y' in d and 'z' in d and 'cmd_id' in d:
@@ -98,16 +99,16 @@ def msg_callback(data):
                          " are not well-formed. Msg will be ignored.")
             midca_feedback(cmd_id = d['cmd_id'], code = asynch.FAILED)
             return
-        point_callback(data, d['cmd_id'])
+        point_callback(point, d['cmd_id'])
     
 def start_node(targetTopic, limbName = 'right'):
     rospy.init_node('baxter_point')
     rospy.loginfo("Reading point commands from topic " + targetTopic)
-    rospy.Subscriber(targetTopic, String, fake_point) 
-    #rospy.Subscriber(targetTopic, String, point_callback)    
+    #rospy.Subscriber(targetTopic, String, fake_point) 
+    rospy.Subscriber(targetTopic, String, msg_callback)    
     global limb, feedbackPub
     feedbackPub = rospy.Publisher(rosrun.FEEDBACK_TOPIC, String, queue_size = 10)
-    #limb = baxter_interface.Limb('limbName')
+    limb = baxter_interface.Limb(limbName)
     rospy.spin()
 
 def test_angle_finder():

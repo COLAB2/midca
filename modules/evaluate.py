@@ -13,7 +13,11 @@ class EvalPointingFromFeedback:
 		else:
 			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
 			if plan.finished():
-				
+				if verbose >= 1:
+					print "Plan", plan, "finished. Removing it and associated goals"
+				goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+				goalGraph.removePlanGoals(plan)
+				goalGraph.removePlan(plan)
 		
 
 class SimpleEval:
