@@ -2,7 +2,7 @@ from datetime import datetime
 import multiprocessing
 
 def now():
-	return (datetime.now() - epoch()).total_seconds()
+	return float((datetime.now() - epoch()).total_seconds())
 
 def epoch():
 	return datetime.utcfromtimestamp(0)

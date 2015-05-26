@@ -39,13 +39,16 @@ class GenericPyhopPlanner:
 	def get_old_plan(self, state, goals, verbose = 2):
 		try:
 			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+			if not plan:
+				return None
 			try:
 				valid = self.validate_plan(state, plan)
 				if verbose >= 2:
 					if valid:
 						print "Old plan found that tests as valid:", plan
 					else:
-						print "Old plan found that tests as invalid:", plan
+						print "Old plan found that tests as invalid:", plan, ". removing from stored plans."
+						self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
 			except:
 				if verbose >= 2:
 					print "Error validating plan:", plan
@@ -61,15 +64,15 @@ class GenericPyhopPlanner:
 	def get_new_plan(self, state, goals, verbose = 2):
 		if verbose >= 2:
 			print "Planning..."
-			try:
-				plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
-				#note: MIDCA does not convert its state and goals to pyhop state and
-				#goal objects. Therefore, pyhop will not print correctly if verbose is
-				#set to other than 0.
-			except:
-				if verbose >= 1:
-					print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
-				return None
+		try:
+			plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
+			#note: MIDCA does not convert its state and goals to pyhop state and
+			#goal objects. Therefore, pyhop will not print correctly if verbose is
+			#set to other than 0.
+		except:
+			if verbose >= 1:
+				print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
+			return None
 		return plan
 	
 	def run(self, cycle, verbose = 2):
@@ -138,8 +141,10 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
 				print "Will not replan"
 			else:
 				print "Will replan"	
+		if plan:
+			return
 		if not plan:
-			plan = self.get_old_plan(state, goals, verbose)
+			plan = self.get_new_plan(state, goals, verbose)
 		if not plan:
 			return
 		midcaPlan = plans.Plan(plan, goals)

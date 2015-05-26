@@ -9,7 +9,7 @@ def block_until_seen(state, objectID):
 	'''
 	return state
 
-def point_at(state, objectID):
+def point_to(state, objectID):
 	return state
 
 def block_until_complete(state):
@@ -20,4 +20,4 @@ def block_until_complete(state):
 	return state
 
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_at, block_until_complete)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete)

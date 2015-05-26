@@ -15,7 +15,7 @@ def send_msg(topic, msg):
 		sent")
 	return rosMidca.send_msg(topic, msg)
 
-def next_id(self):
+def next_id():
 	global nextID
 	id = nextID
 	nextID += 1
@@ -89,6 +89,7 @@ class RosMidca:
 		also be possible to have one handler implement both behaviors, but this might not
 		be desirable.
 		'''
+		print "trying to send message on topic", topic
 		sent = False
 		for handler in self.outgoingMsgHandlers:
 			if handler.topic == topic:
@@ -171,6 +172,7 @@ class UtteranceHandler(IncomingMsgHandler):
 			self.memKey = self.mem.ROS_WORDS_HEARD
 	
 	def store_utterance(self, utterance):
+		print "storing utterance:", utterance
 		if not self.mem:
 			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
 		self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
@@ -184,8 +186,7 @@ class FeedbackHandler(IncomingMsgHandler):
 	succeeds it is interpreted as a number; otherwise a string.
 	Common args are ('cmd_id': name of command issued by MIDCA), ('time': time at which MIDCA
 	sent the command as reported by MIDCA), ('code': code representing success, 
-	different failure types, in-progress, etc.) cmd and time are intended to uniquely 
-	identify the command which is being referred to. 
+	different failure types, in-progress, etc.) 
 	'''
 	
 	def __init__(self, topic, midcaObject, memKey = None):

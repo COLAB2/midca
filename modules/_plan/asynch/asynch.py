@@ -52,11 +52,11 @@ def asynch_plan(mem, midcaPlan):
 		if midcaAction[0] == "block_until_seen":
 			actions.append(AwaitCurrentLocation(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
-		elif midcaAction[0] == "point_at":
+		elif midcaAction[0] == "point_to":
 			cmdID = rosrun.next_id()
 			actions.append(DoPoint(mem, midcaAction, midcaAction[1], 
-			allowed_sighting_lag(midcaAction[1], allowed_sighting_wait(midcaAction[1]),
-			POINT_TOPIC, cmd_id)))
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			POINT_TOPIC, cmdID))
 		else:
 			if verbose >= 1:
 				print "MIDCA action", midcaAction, "does not correspond to an asynch",
@@ -130,11 +130,11 @@ class AsynchAction:
 	def execute(self):
 		if not self.startTime:
 			self.startTime = time.now()
+		self.status = IN_PROGRESS
 		if not self.executeFunc:
 			return
 		try:
-			self.executeFunc(self.mem, self.midcaAction, self.status)
-			self.status = IN_PROGRESS
+			self.executeFunc(self.mem, self.midcaAction, self.status)	
 		except:
 			if verbose >= 2:
 				print "Error executing action", self, ":\n", traceback.format_exc(), 
@@ -158,7 +158,7 @@ class AsynchAction:
 		except:
 			if verbose >= 1:
 				print "Error checking completion status for action", self, " - Assuming \
-				 failure"
+				 failure:\n", traceback.format_exc()
 			self.status = FAILED
 	
 	def ros_msg(self, topic, d):
@@ -176,12 +176,12 @@ class AsynchAction:
 		return str(self.midcaAction)
 
 def get_last_location(mem, objectOrID):
-	world = mem.get(self.mem.STATE)
+	world = mem.get(mem.STATE)
 	sightings = world.all_sightings(objectOrID)
 	if not sightings:
 		return None
 	else:
-		for detectionEvent in sightings.reverse():
+		for detectionEvent in reversed(sightings):
 			if detectionEvent.loc:
 				return (detectionEvent.loc, detectionEvent.time)
 	return None
@@ -199,7 +199,7 @@ class AwaitCurrentLocation(AsynchAction):
 		self.maxDuration = maxDuration
 		executeAction = None
 		completionCheck = lambda mem, midcaAction, status: self.completion_check()
-		super(AwaitCurrentLocation, self).__init__(mem, midcaAction, executeAction, 
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
 		completionCheck, True)
 	
 	def completion_check(self):
@@ -227,18 +227,16 @@ class DoPoint(AsynchAction):
 		self.objectOrID = objectOrID
 		self.maxAllowedLag = maxAllowedLag
 		self.maxDuration = maxDuration
-		self.lastCheck = time.epoch()
+		self.lastCheck = 0.0
 		self.topic = topic
 		self.complete = False
 		self.msgID = msgID
 		executeAction = lambda mem, midcaAction, status: self.send_point()
 		completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
-		super(AwaitCurrentLocation, self).__init__(mem, midcaAction, executeAction, 
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
 		completionCheck, True)
 	
 	def send_point(self):
-		if self.status != NOT_STARTED:
-			return #do not send cmd more than once
 		lastLocReport = get_last_location(self.mem, self.objectOrID)
 		t = time.now()
 		if not lastLocReport:
@@ -255,6 +253,7 @@ class DoPoint(AsynchAction):
 			return
 		self.msgDict = {'x': lastLocReport[0].x, 'y': lastLocReport[0].y, 
 		'z': lastLocReport[0].z, 'time': self.startTime, 'cmd_id': self.msgID}
+		print "trying to send"
 		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
 		if not sent:
 			if verbose >= 1:
@@ -266,7 +265,9 @@ class DoPoint(AsynchAction):
 		checkTime = self.lastCheck
 		self.lastCheck = time.now()
 		feedback = self.mem.get(self.mem.FEEDBACK)
-		for item in feedback.reverse():
+		if not feedback:
+			return False
+		for item in reversed(feedback):
 			#if all items have been checked, either in this check or previous, return
 			if item['received_at'] - checkTime < 0:
 				return False

@@ -192,4 +192,5 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
+		self.lastTime = time.now()
 	

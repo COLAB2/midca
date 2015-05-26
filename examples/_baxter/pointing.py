@@ -10,13 +10,13 @@ import time
 import rospy
 
 # baxter_interface - Baxter Python API
-import baxter_interface
+#import baxter_interface
 
 #Message carrying location of target
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
 from MIDCA import rosrun
-from MIDCA.modules._plan.asynch import asycnh
+from MIDCA.modules._plan.asynch import asynch
 
 limb = None
 feedbackPub = None
@@ -59,7 +59,7 @@ def check_range(target):
     return right_s0 < 1.55 and right_s0 > -1.6 and right_s1 < 1 and right_s1 > -1.35
 
 def midca_feedback(**kwargs):
-    msg = String(data = rosrun.dict_as_msg(kwargs))
+    msg = rosrun.dict_as_msg(kwargs)
     feedbackPub.publish(msg)
 
 def point_callback(data, cmd_id = 'point_def_id'):
@@ -69,13 +69,21 @@ def point_callback(data, cmd_id = 'point_def_id'):
         rospy.loginfo("Point: setting target to" + str(data))
         limb.move_to_joint_positions(point_joint_angles([data.x, data.y, 
         data.z]), threshold = 0.05)
-        midca_feedback(cmd_id = d['cmd_id'], code = asynch.COMPLETE)
+        midca_feedback(cmd_id = cmd_id, code = asynch.COMPLETE)
         #limb.move_to_joint_positions(angles) #blocking
     else:
         rospy.loginfo("Point: target out of pointing range " + str(data))
         midca_feedback(cmd_id = d['cmd_id'], code = asynch.FAILED)
 
-def msg_callback(data, cmd_id):
+def fake_point(data):
+	print("pretending to point")
+	msg = data.data
+	d = rosrun.msg_as_dict(msg)
+	time.sleep(2)
+	print("sending feedback")
+	midca_feedback(cmd_id = d['cmd_id'], code = asynch.COMPLETE)
+
+def msg_callback(data):
     msg = data.data
     d = rosrun.msg_as_dict(msg)
     if not 'x' in d and 'y' in d and 'z' in d and 'cmd_id' in d:
@@ -92,13 +100,14 @@ def msg_callback(data, cmd_id):
             return
         point_callback(data, d['cmd_id'])
     
-def start_node(targetTopic, limbName = limbName):
+def start_node(targetTopic, limbName = 'right'):
     rospy.init_node('baxter_point')
     rospy.loginfo("Reading point commands from topic " + targetTopic)
-    rospy.Subscriber(targetTopic, String, point_callback)    
+    rospy.Subscriber(targetTopic, String, fake_point) 
+    #rospy.Subscriber(targetTopic, String, point_callback)    
     global limb, feedbackPub
     feedbackPub = rospy.Publisher(rosrun.FEEDBACK_TOPIC, String, queue_size = 10)
-    limb = baxter_interface.Limb('limbName')
+    #limb = baxter_interface.Limb('limbName')
     rospy.spin()
 
 def test_angle_finder():

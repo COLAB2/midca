@@ -4,10 +4,16 @@ class EvalPointingFromFeedback:
 	
 	def init(self, world, mem):
 		self.mem = mem
-		self.lastCheck = time.epoch()
 	
 	def run(self, cycle, verbose = 2):
-		world = self.mem.get(self.mem.STATE)
+		goals = self.mem.get(self.mem.CURRENT_GOALS)
+		if not goals:
+			if verbose >= 2:
+				print "No current goals. Skipping eval"
+		else:
+			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+			if plan.finished():
+				
 		
 
 class SimpleEval:
@@ -26,12 +32,12 @@ class SimpleEval:
 			plan = goalGraph.getMatchingPlan(goals)
 			if not plan:
 				if verbose >= 2:
-					print "No plan found that achieves all current goals. " +
+					print "No plan found that achieves all current goals. ",
 					"Skipping eval based on plan completion"
 			else:
 				if plan.finished():
 					if verbose >= 1:
-						print "Plan:", plan. "complete. Removing its goals"
+						print "Plan:", plan, "complete. Removing its goals"
 					for goal in plan.goals:
 						goalGraph.remove(goal)
 					numPlans = len(goalGraph.plans)

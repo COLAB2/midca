@@ -21,9 +21,14 @@ class AsynchronousAct:
 		try:
 			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
 		except:
-			print "Error loading plan. Skipping act phase."
+			if verbose >= 1:
+				print "Error loading plan. Skipping act phase."
 			return
 
+		if not plan:
+			if verbose > 2:
+				print "No current plan. Skipping Act phase"
+			return
 		i = 0
 		if plan.finished():
 			print "Plan", plan, "has already been completed"
@@ -33,7 +38,7 @@ class AsynchronousAct:
 		while i < len(plan):
 			action = plan[i]
 			try:
-				if action.status != asynch.FAILED and action.status != asynch.COMPLETED:
+				if action.status != asynch.FAILED and action.status != asynch.COMPLETE:
 					completed = action.check_complete()
 					if completed:
 						if verbose >= 2:
@@ -53,7 +58,7 @@ class AsynchronousAct:
 					print "Action", action, "Does not seem to have a valid execute() ",
 					"method. Therefore MIDCA cannot execute it"
 					action.status = asynch.FAILED
-			if action.status == asynch.COMPLETED:
+			if action.status == asynch.COMPLETE:
 				i += 1
 			elif not action.blocks:
 				i += 1

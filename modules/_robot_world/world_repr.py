@@ -70,11 +70,11 @@ class SimpleWorld:
 	def get_object(self, objectOrID):
 		if not isinstance(objectOrID, DetectedObject):
 			try:
-				object = self.objectsByID[objectOrID]
+				return self.objectsByID[objectOrID]
 			except KeyError:
 				return None
 		else:
-			object = objectOrID
+			return objectOrID
 	
 	def current_location(self, objectOrID, maxTimeSinceSeen):
 		'''
@@ -118,8 +118,8 @@ class SimpleWorld:
 	
 	def all_sightings(self, objectOrID):
 		object = self.get_object(objectOrID)
-		if object and object in sightings:
-			return sightings[object]
+		if object and object in self.sightings:
+			return self.sightings[object]
 	
 	def location_history(self, objectOrID):
 		'''
