@@ -7,20 +7,21 @@ class SimpleEval:
 		self.mem = mem
 	
 	def run(self, cycle, verbose = 2):
-                changes_str = "" # for trace
-                trace_str = "INPUT:\n" # for trace
-		world = self.mem.get(self.mem.STATES)[-1]
-                trace_str += "  world: "+str(world) # for trace
-		try:
-			goals = self.mem.get(self.mem.CURRENT_GOALS)
-                        trace_str += "  goals:"
-                        if goals:
-                                for g in goals:
-                                        trace_str += "    "+str(g)+"\n"
+                world = self.mem.get(self.mem.STATES)[-1]
+                try:
+                        goals = self.mem.get(self.mem.CURRENT_GOALS)
+                except KeyError:
+                        goals = []
+                
+                trace = self.mem.trace
+                if trace:
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("WORLD", copy.deepcopy(world))
+                        trace.add_data("GOALS", copy.deepcopy(goals))                
 
-		except KeyError:
-			goals = []
-		if goals:
+                goals_changed = False
+                        
+                if goals:
 			for goal in goals:
 				try:
 					achieved = world.atom_true(world.midcaGoalAsAtom(goal))
@@ -36,25 +37,23 @@ class SimpleEval:
 					return
 			if verbose >= 1:
 				print "All current goals achieved. Removing them from goal graph"
-			goalGraph = self.mem.get(self.mem.GOAL_GRAPH)		
+			goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
 			for goal in goals:
 				goalGraph.remove(goal)
-                                changes_str += "\n  Removed goal "+str(goal) # for trace
+                                if trace: trace.add_data("REMOVED GOAL", goal)
+                                goals_changed = True
 			numPlans = len(goalGraph.plans)
 			goalGraph.removeOldPlans()
 			newNumPlans = len(goalGraph.plans)
 			if numPlans != newNumPlans and verbose >= 1:
 				print "removing", numPlans - newNumPlans, "plans that no longer apply."
-                        changes_str += "\n  Removed "+str(numPlans-newNumPlans) # for trace
+                                goals_changed = True
 		else:
 			if verbose >= 2:
 				print "No current goals. Skipping eval"
-                # for trace
-                trace_str += "\nOUTPUT:\n"
-                trace_str += changes_str
-                trace = self.mem.trace
-                if trace:
-                        trace.addphase(cycle,self.__class__.__name__,trace_str)
+
+                if trace and goals_changed: trace.add_data("GOALS",goals)
+
 
 LAST_SCORED_GOAL = "Last Scored Goal"
 SCORE = "Score"

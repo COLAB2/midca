@@ -73,9 +73,11 @@ class CogTrace:
             for g in data:
                 print("    "+str(g))
         elif data_type == "PLAN":
-            print("  PLAN: "+str(data)) 
+            print("  PLAN: "+str(data))
+        elif data_type == "REMOVED GOAL":
+            print("  REMOVED GOAL: "+str(data))
         else:
-            print("  UNKNOWN_DATA_TYPE: "+str(data))
+            print("  UNKNOWN_DATA_TYPE '" + data_type + "' : "+str(data))
             
     def printtrace(self):
         for cycle in self.trace.keys():
