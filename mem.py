@@ -15,6 +15,7 @@ class Memory:
 		self.update(args)
 		self.logger = None
                 self.trace = None
+                self.myMidca = None
 
 	#Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
 	def _update(self, structname, val):
@@ -82,6 +83,9 @@ class Memory:
                         
         def enableTracing(self, trace):
                 self.trace = trace
+
+        def setMyMidca(self, myMidca):
+                self.myMidca = myMidca
                 
 
 

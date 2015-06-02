@@ -1,4 +1,4 @@
-from _plan import pyhop, methods_broken, operators, methods_extinguish_broken, operators_extinguish
+from _plan import pyhop, methods_broken, operators, methods_extinguish_broken, operators_extinguish, methods, methods_extinguish
 from MIDCA import plans
 import collections
 import copy 
@@ -94,6 +94,7 @@ class PyHopPlanner:
 			try:
 				pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
 			except Exception:
+                                print "Caught an exception HERE"
 				pyhopPlan = None
 			if not pyhopPlan and pyhopPlan != []:
 				if verbose >= 1:
@@ -103,6 +104,7 @@ class PyHopPlanner:
 					print
                                 trace_str += "  Planning failed for goals" 
                                 if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
+                                if trace: trace.failuredetected()
 				return
 			#change from pyhop plan to MIDCA plan
 			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)

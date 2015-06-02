@@ -31,7 +31,7 @@ class MIDCA:
 		self.initialized = False
 		self.phaseNum = 1
 		self.logger = logging.Logger()
-                self.trace = trace.CogTrace()
+                self.trace = trace.CogTrace(self.mem)
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -86,6 +86,7 @@ class MIDCA:
 		if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
 			raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
 		self.modules[phase].insert(i, module)
+                module.init(self.world, self.mem)
 	
 	def removeModule(self, phase, i):
 		if isinstance(phase, str):

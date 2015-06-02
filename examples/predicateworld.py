@@ -1,6 +1,6 @@
 from MIDCA import base
 from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
-from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, planning2, act
 
 def asqiiDisplay(world):
 	blocks = blockstate.get_block_list(world)

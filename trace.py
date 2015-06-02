@@ -1,12 +1,15 @@
 from __future__ import print_function
+from MIDCA.mem import Memory
+from MIDCA.modules import planning2
 
 class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
     # that module in that cycle
     trace = {}
     
-    def __init__(self):
+    def __init__(self, mem):
         print("Calling init! Trace is: "+str(self.trace))
+        self.mem = mem
 
     # def getInstance():
     #     if instance == None:
@@ -32,6 +35,17 @@ class CogTrace:
             self.trace[cycle][phase] = data                    
 
 
+    # When this is called, it means the current phase failed for some reason
+    def failuredetected(self):
+        # get the phase
+        #failed_phase = self.trace[-1].keys()[0]
+        #print("[trace.py] failed_phase is " + str(failed_phase))
+        # if it's a planning phase then switch domain files
+        #if failed_phase == "PyHopPlanner":
+        self.mem.myMidca.clear_phase("Plan")
+        self.mem.myMidca.append_module("Plan", planning2.PyHopPlanner(True))
+        print("swapped out the planner, try again")            
+            
     def printtrace(self):
         for cycle in self.trace.keys():
             for phase in self.trace[cycle].keys():
