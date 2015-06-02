@@ -1,4 +1,4 @@
-
+import copy
 class SimpleIntend:
 	
 	def init(self, world, mem):

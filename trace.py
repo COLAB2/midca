@@ -12,8 +12,8 @@ class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
     # that module in that cycle
     trace = {}
-    curr_cycle = -1
-    curr_phase = ""
+    cycle = -1 # current cycle
+    phase = "" # current phase
     
     def __init__(self, mem):
         print("Calling init! Trace is: "+str(self.trace))
@@ -42,15 +42,15 @@ class CogTrace:
             #print("Fresh insert of data for phase "+str(phase)+" in cycle "+str(cycle)+ " to " + str(data))
             self.trace[cycle][phase] = []
             
-        self.curr_cycle = cycle
-        self.curr_phase = phase
+        self.cycle = cycle
+        self.phase = phase
 
     def add_data(self, data_type, data):
         """
         data_type is one of "WORLD, GOALS, etc"
         """
-        if self.curr_cycle != -1 and self.phase != "":
-            self.trace[curr_cycle][phase].append([data_type,str(data)])
+        if self.cycle != -1 and self.phase != "":
+            self.trace[self.cycle][self.phase].append([data_type,str(data)])
             
             
     # When this is called, it means the current phase failed for some reason

@@ -1,4 +1,5 @@
 from trace import CogTrace
+import copy 
 class PerfectObserver:
 
 	'''
