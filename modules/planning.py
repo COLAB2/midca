@@ -35,22 +35,10 @@ class PyHopPlanner:
                         trace.add_data("WORLD", copy.deepcopy(world))
                         trace.add_data("GOALS", copy.deepcopy(goals))
                 
-
-                trace_str = "INPUT:\n  WORLD:"
-                trace_str += str(input_world)
-                trace_str += "  GOALS:\n "
-                if goals:
-                        for g in input_goals:
-                                trace_str += "    " + str(g) + "\n"
-                trace_str += "\nOUTPUT:\n  "
-                
-
 		if not goals:
 			if verbose >= 2:
 				print "No goals received by planner. Skipping planning."
                        
-                        
-                        if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
 			return
 		try:
 			midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -106,9 +94,10 @@ class PyHopPlanner:
 					for goal in goals:
 						print goal, " ",
 					print
-                                trace_str += "  Planning failed for goals" 
-                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
-                                if trace: trace.failuredetected()
+
+                                if trace:
+                                        trace.add_data("PLAN", "FAIL")
+                                        trace.failuredetected() # TODO - remove
 				return
 			#change from pyhop plan to MIDCA plan
 			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
@@ -120,9 +109,8 @@ class PyHopPlanner:
 			#save new plan
 			if midcaPlan != None:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
-                                
-                                trace_str += "  Plan: " + str(midcaPlan) 
-                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
+
+                                trace.add_data("PLAN",midcaPlan)
                 
 
 	def pyhop_state_from_world(self, world, name = "state"):

@@ -72,6 +72,8 @@ class CogTrace:
             print("  GOALS: ")
             for g in data:
                 print("    "+str(g))
+        elif data_type == "PLAN":
+            print("  PLAN: "+str(data)) 
         else:
             print("  UNKNOWN_DATA_TYPE: "+str(data))
             
@@ -82,6 +84,7 @@ class CogTrace:
                 for datum in self.trace[cycle][phase]:
                     # datum[0] is type, datum[1] is actual data
                     print_data(datum[0],datum[1])
+                    print("\n")
 
 #    def gen_trace_graph(self):
         
