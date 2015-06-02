@@ -220,16 +220,13 @@ class ADistanceAnomalyNoter:
 		elif verbose >= 2 and not self.anomalous():
 			print "No anomaly detected."
 
-                # trace at cog level
-                trace_str = "INPUT:\n"
-                trace_str += "  Old World State: " + str(prevworld)+"\n"
-                trace_str += "  New World State: " + str(currworld)+"\n"
-                trace_str += "OUTPUT:\n"
-                trace_str += "  Anomaly Detected: "+str(self.anomalous())+"\n"
 
                 trace = self.mem.trace
                 if trace:
-                        trace.addphase(cycle,self.__class__.__name__,trace_str)
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("PREV WORLD", prevworld)
+                        trace.add_data("CURR WORLD", currworld)
+                        trace.add_data("ANOMALY", self.anomalous())
 	
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):
