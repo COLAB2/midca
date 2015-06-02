@@ -26,11 +26,15 @@ class PyHopPlanner:
 	
 	#this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
-		world = self.mem.get(self.mem.STATES)[-1]
+                world = self.mem.get(self.mem.STATES)[-1]
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
 
-                input_world = copy.deepcopy(world) # for trace
-                input_goals = copy.deepcopy(goals) # for trace
+                trace = self.mem.trace
+                if trace:
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("WORLD", copy.deepcopy(world))
+                        trace.add_data("GOALS", copy.deepcopy(goals))
+                
 
                 trace_str = "INPUT:\n  WORLD:"
                 trace_str += str(input_world)
@@ -39,7 +43,7 @@ class PyHopPlanner:
                         for g in input_goals:
                                 trace_str += "    " + str(g) + "\n"
                 trace_str += "\nOUTPUT:\n  "
-                trace = self.mem.trace
+                
 
 		if not goals:
 			if verbose >= 2:
