@@ -68,6 +68,10 @@ class CogTrace:
     def print_data(data_type, data):
         if data_type == "WORLD":
             print("  WORLD: "+str(data))
+        elif data_type == "PREV WORLD":
+            print("  PREV WORLD: "+str(data))
+        elif data_type == "CURR WORLD":
+            print("  CURR WORLD: "+str(data))            
         elif data_type == "GOALS":
             print("  GOALS: ")
             for g in data:

@@ -21,12 +21,10 @@ class PerfectObserver:
 		if verbose >= 1:
 			print "World observed."
 
-                # trace at cog level
-                trace_str = "INPUT: NONE\nOUTPUT:"
-                trace_str += str(world)
                 trace = self.mem.trace
                 if trace:
-                        trace.addphase(cycle,self.__class__.__name__,trace_str)
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("WORLD",copy.deepcopy(world))
 
 
 class MAReport:

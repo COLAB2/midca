@@ -70,13 +70,12 @@ class UserGoalInput:
 					self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 					print "Goal added."
                                         goals_entered.append(goal)
-                # trace at cog level
-                trace_str = "INPUT # from user:\n"
-                trace_str += "  new goals: "+ str(goals_entered)+"\n"
-                trace_str += "OUTPUT # new goal graph:\n" + str(self.mem.GOAL_GRAPH)
-                
+
                 trace = self.mem.trace
-                trace.addphase(cycle,self.__class__.__name__,trace_str)
+                if trace:
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("USER GOALS", goals_entered)
+                        trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
 class TFStack:
 
