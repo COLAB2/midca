@@ -14,6 +14,8 @@ class CogTrace:
     trace = {}
     cycle = -1 # current cycle
     phase = "" # current phase
+
+    
     
     def __init__(self, mem):
         print("Calling init! Trace is: "+str(self.trace))
@@ -61,7 +63,7 @@ class CogTrace:
         # if it's a planning phase then switch domain files
         #if failed_phase == "PyHopPlanner":
         self.mem.myMidca.clear_phase("Plan")
-        self.mem.myMidca.append_module("Plan", planning2.PyHopPlanner(True))
+        self.mem.myMidca.runtime_append_module("Plan", planning2.PyHopPlanner(True))
         print("swapped out the planner, try again")            
 
 
@@ -73,11 +75,16 @@ class CogTrace:
         elif data_type == "CURR WORLD":
             print("  CURR WORLD: "+str(data))            
         elif data_type == "GOALS":
-            print("  GOALS: ")
-            for g in data:
-                print("    "+str(g))
+            if data is None:
+                print("  GOALS: []")
+            else:
+                print("  GOALS: ")                
+                for g in data:
+                    print("    "+str(g))
         elif data_type == "PLAN":
             print("  PLAN: "+str(data))
+        elif data_type == "ANOMALY":
+            print("  ANOMALY: " + str(data))
         elif data_type == "ACTION":
             print("  ACTION: "+str(data))
         elif data_type == "REMOVED GOAL":

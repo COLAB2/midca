@@ -74,7 +74,10 @@ class MIDCA:
 	
 	def append_module(self, phase, module):
 		self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
-	
+
+        def runtime_append_module(self, phase, module):
+                self.runtime_insert_module(phase, module, MAX_MODULES_PER_PHASE)
+                
 	#note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
 	def insert_module(self, phase, module, i):
 		if isinstance(phase, str):
@@ -86,8 +89,20 @@ class MIDCA:
 		if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
 			raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
 		self.modules[phase].insert(i, module)
-                module.init(self.world, self.mem)
-	
+
+        # just like insert_module but also calls module.init()
+        def runtime_insert_module(self, phase, module, i):
+		if isinstance(phase, str):
+			phase = self.phase_by_name(phase)
+		if phase not in self.phases:
+			raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
+		if not hasattr(module, "run"):
+			raise AttributeError("All modules must a 'run' function")
+		if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
+			raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
+		self.modules[phase].insert(i, module)
+                module.init(self.world, self.mem)                
+                
 	def removeModule(self, phase, i):
 		if isinstance(phase, str):
 			phase = self.phase_by_name(phase)
@@ -101,6 +116,7 @@ class MIDCA:
 		
 	
 	def clearPhase(self, phase):
+                # TODO: call a module.exit() function?
 		self.modules[phase] = []
 	
 	def get_modules(self, phase):
@@ -185,7 +201,10 @@ class PhaseManager:
 	
 	def append_module(self, phase, module):
 		self.midca.append_module(phase, module)
-	
+
+        def runtime_append_module(self, phase, module):
+                self.midca.runtime_append_module(phase, module)
+                
 	def insert_module(self, phase, module, i):
 		self.midca.insert_module(phase, module, i)
 	
