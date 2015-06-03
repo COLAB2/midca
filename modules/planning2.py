@@ -26,27 +26,19 @@ class PyHopPlanner:
 	
 	#this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
-		world = self.mem.get(self.mem.STATES)[-1]
+                world = self.mem.get(self.mem.STATES)[-1]
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
 
-                input_world = copy.deepcopy(world) # for trace
-                input_goals = copy.deepcopy(goals) # for trace
-
-                trace_str = "INPUT:\n  WORLD:"
-                trace_str += str(input_world)
-                trace_str += "  GOALS:\n "
-                if goals:
-                        for g in input_goals:
-                                trace_str += "    " + str(g) + "\n"
-                trace_str += "\nOUTPUT:\n  "
                 trace = self.mem.trace
-
+                if trace:
+                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_data("WORLD", copy.deepcopy(world))
+                        trace.add_data("GOALS", copy.deepcopy(goals))
+                
 		if not goals:
 			if verbose >= 2:
 				print "No goals received by planner. Skipping planning."
                        
-                        
-                        if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
 			return
 		try:
 			midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -102,9 +94,10 @@ class PyHopPlanner:
 					for goal in goals:
 						print goal, " ",
 					print
-                                trace_str += "  Planning failed for goals" 
-                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
-                                if trace: trace.failuredetected()
+
+                                if trace:
+                                        trace.add_data("PLAN", "FAIL")
+                                        trace.failuredetected() # TODO - remove
 				return
 			#change from pyhop plan to MIDCA plan
 			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
@@ -117,8 +110,7 @@ class PyHopPlanner:
 			if midcaPlan != None:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
                                 
-                                trace_str += "  Plan: " + str(midcaPlan) 
-                                if trace: trace.addphase(cycle,self.__class__.__name__,trace_str)
+                                trace.add_data("PLAN",midcaPlan)
                 
 
 	def pyhop_state_from_world(self, world, name = "state"):

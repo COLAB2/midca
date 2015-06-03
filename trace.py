@@ -50,7 +50,7 @@ class CogTrace:
         data_type is one of "WORLD, GOALS, etc"
         """
         if self.cycle != -1 and self.phase != "":
-            self.trace[self.cycle][self.phase].append([data_type,str(data)])
+            self.trace[self.cycle][self.phase].append([data_type,data])
             
             
     # When this is called, it means the current phase failed for some reason
@@ -65,7 +65,7 @@ class CogTrace:
         print("swapped out the planner, try again")            
 
 
-    def print_data(data_type, data):
+    def print_data(self, data_type, data):
         if data_type == "WORLD":
             print("  WORLD: "+str(data))
         elif data_type == "PREV WORLD":
@@ -78,6 +78,8 @@ class CogTrace:
                 print("    "+str(g))
         elif data_type == "PLAN":
             print("  PLAN: "+str(data))
+        elif data_type == "ACTION":
+            print("  ACTION: "+str(data))
         elif data_type == "REMOVED GOAL":
             print("  REMOVED GOAL: "+str(data))
         else:
@@ -89,7 +91,7 @@ class CogTrace:
                 print("---------------------------------------------\n[cycle "+str(cycle)+"][phase "+str(phase)+"]\n---------------------------------------------\n\n")
                 for datum in self.trace[cycle][phase]:
                     # datum[0] is type, datum[1] is actual data
-                    print_data(datum[0],datum[1])
+                    self.print_data(datum[0],datum[1])
                     print("\n")
 
 #    def gen_trace_graph(self):
