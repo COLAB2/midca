@@ -1,8 +1,11 @@
-import rospy
-from geometry_msgs.msg import PointStamped
-from std_msgs.msg import String
-from MIDCA.modules._robot_world import world_repr
-from MIDCA import time
+try:
+        import rospy
+        from geometry_msgs.msg import PointStamped
+        from std_msgs.msg import String
+        from MIDCA.modules._robot_world import world_repr
+        from MIDCA import time
+except:
+        print "Unable to import ROS packages - you may not have ROS installed. This will only affect MIDCA/robot interactions. If you are not using MIDCA with a robot, please ignore this message."
 
 FEEDBACK_TOPIC = "midcaFeedback"
 

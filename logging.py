@@ -3,6 +3,7 @@ from datetime import datetime
 import os, sys, copy
 import platform, string
 
+
 class Logger:
 	
 	logFolderOptions = ["log", "_log"]

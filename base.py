@@ -3,6 +3,7 @@ import copy, time, datetime, sys
 from MIDCA.mem import Memory
 from MIDCA import goals, logging
 from MIDCA.worldsim import stateread
+import threading
 
 MAX_MODULES_PER_PHASE = 100
 	
@@ -22,7 +23,7 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, logenabled = True, verbose = 2):
+	def __init__(self, world = None, logenabled = True, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -32,7 +33,6 @@ class MIDCA:
 		self.phaseNum = 1
 		self.logger = logging.Logger()
 		if not logenabled:
-			print ("Logging disabled")
 			self.logger.working = False
 		else:
 			self.logger.start()
@@ -168,11 +168,28 @@ class MIDCA:
 		if (self.phaseNum - 1) % len(self.phases) == 0:
 			self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
 		return retVal
+
+        def copy(self):
+                '''
+                This method does not make a true copy - it will not copy
+                the original object's loggers and is not
+                intended to be run, only checked to see what MIDCA's state was
+                at an earlier time.
+                '''
+                newCopy = MIDCA(self.world, False, self.verbose)
+		newCopy.mem = Memory()
+		newCopy.mem.knowledge = self.mem.knowledge.copy()
+		newCopy.mem.locks = {name: threading.Lock() for name in self.mem.locks}
+		newCopy.phases = list(self.phases)
+		newCopy.modules = self.modules.copy()
+		newCopy.initialized = self.initialized
+		newCopy.phaseNum = self.phaseNum
+		return newCopy
 	
 class PhaseManager:
 	
-	def __init__(self, world, verbose = 2, display = None, storeHistory = False):
-		self.midca = MIDCA(world, verbose)
+	def __init__(self, world = None, verbose = 2, display = None, storeHistory = False):
+		self.midca = MIDCA(world = world, verbose = verbose)
 		self.mem = self.midca.mem
 		self.storeHistory = storeHistory
 		self.history = []
@@ -221,7 +238,7 @@ class PhaseManager:
 
 	def next_phase(self, verbose = 2):
 		if self.storeHistory:
-			self.history.append(copy.deepcopy(self.midca))
+			self.history.append(self.midca.copy())
 		val = self.midca.next_phase(verbose)
 		return val
 	

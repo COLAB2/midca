@@ -6,24 +6,6 @@ class EvalPointingFromFeedback:
 		self.mem = mem
 	
 	def run(self, cycle, verbose = 2):
-		goals = self.mem.get(self.mem.CURRENT_GOALS)
-		if not goals:
-			if verbose >= 2:
-				print "No current goals. Skipping eval"
-		else:
-			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
-			if plan.finished():
-				if verbose >= 1:
-					print "Plan", plan, "finished. Removing it and associated goals"
-				goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
-				goalGraph.removePlanGoals(plan)
-				goalGraph.removePlan(plan)
-		
-
-class SimpleEval:
-	
-	def init(self, world, mem):
-		self.mem = mem
 		try:
 			goals = self.mem.get(self.mem.CURRENT_GOALS)
 		except KeyError:
@@ -53,6 +35,12 @@ class SimpleEval:
 				else:
 					if verbose >= 2:
 						print "Plan:", plan, "not complete"
+		
+
+class SimpleEval:
+	
+	def init(self, world, mem):
+		self.mem = mem	
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]

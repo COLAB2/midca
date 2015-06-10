@@ -1,6 +1,9 @@
 from MIDCA import rosrun, time, plans
 import traceback
-from geometry_msgs.msg import PointStamped
+try:
+        from geometry_msgs.msg import PointStamped
+except:
+        pass #if ROS is not installed, an error message will already have been generated.
 
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
