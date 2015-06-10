@@ -1,0 +1,19 @@
+1.156000 - Starting cycle 0
+
+1.172000 - ****** Starting Simulate Phase ******
+
+1.172000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+1.172000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+1.172000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+1.484000 - ****** Starting Perceive Phase ******
+
+1.484000 - Running module <MIDCA.modules.perceive.PerfectObserver
+1.766000 - ****** Starting Interpret Phase ******
+
+1.766000 - Running module <MIDCA.modules.note.AnomalyDetector
+1.766000 - Running module <MIDCA.modules.guide.TFStack
+1.781000 - Running module <MIDCA.modules.guide.TFFire
+1.781000 - Running module <MIDCA.modules.guide.UserGoalInput
+2.187000 - ****** Starting Eval Phase ******
+
+2.187000 - Running module <MIDCA.modules.evaluate.SimpleEval

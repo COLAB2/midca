@@ -1,0 +1,453 @@
+1.594000 - Starting cycle 0
+
+1.594000 - ****** Starting Simulate Phase ******
+
+1.594000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+1.594000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+1.610000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+2.125000 - ****** Starting Perceive Phase ******
+
+2.125000 - Running module <MIDCA.modules.perceive.PerfectObserver
+2.532000 - ****** Starting Interpret Phase ******
+
+2.532000 - Running module <MIDCA.modules.note.AnomalyDetector
+2.532000 - Running module <MIDCA.modules.guide.TFStack
+2.547000 - Running module <MIDCA.modules.guide.TFFire
+2.547000 - Running module <MIDCA.modules.guide.UserGoalInput
+2.813000 - ****** Starting Eval Phase ******
+
+2.813000 - Running module <MIDCA.modules.evaluate.SimpleEval
+3.063000 - ****** Starting Intend Phase ******
+
+3.063000 - Running module <MIDCA.modules.intend.SimpleIntend
+4.735000 - ****** Starting Plan Phase ******
+
+4.735000 - Running module <MIDCA.modules.planning.PyHopPlanner
+5.016000 - ****** Starting Act Phase ******
+
+5.016000 - Running module <MIDCA.modules.act.SimpleAct
+5.860000 - Starting cycle 1
+
+5.860000 - ****** Starting Simulate Phase ******
+
+5.860000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+5.860000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+5.860000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+6.141000 - ****** Starting Perceive Phase ******
+
+6.141000 - Running module <MIDCA.modules.perceive.PerfectObserver
+6.391000 - ****** Starting Interpret Phase ******
+
+6.391000 - Running module <MIDCA.modules.note.AnomalyDetector
+6.391000 - Running module <MIDCA.modules.guide.TFStack
+6.407000 - Running module <MIDCA.modules.guide.TFFire
+6.407000 - Running module <MIDCA.modules.guide.UserGoalInput
+6.594000 - ****** Starting Eval Phase ******
+
+6.594000 - Running module <MIDCA.modules.evaluate.SimpleEval
+6.766000 - ****** Starting Intend Phase ******
+
+6.766000 - Running module <MIDCA.modules.intend.SimpleIntend
+6.954000 - ****** Starting Plan Phase ******
+
+6.969000 - Running module <MIDCA.modules.planning.PyHopPlanner
+7.157000 - ****** Starting Act Phase ******
+
+7.157000 - Running module <MIDCA.modules.act.SimpleAct
+7.298000 - Starting cycle 2
+
+7.298000 - ****** Starting Simulate Phase ******
+
+7.298000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+7.313000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+7.313000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+7.516000 - ****** Starting Perceive Phase ******
+
+7.516000 - Running module <MIDCA.modules.perceive.PerfectObserver
+7.704000 - ****** Starting Interpret Phase ******
+
+7.704000 - Running module <MIDCA.modules.note.AnomalyDetector
+7.719000 - Running module <MIDCA.modules.guide.TFStack
+7.719000 - Running module <MIDCA.modules.guide.TFFire
+7.719000 - Running module <MIDCA.modules.guide.UserGoalInput
+7.891000 - ****** Starting Eval Phase ******
+
+7.907000 - Running module <MIDCA.modules.evaluate.SimpleEval
+8.079000 - ****** Starting Intend Phase ******
+
+8.079000 - Running module <MIDCA.modules.intend.SimpleIntend
+8.266000 - ****** Starting Plan Phase ******
+
+8.266000 - Running module <MIDCA.modules.planning.PyHopPlanner
+8.454000 - ****** Starting Act Phase ******
+
+8.454000 - Running module <MIDCA.modules.act.SimpleAct
+8.657000 - Starting cycle 3
+
+8.657000 - ****** Starting Simulate Phase ******
+
+8.657000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+8.657000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+8.657000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+8.860000 - ****** Starting Perceive Phase ******
+
+8.860000 - Running module <MIDCA.modules.perceive.PerfectObserver
+9.032000 - ****** Starting Interpret Phase ******
+
+9.032000 - Running module <MIDCA.modules.note.AnomalyDetector
+9.032000 - Running module <MIDCA.modules.guide.TFStack
+9.048000 - Running module <MIDCA.modules.guide.TFFire
+9.048000 - Running module <MIDCA.modules.guide.UserGoalInput
+12.376000 - ****** Starting Eval Phase ******
+
+12.376000 - Running module <MIDCA.modules.evaluate.SimpleEval
+14.282000 - Running module <MIDCA.modules.intend.SimpleIntend
+14.298000 - Running module <MIDCA.modules.planning.PyHopPlanner
+14.314000 - Running module <MIDCA.modules.act.SimpleAct
+14.345000 - Starting cycle 4
+
+14.345000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+14.345000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+14.345000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+14.360000 - Running module <MIDCA.modules.perceive.PerfectObserver
+14.376000 - Running module <MIDCA.modules.note.AnomalyDetector
+14.376000 - Running module <MIDCA.modules.guide.TFStack
+14.376000 - Running module <MIDCA.modules.guide.TFFire
+14.376000 - Running module <MIDCA.modules.guide.UserGoalInput
+14.407000 - Running module <MIDCA.modules.evaluate.SimpleEval
+14.423000 - Running module <MIDCA.modules.intend.SimpleIntend
+14.439000 - Running module <MIDCA.modules.planning.PyHopPlanner
+14.454000 - Running module <MIDCA.modules.act.SimpleAct
+14.485000 - Starting cycle 5
+
+14.485000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+14.485000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+14.485000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+14.501000 - Running module <MIDCA.modules.perceive.PerfectObserver
+14.532000 - Running module <MIDCA.modules.note.AnomalyDetector
+14.532000 - Running module <MIDCA.modules.guide.TFStack
+14.532000 - Running module <MIDCA.modules.guide.TFFire
+14.532000 - Running module <MIDCA.modules.guide.UserGoalInput
+14.564000 - Running module <MIDCA.modules.evaluate.SimpleEval
+14.595000 - Running module <MIDCA.modules.intend.SimpleIntend
+14.626000 - Running module <MIDCA.modules.planning.PyHopPlanner
+14.657000 - Running module <MIDCA.modules.act.SimpleAct
+14.689000 - Starting cycle 6
+
+14.689000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+14.689000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+14.704000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+14.735000 - Running module <MIDCA.modules.perceive.PerfectObserver
+14.751000 - Running module <MIDCA.modules.note.AnomalyDetector
+14.751000 - Running module <MIDCA.modules.guide.TFStack
+14.751000 - Running module <MIDCA.modules.guide.TFFire
+14.751000 - Running module <MIDCA.modules.guide.UserGoalInput
+14.782000 - Running module <MIDCA.modules.evaluate.SimpleEval
+14.814000 - Running module <MIDCA.modules.intend.SimpleIntend
+14.845000 - Running module <MIDCA.modules.planning.PyHopPlanner
+14.876000 - Running module <MIDCA.modules.act.SimpleAct
+14.892000 - Starting cycle 7
+
+14.892000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+14.892000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+14.892000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+14.923000 - Running module <MIDCA.modules.perceive.PerfectObserver
+14.939000 - Running module <MIDCA.modules.note.AnomalyDetector
+14.939000 - Running module <MIDCA.modules.guide.TFStack
+14.939000 - Running module <MIDCA.modules.guide.TFFire
+14.939000 - Running module <MIDCA.modules.guide.UserGoalInput
+14.970000 - Running module <MIDCA.modules.evaluate.SimpleEval
+15.001000 - Running module <MIDCA.modules.intend.SimpleIntend
+15.017000 - Running module <MIDCA.modules.planning.PyHopPlanner
+15.048000 - Running module <MIDCA.modules.act.SimpleAct
+15.064000 - Starting cycle 8
+
+15.064000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+15.079000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+15.079000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+15.110000 - Running module <MIDCA.modules.perceive.PerfectObserver
+15.126000 - Running module <MIDCA.modules.note.AnomalyDetector
+15.126000 - Running module <MIDCA.modules.guide.TFStack
+15.126000 - Running module <MIDCA.modules.guide.TFFire
+15.126000 - Running module <MIDCA.modules.guide.UserGoalInput
+15.157000 - Running module <MIDCA.modules.evaluate.SimpleEval
+15.189000 - ****** Starting Intend Phase ******
+
+15.189000 - Running module <MIDCA.modules.intend.SimpleIntend
+15.689000 - ****** Starting Plan Phase ******
+
+15.689000 - Running module <MIDCA.modules.planning.PyHopPlanner
+16.032000 - ****** Starting Act Phase ******
+
+16.032000 - Running module <MIDCA.modules.act.SimpleAct
+17.204000 - Starting cycle 9
+
+17.204000 - ****** Starting Simulate Phase ******
+
+17.204000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+17.204000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+17.204000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+17.517000 - ****** Starting Perceive Phase ******
+
+17.532000 - Running module <MIDCA.modules.perceive.PerfectObserver
+17.814000 - ****** Starting Interpret Phase ******
+
+17.814000 - Running module <MIDCA.modules.note.AnomalyDetector
+17.814000 - Running module <MIDCA.modules.guide.TFStack
+17.814000 - Running module <MIDCA.modules.guide.TFFire
+17.814000 - Running module <MIDCA.modules.guide.UserGoalInput
+18.095000 - ****** Starting Eval Phase ******
+
+18.095000 - Running module <MIDCA.modules.evaluate.SimpleEval
+18.454000 - ****** Starting Intend Phase ******
+
+18.454000 - Running module <MIDCA.modules.intend.SimpleIntend
+18.829000 - ****** Starting Plan Phase ******
+
+18.829000 - Running module <MIDCA.modules.planning.PyHopPlanner
+19.064000 - ****** Starting Act Phase ******
+
+19.064000 - Running module <MIDCA.modules.act.SimpleAct
+19.283000 - Starting cycle 10
+
+19.283000 - ****** Starting Simulate Phase ******
+
+19.283000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+19.283000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+19.283000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+19.454000 - ****** Starting Perceive Phase ******
+
+19.454000 - Running module <MIDCA.modules.perceive.PerfectObserver
+19.673000 - ****** Starting Interpret Phase ******
+
+19.673000 - Running module <MIDCA.modules.note.AnomalyDetector
+19.673000 - Running module <MIDCA.modules.guide.TFStack
+19.673000 - Running module <MIDCA.modules.guide.TFFire
+19.673000 - Running module <MIDCA.modules.guide.UserGoalInput
+19.908000 - ****** Starting Eval Phase ******
+
+19.908000 - Running module <MIDCA.modules.evaluate.SimpleEval
+20.142000 - ****** Starting Intend Phase ******
+
+20.142000 - Running module <MIDCA.modules.intend.SimpleIntend
+20.376000 - ****** Starting Plan Phase ******
+
+20.376000 - Running module <MIDCA.modules.planning.PyHopPlanner
+20.580000 - ****** Starting Act Phase ******
+
+20.580000 - Running module <MIDCA.modules.act.SimpleAct
+20.767000 - Starting cycle 11
+
+20.783000 - ****** Starting Simulate Phase ******
+
+20.783000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+20.783000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+20.783000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+20.970000 - ****** Starting Perceive Phase ******
+
+20.970000 - Running module <MIDCA.modules.perceive.PerfectObserver
+21.439000 - ****** Starting Interpret Phase ******
+
+21.455000 - Running module <MIDCA.modules.note.AnomalyDetector
+21.455000 - Running module <MIDCA.modules.guide.TFStack
+21.455000 - Running module <MIDCA.modules.guide.TFFire
+21.455000 - Running module <MIDCA.modules.guide.UserGoalInput
+21.689000 - ****** Starting Eval Phase ******
+
+21.689000 - Running module <MIDCA.modules.evaluate.SimpleEval
+21.908000 - ****** Starting Intend Phase ******
+
+21.908000 - Running module <MIDCA.modules.intend.SimpleIntend
+22.142000 - ****** Starting Plan Phase ******
+
+22.142000 - Running module <MIDCA.modules.planning.PyHopPlanner
+22.392000 - ****** Starting Act Phase ******
+
+22.392000 - Running module <MIDCA.modules.act.SimpleAct
+22.564000 - Starting cycle 12
+
+22.564000 - ****** Starting Simulate Phase ******
+
+22.564000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+22.564000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+22.564000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+22.751000 - ****** Starting Perceive Phase ******
+
+22.751000 - Running module <MIDCA.modules.perceive.PerfectObserver
+22.955000 - ****** Starting Interpret Phase ******
+
+22.955000 - Running module <MIDCA.modules.note.AnomalyDetector
+22.955000 - Running module <MIDCA.modules.guide.TFStack
+22.955000 - Running module <MIDCA.modules.guide.TFFire
+22.955000 - Running module <MIDCA.modules.guide.UserGoalInput
+23.158000 - ****** Starting Eval Phase ******
+
+23.158000 - Running module <MIDCA.modules.evaluate.SimpleEval
+23.361000 - ****** Starting Intend Phase ******
+
+23.361000 - Running module <MIDCA.modules.intend.SimpleIntend
+23.564000 - ****** Starting Plan Phase ******
+
+23.564000 - Running module <MIDCA.modules.planning.PyHopPlanner
+23.783000 - ****** Starting Act Phase ******
+
+23.783000 - Running module <MIDCA.modules.act.SimpleAct
+23.955000 - Starting cycle 13
+
+23.955000 - ****** Starting Simulate Phase ******
+
+23.955000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+23.955000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+23.955000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+24.158000 - ****** Starting Perceive Phase ******
+
+24.158000 - Running module <MIDCA.modules.perceive.PerfectObserver
+24.361000 - ****** Starting Interpret Phase ******
+
+24.361000 - Running module <MIDCA.modules.note.AnomalyDetector
+24.377000 - Running module <MIDCA.modules.guide.TFStack
+24.377000 - Running module <MIDCA.modules.guide.TFFire
+24.377000 - Running module <MIDCA.modules.guide.UserGoalInput
+24.564000 - ****** Starting Eval Phase ******
+
+24.564000 - Running module <MIDCA.modules.evaluate.SimpleEval
+26.517000 - ****** Starting Intend Phase ******
+
+26.517000 - Running module <MIDCA.modules.intend.SimpleIntend
+26.736000 - ****** Starting Plan Phase ******
+
+26.736000 - Running module <MIDCA.modules.planning.PyHopPlanner
+26.955000 - ****** Starting Act Phase ******
+
+26.955000 - Running module <MIDCA.modules.act.SimpleAct
+27.158000 - Starting cycle 14
+
+27.158000 - ****** Starting Simulate Phase ******
+
+27.158000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+27.158000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+27.158000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+27.361000 - ****** Starting Perceive Phase ******
+
+27.361000 - Running module <MIDCA.modules.perceive.PerfectObserver
+27.549000 - ****** Starting Interpret Phase ******
+
+27.549000 - Running module <MIDCA.modules.note.AnomalyDetector
+27.549000 - Running module <MIDCA.modules.guide.TFStack
+27.549000 - Running module <MIDCA.modules.guide.TFFire
+27.549000 - Running module <MIDCA.modules.guide.UserGoalInput
+27.736000 - ****** Starting Eval Phase ******
+
+27.736000 - Running module <MIDCA.modules.evaluate.SimpleEval
+27.939000 - ****** Starting Intend Phase ******
+
+27.939000 - Running module <MIDCA.modules.intend.SimpleIntend
+28.127000 - ****** Starting Plan Phase ******
+
+28.127000 - Running module <MIDCA.modules.planning.PyHopPlanner
+28.299000 - ****** Starting Act Phase ******
+
+28.299000 - Running module <MIDCA.modules.act.SimpleAct
+28.486000 - Starting cycle 15
+
+28.486000 - ****** Starting Simulate Phase ******
+
+28.486000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+28.486000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+28.486000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+28.674000 - ****** Starting Perceive Phase ******
+
+28.674000 - Running module <MIDCA.modules.perceive.PerfectObserver
+29.111000 - ****** Starting Interpret Phase ******
+
+29.111000 - Running module <MIDCA.modules.note.AnomalyDetector
+29.111000 - Running module <MIDCA.modules.guide.TFStack
+29.111000 - Running module <MIDCA.modules.guide.TFFire
+29.111000 - Running module <MIDCA.modules.guide.UserGoalInput
+29.283000 - ****** Starting Eval Phase ******
+
+29.283000 - Running module <MIDCA.modules.evaluate.SimpleEval
+29.471000 - ****** Starting Intend Phase ******
+
+29.471000 - Running module <MIDCA.modules.intend.SimpleIntend
+29.611000 - ****** Starting Plan Phase ******
+
+29.611000 - Running module <MIDCA.modules.planning.PyHopPlanner
+29.877000 - ****** Starting Act Phase ******
+
+29.877000 - Running module <MIDCA.modules.act.SimpleAct
+30.033000 - Starting cycle 16
+
+30.033000 - ****** Starting Simulate Phase ******
+
+30.033000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+30.033000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+30.033000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+30.221000 - ****** Starting Perceive Phase ******
+
+30.221000 - Running module <MIDCA.modules.perceive.PerfectObserver
+30.424000 - ****** Starting Interpret Phase ******
+
+30.424000 - Running module <MIDCA.modules.note.AnomalyDetector
+30.424000 - Running module <MIDCA.modules.guide.TFStack
+30.424000 - Running module <MIDCA.modules.guide.TFFire
+30.424000 - Running module <MIDCA.modules.guide.UserGoalInput
+30.596000 - ****** Starting Eval Phase ******
+
+30.596000 - Running module <MIDCA.modules.evaluate.SimpleEval
+30.799000 - ****** Starting Intend Phase ******
+
+30.799000 - Running module <MIDCA.modules.intend.SimpleIntend
+30.971000 - ****** Starting Plan Phase ******
+
+30.971000 - Running module <MIDCA.modules.planning.PyHopPlanner
+31.127000 - ****** Starting Act Phase ******
+
+31.127000 - Running module <MIDCA.modules.act.SimpleAct
+31.330000 - Starting cycle 17
+
+31.330000 - ****** Starting Simulate Phase ******
+
+31.330000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+31.330000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+31.330000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+31.502000 - ****** Starting Perceive Phase ******
+
+31.502000 - Running module <MIDCA.modules.perceive.PerfectObserver
+31.674000 - ****** Starting Interpret Phase ******
+
+31.674000 - Running module <MIDCA.modules.note.AnomalyDetector
+31.689000 - Running module <MIDCA.modules.guide.TFStack
+31.689000 - Running module <MIDCA.modules.guide.TFFire
+31.689000 - Running module <MIDCA.modules.guide.UserGoalInput
+31.924000 - ****** Starting Eval Phase ******
+
+31.924000 - Running module <MIDCA.modules.evaluate.SimpleEval
+32.174000 - ****** Starting Intend Phase ******
+
+32.174000 - Running module <MIDCA.modules.intend.SimpleIntend
+32.361000 - ****** Starting Plan Phase ******
+
+32.361000 - Running module <MIDCA.modules.planning.PyHopPlanner
+32.533000 - ****** Starting Act Phase ******
+
+32.533000 - Running module <MIDCA.modules.act.SimpleAct
+32.893000 - Starting cycle 18
+
+32.893000 - ****** Starting Simulate Phase ******
+
+32.908000 - Running module <MIDCA.modules.simulator.MidcaActionSimulator
+32.908000 - Running module <MIDCA.modules.simulator.ArsonSimulator
+32.908000 - Running module <MIDCA.modules.simulator.ASCIIWorldViewer
+33.127000 - ****** Starting Perceive Phase ******
+
+33.127000 - Running module <MIDCA.modules.perceive.PerfectObserver
+33.346000 - ****** Starting Interpret Phase ******
+
+33.346000 - Running module <MIDCA.modules.note.AnomalyDetector
+33.346000 - Running module <MIDCA.modules.guide.TFStack
+33.346000 - Running module <MIDCA.modules.guide.TFFire
+33.346000 - Running module <MIDCA.modules.guide.UserGoalInput
+33.565000 - ****** Starting Eval Phase ******
+
+33.565000 - Running module <MIDCA.modules.evaluate.SimpleEval
