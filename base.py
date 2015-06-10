@@ -152,6 +152,7 @@ class MIDCA:
 				print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 	
 	def next_phase(self, verbose = 2):
+		retVal = ""
 		self.phasei = (self.phaseNum - 1) % len(self.phases)
 		if self.phasei == 0:
 			self.logger.logEvent(logging.CycleStartEvent((self.phaseNum - 1) / len(self.phases)))

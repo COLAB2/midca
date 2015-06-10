@@ -4,7 +4,6 @@ class SimpleIntend:
 	def init(self, world, mem):
 		self.mem = mem
 	
-	#if new goal was generated since last run, set current goal to it. Otherwise, set current goal to None to stop redundant planning.
 	def run(self, cycle, verbose = 2):
 		goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
 		if not goalGraph:
