@@ -22,7 +22,7 @@ class Phase:
 
 class MIDCA:
 
-	def __init__(self, world, verbose = 2):
+	def __init__(self, world, logenabled = True, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -31,6 +31,14 @@ class MIDCA:
 		self.initialized = False
 		self.phaseNum = 1
 		self.logger = logging.Logger()
+		if not logenabled:
+			print ("Logging disabled")
+			self.logger.working = False
+		else:
+			self.logger.start()
+			if self.logger.working:
+				self.logger.logOutput()
+				self.mem.enableLogging(self.logger)
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:
@@ -96,10 +104,16 @@ class MIDCA:
 			raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
 		else:
 			modules.pop(i)
-		
-	
-	def clearPhase(self, phase):
-		self.modules[phase] = []
+			
+	def clearPhase(self, phaseOrName):
+		if isinstance(phaseOrName, str):
+			phase = self.phase_by_name(phaseOrName)
+		else:
+			phase = phaseOrName
+		try:
+			self.modules[phase] = []
+		except ValueError:
+			raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
 	
 	def get_modules(self, phase):
 		if isinstance(phase, str):
@@ -274,6 +288,14 @@ class PhaseManager:
 				txt = raw_input()
 				if txt:
 					self.logger.log(txt)
+                        elif val == "drawgoalgraph":
+                                print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
+                                txt = raw_input()
+                                if txt:
+                                        self.mem.get(self.mem.GOAL_GRAPH).writeToPDF(txt)
+                                else:
+                                        self.mem.get(self.mem.GOAL_GRAPH).writeToPDF()
+                                        
 			elif val == "change":
 				print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
 				while True:

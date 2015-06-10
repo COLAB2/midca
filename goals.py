@@ -1,3 +1,6 @@
+import copy
+import shlex, subprocess
+
 
 class Goal:
 	
@@ -45,11 +48,15 @@ class Goal:
 
 class GoalNode:
 	
+        id = 1
+
 	def __init__(self, goal):
 		self.goal = goal
 		self.parents = set()
 		self.children = set()
 		self.plan = None
+                self.id = GoalNode.id
+                GoalNode.id += 1
 	
 	def addChild(self, node):
 		self.children.add(node)
@@ -57,6 +64,10 @@ class GoalNode:
 	
 	def setPlan(self, plan):
 		self.plan = plan
+
+        def dotStr(self):
+                """ Nice string format for labeling the graph in the pdf drawing """
+                return str(self.goal) 
 
 class GoalGraph:
 	
@@ -294,3 +305,53 @@ class GoalGraph:
 	def getUnrestrictedGoals(self):
 		return [node.goal for node in self.roots]
 	
+        def writeToPDF(self, pdf_filename="goalgraph.pdf"):
+                """Requires the 'dot' command be installed on the current system. To
+                   install on unix simply type 'sudo apt-get install
+                   graphviz'
+
+                   The filename must end in .pdf . A temporary .dot
+                   file will be made and then removed to create the
+                   pdf file. The path for the pdf file will be the
+                   same for the .dot file.
+
+                   Since this function traverses the graph, it is
+                   important that there is not a cycle. If there is,
+                   then one of the relationships in the cycle may not
+                   described in the graph
+
+                   Note that this could create a potential security
+                   vulnerability if the filename of the pdf passed in
+                   is prepended with malicious code.
+
+                   To-do list:
+                   - put everything in a directory
+
+                """
+
+                assert(pdf_filename.endswith(".pdf"))
+
+                # get the filename for dot by removing '.pdf'
+                dotfilename = copy.deepcopy(pdf_filename[0:-4]) + ".dot"
+                dotfilestr = "digraph\n{\n"
+
+                for node in self._getAllNodes():
+                        dotfilestr += "  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]\n"
+
+                dotfilestr += "\n"
+
+                for node in self._getAllNodes():
+                        for node_child in node.children:
+                                dotfilestr += "  Goal" + str(node.id) + " -> Goal" + str(node_child.id) + " \n"
+                
+                dotfilestr += "\n}\n"
+                f = open(dotfilename, 'w')
+                f. write(dotfilestr)
+                f.close()
+                #print "Wrote dot file to " + dotfilename
+                genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
+                dot_output = subprocess.check_output(shlex.split(genPDFCommand))
+                #print "dot_output = " + str(dot_output)
+                subprocess.call(shlex.split("rm "+dotfilename))
+                print "Drawing of current goal graph written to " + pdf_filename
+                
