@@ -19,7 +19,7 @@ class Logger:
 		self.startTime = datetime.now()
 		self.timeStr = str(self.startTime)
 		if self.startTime.microsecond > 0:
-			self.timeStr = self.timeStr[:-7]
+			self.timeStr = self.timeStr[:-7].replace(":", "_")
 		
 		#create log dir if it does not exist. If there is a file at ./log, try ./_log. If neither works, fail and print an error message.
 		folderFound = False
