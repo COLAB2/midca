@@ -6,6 +6,9 @@ from MIDCA.logging import Logger
 import inspect, os
 from std_msgs.msg import String
 
+OBJ_LOC_TOPIC = "quad_pos"
+UTTERANCE_TOPIC = "cmds_received"
+
 def ros_style_midca():
 	myMidca = base.MIDCA(None, verbose = 2)
 	for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -30,8 +33,8 @@ myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
-	rosrun.FixedObjectLocationHandler("quad_pos", "quad", myMidca),
-	rosrun.UtteranceHandler("cmds_received", myMidca),
+	rosrun.FixedObjectLocationHandler(OBJ_LOC_TOPIC, "quad", myMidca),
+	rosrun.UtteranceHandler(utteranceTopic, myMidca),
 	rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
 	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.POINT_TOPIC, String)])
 rosMidca.ros_connect()

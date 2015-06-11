@@ -62,7 +62,7 @@ class RosMidca:
 		self.outgoingMsgHandlers = outgoingMsgHandlers
 		self.dynamicPublishers = False
 	
-	def run_midca(self, cycleRate = 10, maxPhaseLength = 30):
+	def run_midca(self, cycleRate = 10):
 		self.midca.init()
 		cycleRate = rospy.Rate(cycleRate)
 		while not rospy.is_shutdown():
