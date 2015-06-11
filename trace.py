@@ -1,6 +1,8 @@
 from __future__ import print_function
 from MIDCA.mem import Memory
 from MIDCA.modules import planning2
+import copy
+import shlex, subprocess
 
 """
 How-To: 
@@ -67,30 +69,33 @@ class CogTrace:
         print("swapped out the planner, try again")            
 
 
-    def print_data(self, data_type, data):
+    def data_str(self, data_type, data):
+        result_str = ""
         if data_type == "WORLD":
-            print("  WORLD: "+str(data))
+            result_str = "  WORLD: "+str(data)
         elif data_type == "PREV WORLD":
-            print("  PREV WORLD: "+str(data))
+            result_str = "  PREV WORLD: "+str(data)
         elif data_type == "CURR WORLD":
-            print("  CURR WORLD: "+str(data))            
+            result_str = "  CURR WORLD: "+str(data)
         elif data_type == "GOALS":
             if data is None:
-                print("  GOALS: []")
+                result_str = "  GOALS: []"
             else:
-                print("  GOALS: ")                
+                result_str = "  GOALS: "
                 for g in data:
-                    print("    "+str(g))
+                    result_str += "    "+str(g)
         elif data_type == "PLAN":
-            print("  PLAN: "+str(data))
+            result_str = "  PLAN: "+str(data)
         elif data_type == "ANOMALY":
-            print("  ANOMALY: " + str(data))
+            result_str = "  ANOMALY: " + str(data)
         elif data_type == "ACTION":
-            print("  ACTION: "+str(data))
+            result_str = "  ACTION: "+str(data)
         elif data_type == "REMOVED GOAL":
-            print("  REMOVED GOAL: "+str(data))
+            result_str = "  REMOVED GOAL: "+str(data)
         else:
-            print("  UNKNOWN_DATA_TYPE '" + data_type + "' : "+str(data))
+            result_str = "  UNKNOWN_DATA_TYPE '" + data_type + "' : "+str(data)
+
+        return result_str
             
     def printtrace(self):
         for cycle in self.trace.keys():
@@ -98,8 +103,73 @@ class CogTrace:
                 print("---------------------------------------------\n[cycle "+str(cycle)+"][phase "+str(phase)+"]\n---------------------------------------------\n\n")
                 for datum in self.trace[cycle][phase]:
                     # datum[0] is type, datum[1] is actual data
-                    self.print_data(datum[0],datum[1])
+                    print(self.data_str(datum[0],datum[1]))
                     print("\n")
+
+    def writeToPDF(self, pdf_filename="trace.pdf"):
+        """Requires the 'dot' command be installed on the current system. To
+        install on unix simply type 'sudo apt-get install
+        graphviz'
+        
+        The filename must end in .pdf . A temporary .dot
+        file will be made and then removed to create the
+        pdf file. The path for the pdf file will be the
+        same for the .dot file.
+        
+        Since this function traverses the graph, it is
+        important that there is not a cycle. If there is,
+        then one of the relationships in the cycle may not
+        described in the graph
+        
+        Note that this could create a potential security
+        vulnerability if the filename of the pdf passed in
+        is prepended with malicious code.
+        
+        To-do list:
+        - put everything in a directory
+        
+        """
+        
+        assert(pdf_filename.endswith(".pdf"))
+        
+        # get the filename for dot by removing '.pdf'
+        dotfilename = copy.deepcopy(pdf_filename[0:-4]) + ".dot"
+        dotfilestr = "digraph\n{\n"
+        graphstr = "" # for making dependency graph
+        prev_node_id = "" # for making dependency graph
+        for cycle in self.trace.keys():
+            for phase in self.trace[cycle].keys():
+                curr_node_id = " C" + str(cycle) + "P"+ str(phase)
+                
+                # generate the string for this node
+                for datum in self.trace[cycle][phase]:
+                    # datum[0] is type, datum[1] is actual data
+                    curr_node_label = curr_node_id +"\n"+str(self.data_str(datum[0],datum[1]))
+                    dotfilestr += curr_node_id +" [label=\""+curr_node_label+" \"]\n"                    
+                # generate string for dependency graph
+                if prev_node_id is "":
+                    # this is first iteration, no dependency added
+                    prev_node_id = curr_node_id
+                else:
+                    graphstr += prev_node_id + " -> " + curr_node_id + " \n"
+                    prev_node_id = curr_node_id
+
+        dotfilestr += "\n"
+
+        dotfilestr += graphstr # add dependency graph
+                
+        dotfilestr += "\n}\n"
+        f = open(dotfilename, 'w')
+        f. write(dotfilestr)
+        f.close()
+        print("Wrote dot file to " + dotfilename)
+        genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
+        print("genPDFCommand = " + genPDFCommand)
+        dot_output = subprocess.check_output(shlex.split(genPDFCommand))
+        print("dot_output = " + str(dot_output))
+        #subprocess.call(shlex.split("rm "+dotfilename))
+        print("Drawing of current trace written to " + pdf_filename)
+    
 
 #    def gen_trace_graph(self):
         
