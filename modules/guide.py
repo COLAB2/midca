@@ -69,6 +69,7 @@ class UserGoalInput:
 					self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 					print "Goal added."
 
+
 class TFStack:
 
 	'''

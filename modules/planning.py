@@ -30,9 +30,9 @@ class GenericPyhopPlanner:
 		if plan_validator:
 			self.validate_plan = plan_validator
 		else:
-			self.validate_plan = lambda state, plan: asynch.FAILED not in [action.status for action in plan]
-			#note by default plans execute to completion unless goals 
-			#change or an action fails.
+			self.validate_plan = True
+			#note by default plans execute to completion unless goals
+			#change
 	
 	def init(self, world, mem):
 		self.mem = mem
@@ -63,6 +63,9 @@ class GenericPyhopPlanner:
 		return None
 	
 	def get_new_plan(self, state, goals, verbose = 2):
+                '''
+                Calls the pyhop planner to generate a new plan.
+                '''
 		if verbose >= 2:
 			print "Planning..."
 		try:
@@ -87,7 +90,6 @@ class GenericPyhopPlanner:
 					print "No world state loaded. Skipping planning."
 				return
 		#now state is the most recent (or only) state and is non-null
-		
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
 		if not goals:
 			if verbose >= 2:
@@ -100,17 +102,20 @@ class GenericPyhopPlanner:
 			else:
 				print "Will replan"	
 		if not plan:
-			plan = self.get_old_plan(state, goals, verbose)
-		if not plan:
-			return
-		midcaPlan = plans.Plan(plan, goals) 
+			plan = self.get_new_plan(state, goals, verbose) 
+                        if not plan and plan != []:
+                                return
+                        #convert to MIDCA plan format
+                        plan = plans.Plan(
+                                [plans.Action(action[0], *action[1:]) for
+                                 action in plan], goals)
 		if verbose >= 1:
 			print "Planning complete."
 			if verbose >= 2:
-				print "Plan: ", midcaPlan
+				print "Plan: ", plan
 		#save new plan
-		if midcaPlan != None:
-			self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
+		if plan != None:
+			self.mem.get(self.mem.GOAL_GRAPH).addPlan(plan)
 
 class AsynchPyhopPlanner(GenericPyhopPlanner):
 	
@@ -118,6 +123,10 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
 	This planner is the same as the GenericPyhopPlanner, but it returns an asynchronous
 	plan.
 	'''
+
+	def __init__(self, declare_methods, declare_operators):
+                GenericPyhopPlanner.__init__(self, declare_methods,declare_operators,
+                lambda state, plan: asynch.FAILED not in [action.status for action in plan])
 	
 	def run(self, cycle, verbose = 2):
 		state = self.mem.get(self.mem.STATE)

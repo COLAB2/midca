@@ -358,7 +358,7 @@ class World:
 	#convenience method for operating with MIDCA
 	def midca_action_applicable(self, midcaAction):
 		try:
-			operator = self.operators[midcaAction.op.name]
+			operator = self.operators[midcaAction.op]
 			args = [self.objects[arg] for arg in midcaAction.args]
 		except KeyError:
 			return False
@@ -387,7 +387,7 @@ class World:
 	
 	#convenience method for operating with MIDCA
 	def apply_midca_action(self, midcaAction):
-		opname = midcaAction.op.name
+		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
 		self.apply_named_action(opname, argnames)
 	
