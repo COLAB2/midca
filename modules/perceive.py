@@ -1,7 +1,10 @@
+from MIDCA.modules._robot_world import world_repr
+from MIDCA import time, rosrun
 
 class ROSObserver:
 	
 	def init(self, world, mem):
+		print "init!"
 		self.mem = mem
 		self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 	
