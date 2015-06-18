@@ -149,8 +149,15 @@ print ma
 class MAReporter:
 	
 	'''
-	MIDCA module that sends a report on the world and actions to the Meta-AQUA story understanding system. This requires Meta-AQUA to be running or it will not work. Also depends on the basic observation module.
+	MIDCA module that sends a report on the world and actions to the 
+	Meta-AQUA story understanding system. This requires Meta-AQUA to be 
+	running or it will not work. Also depends on the basic observation 
+	module.
 	'''
+	
+	def __init__(self, writePort):
+		self.writeS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.writeS.connect(("localhost", writePort))
 	
 	def init(self, world, mem):
 		self.mem = mem
@@ -158,7 +165,9 @@ class MAReporter:
 	def get_lit_blocks(self, world):
 		res = []
 		for objectname in world.objects:
-			if world.is_true("onfire", [objectname]) and world.objects[objectname].type.name == "BLOCK" and objectname != "table":
+			if world.is_true("onfire", [objectname]) and \
+			world.objects[objectname].type.name == "BLOCK" and \
+			objectname != "table":
 				res.append(objectname)
 		return res
 	
@@ -190,4 +199,18 @@ class MAReporter:
 				if block not in lastBurning or block in blocksPutOut:
 					report.actions.append(["burns", block])
 		#report is finished, send to Meta-AQUA
+		if verbose >= 1:
+			print "Sending report to Meta-AQUA",
+			if verbose >= 2:
+				print ":\n", report
+		self.writeS.send(str(report))
+	
+	def __del__(self):
+		'''
+        close sockets on deletion. Also send 'Done' message to Meta-AQUA.
+        '''
+        try:
+            self.writeS.send(self.endMsg)
+        finally:
+            self.writeS.shutdown(socket.SHUT_RDWR)
 			
