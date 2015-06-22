@@ -96,8 +96,7 @@ class PyHopPlanner:
 					print
 
                                 if trace:
-                                        trace.add_data("PLAN", "FAIL")
-                                        trace.failuredetected() # TODO - remove
+                                        trace.add_data("PLAN", pyhopPlan )
 				return
 			#change from pyhop plan to MIDCA plan
 			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)

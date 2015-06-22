@@ -16,6 +16,8 @@ class CogTrace:
     trace = {}
     cycle = -1 # current cycle
     phase = "" # current phase
+    invalid_expectations = {"PyHopPlanner": {"PLAN":[None], "INPUT":[]}}
+    valid_expectations = {}
 
     
     
@@ -45,7 +47,7 @@ class CogTrace:
             self.trace[cycle] = {}
             #print("Fresh insert of data for phase "+str(phase)+" in cycle "+str(cycle)+ " to " + str(data))
             self.trace[cycle][phase] = []
-            
+
         self.cycle = cycle
         self.phase = phase
 
@@ -55,7 +57,11 @@ class CogTrace:
         """
         if self.cycle != -1 and self.phase != "":
             self.trace[self.cycle][self.phase].append([data_type,data])
-            
+
+        # check to see if any expectations were violated
+        invalid_exp_vars = self.invalid_expectations[self.phase]
+        invalid_exp_vars = self.invalid_expectations[self.phase]        
+        
             
     # When this is called, it means the current phase failed for some reason
     def failuredetected(self):
@@ -139,7 +145,7 @@ class CogTrace:
         prev_node_id = "" # for making dependency graph
         for cycle in self.trace.keys():
             for phase in self.trace[cycle].keys():
-                curr_node_id = " C" + str(cycle) + "P"+ str(phase)
+                curr_node_id = " C_" + str(cycle) + "_P_"+ str(phase)
                 
                 # generate the string for this node
                 for datum in self.trace[cycle][phase]:
