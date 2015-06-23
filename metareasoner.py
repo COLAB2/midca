@@ -66,6 +66,7 @@ class MRSimpleDetect:
         return anomalies
     
 class MRSimpleGoalGen:
+    
     anoms_to_goals = None
     default_anoms_to_goals = {"IMPASSE":"SWAP-COMPONENT"}
     
@@ -83,10 +84,37 @@ class MRSimplePlanner:
     
     def __init__(self, trace):
         self.goals_to_plans = default_goals_to_plans
+        self.trace = trace
         
-    def plan_for_goal(goal):
+    def plan_for_goal(self, goal):
         plan = self.goals_to_plans[goal]
         if goal == "SWAP-COMPONENT":
-            for operator in plan:
-                operator.replace("?x",)
-    
+            if self.trace.phase == "PyHopPlanner":
+                return ground_plan(plan, goal)
+            else:
+                # do a meaningless switch
+                old_component = self.trace.phase
+                new_component = self.trace.phase
+                for operator in plan:
+                    operator.replace("?x", self.trace.phase)
+        else:
+            raise Exception('UNDEFINED GOAL:',goal)
+
+    # specific code to ground specific plans (temporary solution)
+    def ground_plan(self,ungrounded_plan, goal):
+        grounded_plan = []
+        if self.trace.phase == "PyHopPlanner" and goal == "SWAP_COMPONENT":
+            old_component = self.trace.phase
+            new_component = "PyHopPlanner2" # TODO: for now this is hardcoded knowledge
+            if len(ungrounded_plan) == 2:
+                grounded_plan.append(ungrounded_plan[0].replace("?x", old_component))
+                grounded_plan.append(ungrounded_plan[0].replace("?x", new_component)))
+        else:
+            raise Exception('No ground_plan protocol for:',self.trace.phase, goal)
+
+        return grounded_plan
+                
+            
+class MRSimpleControl:
+
+    def __init__(self)
