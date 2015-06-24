@@ -64,23 +64,23 @@ class MRSimpleDetect:
         anomalies = []
         # only check last phase of trace
         prev_phase_data = self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
-        print("-*-*- detect(): prev_phase_data = " + str(prev_phase_data))        
-        print("-*-*- detect(): self.neg_expectations.keys(): is " + str(self.neg_expectations.keys()))                                
+        #print("-*-*- detect(): prev_phase_data = " + str(prev_phase_data))        
+        #print("-*-*- detect(): self.neg_expectations.keys(): is " + str(self.neg_expectations.keys()))                                
         # see if any expectations exist for this phase
         if self.trace.get_current_phase() in self.neg_expectations.keys():            
             relevant_neq_exp = self.neg_expectations[self.trace.get_current_phase()]
             
             for prev_phase_datum in prev_phase_data:
-                print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
+                #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
                 if prev_phase_datum[0] in relevant_neq_exp.keys():
-                    print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
+                    #print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
 
                     exp_to_check = relevant_neq_exp[prev_phase_datum[0]]
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
-                            print("-*-*- detect(): adding anomaly: "+str(exp[1]))
+                            #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])                            
                     
                     # for data in prev_phase_data:
@@ -105,7 +105,7 @@ class MRSimpleGoalGen:
         self.anoms_to_goals = self.default_anoms_to_goals
         self.trace = trace
         
-    def gen_goal(anomaly):
+    def gen_goal(self,anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
         for item in ungrounded_goal:
@@ -116,6 +116,7 @@ class MRSimpleGoalGen:
         return grounded_goal
         
 class MRSimplePlanner:
+    
     goals_to_plans = None
     default_goals_to_plans = {"SWAP-COMPONENT":[["REMOVE-COMPONENT", "?x"],["ADD-COMPONENT","?x"]]}
     trace = None
@@ -125,10 +126,11 @@ class MRSimplePlanner:
         self.trace = trace
         
     def plan_for_goal(self, goal):
-        plan = self.goals_to_plans[goal]
-        if goal == "SWAP-COMPONENT":
+        #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))        
+        plan = self.goals_to_plans[goal[0]]
+        if goal[0] == "SWAP-COMPONENT":
             if self.trace.phase == "PyHopPlanner":
-                return ground_plan(plan, goal)
+                return self.ground_plan(plan, goal)
             else:
                 # do a meaningless switch
                 old_component = self.trace.phase
@@ -141,15 +143,18 @@ class MRSimplePlanner:
     # specific code to ground specific plans (temporary solution)
     def ground_plan(self, ungrounded_plan, goal):
         grounded_plan = []
-        if self.trace.phase == "PyHopPlanner" and goal == "SWAP_COMPONENT":
+        if self.trace.phase == "PyHopPlanner" and goal[0] == "SWAP-COMPONENT":
             old_component = self.trace.phase
             new_component = "PyHopPlanner2" # TODO: for now this is hardcoded knowledge
             if len(ungrounded_plan) == 2:
-                grounded_plan.append(ungrounded_plan[0][1].replace("?x", old_component))
-                grounded_plan.append(ungrounded_plan[0][1].replace("?x", new_component))
+                action1 = [ungrounded_plan[0][0], ungrounded_plan[0][1].replace("?x", old_component)]
+                grounded_plan.append(action1)
+                action2 = [ungrounded_plan[1][0], ungrounded_plan[1][1].replace("?x", new_component)]
+                grounded_plan.append(action2)
         else:
             raise Exception('No ground_plan protocol for:',self.trace.phase, goal)
 
+        print("-*-*- ground_plan(): returning "+str(grounded_plan))
         return grounded_plan
                 
             
