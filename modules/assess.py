@@ -9,10 +9,7 @@ class MAQuery:
     endMsg = "Done"
     readSize = 100000
     
-    def __init__(self, readPort, writePort, waitForRead = 3.0):       
-        self.writeS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.writeS.connect(("localhost", writePort))
-        time.sleep(waitForRead)
+    def __init__(self, readPort, waitForRead = 3.0):       
         self.readS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.readS.connect(("localhost", readPort))
 
@@ -51,12 +48,8 @@ class MAQuery:
 
     def __del__(self):
         '''
-        close sockets on deletion. Also send 'Done' message to Meta-AQUA.
+        close socket on deletion. 
         '''
-        try:
-            self.writeS.send(self.endMsg)
-        finally:
-            self.writeS.shutdown(socket.SHUT_RDWR)
-            self.readS.shutdown(socket.SHUT_RDWR)
+        self.readS.shutdown(socket.SHUT_RDWR)
 
 

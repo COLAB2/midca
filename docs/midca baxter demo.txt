@@ -10,8 +10,8 @@ published
     -must be changed in MIDCA run script(baxter_run.py) and utterance listener
     node
 POINT_TOPIC: the topic on which point commands from MIDCA are published.
-    -must be changed in rosrun.py and in point effector node (pointing.py
-    reads rosrun's value)
+    -must be changed in asynch.py and in point effector node (pointing.py
+    reads asynch's value)
 
 I. External steps (sensors and effectors)
     -These can be started in any order, but must all be started for the demo
