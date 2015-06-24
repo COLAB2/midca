@@ -175,7 +175,24 @@ class MIDCA:
         # run metareasoner
         metareasoner.MetaReasoner(self.trace, self.mem).run()
         return retVal
-    
+
+    def copy(self):
+        '''
+        This method does not make a true copy - it will not copy
+        the original object's loggers and is not
+        intended to be run, only checked to see what MIDCA's state was
+        at an earlier time.
+        '''
+        newCopy = MIDCA(self.world,  self.verbose)
+        newCopy.mem = Memory()
+        newCopy.mem.knowledge = self.mem.knowledge.copy()
+        #newCopy.mem.locks = {name: threading.Lock() for name in self.mem.locks}
+        newCopy.phases = list(self.phases)
+        newCopy.modules = self.modules.copy()
+        newCopy.initialized = self.initialized
+        newCopy.phaseNum = self.phaseNum
+        return newCopy
+        
 class PhaseManager:
     
     def __init__(self, world, verbose = 2, display = None, storeHistory = False):
@@ -232,7 +249,7 @@ class PhaseManager:
 
     def next_phase(self, verbose = 2):
         if self.storeHistory:
-            self.history.append(copy.deepcopy(self.midca))
+            self.history.append(copy.deepcopy(self.midca.copy()))
         val = self.midca.next_phase(verbose)
         return val
     
