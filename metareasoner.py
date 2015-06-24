@@ -45,8 +45,9 @@ class MetaReasoner:
         print("-*-*- MetaReasoner plans are: "+str(plans))                
         # controller
         for plan in plans:
-            print("-*-*- MetaReasoner about to execute action: "+str(plan[0]))                            
-            self.controller.act(plan[0])
+            for action in plan:
+                print("-*-*- MetaReasoner about to execute action: "+str(action))
+                self.controller.act(action)
             
         
 class MRSimpleDetect:
@@ -164,23 +165,35 @@ class MRSimpleControl:
         self.cognitive_layer = cognitive_layer
 
     def act(self, action):
-        if action[0] == "REMOVE COMPONENT":
+        if action[0] == "REMOVE-COMPONENT":
             # find the component
             module_index = -1
             phase = None
-            for phase in self.cognitive_layer.get_phases:
-                i = 0
-                for mod in self.cognitive_layer.get_modules(phase):
-                    if str(mod) == action[1]:
-                        module_index = i
-                        phase = phase
-                        break
-                    i += 1
-            # remove the component
-            if phase and module_index > -1:
-                self.cognitive_layer.remove_module(phase, module_index)
-        elif action[0] == "ADD COMPONENT":
-            # add module into phase
-            self.cognitive_layer.runtime_append_module
+            mod_str = ""
+            class Found(Exception): pass # is this bad python? should this go at top of my file? 
+            try:
+                for phase in self.cognitive_layer.get_phases():
+                    i = 0
+                    for mod in self.cognitive_layer.get_modules(phase):
+                        mod_str = str(mod.__class__.__name__)
+                        print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))                     
+                        if mod_str == action[1]:
+                            print("-*-*- act(): we got a match!")
+                            module_index = i
+                            phase = phase
+                            raise Found
+                        i += 1                        
+            except Found:
+            
+                # remove the component
+                print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index)) 
+                if phase and module_index > -1:
+                    self.cognitive_layer.remove_module(phase, module_index)
+                    is_success = mod_str not in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules(phase))
+                    print("-*-*- act():  successfully removed " + str(action[1])+":"+str(is_success)+" ")                
+                elif action[0] == "ADD COMPONENT":
+                    # add module into phase
+                    print("")
+                    # self.cognitive_layer.runtime_append_module
         
     
