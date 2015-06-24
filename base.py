@@ -21,6 +21,15 @@ class Phase:
 	def __hash__(self):
 		return hash(self.name)
 
+class BaseModule:
+
+        def init(self, mem, world = None):
+                self.mem = mem
+
+        def run(self, cycle, verbose = 2):
+                raise NotImplementedError("A MIDCA module must implement the \
+                run(cycle) method.")
+
 class MIDCA:
 
 	def __init__(self, world = None, logenabled = True, verbose = 2):
@@ -132,7 +141,8 @@ class MIDCA:
 				try:
 					if verbose >= 2:
 						print("Initializing " + phase.name + " module " + str(i) + "...",)
-					module.init(self.world, self.mem)
+					module.init(world = self.world,
+                                                    mem = self.mem)
 					print("done.")
 				
 				except Exception as e:
@@ -159,10 +169,22 @@ class MIDCA:
 		if verbose >= 2:
 			print("****** Starting", self.phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
 			self.logger.logEvent(logging.PhaseStartEvent(self.phases[self.phasei].name))
-		for module in self.modules[self.phases[self.phasei]]:
+                i = 0
+		while i < len(self.modules[self.phases[self.phasei]]):
+                        module = self.modules[self.phases[self.phasei]][i]
 			self.logger.logEvent(logging.ModuleStartEvent(module))
-			retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+			try:
+                                retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+                                i += 1
+                        except NotImplementedError:
+                                if verbose >= 1:
+                                        print("module", module, "does not",
+                                              "implement the run() method and",
+                                              "is therefore invalid. It will be",
+                                              "removed from MIDCA.")
+                                self.removeModule(self.phases[self.phasei], i)
 			self.logger.logEvent(logging.ModuleEndEvent(module))
+                        
 		self.logger.logEvent(logging.PhaseEndEvent(self.phases[self.phasei].name))
 		self.phaseNum += 1
 		if (self.phaseNum - 1) % len(self.phases) == 0:
