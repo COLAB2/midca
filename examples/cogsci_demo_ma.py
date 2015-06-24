@@ -6,20 +6,25 @@ import inspect, os
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
-TF-trees and simulated Meta-AQUA connection to autonomously generate goals. 
+TF-trees and Meta-AQUA connection to autonomously generate goals. Meta-AQUA
+must be started and have opened sockets prior to launching MIDCA.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
+writePort = 5150
+readPort = 5151
+
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate.sim")
 
+myMidca.append_module('Perceive', perceive.MAReporter(writePort))
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.5, arsonStart = 10), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
+myMidca.append_module('Interpret', assess.MAQuery(readPort), 3)
 myMidca.insert_module('Eval', evaluate.Scorer(), 0)
 
 def preferApprehend(goal1, goal2):

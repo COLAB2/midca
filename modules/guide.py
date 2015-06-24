@@ -183,7 +183,7 @@ class InstructionReceiver:
 		for utterance in newUtterances:
 			if verbose >= 2:
 				print "received utterance:", utterance
-			if utterance == "point to the quad" or utterance == "goodbye baxter":
+			if utterance == "point to the quad" or utterance == "point at max":
 				goal = goals.Goal(objective = "show-loc", subject = "self", 
 				directObject = "quad", indirectObject = "observer")
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)

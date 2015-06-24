@@ -9,9 +9,10 @@ class MAQuery:
     endMsg = "Done"
     readSize = 100000
     
-    def __init__(self, readPort, waitForRead = 3.0):       
+    def __init__(self, readPort, waitTime = 5.0):       
         self.readS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.readS.connect(("localhost", readPort))
+        self.readS.settimeout(waitTime)
 
     def run(self, cycle, verbose = 2):
         try:
@@ -37,6 +38,9 @@ class MAQuery:
                    if verbose >= 2:
                        print "Meta-AQUA output unrecognized. No goal generated. Output:\n",
                        text
+        except socket.timeout:
+            if verbose >= 1:
+                print "Error: no data received from Meta-AQUA before timeout."
         except:
             if verbose >= 1:
                 print "Error reading from Meta-AQUA.",
