@@ -249,7 +249,7 @@ class PhaseManager:
 
     def next_phase(self, verbose = 2):
         if self.storeHistory:
-            self.history.append(copy.deepcopy(self.midca.copy()))
+            self.history.append(self.midca.copy())
         val = self.midca.next_phase(verbose)
         return val
     
