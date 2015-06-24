@@ -190,10 +190,10 @@ class MRSimpleControl:
                 if phase and module_index > -1:
                     self.cognitive_layer.remove_module(phase, module_index)
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules(phase))
-                    print("-*-*- act():  successfully removed " + str(action[1])+":"+str(is_success)+" ")                
+                    print("-*-*- act():  successfully removed " + str(action[1])+": "+str(is_success)+" ")                
                 elif action[0] == "ADD COMPONENT":
                     # add module into phase
-                    print("")
+                    print("-*-*- act():  executing action = "+str(action[0]))
                     # self.cognitive_layer.runtime_append_module
         
     
