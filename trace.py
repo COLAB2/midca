@@ -34,7 +34,9 @@ class CogTrace:
     def add_phase(self, cycle, phase):
         """args: 
            cycle := integer representing a cycle
-           phase := string representing the name of a phase """
+           phase := string representing the name of a phase
+           module := string represeting the name of the module
+        """
     
         if cycle in self.trace.keys():
             if len(self.trace[cycle]) > 0 and phase in self.trace[cycle].keys():
@@ -58,11 +60,22 @@ class CogTrace:
         if self.cycle != -1 and self.phase != "":
             self.trace[self.cycle][self.phase].append([data_type,data])
 
-        # check to see if any expectations were violated
-        invalid_exp_vars = self.invalid_expectations[self.phase]
-        invalid_exp_vars = self.invalid_expectations[self.phase]        
-        
+    def get_data(self, cycle, phase):
+        if cycle < 0:
+            return [] # if not initialized, no data to return
+        else:
+            # check phase
+            if phase not in self.trace[cycle]:
+                return []
             
+            return self.trace[cycle][phase]
+
+    def get_current_cycle(self):
+        return self.cycle
+
+    def get_current_phase(self):
+        return self.phase        
+        
     # When this is called, it means the current phase failed for some reason
     def failuredetected(self):
         # get the phase
