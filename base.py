@@ -27,6 +27,18 @@ class BaseModule:
                 self.mem = mem
 
         def run(self, cycle, verbose = 2):
+                '''
+                This method will be called once per cycle and defines the
+                behavior of a module.
+
+                Note: The return value of the run method is only
+                used in two special cases when MIDCA is run in interactive mode
+                (see PhaseManager.run()). If the last module in a phase returns
+                'continue', MIDCA will run the subsequent phase immediately. If
+                it returns 'q', MIDCA will quit immediately. These special cases
+                exist to allow modules a greater degree of control over their
+                behavior in interactive mode.
+                '''
                 raise NotImplementedError("A MIDCA module must implement the \
                 run(cycle) method.")
 
@@ -316,6 +328,7 @@ class PhaseManager:
 				else:
 					print("No display function set. See PhaseManager.set_display_function()"	)			
 			elif val.startswith("skip"):
+                                #disable output and run multiple cycles
 				try:
 					num = int(val[4:].strip())
 					for i in range(num):
