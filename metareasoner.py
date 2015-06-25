@@ -19,6 +19,7 @@ class MetaReasoner:
         self.trace = trace
         self.cognitive_layer = mem.myMidca
         self.verbose = verbose
+        self.monitor = MRSimpleMonitor(self.trace, verbose)
         self.discrepancy_detector = MRSimpleDetect(self.trace, verbose)
         self.goal_formulator = MRSimpleGoalGen(self.trace, verbose)
         self.planner = MRSimplePlanner(self.trace, verbose)
@@ -29,7 +30,9 @@ class MetaReasoner:
     def run(self):
         # interpret
         if (self.verbose >= 1): print("-*-*- MetaReasoner starting...")
-        anomalies = self.discrepancy_detector.detect()
+        last_phase_from_trace = self.monitor.get_last_phase()
+        if (self.verbose >= 1): print("-*-*- MetaReasoner monitor retrieving trace (last phase only)")
+        anomalies = self.discrepancy_detector.detect(last_phase_from_trace)
         if (self.verbose >= 1): print("-*-*- MetaReasoner anomalies detected: "+str(anomalies))
         new_goals = []
         for anom in anomalies:
@@ -50,6 +53,17 @@ class MetaReasoner:
                 if (self.verbose >= 1): print("-*-*- MetaReasoner about to execute action: "+str(action))
                 self.controller.act(action)
 
+class MRSimpleMonitor:
+
+    def __init__(self,trace,verbose):
+        self.trace = trace
+        self.verbose = verbose
+
+    def get_last_phase(self):
+        """ Return a small part of the trace """
+        return self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
+
+
 class MRSimpleDetect:
     trace = None
     # negative expectations: if equal to observed state, anomaly detected
@@ -62,17 +76,14 @@ class MRSimpleDetect:
         self.trace = trace
         self.verbose = verbose
 
-    def detect(self):
+    def detect(self, last_phase_data):
         anomalies = []
-        # only check last phase of trace
-        prev_phase_data = self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
-        #print("-*-*- detect(): prev_phase_data = " + str(prev_phase_data))
-        #print("-*-*- detect(): self.neg_expectations.keys(): is " + str(self.neg_expectations.keys()))
+
         # see if any expectations exist for this phase
         if self.trace.get_current_phase() in self.neg_expectations.keys():
             relevant_neq_exp = self.neg_expectations[self.trace.get_current_phase()]
 
-            for prev_phase_datum in prev_phase_data:
+            for prev_phase_datum in last_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
                 if prev_phase_datum[0] in relevant_neq_exp.keys():
@@ -85,10 +96,10 @@ class MRSimpleDetect:
                             #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])
 
-                    # for data in prev_phase_data:
+                    # for data in last_phase_data:
                     #     # check against expectations
-                    #     if data[0] in self.neg_expectations[prev_phase_data].keys():
-                    #         for exp in self.neg_expectations[prev_phase_data][data[0]]:
+                    #     if data[0] in self.neg_expectations[last_phase_data].keys():
+                    #         for exp in self.neg_expectations[last_phase_data][data[0]]:
                     #             if data[1] == exp[0]:
                     #             # anomaly detected in negative expectations
 
