@@ -1,5 +1,5 @@
 from MIDCA.modules._robot_world import world_repr
-from MIDCA import time, rosrun
+from MIDCA import time, rosrun, base
 
 class ROSObserver:
 	
@@ -35,7 +35,7 @@ class ROSObserver:
 			
 	
 
-class PerfectObserver:
+class PerfectObserver(base.BaseModule):
 
 	'''
 	MIDCA Module which copies a complete world state. It is designed to interact with the 
@@ -45,8 +45,10 @@ class PerfectObserver:
 	'''
 
 	def init(self, world, mem):
+                base.BaseModule.init(self, mem)
+                if not world:
+                        raise ValueError("world is None!")
 		self.world = world
-		self.mem = mem
 	
 	#perfect observation
 	def observe(self):
@@ -146,7 +148,7 @@ ma.actions.append(["catchfire", "block1"])
 print ma
 '''
 
-class MAReporter:
+class MAReporter(base.BaseModule):
 	
 	'''
 	MIDCA module that sends a report on the world and actions to the 
@@ -158,9 +160,6 @@ class MAReporter:
 	def __init__(self, writePort):
 		self.writeS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.writeS.connect(("localhost", writePort))
-	
-	def init(self, world, mem):
-		self.mem = mem
 	
 	def get_lit_blocks(self, world):
 		res = []
@@ -206,11 +205,11 @@ class MAReporter:
 		self.writeS.send(str(report))
 	
 	def __del__(self):
-		'''
-        close sockets on deletion. Also send 'Done' message to Meta-AQUA.
-        '''
-        try:
-            self.writeS.send(self.endMsg)
-        finally:
-            self.writeS.shutdown(socket.SHUT_RDWR)
+                '''
+                close sockets on deletion. Also send 'Done' message to Meta-AQUA.
+                '''
+                try:
+                    self.writeS.send(self.endMsg)
+                finally:
+                    self.writeS.shutdown(socket.SHUT_RDWR)
 			

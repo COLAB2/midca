@@ -1,15 +1,12 @@
-from MIDCA import goals, time
+from MIDCA import goals, time, base
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.worldsim import blockstate
 
-class UserGoalInput:
+class UserGoalInput(base.BaseModule):
 	
 	'''
 	MIDCA module that allows users to input goals in a predicate representation. These will be stored in MIDCA goals of the form Goal(arg1Name, arg2Name..., argiName, predicate = predName). Note that this class only allows for simple goals with only predicate and argument information. It does not currently check to see whether the type or number of arguments is appropriate.
 	'''
-	
-	def init(self, world, mem):
-		self.mem = mem
 	
 	def parseGoal(self, txt):
 		if not txt.endswith(")"):
@@ -70,15 +67,14 @@ class UserGoalInput:
 					print "Goal added."
 
 
-class TFStack:
+class TFStack(base.BaseModule):
 
 	'''
 	MIDCA module that generates goals to stack blocks using Michael Maynord's TF-Trees. These trees are trained to cycle through 3 specific states; behavior is unknown for other states. See implementation in modules/_goalgen/tf_3_scen.py for details.
 	'''
 
-	def init(self, world, mem):
+	def __init__(self):
 		self.tree = tf_3_scen.Tree()
-		self.mem = mem
 	
 	def stackingGoalsExist(self):
 		graph = self.mem.get(self.mem.GOAL_GRAPH)
@@ -100,15 +96,14 @@ class TFStack:
 				print "TF-Tree goal generated:", goal
 			self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
-class TFFire:
+class TFFire(base.BaseModule):
 
 	'''
 	MIDCA module that generates goals to put out fires using Michael Maynord's TF-Trees. The behavior is as follows: if any fires exist, a single goal will be generated to put out a fire on some block that is currently burning. Otherwise no goal will be generated.
 	'''
 
-	def init(self, world, mem):
+	def __init__(self):
 		self.tree = tf_fire.Tree()
-		self.mem = mem
 	
 	def fireGoalExists(self):
 		graph = self.mem.get(self.mem.GOAL_GRAPH)
@@ -130,14 +125,11 @@ class TFFire:
 				else:
 					print ". This goal was already in the graph."
 
-class ReactiveApprehend:
+class ReactiveApprehend(base.BaseModule):
 	
 	'''
 	MIDCA module that generates a goal to apprehend an arsonist if there is one who is free and there is a fire in the current world state. This is designed to simulate the behavior of the Meta-AQUA system.
 	'''
-	
-	def init(self, world, mem):
-		self.mem = mem
 	
 	def free_arsonist(self):
 		world = self.mem.get(self.mem.STATES)[-1]

@@ -1,8 +1,6 @@
+from MIDCA import base
 
-class SimpleIntend:
-	
-	def init(self, world, mem):
-		self.mem = mem
+class SimpleIntend(base.BaseModule):
 	
 	def run(self, cycle, verbose = 2):
 		goalGraph = self.mem.get(self.mem.GOAL_GRAPH)

@@ -1,9 +1,6 @@
-from MIDCA import time
+from MIDCA import time, base
 
-class EvalPointingFromFeedback:
-	
-	def init(self, world, mem):
-		self.mem = mem
+class EvalPointingFromFeedback(base.BaseModule):
 	
 	def run(self, cycle, verbose = 2):
 		try:
@@ -37,10 +34,7 @@ class EvalPointingFromFeedback:
 						print "Plan:", plan, "not complete"
 		
 
-class SimpleEval:
-	
-	def init(self, world, mem):
-		self.mem = mem	
+class SimpleEval(base.BaseModule):
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]

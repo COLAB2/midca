@@ -58,7 +58,7 @@ class Action:
                 return self.args[item]
 
         def __str__(self):
-                s = self.op + "("
+                s = str(self.op) + "("
                 for arg in self.args:
                         s += str(arg) + ", "
                 s = s[:-2] + ")"

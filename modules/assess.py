@@ -1,10 +1,10 @@
 import socket
 from MIDCA.modules._xp_goal.parser import * 
 from MIDCA.modules._xp_goal.traverser import *
-from MIDCA import goals
+from MIDCA import goals, base
 
 
-class MAQuery:
+class MAQuery(base.BaseModule):
 
     endMsg = "Done"
     readSize = 100000

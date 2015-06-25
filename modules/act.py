@@ -1,15 +1,13 @@
 from MIDCA.modules._plan.asynch import asynch
+from MIDCA import base
 
-class AsynchronousAct:
+class AsynchronousAct(base.BaseModule):
 	
 	'''
 	MIDCA module that "executes" plans in which the individual actions will be conducted
 	asynchronously. This was originally designed to allow MIDCA to work as a robot
 	controller in communication with ROS sensor and effector nodes.
 	'''
-	
-	def init(self, world, mem):
-		self.mem = mem
 	
 	def run(self, cycle, verbose = 2):		
 		goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -67,15 +65,12 @@ class AsynchronousAct:
 		
 		
 
-class SimpleAct:
+class SimpleAct(base.BaseModule):
 	
 	'''
 	MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
 	To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
 	'''
-	
-	def init(self, world, mem):
-		self.mem = mem
 	
 	#returns the plan that achieves the most current goals, based on simulation.
 	def get_best_plan(self, world, goals, verbose):

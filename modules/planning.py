@@ -1,10 +1,10 @@
 from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca
-from MIDCA import plans
+from MIDCA import plans, base
 import collections
 import traceback	
 from MIDCA.modules._plan.asynch import asynch
 
-class GenericPyhopPlanner:
+class GenericPyhopPlanner(base.BaseModule):
 	
 	'''
 	Whereas the PyHopPlanner class below is optimized for use with MIDCA's built-in world
@@ -27,15 +27,9 @@ class GenericPyhopPlanner:
 			disabled"
 			traceback.print_exc()
 			self.working = False
-		if plan_validator:
-			self.validate_plan = plan_validator
-		else:
-			self.validate_plan = True
-			#note by default plans execute to completion unless goals
-			#change
-	
-	def init(self, world, mem):
-		self.mem = mem
+		self.validate_plan = plan_validator
+                #note by default (no plan validator)
+		#plans execute to completion unless goals change
 	
 	def get_old_plan(self, state, goals, verbose = 2):
 		try:
@@ -43,13 +37,19 @@ class GenericPyhopPlanner:
 			if not plan:
 				return None
 			try:
-				valid = self.validate_plan(state, plan)
-				if verbose >= 2:
-					if valid:
-						print "Old plan found that tests as valid:", plan
+                                if self.validate_plan:
+                                        valid = self.validate_plan(state, plan)
+                                        if valid:
+                                                if verbose >= 2:
+                                                        print "Old plan found that tests as valid:", plan
 					else:
-						print "Old plan found that tests as invalid:", plan, ". removing from stored plans."
+						if verbose >= 2:
+                                                        print "Old plan found that tests as invalid:", plan, ". removing from stored plans."
 						self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
+                                else:
+                                       if verbose >= 2:
+                                               print "no validity check specified. assuming old plan is valid."
+                                       valid = True
 			except:
 				if verbose >= 2:
 					print "Error validating plan:", plan
@@ -96,11 +96,11 @@ class GenericPyhopPlanner:
 				print "No goals received by planner. Skipping planning."
 			return
 		plan = self.get_old_plan(state, goals, verbose)
-		if verbose > 2:
+		if verbose >= 2:
 			if plan:
 				print "Will not replan"
 			else:
-				print "Will replan"	
+				print "Planning from scratch"	
 		if not plan:
 			plan = self.get_new_plan(state, goals, verbose) 
                         if not plan and plan != []:
@@ -109,10 +109,10 @@ class GenericPyhopPlanner:
                         plan = plans.Plan(
                                 [plans.Action(action[0], *action[1:]) for
                                  action in plan], goals)
-		if verbose >= 1:
-			print "Planning complete."
-			if verbose >= 2:
-				print "Plan: ", plan
+                        if verbose >= 1:
+                                print "Planning complete."
+                if verbose >= 2:
+                        print "Plan: ", plan
 		#save new plan
 		if plan != None:
 			self.mem.get(self.mem.GOAL_GRAPH).addPlan(plan)
@@ -167,7 +167,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
 		if asynchPlan != None:
 			self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
 	
-class PyHopPlanner:
+class PyHopPlanner(base.BaseModule):
 	
 	'''
 	MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
@@ -182,12 +182,6 @@ class PyHopPlanner:
 		else:
 			methods.declare_methods()
 			operators.declare_ops()
-	
-	def init(self, world, mem):
-		self.mem = mem
-		#load operators from world. Note that using this simple method MIDCA will not check the types or values of arguments, though it will check for plan validity.
-		#Also, this method depends on the default MIDCA world simulator.
-		self.operators = {op.name: plans.Operator(op.name, op.objnames) for op in world.operators.values()}
 	
 	#this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
@@ -252,7 +246,7 @@ class PyHopPlanner:
 					print
 				return
 			#change from pyhop plan to MIDCA plan
-			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
+			midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
 			
 			if verbose >= 1:
 				print "Planning complete."
@@ -262,7 +256,7 @@ class PyHopPlanner:
 			if midcaPlan != None:
 				self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
-class PyHopPlanner2:
+class PyHopPlanner2(base.BaseModule):
 	
 	'''
 	MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
@@ -277,12 +271,6 @@ class PyHopPlanner2:
 		else:
 			methods_midca.declare_methods()
 			operators_midca.declare_ops()
-	
-	def init(self, world, mem):
-		self.mem = mem
-		#load operators from world. Note that using this simple method MIDCA will not check the types or values of arguments, though it will check for plan validity.
-		#Also, this method depends on the default MIDCA world simulator.
-		self.operators = {op.name: plans.Operator(op.name, op.objnames) for op in world.operators.values()}
 	
 	#this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
@@ -347,7 +335,7 @@ class PyHopPlanner2:
 					print
 				return
 			#change from pyhop plan to MIDCA plan
-			midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)
+			midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
 			
 			if verbose >= 1:
 				print "Planning complete."
