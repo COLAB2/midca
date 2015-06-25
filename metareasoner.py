@@ -1,4 +1,4 @@
-from modules import planning2
+from modules import planning
 
 """Author: Dustin Dannenhauer (dustin.td@gmail.com)
 
@@ -67,7 +67,7 @@ class MRSimpleMonitor:
 class MRSimpleDetect:
     trace = None
     # negative expectations: if equal to observed state, anomaly detected
-    neg_expectations = {"PyHopPlanner":
+    neg_expectations = {"PyHopPlannerBroken":
                         {"PLAN":[[None,"IMPASSE"]],
                          "INPUT":[]}}
     pos_expectations = {}
@@ -144,7 +144,7 @@ class MRSimplePlanner:
         #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
         plan = self.goals_to_plans[goal[0]]
         if goal[0] == "SWAP-MODULE":
-            if self.trace.module == "PyHopPlanner":
+            if self.trace.module == "PyHopPlannerBroken":
                 return self.ground_plan(plan, goal)
             else:
                 # do a meaningless switch
@@ -158,10 +158,10 @@ class MRSimplePlanner:
     # specific code to ground specific plans (temporary solution)
     def ground_plan(self, ungrounded_plan, goal):
         grounded_plan = []
-        if self.trace.module == "PyHopPlanner" and goal[0] == "SWAP-MODULE":
+        if self.trace.module == "PyHopPlannerBroken" and goal[0] == "SWAP-MODULE":
             phase = "Plan"
             old_component = self.trace.module
-            new_component = "PyHopPlanner2" # TODO: for now this is hardcoded knowledge
+            new_component = "PyHopPlanner" # TODO: for now this is hardcoded knowledge
             if len(ungrounded_plan) == 2:
                 action1 = [ungrounded_plan[0][0], ungrounded_plan[0][1].replace("?x", old_component)]
                 grounded_plan.append(action1)
@@ -207,13 +207,13 @@ class MRSimpleControl:
                     self.cognitive_layer.remove_module(phase, module_index)
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules(phase))
                     if is_success: print("Metareasoner removed "+mod_str) # report any actions metareasoner carried out
-                    if (self.verbose >= 2): print("-*-*- act():  did I succeed in removing PyHopPlanner " + str(action[1])+": "+str(is_success)+" ")
+                    if (self.verbose >= 2): print("-*-*- act():  did I succeed in removing PyHopPlannerBroken " + str(action[1])+": "+str(is_success)+" ")
         elif action[0] == "ADD-MODULE":
-            if action[2] == "PyHopPlanner2":
-                self.cognitive_layer.runtime_append_module("Plan", planning2.PyHopPlanner2(True)) # TODO: hardcoded knowledge of Plan phase
-                is_success = "PyHopPlanner2" in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules("Plan"))
-                if (self.verbose >= 2): print("-*-*- act():  did I succeed in adding PyHopPlanner2? "+str(is_success))
-                if is_success: print("Metareasoner added PyHopPlanner2") # report any actions metareasoner carried out
+            if action[2] == "PyHopPlanner":
+                self.cognitive_layer.runtime_append_module("Plan", planning.PyHopPlanner(True)) # TODO: hardcoded knowledge of Plan phase
+                is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules("Plan"))
+                if (self.verbose >= 2): print("-*-*- act():  did I succeed in adding PyHopPlanner? "+str(is_success))
+                if is_success: print("Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
 
 
 

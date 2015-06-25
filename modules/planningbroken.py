@@ -1,8 +1,8 @@
-from _plan import pyhop, operators, methods, operators_extinguish, methods_extinguish
+from _plan import pyhop, methods_broken, operators, methods_extinguish_broken, operators_extinguish
 from MIDCA import plans
 import collections
 import copy
-class PyHopPlanner2:
+class PyHopPlannerBroken:
 
     '''
     MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
@@ -12,10 +12,10 @@ class PyHopPlanner2:
     def __init__(self, extinguishers = False):
         #declares pyhop methods_broken. This is where the planner should be given the domain information it needs.
         if extinguishers:
-            methods_extinguish.declare_methods()
+            methods_extinguish_broken.declare_methods()
             operators_extinguish.declare_ops()
         else:
-            methods.declare_methods()
+            methods_broken.declare_methods()
             operators.declare_ops()
 
     def init(self, world, mem):
@@ -24,14 +24,13 @@ class PyHopPlanner2:
         #Also, this method depends on the default MIDCA world simulator.
         self.operators = {op.name: plans.Operator(op.name, op.objnames) for op in world.operators.values()}
 
-    #this will require a lot more error handling, but ignoring now for debugging.
+    # this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
-
         trace = self.mem.trace
         if trace:
-            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD", copy.deepcopy(world))
             trace.add_data("GOALS", copy.deepcopy(goals))
 
@@ -86,7 +85,6 @@ class PyHopPlanner2:
             try:
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
             except Exception:
-                print "Caught an exception HERE"
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:
@@ -94,9 +92,9 @@ class PyHopPlanner2:
                     for goal in goals:
                         print goal, " ",
                     print
-                    if trace:
-                        trace.add_data("PLAN", pyhopPlan)
-                        #trace.failuredetected() # TODO - remove
+
+                if trace:
+                    trace.add_data("PLAN", pyhopPlan )
                 return
             #change from pyhop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(self.operators[action[0]], *list(action[1:])) for action in pyhopPlan], goals)

@@ -1,6 +1,6 @@
 from MIDCA import base
 from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
-from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planningbroken, planning, act
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
@@ -20,7 +20,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planning.PyHopPlanner(extinguish))
+    myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguish))
     myMidca.append_module("Act", act.SimpleAct())
     return myMidca
 
