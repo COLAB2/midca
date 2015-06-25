@@ -14,26 +14,28 @@ class MetaReasoner:
     controller = None
     cognitive_layer = None
 
-    def __init__(self, trace, mem):
+    def __init__(self, trace, mem, verbose = 0):
+        """ Verbose value of 1 is top level output, verbose 2 is more detailed """
         self.trace = trace
         self.cognitive_layer = mem.myMidca
-        self.discrepancy_detector = MRSimpleDetect(self.trace)
-        self.goal_formulator = MRSimpleGoalGen(self.trace)
-        self.planner = MRSimplePlanner(self.trace)
-        self.controller = MRSimpleControl(self.cognitive_layer)
-        print("-*-*- MetaReasoner.__init__() successful")
+        self.verbose = verbose
+        self.discrepancy_detector = MRSimpleDetect(self.trace, verbose)
+        self.goal_formulator = MRSimpleGoalGen(self.trace, verbose)
+        self.planner = MRSimplePlanner(self.trace, verbose)
+        self.controller = MRSimpleControl(self.cognitive_layer, verbose)
+        if (self.verbose >= 1): print("-*-*- MetaReasoner initialized")
 
     # goes through the metareasoning cycle
     def run(self):
         # interpret
-        print("-*-*- MetaReasoner starting run")
+        if (self.verbose >= 1): print("-*-*- MetaReasoner starting...")
         anomalies = self.discrepancy_detector.detect()
-        print("-*-*- MetaReasoner anomalies detected: "+str(anomalies))
+        if (self.verbose >= 1): print("-*-*- MetaReasoner anomalies detected: "+str(anomalies))
         new_goals = []
         for anom in anomalies:
             new_goals.append(self.goal_formulator.gen_goal(anom))
 
-        print("-*-*- MetaReasoner goals are: "+str(new_goals))
+        if (self.verbose >= 1): print("-*-*- MetaReasoner goals are: "+str(new_goals))
         # implicit intend: pursue all goals
 
         # plan
@@ -41,12 +43,13 @@ class MetaReasoner:
         for new_goal in new_goals:
             plans.append(self.planner.plan_for_goal(new_goal))
 
-        print("-*-*- MetaReasoner plans are: "+str(plans))
+        if (self.verbose >= 1): print("-*-*- MetaReasoner plans are: "+str(plans))
         # controller
         for plan in plans:
             for action in plan:
-                print("-*-*- MetaReasoner about to execute action: "+str(action))
+                if (self.verbose >= 1): print("-*-*- MetaReasoner about to execute action: "+str(action))
                 self.controller.act(action)
+
 class MRSimpleDetect:
     trace = None
     # negative expectations: if equal to observed state, anomaly detected
@@ -55,8 +58,9 @@ class MRSimpleDetect:
                          "INPUT":[]}}
     pos_expectations = {}
 
-    def __init__(self, trace):
+    def __init__(self, trace, verbose = 0):
         self.trace = trace
+        self.verbose = verbose
 
     def detect(self):
         anomalies = []
@@ -90,7 +94,7 @@ class MRSimpleDetect:
 
 
         # TODO: implement pos_expectations
-        print("-*-*- detect(): returning anomalies: "+str(anomalies))
+        if (self.verbose >= 2): print("-*-*- detect(): returning anomalies: "+str(anomalies))
         return anomalies
 
 class MRSimpleGoalGen:
@@ -99,11 +103,12 @@ class MRSimpleGoalGen:
     default_anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
     trace = None
 
-    def __init__(self, trace):
+    def __init__(self, trace, verbose = 0):
         self.anoms_to_goals = self.default_anoms_to_goals
         self.trace = trace
+        self.verbose = verbose
 
-    def gen_goal(self,anomaly):
+    def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
         for item in ungrounded_goal:
@@ -119,9 +124,10 @@ class MRSimplePlanner:
     default_goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]]}
     trace = None
 
-    def __init__(self, trace):
+    def __init__(self, trace, verbose = 0):
         self.goals_to_plans = self.default_goals_to_plans
         self.trace = trace
+        self.verbose = verbose
 
     def plan_for_goal(self, goal):
         #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
@@ -153,16 +159,17 @@ class MRSimplePlanner:
         else:
             raise Exception('No ground_plan protocol for:',self.trace.module, goal)
 
-        print("-*-*- ground_plan(): returning "+str(grounded_plan))
+        if (self.verbose >= 2): print("-*-*- ground_plan(): returning "+str(grounded_plan))
         return grounded_plan
 
 
 class MRSimpleControl:
     cognitive_layer = None
-    def __init__(self, cognitive_layer):
+    def __init__(self, cognitive_layer, verbose = 0):
         self.cognitive_layer = cognitive_layer
+        self.verbose = verbose
 
-    def act(self, action):
+    def act(self, action, verbose = 0):
         if action[0] == "REMOVE-MODULE":
             # find the component
             module_index = -1
@@ -184,16 +191,18 @@ class MRSimpleControl:
             except Found:
 
                 # remove the component
-                print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
+                #print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
                     self.cognitive_layer.remove_module(phase, module_index)
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules(phase))
-                    print("-*-*- act():  did I succeed in removing PyHopPlanner " + str(action[1])+": "+str(is_success)+" ")
+                    if is_success: print("Metareasoner removed "+mod_str) # report any actions metareasoner carried out
+                    if (self.verbose >= 2): print("-*-*- act():  did I succeed in removing PyHopPlanner " + str(action[1])+": "+str(is_success)+" ")
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner2":
                 self.cognitive_layer.runtime_append_module("Plan", planning2.PyHopPlanner2(True)) # TODO: hardcoded knowledge of Plan phase
                 is_success = "PyHopPlanner2" in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules("Plan"))
-                print("-*-*- act():  did I succeed in adding PyHopPlanner2? "+str(is_success))
+                if (self.verbose >= 2): print("-*-*- act():  did I succeed in adding PyHopPlanner2? "+str(is_success))
+                if is_success: print("Metareasoner added PyHopPlanner2") # report any actions metareasoner carried out
 
 
 
