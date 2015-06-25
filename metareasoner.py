@@ -1,4 +1,4 @@
-
+from modules import planning2
 
 """Author: Dustin Dannenhauer (dustin.td@gmail.com)
 
@@ -17,7 +17,6 @@ class MetaReasoner:
     def __init__(self, trace, mem):
         self.trace = trace
         self.cognitive_layer = mem.myMidca
-        
         self.discrepancy_detector = MRSimpleDetect(self.trace)
         self.goal_formulator = MRSimpleGoalGen(self.trace)
         self.planner = MRSimplePlanner(self.trace)
@@ -28,28 +27,26 @@ class MetaReasoner:
     def run(self):
         # interpret
         print("-*-*- MetaReasoner starting run")
-        anomalies = self.discrepancy_detector.detect() 
-        print("-*-*- MetaReasoner anomalies detected: "+str(anomalies))        
+        anomalies = self.discrepancy_detector.detect()
+        print("-*-*- MetaReasoner anomalies detected: "+str(anomalies))
         new_goals = []
         for anom in anomalies:
             new_goals.append(self.goal_formulator.gen_goal(anom))
 
-        print("-*-*- MetaReasoner goals are: "+str(new_goals))                
-        # implicit intend: pursue all goals    
+        print("-*-*- MetaReasoner goals are: "+str(new_goals))
+        # implicit intend: pursue all goals
 
-        # plan    
-        plans = []    
+        # plan
+        plans = []
         for new_goal in new_goals:
             plans.append(self.planner.plan_for_goal(new_goal))
 
-        print("-*-*- MetaReasoner plans are: "+str(plans))                
+        print("-*-*- MetaReasoner plans are: "+str(plans))
         # controller
         for plan in plans:
             for action in plan:
                 print("-*-*- MetaReasoner about to execute action: "+str(action))
                 self.controller.act(action)
-            
-        
 class MRSimpleDetect:
     trace = None
     # negative expectations: if equal to observed state, anomaly detected
@@ -65,12 +62,12 @@ class MRSimpleDetect:
         anomalies = []
         # only check last phase of trace
         prev_phase_data = self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
-        #print("-*-*- detect(): prev_phase_data = " + str(prev_phase_data))        
-        #print("-*-*- detect(): self.neg_expectations.keys(): is " + str(self.neg_expectations.keys()))                                
+        #print("-*-*- detect(): prev_phase_data = " + str(prev_phase_data))
+        #print("-*-*- detect(): self.neg_expectations.keys(): is " + str(self.neg_expectations.keys()))
         # see if any expectations exist for this phase
-        if self.trace.get_current_phase() in self.neg_expectations.keys():            
+        if self.trace.get_current_phase() in self.neg_expectations.keys():
             relevant_neq_exp = self.neg_expectations[self.trace.get_current_phase()]
-            
+
             for prev_phase_datum in prev_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
@@ -82,8 +79,8 @@ class MRSimpleDetect:
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
                             #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
-                            anomalies.append(exp[1])                            
-                    
+                            anomalies.append(exp[1])
+
                     # for data in prev_phase_data:
                     #     # check against expectations
                     #     if data[0] in self.neg_expectations[prev_phase_data].keys():
@@ -95,105 +92,112 @@ class MRSimpleDetect:
         # TODO: implement pos_expectations
         print("-*-*- detect(): returning anomalies: "+str(anomalies))
         return anomalies
-    
+
 class MRSimpleGoalGen:
-    
+
     anoms_to_goals = None
-    default_anoms_to_goals = {"IMPASSE":["SWAP-COMPONENT","?phase"]}
+    default_anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
     trace = None
-    
+
     def __init__(self, trace):
         self.anoms_to_goals = self.default_anoms_to_goals
         self.trace = trace
-        
+
     def gen_goal(self,anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
         for item in ungrounded_goal:
             if item == "?phase":
-                item = self.trace.phase
+                item = self.trace.module
             grounded_goal.append(item)
-                
+
         return grounded_goal
-        
+
 class MRSimplePlanner:
-    
+
     goals_to_plans = None
-    default_goals_to_plans = {"SWAP-COMPONENT":[["REMOVE-COMPONENT", "?x"],["ADD-COMPONENT","?x"]]}
+    default_goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]]}
     trace = None
-    
+
     def __init__(self, trace):
         self.goals_to_plans = self.default_goals_to_plans
         self.trace = trace
-        
+
     def plan_for_goal(self, goal):
-        #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))        
+        #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
         plan = self.goals_to_plans[goal[0]]
-        if goal[0] == "SWAP-COMPONENT":
-            if self.trace.phase == "PyHopPlanner":
+        if goal[0] == "SWAP-MODULE":
+            if self.trace.module == "PyHopPlanner":
                 return self.ground_plan(plan, goal)
             else:
                 # do a meaningless switch
-                old_component = self.trace.phase
-                new_component = self.trace.phase
+                old_component = self.trace.module
+                new_component = self.trace.module
                 for operator in plan:
-                    operator.replace("?x", self.trace.phase)
+                    operator.replace("?x", self.trace.module)
         else:
             raise Exception('UNDEFINED GOAL:',goal)
 
     # specific code to ground specific plans (temporary solution)
     def ground_plan(self, ungrounded_plan, goal):
         grounded_plan = []
-        if self.trace.phase == "PyHopPlanner" and goal[0] == "SWAP-COMPONENT":
-            old_component = self.trace.phase
+        if self.trace.module == "PyHopPlanner" and goal[0] == "SWAP-MODULE":
+            phase = "Plan"
+            old_component = self.trace.module
             new_component = "PyHopPlanner2" # TODO: for now this is hardcoded knowledge
             if len(ungrounded_plan) == 2:
                 action1 = [ungrounded_plan[0][0], ungrounded_plan[0][1].replace("?x", old_component)]
                 grounded_plan.append(action1)
-                action2 = [ungrounded_plan[1][0], ungrounded_plan[1][1].replace("?x", new_component)]
+                action2 = [ungrounded_plan[1][0], ungrounded_plan[1][1].replace("?p", phase),ungrounded_plan[1][2].replace("?x", new_component)]
                 grounded_plan.append(action2)
         else:
-            raise Exception('No ground_plan protocol for:',self.trace.phase, goal)
+            raise Exception('No ground_plan protocol for:',self.trace.module, goal)
 
         print("-*-*- ground_plan(): returning "+str(grounded_plan))
         return grounded_plan
-                
-            
+
+
 class MRSimpleControl:
     cognitive_layer = None
     def __init__(self, cognitive_layer):
         self.cognitive_layer = cognitive_layer
 
     def act(self, action):
-        if action[0] == "REMOVE-COMPONENT":
+        if action[0] == "REMOVE-MODULE":
             # find the component
             module_index = -1
             phase = None
             mod_str = ""
-            class Found(Exception): pass # is this bad python? should this go at top of my file? 
+            class Found(Exception): pass # is this bad python? should this go at top of my file?
             try:
-                for phase in self.cognitive_layer.get_phases():
+                for phasei in self.cognitive_layer.get_phases():
                     i = 0
-                    for mod in self.cognitive_layer.get_modules(phase):
+                    for mod in self.cognitive_layer.get_modules(phasei):
                         mod_str = str(mod.__class__.__name__)
-                        print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))                     
+                        #print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))
                         if mod_str == action[1]:
-                            print("-*-*- act(): we got a match!")
+                            #print("-*-*- act(): we got a match!")
                             module_index = i
-                            phase = phase
+                            phase = phasei
                             raise Found
-                        i += 1                        
+                        i += 1
             except Found:
-            
+
                 # remove the component
-                print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index)) 
+                print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
                     self.cognitive_layer.remove_module(phase, module_index)
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules(phase))
-                    print("-*-*- act():  successfully removed " + str(action[1])+": "+str(is_success)+" ")                
-                elif action[0] == "ADD COMPONENT":
-                    # add module into phase
-                    print("-*-*- act():  executing action = "+str(action[0]))
-                    # self.cognitive_layer.runtime_append_module
-        
-    
+                    print("-*-*- act():  did I succeed in removing PyHopPlanner " + str(action[1])+": "+str(is_success)+" ")
+        elif action[0] == "ADD-MODULE":
+            if action[2] == "PyHopPlanner2":
+                self.cognitive_layer.runtime_append_module("Plan", planning2.PyHopPlanner2(True)) # TODO: hardcoded knowledge of Plan phase
+                is_success = "PyHopPlanner2" in map(lambda x: x.__class__.__name__, self.cognitive_layer.get_modules("Plan"))
+                print("-*-*- act():  did I succeed in adding PyHopPlanner2? "+str(is_success))
+
+
+
+
+
+
+

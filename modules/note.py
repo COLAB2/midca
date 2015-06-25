@@ -223,7 +223,7 @@ class ADistanceAnomalyNoter:
 
                 trace = self.mem.trace
                 if trace:
-                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_module(cycle,self.__class__.__name__)
                         trace.add_data("PREV WORLD", prevworld)
                         trace.add_data("CURR WORLD", currworld)
                         trace.add_data("ANOMALY", self.anomalous())

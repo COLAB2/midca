@@ -43,7 +43,7 @@ class SimpleAct:
 
                 trace = self.mem.trace
                 if trace:
-                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_module(cycle,self.__class__.__name__)
                         trace.add_data("WORLD", copy.deepcopy(world))
                         trace.add_data("GOALS", copy.deepcopy(goals))
                         trace.add_data("PLAN", copy.deepcopy(plan))                        

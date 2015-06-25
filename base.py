@@ -6,18 +6,18 @@ from MIDCA.worldsim import stateread
 
 
 MAX_MODULES_PER_PHASE = 100
-    
+
 class Phase:
-    
+
     def __init__(self, name):
         self.name = name
-    
+
     def __str__(self):
         return self.name
-    
+
     def __eq__(self, other):
         return type(self) == type(other) and self.name == other.name
-    
+
     def __hash__(self):
         return hash(self.name)
 
@@ -33,13 +33,13 @@ class MIDCA:
         self.phaseNum = 1
         self.logger = logging.Logger()
         self.trace = trace.CogTrace(self.mem)
-    
+
     def phase_by_name(self, name):
         for phase in self.phases:
             if phase.name == name:
                 return phase
         return None
-    
+
     def insert_phase(self, phase, phaseOrIndex):
         if isinstance(phase, str):
             phase = Phase(phase)
@@ -57,10 +57,10 @@ class MIDCA:
             raise KeyError("phase " + str(phaseOrIndex) + " not in phase list.")
         self.phases.insert(self.phases.index(phaseOrIndex), phase)
         self.modules[phase] = []
-    
+
     def append_phase(self, phase):
         self.insert_phase(phase, len(self.phases) + 1)
-    
+
     def remove_phase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -72,13 +72,16 @@ class MIDCA:
         except ValueError:
             raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
         #if there is a KeyError, something has gone very wrong.
-    
+
+    def get_current_phase(self):
+        return self.phases[self.phaseNum]
+
     def append_module(self, phase, module):
         self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
 
     def runtime_append_module(self, phase, module):
         self.runtime_insert_module(phase, module, MAX_MODULES_PER_PHASE)
-                
+
     #note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
     def insert_module(self, phase, module, i):
         if isinstance(phase, str):
@@ -102,8 +105,8 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        module.init(self.world, self.mem)                
-                
+        module.init(self.world, self.mem)
+
     def removeModule(self, phase, i):
         if isinstance(phase, str):
             phase = self.phase_by_name(phase)
@@ -114,12 +117,12 @@ class MIDCA:
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
             modules.pop(i)
-        
-    
+
+
     def clearPhase(self, phase):
                 # TODO: call a module.exit() function?
         self.modules[phase] = []
-    
+
     def get_modules(self, phase):
         if isinstance(phase, str):
             phase = self.phase_by_name(phase)
@@ -127,7 +130,7 @@ class MIDCA:
             return self.modules[phase]
         else:
             raise ValueError("No such phase as " + str(phase))
-    
+
     def init(self, verbose = 2):
         for phase in self.phases:
             modules = self.modules[phase]
@@ -139,14 +142,14 @@ class MIDCA:
                         print("Initializing " + phase.name + " module " + str(i) + "...",)
                     module.init(self.world, self.mem)
                     print("done.")
-                
+
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
                         print("\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init.")
         self.initGoalGraph(overwrite = False)
         self.initialized = True
-    
+
     def initGoalGraph(self, cmpFunc = None, overwrite = True):
         if overwrite or not self.mem.get(self.mem.GOAL_GRAPH):
             self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
@@ -155,25 +158,41 @@ class MIDCA:
                 print()
             else:
                 print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
-    
+
     def next_phase(self, verbose = 2):
+        retVal = ""
         self.phasei = (self.phaseNum - 1) % len(self.phases)
         if self.phasei == 0:
             self.logger.logEvent(logging.CycleStartEvent((self.phaseNum - 1) / len(self.phases)))
         if verbose >= 2:
             print("****** Starting", self.phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
             self.logger.logEvent(logging.PhaseStartEvent(self.phases[self.phasei].name))
-        for module in self.modules[self.phases[self.phasei]]:
+        i = 0
+        while i < len(self.modules[self.phases[self.phasei]]):
+            module = self.modules[self.phases[self.phasei]][i]
             self.logger.logEvent(logging.ModuleStartEvent(module))
-            retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+            try:
+                retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+                i += 1
+            except NotImplementedError:
+                if verbose >= 1:
+                    print("module", module, "does not",
+                                            "implement the run() method and",
+                                            "is therefore invalid. It will be",
+                                            "removed from MIDCA.")
+                self.removeModule(self.phases[self.phasei], i)
             self.logger.logEvent(logging.ModuleEndEvent(module))
+
         self.logger.logEvent(logging.PhaseEndEvent(self.phases[self.phasei].name))
         self.phaseNum += 1
         if (self.phaseNum - 1) % len(self.phases) == 0:
             self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
 
+        # set phase
+        self.mem.set("phase", self.phases[self.phasei].name)
         # run metareasoner
         metareasoner.MetaReasoner(self.trace, self.mem).run()
+
         return retVal
 
     def copy(self):
@@ -192,9 +211,9 @@ class MIDCA:
         newCopy.initialized = self.initialized
         newCopy.phaseNum = self.phaseNum
         return newCopy
-        
+
 class PhaseManager:
-    
+
     def __init__(self, world, verbose = 2, display = None, storeHistory = False):
         self.midca = MIDCA(world, verbose)
         self.mem = self.midca.mem
@@ -204,43 +223,43 @@ class PhaseManager:
         self.twoSevenWarning = False
         self.logger = self.midca.logger
         self.trace = self.midca.trace
-    
+
     '''
     convenience functions which wrap MIDCA functions
     '''
     def phase_by_name(self, name):
         return self.midca.phase_by_name(name)
-    
+
     def insert_phase(self, phase, phaseOrIndex):
         self.midca.insert_phase(phase, phaseOrIndex)
-    
+
     def append_phase(self, phase):
         self.midca.append_phase(phase)
-    
+
     def get_phases(self):
         return [phase.name for phase in self.midca.phases]
-    
+
     def append_module(self, phase, module):
         self.midca.append_module(phase, module)
 
     def runtime_append_module(self, phase, module):
         self.midca.runtime_append_module(phase, module)
-                
+
     def insert_module(self, phase, module, i):
         self.midca.insert_module(phase, module, i)
-    
+
     def remove_module(self, phase, i):
         self.midca.removeModule(phase, i)
-    
+
     def clear_phase(self, phase):
         self.midca.clearPhase(phase)
-    
+
     def get_modules(self, phase):
         return self.midca.get_modules(phase)
-    
+
     def init(self, verbose = 2):
         self.midca.init(verbose)
-    
+
     def initGoalGraph(self, cmpFunc = None):
         self.midca.initGoalGraph(cmpFunc)
     '''
@@ -252,7 +271,7 @@ class PhaseManager:
             self.history.append(self.midca.copy())
         val = self.midca.next_phase(verbose)
         return val
-    
+
     def one_cycle(self, verbose = 1, pause = 0.5):
         for i in range(len(self.midca.phases)):
             t1 = datetime.datetime.today()
@@ -266,11 +285,11 @@ class PhaseManager:
                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
                     self.twoSevenWarning = True
                 time.sleep(pause)
-    
+
     def several_cycles(self, num, verbose = 1, pause = 0.01):
         for i in range(num):
             self.one_cycle(verbose, pause)
-    
+
     #MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.midca.world.
     def set_display_function(self, function):
         self.display = function
@@ -278,7 +297,7 @@ class PhaseManager:
     def clearWorldState(self):
         self.midca.world.objects = {}
         self.midca.world.atoms = []
-    
+
     def applyStateChange(self, stateStr):
         stateread.apply_state_str(self.midca.world, stateStr)
 
@@ -303,7 +322,7 @@ class PhaseManager:
                     except Exception as e:
                         print("Error displaying world")
                 else:
-                    print("No display function set. See PhaseManager.set_display_function()"    )           
+                    print("No display function set. See PhaseManager.set_display_function()"    )
             elif val.startswith("skip"):
                 try:
                     num = int(val[4:].strip())

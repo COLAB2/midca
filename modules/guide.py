@@ -73,7 +73,7 @@ class UserGoalInput:
 
                 trace = self.mem.trace
                 if trace:
-                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_module(cycle,self.__class__.__name__)
                         trace.add_data("USER GOALS", goals_entered)
                         trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 

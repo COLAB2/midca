@@ -198,17 +198,17 @@ class CycleEndEvent(Event):
 class PhaseStartEvent(Event):
 	
 	def __init__(self, phase):
-		self.phase = phase
+		self.module = phase
 		self.keys = "all"
 		self.loggable = True
 	
 	def __str__(self):
-		return "****** Starting " + str(self.phase) + " Phase ******\n"
+		return "****** Starting " + str(self.module) + " Phase ******\n"
 	
 class PhaseEndEvent(Event):
 	
 	def __init__(self, phase):
-		self.phase = phase
+		self.module = phase
 		self.keys = []
 		self.loggable = False
 	

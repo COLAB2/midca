@@ -8,7 +8,7 @@ class SimpleIntend:
 	def run(self, cycle, verbose = 2):
                 trace = self.mem.trace
                 if trace:
-                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_module(cycle,self.__class__.__name__)
                         trace.add_data("GOALGRAPH",copy.deepcopy(self.mem.GOAL_GRAPH))
                         
 		goalGraph = self.mem.get(self.mem.GOAL_GRAPH)

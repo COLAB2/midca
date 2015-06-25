@@ -24,14 +24,13 @@ class PyHopPlanner:
 		#Also, this method depends on the default MIDCA world simulator.
 		self.operators = {op.name: plans.Operator(op.name, op.objnames) for op in world.operators.values()}
 	
-	#this will require a lot more error handling, but ignoring now for debugging.
+	# this will require a lot more error handling, but ignoring now for debugging.
 	def run(self, cycle, verbose = 2):
                 world = self.mem.get(self.mem.STATES)[-1]
-		goals = self.mem.get(self.mem.CURRENT_GOALS)
-
+                goals = self.mem.get(self.mem.CURRENT_GOALS)
                 trace = self.mem.trace
                 if trace:
-                        trace.add_phase(cycle,self.__class__.__name__)
+                        trace.add_module(cycle, self.__class__.__name__)
                         trace.add_data("WORLD", copy.deepcopy(world))
                         trace.add_data("GOALS", copy.deepcopy(goals))
                 
