@@ -42,9 +42,17 @@ class BaseModule:
                 raise NotImplementedError("A MIDCA module must implement the \
                 run(cycle) method.")
 
+        def log(self, msg):
+                if self.mem.logger:
+                        self.mem.logger.log(msg)
+                else:
+                        print("Trying call BaseModule.log(), but Logging is not \
+                        enabled! To enable call midca.mem.enableLogging(logger)")
+
 class MIDCA:
 
-	def __init__(self, world = None, logenabled = True, verbose = 2):
+	def __init__(self, world = None, logenabled = True, logOutput = True,
+                     logMemory = True, verbose = 2):
 		self.world = world
 		self.mem = Memory()
 		self.phases = []
@@ -58,8 +66,10 @@ class MIDCA:
 		else:
 			self.logger.start()
 			if self.logger.working:
-				self.logger.logOutput()
+				if logOutput:
+                                        self.logger.logOutput()
 				self.mem.enableLogging(self.logger)
+				self.mem.logEachAccess = logMemory
 	
 	def phase_by_name(self, name):
 		for phase in self.phases:

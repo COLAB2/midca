@@ -109,9 +109,9 @@ class Logger:
 				self._write(deltaTStr + str(event), key)
 		self.events.append(event)
 	
-	def log(self, val, key = None):
-		if isinstance(val, basestring):
-			self._user_log(val, key)
+	def log(self, val, keys = []):
+                if isinstance(val, basestring):
+			self._user_log(val, keys)
 		elif isinstance(val, Event):
 			self.logEvent(val)
 		else:

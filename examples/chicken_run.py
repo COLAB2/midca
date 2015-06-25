@@ -23,10 +23,11 @@ myMidca.remove_module("Simulate", 1) #remove blocksworld viewer
 myMidca.clear_phase("Plan")
 myMidca.append_module("Plan", planning.GenericPyhopPlanner(
     sample_methods.declare_methods, sample_operators.declare_ops))
-myMidca.set_display_function(print)
+myMidca.set_display_function(print) #set world viewer to output text
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = False
+myMidca.mem.logEachAccess = False
 
 myMidca.init()
 myMidca.run()

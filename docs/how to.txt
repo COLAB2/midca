@@ -68,6 +68,25 @@ myMidca.init()
 
 myMidca.run()
 
+9) logging
+
+from 'outside' MIDCA:
+myMidca.logger.log(msg)
+
+from a new-style MIDCA module's run method:
+self.log(msg)
+
+from an old-style MIDCA module's run method:
+not enabled; see first note for a workaround.
+
+note:
+by default, MIDCA will automatically log everything sent to standard output. To
+turn this off, set the MIDCA constructor argument 'logOutput' to False.
+
+note:
+by default, MIDCA also logs each memory access. To turn this off, set the MIDCA
+constructor argument logMemory to False, or set myMidca.mem.logEachAccess to False.
+
 II. Understanding how MIDCA works from the code
 
 1) Start with the base.py file. The method PhaseManager.run() defines the behavior of MIDCA in interactive mode, and following the association between user inputs and associated function calls should give a good idea of what MIDCA is doing.

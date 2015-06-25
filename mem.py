@@ -28,6 +28,7 @@ class Memory:
 		self.logger = None
 		self.mainLock = threading.Lock() #to synchronize lock creation
 		self.locks = {} #lock for each key
+		self.logEachAccess = True
 
 	#Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
 	def _update(self, structname, val):
@@ -149,7 +150,7 @@ class Memory:
 		self.logger = logger
 	
 	def logAccess(self, key):
-		if self.logger:
+		if self.logger and self.logEachAccess:
 			self.logger.logEvent(MemAccessEvent(key))
 
 class MemAccessEvent(Event):
