@@ -3,7 +3,7 @@ import copy, time, datetime, sys
 from MIDCA.mem import Memory
 from MIDCA import goals, logging, trace, metareasoner
 from MIDCA.worldsim import stateread
-
+import threading
 
 MAX_MODULES_PER_PHASE = 100
 
@@ -21,9 +21,38 @@ class Phase:
     def __hash__(self):
         return hash(self.name)
 
+class BaseModule:
+
+    def init(self, mem, world = None):
+        self.mem = mem
+
+    def run(self, cycle, verbose = 2):
+        '''
+        This method will be called once per cycle and defines the
+        behavior of a module.
+
+        Note: The return value of the run method is only
+        used in two special cases when MIDCA is run in interactive mode
+        (see PhaseManager.run()). If the last module in a phase returns
+        'continue', MIDCA will run the subsequent phase immediately. If
+        it returns 'q', MIDCA will quit immediately. These special cases
+        exist to allow modules a greater degree of control over their
+        behavior in interactive mode.
+        '''
+        raise NotImplementedError("A MIDCA module must implement the \
+        run(cycle) method.")
+
+    def log(self, msg):
+        if self.mem.logger:
+            self.mem.logger.log(msg)
+        else:
+            print("Trying call BaseModule.log(), but Logging is not \
+            enabled! To enable call midca.mem.enableLogging(logger)")
+
 class MIDCA:
 
-    def __init__(self, world, verbose = 2):
+    def __init__(self, world = None, logenabled = True, logOutput = True,
+                     logMemory = True, verbose = 2):
         self.world = world
         self.mem = Memory()
         self.phases = []
@@ -31,8 +60,17 @@ class MIDCA:
         self.verbose = verbose
         self.initialized = False
         self.phaseNum = 1
-        self.logger = logging.Logger()
         self.trace = trace.CogTrace(self.mem)
+        self.logger = logging.Logger()
+        if not logenabled:
+            self.logger.working = False
+        else:
+            self.logger.start()
+            if self.logger.working:
+                if logOutput:
+                                        self.logger.logOutput()
+                self.mem.enableLogging(self.logger)
+                self.mem.logEachAccess = logMemory
 
     def phase_by_name(self, name):
         for phase in self.phases:
@@ -72,9 +110,6 @@ class MIDCA:
         except ValueError:
             raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
         #if there is a KeyError, something has gone very wrong.
-
-    def get_current_phase(self):
-        return self.phases[self.phaseNum]
 
     def append_module(self, phase, module):
         self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
@@ -118,10 +153,15 @@ class MIDCA:
         else:
             modules.pop(i)
 
-
-    def clearPhase(self, phase):
-                # TODO: call a module.exit() function?
-        self.modules[phase] = []
+    def clearPhase(self, phaseOrName):
+        if isinstance(phaseOrName, str):
+            phase = self.phase_by_name(phaseOrName)
+        else:
+            phase = phaseOrName
+        try:
+            self.modules[phase] = []
+        except ValueError:
+            raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
 
     def get_modules(self, phase):
         if isinstance(phase, str):
@@ -140,7 +180,8 @@ class MIDCA:
                 try:
                     if verbose >= 2:
                         print("Initializing " + phase.name + " module " + str(i) + "...",)
-                    module.init(self.world, self.mem)
+                    module.init(world = self.world,
+                                mem = self.mem)
                     print("done.")
 
                 except Exception as e:
@@ -167,7 +208,7 @@ class MIDCA:
         if verbose >= 2:
             print("****** Starting", self.phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
             self.logger.logEvent(logging.PhaseStartEvent(self.phases[self.phasei].name))
-        i = 0
+            i = 0
         while i < len(self.modules[self.phases[self.phasei]]):
             module = self.modules[self.phases[self.phasei]][i]
             self.logger.logEvent(logging.ModuleStartEvent(module))
@@ -177,9 +218,9 @@ class MIDCA:
             except NotImplementedError:
                 if verbose >= 1:
                     print("module", module, "does not",
-                                            "implement the run() method and",
-                                            "is therefore invalid. It will be",
-                                            "removed from MIDCA.")
+                          "implement the run() method and",
+                          "is therefore invalid. It will be",
+                          "removed from MIDCA.")
                 self.removeModule(self.phases[self.phasei], i)
             self.logger.logEvent(logging.ModuleEndEvent(module))
 
@@ -188,9 +229,8 @@ class MIDCA:
         if (self.phaseNum - 1) % len(self.phases) == 0:
             self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
 
-        # set phase
+        # record phase and run metareasoner
         self.mem.set("phase", self.phases[self.phasei].name)
-        # run metareasoner
         metareasoner.MetaReasoner(self.trace, self.mem).run()
 
         return retVal
@@ -202,10 +242,10 @@ class MIDCA:
         intended to be run, only checked to see what MIDCA's state was
         at an earlier time.
         '''
-        newCopy = MIDCA(self.world,  self.verbose)
+        newCopy = MIDCA(self.world, False, self.verbose)
         newCopy.mem = Memory()
         newCopy.mem.knowledge = self.mem.knowledge.copy()
-        #newCopy.mem.locks = {name: threading.Lock() for name in self.mem.locks}
+        newCopy.mem.locks = {name: threading.Lock() for name in self.mem.locks}
         newCopy.phases = list(self.phases)
         newCopy.modules = self.modules.copy()
         newCopy.initialized = self.initialized
@@ -214,8 +254,8 @@ class MIDCA:
 
 class PhaseManager:
 
-    def __init__(self, world, verbose = 2, display = None, storeHistory = False):
-        self.midca = MIDCA(world, verbose)
+    def __init__(self, world = None, verbose = 2, display = None, storeHistory = False):
+        self.midca = MIDCA(world = world, verbose = verbose)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
@@ -322,8 +362,9 @@ class PhaseManager:
                     except Exception as e:
                         print("Error displaying world")
                 else:
-                    print("No display function set. See PhaseManager.set_display_function()"    )
+                    print("No display function set. See PhaseManager.set_display_function()"	)
             elif val.startswith("skip"):
+                                #disable output and run multiple cycles
                 try:
                     num = int(val[4:].strip())
                     for i in range(num):
@@ -336,15 +377,22 @@ class PhaseManager:
                 txt = raw_input()
                 if txt:
                     self.logger.log(txt)
+            elif val == "drawgoalgraph":
+                print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
+                txt = raw_input()
+                if txt:
+                    self.mem.get(self.mem.GOAL_GRAPH).writeToPDF(txt)
+                else:
+                    self.mem.get(self.mem.GOAL_GRAPH).writeToPDF()
             elif val == "printtrace":
-                                self.trace.printtrace()
+                self.trace.printtrace()
             elif val == "drawtrace":
-                                print("Input file name ending in .pdf or press enter to use default filename: trace.pdf")
-                                txt = raw_input()
-                                if txt:
-                                        self.trace.writeToPDF(txt)
-                                else:
-                                        self.trace.writeToPDF()
+                print("Input file name ending in .pdf or press enter to use default filename: trace.pdf")
+                txt = raw_input()
+                if txt:
+                    self.trace.writeToPDF(txt)
+                else:
+                    self.trace.writeToPDF()
             elif val == "change":
                 print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                 while True:
@@ -368,7 +416,7 @@ class PhaseManager:
                         try:
                             self.applyStateChange(s)
                             print("State loaded")
-                        except exception as e:
+                        except Exception as e:
                             print("Error loading state. State may be partially loaded: ", str(e))
                     else:
                         try:

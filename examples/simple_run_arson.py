@@ -8,7 +8,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/extinguisher_state.sim")
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
@@ -23,7 +23,7 @@ def preferFire(goal1, goal2):
 		return 1
 	return 0
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+#tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.initGoalGraph(cmpFunc = preferFire)
 myMidca.init()

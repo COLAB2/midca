@@ -43,11 +43,13 @@ class Atom:
 		if len(predicate.argnames) != len(args):
 			raise Exception("Wrong number of args for " + predicate.name)
 		i = 0
+		'''
 		if predicate.argtypes:
 			for arg in args:
 				if not arg.is_a(predicate.argtypes[i]):
 					raise Exception("Instantiating argument " + predicate.argnames[i] + " with " + arg.name + ", which is the wrong type of object")
 				i += 1
+		'''
 		self.predicate = predicate
 		self.args = args
 	
@@ -276,26 +278,45 @@ class World:
 	def copy(self):
 		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
 	
-	def is_true(self, predname, argnames):
-		try:
-			args = [self.objects[name] for name in argnames]
-			return self.atom_true(Atom(self.predicates[predname], args))
-		except Exception:
-			return False
+	def is_true(self, predname, argnames = []):
+		for atom in self.atoms:
+			if atom.predicate.name == predname:
+				if len(atom.args) == len(argnames):
+					namesCorrect = True
+					for i in range(len(atom.args)):
+						if atom.args[i].name != argnames[i]:
+							namesCorrect = False
+					if namesCorrect:
+						return True
+		return False
 	
 	def atom_true(self, atom):
 		return atom in self.atoms
 	
 	def add_atom(self, atom):
-		if atom not in self.atoms:
-			self.atoms.append(atom)
+		self.atoms.append(atom)
 	
-	def add_fact(self, predname, argnames):
-		self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
+	def add_fact(self, predname, argnames = []):
+		if not self.is_true(predname, argnames):
+			self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 	
 	def remove_atom(self, atom):
-		if atom in self.atoms:
-			self.atoms.remove(atom)
+		self.atoms.remove(atom)
+				
+	def remove_fact(self, predname, argnames = []):
+		toRemove = None
+		for atom in self.atoms:
+			if atom.predicate.name == predname:
+				if len(atom.args) == len(argnames):
+					namesCorrect = True
+					for i in range(len(atom.args)):
+						if atom.args[i].name != argnames[i]:
+							namesCorrect = False
+					if namesCorrect:
+						toRemove = atom
+						break
+		if toRemove:
+			self.remove_atom(toRemove)
 	
 	def add_object(self, object):
 		self.objects[object.name] = object
@@ -337,7 +358,7 @@ class World:
 	#convenience method for operating with MIDCA
 	def midca_action_applicable(self, midcaAction):
 		try:
-			operator = self.operators[midcaAction.op.name]
+			operator = self.operators[midcaAction.op]
 			args = [self.objects[arg] for arg in midcaAction.args]
 		except KeyError:
 			return False
@@ -366,7 +387,7 @@ class World:
 	
 	#convenience method for operating with MIDCA
 	def apply_midca_action(self, midcaAction):
-		opname = midcaAction.op.name
+		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
 		self.apply_named_action(opname, argnames)
 	

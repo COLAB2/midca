@@ -1,6 +1,8 @@
 from __future__ import print_function
 from datetime import datetime
 import os, sys, copy
+import platform, string
+
 
 class Logger:
 	
@@ -12,14 +14,27 @@ class Logger:
 		
 		Keys are both the filenames of actual log files and keys that will be passed to the logger to tell it where to log things. If no keys are passed in the default key will be "log"
 		'''
+		self.keys = keys
+		self.filesStayOpen = filesStayOpen
+	
+	def start(self):
+		'''
+		Creates the folder where log files will be stored and creates file(s)
+		'''
+		
+		this_os = platform.platform()   
 		self.events = []
 		self.defaultKey = "log"
-		self.working = False
-		self.filesStayOpen = filesStayOpen
+		self.working = False	
 		self.startTime = datetime.now()
+		
+		
 		self.timeStr = str(self.startTime)
 		if self.startTime.microsecond > 0:
-			self.timeStr = self.timeStr[:-7]
+			self.timeStr = self.timeStr[:-7].replace(":", "_")
+		
+		if "window" in this_os.lower():
+		 	self.timeStr = string.replace(self.timeStr, ':', '_').replace("-", "_")
 		
 		#create log dir if it does not exist. If there is a file at ./log, try ./_log. If neither works, fail and print an error message.
 		folderFound = False
@@ -50,16 +65,17 @@ class Logger:
 				print("Logger: error creating log directory: " + str(e), file = sys.stderr)
 			
 			#now create the individual log file(s)
-			self.files = {key: None for key in keys}
+			self.files = {key: None for key in self.keys}
 			self.working = True
-			for key in keys:
+			for key in self.keys:
 				try:
 					f = self.openFile(key)
 					f.write("Log file for run starting at " + self.timeStr + "\n")
 				except IOError as e:
 					self.writeError(e, filename = os.path.join(self.thisRunDir, key), txt = "Log file for run starting at " + self.timeStr)
-			if not self.files:
-				self.working = False
+					self.working = False
+			if not self.working:
+				print ("Logger disabled")
 			else:
 				print("Logger: logging this run in " + self.thisRunDir, file = sys.stderr)
 			if not self.filesStayOpen:
@@ -93,15 +109,17 @@ class Logger:
 				self._write(deltaTStr + str(event), key)
 		self.events.append(event)
 	
-	def log(self, val, key = None):
-		if isinstance(val, basestring):
-			self._user_log(val, key)
+	def log(self, val, keys = []):
+                if isinstance(val, basestring):
+			self._user_log(val, keys)
 		elif isinstance(val, Event):
 			self.logEvent(val)
 		else:
 			raise ValueError("log must get a string or an Event object")
 	
 	def _write(self, txt, key):
+		if not self.working:
+			return
 		if key not in self.files or not self.files[key] or self.files[key].closed:
 			try:
 				self.openFile(key)
@@ -144,6 +162,7 @@ class StdoutDirector:
         		self.logger.log(event)
         	self.current = ""
         self.stdout.write(s)
+        self.stdout.flush()
     
     def flush(self):
         self.stdout.flush()

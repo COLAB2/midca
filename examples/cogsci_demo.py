@@ -4,6 +4,11 @@ from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide, evaluate
 import inspect, os
 
+'''
+Simulation of tower construction and arson prevention in blocksworld. Uses
+TF-trees and simulated Meta-AQUA connection to autonomously generate goals. 
+'''
+
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
