@@ -14,7 +14,7 @@ class MetaReasoner:
     controller = None
     cognitive_layer = None
 
-    def __init__(self, trace, mem, verbose = 0):
+    def __init__(self, trace, mem, verbose = 2):
         """ Verbose value of 1 is top level output, verbose 2 is more detailed """
         self.trace = trace
         self.cognitive_layer = mem.myMidca
