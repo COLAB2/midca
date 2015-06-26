@@ -37,7 +37,6 @@ class EvalPointingFromFeedback(base.BaseModule):
 class SimpleEval(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
-<<<<<<< HEAD
         world = self.mem.get(self.mem.STATES)[-1]
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)

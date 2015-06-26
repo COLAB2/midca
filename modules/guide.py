@@ -51,7 +51,7 @@ class UserGoalInput(base.BaseModule):
     def run(self, cycle, verbose = 2):
         if verbose == 0:
             return #if skipping, no user input
-                goals_entered = []
+        goals_entered = []
         while True:
             val = raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
             if not val:
@@ -66,7 +66,7 @@ class UserGoalInput(base.BaseModule):
                 else:
                     self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                     print "Goal added."
-                                        goals_entered.append(goal)
+                    goals_entered.append(goal)
 
         trace = self.mem.trace
         if trace:
