@@ -56,7 +56,7 @@ class MIDCA:
         self.world = world
         self.mem = Memory()
         self.phases = []
-        self.metaphases []
+        self.metaphases = []
         self.modules = {}
         self.metamodules = {}
         self.verbose = verbose
@@ -100,6 +100,8 @@ class MIDCA:
         elif isinstance(phaseOrIndex, int):
             phases.insert(phaseOrIndex, phase)
             modules[phase] = []
+            print("[insertphase] phases are now:\n "+str(map(str, phases)))
+            print("[insertphase] modules are now:\n"+str(map(str, modules)))
             return
         if not isinstance(phaseOrIndex, Phase):
             raise KeyError(str(phase) + " is not a valid phase or index.")
@@ -108,14 +110,14 @@ class MIDCA:
         phases.insert(self.phases.index(phaseOrIndex), phase)
         modules[phase] = []
 
-        print("phases are now:\n "+str(phases))
-        print("modules are now:\n"+str(modules))
+        print("[insertphase] phases are now:\n "+str(map(str, phases)))
+        print("[insertphase] modules are now:\n"+str(map(str, modules)))
 
-    def insert_meta_phase(self, phase, phaseOrIndex):
-
-
-    def append_phase(self, phase):
-        self.insert_phase(phase, len(self.phases) + 1)
+    def append_phase(self, phase, meta=False):
+        if meta:
+            self.insert_phase(phase, len(self.metaphases) + 1, meta)
+        else:
+            self.insert_phase(phase, len(self.phases) + 1, meta)
 
     def remove_phase(self, phaseOrName):
         if isinstance(phaseOrName, str):
@@ -129,23 +131,31 @@ class MIDCA:
             raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
         #if there is a KeyError, something has gone very wrong.
 
-    def append_module(self, phase, module):
-        self.insert_module(phase, module, MAX_MODULES_PER_PHASE)
+    def append_module(self, phase, module, meta=False):
+        self.insert_module(phase, module, MAX_MODULES_PER_PHASE, meta)
 
     def runtime_append_module(self, phase, module):
         self.runtime_insert_module(phase, module, MAX_MODULES_PER_PHASE)
 
     #note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
-    def insert_module(self, phase, module, i):
+    def insert_module(self, phase, module, i, meta=False):
+        phases = self.phases
+        modules = self.modules
+        if meta:
+            phases = self.metaphases
+            modules = self.metamodules
         if isinstance(phase, str):
             phase = self.phase_by_name(phase)
-        if phase not in self.phases:
+        if phase not in phases:
             raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
         if not hasattr(module, "run"):
             raise AttributeError("All modules must a 'run' function")
-        if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
+        if len(modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
-        self.modules[phase].insert(i, module)
+        modules[phase].insert(i, module)
+
+        print("[insertmodule] phases are now:\n "+str(map(str, phases)))
+        print("[insertmodule] modules are now:\n"+str(map(str, phases)))
 
     # just like insert_module but also calls module.init()
     def runtime_insert_module(self, phase, module, i):
@@ -270,21 +280,10 @@ class MIDCA:
         newCopy.phaseNum = self.phaseNum
         return newCopy
 
-class MetaMIDCA(MIDCA):
-    '''
-    This is the meta level of MIDCA
-    '''
-    def __init__(self):
-        self.__init__()
-
-
-
-
 class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False):
         self.midca = MIDCA(world = world, verbose = verbose)
-        self.meta_midca = MetaMIDCA(verbose = verbose)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
@@ -305,17 +304,26 @@ class PhaseManager:
     def append_phase(self, phase):
         self.midca.append_phase(phase)
 
+    def append_meta_phase(self, phase):
+        self.midca.append_phase(phase, meta=True)
+
     def get_phases(self):
         return [phase.name for phase in self.midca.phases]
 
     def append_module(self, phase, module):
         self.midca.append_module(phase, module)
 
+    def append_meta_module(self, phase, module):
+        self.midca.append_module(phase, module, meta=True)
+
     def runtime_append_module(self, phase, module):
         self.midca.runtime_append_module(phase, module)
 
     def insert_module(self, phase, module, i):
         self.midca.insert_module(phase, module, i)
+
+    def insert_meta_module(self, phase, module, i):
+        self.midca.insert_module(phase, module, i, meta=True)
 
     def remove_module(self, phase, i):
         self.midca.removeModule(phase, i)

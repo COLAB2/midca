@@ -2,7 +2,7 @@ class MRSimpleInterpret:
     trace = None
     detector = None
     goalgenerator = None
-    def __init__(self, trace, verbose):
+    def __init__(self, verbose):
         self.detector = MRSimpleDetect()
         self.goalgenerator = MRSimpleGoalGen()
 
@@ -18,8 +18,8 @@ class MRSimpleDetect:
                          "INPUT":[]}}
     pos_expectations = {}
 
-    def __init__(self, trace, verbose = 0):
-        self.trace = trace
+    def __init__(self, verbose = 0):
+        #self.trace = trace ## TODO get trace from mem
         self.verbose = verbose
 
     def detect(self, last_phase_data):
@@ -60,9 +60,9 @@ class MRSimpleGoalGen:
     default_anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
     trace = None
 
-    def __init__(self, trace, verbose = 0):
+    def __init__(self, verbose = 0):
         self.anoms_to_goals = self.default_anoms_to_goals
-        self.trace = trace
+        #self.trace = trace ## TODO get trace from mem
         self.verbose = verbose
 
     def gen_goal(self, anomaly):

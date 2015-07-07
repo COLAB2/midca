@@ -1,7 +1,8 @@
 class MRSimpleMonitor:
 
-    def __init__(self,trace,verbose):
-        self.trace = trace
+    def __init__(self, verbose = 0):
+        # TODO get trace from mem
+        #self.trace = trace
         self.verbose = verbose
 
     def get_last_phase(self):

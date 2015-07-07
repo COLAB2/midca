@@ -1,9 +1,10 @@
 import os
 class MRSimpleControl:
     cognitive_layer = None
-    def __init__(self, cognitive_layer, verbose = 0):
-        self.cognitive_layer = cognitive_layer
-        self.verbose = verbose
+    def __init__(self, verbose = 0):
+        verbose = verbose
+        #self.cognitive_layer = cognitive_layer
+        #self.verbose = verbose
 
     def act(self, action, verbose = 0):
         if action[0] == "REMOVE-MODULE":

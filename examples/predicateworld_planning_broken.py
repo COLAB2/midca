@@ -29,14 +29,14 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
 
     # add meta layer phases
     for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
-        myMidca.append_phase(phase)
+        myMidca.append_meta_phase(phase)
 
     # add meta layer modules
-    myMidca.append_module("Monitor", monitor.MRSimpleMonitor())
-    myMidca.append_module("Interpret", interpret.MRSimpleDetect())
-    myMidca.append_module("Interpret", interpret.MRSimpleGoalGen())
-    myMidca.append_module("Plan", plan.MRSimplePlanner())
-    myMidca.append_module("Control", control.MRSimpleControl())
+    myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
+    myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect())
+    myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGen())
+    myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
+    myMidca.append_meta_module("Control", control.MRSimpleControl())
 
     return myMidca
 

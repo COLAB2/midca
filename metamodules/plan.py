@@ -4,9 +4,10 @@ class MRSimplePlanner:
     default_goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]]}
     trace = None
 
-    def __init__(self, trace, verbose = 0):
+    def __init__(self, verbose = 0):
         self.goals_to_plans = self.default_goals_to_plans
-        self.trace = trace
+        # TODO get trace from mem
+        #self.trace = trace
         self.verbose = verbose
 
     def plan_for_goal(self, goal):
