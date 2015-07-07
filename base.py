@@ -56,7 +56,9 @@ class MIDCA:
         self.world = world
         self.mem = Memory()
         self.phases = []
+        self.metaphases []
         self.modules = {}
+        self.metamodules = {}
         self.verbose = verbose
         self.initialized = False
         self.phaseNum = 1
@@ -72,29 +74,45 @@ class MIDCA:
                 self.mem.enableLogging(self.logger)
                 self.mem.logEachAccess = logMemory
 
-    def phase_by_name(self, name):
-        for phase in self.phases:
+    def phase_by_name(self, name, meta = False):
+        phases = self.phases
+        if meta:
+            phases = self.metaphases
+
+        for phase in phases:
             if phase.name == name:
                 return phase
         return None
 
-    def insert_phase(self, phase, phaseOrIndex):
+    def insert_phase(self, phase, phaseOrIndex, meta = False):
+        phases = self.phases
+        modules = self.modules
+        if meta: # switch if inserting a meta phase
+            phases = self.metaphases
+            modules = self.metamodules
+
         if isinstance(phase, str):
             phase = Phase(phase)
         if not isinstance(phase, Phase):
             raise KeyError(str(phase) + " is not a valid phase or phase name.")
         if isinstance(phaseOrIndex, str):
-            phaseOrIndex = self.phase_by_name(phaseOrIndex)
+            phaseOrIndex = self.phase_by_name(phaseOrIndex, meta)
         elif isinstance(phaseOrIndex, int):
-            self.phases.insert(phaseOrIndex, phase)
-            self.modules[phase] = []
+            phases.insert(phaseOrIndex, phase)
+            modules[phase] = []
             return
         if not isinstance(phaseOrIndex, Phase):
             raise KeyError(str(phase) + " is not a valid phase or index.")
         if phaseOrIndex not in self.phases:
             raise KeyError("phase " + str(phaseOrIndex) + " not in phase list.")
-        self.phases.insert(self.phases.index(phaseOrIndex), phase)
-        self.modules[phase] = []
+        phases.insert(self.phases.index(phaseOrIndex), phase)
+        modules[phase] = []
+
+        print("phases are now:\n "+str(phases))
+        print("modules are now:\n"+str(modules))
+
+    def insert_meta_phase(self, phase, phaseOrIndex):
+
 
     def append_phase(self, phase):
         self.insert_phase(phase, len(self.phases) + 1)
@@ -252,10 +270,21 @@ class MIDCA:
         newCopy.phaseNum = self.phaseNum
         return newCopy
 
+class MetaMIDCA(MIDCA):
+    '''
+    This is the meta level of MIDCA
+    '''
+    def __init__(self):
+        self.__init__()
+
+
+
+
 class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False):
         self.midca = MIDCA(world = world, verbose = verbose)
+        self.meta_midca = MetaMIDCA(verbose = verbose)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []

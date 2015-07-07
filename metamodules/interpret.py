@@ -1,3 +1,15 @@
+class MRSimpleInterpret:
+    trace = None
+    detector = None
+    goalgenerator = None
+    def __init__(self, trace, verbose):
+        self.detector = MRSimpleDetect()
+        self.goalgenerator = MRSimpleGoalGen()
+
+    def run(self):
+        self.detector.detect()
+        self.goalgenerator.gengoal()
+
 class MRSimpleDetect:
     trace = None
     # negative expectations: if equal to observed state, anomaly detected
