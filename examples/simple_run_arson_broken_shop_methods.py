@@ -14,9 +14,6 @@ myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, ar
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
-myMidca.mem.enableTracing(myMidca.trace)
-myMidca.mem.setMyMidca(myMidca)
-
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0

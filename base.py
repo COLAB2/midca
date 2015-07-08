@@ -1,7 +1,7 @@
 from __future__ import print_function
 import copy, time, datetime, sys
 from MIDCA.mem import Memory
-from MIDCA import goals, logging, trace, metareasoner
+from MIDCA import goals, logging, trace
 from MIDCA.worldsim import stateread
 import threading
 
@@ -64,15 +64,16 @@ class MIDCA:
         self.phaseNum = 1
         self.metaPhaseNum = 1
         self.logger = logging.Logger()
+        self.metaEnabled = metaEnabled
         if metaEnabled:
-            self.mem.enableMeta(trace.CogTrace())
+            self.mem.enableMeta(trace.CogTrace()) # self is pointer to midca itself
         if not logenabled:
             self.logger.working = False
         else:
             self.logger.start()
             if self.logger.working:
                 if logOutput:
-                                        self.logger.logOutput()
+                    self.logger.logOutput()
                 self.mem.enableLogging(self.logger)
                 self.mem.logEachAccess = logMemory
 
@@ -202,6 +203,11 @@ class MIDCA:
             raise ValueError("No such phase as " + str(phase))
 
     def init(self, verbose = 2):
+        self.init_cognitive_layer(verbose)
+        if self.metaEnabled:
+            self.init_metacognitive_layer(verbose)
+
+    def init_cognitive_layer(self, verbose = 2):
         for phase in self.phases:
             modules = self.modules[phase]
             i = 0
@@ -209,7 +215,7 @@ class MIDCA:
                 i += 1
                 try:
                     if verbose >= 2:
-                        print("Initializing " + phase.name + " module " + str(i) + "...",)
+                        print("[cognitive] Initializing " + phase.name + " module " + str(i) + "...",end="")
                     module.init(world = self.world,
                                 mem = self.mem)
                     print("done.")
@@ -217,7 +223,29 @@ class MIDCA:
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
-                        print("\nPhase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init.")
+                        print("\n[cognitive] Phase " + phase.name + " module " + str(i) +  " has no init function or had an error. Skipping init.")
+
+        self.initGoalGraph(overwrite = False)
+        self.initialized = True
+
+    def init_metacognitive_layer(self, verbose = 2):
+        for phase in self.metaPhases:
+            modules = self.metaModules[phase]
+            i = 0
+            for module in modules:
+                i += 1
+                try:
+                    if verbose >= 2:
+                        print("[metacognitive] Initializing " + phase.name + " module " + str(i) + "...",end="")
+                    module.init(world = self.world,
+                                mem = self.mem)
+                    print("done.")
+
+                except Exception as e:
+                    print(e)
+                    if verbose >= 2:
+                        print("\n[metacognitive] Phase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init.")
+
         self.initGoalGraph(overwrite = False)
         self.initialized = True
 

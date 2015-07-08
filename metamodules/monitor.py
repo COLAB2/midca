@@ -1,13 +1,10 @@
-class MRSimpleMonitor:
+from MIDCA import base
 
-    def __init__(self, verbose = 0):
-        # TODO get trace from mem
-        #self.trace = trace
-        self.verbose = verbose
+class MRSimpleMonitor(base.BaseModule):
 
-    def run(self):
-        print "run"
+    def run(self, cycle, verbose = 2):
+        self.mem.set(self.mem.TRACE_SEGMENT, self.get_last_phase())
 
     def get_last_phase(self):
         """ Return a small part of the trace """
-        return self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
+        return self.mem.trace.get_data(self.mem.trace.get_current_cycle(), self.mem.trace.get_current_phase())

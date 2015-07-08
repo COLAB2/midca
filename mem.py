@@ -20,6 +20,10 @@ class Memory:
     ROS_OBJS_DETECTED = "__detected object queue"
     ROS_WORDS_HEARD = "__words heard queue"
     ROS_FEEDBACK = "__ros feedback"
+    #MetaCognitive
+    TRACE_SEGMENT = "__trace segment"
+
+
 
     def __init__(self, args = {}):
         self.knowledge = {}
@@ -28,8 +32,9 @@ class Memory:
         self.mainLock = threading.Lock() #to synchronize lock creation
         self.locks = {} #lock for each key
         self.logEachAccess = True
-        self.myMidca = None # pointer to MIDCA object
+        #MetaCognitive Variables
         self.metaEnabled = False
+        self.myMidca = None # pointer to MIDCA object
         self.trace = False
 
     #Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
@@ -158,10 +163,7 @@ class Memory:
     def enableMeta(self, trace):
         self.metaEnabled = True
         self.trace = trace
-
-    def setMyMidca(self, myMidca):
-        self.myMidca = myMidca
-
+        self.myMidca = self
 
 class MemAccessEvent(Event):
 
