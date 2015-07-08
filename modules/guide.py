@@ -192,5 +192,15 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
+			if utterance == "find the red card" or utterance == "hello baxter":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "red card", indirectObject = "observer")
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
 		self.lastTime = time.now()
-	

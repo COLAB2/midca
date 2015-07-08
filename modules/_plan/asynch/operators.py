@@ -19,5 +19,15 @@ def block_until_complete(state):
 	'''
 	return state
 
+
+def wait_to_see(state, objectID):
+	return state
+
+def grab(state, objectID):
+	return state
+
+
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, wait_to_see, grab)
+
+
