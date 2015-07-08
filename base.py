@@ -367,7 +367,7 @@ class PhaseManager:
         # TODO - determine how to store history here
         #if self.storeHistory:
         #    self.history.append(self.midca.copy())
-        val = self.midca.next_meta_phase(verbose)
+        val = self.midca.next_phase(verbose, meta=True)
         return val
 
 
@@ -489,8 +489,14 @@ class PhaseManager:
                 print("command not understood")
             else:
                 val = self.next_phase()
+                if self.mem.meta_enabled:
+                    metaval = self.next_meta_phase()
                 if val == "continue":
                     self.next_phase()
                 elif val == "q":
                     break
+                if self.mem.meta_enabled:
+                    if metaval == "continue":
+                        self.next_meta_phase()
+
         print("MIDCA is quitting.")
