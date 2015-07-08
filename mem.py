@@ -30,7 +30,7 @@ class Memory:
         self.logEachAccess = True
         self.trace = None
         self.myMidca = None # pointer to MIDCA object
-        self.meta_enabled = False
+        self.metaEnabled = False
 
     #Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
     def _update(self, structname, val):
@@ -159,7 +159,7 @@ class Memory:
         self.trace = trace
 
     def enableMeta(self):
-        self.meta_enabled = True
+        self.metaEnabled = True
 
     def setMyMidca(self, myMidca):
         self.myMidca = myMidca

@@ -52,7 +52,7 @@ class BaseModule:
 class MIDCA:
 
     def __init__(self, world = None, logenabled = True, logOutput = True,
-                     logMemory = True, verbose = 2):
+                     logMemory = True, metaEnabled = False, verbose = 2):
         self.world = world
         self.mem = Memory()
         self.phases = []
@@ -65,6 +65,8 @@ class MIDCA:
         self.metaPhaseNum = 1
         self.trace = trace.CogTrace(self.mem)
         self.logger = logging.Logger()
+        if metaEnabled:
+            self.mem.enableMeta()
         if not logenabled:
             self.logger.working = False
         else:
@@ -296,8 +298,8 @@ class MIDCA:
 
 class PhaseManager:
 
-    def __init__(self, world = None, verbose = 2, display = None, storeHistory = False):
-        self.midca = MIDCA(world = world, verbose = verbose)
+    def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
+        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
@@ -489,13 +491,13 @@ class PhaseManager:
                 print("command not understood")
             else:
                 val = self.next_phase()
-                if self.mem.meta_enabled:
+                if self.mem.metaEnabled:
                     metaval = self.next_meta_phase()
                 if val == "continue":
                     self.next_phase()
                 elif val == "q":
                     break
-                if self.mem.meta_enabled:
+                if self.mem.metaEnabled:
                     if metaval == "continue":
                         self.next_meta_phase()
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 import MIDCA
 from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide
@@ -15,13 +15,13 @@ myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
 def preferFire(goal1, goal2):
-	if 'predicate' not in goal1 or 'predicate' not in goal2:
-		return 0
-	elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
-		return -1
-	elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
-		return 1
-	return 0
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
+        return -1
+    elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
+        return 1
+    return 0
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
@@ -33,6 +33,6 @@ myMidca.run()
 The code below would print out MIDCA's goal set for the first 20 phases of the run above. Note that any memory values can be accessed in this way, assuming that the storeHistory value was set to True during the run. This code is left as an example, but commented out because it will throw an error if fewer than 20 cycles were simulated.
 
 for i in range(20):
-	print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
+    print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
 
 '''

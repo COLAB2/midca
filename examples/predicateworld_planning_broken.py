@@ -10,7 +10,7 @@ def asqiiDisplay(world):
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
-    myMidca = base.PhaseManager(world, display = asqiiDisplay)
+    myMidca = base.PhaseManager(world, display = asqiiDisplay, metaEnabled=True)
 
     # add cognitive layer phases
     for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
