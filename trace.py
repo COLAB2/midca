@@ -11,9 +11,7 @@ How-To:
 class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
     # that module in that cycle
-    trace = {}
-    cycle = -1 # current cycle
-    module = "" # current module
+
 
     # Expectations are of the form: exp[key] = val, where key is the
     # phase (i.e. Plan) and val is another dict mapping modules
@@ -26,14 +24,19 @@ class CogTrace:
     # the value None for the PLAN variable and that any value for the
     # INPUT variable is okay.
 
-    invalid_expectations = {"Plan":
+
+
+    def __init__(self):
+        self.trace = {}
+        self.cycle = -1 # current cycle
+        self.module = "" # current module
+
+        self.invalid_expectations = {"Plan":
                             {"PyHopPlanner":
                              {"PLAN":[None], "INPUT":[]}}}
-    valid_expectations = {}
+        self.valid_expectations = {}
 
-    def __init__(self, mem):
         #print("Calling init! Trace is: "+str(self.trace))
-        self.mem = mem
 
     # def getInstance():
     #     if instance == None:

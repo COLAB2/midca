@@ -28,9 +28,9 @@ class Memory:
         self.mainLock = threading.Lock() #to synchronize lock creation
         self.locks = {} #lock for each key
         self.logEachAccess = True
-        self.trace = None
         self.myMidca = None # pointer to MIDCA object
         self.metaEnabled = False
+        self.trace = False
 
     #Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
     def _update(self, structname, val):
@@ -155,11 +155,9 @@ class Memory:
         if self.logger and self.logEachAccess:
             self.logger.logEvent(MemAccessEvent(key))
 
-    def enableTracing(self, trace):
-        self.trace = trace
-
-    def enableMeta(self):
+    def enableMeta(self, trace):
         self.metaEnabled = True
+        self.trace = trace
 
     def setMyMidca(self, myMidca):
         self.myMidca = myMidca

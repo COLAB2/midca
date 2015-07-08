@@ -63,10 +63,9 @@ class MIDCA:
         self.initialized = False
         self.phaseNum = 1
         self.metaPhaseNum = 1
-        self.trace = trace.CogTrace(self.mem)
         self.logger = logging.Logger()
         if metaEnabled:
-            self.mem.enableMeta()
+            self.mem.enableMeta(trace.CogTrace())
         if not logenabled:
             self.logger.working = False
         else:
@@ -306,7 +305,6 @@ class PhaseManager:
         self.display = display
         self.twoSevenWarning = False
         self.logger = self.midca.logger
-        self.trace = self.midca.trace
 
     '''
     convenience functions which wrap MIDCA functions
@@ -446,14 +444,14 @@ class PhaseManager:
                 else:
                     self.mem.get(self.mem.GOAL_GRAPH).writeToPDF()
             elif val == "printtrace":
-                self.trace.printtrace()
+                self.mem.trace.printtrace()
             elif val == "drawtrace":
                 print("Input file name ending in .pdf or press enter to use default filename: trace.pdf")
                 txt = raw_input()
                 if txt:
-                    self.trace.writeToPDF(txt)
+                    self.mem.trace.writeToPDF(txt)
                 else:
-                    self.trace.writeToPDF()
+                    self.mem.trace.writeToPDF()
             elif val == "change":
                 print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                 while True:
