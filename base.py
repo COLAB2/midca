@@ -258,8 +258,8 @@ class MIDCA:
             self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
 
         # record phase and run metareasoner
-        self.mem.set("phase", self.phases[self.phasei].name)
-        metareasoner.MetaReasoner(self.trace, self.mem).run()
+        #self.mem.set("phase", self.phases[self.phasei].name)
+        #metareasoner.MetaReasoner(self.trace, self.mem).run()
 
         return retVal
 
