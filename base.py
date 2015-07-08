@@ -103,8 +103,6 @@ class MIDCA:
         elif isinstance(phaseOrIndex, int):
             phases.insert(phaseOrIndex, phase)
             modules[phase] = []
-            print("[insertphase] phases are now:\n "+str(map(str, phases)))
-            print("[insertphase] modules are now:\n"+str(map(str, modules)))
             return
         if not isinstance(phaseOrIndex, Phase):
             raise KeyError(str(phase) + " is not a valid phase or index.")
@@ -112,9 +110,6 @@ class MIDCA:
             raise KeyError("phase " + str(phaseOrIndex) + " not in phase list.")
         phases.insert(self.phases.index(phaseOrIndex), phase)
         modules[phase] = []
-
-        print("[insertphase] phases are now:\n "+str(map(str, phases)))
-        print("[insertphase] modules are now:\n"+str(map(str, modules)))
 
     def append_phase(self, phase, meta=False):
         if meta:
@@ -156,9 +151,6 @@ class MIDCA:
         if len(modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         modules[phase].insert(i, module)
-
-        print("[insertmodule] phases are now:\n "+str(map(str, phases)))
-        print("[insertmodule] modules are now:\n"+str(map(str, modules)))
 
     # just like insert_module but also calls module.init()
     def runtime_insert_module(self, phase, module, i):
@@ -272,7 +264,10 @@ class MIDCA:
         if self.phasei == 0:
             self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
         if verbose >= 2:
-            print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+            if meta:
+                print("****** Starting [meta]", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+            else:
+                print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
             self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
             i = 0
         while i < len(modules[phases[self.phasei]]):

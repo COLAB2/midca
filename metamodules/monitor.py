@@ -4,6 +4,7 @@ class MRSimpleMonitor(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         self.mem.set(self.mem.TRACE_SEGMENT, self.get_last_phase())
+        print("Segment of trace observed.")
 
     def get_last_phase(self):
         """ Return a small part of the trace """

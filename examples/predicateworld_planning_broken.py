@@ -1,7 +1,7 @@
 from MIDCA import base
 from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act, planningbroken
-from MIDCA.metamodules import monitor, control, interpret,  plan
+from MIDCA.metamodules import monitor, control, interpret, metaintend,  plan
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
@@ -29,13 +29,14 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
 
     # add meta layer phases
     #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
-    for phase in ["Monitor", "Interpret", "Plan", "Control"]:
+    for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
         myMidca.append_meta_phase(phase)
 
     # add meta layer modules
     myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
     myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect())
     myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGen())
+    myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
     myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
     myMidca.append_meta_module("Control", control.MRSimpleControl())
 

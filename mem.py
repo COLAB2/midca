@@ -22,7 +22,10 @@ class Memory:
     ROS_FEEDBACK = "__ros feedback"
     #MetaCognitive
     TRACE_SEGMENT = "__trace segment"
-
+    META_ANOMALIES = "__meta anomalies"
+    META_GOALS = "__meta goals"
+    META_CURR_GOAL = "__meta current goal"
+    META_PLAN = "__meta plan" #TODO allow more than one plan
 
 
     def __init__(self, args = {}):

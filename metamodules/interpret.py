@@ -1,36 +1,25 @@
-class MRSimpleInterpret:
-    trace = None
-    detector = None
-    goalgenerator = None
-    def __init__(self, verbose):
-        self.detector = MRSimpleDetect()
-        self.goalgenerator = MRSimpleGoalGen()
+from MIDCA import base
 
-    def run(self):
-        self.detector.detect()
-        self.goalgenerator.gengoal()
+class MRSimpleDetect(base.BaseModule):
 
-class MRSimpleDetect:
-    trace = None
     # negative expectations: if equal to observed state, anomaly detected
     neg_expectations = {"PyHopPlannerBroken":
                         {"PLAN":[[None,"IMPASSE"]],
                          "INPUT":[]}}
     pos_expectations = {}
 
-    def __init__(self, verbose = 0):
-        #self.trace = trace ## TODO get trace from mem
+    def run(self, cycle, verbose=2):
         self.verbose = verbose
+        self.detect()
 
-    def run(self):
-        print "run"
 
-    def detect(self, last_phase_data):
+    def detect(self):
+        last_phase_data = self.mem.get(self.mem.TRACE_SEGMENT)
         anomalies = []
 
         # see if any expectations exist for this phase
-        if self.trace.get_current_phase() in self.neg_expectations.keys():
-            relevant_neq_exp = self.neg_expectations[self.trace.get_current_phase()]
+        if self.mem.trace.get_current_phase() in self.neg_expectations.keys():
+            relevant_neq_exp = self.neg_expectations[self.mem.trace.get_current_phase()]
 
             for prev_phase_datum in last_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
@@ -57,26 +46,27 @@ class MRSimpleDetect:
         if (self.verbose >= 2): print("-*-*- detect(): returning anomalies: "+str(anomalies))
         return anomalies
 
-class MRSimpleGoalGen:
+class MRSimpleGoalGen(base.BaseModule):
 
-    anoms_to_goals = None
-    default_anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
-    trace = None
+    anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
 
-    def __init__(self, verbose = 0):
-        self.anoms_to_goals = self.default_anoms_to_goals
-        #self.trace = trace ## TODO get trace from mem
+    def run(self,cycle,verbose=2):
         self.verbose = verbose
+        #print("[in MRSimpleGoalGen] self.mem.META_ANOMALIES are "+str(self.mem.get(self.mem.META_ANOMALIES)))
+        if not self.mem.get(self.mem.META_GOALS):
+            self.mem.set(self.mem.META_GOALS, [])
 
-    def run(self):
-        print "run"
+        if self.mem.get(self.mem.META_ANOMALIES):
+            for anomaly in self.get(self.mem.META_ANOMALIES):
+                new_goal = self.gen_goal(anomaly)
+                self.mem.set(self.mem.META_GOALS, self.mem.get(self.mem.META_GOALS).append(new_goal))
 
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
         for item in ungrounded_goal:
             if item == "?phase":
-                item = self.trace.module
+                item = self.mem.trace.module
             grounded_goal.append(item)
 
         return grounded_goal

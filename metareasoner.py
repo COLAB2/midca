@@ -12,18 +12,18 @@ class MetaReasoner:
     discrepancy_detector = None
     planner = None
     controller = None
-    cognitive_layer = None
+    midca = None
 
     def __init__(self, trace, mem, verbose = 2):
         """ Verbose value of 1 is top level output, verbose 2 is more detailed """
         self.trace = trace
-        self.cognitive_layer = mem.myMidca
+        self.midca = mem.myMidca
         self.verbose = verbose
         self.monitor = monitor.MRSimpleMonitor(self.trace, verbose)
         self.discrepancy_detector = interpret.MRSimpleDetect(self.trace, verbose)
         self.goal_formulator = interpret.MRSimpleGoalGen(self.trace, verbose)
         self.planner = plan.MRSimplePlanner(self.trace, verbose)
-        self.controller = control.MRSimpleControl(self.cognitive_layer, verbose)
+        self.controller = control.MRSimpleControl(self.midca, verbose)
         if (self.verbose >= 1): print("-*-*- MetaReasoner initialized")
 
     # goes through the metareasoning cycle
