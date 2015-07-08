@@ -269,7 +269,7 @@ class MIDCA:
             else:
                 print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
             self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
-            i = 0
+        i = 0
         while i < len(modules[phases[self.phasei]]):
             module = modules[phases[self.phasei]][i]
             self.logger.logEvent(logging.ModuleStartEvent(module))
@@ -390,14 +390,21 @@ class PhaseManager:
         # TODO - determine how to store history here
         #if self.storeHistory:
         #    self.history.append(self.midca.copy())
+        if self.storeHistory: print("Warning: History not being stored during meta phase") #TODO
         val = self.midca.next_phase(verbose, meta=True)
         return val
 
 
-    def one_cycle(self, verbose = 1, pause = 0.5):
-        for i in range(len(self.midca.phases)):
+    def one_cycle(self, verbose = 1, pause = 0.5, meta=False):
+        phases = self.midca.phases
+        if meta:
+            phases = self.midca.metaPhases
+        for i in range(len(phases)):
             t1 = datetime.datetime.today()
-            self.next_phase(verbose)
+            if meta:
+                self.next_meta_phase(verbose)
+            else:
+                self.next_phase(verbose)
             t2 = datetime.datetime.today()
             try:
                 if (t2 - t1).total_seconds() < pause:
@@ -406,11 +413,12 @@ class PhaseManager:
                 if not self.twoSevenWarning:
                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
                     self.twoSevenWarning = True
+                print("dir(time) is "+str(dir(time)))
                 time.sleep(pause)
 
-    def several_cycles(self, num, verbose = 1, pause = 0.01):
+    def several_cycles(self, num, verbose = 1, pause = 0.01, meta=False):
         for i in range(num):
-            self.one_cycle(verbose, pause)
+            self.one_cycle(verbose, pause, meta)
 
     #MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.midca.world.
     def set_display_function(self, function):
@@ -450,7 +458,7 @@ class PhaseManager:
                 try:
                     num = int(val[4:].strip())
                     for i in range(num):
-                        self.one_cycle(verbose = 0, pause = 0)
+                        self.one_cycle(verbose = 0, pause = 0) # TODO - use several_cycles() instead?
                     print(str(num) + " cycles finished.")
                 except ValueError:
                     print("Usage: 'skip n', where n is an integer")
@@ -513,13 +521,13 @@ class PhaseManager:
             else:
                 val = self.next_phase()
                 if self.mem.metaEnabled:
-                    metaval = self.next_meta_phase()
+                    metaval = self.several_cycles(2, meta=True)
                 if val == "continue":
                     self.next_phase()
                 elif val == "q":
                     break
                 if self.mem.metaEnabled:
                     if metaval == "continue":
-                        self.next_meta_phase()
+                        self.next_meta_phase() # TODO - not sure when this gets called
 
         print("MIDCA is quitting.")
