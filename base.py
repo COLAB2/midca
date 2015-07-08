@@ -56,12 +56,13 @@ class MIDCA:
         self.world = world
         self.mem = Memory()
         self.phases = []
-        self.metaphases = []
+        self.metaPhases = []
         self.modules = {}
-        self.metamodules = {}
+        self.metaModules = {}
         self.verbose = verbose
         self.initialized = False
         self.phaseNum = 1
+        self.metaPhaseNum = 1
         self.trace = trace.CogTrace(self.mem)
         self.logger = logging.Logger()
         if not logenabled:
@@ -77,7 +78,7 @@ class MIDCA:
     def phase_by_name(self, name, meta = False):
         phases = self.phases
         if meta:
-            phases = self.metaphases
+            phases = self.metaPhases
 
         for phase in phases:
             if phase.name == name:
@@ -88,8 +89,8 @@ class MIDCA:
         phases = self.phases
         modules = self.modules
         if meta: # switch if inserting a meta phase
-            phases = self.metaphases
-            modules = self.metamodules
+            phases = self.metaPhases
+            modules = self.metaModules
 
         if isinstance(phase, str):
             phase = Phase(phase)
@@ -115,7 +116,7 @@ class MIDCA:
 
     def append_phase(self, phase, meta=False):
         if meta:
-            self.insert_phase(phase, len(self.metaphases) + 1, meta)
+            self.insert_phase(phase, len(self.metaPhases) + 1, meta)
         else:
             self.insert_phase(phase, len(self.phases) + 1, meta)
 
@@ -142,8 +143,8 @@ class MIDCA:
         phases = self.phases
         modules = self.modules
         if meta:
-            phases = self.metaphases
-            modules = self.metamodules
+            phases = self.metaPhases
+            modules = self.metaModules
         if isinstance(phase, str):
             phase = self.phase_by_name(phase, meta)
         if phase not in phases:
@@ -229,19 +230,27 @@ class MIDCA:
                 print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 
     def next_phase(self, verbose = 2, meta = False):
+        phaseNum = self.phaseNum
+        phases = self.phases
+        modules = self.modules
+        if meta: # switch if meta
+            phaseNum = self.metaPhaseNum
+            phases = self.metaPhases
+            modules = self.metaModules
+
         retVal = ""
-        self.phasei = (self.phaseNum - 1) % len(self.phases)
+        self.phasei = (phaseNum - 1) % len(phases)
         if self.phasei == 0:
-            self.logger.logEvent(logging.CycleStartEvent((self.phaseNum - 1) / len(self.phases)))
+            self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
         if verbose >= 2:
-            print("****** Starting", self.phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
-            self.logger.logEvent(logging.PhaseStartEvent(self.phases[self.phasei].name))
+            print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+            self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
             i = 0
-        while i < len(self.modules[self.phases[self.phasei]]):
-            module = self.modules[self.phases[self.phasei]][i]
+        while i < len(modules[phases[self.phasei]]):
+            module = modules[phases[self.phasei]][i]
             self.logger.logEvent(logging.ModuleStartEvent(module))
             try:
-                retVal = module.run((self.phaseNum - 1) / len(self.phases), verbose)
+                retVal = module.run((phaseNum - 1) / len(phases), verbose)
                 i += 1
             except NotImplementedError:
                 if verbose >= 1:
@@ -249,13 +258,18 @@ class MIDCA:
                           "implement the run() method and",
                           "is therefore invalid. It will be",
                           "removed from MIDCA.")
-                self.removeModule(self.phases[self.phasei], i)
+                self.removeModule(phases[self.phasei], i)
             self.logger.logEvent(logging.ModuleEndEvent(module))
 
-        self.logger.logEvent(logging.PhaseEndEvent(self.phases[self.phasei].name))
-        self.phaseNum += 1
-        if (self.phaseNum - 1) % len(self.phases) == 0:
-            self.logger.logEvent(logging.CycleEndEvent((self.phaseNum - 1) / len(self.phases)))
+        self.logger.logEvent(logging.PhaseEndEvent(phases[self.phasei].name))
+
+        if not meta:
+            self.phaseNum += 1
+        else:
+            self.metaPhaseNum += 1
+
+        if (phaseNum - 1) % len(phases) == 0:
+            self.logger.logEvent(logging.CycleEndEvent((phaseNum - 1) / len(phases)))
 
         # record phase and run metareasoner
         #self.mem.set("phase", self.phases[self.phasei].name)
