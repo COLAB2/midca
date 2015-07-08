@@ -6,6 +6,9 @@ class MRSimpleControl:
         #self.cognitive_layer = cognitive_layer
         #self.verbose = verbose
 
+    def run(self):
+        print "run"
+
     def act(self, action, verbose = 0):
         if action[0] == "REMOVE-MODULE":
             # find the component

@@ -22,6 +22,9 @@ class MRSimpleDetect:
         #self.trace = trace ## TODO get trace from mem
         self.verbose = verbose
 
+    def run(self):
+        print "run"
+
     def detect(self, last_phase_data):
         anomalies = []
 
@@ -64,6 +67,9 @@ class MRSimpleGoalGen:
         self.anoms_to_goals = self.default_anoms_to_goals
         #self.trace = trace ## TODO get trace from mem
         self.verbose = verbose
+
+    def run(self):
+        print "run"
 
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]

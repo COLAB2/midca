@@ -10,6 +10,9 @@ class MRSimplePlanner:
         #self.trace = trace
         self.verbose = verbose
 
+    def run(self):
+        print "run"
+
     def plan_for_goal(self, goal):
         #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
         plan = self.goals_to_plans[goal[0]]

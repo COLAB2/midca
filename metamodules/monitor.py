@@ -5,6 +5,9 @@ class MRSimpleMonitor:
         #self.trace = trace
         self.verbose = verbose
 
+    def run(self):
+        print "run"
+
     def get_last_phase(self):
         """ Return a small part of the trace """
         return self.trace.get_data(self.trace.get_current_cycle(), self.trace.get_current_phase())
