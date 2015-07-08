@@ -145,7 +145,7 @@ class MIDCA:
             phases = self.metaphases
             modules = self.metamodules
         if isinstance(phase, str):
-            phase = self.phase_by_name(phase)
+            phase = self.phase_by_name(phase, meta)
         if phase not in phases:
             raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
         if not hasattr(module, "run"):
@@ -155,7 +155,7 @@ class MIDCA:
         modules[phase].insert(i, module)
 
         print("[insertmodule] phases are now:\n "+str(map(str, phases)))
-        print("[insertmodule] modules are now:\n"+str(map(str, phases)))
+        print("[insertmodule] modules are now:\n"+str(map(str, modules)))
 
     # just like insert_module but also calls module.init()
     def runtime_insert_module(self, phase, module, i):

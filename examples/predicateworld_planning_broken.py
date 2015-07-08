@@ -28,7 +28,8 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Act", act.SimpleAct())
 
     # add meta layer phases
-    for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+    #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+    for phase in ["Monitor", "Interpret", "Plan", "Control"]:
         myMidca.append_meta_phase(phase)
 
     # add meta layer modules
