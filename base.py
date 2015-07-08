@@ -228,7 +228,7 @@ class MIDCA:
             else:
                 print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 
-    def next_phase(self, verbose = 2):
+    def next_phase(self, verbose = 2, meta = False):
         retVal = ""
         self.phasei = (self.phaseNum - 1) % len(self.phases)
         if self.phasei == 0:
@@ -348,6 +348,14 @@ class PhaseManager:
             self.history.append(self.midca.copy())
         val = self.midca.next_phase(verbose)
         return val
+
+    def next_meta_phase(self, verbose = 2):
+        # TODO - determine how to store history here
+        #if self.storeHistory:
+        #    self.history.append(self.midca.copy())
+        val = self.midca.next_meta_phase(verbose)
+        return val
+
 
     def one_cycle(self, verbose = 1, pause = 0.5):
         for i in range(len(self.midca.phases)):
