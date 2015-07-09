@@ -14,12 +14,12 @@ class MRSimpleDetect(base.BaseModule):
 
 
     def detect(self):
-        last_phase_data = self.mem.get(self.mem.TRACE_SEGMENT)
+        last_phase_name, last_phase_data = self.mem.get(self.mem.TRACE_SEGMENT)
         anomalies = []
 
         # see if any expectations exist for this phase
-        if self.mem.trace.get_current_phase() in self.neg_expectations.keys():
-            relevant_neq_exp = self.neg_expectations[self.mem.trace.get_current_phase()]
+        if last_phase_name in self.neg_expectations.keys():
+            relevant_neq_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
@@ -43,8 +43,8 @@ class MRSimpleDetect(base.BaseModule):
 
 
         # TODO: implement pos_expectations
-        if (self.verbose >= 2): print("-*-*- detect(): returning anomalies: "+str(anomalies))
-        return anomalies
+        if (self.verbose >= 2): print("    Found anomalies: "+str(anomalies))
+        self.mem.set(self.mem.META_ANOMALIES, anomalies)
 
 class MRSimpleGoalGen(base.BaseModule):
 
@@ -57,10 +57,12 @@ class MRSimpleGoalGen(base.BaseModule):
             self.mem.set(self.mem.META_GOALS, [])
 
         if self.mem.get(self.mem.META_ANOMALIES):
-            for anomaly in self.get(self.mem.META_ANOMALIES):
+            goals = self.mem.get(self.mem.META_GOALS)
+            for anomaly in self.mem.get(self.mem.META_ANOMALIES):
                 new_goal = self.gen_goal(anomaly)
-                self.mem.set(self.mem.META_GOALS, self.mem.get(self.mem.META_GOALS).append(new_goal))
-
+                goals.append(new_goal)
+                self.mem.set(self.mem.META_GOALS, goals)
+        #print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []

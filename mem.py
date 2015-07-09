@@ -163,10 +163,10 @@ class Memory:
         if self.logger and self.logEachAccess:
             self.logger.logEvent(MemAccessEvent(key))
 
-    def enableMeta(self, trace):
+    def enableMeta(self, trace, phaseManager):
         self.metaEnabled = True
         self.trace = trace
-        self.myMidca = self
+        self.myMidca = phaseManager
 
 class MemAccessEvent(Event):
 

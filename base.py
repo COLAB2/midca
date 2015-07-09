@@ -1,6 +1,6 @@
 from __future__ import print_function
 import copy, datetime, sys
-from MIDCA import midcatime
+import time
 from MIDCA.mem import Memory
 from MIDCA import goals, logging, trace
 from MIDCA.worldsim import stateread
@@ -53,7 +53,7 @@ class BaseModule:
 class MIDCA:
 
     def __init__(self, world = None, logenabled = True, logOutput = True,
-                     logMemory = True, metaEnabled = False, verbose = 2):
+                     logMemory = True, metaEnabled = False, phaseManager = None, verbose = 2):
         self.world = world
         self.mem = Memory()
         self.phases = []
@@ -67,7 +67,9 @@ class MIDCA:
         self.logger = logging.Logger()
         self.metaEnabled = metaEnabled
         if metaEnabled:
-            self.mem.enableMeta(trace.CogTrace()) # self is pointer to midca itself
+            if not phaseManager:
+                raise Exception("MetaEnabled but phaseManager pointer not given")
+            self.mem.enableMeta(trace.CogTrace(), phaseManager) # self is pointer to midca itself
         if not logenabled:
             self.logger.working = False
         else:
@@ -266,7 +268,7 @@ class MIDCA:
             self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
         if verbose >= 2:
             if meta:
-                print("****** Starting [meta]", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+                print("    ***[meta] Starting ", phases[self.phasei].name, "Phase ***\n", file = sys.stderr)
             else:
                 print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
             self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
@@ -307,7 +309,7 @@ class MIDCA:
         This method does not make a true copy - it will not copy
         the original object's loggers and is not
         intended to be run, only checked to see what MIDCA's state was
-        at an earlier midcatime.
+        at an earlier time.
         '''
         newCopy = MIDCA(self.world, False, self.verbose)
         newCopy.mem = Memory()
@@ -322,7 +324,8 @@ class MIDCA:
 class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
-        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled)
+        # phasemanager is passed in as a self pointer for metacognitive modification
+        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
@@ -391,7 +394,7 @@ class PhaseManager:
         # TODO - determine how to store history here
         #if self.storeHistory:
         #    self.history.append(self.midca.copy())
-        if self.storeHistory: print("Warning: History not being stored during meta phase") #TODO
+        if self.storeHistory and verbose >= 3: print("Warning: History not being stored during meta phase") #TODO
         val = self.midca.next_phase(verbose, meta=True)
         return val
 
@@ -409,13 +412,12 @@ class PhaseManager:
             t2 = datetime.datetime.today()
             try:
                 if (t2 - t1).total_seconds() < pause:
-                    midcatime.sleep(pause - (t2 - t1).total_seconds())
+                    time.sleep(pause - (t2 - t1).total_seconds())
             except AttributeError:
                 if not self.twoSevenWarning:
                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
                     self.twoSevenWarning = True
-                print("dir(midcatime) is "+str(dir(midcatime)))
-                midcatime.sleep(pause)
+                time.sleep(pause)
 
     def several_cycles(self, num, verbose = 1, pause = 0.01, meta=False):
         for i in range(num):
@@ -522,7 +524,7 @@ class PhaseManager:
             else:
                 val = self.next_phase()
                 if self.mem.metaEnabled:
-                    metaval = self.several_cycles(2, meta=True)
+                    metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
                 if val == "continue":
                     self.next_phase()
                 elif val == "q":

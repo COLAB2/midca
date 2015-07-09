@@ -8,6 +8,8 @@ class MRSimpleControl(base.BaseModule):
         if plan:
             for action in plan:
                 self.act(action)
+        else:
+            print("    No actions taken")
 
     def act(self, action, verbose = 0):
         if action[0] == "REMOVE-MODULE":
@@ -17,9 +19,9 @@ class MRSimpleControl(base.BaseModule):
             mod_str = ""
             class Found(Exception): pass # is this bad python? should this go at top of my file?
             try:
-                for phasei in self.midca.get_phases():
+                for phasei in self.mem.myMidca.get_phases():
                     i = 0
-                    for mod in self.midca.get_modules(phasei):
+                    for mod in self.mem.myMidca.get_modules(phasei):
                         mod_str = str(mod.__class__.__name__)
                         #print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))
                         if mod_str == action[1]:
@@ -33,16 +35,16 @@ class MRSimpleControl(base.BaseModule):
                 # remove the component
                 #print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
-                    self.midca.remove_module(phase, module_index)
-                    is_success = mod_str not in map(lambda x: x.__class__.__name__, self.midca.get_modules(phase))
-                    if is_success: print("Metareasoner removed "+mod_str) # report any actions metareasoner carried out
+                    self.mem.myMidca.remove_module(phase, module_index)
+                    is_success = mod_str not in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules(phase))
+                    if is_success: print("    Metareasoner removed "+mod_str) # report any actions metareasoner carried out
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
-                print("current directory: "+str(os.getcwd()))
+                #print("current directory: "+str(os.getcwd()))
                 planningModuleInstance = __import__("modules.planning")
-                print("loaded planning module, it has following attributes: "+str(dir(planningModuleInstance)))
+                #print("loaded planning module, it has following attributes: "+str(dir(planningModuleInstance)))
                 pyHopPlannerInstance = planningModuleInstance.planning.PyHopPlanner(True)
-                self.midca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
-                is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.midca.get_modules("Plan"))
-                if is_success: print("Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
+                self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
+                is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
+                if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
 

@@ -5,15 +5,16 @@ class MRSimplePlanner(base.BaseModule):
     goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]]}
 
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         curr_goal = self.mem.get(self.mem.META_CURR_GOAL)
         if not curr_goal:
-            print("No goal selected")
+            print("    No plan generated")
             return
         else:
             plan = self.plan_for_goal(curr_goal)
             if plan:
                 self.mem.set(self.mem.META_PLAN, plan)
-                print("Selected plan: "+str(plan))
+                print("    Selected plan: "+str(plan))
 
     def plan_for_goal(self, goal):
         #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
@@ -45,5 +46,5 @@ class MRSimplePlanner(base.BaseModule):
         else:
             raise Exception('No ground_plan protocol for:',self.mem.trace.module, goal)
 
-        if (self.verbose >= 2): print("-*-*- ground_plan(): returning "+str(grounded_plan))
+        #if (self.verbose >= 2): print("-*-*- ground_plan(): returning "+str(grounded_plan))
         return grounded_plan

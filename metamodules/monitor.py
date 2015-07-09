@@ -3,8 +3,8 @@ from MIDCA import base
 class MRSimpleMonitor(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
-        self.mem.set(self.mem.TRACE_SEGMENT, self.get_last_phase())
-        print("Segment of trace observed.")
+        self.mem.set(self.mem.TRACE_SEGMENT, [self.mem.trace.get_current_phase(),self.get_last_phase()])
+        print("    Retrieved last segment of trace") #+str(self.mem.get(self.mem.TRACE_SEGMENT)))
 
     def get_last_phase(self):
         """ Return a small part of the trace """
