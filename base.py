@@ -448,14 +448,6 @@ class PhaseManager:
             elif val == "skip":
                 self.one_cycle(verbose = 0, pause = 0)
                 print("cycle finished")
-            elif val == "show":
-                if self.display:
-                    try:
-                        self.display(self.midca.world)
-                    except Exception as e:
-                        print("Error displaying world")
-                else:
-                    print("No display function set. See PhaseManager.set_display_function()"	)
             elif val.startswith("skip"):
                                 #disable output and run multiple cycles
                 try:
@@ -465,6 +457,14 @@ class PhaseManager:
                     print(str(num) + " cycles finished.")
                 except ValueError:
                     print("Usage: 'skip n', where n is an integer")
+            elif val == "show":
+                if self.display:
+                    try:
+                        self.display(self.midca.world)
+                    except Exception as e:
+                        print("Error displaying world")
+                else:
+                    print("No display function set. See PhaseManager.set_display_function()"    )
             elif val == "log":
                 print("Input the text to add to MIDCA's log file. Leave empty and press enter to cancel\n", file = sys.stderr)
                 txt = raw_input()
