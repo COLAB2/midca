@@ -1,4 +1,5 @@
-from MIDCA import goals, time, base
+from MIDCA import goals, base
+from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.worldsim import blockstate
 
@@ -169,7 +170,7 @@ class InstructionReceiver:
 
     def init(self, world, mem):
         self.mem = mem
-        self.lastTime = time.now()
+        self.lastTime = midcatime.now()
 
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATE)
@@ -193,4 +194,4 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-        self.lastTime = time.now()
+        self.lastTime = midcatime.now()

@@ -1,5 +1,6 @@
 from MIDCA.modules._robot_world import world_repr
-from MIDCA import time, rosrun, base
+from MIDCA import rosrun, base
+from MIDCA import midcatime
 import copy
 
 class ROSObserver:
@@ -21,14 +22,14 @@ class ROSObserver:
         if not feedback:
             feedback = []
         for event in detectionEvents:
-            event.time = time.now()
+            event.time = midcatime.now()
             world.sighting(event)
         for event in utteranceEvents:
-            event.time = time.now()
+            event.time = midcatime.now()
             world.utterance(event)
         for msg in feedback:
             d = rosrun.msg_as_dict(msg)
-            d['received_at'] = float(time.now())
+            d['received_at'] = float(midcatime.now())
             self.mem.add(self.mem.FEEDBACK, d)
         self.mem.unlock(self.mem.STATE)
         if verbose > 1:

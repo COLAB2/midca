@@ -1,4 +1,5 @@
-from MIDCA import rosrun, time, plans
+from MIDCA import rosrun, plans
+from MIDCA import midcatime
 import traceback
 try:
         from geometry_msgs.msg import PointStamped
@@ -34,7 +35,7 @@ def allowed_sighting_lag(objectID):
 
 def allowed_sighting_wait(objectID):
 	'''
-	returns the amount of time MIDCA should wait to see an object before giving up.
+	returns the amount of midcatime MIDCA should wait to see an object before giving up.
 	'''
 	return MAX_SIGHTING_WAIT
 	
@@ -132,7 +133,7 @@ class AsynchAction:
 	
 	def execute(self):
 		if not self.startTime:
-			self.startTime = time.now()
+			self.startTime = midcatime.now()
 		self.status = IN_PROGRESS
 		if not self.executeFunc:
 			return
@@ -146,7 +147,7 @@ class AsynchAction:
 	
 	def check_complete(self):
 		if not self.startTime:
-			self.startTime = time.now()
+			self.startTime = midcatime.now()
 		if not self.check_complete:
 			return
 		try:
@@ -206,10 +207,10 @@ class AwaitCurrentLocation(AsynchAction):
 		completionCheck, True)
 	
 	def completion_check(self):
-		t = time.now()
+		t = midcatime.now()
 		if t - self.startTime > self.maxDuration:
 			if verbose >= 1:
-				print "max time exceeded for action:", self, "- changing status to failed." 
+				print "max midcatime exceeded for action:", self, "- changing status to failed." 
 			self.status = FAILED
 			return False
 		lastLocReport = get_last_location(self.mem, self.objectOrID)
@@ -241,7 +242,7 @@ class DoPoint(AsynchAction):
 	
 	def send_point(self):
 		lastLocReport = get_last_location(self.mem, self.objectOrID)
-		t = time.now()
+		t = midcatime.now()
 		if not lastLocReport:
 			if verbose >= 1:
 				print "No object location found, so action:", self, "will fail."
@@ -255,7 +256,7 @@ class DoPoint(AsynchAction):
 			self.status = FAILED
 			return
 		self.msgDict = {'x': lastLocReport[0].x, 'y': lastLocReport[0].y, 
-		'z': lastLocReport[0].z, 'time': self.startTime, 'cmd_id': self.msgID}
+		'z': lastLocReport[0].z, 'midcatime': self.startTime, 'cmd_id': self.msgID}
 		print "trying to send"
 		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
 		if not sent:
@@ -266,7 +267,7 @@ class DoPoint(AsynchAction):
 	
 	def check_confirmation(self):
 		checkTime = self.lastCheck
-		self.lastCheck = time.now()
+		self.lastCheck = midcatime.now()
 		feedback = self.mem.get(self.mem.FEEDBACK)
 		if not feedback:
 			return False

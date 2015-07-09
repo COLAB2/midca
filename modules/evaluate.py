@@ -1,4 +1,5 @@
-from MIDCA import time, base
+from MIDCA import base
+from MIDCA import midcatime
 import copy
 
 class EvalPointingFromFeedback(base.BaseModule):
@@ -100,7 +101,7 @@ class Score:
 class Scorer:
 
     '''
-    MIDCA module that scores MIDCA on tower construction success. Each time a tower is built, MIDCA gets 1 point for each block in the tower (including the triangular one) that is not on fire.
+    MIDCA module that scores MIDCA on tower construction success. Each midcatime a tower is built, MIDCA gets 1 point for each block in the tower (including the triangular one) that is not on fire.
     Note: This module must precede SimpleEval to work consistently.
     '''
 

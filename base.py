@@ -1,5 +1,6 @@
 from __future__ import print_function
-import copy, time, datetime, sys
+import copy, datetime, sys
+from MIDCA import midcatime
 from MIDCA.mem import Memory
 from MIDCA import goals, logging, trace
 from MIDCA.worldsim import stateread
@@ -306,7 +307,7 @@ class MIDCA:
         This method does not make a true copy - it will not copy
         the original object's loggers and is not
         intended to be run, only checked to see what MIDCA's state was
-        at an earlier time.
+        at an earlier midcatime.
         '''
         newCopy = MIDCA(self.world, False, self.verbose)
         newCopy.mem = Memory()
@@ -408,13 +409,13 @@ class PhaseManager:
             t2 = datetime.datetime.today()
             try:
                 if (t2 - t1).total_seconds() < pause:
-                    time.sleep(pause - (t2 - t1).total_seconds())
+                    midcatime.sleep(pause - (t2 - t1).total_seconds())
             except AttributeError:
                 if not self.twoSevenWarning:
                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
                     self.twoSevenWarning = True
-                print("dir(time) is "+str(dir(time)))
-                time.sleep(pause)
+                print("dir(midcatime) is "+str(dir(midcatime)))
+                midcatime.sleep(pause)
 
     def several_cycles(self, num, verbose = 1, pause = 0.01, meta=False):
         for i in range(num):
