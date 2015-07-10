@@ -5,6 +5,7 @@ from MIDCA.modules._plan.asynch import asynch, operators, methods
 from MIDCA.logging import Logger
 import inspect, os
 from std_msgs.msg import String
+from MIDCA.examples import Calibrate
 
 def ros_style_midca():
 	myMidca = base.MIDCA(None, verbose = 2)
@@ -29,11 +30,20 @@ myMidca = ros_style_midca()
 myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
+# calibration
+
+
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
-	
+	#rosrun.CalibrationHandler("calibrate_done", myMidca),
 	rosrun.FixedObjectLocationHandler("obj_pos", "red card", myMidca),
 	rosrun.UtteranceHandler("cmds_received", myMidca),
 	rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
 	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.LOC_TOPIC, String)])
 rosMidca.ros_connect()
+
+H = Calibrate.calibrate()
+Z = Calibrate.getZ()
+
+myMidca.mem.set(myMidca.mem.CALIBRATION_MATRIX, H)
+myMidca.mem.set(myMidca.mem.CALIBRATION_Z, Z)
 rosMidca.run_midca()

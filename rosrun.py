@@ -160,6 +160,33 @@ class FixedObjectLocationHandler(IncomingMsgHandler):
 		self.mem.add(self.memKey, world_repr.DetectionEvent(id = self.objID, 
 		loc = pointMsg.point))
 
+class CalibrationHandler(IncomingMsgHandler):
+
+	'''
+	class that receives Point messages, where each message indicates that the given object
+	has been identified at that location. Args include the topic to listen to, object id,
+	and midca object to whose memory observations will be stored. Optionally the memory
+	key to be stored to can also be specified.
+	'''
+	
+	def __init__(self, topic, midcaObject, memKey = None):
+		callback = lambda msg: self.store_calibrate_matrix(msg)
+		msgType = String
+		super(CalibrationHandler, self).__init__(topic, msgType, callback,
+		midcaObject)
+		
+		if memKey:
+			self.memKey = memKey
+		else:
+			self.memKey = self.mem.CALIBRATION_DONE
+		
+	def store_calibrate_matrix(self, msg):
+		if not self.mem:
+			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+		self.mem.set(self.mem.CALIBRATION_MATRIX, msg)
+		
+
+
 class UtteranceHandler(IncomingMsgHandler):
 	
 	def __init__(self, topic, midcaObject, memKey = None):

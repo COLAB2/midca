@@ -18,7 +18,8 @@ from baxter import *
 from geometry_msgs.msg import Point, PointStamped
 # Global variables:
 
-H = []    # The current homography matrix.
+
+#H = []    # The current homography matrix.
 Z = 0    # The Z coordinate of the table.
 baxter = Baxter() # The object that controls Baxter. Defined in baxter.py.
 floor_reference_points = [] # The floor reference points.
@@ -30,6 +31,8 @@ points = []
 original_position = None
 current_position = None
 
+# def __init__(self):
+#      pass
 
 def initial_setup_baxter():
     """
@@ -37,8 +40,8 @@ def initial_setup_baxter():
 
     """
     
-    print 'Initializing node...'
-    rospy.init_node('baxter_or')
+    #print 'Initializing node...'
+    #rospy.init_node('baxter_or')
     baxter.enable()
     baxter.calibrateLeftGripper()
     
@@ -129,8 +132,8 @@ def get_img_reference_points():
 
 
 
-def getObjectPosition():
-    #raw_input('Enter to capture image.')
+def getObjectPosition(H, Z):
+   
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
     
@@ -138,9 +141,12 @@ def getObjectPosition():
     hsv = cv2.cvtColor(cvimage, cv2.COLOR_BGR2HSV)
     
         # define range of red color in HSV
-    lower_red = np.array([165,50,200])
+#     lower_red = np.array([165,50,200])
+#     #0,60,60
+#     upper_red = np.array([175,200,255])
+    lower_red = np.array([0,50,43])
     #0,60,60
-    upper_red = np.array([175,200,255])
+    upper_red = np.array([0,100,100])
     #upper_red = np.array([175,200,255])
     #13,100,100
     
@@ -231,115 +237,16 @@ def getObjectPosition():
             #cv2.destroyAllWindows()
             #return 0
 
-    cv2.imshow('frame',frame)
-    cv2.imshow('mask',thresh)
-    #cv2.imshow('res',im)
-    k = cv2.waitKey(5) & 0xFF
-    if k == 27:
-        cv2.destroyAllWindows()
-
-def getObjectPositionTest():
-    raw_input('Enter to capture image.')
-    image = baxter.getImageFromRightHandCamera()
-    cvimage = baxter.getLastCvImage()
-    
-# Convert BGR to HSV
-    hsv = cv2.cvtColor(cvimage, cv2.COLOR_BGR2HSV)
-    
-        # define range of red color in HSV
-    lower_red = np.array([165,50,200])
-    upper_red = np.array([175,200,255])
-    
-        # Threshold the HSV image to get only blue colors
-    thresh = cv2.inRange(hsv, lower_red, upper_red)
-    
-        # Bitwise-AND mask and original image
-    res = cv2.bitwise_and(cvimage,cvimage, mask= thresh)
-    
-#     cv2.imshow('frame',cvimage)
+#     cv2.imshow('frame',frame)
 #     cv2.imshow('mask',thresh)
-#     cv2.imshow('res',res)
-#     k = cv2.waitKey(0) & 0xFF
-     
-    if k == 27:
-       cv2.destroyAllWindows()    
-        
-    image, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-        
-    if(len(contours) > 0):
-        print len(contours) 
-    else:
-        print len(contours)
-    
-    
+#     #cv2.imshow('res',im)
+#     k = cv2.waitKey(5) & 0xFF
+#     if k == 27:
+#         cv2.destroyAllWindows()
 
 
-def get_floor_reference_points():
-    """
-    This function get 4 points of reference from the real world, asking the
-    user to move the baxter arm to the position of each corresponding point
-    in the image, and then getting the X,Y and Z coordinates of baxter's hand.
-    Returns an array of size 4 containing 4 coordinates:
-    [[x1,y1], [x2,y2], [x3,y3], [x4,y4]].
-    All the coordinates Z should be approximatelly the same. We assume the table
-    is niveled. Save the Z coordinate in the global variable.
-
-    TODO: Implement this. Figure out a way to get the end position of baxter
-    hand. I know that in baxter_msgs
-
-    """
-    global Z # This declaration is needed to modify the global variable Z
-    global floor_reference_points # Maybe erase.
-    global floor_reference_orientations # Maybe erase.
-    
-#     raw_input('Move the LEFT arm to point 1 and press enter.')
-#     p1 = baxter.getLeftArmPosition()
-#     o1 = baxter.getLeftArmOrientation()
-#     print 'Point 1 =', p1
-#     raw_input('Move the LEFT arm to point 2 and press enter.')
-#     p2 = baxter.getLeftArmPosition()
-#     o2 = baxter.getLeftArmOrientation()
-#     print 'Point 2 =', p2
-#     raw_input('Move the LEFT arm to point 3 and press enter.')
-#     p3 = baxter.getLeftArmPosition()
-#     o3 = baxter.getLeftArmOrientation()
-#     print 'Point 3 =', p3
-#     raw_input('Move the LEFT arm to point 4 and press enter.')
-#     p4 = baxter.getLeftArmPosition()
-#     o4 = baxter.getLeftArmOrientation()
-#     print 'Point 4 =', p4
-#      
-#     floor_reference_points = [p1,p2,p3,p4]
-#     floor_reference_orientations = [o1,o2,o3,o4]
-    
- #    Calculate the z coordinate average:
-    #Z = (p1[2] + p2[2] + p3[2] + p4[2]) / 4
-    #Z = -0.19733055364191465
-    Z = (-0.09213761966304572  -0.08460401925336455 -0.07989979719202103 -0.08507849515304883)/4
-    print Z
-# Point 1 = [0.5014114237373656, 0.2738107544597765, -0.09213761966304572]
-# Move the LEFT arm to point 2 and press enter.
-# Point 2 = [0.7535411194156703, 0.2897614820921219, -0.08460401925336455]
-# Move the LEFT arm to point 3 and press enter.
-# Point 3 = [0.7743015627913727, -0.12427782967004859, -0.07989979719202103]
-# Move the LEFT arm to point 4 and press enter.
-# Point 4 = [0.544968127426643, -0.15310413766573078, -0.08507849515304883]
-# -0.0854299828154
-    #return [[p1[0],p1[1]], [p2[0],p2[1]], [p3[0],p3[1]], [p4[0],p4[1]]]
-    return [[0.5014114237373656, 0.2738107544597765],
-     [0.7535411194156703, 0.2897614820921219],
-      [0.7743015627913727, -0.124277829670048],
-     [0.544968127426643, -0.15310413766573078]]
 
 
-def calibrate_homography():
-    global H, Hinv
-    floor_points = get_floor_reference_points()
-    img_points = get_img_reference_points()
-    print img_points
-    print floor_points
-    
-    H = homography_floor_to_img(img_points, floor_points)
 
 def sendPoint(point):
     #rospy.init_node('baxter_grabbing')
@@ -358,13 +265,13 @@ def sendPoint(point):
         pub.publish(PointStamped(point = p))
         
         
-def main():
+def main(H, Z):
+    #print(H)
     initial_setup_baxter()
-    calibrate_homography()
-    position = getObjectPosition()
-    print position
+    #calibrate_homography()
+    position = getObjectPosition(H, Z)
     #baxter.closeLeftGripper()
-    #sendPoint(position)
+    sendPoint(position)
 
 if __name__ == '__main__':
     main()

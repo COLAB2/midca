@@ -1,6 +1,7 @@
 from MIDCA import rosrun, time, plans
 import traceback
 from geometry_msgs.msg import PointStamped
+from MIDCA.examples import ObjectDetector
 
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
@@ -58,11 +59,10 @@ def asynch_plan(mem, midcaPlan):
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			POINT_TOPIC, cmdID))
 		
-# 		elif midcaAction[0] == "wait_to_see":
-# 			cmdID = rosrun.next_id()
-# 			actions.append(DoDetect(mem, midcaAction, midcaAction[1], 
-# 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-# 			LOC_TOPIC, cmdID))
+		elif midcaAction[0] == "detect":
+			actions.append(DoFind(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
+			
 		elif midcaAction[0] == "grab":
 			cmdID = rosrun.next_id()
 			actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
@@ -224,6 +224,45 @@ class AwaitCurrentLocation(AsynchAction):
 		if not lastLocReport:
 			return False
 		return t - lastLocReport[1] <= self.maxAllowedLag
+
+class DoFind(AsynchAction):
+
+	'''
+	Action that blocks until there is a current (within last maxAllowedLag seconds)
+	observation of the object's location.
+	'''
+
+	def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration):
+		self.objectOrID = objectOrID
+		self.maxAllowedLag = maxAllowedLag
+		self.maxDuration = maxDuration
+		executeAction = lambda mem, midcaAction, status: self.detectObject()
+		completionCheck = lambda mem, midcaAction, status: self.completion_check()
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
+		completionCheck, True)
+	
+	def detectObject(self):
+		matrix = []
+		if self.mem.get(self.mem.CALIBRATION_MATRIX).size:
+			matrix = self.mem.get(self.mem.CALIBRATION_MATRIX)
+			z = self.mem.get(self.mem.CALIBRATION_Z)
+			ObjectDetector.main(matrix, z)
+			return true
+		
+		return False	
+	
+	def completion_check(self):
+		t = time.now()
+		if t - self.startTime > self.maxDuration:
+			if verbose >= 1:
+				print "max time exceeded for action:", self, "- changing status to failed." 
+			self.status = FAILED
+			return False
+		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		if not lastLocReport:
+			return False
+		return t - lastLocReport[1] <= self.maxAllowedLag
+
 
 class DoPoint(AsynchAction):
 	

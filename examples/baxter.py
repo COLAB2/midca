@@ -174,9 +174,9 @@ class Baxter:
     
     
     def enable(self):
-        print "start"
-        self.robotEnable = baxter_interface.RobotEnable()
-        self.robotEnable.enable()
+#         print "start"
+#         self.robotEnable = baxter_interface.RobotEnable()
+#         self.robotEnable.enable()
         self.leftArm = baxter_interface.Limb('left')
         self.rightArm = baxter_interface.Limb('right')
         # Waits for the image service of right hand camera to become available.

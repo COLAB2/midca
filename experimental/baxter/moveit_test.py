@@ -31,7 +31,7 @@ class BaxterWave:
 			right = MoveGroupCommander("right_arm")
 			
 			upRight = geometry_msgs.msg.Pose(position = geometry_msgs.msg.Point(
-			x = 0.7, y = -0.35, z = 0.8))
+			x = 0.9667369015076861, y = -0.1190874231664102, z = -0.07489146157788866 ))
 			
 			#upLeft = geometry_msgs.msg.Pose(position = geometry_msgs.msg.Point(
 			#x = 0.7, y = 0.35, z = 0.8))

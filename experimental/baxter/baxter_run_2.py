@@ -8,10 +8,13 @@ def print_func(s):
 
 def baxter_midca():
 	world = "Baxter World"
+	print 'I am here'	
 	myMidca = base.PhaseManager(world, display = print_func)
 	for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)
-	myMidca.append_module("Act", moveit_test.BaxterWave([], [(0.4, -0.2, 0.2), (0.5, -0.2, 0.4), (0.4, -0.2, 0.2)]))
+	
+	
+	myMidca.append_module("Act", moveit_test.BaxterWave([], [(0.5212523750330741, 0.32016779873003876,-0.06583053722449383)]))
 	return myMidca
 
 def test():

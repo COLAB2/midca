@@ -17,7 +17,7 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import String
 from MIDCA import rosrun
 from MIDCA.modules._plan.asynch import asynch
-from baxter import *
+from MIDCA.examples.baxter import * 
 
 limb = None
 feedbackPub = None
@@ -34,8 +34,9 @@ def move_left_arm_to(point):
 
     print('point =', point)
     baxter.moveLeftArm(point, baxter.getLeftArmOrientation())
-    
-
+    baxter.closeLeftGripper()
+    p2 = Point(x = point.x, y = point.y, z = 0.14991940971164064)
+    baxter.moveLeftArm(p2, baxter.getLeftArmOrientation())
 
 def point_callback(data, cmd_id = 'point_def_id'):
     print("I M HERE******* ", data)
