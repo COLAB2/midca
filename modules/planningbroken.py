@@ -99,3 +99,78 @@ class PyHopPlannerBroken(base.BaseModule):
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN",midcaPlan)
+
+def pyhop_state_from_world(world, name = "state"):
+    s = pyhop.State(name)
+    s.pos = {}
+    s.clear = {}
+    s.holding = False
+    s.fire = {}
+    s.free = {}
+    s.fire_ext_avail = set()
+    s.holdingfireext = None
+    blocks = []
+    for objname in world.objects:
+        if world.objects[objname].type.name == "BLOCK" and objname != "table":
+            blocks.append(objname)
+        elif world.objects[objname].type.name == "ARSONIST":
+            s.free[objname] = False
+    for atom in world.atoms:
+        if atom.predicate.name == "clear":
+            s.clear[atom.args[0].name] = True
+        elif atom.predicate.name == "holding":
+            s.holding = atom.args[0].name
+        elif atom.predicate.name == "fire-extinguisher":
+            s.fire_ext_avail.add(atom.args[0].name)
+        elif atom.predicate.name == "holdingextinguisher":
+            s.holdingfireext = atom.args[0].name
+        elif atom.predicate.name == "arm-empty":
+            s.holding = False
+        elif atom.predicate.name == "on":
+            s.pos[atom.args[0].name] = atom.args[1].name
+        elif atom.predicate.name == "on-table":
+            s.pos[atom.args[0].name] = "table"
+        elif atom.predicate.name == "onfire":
+            s.fire[atom.args[0].name] = True
+        elif atom.predicate.name == "free":
+            s.free[atom.args[0].name] = True
+    for block in blocks:
+        if block not in s.clear:
+            s.clear[block] = False
+        if block not in s.fire:
+            s.fire[block] = False
+        if block not in s.pos:
+            s.pos[block] = "in-arm"
+    return s
+
+#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
+def pyhop_tasks_from_goals(goals):
+    alltasks = []
+    blkgoals = pyhop.Goal("goals")
+    blkgoals.pos = {}
+    for goal in goals:
+        #extract predicate
+        if 'predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['predicate'])
+        elif 'Predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['Predicate'])
+        elif goal.args:
+            predicate = str(goal.args[0])
+        else:
+            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        args = [str(arg) for arg in goal.args]
+        if args[0] == predicate:
+            args.pop(0)
+        if predicate == "on":
+            blkgoals.pos[args[0]] = args[1]
+        elif predicate == 'on-table':
+            blkgoals.pos[args[0]] = 'table'
+        elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:
+            alltasks.append(("put_out", args[0]))
+        elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
+            alltasks.append(("catch_arsonist", args[0]))
+        else:
+            raise Exception("No task corresponds to predicate " + predicate)
+    if blkgoals.pos:
+        alltasks.append(("move_blocks", blkgoals))
+    return alltasks
