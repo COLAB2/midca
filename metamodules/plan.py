@@ -28,7 +28,8 @@ class MRSimplePlanner(base.BaseModule):
                 new_component = self.mem.trace.module
                 for operator in plan:
                     print("operator is "+str(operator))
-                    operator.replace("?x", self.mem.trace.module)
+                    for item in operator:
+                        item.replace("?x", self.mem.trace.module)
         else:
             raise Exception('UNDEFINED GOAL:',goal)
 
