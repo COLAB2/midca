@@ -5,11 +5,27 @@ class MRSimpleControl(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         plan = self.mem.get(self.mem.META_PLAN)
+        failed = False
         if plan:
             for action in plan:
-                self.act(action)
+                if not self.act(action):
+                    failed = True
+                    print("    MRSimpleControl failed to complete an action")
+            if not failed:
+                self.cleanup_and_reset()
         else:
             print("    No actions taken")
+
+
+
+    def cleanup_and_reset(self):
+        """
+        Temporary function to remove goal and plan,
+        should eventually be replaced by evaluate
+         """
+        self.mem.set(self.mem.META_PLAN, None)
+        self.mem.set(self.mem.META_GOALS, None)
+        self.mem.set(self.mem.META_CURR_GOAL, None)
 
     def act(self, action, verbose = 0):
         if action[0] == "REMOVE-MODULE":
@@ -38,6 +54,7 @@ class MRSimpleControl(base.BaseModule):
                     self.mem.myMidca.remove_module(phase, module_index)
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules(phase))
                     if is_success: print("    Metareasoner removed "+mod_str) # report any actions metareasoner carried out
+                    return is_success
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
                 #print("current directory: "+str(os.getcwd()))
@@ -47,4 +64,5 @@ class MRSimpleControl(base.BaseModule):
                 self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
                 is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
                 if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
+                return is_success
 
