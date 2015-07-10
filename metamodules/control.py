@@ -11,6 +11,7 @@ class MRSimpleControl(base.BaseModule):
                 if not self.act(action):
                     failed = True
                     print("    MRSimpleControl failed to complete an action")
+                    self.cleanup_and_reset()
             if not failed:
                 self.cleanup_and_reset()
         else:

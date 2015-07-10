@@ -166,7 +166,7 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        module.init(self.world, self.mem)
+        module.init(mem=self.mem, world=self.world)
 
     def removeModule(self, phase, i):
         if isinstance(phase, str):

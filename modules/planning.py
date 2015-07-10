@@ -2,6 +2,7 @@ from _plan import pyhop, methods, operators, methods_extinguish, operators_extin
 from MIDCA import plans, base
 import collections
 import traceback
+import copy
 from MIDCA.modules._plan.asynch import asynch
 
 class GenericPyhopPlanner(base.BaseModule):
