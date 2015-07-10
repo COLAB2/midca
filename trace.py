@@ -2,6 +2,8 @@ from __future__ import print_function
 import copy
 import shlex, subprocess
 
+from collections import OrderedDict
+
 """
 How-To:
 1. In each module, before storing data into the trace call add_module() then
@@ -58,7 +60,7 @@ class CogTrace:
                 #print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
                 self.trace[cycle][module] = []
         else:
-            self.trace[cycle] = {}
+            self.trace[cycle] = OrderedDict()
             #print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
             self.trace[cycle][module] = []
 
@@ -71,6 +73,7 @@ class CogTrace:
         """
         if self.cycle != -1 and self.module != "":
             self.trace[self.cycle][self.module].append([data_type,data])
+
 
     def get_data(self, cycle, phase):
         if cycle < 0:
@@ -173,10 +176,12 @@ class CogTrace:
                 curr_node_id = " C_" + str(cycle) + "_P_"+ str(phase)
 
                 # generate the string for this node
+                curr_node_label = curr_node_id +"\n"
                 for datum in self.trace[cycle][phase]:
+                    #print("[writetopdf] self.trace[cycle][phase] is "+str(self.trace[cycle][phase]))
                     # datum[0] is type, datum[1] is actual data
-                    curr_node_label = curr_node_id +"\n"+str(self.data_str(datum[0],datum[1]))
-                    dotfilestr += curr_node_id +" [label=\""+curr_node_label+" \"]\n"
+                    curr_node_label += str(self.data_str(datum[0],datum[1]))+"\n"
+                    dotfilestr += curr_node_id +" [shape=rect label=\""+curr_node_label+" \"]\n"
                 # generate string for dependency graph
                 if prev_node_id is "":
                     # this is first iteration, no dependency added
