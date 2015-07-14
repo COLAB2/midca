@@ -20,7 +20,7 @@ myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.Scorer(), 0)
+myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
 def preferApprehend(goal1, goal2):
 	if 'predicate' not in goal1 or 'predicate' not in goal2:
