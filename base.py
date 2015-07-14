@@ -490,9 +490,14 @@ class PhaseManager:
                 print("Please enter the variable you wish to see the values of, or hit enter to see all of them ")
                 txt = raw_input()
                 if txt:
+                    keyfound = False
                     for key in self.mem.knowledge.keys():
                         if str(key) == txt:
+                            keyfound = True
                             print("    ["+key+"] = "+str(self.mem.get(key))+"\n")
+                    if not keyfound:
+                        print("  [Error] Key "+txt+" not found in MIDCA's memory")
+                        print("  [Available Keys] "+str(self.mem.knowledge.keys()))
                 else:
                     print("  Current memory is: \n")
                     for key in self.mem.knowledge.keys():
