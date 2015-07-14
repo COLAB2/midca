@@ -210,7 +210,7 @@ class MIDCA:
                 i += 1
                 try:
                     if verbose >= 2:
-                        print("[cognitive] Initializing " + phase.name + " module " + str(i) + "...",end="")
+                        print("[cognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ "...",end="")
                     module.init(world = self.world,
                                 mem = self.mem)
                     print("done.")
@@ -218,7 +218,7 @@ class MIDCA:
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
-                        print("\n[cognitive] Phase " + phase.name + " module " + str(i) +  " has no init function or had an error. Skipping init.")
+                        print("\n[cognitive] Phase " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ " has no init function or had an error. Skipping init.")
 
         self.initGoalGraph(overwrite = False)
         self.initialized = True
@@ -231,7 +231,7 @@ class MIDCA:
                 i += 1
                 try:
                     if verbose >= 2:
-                        print("[metacognitive] Initializing " + phase.name + " module " + str(i) + "...",end="")
+                        print("[metacognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+"...",end="")
                     module.init(world = self.world,
                                 mem = self.mem)
                     print("done.")
@@ -239,7 +239,7 @@ class MIDCA:
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
-                        print("\n[metacognitive] Phase " + phase.name + " module " + str(i) +  "has no init function or had an error. Skipping init.")
+                        print("\n[metacognitive] Phase " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ "has no init function or had an error. Skipping init.")
 
         self.initGoalGraph(overwrite = False)
         self.initialized = True
