@@ -97,6 +97,9 @@ class Score:
     def update(self, score):
         self.towers += 1
         self.score += score
+        
+    def __str__(self):
+        return "towers="+str(self.towers)+",score="+str(self.score)
 
 class Scorer:
 
