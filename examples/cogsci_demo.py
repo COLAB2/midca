@@ -15,11 +15,11 @@ MIDCA_ROOT = thisDir + "/../"
 
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate.sim")
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.5, arsonStart = 10), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
-#myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
+myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
 def preferApprehend(goal1, goal2):
