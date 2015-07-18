@@ -56,6 +56,9 @@ class Experiment():
         Executes all the runs from appendRun and sends the resulting midca
         objects to each data writing function added by addWriteDataFunc()
         '''
-        for run_i in self.runs:
-            pass
+        for run_id in range(len(self.runs)):
+            midca.run()
+            for datawritefunc in self.datawritefuncs:
+                datawritefunc(run_id, midca)
+
 
