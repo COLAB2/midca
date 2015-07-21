@@ -19,7 +19,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIKRequest,
 )
 from sensor_msgs.msg import Image
-from baxter_image.srv import ImageSrv, ImageSrvResponse
+from baxter_srv.srv import ImageSrv, ImageSrvResponse
 import numpy as np
 import  cv2
 from cv_bridge import CvBridge, CvBridgeError

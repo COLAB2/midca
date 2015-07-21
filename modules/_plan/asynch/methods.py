@@ -4,7 +4,7 @@ def point_at_m(state, objectID):
 	return [("block_until_seen", objectID), ("point_to", objectID)]
 def pickup_o(state, objectID):
 	#return [("block_until_seen", objectID),("wait_to_see", objectID), ("grab", objectID)]
-	return [("detect", objectID), ("grab", objectID)]
+	return [("block_until_seen", objectID), ("grab", objectID)]
 
 def achieve_goals_m(state, goals):
 	if goals:

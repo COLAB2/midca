@@ -6,7 +6,7 @@ Created on Jun 16, 2015
 #!/usr/bin/env python
 
 import roslib; 
-#roslib.load_manifest('baxter_image')
+
 import rospy
 
 import time

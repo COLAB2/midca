@@ -190,6 +190,7 @@ def get_last_location(mem, objectOrID):
 	world = mem.get(mem.STATE)
 	sightings = world.all_sightings(objectOrID)
 	if not sightings:
+		print("noooooooooo")
 		return None
 	else:
 		for detectionEvent in reversed(sightings):
@@ -236,7 +237,8 @@ class DoFind(AsynchAction):
 		self.objectOrID = objectOrID
 		self.maxAllowedLag = maxAllowedLag
 		self.maxDuration = maxDuration
-		executeAction = lambda mem, midcaAction, status: self.detectObject()
+		#executeAction = lambda mem, midcaAction, status: self.detectObject()
+		executeAction = None
 		completionCheck = lambda mem, midcaAction, status: self.completion_check()
 		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
 		completionCheck, True)
