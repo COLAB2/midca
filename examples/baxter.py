@@ -28,49 +28,7 @@ class Baxter:
     def __init__(self):
         pass
     
-    
- 
-    
-    
-#     def inverseKinematics(self, limb, point, orientation):
-#         #ns = "/sdk/robot/limb/" + limb + "/solve_ik_position"
-#         ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
-#         rospy.wait_for_service(ns)
-#         iksvc = rospy.ServiceProxy(ns, SolvePositionIK)
-#         ikreq = SolvePositionIKRequest()
-#         hdr = Header(stamp=rospy.Time.now(), frame_id='base')
-#         pose = PoseStamped(
-#                     header=hdr,
-#                     pose=Pose(
-#                     position=Point(
-#                         x=point[0],
-#                         y=point[1],
-#                         z=point[2],
-#                     ),
-#                     orientation=Quaternion(
-#                         x=orientation[0],
-#                         y=orientation[1],
-#                         z=orientation[2],
-#                         w=orientation[3],
-#                     )
-#                 )
-#             );
-#         ikreq.pose_stamp.append(pose)
-#         try:
-#             resp = iksvc(ikreq)
-#         except rospy.ServiceException,e :
-#             rospy.loginfo("Service call failed: %s" % (e,))
-#         if (resp.isValid[0]):
-#             #print("SUCCESS - Valid Joint Solution Found:")
-#             # Format solution into Limb API-compatible dictionary
-#             limb_joints = dict(zip(resp.joints[0].names, resp.joints[0].angles))
-#             #print limb_joints
-#             return limb_joints
-#         else:
-#             print("INVALID POSE - No Valid Joint Solution Found.")
-#             return None
- # Gripper Methods:
-    
+     
     def calibrateLeftGripper(self):
         self.leftGripper.calibrate()
         
@@ -182,6 +140,11 @@ class Baxter:
         # Waits for the image service of right hand camera to become available.
         rospy.wait_for_service('last_image')
         self.rightHandCamera = rospy.ServiceProxy('last_image', ImageSrv)
+        self.leftGripper = baxter_interface.Gripper('left')
+        
+    def initiate(self):
+        self.leftArm = baxter_interface.Limb('left')
+        self.rightArm = baxter_interface.Limb('right')
         self.leftGripper = baxter_interface.Gripper('left')
         
     def getLeftArmPosition(self):

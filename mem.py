@@ -23,6 +23,7 @@ class Memory:
 	CALIBRATION_Z = "__Z"
 	ROS_WORDS_HEARD = "__words heard queue"
 	ROS_FEEDBACK = "__ros feedback"
+	Objects = "__objects"
 	
 	def __init__(self, args = {}):
 		self.knowledge = {}

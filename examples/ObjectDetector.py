@@ -6,13 +6,10 @@ Created on Jun 16, 2015
 #!/usr/bin/env python
 
 import roslib; 
-#roslib.load_manifest('baxter_image')
 import rospy
-
 import time
 import  cv2
 import numpy as np
-
 from homography import *
 from baxter import *
 from geometry_msgs.msg import Point, PointStamped
@@ -31,138 +28,31 @@ points = []
 original_position = None
 current_position = None
 
-# def __init__(self):
-#      pass
-
 def initial_setup_baxter():
     """
     Enable and set up baxter.
 
     """
-    
-    #print 'Initializing node...'
-    #rospy.init_node('baxter_or')
     baxter.enable()
-    baxter.calibrateLeftGripper()
     
-   
-def move_left_arm_to(point):
-    origin = baxter.getLeftArmPosition()
-    print 'origin =', origin
-#     if origin[2] < Z + 0.2:
-#         dest1 = origin[:]
-#         dest1[2] += 0.2
-#         print 'dest1 =', dest1
-#         baxter.moveLeftArm(dest1, baxter.getLeftArmOrientation())
-#         print 'done dest1'
-#     if point[2] < Z + 0.1:
-#         dest2 = point[:]
-#         dest2[2] += 0.2
-#         print 'dest2 =', dest2
-#         baxter.moveLeftArm(dest2, baxter.getLeftArmOrientation())
-#         print 'done dest2'
-    print 'point =', point
-    baxter.moveLeftArm(point, baxter.getLeftArmOrientation())
-    print 'done point'
-
-   
-def test():
-    """
-    This function get 4 points of reference from the image from the right hand
-    of baxter. Returns an array of size 4, with 4 coordinates:
-    [[x1,y1], [x2,y2], [x3,y3], [x4,y4]].
-
-    TODO: implement this. We have to define a color we will mark the table
-    and get 4 points of that color from the image.
-
-    """
-    # The following line is just for test.
-    raw_input('Enter to capture image.')
-    image = baxter.getImageFromRightHandCamera()
-    cvimage = baxter.getLastCvImage()
-    #while n_clicks <= tot_clicks-1:
-    cv2.imshow('image',cvimage)
-    k = cv2.waitKey(0)
-    if k == 27:         # wait for ESC key to exit
-        cv2.destroyAllWindows()
-        # displays the image
-        #cv.ShowImage("Click", cvimage)
-        #calls the callback function "on_mouse_click'when mouse is clicked inside window
-        #cv.SetMouseCallback("Click", on_mouse_click, param=1)
-        #cv.WaitKey(1000)
-        
-    
-    #print points
-    return points
-
-def on_mouse_click(event, x, y, flag, param):
-    global n_clicks, points
-    if event == cv2.EVENT_LBUTTONDOWN:
-        print 'Point %s captured: (%s,%s)' % (n_clicks+1,x,y)
-        points.append([x, y])
-        n_clicks += 1
-
-
-def get_img_reference_points():
-    """
-    This function get 4 points of reference from the image from the right hand
-    of baxter. Returns an array of size 4, with 4 coordinates:
-    [[x1,y1], [x2,y2], [x3,y3], [x4,y4]].
-
-    TODO: implement this. We have to define a color we will mark the table
-    and get 4 points of that color from the image.
-
-    """
-    # The following line is just for test.
-    raw_input('Enter to capture image.')
-    image = baxter.getImageFromRightHandCamera()
-    cvimage = baxter.getLastCvImage()
-    while n_clicks <= tot_clicks-1:
-        # displays the image
-        cv2.imshow("Click", cvimage)
-        #cv.ShowImage("Click", cvimage)
-        #calls the callback function "on_mouse_click'when mouse is clicked inside window
-        cv2.setMouseCallback("Click", on_mouse_click, param=1)
-        #cv.SetMouseCallback("Click", on_mouse_click, param=1)
-        #cv.WaitKey(1000)
-        cv2.waitKey(1000)
-    
-    #print points
-    return points
-
-
 
 def getObjectPosition(H, Z):
    
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
     
-# Convert BGR to HSV
+    # Convert BGR to HSV
     hsv = cv2.cvtColor(cvimage, cv2.COLOR_BGR2HSV)
     
-        # define range of red color in HSV
-#     lower_red = np.array([165,50,200])
-#     #0,60,60
-#     upper_red = np.array([175,200,255])
-    lower_red = np.array([0,50,43])
+    lower_red = np.array([0,60,60])
     #0,60,60
-    upper_red = np.array([0,100,100])
-    #upper_red = np.array([175,200,255])
-    #13,100,100
-    
+    upper_red = np.array([10,100,100])
+   
         # Threshold the HSV image to get only blue colors
     thresh = cv2.inRange(hsv, lower_red, upper_red)
     
         # Bitwise-AND mask and original image
     res = cv2.bitwise_and(cvimage,cvimage, mask= thresh)
-    
-#     cv2.imshow('frame',cvimage)
-#     cv2.imshow('mask',thresh)
-#     cv2.imshow('res',res)
-#     k = cv2.waitKey(0) & 0xFF
-#      
-#     if k == 27:
-#        cv2.destroyAllWindows()    
         
     image, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     bpoints1 = []
@@ -171,19 +61,17 @@ def getObjectPosition(H, Z):
     if(len(contours) > 0):
         print len(contours) 
     else:
-        print len(contours)
+        return None
     
-    if(len(contours) > 0):
-        print len(contours)
-#      
+    cnt = contours[0]
     
+    if(len(cnt) > 0):
+        #print len(contours)
         cnt = contours[0]
         M = cv2.moments(cnt)
         print M
         
         x,y,w,h = cv2.boundingRect(cnt)
-        
-        
         pt1 = [x, y]
         pt2 = [x + w, y + h]
         
@@ -212,7 +100,6 @@ def getObjectPosition(H, Z):
             # LOWER RIGHT CORNER OF THE LARGEST RECTANGLE
             pt2 = pt2max
             cvimage = cv2.rectangle(cvimage,tuple(pt1),tuple(pt2),(0,255,0),2)
-            #cv.Rectangle(cvimage,tuple(pt1),tuple(pt2), cv.CV_RGB(255,0,0), 1)
             # HORIZON COORDINATE OF THE LARGEST RECTANGLE
             centroidu = (pt1[0]+pt2[0])/2
             # VERTICAL COORDINATE OF THE LARGEST RECTANGLE
@@ -225,34 +112,10 @@ def getObjectPosition(H, Z):
             cvimage = cv2.circle(cvimage,center,radius,(0,255,0),2)
             
             floor_point = pixel_to_floor(H,[centroidu,centroidv])
-#             cv2.imshow('Click',cvimage)
-#             cv2.waitKey(1000)
-        #cv2.destroyAllWindows()
             return floor_point + [Z]
             
-            
-            #cv.Circle(cvimage,(centroidu,centroidv),5,0,-1)
-            #floor_point = pixel_to_floor(H,[centroidu,centroidv])
-            
-            #cv2.destroyAllWindows()
-            #return 0
-
-#     cv2.imshow('frame',frame)
-#     cv2.imshow('mask',thresh)
-#     #cv2.imshow('res',im)
-#     k = cv2.waitKey(5) & 0xFF
-#     if k == 27:
-#         cv2.destroyAllWindows()
-
-
-
-
 
 def sendPoint(point):
-    #rospy.init_node('baxter_grabbing')
-    #x: 0.757512333588
-#y: 0.0329546734934
-#z: -0.078898709214)
 
     pub = rospy.Publisher('obj_pos', PointStamped, queue_size=10)
     points = [Point(x = point[0], y = point[1], z = point[2]),
@@ -271,7 +134,13 @@ def main(H, Z):
     #calibrate_homography()
     position = getObjectPosition(H, Z)
     #baxter.closeLeftGripper()
-    sendPoint(position)
+    #sendPoint(position)
+    if(position != None):
+        p = Point(x = position[0], y = position[1], z = position[2])
+    
+        return PointStamped(point = p)
+    
+    return None
 
 if __name__ == '__main__':
     main()

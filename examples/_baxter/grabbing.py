@@ -27,26 +27,41 @@ def midca_feedback(**kwargs):
     msg = rosrun.dict_as_msg(kwargs)
     feedbackPub.publish(msg)
 
-def move_left_arm_to(point):
-    baxter.enable()
+def Reach(point, o1):
+    baxter.initiate()
     origin = baxter.getLeftArmPosition()
-    
+    baxter.calibrateLeftGripper()
 
     print('point =', point)
-    baxter.moveLeftArm(point, baxter.getLeftArmOrientation())
-    baxter.closeLeftGripper()
-    p2 = Point(x = point.x, y = point.y, z = 0.14991940971164064)
-    baxter.moveLeftArm(p2, baxter.getLeftArmOrientation())
-
-def point_callback(data, cmd_id = 'point_def_id'):
-    print("I M HERE******* ", data)
     
-    if data.x == 0 and data.y == 0 and data.z == 0:
+    
+    #[0.9858036680068526, 0.15518960733015813, -0.06358533543017306, 0.008013678255261263]
+    baxter.moveLeftArm(point, o1)
+    
+    return True
+    
+def Grasp():
+    baxter.closeLeftGripper()
+    return True
+
+def RaiseHand(point, o1):
+    p2 = Point(x = point.x, y = point.y, z = 0.14991940971164064)
+    baxter.moveLeftArm(p2, o1)
+
+    return True
+
+
+def point_callback(point, cmd_id = 'point_def_id'):
+    
+    if point.x == 0 and point.y == 0 and point.z == 0:
         rospy.loginfo("Point: got a stop command (all zeros)")
     else:
-        rospy.loginfo("Point: setting target to" + str(data))
-       
-        move_left_arm_to(data)
+        rospy.loginfo("Point: setting target to" + str(point))
+        o1 = [0.9912059087997489, 0.12898810957822202, -0.016456430713070586, 0.02453772271597873]
+        
+        Reach(point, o1)
+        Grasp()
+        RaiseHand(point, o1)
         
         midca_feedback(cmd_id = cmd_id, code = asynch.COMPLETE)
         #limb.move_to_joint_positions(angles) #blocking
