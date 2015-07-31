@@ -1,4 +1,4 @@
-README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture. Note that MIDCA currently only has one cycle; the meta- cycle has yet to be implemented.
+README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture. 
 
 1) Most code and documentation in this module is intended to be read with word wrap (<=80 chrs) enabled.
 
