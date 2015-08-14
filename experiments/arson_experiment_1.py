@@ -26,11 +26,10 @@ class ArsonCogSciDemo():
         file = open(DATA_FILENAME, 'w')
         file.write("runID,arsonchance,usingTFTree,usingSimMA,towerscompleted,score,\n")
 
-
         def customWriteData(run_id, midca):
             '''
             This function will be called on each midca object after it has run and should get the
-            necessary values (to be writtent to a data file) from the midca object
+            necessary values (to be written to a data file) from the midca object
             '''
             # get the arson chance from the module
             arsonchance = -1
@@ -41,19 +40,34 @@ class ArsonCogSciDemo():
             print("these are the modules")
             file.write(str(run_id)+","+"")
 
-
+        ###### create code for each MIDCA run #####
         ex = experiment.Experiment()
-
-
+        ex.addWriteDataFunc(customWriteData)
         ARSON_CHANCE_START = 0.0
         ARSON_CHANCE_END = 1.0
         ARSON_CHANCE_INCREMENT = 0.1
 
         NUM_CYCLES = 1000
 
+        # since we are varying using 3 parameters (arson chance, using tf trees, using MA)
+        # we have three nested loops, creating individual midca runs for each unique paramterization
+
+        # 1. vary by arson chance
+        curr_arson_chance = ARSON_CHANCE_START
+        while curr_arson_chance < ARSON_CHANCE_END:
+
+            # 2. vary by using TF Trees
+            for useTFTrees in [True, False]:
+
+                # 3. vary using MA (Simulated version)
+                for useSimMA in [True, False]:
+                    ex.appendRun(self.createMidcaInstance(curr_arson_chance, useTFTrees, useSimMA))
 
 
-    def createMIDCAObject(self, arsonchance, usingTFTreeFire, usingSimulatedMA):
+            curr_arson_chance += ARSON_CHANCE_INCREMENT
+
+
+    def createMIDCAInstance(self, arsonchance, usingTFTreeFire, usingSimulatedMA):
         '''
         All the heavy duty code of creating MIDCA goes here. Use variables
         where ever you wish to parameterize.
