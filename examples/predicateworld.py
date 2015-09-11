@@ -13,7 +13,8 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
         #creates a PhaseManager object, which wraps a MIDCA object
-    myMidca = base.PhaseManager(world, display = asqiiDisplay)
+    myMidca = base.PhaseManager(world, display = asqiiDisplay, verbose=4)
+    asqiiDisplay(world)
         #add phases by name
     for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
         myMidca.append_phase(phase)
@@ -23,7 +24,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
     myMidca.append_module("Perceive", perceive.PerfectObserver())
     myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-    myMidca.append_module("Interpret", guide.UserGoalInput())
+    #myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", intend.SimpleIntend())
     myMidca.append_module("Plan", planning.PyHopPlanner(extinguish))

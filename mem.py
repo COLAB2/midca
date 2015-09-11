@@ -1,4 +1,5 @@
 from MIDCA.logging import Event
+from MIDCA.trace import CogTrace
 import threading
 
 class Memory:
@@ -167,6 +168,10 @@ class Memory:
         self.metaEnabled = True
         self.trace = trace
         self.myMidca = phaseManager
+
+    def enableTrace(self):
+        if not self.trace:
+            self.trace = CogTrace()
 
 class MemAccessEvent(Event):
 
