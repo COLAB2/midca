@@ -88,6 +88,9 @@ class ArsonSimulator:
         self.chance = arsonChance
         self.start = arsonStart
 
+    def getArsonChance(self):
+        return self.chance
+
     def init(self, world, mem):
         self.mem = mem
         self.world = world

@@ -397,6 +397,7 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
+
     return s
 
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
