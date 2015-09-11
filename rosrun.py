@@ -1,5 +1,5 @@
 import rospy
-from geometry_msgs.msg import PointStamped
+from geometry_msgs.msg import Point, PointStamped
 from std_msgs.msg import String
 from MIDCA.modules._robot_world import world_repr
 from MIDCA import time
@@ -159,6 +159,43 @@ class FixedObjectLocationHandler(IncomingMsgHandler):
 			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
 		self.mem.add(self.memKey, world_repr.DetectionEvent(id = self.objID, 
 		loc = pointMsg.point))
+
+class ObjectsLocationHandler(IncomingMsgHandler):
+
+	'''
+	class that receives Point messages, where each message indicates that the given object
+	has been identified at that location. Args include the topic to listen to, object id,
+	and midca object to whose memory observations will be stored. Optionally the memory
+	key to be stored to can also be specified.
+	'''
+	
+	def __init__(self, topic, midcaObject, memKey = None):
+		callback = lambda strMsg: self.store_locations(strMsg)
+		msgType = String
+		super(ObjectsLocationHandler, self).__init__(topic, msgType, callback,
+		midcaObject)
+		#self.objID = objID
+		if memKey:
+			self.memKey = memKey
+		else:
+			self.memKey = self.mem.ROS_OBJS_DETECTED
+		
+	def store_locations(self, data):
+		if not self.mem:
+			rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+		
+		strMsg = str(data.data).strip()
+		color_locations = strMsg.split(";")
+		
+		for msg in color_locations:
+			
+			color_location = msg.split(":");
+			
+ 			pointstr = color_location[1].split(",")
+ 		 	p = Point(x = int(pointstr[0]), y = int(pointstr[1]), z = int(pointstr[2]))
+			
+			self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
+		loc = p))
 
 class CalibrationHandler(IncomingMsgHandler):
 

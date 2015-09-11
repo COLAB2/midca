@@ -35,10 +35,12 @@ myMidca.mem.enableLogging(myMidca.logger)
 
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
 	#rosrun.CalibrationHandler("calibrate_done", myMidca),
-	#rosrun.FixedObjectLocationHandler("obj_pos", "red card", myMidca),
+	rosrun.ObjectsLocationHandler("obj_pos", myMidca),
 	rosrun.UtteranceHandler("cmds_received", myMidca),
 	rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
-	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.LOC_TOPIC, String)])
+	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.LOC_TOPIC, String), 
+						rosrun.OutgoingMsgHandler(asynch.GRAB_TOPIC, String),
+						rosrun.OutgoingMsgHandler(asynch.RAISE_TOPIC, String)])
 rosMidca.ros_connect()
 
 H = Calibrate.calibrate()

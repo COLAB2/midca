@@ -1,4 +1,5 @@
 from MIDCA.modules._plan import pyhop
+from docutils.statemachine import State
 
 
 def block_until_seen(state, objectID):
@@ -20,14 +21,16 @@ def block_until_complete(state):
 	return state
 
 
-def detect(state, objectID):
+def reach(state, objectID):
 	return state
 
 def grab(state, objectID):
+	return State
+
+def raising(state, objectID):
 	return state
 
-
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, detect, grab)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, reach, grab, raising)
 
 

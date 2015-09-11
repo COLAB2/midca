@@ -61,7 +61,9 @@ class SimpleWorld:
 		if id in self.objectsByID:
 			object = self.objectsByID[id]
 		else:
+			
 			object = DetectedObject(id)
+			print(object)
 			self.objectsByID[id] = object
 		if object not in self.sightings:
 			self.sightings[object] = []

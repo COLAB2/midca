@@ -19,7 +19,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIKRequest,
 )
 from sensor_msgs.msg import Image
-from baxter_srv.srv import ImageSrv, ImageSrvResponse
+from baxter_image.srv import ImageSrv, ImageSrvResponse
 import numpy as np
 import  cv2
 from cv_bridge import CvBridge, CvBridgeError
@@ -124,12 +124,9 @@ class Baxter:
         else: 
             print angles
         
-        
-        print 'I am here!!!!!' 
-        print angles
             
         self.leftArm.move_to_joint_positions(angles) # 15 secs timeout default.
-    
+        return True
     
     def enable(self):
 #         print "start"
@@ -162,6 +159,29 @@ class Baxter:
         w = orientation['orientation'].w
         return [x,y,z,w]
     
+    def send_image_to_screen(self, cvimage):
+        """
+        This method publish the image to baxter' face
+        """
+        bridge = CvBridge()
+        msg = bridge.cv2_to_imgmsg(cvimage, encoding="passthrough")
+        pub = rospy.Publisher('/robot/xdisplay', Image,  queue_size=10)
+        pub.publish(msg)
+        # Sleep to allow for image to be published.
+        rospy.sleep(1)
+        
+    def send_image_to_screen(self):
+        if(getLastCvImage(self) == None):
+            getImageFromRightHandCamera(self)
+        
+        cvimage = getLastCvImage(self)    
+        bridge = CvBridge()
+        msg = bridge.cv2_to_imgmsg(cvimage, encoding="passthrough")
+        pub = rospy.Publisher('/robot/xdisplay', Image,  queue_size=10)
+        pub.publish(msg)
+        # Sleep to allow for image to be published.
+        rospy.sleep(1)
+        
     def getImageFromRightHandCamera(self):
         """
         This method returns a numpy array of the image that was captured from

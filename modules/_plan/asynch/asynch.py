@@ -2,6 +2,8 @@ from MIDCA import rosrun, time, plans
 import traceback
 from geometry_msgs.msg import PointStamped
 from MIDCA.examples import ObjectDetector
+from MIDCA.examples.homography import * 
+from std_msgs.msg import String
 
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
@@ -17,6 +19,8 @@ FEEDBACK_KEY = "code"
 CMD_ID_KEY = "cmd_id"
 POINT_TOPIC = "point_cmd"
 LOC_TOPIC = "loc_cmd"
+GRAB_TOPIC = "grabbing_cmd"
+RAISE_TOPIC = "raise_cmd"
 #set this to change output for all asynch actions.
 verbose = 2
 
@@ -59,15 +63,21 @@ def asynch_plan(mem, midcaPlan):
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			POINT_TOPIC, cmdID))
 		
-		elif midcaAction[0] == "detect":
-			actions.append(DoFind(mem, midcaAction, midcaAction[1], 
-			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
-			
+		elif midcaAction[0] == "reach":
+			cmdID = rosrun.next_id()
+			actions.append(DoReach(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			LOC_TOPIC, cmdID))	
 		elif midcaAction[0] == "grab":
 			cmdID = rosrun.next_id()
 			actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-			LOC_TOPIC, cmdID))	
+			GRAB_TOPIC, cmdID))
+		elif midcaAction[0] == "raising":
+			cmdID = rosrun.next_id()
+			actions.append(DoRaise(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			RAISE_TOPIC, cmdID))
 		else:
 			if verbose >= 1:
 				print "MIDCA action", midcaAction, "does not correspond to an asynch",
@@ -226,45 +236,6 @@ class AwaitCurrentLocation(AsynchAction):
 			return False
 		return t - lastLocReport[1] <= self.maxAllowedLag
 
-class DoFind(AsynchAction):
-
-	'''
-	Action that blocks until there is a current (within last maxAllowedLag seconds)
-	observation of the object's location.
-	'''
-
-	def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration):
-		self.objectOrID = objectOrID
-		self.maxAllowedLag = maxAllowedLag
-		self.maxDuration = maxDuration
-		#executeAction = lambda mem, midcaAction, status: self.detectObject()
-		executeAction = None
-		completionCheck = lambda mem, midcaAction, status: self.completion_check()
-		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
-		completionCheck, True)
-	
-	def detectObject(self):
-		matrix = []
-		if self.mem.get(self.mem.CALIBRATION_MATRIX).size:
-			matrix = self.mem.get(self.mem.CALIBRATION_MATRIX)
-			z = self.mem.get(self.mem.CALIBRATION_Z)
-			ObjectDetector.main(matrix, z)
-			return true
-		
-		return False	
-	
-	def completion_check(self):
-		t = time.now()
-		if t - self.startTime > self.maxDuration:
-			if verbose >= 1:
-				print "max time exceeded for action:", self, "- changing status to failed." 
-			self.status = FAILED
-			return False
-		lastLocReport = get_last_location(self.mem, self.objectOrID)
-		if not lastLocReport:
-			return False
-		return t - lastLocReport[1] <= self.maxAllowedLag
-
 
 class DoPoint(AsynchAction):
 	
@@ -338,7 +309,7 @@ class DoPoint(AsynchAction):
 
 
 
-class DoGrab(AsynchAction):
+class DoReach(AsynchAction):
 	
 	'''
 	Action that orders a point action. To 
@@ -360,8 +331,12 @@ class DoGrab(AsynchAction):
 		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
 		completionCheck, True)
 	
+	
+        
 	def send_point(self):
 		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		print lastLocReport
+		
 		t = time.now()
 		if not lastLocReport:
 			if verbose >= 1:
@@ -375,8 +350,16 @@ class DoGrab(AsynchAction):
 				"will fail."
 			self.status = FAILED
 			return
-		self.msgDict = {'x': lastLocReport[0].x, 'y': lastLocReport[0].y, 
-		'z': lastLocReport[0].z, 'time': self.startTime, 'cmd_id': self.msgID}
+		
+		x = lastLocReport[0].x
+		y = lastLocReport[0].y
+		
+		H = self.mem.get(self.mem.CALIBRATION_MATRIX)
+		z = self.mem.get(self.mem.CALIBRATION_Z)
+		floor_point = pixel_to_floor(H,[x, y])
+		
+		self.msgDict = {'x': floor_point[0], 'y': floor_point[1], 
+		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		print self.msgDict
 		
@@ -411,3 +394,117 @@ class DoGrab(AsynchAction):
 						print "MIDCA received feedback that action", self, "has failed"
 					return False
 		return False
+	
+
+class DoRaise(AsynchAction):
+	
+	'''
+	Action that orders a point action. To 
+	ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
+	same target should be done immediately before this.
+	'''
+	
+	def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topic,
+	msgID):
+		self.objectOrID = objectOrID
+		self.maxAllowedLag = maxAllowedLag
+		self.maxDuration = maxDuration
+		self.lastCheck = 0.0
+		self.topic = topic
+		self.complete = False
+		self.msgID = msgID
+		executeAction = lambda mem, midcaAction, status: self.send_point()
+		completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
+		completionCheck, True)
+	
+	def send_point(self):
+#0.6480168766398825, 0.4782503847940384, 0.289534050209461
+		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
+		'z': 0.289534050209461, 'time': self.startTime, 'cmd_id': self.msgID}
+		
+		
+		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
+		if not sent:
+			if verbose >= 1:
+				print "Failllll???"
+# 				print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
+# 				"assumed failed."
+			self.status = FAILED
+	
+	def check_confirmation(self):
+		checkTime = self.lastCheck
+		self.lastCheck = time.now()
+		feedback = self.mem.get(self.mem.FEEDBACK)
+		if not feedback:
+			return False
+		for item in reversed(feedback):
+			#if all items have been checked, either in this check or previous, return
+			if item['received_at'] - checkTime < 0:
+				return False
+			#else see if item is a completion or failure message with id == self.msgID
+			if item[CMD_ID_KEY] == self.msgID:
+				if item[FEEDBACK_KEY] == COMPLETE:
+					return True
+				elif item[FEEDBACK_KEY] == FAILED:
+					self.status = FAILED
+					if verbose >= 1:
+						print "MIDCA received feedback that action", self, "has failed"
+					return False
+		return False
+	
+class DoGrab(AsynchAction):
+	
+	'''
+	Action that orders a point action. To 
+	ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
+	same target should be done immediately before this.
+	'''
+	
+	def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topic,
+	msgID):
+		self.objectOrID = objectOrID
+		self.maxAllowedLag = maxAllowedLag
+		self.maxDuration = maxDuration
+		self.lastCheck = 0.0
+		self.topic = topic
+		self.complete = False
+		self.msgID = msgID
+		executeAction = lambda mem, midcaAction, status: self.send_msg()
+		completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
+		completionCheck, True)
+	
+	def send_msg(self):
+		self.msgDict = {'cmd': "Grab it", 'time': self.startTime, 'cmd_id': self.msgID}
+		
+		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
+		if not sent:
+			if verbose >= 1:
+				print "Fail"
+# 				print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
+# 				"assumed failed."
+			self.status = FAILED
+	
+	def check_confirmation(self):
+		checkTime = self.lastCheck
+		self.lastCheck = time.now()
+		feedback = self.mem.get(self.mem.FEEDBACK)
+		if not feedback:
+			return False
+		for item in reversed(feedback):
+			#if all items have been checked, either in this check or previous, return
+			if item['received_at'] - checkTime < 0:
+				return False
+			#else see if item is a completion or failure message with id == self.msgID
+			if item[CMD_ID_KEY] == self.msgID:
+				if item[FEEDBACK_KEY] == COMPLETE:
+					return True
+				elif item[FEEDBACK_KEY] == FAILED:
+					self.status = FAILED
+					if verbose >= 1:
+						print "MIDCA received feedback that action", self, "has failed"
+					return False
+		return False
+
+

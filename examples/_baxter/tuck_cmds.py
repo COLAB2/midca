@@ -5,11 +5,11 @@ from std_msgs.msg import String
 
 rospy.init_node('baxter_pointing_test')
 
-pub = rospy.Publisher('cmds_received', String, queue_size=10)
+pub = rospy.Publisher('tuck_cmd', String, queue_size=10)
 #tuck_cmd
 while not rospy.is_shutdown():
 	print("Sending voice command:")
-	pub.publish("get the red card")
+	pub.publish("tuck the arms")
 	time.sleep(2)
    
 # n = 0
