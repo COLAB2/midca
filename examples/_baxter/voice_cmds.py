@@ -9,7 +9,7 @@ pub = rospy.Publisher('cmds_received', String, queue_size=10)
 #tuck_cmd
 while not rospy.is_shutdown():
 	print("Sending voice command:")
-	pub.publish("get the red card")
+	pub.publish("get the green block")
 	time.sleep(2)
    
 # n = 0

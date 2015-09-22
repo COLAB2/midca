@@ -192,9 +192,9 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			if utterance == "get the red card" or utterance == "hello baxter":
+			if utterance == "get the red block":
 				goal = goals.Goal(objective = "holding", subject = "self", 
-				directObject = "red card", indirectObject = "observer")
+				directObject = "red block", indirectObject = "observer")
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:
@@ -202,9 +202,9 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			if utterance == "get the blue card":
+			if utterance == "get the blue block":
 				goal = goals.Goal(objective = "holding", subject = "self", 
-				directObject = "blue card", indirectObject = "observer")
+				directObject = "blue block", indirectObject = "observer")
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:
@@ -212,5 +212,20 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
+			
+			if utterance == "get the green block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "green block", indirectObject = "observer")
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+						
+			else:
+				print "message is unknown"
+							
 		self.lastTime = time.now()
 		
