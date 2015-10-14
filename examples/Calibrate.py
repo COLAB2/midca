@@ -17,6 +17,8 @@ from homography import *
 from baxter import *
 from geometry_msgs.msg import Point, PointStamped
 from _dbus_bindings import String
+from sys import argv
+from decimal import *
 # Global variables:
 
 H = []    # The current homography matrix.
@@ -27,7 +29,7 @@ floor_reference_orientations = [] # The floor reference orientations.
 n_clicks = 0
 tot_clicks = 4
 points = []
-
+filename = argv
 original_position = None
 current_position = None
 
@@ -104,6 +106,7 @@ def get_floor_reference_points():
     
     #Z = (-0.04311285564353425  -0.04512672573083166 -0.04080078888404003 -0.046071914959185875)/4
     Z= -0.04721129960500225
+    
     print Z
 # [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
 # Point 1 = [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
@@ -121,10 +124,24 @@ def get_floor_reference_points():
 # Point 4 = [0.5418466718761972, 0.034360381218309734, -0.11464607923115094]
 
     #return [[p1[0],p1[1]], [p2[0],p2[1]], [p3[0],p3[1]], [p4[0],p4[1]]]
-    return [[0.5636601569183016, 0.3326621870465227],
-     [0.7598941726694376, 0.3406087310658278],
-     [0.7723861474122566, -0.06829506727609734],
-     [0.5878719597558943, -0.06683084974877289]]
+   
+    #print p4
+    filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
+    f = open(filename, 'r')
+    p1 = f.readline().split(' ')
+    p2 = f.readline().split(' ')
+    p3 = f.readline().split(' ')
+    p4 = f.readline().split(' ')
+    
+    return [[Decimal(p1[0]), Decimal(p1[1])],
+     [Decimal(p2[0]), Decimal(p2[1])],
+     [Decimal(p3[0]), Decimal(p3[1])],
+     [Decimal(p4[0]), Decimal(p4[1])]]
+    
+#     return [[0.5718602040826699, 0.2662634410884852],
+#      [0.7759924972395065, 0.2607727783310961],
+#      [0.7588658957428053, -0.14051425345680635],
+#      [0.5728275006876863, -0.1292139710808082]]
     
 def calibrate_homography():
     global H, Hinv

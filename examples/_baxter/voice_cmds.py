@@ -9,12 +9,12 @@ pub = rospy.Publisher('cmds_received', String, queue_size=10)
 #tuck_cmd
 while not rospy.is_shutdown():
 	print("Sending voice command:")
-	pub.publish("get the green block")
+	pub.publish("get the red block")
 	time.sleep(2)
    
 # n = 0
 # while n < 20:
-# 	n += 1
+# 	n += 1d
 # 	time.sleep(2)
 # 	p = points[n % 4]
 # #	p = points[1]
