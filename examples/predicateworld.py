@@ -7,7 +7,7 @@ def asqiiDisplay(world):
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    print str(scene.Scene(blocks))
+    print(str(scene.Scene(blocks)))
 
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     world = domainread.load_domain(domainFile)
