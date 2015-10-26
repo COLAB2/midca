@@ -9,6 +9,7 @@ def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
     print(str(scene.Scene(blocks)))
 
+
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
