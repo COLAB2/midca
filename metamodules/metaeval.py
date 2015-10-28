@@ -7,10 +7,10 @@ class MRSimpleEval(base.BaseModule):
         metagoals = self.mem.get(self.mem.META_GOALS)
         if metagoals and len(metagoals) > 0:
             for goal in metagoals:
-                achieved =
+                pass
 
         else:
             print("No goals - eval doing nothing")
 
     def goal_achieved(self, goal):
-        result =
+        pass
