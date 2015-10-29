@@ -28,6 +28,11 @@ def pickup(state,b):
         state.pos[b] = 'hand'
         state.clear[b] = False
         state.holding = b
+        
+        # remove mortar if the block has it (just to be safe)
+        if hasattr(state, 'mortared') and state.mortared[b] == True:
+            state.mortared[b] == False
+        
         return state
     else: return False
 
@@ -39,8 +44,8 @@ def unstack(state,b,c):
         state.clear[c] = True
 
         # to undo mortar but doesn't increase quantity
-#        if state.mortared[b] == True:
-#            state.mortared[b] == False
+        if hasattr(state, 'mortared') and state.mortared[b] == True:
+            state.mortared[b] == False
         
         return state
     else: return False

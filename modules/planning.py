@@ -356,6 +356,8 @@ class PyHopPlanner2(base.BaseModule):
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
+
+
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.pos = {}
