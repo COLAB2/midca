@@ -460,9 +460,9 @@ class PhaseManager:
                         num = int(val[4:].strip())
                         for i in range(num):
                             self.one_cycle(verbose = 0, pause = 0) # TODO - use several_cycles() instead?
-                            print("  Score is "+str(self.mem.get("Score")))
-                            print("  cycle "+str(i))
-                            self.display(self.midca.world)
+                            #print("  Score is "+str(self.mem.get("Score")))
+                            #print("  cycle "+str(i))
+                            #self.display(self.midca.world)
                         print(str(num) + " cycles finished.")
                     except ValueError:
                         print("Usage: 'skip n', where n is an integer")

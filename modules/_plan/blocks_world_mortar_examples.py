@@ -49,7 +49,7 @@ state1.mortared = {}
 for blockid in state1.pos.keys():
     state1.mortared[blockid] = False
 
-state1.mortar_quantity = 4
+state1.mortar_quantity = 3
 
 
 print_state(state1)

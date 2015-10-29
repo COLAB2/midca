@@ -125,9 +125,12 @@ def put_m(state,b1,b2):
     if state.holding == b1:
         if b2 == 'table':
                 return [('putdown',b1)]
+        elif state.mortar_quantity > 0:
+        	# new stack with mortar
+            return [('stack_mortared',b1,b2)]
         else:
-        								# new stack with mortar
-                return [('stack_mortared',b1,b2)]
+            # no mortar left, continue stacking like normal
+            return [('stack',b1,b2)]
     else:
         return False
             
