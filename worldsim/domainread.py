@@ -48,7 +48,7 @@ class Cond:
 
 def condition(predicatename, args = [], negate = False):
 	if predicatename not in predicates:
-		raise Exception("predciate DNE.")
+		raise Exception("predicate DNE.")
 	return Cond(predicates[predicatename], args, not negate)
 	
 #args is a dict: {argname: argtypename}

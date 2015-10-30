@@ -1,9 +1,10 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca
+from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
 from MIDCA import plans, base
 import collections
 import traceback
 import copy
 from MIDCA.modules._plan.asynch import asynch
+from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 
 class GenericPyhopPlanner(base.BaseModule):
 
@@ -176,11 +177,16 @@ class PyHopPlanner(base.BaseModule):
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''
 
-    def __init__(self, extinguishers = False):
+    def __init__(self, extinguishers = False, mortar = False):
         #declares pyhop methods. This is where the planner should be given the domain information it needs.
         if extinguishers:
             methods_extinguish.declare_methods()
             operators_extinguish.declare_ops()
+        elif mortar:
+            methods_mortar.declare_methods()
+            operators_mortar.declare_ops()
+            print_methods()
+            print_operators()
         else:
             methods.declare_methods()
             operators.declare_ops()
@@ -237,6 +243,7 @@ class PyHopPlanner(base.BaseModule):
                 print "Planning..."
             try:
                 pyhopState = pyhop_state_from_world(world)
+                print_state(pyhopState)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
@@ -244,7 +251,7 @@ class PyHopPlanner(base.BaseModule):
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
-                pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
+                pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 4)
             except Exception:
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
@@ -367,6 +374,8 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
+    s.mortar_quantity = 0
+    s.mortared = {}
     blocks = []
     for objname in world.objects:
         if world.objects[objname].type.name == "BLOCK" and objname != "table":
@@ -392,6 +401,8 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[atom.args[0].name] = True
         elif atom.predicate.name == "free":
             s.free[atom.args[0].name] = True
+        elif atom.predicate.name == "mortar-quantity":
+            s.mortar_quantity = int(atom.args[0].name)
     for block in blocks:
         if block not in s.clear:
             s.clear[block] = False
@@ -399,6 +410,8 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
+        if block not in s.mortared:
+            s.mortared[block] = False
 
     return s
 

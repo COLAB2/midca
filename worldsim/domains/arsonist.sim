@@ -13,6 +13,7 @@ predicate(table, [blk], [BLOCK])
 predicate(onfire, [blk], [BLOCK])
 predicate(arsonist, [ars], [ARSONIST])
 predicate(free, [ars], [ARSONIST])
+predicate(hasmortar, [blk], [BLOCK])
 
 operator(stack, 
 args = [(topblk, BLOCK), (btmblk, BLOCK)], 
