@@ -225,6 +225,9 @@ class MortarScorer:
                 return goal
         return None
 
+    def has_mortar(self, block):
+        return self.world.is_true("hasmortar", [block.name])
+
     def block_under(self, block):
         if self.world.is_true("on-table", [block.name]):
             return None
@@ -232,16 +235,19 @@ class MortarScorer:
             if atom.predicate.name == "on" and atom.args[0] == block:
                 return atom.args[1]
         return None
-
+    
     def get_tower_score(self, goal):
         score = 0
         block = self.world.objects[goal.args[0]]
         while block:
-            if not self.is_on_fire(block):
+            # every block is worth a point
+            score += 1 
+            # if the block also has mortar, give extra point
+            if self.has_mortar(block):
                 score += 1
             block = self.block_under(block)
             # Add code here to check if the block has mortar, and if so, give an extra point
-            if bloc
+            
         return score
 
     def run(self, cycle, verbose = 2):
