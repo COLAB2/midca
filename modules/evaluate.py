@@ -181,9 +181,11 @@ class MortarScore:
         self.regularblocks = 0
         self.score = 0
 
-    def update(self, score):
+    def update(self, score, mortarblocks, regularblocks):
         self.towers += 1
         self.score += score
+        self.mortarblocks += mortarblocks
+        self.regularblocks += regularblocks
         # print "Score just updated"
 
     def getTowersCompleted(self):
@@ -238,6 +240,8 @@ class MortarScorer:
     
     def get_tower_score(self, goal):
         score = 0
+        mortarblocks = 0
+        regularblocks = 0
         block = self.world.objects[goal.args[0]]
         while block:
             # every block is worth a point
@@ -245,10 +249,16 @@ class MortarScorer:
             # if the block also has mortar, give extra point
             if self.has_mortar(block):
                 score += 1
+            # count mortar and non-mortar blocks separately
+            if self.has_mortar(block):
+                mortarblocks += 1
+            else:
+                regularblocks += 1
+            
             block = self.block_under(block)
             # Add code here to check if the block has mortar, and if so, give an extra point
             
-        return score
+        return score, mortarblocks, regularblocks
 
     def run(self, cycle, verbose = 2):
         lastGoal = self.mem.get(LAST_SCORED_GOAL)
@@ -266,10 +276,10 @@ class MortarScorer:
         self.mem.set(LAST_SCORED_GOAL, currentGoal)
         if not self.world.is_true("triangle", [currentGoal.args[0]]):
             return #only towers with triangles on top count
-        score = self.get_tower_score(currentGoal)
-        self.mem.get(SCORE).update(score)
+        score, mortarblocks, regularblocks = self.get_tower_score(currentGoal)
+        self.mem.get(MORTARSCORE).update(score, mortarblocks, regularblocks)
         if verbose >= 2:
-            print "Tower", self.mem.get(SCORE).towers, "completed.", score, "added to score, which is now", self.mem.get(SCORE).score
+            print "Tower", self.mem.get(MORTARSCORE).towers, "completed.", score, "added to score, which is now", self.mem.get(MORTARSCORE).score
 
 
 NORMAL_BLOCK_VAL = 1.0

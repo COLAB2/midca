@@ -505,12 +505,15 @@ class PhaseManager:
                                 keyfound = True
                                 print("    ["+key+"] = "+str(self.mem.get(key))+"\n")
                         if not keyfound:
-                            print("  [Error] Key "+txt+" not found in MIDCA's memory")
+                            print("  Error: Key "+txt+" not found in MIDCA's memory")
                             print("  [Available Keys] "+str(self.mem.knowledge.keys()))
                     else:
                         print("  Current memory is: \n")
                         for key in self.mem.knowledge.keys():
                             print("    ["+key+"] = "+str(self.mem.get(key)))
+                        print("")
+                elif val == "worldstate":
+                    print(str(self.mem.get("__world states")[-1]))
                 elif val == "change":
                     print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:

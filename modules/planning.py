@@ -251,7 +251,7 @@ class PyHopPlanner(base.BaseModule):
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
-                pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 4)
+                pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
             except Exception:
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:

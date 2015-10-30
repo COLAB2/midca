@@ -301,6 +301,14 @@ class World:
 			self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 	
 	def remove_atom(self, atom):
+		#print("---------------------------------")
+# 		print("removing_atom("+str(atom)+")")
+# 		print("atoms are: ")
+# 		for atom in self.atoms:
+# 			print(str(atom))
+# 			print("- - - - -")
+# 		print("---------------------------------")
+		
 		self.atoms.remove(atom)
 				
 	def remove_fact(self, predname, argnames = []):
@@ -366,6 +374,7 @@ class World:
 		return self.is_applicable(action)
 
 	def apply(self, simAction):
+		#print("in apply: simAction is " + str(simAction))
 		for i in range(len(simAction.results)):
 			if simAction.postPos[i]:
 				self.add_atom(simAction.results[i])
@@ -383,6 +392,7 @@ class World:
 		simAction = self.operators[opName].instantiate(args)
 		if not self.is_applicable(simAction):
 			raise Exception("Preconditions not met.")
+		print("about to do self.apply("+str(simAction)+")")
 		self.apply(simAction)
 	
 	#convenience method for operating with MIDCA
