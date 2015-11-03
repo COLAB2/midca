@@ -13,6 +13,7 @@ def _apply_state(world, lines):
 			argnames = line[line.index("(") + 1:line.index(")")].split(",")
 			for i in range(len(argnames)):
 				argnames[i] = argnames[i].strip()
+				print("argnames[i]="+str(argnames[i]))
 			if call.startswith("!"):
 				negate = True
 				call = call[1:]
@@ -27,6 +28,8 @@ def _apply_state(world, lines):
 						raise Exception("Line " + str(lineNum) + ": Object - " + name + " DNE " + line)
 					args.append(world.objects[name])
 				atom = world.predicates[call].instantiate(args)
+				#if len(args) > 0:
+				#	print("just instantiated atom: "+str(atom)+" args[0]: "+str(args[0]))
 				if negate:
 					world.remove_atom(atom)
 				else:
