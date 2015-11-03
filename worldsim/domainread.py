@@ -117,20 +117,29 @@ def preprocess(text):
 		else:
 			corrected += "[]"
 		i = newI + 1
-	return corrected.replace("\"False\"", "False").replace("\"True\"", "True")
+	print("returning in preprocess")
+	result = corrected.replace("\"False\"", "False").replace("\"True\"", "True")
+	print("return value is:\n ")
+	print(result)
+	return result
 
 def load_domain(filename):
+	print("operators.values() = "+str(operators.values()))
+	print("types = "+str(types))
+	print("objects.values() = "+str(objects.values()))
 	f = open(filename)
 	exec preprocess(f.read())
+	print("done, but file still open")
 	f.close()
+	print("done, AND file closed")
+	print("operators.values() = "+str(operators.values()))
+	print("types = "+str(types))
+	print("objects.values() = "+str(objects.values()))
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 
 def load_domain_str(str):
 	exec preprocess(str)
-	print("operators.values() = "+str(operators.values()))
-	print("types = "+str(types))
-	print("objects.values() = "+str(objects.values()))
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 
