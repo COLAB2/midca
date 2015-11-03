@@ -9,6 +9,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 import sys
 sys.path.append("../")
 import pyhop
+import random 
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
 the current state, and the others are the planning operator's usual arguments.
@@ -82,14 +83,14 @@ def stack(state,b,c):
         return state
     else: return False
 
-def stack_mortared(state,b,c):
-    if state.pos[b] == 'hand' and state.clear[c] == True and state.mortar_quantity > 0:
+def stack_mortared(state,b,c,m):
+    if state.pos[b] == 'hand' and state.clear[c] == True and state.mortaravailable[m]:
         state.pos[b] = c
         state.clear[b] = True
         state.holding = False
         state.clear[c] = False
-        state.mortared[c] = True
-        state.mortar_quantity -= 1
+        state.hasmortar[b] = True
+        state.mortaravailable[m] = False
         return state
     else: return False    
     

@@ -264,7 +264,8 @@ class PyHopPlanner(base.BaseModule):
                 return
             #change from pyhop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
-
+            print("midcaPlan:\n")
+            print(str(midcaPlan))
             if verbose >= 1:
                 print "Planning complete."
             if verbose >= 2:
@@ -374,14 +375,17 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.mortar_quantity = 0
-    s.mortared = {}
+    s.hasmortar = {} # keys are 
+    s.mortaravailable = {}
+    mortarblocks = []
     blocks = []
     for objname in world.objects:
         if world.objects[objname].type.name == "BLOCK" and objname != "table":
             blocks.append(objname)
         elif world.objects[objname].type.name == "ARSONIST":
             s.free[objname] = False
+        elif world.objects[objname].type.name == "MORTARBLOCK":
+            mortarblocks.append(objname)
     for atom in world.atoms:
         if atom.predicate.name == "clear":
             s.clear[atom.args[0].name] = True
@@ -401,8 +405,10 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[atom.args[0].name] = True
         elif atom.predicate.name == "free":
             s.free[atom.args[0].name] = True
-        elif atom.predicate.name == "mortar-quantity":
-            s.mortar_quantity = int(atom.args[0].name)
+        elif atom.predicate.name == "available":
+            s.mortaravailable[atom.args[0].name] = True
+        elif atom.predicate.name == "hasmortar":
+            s.hasmortar[atom.args[0].name] = atom.args[1].name
     for block in blocks:
         if block not in s.clear:
             s.clear[block] = False
@@ -410,8 +416,12 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
-        if block not in s.mortared:
-            s.mortared[block] = False
+        if block not in s.hasmortar.keys():
+            s.hasmortar[block] = False
+    
+    for mblock in mortarblocks:
+        if mblock not in s.mortaravailable.keys():
+            s.mortaravailable[mblock] = False
 
     return s
 
