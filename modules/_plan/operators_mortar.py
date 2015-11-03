@@ -50,6 +50,21 @@ def unstack(state,b,c):
         return state
     else: return False
     
+def unstack_mortared(state,b,c,m):    
+    ''' m is for mortar '''
+    if state.pos[b] == c and c != 'table' and state.clear[b] == True and state.holding == False:
+        state.pos[b] = 'hand'
+        state.clear[b] = False
+        state.holding = b
+        state.clear[c] = True
+
+        # to undo mortar but doesn't increase quantity
+        if hasattr(state, 'mortared') and state.mortared[b] == True:
+            state.mortared[b] == False
+        
+        return state
+    else: return False
+
 def putdown(state,b):
     if state.pos[b] == 'hand':
         state.pos[b] = 'table'
