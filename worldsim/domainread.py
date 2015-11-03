@@ -128,6 +128,9 @@ def load_domain(filename):
 
 def load_domain_str(str):
 	exec preprocess(str)
+	print("operators.values() = "+str(operators.values()))
+	print("types = "+str(types))
+	print("objects.values() = "+str(objects.values()))
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 
