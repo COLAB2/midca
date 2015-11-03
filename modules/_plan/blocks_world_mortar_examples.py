@@ -71,9 +71,24 @@ print('- this should succeed:')
 pyhop(state1,[('get','c')], verbose=1)
 
 print(' - testing stack mortared')
+print_state(state1)
 goal1a = Goal('goal1a')
 goal1a.pos={'c':'b', 'b':'a', 'a':'e', 'e':'d', 'd':'table'}
 pyhop(state1,[('move_blocks', goal1a)],verbose=1)
+
+print(' - testing unstack mortared')
+state2 = State('state2')
+state2.hasmortar = {'D_': False, 'B_': 'M5', 'C_': 'M4', 'A_': False}
+state2.fire = {'D_': False, 'B_': False, 'C_': False, 'A_': False}
+state2.clear = {'D_': True, 'B_': False, 'C_': False, 'A_': False}
+state2.pos = {'D_': 'C_', 'B_': 'A_', 'C_': 'B_', 'A_': 'table'}
+state2.free = {'Gui Montag': True}
+state2.mortaravailable = {'M5': False, 'M4': False, 'M1': True, 'M3': True, 'M2': True, 'M6':True, 'M7':True}
+state2.holding = False
+print_state(state2)
+goal2 = Goal('goal2')
+goal2.pos={'D_':'B_'}
+pyhop(state2,[('move_blocks', goal2)],verbose=4)
 
 # 
 # print("""
