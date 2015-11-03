@@ -67,6 +67,7 @@ def operator(name, args = [], preconditions = [], results = []):
 	for condition in preconditions:
 		for argname in condition.argnames:
 			if argname not in objnames:
+				print("argname is "+str(argname))
 				raise Exception("condition argument not listed as an object for this operator")
 		prepredicates.append(condition.predicate)
 		preobjnames.append(condition.argnames)

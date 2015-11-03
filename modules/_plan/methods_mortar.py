@@ -11,7 +11,6 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 import pyhop
 
-
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
@@ -112,7 +111,13 @@ def pickup_m(state,b1):
 
 def unstack_m(state,b1):
     """Generate a pickup subtask."""
-    if state.clear[b1]: return [('unstack',b1,state.pos[b1])]
+    if state.clear[b1]:
+        btmblk = state.pos[b1]
+        mortarblk = state.hasmortar[btmblk] 
+        if mortarblk: 
+            return [('unstack_mortared',b1,state.pos[b1],mortarblk)]
+        else:
+            return [('unstack',b1,state.pos[b1])]
     return False
 
 ### methods for "put"
@@ -122,12 +127,19 @@ def put_m(state,b1,b2):
     Generate either a putdown or a stack subtask for b1.
     b2 is b1's destination: either the table or another block.
     """
+    
+    available_mortar = [k for k,v in state.mortaravailable.items() if v]
+    print("available mortar is "+str(available_mortar))
+    mortar_block = False
+    if len(available_mortar) > 0:
+        mortar_block = available_mortar[0]
+    
     if state.holding == b1:
         if b2 == 'table':
                 return [('putdown',b1)]
-        elif state.mortar_quantity > 0:
+        elif mortar_block:
         	# new stack with mortar
-            return [('stack_mortared',b1,b2)]
+            return [('stack_mortared',b1,b2,mortar_block)]
         else:
             # no mortar left, continue stacking like normal
             return [('stack',b1,b2)]

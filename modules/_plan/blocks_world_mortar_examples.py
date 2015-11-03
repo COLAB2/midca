@@ -45,12 +45,15 @@ state1.holding=False
 
 # make sure no blocks have mortar on them; start with initial quantity
 # of mortar
-state1.mortared = {}
+state1.hasmortar = {}
 for blockid in state1.pos.keys():
-    state1.mortared[blockid] = False
+    state1.hasmortar[blockid] = False
 
-state1.mortar_quantity = 3
-
+state1.mortaravailable = {} # key is id, value is Available/Used
+num_mortar = 5
+for i in range(num_mortar):
+    key = 'M'+str(i)
+    state1.mortaravailable[key] = True
 
 print_state(state1)
 print('')
