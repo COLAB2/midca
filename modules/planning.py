@@ -243,7 +243,6 @@ class PyHopPlanner(base.BaseModule):
                 print "Planning..."
             try:
                 pyhopState = pyhop_state_from_world(world)
-                print_state(pyhopState)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
@@ -264,8 +263,7 @@ class PyHopPlanner(base.BaseModule):
                 return
             #change from pyhop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
-            print("midcaPlan:\n")
-            print(str(midcaPlan))
+            
             if verbose >= 1:
                 print "Planning complete."
             if verbose >= 2:
