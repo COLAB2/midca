@@ -28,7 +28,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False, 
     #myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planning.PyHopPlanner(extinguish))
+    myMidca.append_module("Plan", planning.PyHopPlanner(extinguish,mortar))
     myMidca.append_module("Act", act.SimpleAct())
     return myMidca
 
