@@ -142,9 +142,9 @@ class Plan:
 		for i in range(len(self.actions)):
 			if self.step - 2 == i:
 				if os.name == 'nt': # we're on windows, don't use color codes
-					s += '[' + str(self.actions[i]) + '['
+					s += '[' + str(self.actions[i]) + ']'
 				else:
-					s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+					s += '\033[94m' + str(self.actions[i]) + '\033]0m'
 					
 			else:
 				s += str(self.actions[i])
@@ -156,9 +156,9 @@ class Plan:
 		for i in range(len(self.actions)):
 			if self.step - 1 == i:
 				if os.name == 'nt': # we're on windows, don't use color codes
-					s += '[' + str(self.actions[i]) + '['
+					s += '[' + str(self.actions[i]) + ']'
 				else:
-					s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+					s += '\033[94m' + str(self.actions[i]) + '\033]0m'
 			else:
 				s += str(self.actions[i])
 			s += " "
