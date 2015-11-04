@@ -335,11 +335,11 @@ def get_floor_reference_points():
 def calibrate_homography():
     global H, Hinv
     floor_points = get_floor_reference_points()
-    img_points = get_img_reference_points()
-    print img_points
-    print floor_points
+#     img_points = get_img_reference_points()
+#     print img_points
+#     print floor_points
     
-    H = homography_floor_to_img(img_points, floor_points)
+    #H = homography_floor_to_img(img_points, floor_points)
 
 def sendPoint(point):
     #rospy.init_node('baxter_grabbing')
