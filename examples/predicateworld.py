@@ -10,7 +10,7 @@ def asqiiDisplay(world):
     print(str(scene.Scene(blocks)))
 
 
-def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
+def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False, mortar=False):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
         #creates a PhaseManager object, which wraps a MIDCA object
