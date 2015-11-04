@@ -185,8 +185,6 @@ class PyHopPlanner(base.BaseModule):
         elif mortar:
             methods_mortar.declare_methods()
             operators_mortar.declare_ops()
-            print_methods()
-            print_operators()
         else:
             methods.declare_methods()
             operators.declare_ops()
