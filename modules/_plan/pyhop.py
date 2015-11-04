@@ -206,12 +206,6 @@ def pyhop(state,tasks,verbose=0):
     if verbose>0: print('** result =',result,'\n')
     return result
 
-def copy_state(state):
-	try:
-		return state.copy()
-	except AttributeError:
-		return copy.deepcopy(state)
-
 def seek_plan(state,tasks,plan,depth,verbose=0):
     """
     Workhorse for pyhop. state and tasks are as in pyhop.
@@ -227,7 +221,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     if task1[0] in operators:
         if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
-        newstate = operator(copy_state(state),*task1[1:])
+        newstate = operator(copy.deepcopy(state),*task1[1:])
         if verbose>2:
             print('depth {} new state:'.format(depth))
             print_state(newstate)
@@ -244,6 +238,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             if verbose>2:
                 print('depth {} new tasks: {}'.format(depth,subtasks))
             if subtasks != False:
+                #add monitors here for the methods
+                
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution != False:
                     return solution
