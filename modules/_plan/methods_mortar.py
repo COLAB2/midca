@@ -112,14 +112,14 @@ def pickup_m(state,b1):
 def unstack_m(state,b1):
     """Generate a pickup subtask."""
     if state.clear[b1]:
-#         btmblk = state.pos[b1]
-#         print('btmblk is:'+str(btmblk)+" keys of state.hasmortar: "+str(state.hasmortar.keys()))
-#         mortarblk = state.hasmortar[btmblk] 
-#         print('mortarblk is '+str(mortarblk))
-#         if mortarblk: 
-#             return [('unstack_mortared',b1,state.pos[b1],mortarblk)]
-#         else:
-        return [('unstack',b1,state.pos[b1])]
+        btmblk = state.pos[b1]
+        print('btmblk is:'+str(btmblk)+" keys of state.hasmortar: "+str(state.hasmortar.keys()))
+        mortarblk = state.hasmortar[btmblk] 
+        print('mortarblk is '+str(mortarblk))
+        if mortarblk: 
+            return [('unstack_mortared',b1,state.pos[b1],mortarblk)]
+        else:
+            return [('unstack',b1,state.pos[b1])]
     return False
 
 ### methods for "put"
