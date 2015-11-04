@@ -13,7 +13,6 @@ def _apply_state(world, lines):
 			argnames = line[line.index("(") + 1:line.index(")")].split(",")
 			for i in range(len(argnames)):
 				argnames[i] = argnames[i].strip()
-				print("argnames[i]="+str(argnames[i]))
 			if call.startswith("!"):
 				negate = True
 				call = call[1:]
