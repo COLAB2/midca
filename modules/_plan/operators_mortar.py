@@ -119,4 +119,4 @@ what the operators are. Note that the operator names are *not* quoted.
 """
 
 def declare_ops():
-	pyhop.declare_operators(pickup, unstack, putdown, stack, stack_mortared, putoutfire, apprehend, searchfor)
+	pyhop.declare_operators(pickup, unstack, unstack_mortared, putdown, stack, stack_mortared, putoutfire, apprehend, searchfor)
