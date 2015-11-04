@@ -76,14 +76,23 @@ class Scene:
                         		asciisquares[-2][j] = ("         /   \\ ", layers[i][k])
                         		asciisquares[-3][j] = ("        /  " + str(layers[i][k].id) + " \\", layers[i][k])
                         elif layers[i][k].type == Block.SQUARE:
-                        	if layers[i][k].onfire:
-                        		asciisquares[-1][j] = ("        -------", layers[i][k])
-                        		asciisquares[-2][j] = ("       | *" + str(layers[i][k].id) + "* |", layers[i][k])
-                        		asciisquares[-3][j] = ("        -------", layers[i][k])
-                        	else:
-                        		asciisquares[-1][j] = ("        -------", layers[i][k])
-                        		asciisquares[-2][j] = ("       |  " + str(layers[i][k].id) + "  |", layers[i][k])
-                        		asciisquares[-3][j] = ("        -------", layers[i][k])
+                            print("type(layers[i][k]) ="+str(type(layers[i][k]))+"\n dir(layers[i][k])="+str(dir(layers[i][k])))
+                            if layers[i][k].onfire and layers[i][k].hasmortar:
+                                asciisquares[-1][j] = ("        +++++++", layers[i][k])
+                                asciisquares[-2][j] = ("       | *" + str(layers[i][k].id) + "* |", layers[i][k])
+                                asciisquares[-3][j] = ("        -------", layers[i][k])
+                            elif layers[i][k].onfire:
+                                asciisquares[-1][j] = ("        -------", layers[i][k])
+                                asciisquares[-2][j] = ("       | *" + str(layers[i][k].id) + "* |", layers[i][k])
+                                asciisquares[-3][j] = ("        -------", layers[i][k])
+                            elif layers[i][k].hasmortar:
+                                asciisquares[-1][j] = ("        +++++++", layers[i][k])
+                                asciisquares[-2][j] = ("       |  " + str(layers[i][k].id) + "  |", layers[i][k])
+                                asciisquares[-3][j] = ("        -------", layers[i][k])        
+                            else:
+                                asciisquares[-1][j] = ("        -------", layers[i][k])
+                                asciisquares[-2][j] = ("       |  " + str(layers[i][k].id) + "  |", layers[i][k])
+                                asciisquares[-3][j] = ("        -------", layers[i][k])
                         layers[i].pop(k)
                         break
                 if not written:
