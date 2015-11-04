@@ -26,7 +26,6 @@ def get_block_list(world):
 			table = block
 		blocks[obj.name] = block
 	for atom in world.atoms:
-		print("atom is "+str(atom))
 		if atom.predicate == world.predicates["on"]:
 			blocks[atom.args[0].name].on = blocks[atom.args[1].name]
 		elif atom.predicate == world.predicates["on-table"]:

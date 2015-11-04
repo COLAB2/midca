@@ -67,7 +67,6 @@ def operator(name, args = [], preconditions = [], results = []):
 	for condition in preconditions:
 		for argname in condition.argnames:
 			if argname not in objnames:
-				print("argname is "+str(argname))
 				raise Exception("condition argument not listed as an object for this operator")
 		prepredicates.append(condition.predicate)
 		preobjnames.append(condition.argnames)
@@ -118,24 +117,12 @@ def preprocess(text):
 		else:
 			corrected += "[]"
 		i = newI + 1
-	print("returning in preprocess")
-	result = corrected.replace("\"False\"", "False").replace("\"True\"", "True")
-	print("return value is:\n ")
-	print(result)
-	return result
+	return corrected.replace("\"False\"", "False").replace("\"True\"", "True") 
 
 def load_domain(filename):
-	print("operators.values() = "+str(operators.values()))
-	print("types = "+str(types))
-	print("objects.values() = "+str(objects.values()))
 	f = open(filename)
 	exec preprocess(f.read())
-	print("done, but file still open")
 	f.close()
-	print("done, AND file closed")
-	print("operators.values() = "+str(operators.values()))
-	print("types = "+str(types))
-	print("objects.values() = "+str(objects.values()))
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 

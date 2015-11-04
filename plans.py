@@ -1,3 +1,5 @@
+import os # used to detect operating system for unix-style color codes
+
 
 class Argument:
 	
@@ -139,7 +141,11 @@ class Plan:
 		s = ""
 		for i in range(len(self.actions)):
 			if self.step - 2 == i:
-				s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+				if os.name == 'nt': # we're on windows, don't use color codes
+					s += '[' + str(self.actions[i]) + '['
+				else:
+					s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+					
 			else:
 				s += str(self.actions[i])
 			s += " "
@@ -149,7 +155,10 @@ class Plan:
 		s = ""
 		for i in range(len(self.actions)):
 			if self.step - 1 == i:
-				s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+				if os.name == 'nt': # we're on windows, don't use color codes
+					s += '[' + str(self.actions[i]) + '['
+				else:
+					s += '\033[94m' + str(self.actions[i]) + '\033[0m'
 			else:
 				s += str(self.actions[i])
 			s += " "

@@ -113,9 +113,7 @@ def unstack_m(state,b1):
     """Generate a pickup subtask."""
     if state.clear[b1]:
         btmblk = state.pos[b1]
-        print('btmblk is:'+str(btmblk)+" keys of state.hasmortar: "+str(state.hasmortar.keys()))
         mortarblk = state.hasmortar[btmblk] 
-        print('mortarblk is '+str(mortarblk))
         if mortarblk: 
             return [('unstack_mortared',b1,state.pos[b1],mortarblk)]
         else:
@@ -131,14 +129,13 @@ def put_m(state,b1,b2):
     """
     
     available_mortar = [k for k,v in state.mortaravailable.items() if v]
-    print("available mortar is "+str(available_mortar))
     mortar_block = False
     if len(available_mortar) > 0:
         mortar_block = available_mortar[0]
     
     if state.holding == b1:
         if b2 == 'table':
-                return [('putdown',b1)]
+            return [('putdown',b1)]
         elif mortar_block:
         	# new stack with mortar
             return [('stack_mortared',b1,b2,mortar_block)]
