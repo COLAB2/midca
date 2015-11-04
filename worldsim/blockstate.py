@@ -21,10 +21,12 @@ def get_block_list(world):
 		block.clear = False
 		block.on = None
 		block.onfire = False
+		block.hasmortar = False
 		if block.type == block.TABLE:
 			table = block
 		blocks[obj.name] = block
 	for atom in world.atoms:
+		print("atom is "+str(atom))
 		if atom.predicate == world.predicates["on"]:
 			blocks[atom.args[0].name].on = blocks[atom.args[1].name]
 		elif atom.predicate == world.predicates["on-table"]:
@@ -33,5 +35,8 @@ def get_block_list(world):
 			blocks[atom.args[0].name].clear = True
 		elif atom.predicate == world.predicates["onfire"]:
 			blocks[atom.args[0].name].onfire = True
+		elif atom.predicate == world.predicates["hasmortar"]:
+			print("just set hasmortar to true")
+			blocks[atom.args[0].name].hasmortar = True
 	return sorted(blocks.values(), key = lambda x: x.id)
 
