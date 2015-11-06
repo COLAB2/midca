@@ -5,52 +5,55 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 
-from MIDCA.modules._plan.pyhop import pyhop
+from MIDCA.modules._plan import pyhop
+from _io import open
 
-class Monitor(object):
-    name = {}
-    is_active = True
-    is_fired = False
-
-    # The class "constructor" - It's actually an initializer 
-    def __init__(self, name, isactive, isfired):
+class Monitor():
+    
+    def __init__(self, name, isactive, isfired, block):
         self.name = name
+        self.block = block
         self.is_active = isactive
         self.is_fired = isfired
 
-    def make_monitor(name):
-        monitor = Monitor(name)
-        return monitor
+    
     
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
 #precondition: state.clear[b1] = true
 #pickup_task
+#we just generate the monitor for the first task
 
-
-def pickup_m_monitor(state, b1):
-    """generate the monitor 'clear' here for b1"""
-    """run the monitor parallel """
-    flag = True
-    while(flag):
-        if state.clear[b1] == False:
-            flag = False
+def clear_block(state, b1):
+    #clear_block_object =  filter(lambda x: x.name == clear_block, pyhop.monitors)
+#     if blocks.blocks[b1].type.name != "BLOCK":
+#         return True
+    #f = open('myfile','w')
+     # python will convert \n to os.linesep
+   
     
-    pickup_m_monitor_object = filter(lambda x: x.name == pickup_m_monitor, pyhop.monitors)
-    pickup_m_monitor_object[0].is_fired = True
-    pickup_m_monitor_object[0].is_active = False
+    for key in pyhop.monitors.keys():
+        m_list = pyhop.monitors[key]
+        for m in m_list:
+            if m.name == clear_block: 
+                print("@@" + m.name.__name__ + " " + str(m.is_active))
+                
+                if m.block == b1 and m.is_active == True:
+                    print "it is already running"
+                else:
+                    m.is_active = True
+                    m.block = b1
+                    print("monitor is running for " + b1)
+                    
+                    while(m.is_fired == False):
+                        #f.write (b1 + " true")
+                        
+                        if state.clear[b1] == False:
+                            m.is_fired = True
+                break
 
-
-def unstack_m_monitor(state,b1):
-    """state.clear[b1]"""
-    flag = True
-    while(flag):
-        if state.clear[b1] == False:
-            flag = False
-    unstack_m_monitor_object = filter(lambda x: x.name == unstack_m_monitor, pyhop.monitors)
-    unstack_m_monitor_object[0].is_fired = True
-    unstack_m_monitor_object[0].is_active = False
+"""for each task we know what kind of monitors we should run"""
     
 def declare_monitors(longApprehend = True):    
-    pyhop.declare_monitors('pickup_task', Monitor.make_monitor(pickup_m_monitor))       
+    pyhop.declare_monitors('pickup_task', Monitor(clear_block, False, False, None))       

@@ -22,6 +22,7 @@ class GenericPyhopPlanner(base.BaseModule):
         try:
             declare_methods()
             declare_operators()
+            declare_monitors()
             self.working = True
         except:
             print "Error declaring pyhop methods and operators. This planner will be \
@@ -184,7 +185,7 @@ class PyHopPlanner(base.BaseModule):
         else:
             methods.declare_methods()
             operators.declare_ops()
-
+			
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]

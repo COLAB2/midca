@@ -102,7 +102,8 @@ Pyhop provides the following classes and functions:
 
 from __future__ import print_function
 import copy,sys, pprint
-
+from threading import Thread
+import time
 ############################################################
 # States and goals
 
@@ -162,7 +163,7 @@ def find_if(cond,seq):
 
 operators = {}
 methods = {}
-
+monitors = {}
 def declare_operators(*op_list):
     """
     Call this after defining the operators, to tell Pyhop what they are. 
@@ -179,6 +180,28 @@ def declare_methods(task_name,*method_list):
     """
     methods.update({task_name:list(method_list)})
     return methods[task_name]
+
+def declare_monitors(task_name,*monitor_list):
+    """
+    Call this once for each task, to tell Pyhop what the methods are.
+    task_name must be a string.
+    method_list must be a list of functions, not strings.
+    """
+    monitors.update({task_name:list(monitor_list)})
+    return monitors[task_name]
+###########################################################
+
+def check_monitors():
+    #fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
+    for key in monitors.keys():
+        m_list = monitors[key]
+        for m in m_list:
+            if m.is_fired == True:
+                return m
+            
+    
+    return None
+        
 
 ############################################################
 # Commands to find out what the operators and methods are
@@ -213,11 +236,19 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
+    print("start here....")
+    fired_monitor = check_monitors()
+    if fired_monitor:
+        print("monitor is fired")
+    
+    time.sleep(30)
+    
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
         return plan
     task1 = tasks[0]
+
     if task1[0] in operators:
         if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
@@ -239,7 +270,14 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                 print('depth {} new tasks: {}'.format(depth,subtasks))
             if subtasks != False:
                 #add monitors here for the methods
-                
+                print("add monitors")
+                if task1[0] in monitors:
+                    monitor_list = monitors[task1[0]]
+                    
+                    for monitor in monitor_list:
+                        monitor.is_active = True
+                        Thread(target=monitor.name, args=[state, task1[1]]).start()
+                                
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution != False:
                     return solution
