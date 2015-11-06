@@ -18,6 +18,7 @@ setup(name='MIDCA',
                 'MIDCA.modules._xp_goal',
                 'MIDCA.experimental',
                 'MIDCA.experimental.baxter',
+                'MIDCA.experiment',
                 'MIDCA.metamodules'],
       package_dir={"": ".."}
      )
