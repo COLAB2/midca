@@ -35,7 +35,6 @@ def get_block_list(world):
 		elif atom.predicate == world.predicates["onfire"]:
 			blocks[atom.args[0].name].onfire = True
 		elif atom.predicate == world.predicates["hasmortar"]:
-			print("just set hasmortar to true")
 			blocks[atom.args[0].name].hasmortar = True
 	return sorted(blocks.values(), key = lambda x: x.id)
 
