@@ -228,7 +228,11 @@ class MortarScorer:
         return None
 
     def has_mortar(self, block):
-        return self.world.is_true("hasmortar", [block.name])
+        # see if hasmortar on this block is true
+        for atom in self.world.atoms:
+            if atom.predicate.name == "hasmortar" and atom.args[0].name == block.name:
+                return True 
+        return False
 
     def block_under(self, block):
         if self.world.is_true("on-table", [block.name]):
