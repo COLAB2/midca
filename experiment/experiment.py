@@ -24,6 +24,7 @@ class Experiment():
         self.datawritefuncs = []
         self.destructfuncs = []
         self.name = name
+        self.run_count = 0
 
     def addDataFile(self, filename):
         '''
@@ -43,22 +44,19 @@ class Experiment():
         MIDCA will be passed to the data output function.
         '''
         self.runs.append(midca)
-
+        
         midcaInst = midca
         curr_midca = midcaInst.getMIDCAObj()
         curr_midca.init()
         #print(midcaInst)
         midcaInst.run_cycles(self.numCycles)
         print(str(self.numCycles) + " cycles finished.")
-        #print(midcaInst)
-        run_id = 1
-        for datawritefunc in self.datawritefuncs:
-            datawritefunc(run_id, midcaInst.getMIDCAObj())
-            print "Just wrote out data"
+        
+        for dwfunc in self.datawritefuncs:
+            dwfunc(self.run_count, midcaInst.getMIDCAObj())
+            print("Just wrote out data for run "+str(self.run_count))
             #time.sleep(1)
-            run_id += 1
-        print(midcaInst)
-
+        self.run_count+=1
 
     def addWriteDataFunc(self, func):
         '''

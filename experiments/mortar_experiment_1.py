@@ -81,20 +81,20 @@ class MortarCogSciDemoExperiment1():
         # since we are varying using 3 parameters (arson chance, using tf trees, using MA)
         # we have three nested loops, creating individual midca runs for each unique paramterization
 
-        print "Initializing each unique MIDCA run..."
         # time.sleep(0.5)
         # 1. vary by arson chance
         curr_mortar_count = MORTAR_QUANTITY_START
-        while curr_mortar_count > MORTAR_QUANTITY_END:
+        while curr_mortar_count < MORTAR_QUANTITY_END:
             # create MIDCA instance
             midcaInst = MIDCAInstance(curr_mortar_count)
             midcaInst.createMIDCAObj()
+            print("appending the run w/ mortarcount of "+str(curr_mortar_count))
             ex.appendRun(midcaInst)
 
             curr_mortar_count += MORTAR_QUANTITY_INCREMENT
         print "Running each MIDCA instance..."
         # time.sleep(0.5)
-
+        ex.run()
 
 class MIDCAInstance():
     '''
@@ -125,13 +125,13 @@ class MIDCAInstance():
             self.world = domainread.load_domain(domainFile)
             
             # for state file, need to add number of mortar blocks to begin with
-            state_lines = open(stateFile).readlines() # first read file
+            state_str = open(stateFile).read() # first read file
             # now add new mortar blocks
             for i in range(self.currMortarCount):
-                state_lines.append("MORTARBLOCK(M"+str(i)+")\n")
-                state_lines.append("available(M"+str(i)+")\n")
+                state_str+="MORTARBLOCK(M"+str(i)+")\n"
+                state_str+="available(M"+str(i)+")\n"
             # now load the state    
-            stateread.apply_state_str(self.world, state_lines)
+            stateread.apply_state_str(self.world, state_str)
             # creates a PhaseManager object, which wraps a MIDCA object
             myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=4)
             #asqiiDisplay(world)

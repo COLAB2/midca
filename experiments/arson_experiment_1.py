@@ -119,7 +119,7 @@ class ArsonCogSciDemo():
             curr_arson_chance -= ARSON_CHANCE_DECREMENT
         print "Running each MIDCA instance..."
         # time.sleep(0.5)
-
+        ex.run()
 
 class MIDCAInstance():
     '''
