@@ -104,6 +104,7 @@ from __future__ import print_function
 import copy,sys, pprint
 from threading import Thread
 import time
+
 ############################################################
 # States and goals
 
@@ -164,6 +165,8 @@ def find_if(cond,seq):
 operators = {}
 methods = {}
 monitors = {}
+generated_monitors = []
+
 def declare_operators(*op_list):
     """
     Call this after defining the operators, to tell Pyhop what they are. 
@@ -193,13 +196,15 @@ def declare_monitors(task_name,*monitor_list):
 
 def check_monitors():
     #fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
-    for key in monitors.keys():
-        m_list = monitors[key]
-        for m in m_list:
-            if m.is_fired == True:
-                m.is_fired = False
-                m.is_activated = False
-                return m
+    print("**********") 
+    for m in generated_monitors:
+        print(m.block + " " + str(m.is_fired))
+    print("**********")        
+    for m in generated_monitors:
+        if m.is_fired == True:
+            m.is_fired = False
+            m.is_activated = False
+            return m
             
     
     return None
@@ -238,10 +243,11 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-    print("start here....")
+   
     fired_monitor = check_monitors()
     if fired_monitor:
-        print("monitor is fired")
+        print("monitor is fired for block " + fired_monitor.block+
+              " need to backtrack to level " + str(fired_monitor.depth))
         
     
     time.sleep(2)
@@ -276,10 +282,11 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                 print(task1[0])
                 if task1[0] in monitors:
                     monitor_list = monitors[task1[0]]
+                    print("monitor is generated for " + task1[0] + ": " + str(depth))
                     
                     for monitor in monitor_list:
-                        monitor.is_active = True
-                        Thread(target=monitor.name, args=[state, task1[1]]).start()
+                        
+                        Thread(target=monitor.name, args=[state, depth, task1[1], task1[0]]).start()
                                 
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution != False:
