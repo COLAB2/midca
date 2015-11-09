@@ -7,6 +7,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 from MIDCA.modules._plan import pyhop
 from _io import open
+import time
 
 class Monitor():
     
@@ -42,15 +43,23 @@ def clear_block(state, b1):
                 if m.block == b1 and m.is_active == True:
                     print "it is already running"
                 else:
+                    i = 0
                     m.is_active = True
                     m.block = b1
                     print("monitor is running for " + b1)
                     
                     while(m.is_fired == False):
                         #f.write (b1 + " true")
+                        i = i + 1
+                        time.sleep(3)
+                        if i > 7:
+                            m.is_fired = True
+                            print("monitor: " + b1 + "is not clear!")
                         
                         if state.clear[b1] == False:
+                            print("monitor: " + b1 + "is not clear!")
                             m.is_fired = True
+                        
                 break
 
 """for each task we know what kind of monitors we should run"""

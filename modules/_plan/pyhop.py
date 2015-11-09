@@ -197,6 +197,8 @@ def check_monitors():
         m_list = monitors[key]
         for m in m_list:
             if m.is_fired == True:
+                m.is_fired = False
+                m.is_activated = False
                 return m
             
     
@@ -240,8 +242,9 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     fired_monitor = check_monitors()
     if fired_monitor:
         print("monitor is fired")
+        
     
-    time.sleep(30)
+    time.sleep(2)
     
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
@@ -270,7 +273,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                 print('depth {} new tasks: {}'.format(depth,subtasks))
             if subtasks != False:
                 #add monitors here for the methods
-                print("add monitors")
+                print(task1[0])
                 if task1[0] in monitors:
                     monitor_list = monitors[task1[0]]
                     
