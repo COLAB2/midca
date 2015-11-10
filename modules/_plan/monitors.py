@@ -17,7 +17,7 @@ class Monitor():
         self.depth = depth
         self.is_active = True
         self.is_fired = False
-        self.task_name = task_name
+        self.task_name.append(task_name)
 
     
     
@@ -35,7 +35,8 @@ def clear_block(state, depth, b1, task_name):
     
     i = 0
     m =  filter(lambda x: x.name.__name__ == clear_block and x.block == b1, pyhop.generated_monitors)
-    if m:     
+    if m: 
+        m.task_name.append(task_name)    
         print "monitor is already running for " + b1
     else:
         m = Monitor(clear_block, b1, depth, task_name)
@@ -94,4 +95,10 @@ def clear_block(state, depth, b1, task_name):
 """for each task we know what kind of monitors we should run"""
     
 def declare_monitors(longApprehend = True):    
-    pyhop.declare_monitors('pickup_task', Monitor(clear_block, False, False, "None"))       
+    pyhop.declare_monitors('pickup_task', Monitor(clear_block, False, False, "None"))
+    #unstack_task 
+    pyhop.declare_monitors('unstack_task', Monitor(clear_block, False, False, "None"))
+    #unstack
+    pyhop.declare_monitors('unstack', Monitor(clear_block, False, False, "None"))
+    #pickup
+    pyhop.declare_monitors('pickup', Monitor(clear_block, False, False, "None"))      

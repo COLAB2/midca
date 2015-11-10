@@ -196,10 +196,10 @@ def declare_monitors(task_name,*monitor_list):
 
 def check_monitors():
     #fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
-    print("**********") 
-    for m in generated_monitors:
-        print(m.block + " " + str(m.is_fired))
-    print("**********")        
+#     print("**********") 
+#     for m in generated_monitors:
+#         print(m.block + " " + str(m.is_fired))
+#     print("**********")        
     for m in generated_monitors:
         if m.is_fired == True:
             m.is_fired = False
@@ -243,9 +243,11 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-   
+    
+    
     fired_monitor = check_monitors()
     if fired_monitor:
+        print("current plan is "+ plan)
         print("monitor is fired for block " + fired_monitor.block+
               " need to backtrack to level " + str(fired_monitor.depth))
         
@@ -266,6 +268,13 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             print('depth {} new state:'.format(depth))
             print_state(newstate)
         if newstate:
+            print(task1[0])
+            if task1[0] in monitors:
+                monitor_list = monitors[task1[0]]
+                print("monitor is generated for " + task1[0] + ": " + str(depth))
+                for monitor in monitor_list:
+                    Thread(target=monitor.name, args=[state, depth, task1[1], task1[0]]).start()
+
             solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
             if solution != False:
                 return solution
@@ -277,18 +286,20 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             # Can't just say "if subtasks:", because that's wrong if subtasks == []
             if verbose>2:
                 print('depth {} new tasks: {}'.format(depth,subtasks))
-            if subtasks != False:
-                #add monitors here for the methods
-                print(task1[0])
+            if subtasks != False:                
                 if task1[0] in monitors:
                     monitor_list = monitors[task1[0]]
                     print("monitor is generated for " + task1[0] + ": " + str(depth))
                     
                     for monitor in monitor_list:
-                        
                         Thread(target=monitor.name, args=[state, depth, task1[1], task1[0]]).start()
-                                
+                        
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
+                if solution == False:
+                    print(task1[0] + " false")
+                    print("all the monitors for this task, "+ task1[0] +" will be terminated")
+                    #terminate the monitor!!!
+                        
                 if solution != False:
                     return solution
     if verbose>2: print('depth {} returns failure'.format(depth))
