@@ -1,15 +1,11 @@
 """
 Pyhop, version 1.2.1 -- a simple SHOP-like planner written in Python.
 Author: Dana S. Nau, 15 February 2013
-
 Copyright 2013 Dana S. Nau - http://www.cs.umd.edu/~nau
-
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
-
      http://www.apache.org/licenses/LICENSE-2.0
-
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,37 +14,26 @@ Copyright 2013 Dana S. Nau - http://www.cs.umd.edu/~nau
    
 Pyhop should work correctly in both Python 2.7 and Python 3.2.
 For examples of how to use it, see the example files that come with Pyhop.
-
 Pyhop provides the following classes and functions:
-
 - foo = State('foo') tells Pyhop to create an empty state object named 'foo'.
   To put variables and values into it, you should do assignments such as
   foo.var1 = val1
-
 - bar = Goal('bar') tells Pyhop to create an empty goal object named 'bar'.
   To put variables and values into it, you should do assignments such as
   bar.var1 = val1
-
 - print_state(foo) will print the variables and values in the state foo.
-
 - print_goal(foo) will print the variables and values in the goal foo.
-
 - declare_operators(o1, o2, ..., ok) tells Pyhop that o1, o2, ..., ok
   are all of the planning operators; this supersedes any previous call
   to declare_operators.
-
 - print_operators() will print out the list of available operators.
-
 - declare_methods('foo', m1, m2, ..., mk) tells Pyhop that m1, m2, ..., mk
   are all of the methods for tasks having 'foo' as their taskname; this
   supersedes any previous call to declare_methods('foo', ...).
-
 - print_methods() will print out a list of all declared methods.
-
 - pyhop(state1,tasklist) tells Pyhop to find a plan for accomplishing tasklist
   (a list of tasks), starting from an initial state state1, using whatever
   methods and operators you declared previously.
-
 - In the above call to pyhop, you can add an optional 3rd argument called
   'verbose' that tells pyhop how much debugging printout it should provide:
 - if verbose = 0, then pyhop prints nothing;
@@ -196,19 +181,23 @@ def declare_monitors(task_name,*monitor_list):
 
 def check_monitors():
     #fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
-#     print("**********") 
+#     print("****The monitors are running:******") 
 #     for m in generated_monitors:
-#         print(m.block + " " + str(m.is_fired))
+#         print(m.name.__name__+" "+ m.block + " " + str(m.is_fired))
 #     print("**********")        
     for m in generated_monitors:
         if m.is_fired == True:
             m.is_fired = False
             m.is_activated = False
+            generated_monitors.remove(m)
             return m
-            
-    
     return None
-        
+
+def RemoveMonitors(method_name):
+    for m in generated_monitors:
+        if method_name in m.tasks:
+            print(m.name.__name__ +" " + m.block + " is removed")
+            generated_monitors.remove(m)
 
 ############################################################
 # Commands to find out what the operators and methods are
@@ -243,15 +232,10 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-    
-    
     fired_monitor = check_monitors()
     if fired_monitor:
-        print("current plan is "+ plan)
         print("monitor is fired for block " + fired_monitor.block+
               " need to backtrack to level " + str(fired_monitor.depth))
-        
-    
     time.sleep(2)
     
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
@@ -268,13 +252,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             print('depth {} new state:'.format(depth))
             print_state(newstate)
         if newstate:
-            print(task1[0])
-            if task1[0] in monitors:
-                monitor_list = monitors[task1[0]]
-                print("monitor is generated for " + task1[0] + ": " + str(depth))
-                for monitor in monitor_list:
-                    Thread(target=monitor.name, args=[state, depth, task1[1], task1[0]]).start()
-
             solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
             if solution != False:
                 return solution
@@ -286,20 +263,21 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             # Can't just say "if subtasks:", because that's wrong if subtasks == []
             if verbose>2:
                 print('depth {} new tasks: {}'.format(depth,subtasks))
-            if subtasks != False:                
+            if subtasks != False:
+                #add monitors here for the methods
+                print(task1[0])
                 if task1[0] in monitors:
                     monitor_list = monitors[task1[0]]
                     print("monitor is generated for " + task1[0] + ": " + str(depth))
                     
                     for monitor in monitor_list:
-                        Thread(target=monitor.name, args=[state, depth, task1[1], task1[0]]).start()
-                        
+                        Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
+                                
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution == False:
-                    print(task1[0] + " false")
-                    print("all the monitors for this task, "+ task1[0] +" will be terminated")
-                    #terminate the monitor!!!
-                        
+                    print(task1[0] + " was failed, it will choose another method--")
+                    RemoveMonitors(task1[0])
+                    
                 if solution != False:
                     return solution
     if verbose>2: print('depth {} returns failure'.format(depth))
