@@ -234,8 +234,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     """
     fired_monitor = check_monitors()
     if fired_monitor:
-        print("monitor is fired for block " + fired_monitor.block+
-              " need to backtrack to level " + str(fired_monitor.depth))
+        print("The clear-block monitor is fired for block " + fired_monitor.block+
+              ", need to backtrack to level " + str(fired_monitor.depth))
     time.sleep(2)
     
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
@@ -265,17 +265,17 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                 print('depth {} new tasks: {}'.format(depth,subtasks))
             if subtasks != False:
                 #add monitors here for the methods
-                print(task1[0])
+                print("next subtask: " + task1[0])
                 if task1[0] in monitors:
                     monitor_list = monitors[task1[0]]
-                    print("monitor is generated for " + task1[0] + ": " + str(depth))
+                    print("monitor is generated for " + task1[0] + " at depth " + str(depth))
                     
                     for monitor in monitor_list:
                         Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
                                 
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution == False:
-                    print(task1[0] + " was failed, it will choose another method--")
+                    print("'" + task1[0] + "' was failed, it will choose another method--")
                     RemoveMonitors(task1[0])
                     
                 if solution != False:
