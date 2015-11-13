@@ -96,12 +96,12 @@ class MortarCogSciDemoExperiment1():
 
         #ex.addWriteDataFunc(customWriteData)
 
-        CYCLES_START = 30
-        CYCLES_END = 50
-        CYCLES_INCREMENT = 1
+        CYCLES_START = 10
+        CYCLES_END = 200
+        CYCLES_INCREMENT = 10
 
         MORTAR_QUANTITY_START = 1
-        MORTAR_QUANTITY_END = 3
+        MORTAR_QUANTITY_END = 30
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
         runs = []
         curr_mortar_count = MORTAR_QUANTITY_START
@@ -123,12 +123,16 @@ class MortarCogSciDemoExperiment1():
 
         
         # Uses multiprocessing to give each run its own python process
+         
+        num_processes = 8 
+        print("Experiment has begun, using "+str(num_processes)+" processes...")
         t0 = time.time()
-        pool = Pool(processes=8, maxtasksperchild=1)
+        pool = Pool(processes=num_processes, maxtasksperchild=1)
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
         results = pool.map(singlerun, runs, chunksize=1)
         t1 = time.time()
-        print("Experiment took "+str(t1-t0)+"  and we've obtained "+str(len(results))+" data points")
+        timestr = '%.2f' % (t1-t0)
+        print("Experiment took "+timestr+"s and we've obtained "+str(len(results))+" data points")
         #return results
          
          
@@ -276,11 +280,12 @@ class MIDCAInstance():
         else:
             return 'not-initialized'
 
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
-from matplotlib import cm
+
 
 def graph():
+    from mpl_toolkits.mplot3d import Axes3D
+    import matplotlib.pyplot as plt
+    from matplotlib import cm
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-1]
