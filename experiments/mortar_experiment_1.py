@@ -3,7 +3,7 @@ Created on Jul 16, 2015
 
 @author: dustin
 '''
-from MIDCA.experiment.experiment import Experiment
+#from MIDCA.experiment.experiment import Experiment
 from MIDCA import base
 from MIDCA.worldsim import domainread, stateread, blockstate, scene
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
@@ -13,7 +13,7 @@ import inspect
 import time
 import copy
 from functools import partial
-
+from multiprocessing import Pool
 import sys
 
 DATADIR = "experiments/mortar-experiment-1-data/"
@@ -23,9 +23,33 @@ def asqiiDisplay(world):
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    print str(scene.Scene(blocks))
+    #print str(scene.Scene(blocks))
 
 
+
+##############################################        
+        # func for Pool.map() (there are some restrictions on the kinds of functions it can take)
+def singlerun(args):
+    run_id = args[0]
+    curr_mortar_count = args[1]
+    midca_inst = MIDCAInstance(curr_mortar_count)
+    midca_inst.createMIDCAObj()
+    num_cycles = args[2]
+    curr_midca = midca_inst.getMIDCAObj()
+    curr_midca.init()
+    ##print("****************************** reached post init() *****************")
+    midca_inst.run_cycles(num_cycles)
+    ##print("****************************** reached post run_cycles() *****************")
+    
+    
+    
+    # prepare data for writing output string
+    towersCompleted = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersCompleted()
+    towersScore = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
+    numMortars = curr_midca.mem.get(evaluate.MORTARSCORE).getMortarBlocks()
+    result = str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "," + str(num_cycles) + "\n"
+    print(result) 
+    return result
 
 class MortarCogSciDemoExperiment1():
     '''
@@ -51,7 +75,7 @@ class MortarCogSciDemoExperiment1():
             # get tower score
             towersCompleted = midca.mem.get(evaluate.MORTARSCORE).getTowersCompleted()
             towersScore = midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
-            print("writing to file "+str(os.path.abspath(file.name))+": "+str(midca.mem.get(evaluate.MORTARSCORE)))
+            #print("writing to file "+str(os.path.abspath(file.name))+": "+str(midca.mem.get(evaluate.MORTARSCORE)))
             numMortars = midca.mem.get(evaluate.MORTARSCORE).getMortarBlocks()
             return str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) +","+str(num_cycles+"\n")
             #file.write(str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) +","+str(num_cycles+"\n"))
@@ -68,35 +92,52 @@ class MortarCogSciDemoExperiment1():
         #NUM_CYCLES = 50
 
         ###### create code for each MIDCA run #####
-        ex = Experiment(self.__class__.__name__)
+        #ex = Experiment(self.__class__.__name__)
 
-        ex.addWriteDataFunc(customWriteData)
+        #ex.addWriteDataFunc(customWriteData)
 
         CYCLES_START = 1
-        CYCLES_END = 50
+        CYCLES_END = 20
         CYCLES_INCREMENT = 1
 
         MORTAR_QUANTITY_START = 1
-        MORTAR_QUANTITY_END = 50
+        MORTAR_QUANTITY_END = 5
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
-
+        runs = []
         curr_mortar_count = MORTAR_QUANTITY_START
+        run_id = 0
         while curr_mortar_count < MORTAR_QUANTITY_END:
             curr_cycles_count = CYCLES_START
             while curr_cycles_count < CYCLES_END:
                 # create MIDCA instance
-                midcaInst = MIDCAInstance(curr_mortar_count)
+                #midcaInst = MIDCAInstance(curr_mortar_count)
                 #midcaInst.createMIDCAObj()
-                #print("appending the run w/ mortarcount of " + str(curr_mortar_count))
-                ex.appendRun(midcaInst, num_cycles=curr_cycles_count)
+                ##print("appending the run w/ mortarcount of " + str(curr_mortar_count))
+                runs.append([run_id,curr_mortar_count, curr_cycles_count])
+                run_id+=1
                 curr_cycles_count+= CYCLES_INCREMENT
             curr_mortar_count += MORTAR_QUANTITY_INCREMENT
-        print "******************* Finished Initialization **************************"
-        results = ex.run()
+        #print "******************* Finished Initialization of runs array **************************"
         
+        
+
+        
+        # Uses multiprocessing to give each run its own python process
+        pool = Pool(processes=8)
+        # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
+        results = pool.map(singlerun, runs, chunksize=1)
+        print("Experiment finished. We've obtained "+str(len(results))+" data points")
+        #return results
+        
+        
+        
+        
+        ###############################################
+        time.sleep(1)
         # Write data to file
         curr_datetime_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
         DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + curr_datetime_str + ".csv"
+        print("FILENAME = "+str(DATA_FILENAME))
         #DATA_FILENAME = DATADIR + filename
         # initialize the csv file here
         f = open(DATA_FILENAME, 'w')
@@ -114,11 +155,11 @@ class MortarCogSciDemoExperiment1():
 #             # create MIDCA instance
 #             midcaInst = MIDCAInstance(curr_mortar_count)
 #             midcaInst.createMIDCAObj()
-#             print("appending the run w/ mortarcount of "+str(curr_mortar_count))
+#             #print("appending the run w/ mortarcount of "+str(curr_mortar_count))
 #             ex.appendRun(midcaInst)
 #             
 #             curr_mortar_count += MORTAR_QUANTITY_INCREMENT
-#         print "*******************FINISHED**************************"
+#         #print "*******************FINISHED**************************"
         # time.sleep(0.5)
         #ex.run()
         
@@ -206,17 +247,19 @@ class MIDCAInstance():
             myMidca.initGoalGraph()
             ## DO NOT DO THIS: experiment.py will do this automatically: myMidca.init()
 
-            print "Created MIDCA "+str(id(myMidca))+" w/ currMortarCount="+str(self.currMortarCount)
+            #print "Created MIDCA "+str(id(myMidca))+" w/ currMortarCount="+str(self.currMortarCount)
 
             self.myMidca = myMidca
             self.initialized = True
 
     def run_cycles(self, num):
+        
         for cycle in range(num):
-                self.myMidca.one_cycle(verbose = 0, pause = 0)
-                #self.myMidca.display(self.myMidca.midca.world)
-                #print str(self.myMidca.midca.mem.get(self.myMidca.midca.mem.GOAL_GRAPH))
-                #print str(cycle)
+            ##print("'''''''''''''''  in run_cycles''''''''''''''''''''''''")
+            self.myMidca.one_cycle(verbose = 0, pause = 0)
+            #self.myMidca.display(self.myMidca.midca.world)
+            ##print str(self.myMidca.midca.mem.get(self.myMidca.midca.mem.GOAL_GRAPH))
+            ##print str(cycle)
 
     def getMIDCAObj(self):
         return self.myMidca
