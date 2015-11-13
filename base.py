@@ -167,7 +167,7 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        module.init(mem=self.mem, world=self.world)
+        module.init(mem=self.mem, world=self.world, verbose=self.verbose)
 
     def removeModule(self, phase, i):
         if isinstance(phase, str):
@@ -198,10 +198,10 @@ class MIDCA:
         else:
             raise ValueError("No such phase as " + str(phase))
 
-    def init(self, verbose = 2):
-        self.init_cognitive_layer(verbose)
+    def init(self):
+        self.init_cognitive_layer(verbose=self.verbose)
         if self.metaEnabled:
-            self.init_metacognitive_layer(verbose)
+            self.init_metacognitive_layer(verbose=self.verbose)
 
     def init_cognitive_layer(self, verbose = 2):
         for phase in self.phases:
@@ -214,7 +214,7 @@ class MIDCA:
                         print("[cognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ "...",end="")
                     module.init(world = self.world,
                                 mem = self.mem)
-                    print("done.")
+                    if verbose >= 2: print("done.")
 
                 except Exception as e:
                     print(e)
@@ -235,7 +235,7 @@ class MIDCA:
                         print("[metacognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+"...",end="")
                     module.init(world = self.world,
                                 mem = self.mem)
-                    print("done.")
+                    if verbose >= 2: print("done.")
 
                 except Exception as e:
                     print(e)
@@ -252,7 +252,8 @@ class MIDCA:
             if cmpFunc:
                 if self.verbose > 0: print()
             else:
-                print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
+                if self.verbose > 0:
+                    print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 
     def next_phase(self, verbose = 2, meta = False):
         phaseNum = self.phaseNum
@@ -376,8 +377,8 @@ class PhaseManager:
     def get_modules(self, phase):
         return self.midca.get_modules(phase)
 
-    def init(self, verbose = 2):
-        self.midca.init(verbose)
+    def init(self):
+        self.midca.init()
 
     def initGoalGraph(self, cmpFunc = None):
         self.midca.initGoalGraph(cmpFunc)

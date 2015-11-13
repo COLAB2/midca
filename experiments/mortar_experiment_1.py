@@ -48,7 +48,7 @@ def singlerun(args):
     towersScore = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
     numMortars = curr_midca.mem.get(evaluate.MORTARSCORE).getMortarBlocks()
     result = str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "," + str(num_cycles) + "\n"
-    print(result) 
+    #print(result) 
     return result
 
 class MortarCogSciDemoExperiment1():
@@ -101,7 +101,7 @@ class MortarCogSciDemoExperiment1():
         CYCLES_INCREMENT = 1
 
         MORTAR_QUANTITY_START = 1
-        MORTAR_QUANTITY_END = 10
+        MORTAR_QUANTITY_END = 3
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
         runs = []
         curr_mortar_count = MORTAR_QUANTITY_START
@@ -123,11 +123,12 @@ class MortarCogSciDemoExperiment1():
 
         
         # Uses multiprocessing to give each run its own python process
-        
+        t0 = time.time()
         pool = Pool(processes=8, maxtasksperchild=1)
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
         results = pool.map(singlerun, runs, chunksize=1)
-        print("Experiment finished. We've obtained "+str(len(results))+" data points")
+        t1 = time.time()
+        print("Experiment took "+str(t1-t0)+"  and we've obtained "+str(len(results))+" data points")
         #return results
          
          
@@ -138,16 +139,15 @@ class MortarCogSciDemoExperiment1():
         # Write data to file
         curr_datetime_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
         DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + curr_datetime_str + ".csv"
-        print("FILENAME = "+str(DATA_FILENAME))
-        for r in results:
-            print("  "+str(r))
+        #for r in results:
+        #    print("  "+str(r))
         #DATA_FILENAME = DATADIR + filename
         # initialize the csv file here
         f = open(DATA_FILENAME, 'w')
         f.write("runID,numMortar,towersCompleted,score,numcycles\n")
         for r in results:
             f.write(r)
-        
+        print("Data written to file "+str(DATA_FILENAME))
         # since we are varying using 3 parameters (arson chance, using tf trees, using MA)
         # we have three nested loops, creating individual midca runs for each unique paramterization
 
@@ -223,7 +223,7 @@ class MIDCAInstance():
             # now load the state    
             stateread.apply_state_str(self.world, state_str)
             # creates a PhaseManager object, which wraps a MIDCA object
-            myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=4)
+            myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=0)
             #asqiiDisplay(world)
             # add phases by name
             for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:

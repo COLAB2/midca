@@ -5,7 +5,8 @@ try:
         from MIDCA.modules._robot_world import world_repr
         from MIDCA import midcatime
 except:
-        print "Unable to import ROS packages - you may not have ROS installed. This will only affect MIDCA/robot interactions. If you are not using MIDCA with a robot, please ignore this message."
+		pass
+        #print "Unable to import ROS packages - you may not have ROS installed. This will only affect MIDCA/robot interactions. If you are not using MIDCA with a robot, please ignore this message."
 
 FEEDBACK_TOPIC = "midcaFeedback"
 
