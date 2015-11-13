@@ -100,7 +100,7 @@ class MortarCogSciDemoExperiment1():
         CYCLES_END = 50
         CYCLES_INCREMENT = 1
 
-        MORTAR_QUANTITY_START = 10
+        MORTAR_QUANTITY_START = 1
         MORTAR_QUANTITY_END = 10
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
         runs = []
@@ -123,15 +123,16 @@ class MortarCogSciDemoExperiment1():
 
         
         # Uses multiprocessing to give each run its own python process
+        
         pool = Pool(processes=8, maxtasksperchild=1)
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
         results = pool.map(singlerun, runs, chunksize=1)
         print("Experiment finished. We've obtained "+str(len(results))+" data points")
         #return results
-        
-        
-        
-        
+         
+         
+         
+         
         ###############################################
         time.sleep(1)
         # Write data to file
@@ -275,6 +276,59 @@ class MIDCAInstance():
         else:
             return 'not-initialized'
 
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+def graph():
+    # get the most recent filename
+    files = sorted([f for f in os.listdir(DATADIR)])
+    datafile = DATADIR + files[-1]
+    print("About to graph data from "+str(datafile))
+    header = True
+    mortar_xs = []
+    cycles_ys = []
+    score_zs = []
+    
+    with open(datafile,'r') as f:
+        for line in f.readlines():
+            print("line is "+str(line))
+            if header: 
+                header = False
+            else:
+                row = line.strip().split(',')
+                print("row="+str(row))
+                mortar_xs.append(int(row[1]))
+                cycles_ys.append(int(row[3]))
+                score_zs.append(int(row[4]))
+        
+        
+        
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_trisurf(mortar_xs,cycles_ys,score_zs,cmap=cm.coolwarm)
+    #ax.scatter(mortar_xs,cycles_ys,score_zs,cmap=cm.coolwarm)
+    ax.legend()
+    ax.set_xlabel("# Mortar")
+    ax.set_ylabel("# Cycles (aka Goals)")
+    ax.set_zlabel("# Score")
+    plt.show()
+
+#     fig = plt.figure()
+#     ax = fig.gca(projection='3d')
+#     X = mortar
+#     Y = score
+#     Z = cycles
+#     surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm,
+#                        linewidth=0, antialiased=False)
+#     fig.colorbar(surf, shrink=0.5, aspect=5)
+# 
+#     plt.show()
+
 if __name__ == "__main__":
-    MortarCogSciDemoExperiment1()
+    if len(sys.argv) > 1 and sys.argv[1] == 'graph':
+        # produce graph instead of running experiment
+        graph()
+    else:   
+        MortarCogSciDemoExperiment1()
 
