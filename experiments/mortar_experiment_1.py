@@ -96,19 +96,19 @@ class MortarCogSciDemoExperiment1():
 
         #ex.addWriteDataFunc(customWriteData)
 
-        CYCLES_START = 1
-        CYCLES_END = 20
+        CYCLES_START = 30
+        CYCLES_END = 50
         CYCLES_INCREMENT = 1
 
-        MORTAR_QUANTITY_START = 1
-        MORTAR_QUANTITY_END = 5
+        MORTAR_QUANTITY_START = 10
+        MORTAR_QUANTITY_END = 10
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
         runs = []
         curr_mortar_count = MORTAR_QUANTITY_START
         run_id = 0
-        while curr_mortar_count < MORTAR_QUANTITY_END:
+        while curr_mortar_count <= MORTAR_QUANTITY_END:
             curr_cycles_count = CYCLES_START
-            while curr_cycles_count < CYCLES_END:
+            while curr_cycles_count <= CYCLES_END:
                 # create MIDCA instance
                 #midcaInst = MIDCAInstance(curr_mortar_count)
                 #midcaInst.createMIDCAObj()
@@ -123,7 +123,7 @@ class MortarCogSciDemoExperiment1():
 
         
         # Uses multiprocessing to give each run its own python process
-        pool = Pool(processes=8)
+        pool = Pool(processes=8, maxtasksperchild=1)
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
         results = pool.map(singlerun, runs, chunksize=1)
         print("Experiment finished. We've obtained "+str(len(results))+" data points")
@@ -138,6 +138,8 @@ class MortarCogSciDemoExperiment1():
         curr_datetime_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
         DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + curr_datetime_str + ".csv"
         print("FILENAME = "+str(DATA_FILENAME))
+        for r in results:
+            print("  "+str(r))
         #DATA_FILENAME = DATADIR + filename
         # initialize the csv file here
         f = open(DATA_FILENAME, 'w')
