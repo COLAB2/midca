@@ -304,8 +304,8 @@ def graph():
                 row = line.strip().split(',')
                 print("row="+str(row))
                 mortar_xs.append(int(row[1]))
-                cycles_ys.append(int(row[3]))
-                score_zs.append(int(row[4]))
+                score_zs.append(int(row[3]))
+                cycles_ys.append(int(row[4]))
         
         
         
