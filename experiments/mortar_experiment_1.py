@@ -14,6 +14,8 @@ import time
 import copy
 from functools import partial
 
+import sys
+
 DATADIR = "experiments/mortar-experiment-1-data/"
 
 def asqiiDisplay(world):
@@ -22,6 +24,8 @@ def asqiiDisplay(world):
     '''
     blocks = blockstate.get_block_list(world)
     print str(scene.Scene(blocks))
+
+
 
 class MortarCogSciDemoExperiment1():
     '''
@@ -35,14 +39,8 @@ class MortarCogSciDemoExperiment1():
         '''
         Setup code for experiment
         '''
-        curr_datetime_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
-        DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + curr_datetime_str + ".csv"
 
-        # initialize the csv file here
-        file = open(DATA_FILENAME, 'w')
-        file.write("runID,numMortar,towersCompleted,score,\n")
-
-        def customWriteData(run_id, midca):
+        def customWriteData(run_id, num_cycles, midca):
             '''
             This function will be called on each midca object after it has run and should get the
             necessary values (to be written to a data file) from the midca object.
@@ -53,10 +51,12 @@ class MortarCogSciDemoExperiment1():
             # get tower score
             towersCompleted = midca.mem.get(evaluate.MORTARSCORE).getTowersCompleted()
             towersScore = midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
-            print str(midca.mem.get(evaluate.MORTARSCORE))
+            print("writing to file "+str(os.path.abspath(file.name))+": "+str(midca.mem.get(evaluate.MORTARSCORE)))
             numMortars = midca.mem.get(evaluate.MORTARSCORE).getMortarBlocks()
-            file.write(str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "\n")
-            file.flush()
+            return str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) +","+str(num_cycles+"\n")
+            #file.write(str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) +","+str(num_cycles+"\n"))
+            
+            #file.flush()
 
         def cleanup():
             '''
@@ -65,36 +65,65 @@ class MortarCogSciDemoExperiment1():
             '''
             file.close()
         
-        NUM_CYCLES = 200
+        #NUM_CYCLES = 50
 
         ###### create code for each MIDCA run #####
         ex = Experiment(self.__class__.__name__)
 
         ex.addWriteDataFunc(customWriteData)
-        ex.addDestructFunc(cleanup)
 
-        ex.setNumCycles(NUM_CYCLES)
+        CYCLES_START = 1
+        CYCLES_END = 50
+        CYCLES_INCREMENT = 1
+
         MORTAR_QUANTITY_START = 1
-        MORTAR_QUANTITY_END = 100
+        MORTAR_QUANTITY_END = 50
         MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
+
+        curr_mortar_count = MORTAR_QUANTITY_START
+        while curr_mortar_count < MORTAR_QUANTITY_END:
+            curr_cycles_count = CYCLES_START
+            while curr_cycles_count < CYCLES_END:
+                # create MIDCA instance
+                midcaInst = MIDCAInstance(curr_mortar_count)
+                #midcaInst.createMIDCAObj()
+                #print("appending the run w/ mortarcount of " + str(curr_mortar_count))
+                ex.appendRun(midcaInst, num_cycles=curr_cycles_count)
+                curr_cycles_count+= CYCLES_INCREMENT
+            curr_mortar_count += MORTAR_QUANTITY_INCREMENT
+        print "******************* Finished Initialization **************************"
+        results = ex.run()
+        
+        # Write data to file
+        curr_datetime_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
+        DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + curr_datetime_str + ".csv"
+        #DATA_FILENAME = DATADIR + filename
+        # initialize the csv file here
+        f = open(DATA_FILENAME, 'w')
+        f.write("runID,numMortar,towersCompleted,score,numcycles\n")
+        for r in results:
+            f.write(r)
         
         # since we are varying using 3 parameters (arson chance, using tf trees, using MA)
         # we have three nested loops, creating individual midca runs for each unique paramterization
 
         # time.sleep(0.5)
         # 1. vary by arson chance
-        curr_mortar_count = MORTAR_QUANTITY_START
-        while curr_mortar_count < MORTAR_QUANTITY_END:
-            # create MIDCA instance
-            midcaInst = MIDCAInstance(curr_mortar_count)
-            midcaInst.createMIDCAObj()
-            print("appending the run w/ mortarcount of "+str(curr_mortar_count))
-            ex.appendRun(midcaInst)
-
-            curr_mortar_count += MORTAR_QUANTITY_INCREMENT
-        print "Running each MIDCA instance..."
+#         curr_mortar_count = MORTAR_QUANTITY_START
+#         while curr_mortar_count < MORTAR_QUANTITY_END:
+#             # create MIDCA instance
+#             midcaInst = MIDCAInstance(curr_mortar_count)
+#             midcaInst.createMIDCAObj()
+#             print("appending the run w/ mortarcount of "+str(curr_mortar_count))
+#             ex.appendRun(midcaInst)
+#             
+#             curr_mortar_count += MORTAR_QUANTITY_INCREMENT
+#         print "*******************FINISHED**************************"
         # time.sleep(0.5)
-        ex.run()
+        #ex.run()
+        
+        
+
 
 class MIDCAInstance():
     '''
@@ -103,11 +132,28 @@ class MIDCAInstance():
 
     def __init__(self, currMortarCount):
         self.currMortarCount = currMortarCount
-        
         self.initialized = False # to initialize, call createMIDCAObj()
         self.myMidca = None
 
         self.world = None
+        
+#         globalsfile = 'experiments/mortar-experiment-1-data/globals-for-mortar-'+str(currMortarCount)+'.txt' 
+#         with open(globalsfile, 'w') as f:
+#             f.write('------------------ dir() ----------------------------------\n')
+#             for name in dir():
+#                 myvalue = eval(name)
+#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
+#             f.write('------------------ locals() ----------------------------------\n')
+#             for name in locals():
+#                 myvalue = eval(name)
+#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
+#             f.write('------------------ globals() ----------------------------------\n')
+#             for name in globals():
+#                 myvalue = eval(name)
+#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
+#             f.write('------------------ vars() ----------------------------------\n')
+#             for key,val in vars().items():
+#                 f.write(str(key)+ " is "+ str(type(val))+ " = "+ str(val)+"\n")
 
     def createMIDCAObj(self):
         # in this demo, always keep extinguish to false
@@ -176,10 +222,13 @@ class MIDCAInstance():
         return self.myMidca
 
     def __str__(self):
-        s = "MIDCAInstance [id]="+str(id(self.myMidca))
-        s += "\n[currMortarCount]="+str(self.currMortarCount)
-        s += "\n[Score]="+str(self.myMidca.mem.get(evaluate.MORTARSCORE))
-        return s
+        if self.myMidca:
+            s = "MIDCAInstance [id]="+str(id(self.myMidca))
+            s += "\n[currMortarCount]="+str(self.currMortarCount)
+            s += "\n[Score]="+str(self.myMidca.mem.get(evaluate.MORTARSCORE))
+            return s
+        else:
+            return 'not-initialized'
 
 if __name__ == "__main__":
     MortarCogSciDemoExperiment1()
