@@ -5,7 +5,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 from __future__ import print_function
-from pyhop import *
+from MIDCA.modules._plan.pyhop import *
 
 import blocks_world_operators
 print('')

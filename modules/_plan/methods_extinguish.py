@@ -6,6 +6,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 import pyhop
 import random
+from MIDCA.modules._plan.pyhop import print_goal
 
 """
 Here are some helper functions that are used in the methods' preconditions.
@@ -51,6 +52,7 @@ def moveb_m(state,goal):
     do so and call move_blocks recursively. Otherwise, no blocks need
     to be moved.
     """
+    print_goal(goal)
     for b1 in all_blocks(state):
         s = status(b1,state,goal)
         if s == 'move-to-table':

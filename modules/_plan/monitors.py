@@ -18,6 +18,7 @@ class Monitor():
         self.is_active = True
         self.is_fired = False
         self.tasks = []
+        self.change_state = None
         
     def add_task(self, task_name):
         self.tasks.append(task_name)
@@ -31,8 +32,10 @@ Here are some helper functions that are used in the methods' preconditions.
 #pickup_task
 #we just generate the monitor for the first task
 
-
-
+def change_state(state, b1):
+    state.clear[b1] = False
+    state.pos.update({"F_" : b1})
+    return state
 
 def clear_block(state, depth, b1, task_name):
     i = 0
@@ -43,15 +46,19 @@ def clear_block(state, depth, b1, task_name):
     else:
         m = Monitor(clear_block, b1, depth)
         m.add_task(task_name)
+        m.change_state = change_state
         pyhop.generated_monitors.append(m)
     
         while(m.is_fired == False):
                         #f.write (b1 + " true")
             i = i + 1
             time.sleep(2)
-            if i > 7:
-                m.is_fired = True
-                #print("monitor: " + b1 + "is not clear!")
+            if i > 5:
+                if b1 == "C_":
+                    m.is_fired = True
+                    state.clear[b1] = False
+                    state.pos.update({"F_" : b1})
+                    print("monitor: " + b1 + "is not clear!")
                         
             if state.clear[b1] == False:
                 print("monitor: " + b1 + "is not clear!")
@@ -66,5 +73,11 @@ def declare_monitors(longApprehend = True):
     pyhop.declare_monitors('unstack_task', clear_block)
     #unstack
     pyhop.declare_monitors('unstack', clear_block)
-#     #pickup
+   #pickup
     pyhop.declare_monitors('pickup', clear_block)      
+    #get
+    pyhop.declare_monitors('get', clear_block)
+    
+    
+    
+    

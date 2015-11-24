@@ -3,21 +3,25 @@ BLOCK(B_)
 BLOCK(C_)
 BLOCK(table)
 BLOCK(D_)
+BLOCK(F_)
 ARSONIST(Gui Montag)
 
 on(B_, A_)
 on(D_, B_)
 on-table(A_)
 on-table(C_)
+on-table(F_)
 
 block(A_)
 block(B_)
 block(C_)
+block(F_)
 triangle(D_)
 table(table)
 
 clear(C_)
 clear(D_)
+clear(F_)
 arm-empty()
 
 

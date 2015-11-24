@@ -184,12 +184,12 @@ def check_monitors():
 #     print("****The monitors are running:******") 
 #     for m in generated_monitors:
 #         print(m.name.__name__+" "+ m.block + " " + str(m.is_fired))
-#     print("**********")        
+    print("**********")        
     for m in generated_monitors:
         if m.is_fired == True:
-            m.is_fired = False
-            m.is_activated = False
-            generated_monitors.remove(m)
+            #m.is_fired = False
+            #m.is_activated = False
+            #generated_monitors.remove(m)
             return m
     return None
 
@@ -221,64 +221,95 @@ def pyhop(state,tasks,verbose=0):
     If successful, return the plan. Otherwise return False.
     """
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
-    result = seek_plan(state,tasks,[],0,verbose)
+    
+    result = seek_plan(state,tasks,[],0, verbose)
+    
     if verbose>0: print('** result =',result,'\n')
     return result
 
+fired_monitor = None
 def seek_plan(state,tasks,plan,depth,verbose=0):
+    global fired_monitor 
     """
     Workhorse for pyhop. state and tasks are as in pyhop.
     - plan is the current partial plan.
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-    fired_monitor = check_monitors()
-    if fired_monitor:
-        print("The clear-block monitor is fired for block " + fired_monitor.block+
-              ", need to backtrack to level " + str(fired_monitor.depth))
-    time.sleep(2)
+    print("tasks: ")
+    print("".join([str(x) for x in tasks] ))
     
+    time.sleep(3)
+   
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
         return plan
     task1 = tasks[0]
-
-    if task1[0] in operators:
-        if verbose>2: print('depth {} action {}'.format(depth,task1))
-        operator = operators[task1[0]]
-        newstate = operator(copy.deepcopy(state),*task1[1:])
-        if verbose>2:
-            print('depth {} new state:'.format(depth))
-            print_state(newstate)
-        if newstate:
-            solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
-            if solution != False:
-                return solution
-    if task1[0] in methods:
-        if verbose>2: print('depth {} method instance {}'.format(depth,task1))
-        relevant = methods[task1[0]]
-        for method in relevant:
-            subtasks = method(state,*task1[1:])
-            # Can't just say "if subtasks:", because that's wrong if subtasks == []
+    fired_monitor = check_monitors()
+    if fired_monitor:
+        print("monitor fired at depth " + str(depth))
+        if fired_monitor.depth < depth:
+            print("The clear-block monitor is fired for block " + fired_monitor.block+
+                  ", need to backtrack to level " + str(fired_monitor.depth))
+            return False
+        else:
+            print("here!")
+            fired_monitor.is_fired = False
+    else:
+        if task1[0] in operators:
+            if verbose>2: print('depth {} action {}'.format(depth,task1))
+            operator = operators[task1[0]]
+            newstate = operator(copy.deepcopy(state),*task1[1:])
+            print_state(newstate, 4)
             if verbose>2:
-                print('depth {} new tasks: {}'.format(depth,subtasks))
-            if subtasks != False:
-                #add monitors here for the methods
-                print("next subtask: " + task1[0])
-                if task1[0] in monitors:
-                    monitor_list = monitors[task1[0]]
-                    print("monitor is generated for " + task1[0] + " at depth " + str(depth))
-                    
-                    for monitor in monitor_list:
-                        Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
-                                
-                solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
-                if solution == False:
-                    print("'" + task1[0] + "' was failed, it will choose another method--")
-                    RemoveMonitors(task1[0])
-                    
+                print('depth {} new state:'.format(depth))
+                print_state(newstate)
+            if newstate:
+                solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
                 if solution != False:
                     return solution
-    if verbose>2: print('depth {} returns failure'.format(depth))
-    return False
+        if task1[0] in methods:
+            if verbose>2: print('depth {} method instance {}'.format(depth,task1))
+            relevant = methods[task1[0]]
+            for method in relevant:
+                subtasks = method(state,*task1[1:])
+                # Can't just say "if subtasks:", because that's wrong if subtasks == []
+                if verbose>2:
+                    print('depth {} new tasks: {}'.format(depth,subtasks))
+                if subtasks != False:
+                    #add monitors here for the methods
+                    print("next subtask: " + task1[0])
+                    if task1[0] in monitors:
+                        monitor_list = monitors[task1[0]]
+                        print("monitor is generated for " + task1[0] + " at depth " + str(depth))
+                        
+                        for monitor in monitor_list:
+                            Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
+                    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+                    if solution == False:
+                        if fired_monitor and fired_monitor.depth > depth:
+                            print(plan)
+                            fired_monitor.is_fired = False
+                            #generated_monitors.remove(fired_monitor)
+                            
+                            print("here! DO SOMETHING!")
+                            print(subtasks)
+                            print("----state:")
+                            print_state(state, 4)
+#                             newstate = fired_monitor.change_state(state, task1[1])
+#                             print("-----new state:")
+#                             print_state(newstate, 4)
+                            
+                            solution = seek_plan(state,tasks[1:],plan,depth+1, verbose)
+                        else:
+                            print("'" + task1[0] + "' was failed, it will choose another method--")
+                            #RemoveMonitors(task1[0])
+                        
+                    if solution != False:
+                        return solution
+        if verbose>2: print('depth {} returns failure'.format(depth))
+        return False
+    
+  
+    
