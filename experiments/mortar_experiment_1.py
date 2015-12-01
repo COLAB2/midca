@@ -1,6 +1,9 @@
 '''
 Created on Jul 16, 2015
 
+This file runs an experiment involving multiple, differently configured, instances of MIDCA
+and collecting data from MIDCA's memory and the experiment.
+
 @author: Dustin Dannenhauer
 '''
 from MIDCA import base
@@ -28,7 +31,7 @@ MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
 
 NUM_PROCESSES = 8 # Number of individual python processes to use
 
-def singlerun_output_str(run_id, curr_midca, curr_mortar_count):
+def singlerun_output_str(run_id, curr_midca, curr_mortar_count, num_cycles):
     towersCompleted = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersCompleted()
     towersScore = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
     numMortars = curr_mortar_count
@@ -46,7 +49,7 @@ def singlerun(args):
     midca_inst.run_cycles(num_cycles)
     
     # prepare data for writing output string
-    result_str = singlerun_output_str(run_id,curr_midca,curr_mortar_count)
+    result_str = singlerun_output_str(run_id,curr_midca,curr_mortar_count, num_cycles)
     return result_str 
 
 def runexperiment():    
@@ -91,97 +94,69 @@ class MIDCAInstance():
     '''
     This class creates a specific instance of MIDCA given certain parameters.
     '''
-
     def __init__(self, currMortarCount):
         self.currMortarCount = currMortarCount
         self.initialized = False # to initialize, call createMIDCAObj()
         self.myMidca = None
-
         self.world = None
-        
-#         globalsfile = 'experiments/mortar-experiment-1-data/globals-for-mortar-'+str(currMortarCount)+'.txt' 
-#         with open(globalsfile, 'w') as f:
-#             f.write('------------------ dir() ----------------------------------\n')
-#             for name in dir():
-#                 myvalue = eval(name)
-#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
-#             f.write('------------------ locals() ----------------------------------\n')
-#             for name in locals():
-#                 myvalue = eval(name)
-#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
-#             f.write('------------------ globals() ----------------------------------\n')
-#             for name in globals():
-#                 myvalue = eval(name)
-#                 f.write(str(name)+ " is "+ str(type(name))+ " = "+ str(myvalue)+"\n")
-#             f.write('------------------ vars() ----------------------------------\n')
-#             for key,val in vars().items():
-#                 f.write(str(key)+ " is "+ str(type(val))+ " = "+ str(val)+"\n")
 
     def createMIDCAObj(self):
-        # in this demo, always keep extinguish to false
-            extinguish = False
-            mortar = True
+        extinguish = False
+        mortar = True
 
-            thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-            MIDCA_ROOT = thisDir + "/../"
+        MIDCA_ROOT = thisDir + "/../"
 
-            domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_mortar.sim"
-            stateFile = MIDCA_ROOT + "worldsim/states/defstate_mortar.sim"
+        domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_mortar.sim"
+        stateFile = MIDCA_ROOT + "worldsim/states/defstate_mortar.sim"
 
-            # load domain file like normal
-            self.world = domainread.load_domain(domainFile)
-            
-            # for state file, need to add number of mortar blocks to begin with
-            state_str = open(stateFile).read() # first read file
-            # now add new mortar blocks
-            for i in range(self.currMortarCount):
-                state_str+="MORTARBLOCK(M"+str(i)+")\n"
-                state_str+="available(M"+str(i)+")\n"
-            # now load the state    
-            stateread.apply_state_str(self.world, state_str)
-            # creates a PhaseManager object, which wraps a MIDCA object
-            myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=0)
-            #asqiiDisplay(world)
-            # add phases by name
-            for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
-                myMidca.append_phase(phase)
+        # load domain file like normal
+        self.world = domainread.load_domain(domainFile)
+        
+        # for state file, need to add number of mortar blocks to begin with
+        state_str = open(stateFile).read() # first read file
+        # now add new mortar blocks
+        for i in range(self.currMortarCount):
+            state_str+="MORTARBLOCK(M"+str(i)+")\n"
+            state_str+="available(M"+str(i)+")\n"
+        # now load the state    
+        stateread.apply_state_str(self.world, state_str)
+        # creates a PhaseManager object, which wraps a MIDCA object
+        myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=0)
+        #asqiiDisplay(world)
+        # add phases by name
+        for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+            myMidca.append_phase(phase)
 
-            # add the modules which instantiate basic blocksworld operation
-            myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-            myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-            myMidca.append_module("Perceive", perceive.PerfectObserver())
-            myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-            # need to make sure to disable all user input modules #myMidca.append_module("Interpret", guide.UserGoalInput())
-            myMidca.append_module("Eval", evaluate.SimpleEval())
-            myMidca.append_module("Intend", intend.SimpleIntend())
-            myMidca.append_module("Plan", planning.PyHopPlanner(extinguish, mortar))
-            myMidca.append_module("Act", act.SimpleAct())
+        # add the modules which instantiate basic blocksworld operation
+        myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+        myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
+        myMidca.append_module("Perceive", perceive.PerfectObserver())
+        myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+        # need to make sure to disable all user input modules #myMidca.append_module("Interpret", guide.UserGoalInput())
+        myMidca.append_module("Eval", evaluate.SimpleEval())
+        myMidca.append_module("Intend", intend.SimpleIntend())
+        myMidca.append_module("Plan", planning.PyHopPlanner(extinguish, mortar))
+        myMidca.append_module("Act", act.SimpleAct())
 
-            #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=self.arsonChanceArg, arsonStart=10), 1)
-            #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-            myMidca.insert_module('Interpret', guide.TFStack(), 1)
+        #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=self.arsonChanceArg, arsonStart=10), 1)
+        #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
+        myMidca.insert_module('Interpret', guide.TFStack(), 1)
 
-            myMidca.insert_module('Eval', evaluate.MortarScorer(), 1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
-            # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
-            myMidca.storeHistory = False
-            myMidca.initGoalGraph()
-            ## DO NOT DO THIS: experiment.py will do this automatically: myMidca.init()
+        myMidca.insert_module('Eval', evaluate.MortarScorer(), 1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+        # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+        myMidca.storeHistory = False
+        myMidca.initGoalGraph()
+        ## note: myMidca.init() is NOT called here, instead in singlerun()
 
-            #print "Created MIDCA "+str(id(myMidca))+" w/ currMortarCount="+str(self.currMortarCount)
-
-            self.myMidca = myMidca
-            self.initialized = True
+        self.myMidca = myMidca
+        self.initialized = True
 
     def run_cycles(self, num):
-        
         for cycle in range(num):
-            ##print("'''''''''''''''  in run_cycles''''''''''''''''''''''''")
             self.myMidca.one_cycle(verbose = 0, pause = 0)
-            #self.myMidca.display(self.myMidca.midca.world)
-            ##print str(self.myMidca.midca.mem.get(self.myMidca.midca.mem.GOAL_GRAPH))
-            ##print str(cycle)
-
+            
     def getMIDCAObj(self):
         return self.myMidca
 
@@ -194,18 +169,28 @@ class MIDCAInstance():
         else:
             return 'not-initialized'
 
+###########
+## Graph ##
+###########
+
 def get_max_score_for_cycles(cycle):
+    '''
+    Used to convert score into percent. These hardcoded scores are the max scores for the corresponding cycles.
+    '''
     max_scores = {10:6,20:10,30:20,40:26,50:30,60:40,70:46,80:50,90:60,100:66}
     return max_scores[cycle]
 
 def graph(prev_file):
+    '''
+    Produce the graph
+    '''
     from mpl_toolkits.mplot3d import Axes3D
     import matplotlib.pyplot as plt
     from matplotlib import cm
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-(prev_file+1)]
-    print("About to graph data from "+str(datafile))
+    print("-- About to graph data from "+str(datafile))
     header = True
     mortar_ys = []
     cycles_xs = []
@@ -224,35 +209,17 @@ def graph(prev_file):
                 score_zs.append(score)
                 cycles_xs.append(num_cycles)
                 
-        
-    #score_zs = map(lambda x: (x*1.0) / max_score, score_zs)    
-        
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
-#     for item in dir(ax):
-#         print("  "+str(item))
-#     
     ax.set_zlim(bottom=0.0,top=1.0)
     ax.set_xlim(max(cycles_xs),0)
     ax.set_ylim(max(mortar_ys),0)
-    #ax.scatter(mortar_xs,cycles_ys,score_zs,cmap=cm.coolwarm)
     ax.legend()
     ax.set_xlabel("Goals")
     ax.set_ylabel("Resources")
     ax.set_zlabel("Score")
     plt.show()
-
-#     fig = plt.figure()
-#     ax = fig.gca(projection='3d')
-#     X = mortar
-#     Y = score
-#     Z = cycles
-#     surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm,
-#                        linewidth=0, antialiased=False)
-#     fig.colorbar(surf, shrink=0.5, aspect=5)
-# 
-#     plt.show()
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'graph':
@@ -263,8 +230,4 @@ if __name__ == "__main__":
             graph(0)
     else:   
         runexperiment()
-        # set up an Experiment
-#         ex = Experiment()
-#         ex.setRunFunction(singlerun)
-#         ex.appendRunArgs()
-#         
+          
