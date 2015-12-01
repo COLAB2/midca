@@ -141,7 +141,8 @@ def put_m(state,b1,b2):
             return [('stack_mortared',b1,b2,mortar_block)]
         else:
             # no mortar left, continue stacking like normal
-            return [('stack',b1,b2)]
+            #return [('stack',b1,b2)]
+            return False
     else:
         return False
             

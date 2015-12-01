@@ -5,6 +5,7 @@ BLOCK(table)
 BLOCK(D_)
 ARSONIST(Gui Montag)
 
+
 on(B_, A_)
 on(D_, B_)
 on-table(A_)
@@ -15,6 +16,7 @@ block(B_)
 block(C_)
 triangle(D_)
 table(table)
+
 
 clear(C_)
 clear(D_)
