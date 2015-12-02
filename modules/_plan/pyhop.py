@@ -238,9 +238,10 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     """
     print("tasks: ")
     print("".join([str(x) for x in tasks] ))
-    
+    print("plan:")
+    print(plan)
     time.sleep(3)
-   
+        
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
@@ -254,7 +255,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                   ", need to backtrack to level " + str(fired_monitor.depth))
             return False
         else:
-            print("here!")
             fired_monitor.is_fired = False
     else:
         if task1[0] in operators:
@@ -297,11 +297,14 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             print(subtasks)
                             print("----state:")
                             print_state(state, 4)
-#                             newstate = fired_monitor.change_state(state, task1[1])
-#                             print("-----new state:")
-#                             print_state(newstate, 4)
-                            
-                            solution = seek_plan(state,tasks[1:],plan,depth+1, verbose)
+                            k = 0
+                            #cut from the plan
+                            for task in tasks:
+                                if task[0] != 'move_blocks':
+                                    k = k + 1
+                                else:
+                                    break    
+                            solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
                         else:
                             print("'" + task1[0] + "' was failed, it will choose another method--")
                             #RemoveMonitors(task1[0])
