@@ -1,4 +1,4 @@
-"""
+ """
 Blocks-world test data for Pyhop 1.1.
 Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.

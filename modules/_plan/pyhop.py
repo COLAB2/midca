@@ -236,12 +236,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-    print("tasks: ")
-    print("".join([str(x) for x in tasks] ))
-    print("plan:")
-    print(plan)
-    time.sleep(3)
-        
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
@@ -293,10 +287,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             fired_monitor.is_fired = False
                             #generated_monitors.remove(fired_monitor)
                             
-                            print("here! DO SOMETHING!")
-                            print(subtasks)
-                            print("----state:")
-                            print_state(state, 4)
                             k = 0
                             #cut from the plan
                             for task in tasks:

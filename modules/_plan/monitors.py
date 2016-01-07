@@ -51,23 +51,24 @@ def clear_block(state, depth, b1, task_name):
     
         while(m.is_fired == False):
                         #f.write (b1 + " true")
-#             i = i + 1
-#             time.sleep(2)
-#             if i > 5:
-#                 if b1 == "C_":
-#                     m.is_fired = True
-#                     state.clear[b1] = False
-#                     state.pos.update({"F_" : b1})
-#                     print("monitor: " + b1 + "is not clear!")
+            i = i + 1
+            time.sleep(2)
+            if i > 5:
+                if b1 == "C_":
+                    m.is_fired = True
+                    state.clear[b1] = False
+                    state.pos.update({"F_" : b1})
+                    print("monitor: " + b1 + "is not clear!")
                         
             if state.clear[b1] == False:
                 print("monitor: " + b1 + "is not clear!")
                 m.is_fired = True
+ 
+ 
                
 #it is about the position of block b which should be on top of c
 def pos_of_block(state, depth, b, task_name):
     i = 0
-    print "here@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     m =  filter(lambda x: x.name.__name__ == "pos_of_block" and x.block == b, pyhop.generated_monitors)
     if m: 
         m[0].add_task(task_name)    
@@ -84,7 +85,6 @@ def pos_of_block(state, depth, b, task_name):
         print c
         
         while(m.is_fired == False):
-                        #f.write (b1 + " true")
             i = i + 1
             time.sleep(2)
             if i > 5:
