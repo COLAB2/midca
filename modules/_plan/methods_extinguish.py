@@ -86,6 +86,8 @@ def move1(state,b1,dest):
     else:
     	return [('get', b1), ('put', b1,dest)]
 
+
+
 ### methods for "get"
 
 def get_by_unstack(state,b1):
