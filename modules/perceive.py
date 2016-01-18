@@ -28,14 +28,16 @@ class ROSObserver:
 		
 	def run(self, cycle, verbose = 2):
 		#self.ObserveWorld() 
-		
-		
 		detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
+		detecttionBlockState = self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
 		utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
 		feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
 		world = self.mem.get_and_lock(self.mem.STATE)
+		
 		if not detectionEvents:
 			detectionEvents = []
+		if not detecttionBlockState:
+			detecttionBlockState = []
 		if not utteranceEvents:
 			utteranceEvents = []
 		if not feedback:
@@ -43,6 +45,9 @@ class ROSObserver:
 		for event in detectionEvents:
 			event.time = time.now()
 			world.sighting(event)
+		for blockstate in detecttionBlockState:
+			blockstate.time = time.now()
+			world.position(blockstate)
 		for event in utteranceEvents:
 			event.time = time.now()
 			world.utterance(event)

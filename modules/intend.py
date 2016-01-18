@@ -19,5 +19,5 @@ class SimpleIntend:
 			if verbose >= 2:
 				print "Selecting goal(s):", 
 				for goal in goals:
-					print goal,
+					print goal["objective"] + " the " + goal["directObject"],
 				print

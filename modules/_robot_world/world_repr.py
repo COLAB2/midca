@@ -7,6 +7,14 @@ class Location:
 		self.y = y
 		self.z = z	
 
+
+class pos_block:
+	def __init__(self, id, position, isclear):
+		self.time = time.now()
+		self.id = id
+		self.position = position
+		self.isclear = isclear
+
 class DetectedObject:
 	
 	'''
@@ -51,9 +59,26 @@ class SimpleWorld:
 		self.sightings = {}
 		self.objectsByID = {}
 		self.utterances = []
-	
+		self.pos = {}
+		self.clear = []
 	def utterance(self, utteranceEvent):
 		self.utterances.append(utteranceEvent)
+	
+	def position(self, block_pos):
+		id = block_pos.id
+		
+		
+		
+		if id in self.objectsByID:
+			object = self.objectsByID[id]
+		else:
+			object = DetectedObject(id)
+			print(object)
+			self.objectsByID[id] = object
+		if object not in self.pos:
+			self.pos[object] = []
+		self.pos[object].append(block_pos)
+		
 	
 	def sighting(self, detectionEvent):
 		id = detectionEvent.id
@@ -122,7 +147,12 @@ class SimpleWorld:
 		object = self.get_object(objectOrID)
 		if object and object in self.sightings:
 			return self.sightings[object]
-	
+		
+	def all_pos(self, objectOrID):
+		object = self.get_object(objectOrID)
+		if object and object in self.pos:
+			return self.pos[object]
+		
 	def location_history(self, objectOrID):
 		'''
 		returns a list of tuples (loc, time) for the locations of the designated object.

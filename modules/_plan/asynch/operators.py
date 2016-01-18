@@ -27,10 +27,15 @@ def reach(state, objectID):
 def grab(state, objectID):
 	return State
 
+def putdown(state, objectID):
+	return State
+
 def raising(state, objectID):
+	return state
+def unstack(state, b1, b2):
 	return state
 
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, reach, grab, raising)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, reach, grab, raising, unstack, putdown)
 
 

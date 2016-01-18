@@ -19,6 +19,7 @@ class Memory:
 	FEEDBACK = "__feedback"
 	#ROS constants used by rosrun classes and related modules in act and perceive.
 	ROS_OBJS_DETECTED = "__detected object queue"
+	ROS_OBJS_STATE = "__state"
 	CALIBRATION_MATRIX = "__camera calibration status"
 	CALIBRATION_Z = "__Z"
 	ROS_WORDS_HEARD = "__words heard queue"

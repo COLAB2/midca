@@ -224,8 +224,8 @@ class InstructionReceiver:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 						
-			else:
-				print "message is unknown"
+# 			else:
+# 				print "message is unknown"
 							
 		self.lastTime = time.now()
 		

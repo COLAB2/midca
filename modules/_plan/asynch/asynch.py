@@ -68,6 +68,11 @@ def asynch_plan(mem, midcaPlan):
 			actions.append(DoReach(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			LOC_TOPIC, cmdID))	
+		elif midcaAction[0] == "unstack":
+			cmdID = rosrun.next_id()
+			actions.append(DoReach(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			LOC_TOPIC, cmdID))	
 		elif midcaAction[0] == "grab":
 			cmdID = rosrun.next_id()
 			actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
@@ -394,7 +399,92 @@ class DoReach(AsynchAction):
 						print "MIDCA received feedback that action", self, "has failed"
 					return False
 		return False
+
+class DoUnstack(AsynchAction):
 	
+	'''
+	Action that orders a point action. To 
+	ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
+	same target should be done immediately before this.
+	'''
+	
+	def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topic,
+	msgID):
+		self.objectOrID = objectOrID
+		self.maxAllowedLag = maxAllowedLag
+		self.maxDuration = maxDuration
+		self.lastCheck = 0.0
+		self.topic = topic
+		self.complete = False
+		self.msgID = msgID
+		executeAction = lambda mem, midcaAction, status: self.send_point()
+		completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+		AsynchAction.__init__(self, mem, midcaAction, executeAction, 
+		completionCheck, True)
+	
+	
+        
+	def send_point(self):
+		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		print lastLocReport
+		
+		t = time.now()
+		if not lastLocReport:
+			if verbose >= 1:
+				print "No object location found, so action:", self, "will fail."
+			self.status = FAILED
+			return
+		if t - lastLocReport[1] > self.maxAllowedLag:
+			if verbose >= 1:
+				print "Last object location report is too old -", 
+				(t - lastLocReport[1]).total_seconds(), "seconds - so action:", self, 
+				"will fail."
+			self.status = FAILED
+			return
+		
+		x = lastLocReport[0].x
+		y = lastLocReport[0].y
+		
+		H = self.mem.get(self.mem.CALIBRATION_MATRIX)
+		z = 0.02477944410983878
+		floor_point = pixel_to_floor(H,[x, y])
+		
+		self.msgDict = {'x': floor_point[0], 'y': floor_point[1], 
+		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		
+		print self.msgDict
+		
+		print "trying to send"
+		print self.topic
+		
+		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
+		if not sent:
+			if verbose >= 1:
+				print "Fail"
+# 				print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
+# 				"assumed failed."
+			self.status = FAILED
+	
+	def check_confirmation(self):
+		checkTime = self.lastCheck
+		self.lastCheck = time.now()
+		feedback = self.mem.get(self.mem.FEEDBACK)
+		if not feedback:
+			return False
+		for item in reversed(feedback):
+			#if all items have been checked, either in this check or previous, return
+			if item['received_at'] - checkTime < 0:
+				return False
+			#else see if item is a completion or failure message with id == self.msgID
+			if item[CMD_ID_KEY] == self.msgID:
+				if item[FEEDBACK_KEY] == COMPLETE:
+					return True
+				elif item[FEEDBACK_KEY] == FAILED:
+					self.status = FAILED
+					if verbose >= 1:
+						print "MIDCA received feedback that action", self, "has failed"
+					return False
+		return False	
 
 class DoRaise(AsynchAction):
 	
