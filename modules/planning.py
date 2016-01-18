@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca
+from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, monitors
 from MIDCA import plans, base
 import collections
 import traceback
@@ -24,6 +24,7 @@ class GenericPyhopPlanner(base.BaseModule):
             declare_operators()
             declare_monitors()
             self.working = True
+            print "right!!"
         except:
             print "Error declaring pyhop methods and operators. This planner will be \
             disabled"
@@ -182,9 +183,11 @@ class PyHopPlanner(base.BaseModule):
         if extinguishers:
             methods_extinguish.declare_methods()
             operators_extinguish.declare_ops()
+            monitors.declare_monitors()
         else:
             methods.declare_methods()
             operators.declare_ops()
+            monitors.declare_monitors()
 			
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
