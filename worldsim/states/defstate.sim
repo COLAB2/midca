@@ -7,8 +7,8 @@ BLOCK(F_)
 ARSONIST(Gui Montag)
 
 on(B_, A_)
-on(D_, C_)
-on(C_,B_)
+on(D_, B_)
+on-table(C_)
 on-table(A_)
 on-table(F_)
 
@@ -21,6 +21,7 @@ table(table)
 
 
 clear(D_)
+clear(C_)
 clear(F_)
 arm-empty()
 

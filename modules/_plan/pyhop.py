@@ -299,10 +299,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
                     solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
                     if solution == False:
-                        print("solution is false")
-                        if fired_monitor:
-                            print("depth of fired monitor"+ str(fired_monitor.depth))
-                            print("depth of this task" + str(depth))
                         if fired_monitor and fired_monitor.depth > depth:
                             print("fired-monitor")
                             print(plan)
@@ -310,6 +306,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             #generated_monitors.remove(fired_monitor)
                             
                             k = 0
+                            solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
+                            
                             #cut from the plan
                             #here I should check to see which method should be run next 
                             # here I should run all the methods to see which one work
@@ -319,14 +317,14 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
 #                                     k = k + 1
 #                                 else:
 #                                     break
-                            for task in tasks:
-                                print("trying this task to see if it works with the new state "+task[0])
-                                print(str(k))
-                                solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
-                                if solution == False:
-                                    k = k + 1
-                                else:
-                                    break
+#                             for task in tasks:
+#                                 print("trying this task to see if it works with the new state "+task[0])
+#                                 print(str(k))
+#                                 solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
+#                                 if solution == False:
+#                                     k = k + 1
+#                                 else:
+#                                     break
                                 
                             #solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
                             
