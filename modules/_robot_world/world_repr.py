@@ -61,14 +61,12 @@ class SimpleWorld:
 		self.utterances = []
 		self.pos = {}
 		self.clear = []
+		
 	def utterance(self, utteranceEvent):
 		self.utterances.append(utteranceEvent)
 	
 	def position(self, block_pos):
 		id = block_pos.id
-		
-		
-		
 		if id in self.objectsByID:
 			object = self.objectsByID[id]
 		else:

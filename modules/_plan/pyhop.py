@@ -202,6 +202,8 @@ def pyhop(state,tasks,verbose=0):
     If successful, return the plan. Otherwise return False.
     """
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
+    print("call seek_plan")
+    print_methods(methods)
     result = seek_plan(state,tasks,[],0,verbose)
     if verbose>0: print('** result =',result,'\n')
     return result
@@ -213,12 +215,17 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
+    print("pyhop planner....")
+    print('depth {} tasks {}'.format(depth,tasks))
+    #print_state(state)
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
+        print(plan)
         return plan
     task1 = tasks[0]
     if task1[0] in operators:
+        print(task1[0])
         if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
         newstate = operator(copy.deepcopy(state),*task1[1:])
@@ -230,9 +237,12 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             if solution != False:
                 return solution
     if task1[0] in methods:
+        print(task1[0])
         if verbose>2: print('depth {} method instance {}'.format(depth,task1))
         relevant = methods[task1[0]]
+        
         for method in relevant:
+            print("it is here")
             subtasks = method(state,*task1[1:])
             # Can't just say "if subtasks:", because that's wrong if subtasks == []
             if verbose>2:
@@ -241,5 +251,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                 solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution != False:
                     return solution
+            else:
+                print("s is false")
     if verbose>2: print('depth {} returns failure'.format(depth))
     return False

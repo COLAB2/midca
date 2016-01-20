@@ -63,14 +63,14 @@ def asynch_plan(mem, midcaPlan):
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			POINT_TOPIC, cmdID))
 		
-		elif midcaAction[0] == "reach":
+		elif midcaAction[0] == "reach_to_pickup":
 			cmdID = rosrun.next_id()
 			actions.append(DoReach(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			LOC_TOPIC, cmdID))	
-		elif midcaAction[0] == "unstack":
+		elif midcaAction[0] == "reach_to_unstack":
 			cmdID = rosrun.next_id()
-			actions.append(DoReach(mem, midcaAction, midcaAction[1], 
+			actions.append(DoUnstack(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			LOC_TOPIC, cmdID))	
 		elif midcaAction[0] == "grab":
@@ -425,7 +425,7 @@ class DoUnstack(AsynchAction):
 	
         
 	def send_point(self):
-		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		lastLocReport = get_last_location(self.mem, 'red block')
 		print lastLocReport
 		
 		t = time.now()
