@@ -42,6 +42,9 @@ def MoveArm(point):
 def Grasp():
     baxter.closeLeftGripper()
     return True
+def release():
+    baxter.openLeftGripper()
+    return True
 
 def point_2_callback(point, cmd_id = 'point_2_def_id'):
     
@@ -55,7 +58,7 @@ def point_2_callback(point, cmd_id = 'point_2_def_id'):
             midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
         
         else:
-            baxter.openLeftGripper()
+            #baxter.openLeftGripper()
             midca_feedback(cmd_id = cmd_id, code = asynch.COMPLETE)
             
         #limb.move_to_joint_positions(angles) #blocking
@@ -72,6 +75,12 @@ def msg_callback(point, cmd_id = 'grasp_id'):
 #     else:
 #         rospy.loginfo("Point: target out of pointing range " + str(data))
 #         midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
+
+def release_callback(point, cmd_id = 'r_id'):
+        print("yeah got it")
+        release()
+        
+        midca_feedback(cmd_id = cmd_id, code = asynch.COMPLETE)
 
 def point_callback(point, cmd_id = 'point_def_id'):
     
@@ -124,13 +133,21 @@ def raising_callback(data):
             point = Point(x = d['x'], y = d['y'], z = d['z'])
             
             
-        except NumberFormatException:
+        except Exception:
             rospy.logerr("Msg received by grabbing nodes, but target coordinates" +
                          " are not well-formed. Msg will be ignored.")
             midca_feedback(cmd_id = d['cmd_id'], code = asynch.FAILED)
             return
         point_2_callback(point, d['cmd_id'])
-        
+
+
+def releasing_callback(data):
+    print("got msg:", data)
+    msg = data.data
+    d = rosrun.msg_as_dict(msg)
+    
+    release_callback(msg, d['cmd_id'])
+   
 
 def grabbing_callback(data):
     print("got msg:", data)
@@ -143,12 +160,13 @@ def grabbing_callback(data):
     
 def start_node(targetTopic, limbName = 'left'):
     rospy.init_node('baxter_grabbing')
+    print("start node")
     rospy.loginfo("Reading point commands from topic " + targetTopic)
     #rospy.Subscriber(targetTopic, String, fake_point) 
     rospy.Subscriber("loc_cmd", String, reaching_callback)    
     rospy.Subscriber("grabbing_cmd", String, grabbing_callback)
     rospy.Subscriber("raise_cmd", String, raising_callback)
-    
+    rospy.Subscriber("release_cmd", String, releasing_callback)
     baxter.initiate()
     
     #origin = baxter.getLeftArmPosition()

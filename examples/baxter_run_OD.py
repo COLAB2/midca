@@ -40,6 +40,7 @@ rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
 	rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
 	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.LOC_TOPIC, String), 
 						rosrun.OutgoingMsgHandler(asynch.GRAB_TOPIC, String),
+						rosrun.OutgoingMsgHandler(asynch.RELEASE_TOPIC, String),
 						rosrun.OutgoingMsgHandler(asynch.RAISE_TOPIC, String)])
 rosMidca.ros_connect()
 

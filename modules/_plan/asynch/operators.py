@@ -24,6 +24,10 @@ def block_until_complete(state):
 def grab(state, objectID):
 	return state
 
+def release(state, objectID):
+	return state
+
+
 def putdown(state,b):
     if get_last_position(state, b) == 'in-arm':
         set_position(state, b, 'table')
@@ -119,6 +123,7 @@ def set_clear_status(state, objectOrID, newClearStatus):
 
 
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
+						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release)
 
 

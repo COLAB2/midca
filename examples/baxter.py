@@ -36,6 +36,7 @@ class Baxter:
         self.leftGripper.close()
         
     def openLeftGripper(self):
+        print("open gripper")
         self.leftGripper.open()
     
     def inverseKinematics(self, limb, point, orientation):
