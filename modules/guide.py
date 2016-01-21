@@ -194,7 +194,7 @@ class InstructionReceiver:
 						goal graph"
 			if utterance == "get the red block":
 				goal = goals.Goal(objective = "holding", subject = "self", 
-				directObject = "red block", indirectObject = "observer")
+				directObject = "red block", indirectObject = "observer", pos = 'red block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:
@@ -215,7 +215,29 @@ class InstructionReceiver:
 			
 			if utterance == "get the green block":
 				goal = goals.Goal(objective = "holding", subject = "self", 
-				directObject = "green block", indirectObject = "observer")
+				directObject = "green block", indirectObject = "observer", pos = 'green block:table')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "stack green block on red block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'green block:red block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+						
+			if utterance == "stack red block on grenn block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:

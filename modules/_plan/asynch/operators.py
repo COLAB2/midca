@@ -22,10 +22,15 @@ def block_until_complete(state):
 
 
 def grab(state, objectID):
-	return State
+	return state
 
-def putdown(state, objectID):
-	return State
+def putdown(state,b):
+    if get_last_position(state, b) == 'in-arm':
+        set_position(state, b, 'table')
+        set_clear_status(state, b, 'clear')
+        #state.holding = False
+        return state
+    else: return False
 
 def raising(state, objectID):
 	return state
@@ -34,7 +39,7 @@ def raising(state, objectID):
 def reach_to_pickup(state,b):
     if get_last_position(state, b) == 'table' and get_last_clear_status(state, b) == 'clear':
         #state.position[b] = 'hand'
-        set_position(state, b, 'hand')
+        set_position(state, b, 'in-arm')
         #state.isclear[b] = False
         set_clear_status(state, b, 'not clear')
         #state.holding = b
@@ -43,12 +48,27 @@ def reach_to_pickup(state,b):
 
 def reach_to_unstack(state,b,c):
     if get_last_position(state, b) == c and get_last_clear_status(state, b) == 'clear':
-        set_position(state, b, 'hand')
+        set_position(state, b, 'in-arm')
         set_clear_status(state, b, 'not clear')
         #state.holding = b
         set_clear_status(state, c, 'clear')
         return state
     else: return False
+
+def stack(state,b,c):
+    #if get_last_position(state, b) == 'in-arm' and get_last_clear_status(state, b) == 'clear':
+    raw_input('Enter ...')
+    if get_last_clear_status(state, c) == 'clear':
+    	print("yes it is clear")
+        set_position(state, b, c)
+        set_clear_status(state, b, 'clear')
+        #state.holding = False
+        set_clear_status(state, c, 'not clear')
+        return state
+    else:
+    	print("return false") 
+    	return False
+
 
 def get_last_position(state, objectOrID):
 	
@@ -96,7 +116,9 @@ def set_clear_status(state, objectOrID, newClearStatus):
 				return state
 	return None
 
+
+
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, grab, raising, putdown, reach_to_pickup, reach_to_unstack)
+	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack)
 
 

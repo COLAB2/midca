@@ -36,11 +36,17 @@ def get_last_clear_status(state, objectOrID):
 			if state_pos.isclear:
 				return (state_pos.isclear)
 	return None
+
+def all_blocks(state):
+    #return state.all_objects()
+    return ['green block', 'red block']
 	
 def achieve_goals_m(state, goals):
 	print("achieve_goals_m")
+	
 	if goals:
 		goal = goals[0]
+		get_goal_pos(goal)
 		object = goal["directObject"]
 		#print(object + " is " + get_last_clear_status(state, object))
 		if goal["objective"] == "show-loc":
@@ -48,7 +54,7 @@ def achieve_goals_m(state, goals):
 		
 		if goal["objective"] == "holding":
 			print("holding")
-			return [("get", goal["directObject"]), ("achieve_goals", goals[1:])]
+			return [("move_blocks", goal)]
 		
 # 		if goal["objective"] == "holding":
 #  			if get_last_clear_status(state, object) == 'clear':
@@ -65,30 +71,50 @@ def achieve_goals_m(state, goals):
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
+goal_pos_dic = {}
 
+def get_goal_pos(goal):
+	poses = goal["pos"]
+	goal_pos_dic.update({poses.split(":")[0]: poses.split(":")[1]})
+	 
+	
 def is_done(b1,state,goal):
-    if b1 == 'table': return True
-    if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
-        return False
-    if state.pos[b1] == 'table': return True
-    if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
-    	return False
-    return is_done(state.pos[b1],state,goal)
+	print("block: " + b1)
+	if b1 == 'table': return True
+	if b1 in goal_pos_dic:
+		print(goal_pos_dic[b1])
+	else:
+		print("no!")
+	if b1 in goal_pos_dic and str(goal_pos_dic[b1]) != str(get_last_position(state, b1)):
+		print("return false")
+		return False
+	if get_last_position(state, b1)== 'table': return True
+	if get_last_position(state, b1) in goal_pos_dic.values() and (b1 not in goal_pos_dic or goal_pos_dic[b1] != get_last_position(state, b1)):
+		return False
+	raw_input('Enter ...')
+	return is_done(get_last_position(state, b1),state,goal)
 
 def status(b1,state,goal):
-    if is_done(b1,state,goal):
-        return 'done'
-    elif not (state.clear[b1] or state.pos[b1] == "in-arm"):
-        return 'inaccessible'
-    elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
-        return 'move-to-table'
-    elif is_done(goal.pos[b1],state,goal) and state.clear[goal.pos[b1]]:
-        return 'move-to-block'
-    else:
-        return 'waiting'
+	print("status" + b1)
+	if b1 in goal_pos_dic:
+		print(goal_pos_dic[b1])
+	print("***********")
+	if is_done(b1,state,goal):
+		print("done")
+		return 'done'
+	elif not (get_last_clear_status(state, b1) or get_last_position(state, b1) == "hand"):
+		rprint('inaccessible')
+		return 'inaccessible'
+	elif not (b1 in goal_pos_dic) or str(goal_pos_dic[b1]).strip() == 'table':
+		print("move to table")
+		return 'move-to-table'
+	elif is_done(goal_pos_dic[b1],state,goal) and get_last_clear_status(state, goal_pos_dic[b1]):
+		print("move to block")
+		return 'move-to-block'
+	else:
+		print("waiting")
+		return 'waiting'
 
-def all_blocks(state):
-    return state.clear.keys()
 
 
 """
@@ -106,14 +132,19 @@ def moveb_m(state,goal):
     do so and call move_blocks recursively. Otherwise, no blocks need
     to be moved.
     """
+    
     for b1 in all_blocks(state):
+    	print("___block: " + b1)
+    	raw_input('Enter ...')
         s = status(b1,state,goal)
         if s == 'move-to-table':
-            return [('move_one',b1,'table'),('move_blocks',goal)]
+        	print("___move one")
+        	return [('move_one',b1,'table'),('move_blocks',goal)]
         elif s == 'move-to-block':
-            return [('move_one',b1,goal.pos[b1]), ('move_blocks',goal)]
+            return [('move_one',b1,goal_pos_dic[b1]), ('move_blocks',goal)]
         else:
-            continue
+        	print("continue")
+        	continue
     #
     # if we get here, no blocks can be moved to their final locations
     b1 = pyhop.find_if(lambda x: status(x,state,goal) == 'waiting', all_blocks(state))
@@ -133,7 +164,7 @@ def move1(state,b1,dest):
     """
     Generate subtasks to get b1 and put it at dest.
     """
-    if state.pos[b1] == "in-arm":
+    if get_last_position(state, b1) == "in-arm":
     	return [('put', b1,dest)]
     else:
     	return [('get', b1), ('put', b1,dest)]
@@ -146,12 +177,13 @@ def get_by_unstack(state,b1):
     return [('unstack_task',b1)]
     #return False
 
-def get_by_pickup(state,b1):
+def get_m(state,b1):
     """Generate a pickup subtask."""
-    print("get_by_pickup")
-    print(get_last_clear_status(state, b1))
-    #if get_last_clear_status(state, b1) == 'clear':
-    return [('pickup_task',b1)]
+    if get_last_clear_status(state, b1) == 'clear' and get_last_position(state, b1) == 'table':
+     	return [('pickup_task',b1)]
+    elif get_last_clear_status(state, b1) == 'clear' and get_last_position(state, b1) != 'table':
+    	return [('unstack_task',b1)]
+     	
     #return False
     
 
@@ -160,7 +192,7 @@ def put_m(state,b1,b2):
     Generate either a putdown or a stack subtask for b1.
     b2 is b1's destination: either the table or another block.
     """
-    if state.holding == b1:
+    if get_last_position(state, b1) == 'in-arm':
         if b2 == 'table':
             return [('putdown',b1)]
         else:
@@ -193,7 +225,7 @@ def declare_methods():
 	pyhop.declare_methods('put',put_m)
 	pyhop.declare_methods('unstack_task',unstack_m)
 	pyhop.declare_methods('pickup_task',pickup_m)
-	pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
+	pyhop.declare_methods('get',get_m)
 	pyhop.declare_methods('move_one',move1)
 	pyhop.declare_methods('move_blocks',moveb_m)
 

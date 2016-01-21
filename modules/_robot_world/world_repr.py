@@ -151,6 +151,9 @@ class SimpleWorld:
 		if object and object in self.pos:
 			return self.pos[object]
 		
+	def all_objects(self):
+		return self.objectsByID
+		
 	def location_history(self, objectOrID):
 		'''
 		returns a list of tuples (loc, time) for the locations of the designated object.
