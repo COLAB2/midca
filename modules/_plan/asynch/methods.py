@@ -194,9 +194,9 @@ def put_m(state,b1,b2):
     """
     if get_last_position(state, b1) == 'in-arm':
         if b2 == 'table':
-            return [('putdown',b1), ('release', b1)]
+            return [('putdown',b1), ('release', b1), ("raising", b1)]
         else:
-            return [('stack',b1,b2), ('release', b1)]
+            return [('stack',b1,b2), ('release', b1), ("raising", b1)]
     else:
         return False
 
