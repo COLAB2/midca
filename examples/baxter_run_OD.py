@@ -1,7 +1,7 @@
 #!/usr/bin/env python 
 from MIDCA import base, rosrun
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
-from MIDCA.modules._plan.asynch import asynch, operators, methods
+from MIDCA.modules._plan.asynch import asynch, operators, methods, monitors
 from MIDCA.logging import Logger
 import inspect, os
 from std_msgs.msg import String
@@ -17,7 +17,9 @@ def ros_style_midca():
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
 	myMidca.append_module("Intend", intend.SimpleIntend())
 	myMidca.append_module("Plan", planning.AsynchPyhopPlanner(methods.declare_methods, 
-	operators.declare_ops))
+	operators.declare_ops, monitors.declare_monitors
+	
+	))
 	myMidca.append_module("Act", act.AsynchronousAct())
 	return myMidca
 	

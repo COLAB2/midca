@@ -89,6 +89,11 @@ def asynch_plan(mem, midcaPlan):
 			actions.append(DoRaise(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			RAISE_TOPIC, cmdID))
+		elif midcaAction[0] == "raising_arm":
+			cmdID = rosrun.next_id()
+			actions.append(DoRaise(mem, midcaAction, ' ', 
+			allowed_sighting_lag(' '), allowed_sighting_wait(' '),
+			RAISE_TOPIC, cmdID))
 		elif midcaAction[0] == "putdown":
 			cmdID = rosrun.next_id()
 			actions.append(DoPut(mem, midcaAction, midcaAction[1], 

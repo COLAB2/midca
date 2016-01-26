@@ -9,22 +9,7 @@ class ROSObserver:
 		self.mem = mem
 		self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 	
-	def ObserveWorld(self):
-		if self.mem.get(self.mem.CALIBRATION_MATRIX).size:
-			matrix = self.mem.get(self.mem.CALIBRATION_MATRIX)
-			z = self.mem.get(self.mem.CALIBRATION_Z)
-			object_location_dic = ObjectDetector.main(matrix, z)
-			
-			for object in object_location_dic:
-				location = object_location_dic[object]
-				self.objID = object + " " + "card"
- 				self.mem.add(self.mem.ROS_OBJS_DETECTED, 
-							world_repr.DetectionEvent(id = self.objID, loc = location.point))
-			
-# 			if(p != None):
-# 				self.objID = "red card"
-# 				self.mem.add(self.mem.ROS_OBJS_DETECTED, world_repr.DetectionEvent(id = self.objID, 
-#  		loc = p.point))
+	
 		
 	def run(self, cycle, verbose = 2):
 		#self.ObserveWorld() 

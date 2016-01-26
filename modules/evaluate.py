@@ -12,7 +12,7 @@ class EvalPointingFromFeedback:
 				print "No current goals. Skipping eval"
 		else:
 			plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
-			if plan.finished():
+			if plan and plan.finished():
 				if verbose >= 1:
 					print "Plan", plan, "finished. Removing it and associated goals"
 				goalGraph = self.mem.get(self.mem.GOAL_GRAPH)

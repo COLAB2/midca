@@ -2,7 +2,7 @@ from _plan import pyhop, methods, operators, methods_extinguish, operators_extin
 from MIDCA import plans
 import collections
 import traceback	
-from MIDCA.modules._plan.asynch import asynch, methods
+from MIDCA.modules._plan.asynch import asynch, methods, monitors
 
 class GenericPyhopPlanner:
 	
@@ -17,10 +17,11 @@ class GenericPyhopPlanner:
 	only be called on old plans that are retrieved.
 	'''
 	
-	def __init__(self, declare_methods, declare_operators, plan_validator = None):
+	def __init__(self, declare_methods, declare_operators, declare_monitors, plan_validator = None):
 		try:
 			declare_methods()
 			declare_operators()
+			declare_monitors()
 			self.working = True
 		except:
 			print "Error declaring pyhop methods and operators. This planner will be \
@@ -170,9 +171,11 @@ class PyHopPlanner:
 		if extinguishers:
 			methods_extinguish.declare_methods()
 			operators_extinguish.declare_ops()
+			monitors.declare_monitors
 		else:
 			methods.declare_methods()
 			operators.declare_ops()
+			monitors.declare_monitors
 	
 	def init(self, world, mem):
 		self.mem = mem

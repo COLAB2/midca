@@ -79,7 +79,7 @@ def get_goal_pos(goal):
 	 
 	
 def is_done(b1,state,goal):
-	print("block: " + b1)
+	#print("block: " + b1)
 	if b1 == 'table': return True
 	if b1 in goal_pos_dic:
 		print(goal_pos_dic[b1])
@@ -194,9 +194,9 @@ def put_m(state,b1,b2):
     """
     if get_last_position(state, b1) == 'in-arm':
         if b2 == 'table':
-            return [('putdown',b1), ('release', b1), ("raising", b1)]
+            return [('putdown',b1), ('release', b1), ('raising', b1)]
         else:
-            return [('stack',b1,b2), ('release', b1), ("raising", b1)]
+            return [('stack',b1,b2), ('release', b1), ('raising', b1)]
     else:
         return False
 

@@ -235,7 +235,7 @@ class InstructionReceiver:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 						
-			if utterance == "stack red block on grenn block":
+			if utterance == "stack red block on green block":
 				goal = goals.Goal(objective = "holding", subject = "self", 
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)

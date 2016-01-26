@@ -1,5 +1,5 @@
 from MIDCA.modules._plan import pyhop
-from docutils.statemachine import State
+
 
 
 def block_until_seen(state, objectID):
@@ -39,6 +39,8 @@ def putdown(state,b):
 def raising(state, objectID):
 	return state
 
+def raising_arm(state):
+	return state
 
 def reach_to_pickup(state,b):
     if get_last_position(state, b) == 'table' and get_last_clear_status(state, b) == 'clear':
@@ -124,6 +126,6 @@ def set_clear_status(state, objectOrID, newClearStatus):
 
 def declare_ops():
 	pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
-						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release)
+						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release, raising_arm)
 
 
