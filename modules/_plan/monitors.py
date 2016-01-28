@@ -37,6 +37,34 @@ def change_state(state, b1):
     state.pos.update({"F_" : b1})
     return state
 
+def on_fire(state, depth, b1, task_name):
+    i = 0
+    m =  filter(lambda x: x.name.__name__ == "on_fire" and x.block == b1, pyhop.generated_monitors)
+    if m: 
+        m[0].add_task(task_name)    
+        print "monitor is already running for " + b1
+    else:
+        print "monitor is added for" + b1 + "to check if it is on fire"
+        m = Monitor(clear_block, b1, depth)
+        m.add_task(task_name)
+        m.change_state = change_state
+        pyhop.generated_monitors.append(m)
+        status_on_fire = state.fire[b1]
+        
+        while(m.is_fired == False):
+                        #f.write (b1 + " true")
+            i = i + 1
+            time.sleep(2)
+            if i > 3:
+                if b1 == "XX_":
+                    m.is_fired = True
+                    state.fire['XX_'] = False
+                    print("monitor: " + b1 + "fire status changed")
+                         
+            if state.fire[b1] != status_on_fire:
+                print("monitor: " + b1 + 'fire status changed')
+                m.is_fired = True
+ 
 def clear_block(state, depth, b1, task_name):
     i = 0
     m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == b1, pyhop.generated_monitors)
@@ -57,15 +85,13 @@ def clear_block(state, depth, b1, task_name):
             if i > 3:
                 if b1 == "C_":
                     m.is_fired = True
-                    state.clear[b1] = False
-                    state.pos.update({"F_" : b1})
+                    state.clear['A'] = False
+                    state.pos.update({"B_" : 'table'})
                     print("monitor: " + b1 + "is not clear!")
                          
             if state.clear[b1] == False:
                 print("monitor: " + b1 + "is not clear!")
                 m.is_fired = True
- 
- 
                
 #it is about the position of block b which should be on top of c
 def pos_of_block(state, depth, b, task_name):
@@ -112,7 +138,9 @@ def declare_monitors(longApprehend = True):
 #     #state.pos[b] == c
     #pyhop.declare_monitors('unstack', pos_of_block)
    #pickup
-    pyhop.declare_monitors('pickup', clear_block)      
+    pyhop.declare_monitors('pickup', clear_block)
+    pyhop.declare_monitors('putoutfire', on_fire)
+          
 #     #get
     #pyhop.declare_monitors('get', clear_block)
 #     

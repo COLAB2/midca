@@ -1,7 +1,8 @@
 #!/usr/bin/env python 
 import MIDCA
 from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide, evaluate
+from MIDCA.modules import simulator, guide, evaluate, intend
+
 import inspect, os
 
 '''
@@ -13,7 +14,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate.sim")
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim", stateFile = MIDCA_ROOT + "worldsim/states/state2.sim")
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.5, arsonStart = 10), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)

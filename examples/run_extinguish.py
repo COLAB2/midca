@@ -8,7 +8,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim", stateFile = MIDCA_ROOT + "worldsim/states/extinguisher_state.sim", extinguish = True)
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim", stateFile = MIDCA_ROOT + "worldsim/states/state2.sim", extinguish = True)
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 5), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)

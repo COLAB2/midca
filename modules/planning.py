@@ -180,15 +180,15 @@ class PyHopPlanner(base.BaseModule):
 
     def __init__(self, extinguishers = False):
         #declares pyhop methods. This is where the planner should be given the domain information it needs.
-        if extinguishers:
-            methods_extinguish.declare_methods()
-            operators_extinguish.declare_ops()
-            monitors.declare_monitors()
-        else:
-            methods.declare_methods()
-            operators.declare_ops()
-            monitors.declare_monitors()
-			
+        #if extinguishers:
+        methods_extinguish.declare_methods()
+        operators_extinguish.declare_ops()
+        monitors.declare_monitors()
+        #else:
+#             methods.declare_methods()
+#             operators.declare_ops()
+#             monitors.declare_monitors()
+            
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -280,12 +280,12 @@ class PyHopPlanner2(base.BaseModule):
 
     def __init__(self, extinguishers = False):
         #declares pyhop methods. This is where the planner should be given the domain information it needs.
-        if extinguishers:
-            methods_extinguish.declare_methods()
-            operators_extinguish.declare_ops()
-        else:
-            methods_midca.declare_methods()
-            operators_midca.declare_ops()
+#         if extinguishers:
+        methods_extinguish.declare_methods()
+        operators_extinguish.declare_ops()
+#         else:
+#             methods_midca.declare_methods()
+#             operators_midca.declare_ops()
 
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):

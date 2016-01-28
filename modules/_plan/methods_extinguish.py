@@ -89,15 +89,20 @@ def move1(state,b1,dest):
 
 
 ### methods for "get"
+def get_burning_block(state, b1):
+    if state.fire[b1]: return[('put_out',b1)]
+    return False 
 
 def get_by_unstack(state,b1):
     """Generate a pickup subtask."""
-    if state.clear[b1]: return [('unstack_task',b1)]
+    if state.fire[b1] and state.clear[b1]: return[('put_out',b1), ('unstack_task',b1)]
+    elif state.clear[b1]: return [('unstack_task',b1)]
     return False
 
 def get_by_pickup(state,b1):
     """Generate a pickup subtask."""
-    if state.clear[b1]: return [('pickup_task',b1)]
+    if state.fire[b1] and state.clear[b1]: return[('put_out',b1), ('pickup_task',b1)]
+    elif state.clear[b1]: return [('pickup_task',b1)]
     return False
     
 ### methods for "pickup_task"

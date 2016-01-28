@@ -56,7 +56,7 @@ def stack(state,b,c):
 
 def putoutfire(state, b, ext):
 	if state.fire[b] == True and state.holdingfireext == ext:
-		state.fire[b] == False
+		state.fire[b] = False
 		return state
 	else: 
 		return False
