@@ -369,6 +369,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
+    s.blockfireext = {}
     blocks = []
     for objname in world.objects:
         if world.objects[objname].type.name == "BLOCK" and objname != "table":
@@ -386,6 +387,9 @@ def pyhop_state_from_world(world, name = "state"):
             s.holdingfireext = atom.args[0].name
         elif atom.predicate.name == "arm-empty":
             s.holding = False
+        #fire ext in a block
+        elif atom.predicate.name == "ext_in_box":
+            s.blockfireext[atom.args[0].name] = atom.args[1].name 
         elif atom.predicate.name == "on":
             s.pos[atom.args[0].name] = atom.args[1].name
         elif atom.predicate.name == "on-table":

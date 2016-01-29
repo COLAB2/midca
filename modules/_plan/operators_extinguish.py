@@ -54,6 +54,7 @@ def stack(state,b,c):
         return state
     else: return False
 
+    
 def putoutfire(state, b, ext):
 	if state.fire[b] == True and state.holdingfireext == ext:
 		state.fire[b] = False
@@ -62,12 +63,13 @@ def putoutfire(state, b, ext):
 		return False
 
 def pickup_extinguisher(state, extinguisher):
-	if extinguisher in state.fire_ext_avail and not state.holdingfireext:
-		state.holdingfireext = extinguisher
-		state.fire_ext_avail.remove(extinguisher)
-		return state
-	else:
-		return False
+    if extinguisher in state.fire_ext_avail and not state.holdingfireext:
+        state.holdingfireext = extinguisher
+        state.fire_ext_avail.remove(extinguisher)
+        state.blockfireext[extinguisher] = 'in-arm'
+        return state
+    else:
+        return False
 
 def putdown_extinguisher(state, extinguisher):
 	if state.holdingfireext == extinguisher:

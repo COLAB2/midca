@@ -139,7 +139,7 @@ def declare_monitors(longApprehend = True):
     #pyhop.declare_monitors('unstack', pos_of_block)
    #pickup
     pyhop.declare_monitors('pickup', clear_block)
-    pyhop.declare_monitors('putoutfire', on_fire)
+    pyhop.declare_monitors('put_out', on_fire)
           
 #     #get
     #pyhop.declare_monitors('get', clear_block)
