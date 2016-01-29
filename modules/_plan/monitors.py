@@ -54,7 +54,7 @@ def on_fire(state, depth, b1, task_name):
         while(m.is_fired == False):
                         #f.write (b1 + " true")
             i = i + 1
-            time.sleep(2)
+            time.sleep(50)
             if i > 3:
                 if b1 == "XX_":
                     m.is_fired = True

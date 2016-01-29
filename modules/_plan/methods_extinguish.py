@@ -135,19 +135,23 @@ def put_m(state,b1,b2):
         return False
 
 def put_out_m(state, b1):
-	if state.fire[b1]:
-		if state.holdingfireext:
-			return [("putoutfire", b1, state.holdingfireext)]
-		elif state.fire_ext_avail:
-			ext = random.choice(list(state.fire_ext_avail))
-			return [('get_extinguisher', ext), ("putoutfire", b1, ext)]
+    if state.fire[b1]:
+        if state.holdingfireext:
+            return [("putoutfire", b1, state.holdingfireext)]
+        elif state.fire_ext_avail:
+            ext = random.choice(list(state.fire_ext_avail))
+            box = state.blockfireext[ext]
+            return [('get_extinguisher', ext, box), ("putoutfire", b1, ext)]
 	else:
 		return []
 
-def get_extinguisher_m(state, extinguisher):
-	if extinguisher in state.fire_ext_avail and not state.holdingfireext:
-		return [("pickup_extinguisher", extinguisher)]
-	else:
+def get_extinguisher_m(state, extinguisher, b):
+    if extinguisher in state.fire_ext_avail and not state.holdingfireext:
+        if state.clear[b]:
+            return [('get', b), ('putdown',b),("pickup_extinguisher", extinguisher)]
+        else:
+            return[('make_block_clear', b),('get_extinguisher', extinguisher, b)]
+    else:
 		return False
 
 def quick_apprehend_m(state, perp):
