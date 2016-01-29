@@ -17,6 +17,7 @@ myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/doma
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.init()
+
 myMidca.run()
 
 '''

@@ -51,19 +51,19 @@ def on_fire(state, depth, b1, task_name):
         pyhop.generated_monitors.append(m)
         status_on_fire = state.fire[b1]
         
-        while(m.is_fired == False):
-                        #f.write (b1 + " true")
-            i = i + 1
-            time.sleep(50)
-            if i > 3:
-                if b1 == "XX_":
-                    m.is_fired = True
-                    state.fire['XX_'] = False
-                    print("monitor: " + b1 + "fire status changed")
-                         
-            if state.fire[b1] != status_on_fire:
-                print("monitor: " + b1 + 'fire status changed')
-                m.is_fired = True
+#         while(m.is_fired == False):
+#                         #f.write (b1 + " true")
+#             i = i + 1
+#             time.sleep(50)
+#             if i > 3:
+#                 if b1 == "XX_":
+#                     m.is_fired = True
+#                     state.fire['XX_'] = False
+#                     print("monitor: " + b1 + "fire status changed")
+#                          
+#             if state.fire[b1] != status_on_fire:
+#                 print("monitor: " + b1 + 'fire status changed')
+#                 m.is_fired = True
  
 def clear_block(state, depth, b1, task_name):
     i = 0
@@ -78,20 +78,20 @@ def clear_block(state, depth, b1, task_name):
         m.change_state = change_state
         pyhop.generated_monitors.append(m)
     
-        while(m.is_fired == False):
-                        #f.write (b1 + " true")
-            i = i + 1
-            time.sleep(2)
-            if i > 3:
-                if b1 == "C_":
-                    m.is_fired = True
-                    state.clear['A'] = False
-                    state.pos.update({"B_" : 'table'})
-                    print("monitor: " + b1 + "is not clear!")
-                         
-            if state.clear[b1] == False:
-                print("monitor: " + b1 + "is not clear!")
-                m.is_fired = True
+#         while(m.is_fired == False):
+#                         #f.write (b1 + " true")
+#             i = i + 1
+#             time.sleep(2)
+#             if i > 3:
+#                 if b1 == "C_":
+#                     m.is_fired = True
+#                     state.clear['A'] = False
+#                     state.pos.update({"B_" : 'table'})
+#                     print("monitor: " + b1 + "is not clear!")
+#                          
+#             if state.clear[b1] == False:
+#                 print("monitor: " + b1 + "is not clear!")
+#                 m.is_fired = True
                
 #it is about the position of block b which should be on top of c
 def pos_of_block(state, depth, b, task_name):
@@ -111,19 +111,19 @@ def pos_of_block(state, depth, b, task_name):
         c = state.pos[b]
         print c
         
-        while(m.is_fired == False):
-            i = i + 1
-            time.sleep(2)
-            if i > 5:
-                if b == "C_":
-                    m.is_fired = True
-                    state.clear[c] = True
-                    state.pos.update({"C_" : 'table'})
-                    print("monitor: " + b + "is not on " + c + "anymore")
-                        
-            if state.pos[b] != c:
-                print("monitor: " + b + "is not on " + c + "anymore")
-                m.is_fired = True
+#         while(m.is_fired == False):
+#             i = i + 1
+#             time.sleep(2)
+#             if i > 5:
+#                 if b == "C_":
+#                     m.is_fired = True
+#                     state.clear[c] = True
+#                     state.pos.update({"C_" : 'table'})
+#                     print("monitor: " + b + "is not on " + c + "anymore")
+#                         
+#             if state.pos[b] != c:
+#                 print("monitor: " + b + "is not on " + c + "anymore")
+#                 m.is_fired = True
     
     
 #

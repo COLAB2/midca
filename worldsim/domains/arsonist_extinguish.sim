@@ -19,6 +19,8 @@ predicate(arsonist, [ars], [ARSONIST])
 predicate(free, [ars], [ARSONIST])
 predicate(fire-extinguisher, [fireExt], [FIRE-EXTINGUISHER])
 predicate(holdingextinguisher, [fireExt], [FIRE-EXTINGUISHER])
+predicate(ext_in_box, [fireExt, blk], [FIRE-EXTINGUISHER, BLOCK])
+
 
 operator(stack, 
 args = [(topblk, BLOCK), (btmblk, BLOCK)], 

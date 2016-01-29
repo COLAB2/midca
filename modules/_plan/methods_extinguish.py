@@ -11,7 +11,19 @@ from MIDCA.modules._plan.pyhop import print_goal
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
-
+#b on c
+def make_block_clear_m(state, c, b):
+    if state.clear[b]:
+        return [('unstack', b, c), ('putdown', b)]
+    else:
+        for b1 in all_blocks(state):
+            if state.pos[b1] == b:
+                break 
+        
+        return [('make_block_clear', b, b1), ('unstack', b, c), ('putdown', b)]
+#         plan.append(('unstack', b1, b))
+#         plan.append(('putdown', b1))
+        
 def is_done(b1,state,goal):
     if b1 == 'table': return True
     if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
@@ -19,11 +31,16 @@ def is_done(b1,state,goal):
     if state.pos[b1] == 'table': return True
     if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
     	return False
+#     if state.blockfireext[state.fire_ext_avail] == b1 and state.fire:
+#         return False
+#     if state.pos[b1] == state.blockfireext[state.fire_ext_avail] and state.fire:
+#         return False
     return is_done(state.pos[b1],state,goal)
 
 def status(b1,state,goal):
     if is_done(b1,state,goal):
         return 'done'
+    
     elif not (state.clear[b1] or state.pos[b1] == "in-arm"):
         return 'inaccessible'
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
@@ -150,7 +167,10 @@ def get_extinguisher_m(state, extinguisher, b):
         if state.clear[b]:
             return [('get', b), ('putdown',b),("pickup_extinguisher", extinguisher)]
         else:
-            return[('make_block_clear', b),('get_extinguisher', extinguisher, b)]
+            for b1 in all_blocks(state):
+                if state.pos[b1] == b:
+                    break  
+            return[('make_block_clear', b, b1),('get_extinguisher', extinguisher, b)]
     else:
 		return False
 
@@ -167,16 +187,17 @@ def long_apprehend_m(state, perp):
 		return []
 
 def declare_methods(longApprehend = True):
-	if longApprehend:
-		pyhop.declare_methods("catch_arsonist", long_apprehend_m)
-	else:
-		pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
-	pyhop.declare_methods("put_out", put_out_m)
-	pyhop.declare_methods('put',put_m)
-	pyhop.declare_methods('unstack_task',unstack_m)
-	pyhop.declare_methods('pickup_task',pickup_m)
-	pyhop.declare_methods('get',get_burning_block,get_by_pickup,get_by_unstack)
-	pyhop.declare_methods('move_one',move1)
-	pyhop.declare_methods('move_blocks',moveb_m)
-	pyhop.declare_methods('get_extinguisher',get_extinguisher_m)
-
+    if longApprehend:
+        pyhop.declare_methods("catch_arsonist", long_apprehend_m)
+    else:
+        pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
+    pyhop.declare_methods("put_out", put_out_m)
+    pyhop.declare_methods('put',put_m)
+    pyhop.declare_methods('unstack_task',unstack_m)
+    pyhop.declare_methods('pickup_task',pickup_m)
+    pyhop.declare_methods('get',get_burning_block,get_by_pickup,get_by_unstack)
+    pyhop.declare_methods('move_one',move1)
+    pyhop.declare_methods('move_blocks',moveb_m)
+    pyhop.declare_methods('make_block_clear',make_block_clear_m)
+    pyhop.declare_methods('get_extinguisher',get_extinguisher_m)
+    
