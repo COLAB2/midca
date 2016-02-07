@@ -113,13 +113,13 @@ def get_burning_block(state, b1):
 def get_by_unstack(state,b1):
     """Generate a pickup subtask."""
     #if state.fire[b1] and state.clear[b1]: return[('put_out',b1), ('unstack_task',b1)]
-    if state.clear[b1]: return [('unstack_task',b1)]
+    if state.clear[b1] and not (state.fire[b1]): return [('unstack_task',b1)]
     return False
 
 def get_by_pickup(state,b1):
     """Generate a pickup subtask."""
     #if state.fire[b1] and state.clear[b1]: return[('put_out',b1), ('pickup_task',b1)]
-    if state.clear[b1]: return [('pickup_task',b1)]
+    if state.clear[b1] and not (state.fire[b1]): return [('pickup_task',b1)]
     return False
     
 ### methods for "pickup_task"
@@ -165,7 +165,7 @@ def put_out_m(state, b1):
 def get_extinguisher_m(state, extinguisher, b):
     if extinguisher in state.fire_ext_avail and not state.holdingfireext:
         if state.clear[b]:
-            return [('get', b), ('putdown',b),("pickup_extinguisher", extinguisher)]
+            return [("pickup_extinguisher", extinguisher)]
         else:
             for b1 in all_blocks(state):
                 if state.pos[b1] == b:

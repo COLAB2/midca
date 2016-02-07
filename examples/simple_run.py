@@ -4,9 +4,18 @@ from MIDCA.examples import predicateworld
 from MIDCA.logging import Logger
 import inspect, os
 
+
+
 '''
-This script runs a
- simple version of MIDCA in blocksworld in which fires do not start, all goals are input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
+This s
+
+cript runs a
+ simple version of MIDCA in blocksworld in which fires do 
+ 
+ 
+ 
+ 
+ not start, all goals are input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

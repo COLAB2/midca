@@ -51,19 +51,19 @@ def on_fire(state, depth, b1, task_name):
         pyhop.generated_monitors.append(m)
         status_on_fire = state.fire[b1]
         
-#         while(m.is_fired == False):
-#                         #f.write (b1 + " true")
-#             i = i + 1
-#             time.sleep(50)
-#             if i > 3:
-#                 if b1 == "XX_":
-#                     m.is_fired = True
-#                     state.fire['XX_'] = False
-#                     print("monitor: " + b1 + "fire status changed")
-#                          
-#             if state.fire[b1] != status_on_fire:
-#                 print("monitor: " + b1 + 'fire status changed')
-#                 m.is_fired = True
+        while(m.is_fired == False):
+                        #f.write (b1 + " true")
+            i = i + 1
+            time.sleep(50)
+            if i > 3:
+                if b1 == "XX_":
+                    m.is_fired = True
+                    state.fire['XX_'] = False
+                    print("monitor: " + b1 + "fire status changed")
+                         
+            if state.fire[b1] != status_on_fire:
+                print("monitor: " + b1 + 'fire status changed')
+                m.is_fired = True
  
 def clear_block(state, depth, b1, task_name):
     i = 0
@@ -134,11 +134,11 @@ def declare_monitors(longApprehend = True):
 #     #unstack_task 
     #pyhop.declare_monitors('unstack_task', clear_block)
 #     #unstack
-    pyhop.declare_monitors('unstack', clear_block)
+    #pyhop.declare_monitors('unstack', clear_block)
 #     #state.pos[b] == c
     #pyhop.declare_monitors('unstack', pos_of_block)
    #pickup
-    pyhop.declare_monitors('pickup', clear_block)
+    #pyhop.declare_monitors('pickup', clear_block)
     pyhop.declare_monitors('put_out', on_fire)
           
 #     #get
