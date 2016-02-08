@@ -389,12 +389,16 @@ class DoReach(AsynchAction):
 		
 		x = lastLocReport[0].x
 		y = lastLocReport[0].y
+		z = lastLocReport[0].z
 		
-		H = self.mem.get(self.mem.CALIBRATION_MATRIX)
-		z = self.mem.get(self.mem.CALIBRATION_Z)
-		floor_point = pixel_to_floor(H,[x, y])
+		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
+			H = self.mem.get(self.mem.CALIBRATION_MATRIX)
+			z = self.mem.get(self.mem.CALIBRATION_Z)
+			floor_point = pixel_to_floor(H,[x, y])
+			x = floor_point[0]
+			y = floor_point[1]
 		
-		self.msgDict = {'x': floor_point[0], 'y': floor_point[1], 
+		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		print self.msgDict
@@ -459,9 +463,7 @@ class DoUnstack(AsynchAction):
 	def send_point(self):
 		#we reach the block using the position of the block
 		#pos_of_block = get_last_position(self.mem, self.objectOrID)
-		print("+++++++++++++++" + self.midcaAction[2])
 		lastLocReport = get_last_location(self.mem, 'red block')
-		print lastLocReport
 		
 		t = time.now()
 		if not lastLocReport:
@@ -477,14 +479,20 @@ class DoUnstack(AsynchAction):
 # 			self.status = FAILED
 # 			return
 		
+		
 		x = lastLocReport[0].x
 		y = lastLocReport[0].y
+		z = self.mem.get(self.mem.UNSTACK_Z)
+		#z = 0.02477944410983878
 		
-		H = self.mem.get(self.mem.CALIBRATION_MATRIX)
-		z = 0.02477944410983878
-		floor_point = pixel_to_floor(H,[x, y])
+		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
+			H = self.mem.get(self.mem.CALIBRATION_MATRIX)
+			floor_point = pixel_to_floor(H,[x, y])
+			x = floor_point[0]
+			y = floor_point[1]
 		
-		self.msgDict = {'x': floor_point[0], 'y': floor_point[1], 
+		
+		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		print self.msgDict
@@ -567,12 +575,16 @@ class DoStack(AsynchAction):
 		#[0.6763038647265367, 0.30295363707695533, 0.018148563732166244]
 		x = lastLocReport[0].x
 		y = lastLocReport[0].y
+		z = self.mem.get(self.mem.STACK_Z)
+		#z = 0.018148563732166244
 		
-		H = self.mem.get(self.mem.CALIBRATION_MATRIX)
-		z = 0.018148563732166244
-		floor_point = pixel_to_floor(H,[x, y])
+		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
+			H = self.mem.get(self.mem.CALIBRATION_MATRIX)
+			floor_point = pixel_to_floor(H,[x, y])
+			x = floor_point[0]
+			y = floor_point[1]
 		
-		self.msgDict = {'x': floor_point[0], 'y': floor_point[1], 
+		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		print self.msgDict
@@ -634,14 +646,19 @@ class DoPut(AsynchAction):
 	
 	def send_point(self):
 #0.6480168766398825, 0.4782503847940384, 0.289534050209461
-		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
-		'z': -0.04665006901665164, 'time': self.startTime, 'cmd_id': self.msgID}
+# 		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
+# 		'z': -0.04665006901665164, 'time': self.startTime, 'cmd_id': self.msgID}
+		
+		point = self.mem.get(self.mem.PUTTING_POINT)
+		
+		self.msgDict = {'x': point.x, 'y': point.y, 
+		'z': point.z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		
 		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
 		if not sent:
 			if verbose >= 1:
-				print "Failllll???"
+				print "Fail"
 # 				print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 # 				"assumed failed."
 			self.status = FAILED
@@ -693,14 +710,19 @@ class DoRaise(AsynchAction):
 	
 	def send_point(self):
 #0.6480168766398825, 0.4782503847940384, 0.289534050209461
-		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
-		'z': 0.289534050209461, 'time': self.startTime, 'cmd_id': self.msgID}
+		raising_point = self.mem.get(self.mem.RAISING_POINT)
+		
+		self.msgDict = {'x': raising_point.x, 'y': raising_point.y, 
+		'z': raising_point.z, 'time': self.startTime, 'cmd_id': self.msgID}
+
+# 		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
+# 		'z': 0.289534050209461, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		
 		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
 		if not sent:
 			if verbose >= 1:
-				print "Failllll???"
+				print "Fail"
 # 				print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 # 				"assumed failed."
 			self.status = FAILED
@@ -803,7 +825,7 @@ class DoRelease(AsynchAction):
 		completionCheck, True)
 	
 	def send_msg(self):
-		self.msgDict = {'cmd': "Grab it", 'time': self.startTime, 'cmd_id': self.msgID}
+		self.msgDict = {'cmd': "release it", 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
 		if not sent:

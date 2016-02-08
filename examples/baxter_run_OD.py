@@ -6,6 +6,7 @@ from MIDCA.logging import Logger
 import inspect, os
 from std_msgs.msg import String
 from MIDCA.examples import Calibrate
+from geometry_msgs.msg import Point, PointStamped
 
 def ros_style_midca():
 	myMidca = base.MIDCA(None, verbose = 2)
@@ -51,5 +52,13 @@ Z = Calibrate.getZ()
 
 myMidca.mem.set(myMidca.mem.CALIBRATION_MATRIX, H)
 myMidca.mem.set(myMidca.mem.CALIBRATION_Z, Z)
+myMidca.mem.set(myMidca.mem.STACK_Z, 0.018148563732166244)
+myMidca.mem.set(myMidca.mem.UNSTACK_Z, 0.02477944410983878)
+p = Point(x = 0.6480168766398825, y =  0.4782503847940384, z = 0.289534050209461)
+myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
+
+q = Point(x = 0.6480168766398825, y =  0.4782503847940384, z = -0.04665006901665164)
+myMidca.mem.set(myMidca.mem.PUTTING_POINT, q)
+
 raw_input('Enter ...')
 rosMidca.run_midca()

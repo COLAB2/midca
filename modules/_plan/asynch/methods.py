@@ -52,13 +52,20 @@ def achieve_goals_m(state, goals):
 		if goal["objective"] == "show-loc":
 			return [("point_at", goal["directObject"]), ("achieve_goals", goals[1:])]
 		
-		if goal["objective"] == "holding":
+		if goal["objective"] == "stacking":
 			print("holding")
 			return [("move_blocks", goal)]
 		
-# 		if goal["objective"] == "holding":
-#  			if get_last_clear_status(state, object) == 'clear':
-# 			 	return [("pickup", goal["directObject"]), ("achieve_goals", goals[1:])]
+		if goal["objective"] == "holding":
+ 			if get_last_clear_status(state, object) == 'clear':
+			 	return [("pickup_task", goal["directObject"]), ("achieve_goals", goals[1:])]
+		
+		
+		if goal["objective"] == "moving":
+ 			if get_last_clear_status(state, object) == 'clear':
+			 	return [('move_one',goal["directObject"],'table'), ("achieve_goals", goals[1:])]
+		
+			 
 #  			else:
 #  				return [("unstack_t", "green block", goal["directObject"]), ("pickup", goal["directObject"]), ("achieve_goals", goals[1:])]
 #  				
