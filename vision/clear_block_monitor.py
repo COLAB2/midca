@@ -128,7 +128,7 @@ def publish(msg, topic):
 
        
     
-def monitor_clear_block(block_name='green block', topic='clear_block'):
+def monitor_clear_block(block_name='red block', topic='clear_block'):
     print 'monitoring clear...'
     
     #rospy.init_node('clear_block_monitor', anonymous=True)
