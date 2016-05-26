@@ -15,6 +15,7 @@ import inspect
 import time
 from multiprocessing import Pool
 import sys
+import ctypes # for popups
 
 DATADIR = "experiments/mortar-experiment-1-data/"
 NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
@@ -52,7 +53,7 @@ def singlerun(args):
     result_str = singlerun_output_str(run_id,curr_midca,curr_mortar_count, num_cycles)
     return result_str 
 
-def runexperiment():    
+def runexperiment():  
     runs = []
     curr_mortar_count = MORTAR_QUANTITY_START
     run_id = 0
@@ -221,6 +222,144 @@ def graph(prev_file):
     ax.set_zlabel("Score")
     plt.show()
 
+def graph_slices_hardcoded():
+    '''
+    Produce the graph
+    '''
+    # as soon as I generate new data, I need to update these numbers: 3 and 4
+    # they correspond to the data files sorted by most recent first
+    prev_file_goal_trans = 6
+    prev_file_no_goal_trans = 5
+    
+    from mpl_toolkits.mplot3d import Axes3D
+    import matplotlib.pyplot as plt
+    from matplotlib import cm
+    # get the most recent filename
+    files = sorted([f for f in os.listdir(DATADIR)])
+    datafile_goal_trans = DATADIR + files[-(prev_file_goal_trans+1)]
+    datafile_no_goal_trans = DATADIR + files[-(prev_file_no_goal_trans+1)]
+    print("-- About to read in goal transform data from "+str(datafile_goal_trans))
+    header = True
+    gt_mortar_ys = []
+    gt_cycles_xs = []
+    gt_score_zs = []
+    count = 0
+    with open(datafile_goal_trans,'r') as f:
+        for line in f.readlines():
+            if header: 
+                header = False
+            else:
+                count+=1
+                row = line.strip().split(',')
+                gt_mortar_ys.append(int(row[1]))
+                num_cycles = int(row[4])
+                score = int(row[3])
+                score = (score*1.0) / get_max_score_for_cycles(num_cycles)
+                gt_score_zs.append(score)
+                gt_cycles_xs.append(num_cycles)
+        print("There were "+str(count)+" data points collected that will be used for this graph")
+    print("-- About to read in non-goal transform data from "+str(datafile_goal_trans))
+    
+    no_gt_mortar_ys = []
+    no_gt_cycles_xs = []
+    no_gt_score_zs = []
+    header = True
+    with open(datafile_no_goal_trans,'r') as f:
+        for line in f.readlines():
+            if header: 
+                header = False
+            else:
+                row = line.strip().split(',')
+                no_gt_mortar_ys.append(int(row[1]))
+                num_cycles = int(row[4])
+                score = int(row[3])
+                score = (score*1.0) / get_max_score_for_cycles(num_cycles)
+                no_gt_score_zs.append(score)
+                no_gt_cycles_xs.append(num_cycles)
+    
+    # hold mortar at 15
+    mortar_hold = 5
+    
+    # now get all data points where mortar is the hold value
+    gt_score = []
+    gt_cycles = [] 
+
+    for i in range(len(gt_mortar_ys)):
+        curr_mortar = gt_mortar_ys[i]
+        curr_score = gt_score_zs[i]
+        curr_cycles = gt_cycles_xs[i]
+        if curr_mortar == mortar_hold:
+            gt_score.append(curr_score)
+            gt_cycles.append(curr_cycles)
+
+    no_gt_score = []
+    no_gt_cycles = []
+    
+    for i in range(len(no_gt_mortar_ys)):
+        curr_mortar = no_gt_mortar_ys[i]
+        curr_score = no_gt_score_zs[i]
+        curr_cycles = no_gt_cycles_xs[i]
+        if curr_mortar == mortar_hold:
+            no_gt_score.append(curr_score)
+            no_gt_cycles.append(curr_cycles)
+    
+    # now graph slice where x-axis is number of goals
+    
+    plt.plot(gt_cycles,gt_score,label='Goal Trans', linewidth=3)
+    plt.plot(no_gt_cycles,no_gt_score,'--',label='No Goal Trans',linewidth=3)
+    #ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
+    #ax.set_zlim(bottom=0.0,top=1.0)
+    #ax.set_xlim(max(cycles_xs),0)
+    #ax.set_ylim(max(mortar_ys),0)
+    plt.legend()
+    plt.xlabel("Goals in Mortar Towers to Build")
+    plt.ylabel("Score")
+    plt.rcParams.update({'font.size': 16})
+    #fig.set_zlabel("Score")
+    plt.show()
+
+    # now do the exact same thing, except hold goals at 
+    cycles_hold = 100
+
+    # now get all data points where mortar is the hold value
+    gt_score = []
+    gt_mortar = [] 
+
+    for i in range(len(gt_mortar_ys)):
+        curr_mortar = gt_mortar_ys[i]
+        curr_score = gt_score_zs[i]
+        curr_cycles = gt_cycles_xs[i]
+        if curr_cycles == cycles_hold:
+            gt_score.append(curr_score)
+            gt_mortar.append(curr_mortar)
+
+    no_gt_score = []
+    no_gt_mortar = []
+    
+    for i in range(len(no_gt_mortar_ys)):
+        curr_mortar = no_gt_mortar_ys[i]
+        curr_score = no_gt_score_zs[i]
+        curr_cycles = no_gt_cycles_xs[i]
+        if curr_cycles == cycles_hold:
+            no_gt_score.append(curr_score)
+            no_gt_mortar.append(curr_mortar)
+    
+    # now graph slice where x-axis is number of goals
+    
+    plt.plot(gt_mortar,gt_score,label='Goal Trans', linewidth=3)
+    plt.plot(no_gt_mortar,no_gt_score,'--',label='No Goal Trans',linewidth=3)
+    #ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
+    #ax.set_zlim(bottom=0.0,top=1.0)
+    #ax.set_xlim(max(cycles_xs),0)
+    #ax.set_ylim(max(mortar_ys),0)
+    plt.legend(loc=4)
+    plt.xlabel("Resources in Number of Mortar")
+    plt.ylabel("Score")
+    #fig.set_zlabel("Score")
+    plt.rcParams.update({'font.size': 16})
+    plt.show()
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'graph':
         # produce graph instead of running experiment
@@ -228,6 +367,8 @@ if __name__ == "__main__":
             graph(int(sys.argv[2]))
         else:
             graph(0)
+    elif len(sys.argv) > 1 and sys.argv[1] == 'graphslices':
+        graph_slices_hardcoded()
     else:   
         runexperiment()
           

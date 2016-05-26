@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import MIDCA
 from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide, evaluate
+from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
+from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from MIDCA import base
+
 import inspect, os
 
 '''
@@ -9,12 +12,46 @@ Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
+MORTAR_COUNT = 5
+
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_mortar.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_mortar.sim", extinguish=False, mortar=True)
+domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_mortar.sim"
+stateFile = MIDCA_ROOT + "worldsim/states/defstate_mortar.sim"
+extinguish=False
+mortar=True
+world = domainread.load_domain(domainFile)
 
+# for state file, need to add number of mortar blocks to begin with
+state_str = open(stateFile).read() # first read file
+# now add new mortar blocks
+for i in range(MORTAR_COUNT):
+    state_str+="MORTARBLOCK(M"+str(i)+")\n"
+    state_str+="available(M"+str(i)+")\n"
+# now load the state    
+stateread.apply_state_str(world, state_str)
+
+stateread.apply_state_file(world, stateFile)
+    #creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display = predicateworld.asqiiDisplay, verbose=4)
+
+predicateworld.asqiiDisplay(world)
+    #add phases by name
+for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+    myMidca.append_phase(phase)
+
+    #add the modules which instantiate basic blocksworld operation
+myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
+myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Plan", planning.PyHopPlanner(extinguish,mortar))
+myMidca.append_module("Act", act.SimpleAct())
 #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
 #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
