@@ -33,7 +33,7 @@ def status(b1,state,goal):
         return 'move-to-table'
     elif is_done(goal.pos[b1],state,goal) and state.clear[goal.pos[b1]]:
         btmblk = goal.pos[b1]
-        if btmblk in goal.hasmortar.keys() and goal.hasmortar[btmblk] and not state.hasmortar[btmblk]:
+        if btmblk in goal.hasmortar.keys() and goal.hasmortar[btmblk]:
             ''' This check adds a status so we move blocks with mortar different then without mortar '''
             return 'move-to-block-with-mortar'
         else:
