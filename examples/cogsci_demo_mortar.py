@@ -12,7 +12,7 @@ Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
-MORTAR_COUNT = 5
+MORTAR_COUNT = 7
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 

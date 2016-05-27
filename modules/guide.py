@@ -83,19 +83,23 @@ class SimpleMortarGoalGen(base.BaseModule):
     
     curr_goal_index = 0
 
-    curr_goals = [goals.Goal(*['A_','B_'], predicate = 'stable-on'),
-             goals.Goal(*['C_','B_'], predicate = 'stable-on'),]
+    curr_goal_sets = [
+                  [goals.Goal(*['A_','B_'], predicate = 'stable-on'),
+                   goals.Goal(*['C_','A_'], predicate = 'stable-on'),
+                   goals.Goal(*['D_','C_'], predicate = 'stable-on')],
+                  [goals.Goal(*['A_','D_'], predicate = 'stable-on'),
+                   goals.Goal(*['C_','A_'], predicate = 'stable-on'),
+                   goals.Goal(*['B_','C_'], predicate = 'stable-on')]]
 
     def next_goal(self):
         # get the next goal
-        curr_goal = self.curr_goals[self.curr_goal_index]
+        curr_goal_set = self.curr_goal_sets[self.curr_goal_index]
         # update index for next time around
-        if self.curr_goal_index == len(self.curr_goals)-1:
+        if self.curr_goal_index == len(self.curr_goal_sets)-1:
             self.curr_goal_index = 0
         else:
             self.curr_goal_index+=1
-            
-        return curr_goal
+        return curr_goal_set
 
     def run(self, cycle, verbose=2):
         trace = self.mem.trace
@@ -105,11 +109,12 @@ class SimpleMortarGoalGen(base.BaseModule):
         # first, check to see if we need a new goal, and only then insert a new one
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # get the next goal
-            goal = self.next_goal()
+            goal_set = self.next_goal()
             # insert that goal
-            self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            for g in goal_set:
+                self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             # update trace
-            trace.add_data("NEXT GOAL", goal)
+            trace.add_data("NEXT GOAL(s)", goal_set)
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
         else:
             trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
