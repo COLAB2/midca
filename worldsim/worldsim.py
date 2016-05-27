@@ -392,7 +392,7 @@ class World:
 		argnames = [str(arg) for arg in midcaAction.args]
 		self.apply_named_action(opname, argnames)
 	
-	#interprets a MIDCA goal as a predicate statement. Expects the predciate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
+	#interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
 	def midcaGoalAsAtom(self, goal):
 		try:
 			predName = str(goal['predicate'])

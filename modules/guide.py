@@ -2,6 +2,7 @@ from MIDCA import goals, base
 from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.worldsim import blockstate
+import copy
 
 class UserGoalInput(base.BaseModule):
 
@@ -74,6 +75,46 @@ class UserGoalInput(base.BaseModule):
             trace.add_module(cycle,self.__class__.__name__)
             trace.add_data("USER GOALS", goals_entered)
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+class SimpleMortarGoalGen(base.BaseModule):
+    '''
+    MIDCA module that cycles through goals for the agent to achieve.
+    '''
+    
+    curr_goal_index = 0
+
+    curr_goals = [goals.Goal(*['A_','B_'], predicate = 'stable-on'),
+             goals.Goal(*['C_','B_'], predicate = 'stable-on'),]
+
+    def next_goal(self):
+        # get the next goal
+        curr_goal = self.curr_goals[self.curr_goal_index]
+        # update index for next time around
+        if self.curr_goal_index == len(self.curr_goals)-1:
+            self.curr_goal_index = 0
+        else:
+            self.curr_goal_index+=1
+            
+        return curr_goal
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            
+        # first, check to see if we need a new goal, and only then insert a new one
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            # get the next goal
+            goal = self.next_goal()
+            # insert that goal
+            self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            # update trace
+            trace.add_data("NEXT GOAL", goal)
+            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+        else:
+            trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
+            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+        
 
 
 class TFStack(base.BaseModule):

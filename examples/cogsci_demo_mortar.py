@@ -54,7 +54,7 @@ myMidca.append_module("Plan", planning.PyHopPlanner(extinguish,mortar))
 myMidca.append_module("Act", act.SimpleAct())
 #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
 #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
+myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen(), 1)
 #myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
