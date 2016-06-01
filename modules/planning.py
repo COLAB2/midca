@@ -241,10 +241,12 @@ class PyHopPlanner(base.BaseModule):
                 print "Planning..."
             try:
                 pyhopState = pyhop_state_from_world(world)
+                pyhop.print_state(pyhopState)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
                 pyhopTasks = pyhop_tasks_from_goals(goals)
+                print "pyhopTasks are  " + str(pyhopTasks)
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
@@ -395,6 +397,11 @@ def pyhop_state_from_world(world, name = "state"):
             s.holding = False
         elif atom.predicate.name == "on":
             s.pos[atom.args[0].name] = atom.args[1].name
+            s.clear[atom.args[1].name] = False
+        elif atom.predicate.name == "stable-on":
+            s.pos[atom.args[0].name] = atom.args[1].name
+            s.clear[atom.args[1].name] = False
+            #s.hasmortar[atom.args[1].name] = True # redundant
         elif atom.predicate.name == "on-table":
             s.pos[atom.args[0].name] = "table"
         elif atom.predicate.name == "onfire":
@@ -426,6 +433,7 @@ def pyhop_tasks_from_goals(goals):
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
+    blkgoals.hasmortar = {}
     for goal in goals:
         #extract predicate
         if 'predicate' in goal.kwargs:
@@ -441,6 +449,9 @@ def pyhop_tasks_from_goals(goals):
             args.pop(0)
         if predicate == "on":
             blkgoals.pos[args[0]] = args[1]
+        elif predicate == "stable-on":
+            blkgoals.pos[args[0]] = args[1]
+            blkgoals.hasmortar[args[1]] = True  
         elif predicate == 'on-table':
             blkgoals.pos[args[0]] = 'table'
         elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:

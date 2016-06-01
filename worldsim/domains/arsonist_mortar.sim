@@ -73,7 +73,7 @@ results = [
 	condition(holding, [topblk]), 
 	condition(arm-empty, [], negate = True), 
 	condition(stable-on, [topblk, btmblk], negate = True), 
-	condition(clear, [btmblk], negate = False),
+	condition(clear, [btmblk], negate = False), 
 	condition(hasmortar, [btmblk, mortar], negate = True)])
 
 operator(putdown, 

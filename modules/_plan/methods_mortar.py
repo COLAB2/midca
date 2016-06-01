@@ -173,9 +173,11 @@ def put_m_mortar(state,b1,b2):
             return [('putdown',b1)]
         elif mortar_block:
             # new stack with mortar
+            #print("*-*-*-*-*-* stacking with mortar")
             return [('stack_mortared',b1,b2,mortar_block)]
         else:
             # no mortar left, fail
+            #print("      *******\n       NO MORE MORTAR\n      *******")
             return False
     else:
         return False
