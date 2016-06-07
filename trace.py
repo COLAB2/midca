@@ -85,6 +85,13 @@ class CogTrace:
 
             return self.trace[cycle][phase]
 
+    def get_current_phase_data(self):
+        '''
+        Returns the data of the most recent phase stored in the trace.
+        Equivalent to calling: get_data(get_current_cycle(), get_current_phase())
+        '''
+        return self.get_data(self.get_current_cycle(), self.get_current_phase())
+
     def get_current_cycle(self):
         return self.cycle
 

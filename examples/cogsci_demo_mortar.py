@@ -3,6 +3,7 @@ import MIDCA
 from MIDCA.examples import predicateworld
 from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from MIDCA.metamodules import monitor, control, interpret, metaintend,  plan
 from MIDCA import base
 
 import inspect, os
@@ -12,7 +13,7 @@ Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
-MORTAR_COUNT = 20
+MORTAR_COUNT = 5
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
@@ -35,7 +36,7 @@ stateread.apply_state_str(world, state_str)
 
 stateread.apply_state_file(world, stateFile)
     #creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = predicateworld.asqiiDisplay, verbose=4)
+myMidca = base.PhaseManager(world, display = predicateworld.asqiiDisplay, verbose=4, metaEnabled=True)
 
 predicateworld.asqiiDisplay(world)
     #add phases by name
@@ -58,6 +59,19 @@ myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen(), 1)
 #myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+
+# add meta layer phases
+#for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
+    myMidca.append_meta_phase(phase)
+
+# add meta layer modules
+myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect2())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGenForGoalTrans())
+myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
+myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
+myMidca.append_meta_module("Control", control.MRSimpleControl())
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:

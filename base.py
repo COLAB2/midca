@@ -70,7 +70,7 @@ class MIDCA:
         if metaEnabled:
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
-            self.mem.enableMeta(self.trace, phaseManager)
+            self.mem.enableMeta(trace.CogTrace(), phaseManager)
         if not logenabled:
             self.logger.working = False
         else:
@@ -334,6 +334,7 @@ class PhaseManager:
         self.display = display
         self.twoSevenWarning = False
         self.logger = self.midca.logger
+        self.meta_verbose = verbose
 
     '''
     convenience functions which wrap MIDCA functions
@@ -397,7 +398,7 @@ class PhaseManager:
         #if self.storeHistory:
         #    self.history.append(self.midca.copy())
         if self.storeHistory and verbose >= 3: print("Warning: History not being stored during meta phase") #TODO
-        val = self.midca.next_phase(verbose, meta=True)
+        val = self.midca.next_phase(self.meta_verbose, meta=True)
         return val
 
 
@@ -480,6 +481,13 @@ class PhaseManager:
                     txt = raw_input()
                     if txt:
                         self.logger.log(txt)
+                elif val == "toggle meta verbose":
+                    if self.meta_verbose > 0:
+                        self.meta_verbose = 0
+                        print("Turning OFF metacognitive phase outputs")
+                    else:
+                        self.meta_verbose = 2
+                        print("Turning ON metacognitive phase outputs")
                 elif val == "drawgoalgraph":
                     print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
                     txt = raw_input()

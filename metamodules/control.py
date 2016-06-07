@@ -10,12 +10,12 @@ class MRSimpleControl(base.BaseModule):
             for action in plan:
                 if not self.act(action):
                     failed = True
-                    print("    MRSimpleControl failed to complete an action")
+                    if verbose >= 2: print("    MRSimpleControl failed to complete an action")
                     self.cleanup_and_reset()
             if not failed:
                 self.cleanup_and_reset()
         else:
-            print("    No actions taken")
+            if verbose >= 2: print("    No actions taken")
 
 
 
