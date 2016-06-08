@@ -344,6 +344,9 @@ class World:
 					return True
 		return False
 	
+	def get_atoms(self):
+		return self.atoms
+	
 	def get_possible_objects(predicate, arg):
 		return self.objects.values() #not, obviously, a good implementation
 	

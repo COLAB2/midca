@@ -116,6 +116,7 @@ class MRSimpleGoalGen(base.BaseModule):
                 new_goal = self.gen_goal(anomaly)
                 goals.append(new_goal)
                 self.mem.set(self.mem.META_GOALS, goals)
+                
         #print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
@@ -131,7 +132,7 @@ class MRSimpleGoalGenForGoalTrans(base.BaseModule):
     '''
     This class generates a goal to transform the goal when the planner fails.
     '''
-    anoms_to_goals = {"IMPASSE":["TRANSFORM-GOAL","?goal"]}
+    anoms_to_goals = {"IMPASSE":["ACHIEVEABLE-GOAL","?goal"]}
 
     def run(self,cycle,verbose=2):
         self.verbose = verbose

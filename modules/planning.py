@@ -259,7 +259,8 @@ class PyHopPlanner(base.BaseModule):
                     for goal in goals:
                         print goal, " ",
                     print
-                if trace: trace.add_data("PLAN", pyhopPlan)
+                
+                if trace: trace.add_data("PLAN", None) # planning failed, record NONE for plan
                 return
             #change from pyhop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)

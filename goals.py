@@ -37,6 +37,24 @@ class Goal:
         else:
             self.kwargs[key] = item
 
+    def get_args(self):
+        '''
+        Return the arguments for this goal.
+        Example:
+        Goal(A_,B_, on)
+        would return [A_,B_] as the args
+        '''
+        return self.args
+    
+    def get_pred(self):
+        '''
+        Return the predicate for this goal.
+        Example:
+        Goal(A_,B_, on)
+        would return 'on' as the args
+        '''
+        return self.kwargs['predicate']
+
     def __str__(self):
         s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in self.kwargs.items()])
         if self.args or self.kwargs:
