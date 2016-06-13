@@ -63,7 +63,6 @@ class MRSimpleDetect2(base.BaseModule):
         self.verbose = verbose
         self.detect()
 
-
     def detect(self):
         last_phase_name, last_phase_data = self.mem.get(self.mem.TRACE_SEGMENT)
         anomalies = []

@@ -71,19 +71,14 @@ class MRSimpleControl(base.BaseModule):
             # specific to mortar and blocks world, not general
             # get the highest blocks
             goal_atoms = action[1]
-            goal_atoms_strs = map(str, goal_atoms)
             goal_args = map(lambda x: x.get_args(), goal_atoms)
-            goal_preds = map(lambda x: x.get_pred(), goal_atoms)
-            print("goal_atoms_strs = " + str(goal_atoms_strs))
-            print("goal_args = " + str(goal_args))
-            print("goal_preds = " + str(goal_preds))
             
             # figure out how much mortar we have using the world state
             num_available_mortar = 0
             for atom in map(str, self.mem.get("__world states")[-1].get_atoms()):
                 if 'available(' in atom:
                     num_available_mortar +=1
-                    print("found available mortar: "+str(atom))
+                    if verbose >= 3: print("found available mortar: "+str(atom))
             
             # transform 'stable-on' to 'on' predicates ensuring there is enough mortar for each
             bottom_blks = []
@@ -92,13 +87,11 @@ class MRSimpleControl(base.BaseModule):
                 bottom_blks.append(a_tpl[1])
                 top_blks.append(a_tpl[0])
             
-            print("bottom blks are "+str(bottom_blks))
-            print("top blks are "+str(top_blks))
             bottommost_blk = [b for b in bottom_blks if b not in top_blks][0]
-            print("bottommost_blk is "+str(bottommost_blk))
             
             transformed_goal_atoms = []
             
+            # transform goal atoms
             curr_bottom_blk = bottommost_blk
             while curr_bottom_blk in bottom_blks:
                 i = bottom_blks.index(curr_bottom_blk)
@@ -110,7 +103,6 @@ class MRSimpleControl(base.BaseModule):
                     transformed_goal_atoms.append("on,"+top_blks[i]+","+curr_bottom_blk)
                 curr_bottom_blk = top_blks[i]
             
-            print("transformed goal atoms = "+str(transformed_goal_atoms))
             # now make actual MIDCA goal objects
             transformed_goals = []
             for atom_str in transformed_goal_atoms:
@@ -118,11 +110,11 @@ class MRSimpleControl(base.BaseModule):
                 transformed_goals.append(goals.Goal(*[vals[1],vals[2]], predicate = vals[0]))
              
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
-            # now we will remove the old goal
+            
+            # do removal first
+            for g in goal_atoms:
+                goalGraph.remove(g)
             if verbose >= 2:
-                # do removal first
-                for g in goal_atoms:
-                    goalGraph.remove(g)
                 # now display success statement
                 print("Removed from the goal graph the previous goal:")
                 for g in goal_atoms:
@@ -135,9 +127,9 @@ class MRSimpleControl(base.BaseModule):
                     print("    "+str(g))
                     
             # now insert the new goal
-            if verbose >= 2:
-                for g in transformed_goals:
+            for g in transformed_goals:
                     goalGraph.insert(g)
+            if verbose >= 2:
                 print("Transformed goal has been inserted into goal graph.")
              
             return True

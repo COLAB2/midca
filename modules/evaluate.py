@@ -126,7 +126,7 @@ class Scorer:
         if not self.mem.get(self.mem.CURRENT_GOALS):
             return None
         for goal in self.mem.get(self.mem.CURRENT_GOALS):
-            if 'predicate' in goal and goal['predicate'] == 'on':
+            if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on'):
                 return goal
         return None
 
@@ -137,7 +137,7 @@ class Scorer:
         if self.world.is_true("on-table", [block.name]):
             return None
         for atom in self.world.atoms:
-            if atom.predicate.name == "on" and atom.args[0] == block:
+            if (atom.predicate.name == "on" or atom.predicate.name == "stable-on")  and atom.args[0] == block:
                 return atom.args[1]
         return None
 
