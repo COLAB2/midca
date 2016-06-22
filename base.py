@@ -267,17 +267,17 @@ class MIDCA:
         retVal = ""
         self.phasei = (phaseNum - 1) % len(phases)
         if self.phasei == 0:
-            self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
+            if self.logger.working: self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
         if verbose >= 2:
             if meta:
                 print("    ***[meta] Starting ", phases[self.phasei].name, "Phase ***\n", file = sys.stderr)
             else:
                 print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
-            self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
+            if self.logger.working: self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
         i = 0
         while i < len(modules[phases[self.phasei]]):
             module = modules[phases[self.phasei]][i]
-            self.logger.logEvent(logging.ModuleStartEvent(module))
+            if self.logger.working: self.logger.logEvent(logging.ModuleStartEvent(module))
             try:
                 retVal = module.run((phaseNum - 1) / len(phases), verbose)
                 i += 1
@@ -288,9 +288,9 @@ class MIDCA:
                           "is therefore invalid. It will be",
                           "removed from MIDCA.")
                 self.removeModule(phases[self.phasei], i)
-            self.logger.logEvent(logging.ModuleEndEvent(module))
+            if self.logger.working: self.logger.logEvent(logging.ModuleEndEvent(module))
 
-        self.logger.logEvent(logging.PhaseEndEvent(phases[self.phasei].name))
+        if self.logger.working: self.logger.logEvent(logging.PhaseEndEvent(phases[self.phasei].name))
 
         if not meta:
             self.phaseNum += 1
@@ -298,7 +298,7 @@ class MIDCA:
             self.metaPhaseNum += 1
 
         if (phaseNum - 1) % len(phases) == 0:
-            self.logger.logEvent(logging.CycleEndEvent((phaseNum - 1) / len(phases)))
+            if self.logger.working: self.logger.logEvent(logging.CycleEndEvent((phaseNum - 1) / len(phases)))
 
         # record phase and run metareasoner
         #self.mem.set("phase", self.phases[self.phasei].name)
