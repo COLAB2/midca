@@ -238,7 +238,7 @@ class InstructionReceiver:
 			
 			if utterance == "stack green block on red block":
 				goal = goals.Goal(objective = "stacking", subject = "self", 
-				directObject = "green block", indirectObject = "observer", pos = 'green block:red block')
+				directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:
@@ -246,7 +246,8 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-						
+			
+		
 			if utterance == "stack red block on green block":
 				goal = goals.Goal(objective = "stacking", subject = "self", 
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
@@ -257,7 +258,20 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-						
+			
+			if utterance == "stack":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			
+				
 # 			else:
 # 				print "message is unknown"
 							

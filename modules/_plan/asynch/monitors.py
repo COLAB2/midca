@@ -152,6 +152,7 @@ def pos_of_block(state, depth, task):
         c = get_last_position(state, b)
         new_pos = pos_block_monitor.monitor_pos_block(b, c)
         if new_pos:
+            print("monitor fires!!")
             m.is_fired = True
             set_position(state, b, new_pos)
             set_clear_status(state, c, 'clear')
@@ -178,8 +179,8 @@ def declare_monitors(longApprehend = True):
 #     #unstack
     #pyhop.declare_monitors('reach_to_unstack', clear_block)
 #     #state.pos[b] == c
-    pyhop.declare_monitors('reach_to_unstack', pos_of_block, clear_block)
-    pyhop.declare_monitors('reach_to_pickup', pos_of_block, clear_block)
+    pyhop.declare_monitors('reach_to_unstack', clear_block)
+    pyhop.declare_monitors('reach_to_pickup', clear_block)
    #pickup
     #pyhop.declare_monitors('reach_to_pickup', clear_block)      
 #     #get

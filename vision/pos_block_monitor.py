@@ -156,7 +156,7 @@ def monitor_pos_block(block_name='green block', pos='table'):
             p = findContour(frame, mask)
             if(p != None):
                 color_location.update({color_name : (p[0], p[1], 0)})
-        time.sleep(3)
+        time.sleep(2)
         pos_block = pos
         if len(color_location) >= 2:
             
@@ -166,7 +166,7 @@ def monitor_pos_block(block_name='green block', pos='table'):
             clear_red = 'clear'
             for obj in color_location.keys():
                 if obj != block_name:
-                    if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 10:
+                    if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 12:
                         if color_location[block_name][1] < color_location[obj][1]:
                             #print("1")
                             pos_block = obj

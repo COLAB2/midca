@@ -156,7 +156,7 @@ def monitor_clear_block(block_name='red block', topic='clear_block'):
             p = findContour(frame, mask)
             if(p != None):
                 color_location.update({color_name : (p[0], p[1], 0)})
-        time.sleep(3)
+        time.sleep(2)
         if len(color_location) == 2:
             pos_green = 'table'
             pos_red = 'table'
@@ -164,12 +164,12 @@ def monitor_clear_block(block_name='red block', topic='clear_block'):
             clear_red = 'clear'
             for obj in color_location.keys():
                 if obj != block_name:
-                    if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 10:
+                    if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 12:
                         if color_location[block_name][1] > color_location[obj][1]:
-                             print block_name + " is not clear"
+                             #print block_name + " is not clear"
                              return obj
-                        else:
-                            print block_name + "is clear"
+#                         else:
+#                             print block_name + "is clear"
                 
 
 

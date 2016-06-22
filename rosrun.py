@@ -206,7 +206,7 @@ class ObjectsLocationHandler(IncomingMsgHandler):
 			pos_red = 'table'
 			clear_green = 'clear'
 			clear_red = 'clear'
-			if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 10:
+			if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 12:
 				if color_location_dic['red block'].y > color_location_dic['green block'].y:
 					pos_green = "red block"
 					clear_red = 'not clear'

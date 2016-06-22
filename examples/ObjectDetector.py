@@ -6,17 +6,19 @@ Created on Jun 16, 2015
 #!/usr/bin/env python
 
 import roslib; 
+
 import rospy
+
 import time
 import  cv2
 import numpy as np
+from sys import argv
 from homography import *
 from baxter import *
 from geometry_msgs.msg import Point, PointStamped
 # Global variables:
 
-
-#H = []    # The current homography matrix.
+H = []    # The current homography matrix.
 Z = 0    # The Z coordinate of the table.
 baxter = Baxter() # The object that controls Baxter. Defined in baxter.py.
 floor_reference_points = [] # The floor reference points.
@@ -27,217 +29,103 @@ points = []
 
 original_position = None
 current_position = None
+filename = "~/ros_ws/src/baxter_srv/scripts/calibration.txt"
 
 def initial_setup_baxter():
     """
     Enable and set up baxter.
 
     """
+    
+    print 'Initializing node...'
+    rospy.init_node('baxter_or')
     baxter.enable()
+    baxter.calibrateLeftGripper()
     
 
-def getObjectPosition(H, Z):
+
+def get_floor_reference_points():
+    """
+    This function get 4 points of reference from the real world, asking the
+    user to move the baxter arm to the position of each corresponding point
+    in the image, and then getting the X,Y and Z coordinates of baxter's hand.
+    Returns an array of size 4 containing 4 coordinates:
+    [[x1,y1], [x2,y2], [x3,y3], [x4,y4]].
+    All the coordinates Z should be approximatelly the same. We assume the table
+    is niveled. Save the Z coordinate in the global variable.
+
+    TODO: Implement this. Figure out a way to get the end position of baxter
+    hand. I know that in baxter_msgs
+
+    """
+    global Z # This declaration is needed to modify the global variable Z
+    global floor_reference_points # Maybe erase.
+    global floor_reference_orientations # Maybe erase.
+    
+    raw_input('Move the LEFT arm to point 1 and press enter.')
+    p1 = baxter.getLeftArmPosition()
+    o1 = baxter.getLeftArmOrientation()
+    print o1
+    #[-0.04504873726153096, 0.9983659324956183, 0.020392051958720396, -0.028639837992011533]
+    print 'Point 1 =', p1
+    raw_input('Move the LEFT arm to point 2 and press enter.')
+    p2 = baxter.getLeftArmPosition()
+    o2 = baxter.getLeftArmOrientation()
+    print 'Point 2 =', p2
+    raw_input('Move the LEFT arm to point 3 and press enter.')
+    p3 = baxter.getLeftArmPosition()
+    o3 = baxter.getLeftArmOrientation()
+    print 'Point 3 =', p3
+    raw_input('Move the LEFT arm to point 4 and press enter.')
+    p4 = baxter.getLeftArmPosition()
+    o4 = baxter.getLeftArmOrientation()
+    print 'Point 4 =', p4
+      
+
+    Z = (p1[2] + p2[2] + p3[2] + p4[2]) / 4
+
+    print Z
+
+    
+    filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
+    
+    target = open(filename, 'w')
+
    
-    image = baxter.getImageFromRightHandCamera()
-    cvimage = baxter.getLastCvImage()
+    target.truncate()
     
-    # Convert BGR to HSV
-    hsv = cv2.cvtColor(cvimage, cv2.COLOR_BGR2HSV)
+    target.write(repr(p1[0])+ " " + repr(p1[1]))
+    target.write("\n")
+    target.write(repr(p2[0])+ " " + repr(p2[1]))
+    target.write("\n")
+    target.write(repr(p3[0])+ " " + repr(p3[1]))
+    target.write("\n")
+    target.write(repr(p4[0])+ " " + repr(p4[1]))
+    target.write("\n")
     
-    lower_red = np.array([0,60,60])
-    #0,60,60
-    upper_red = np.array([10,100,100])
-   
-        # Threshold the HSV image to get only blue colors
-    thresh = cv2.inRange(hsv, lower_red, upper_red)
     
-        # Bitwise-AND mask and original image
-    res = cv2.bitwise_and(cvimage,cvimage, mask= thresh)
-        
-    image, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    bpoints1 = []
-    bpoints2 = []
-        
-    if(len(contours) > 0):
-        print len(contours) 
-    else:
-        return None
+    target.close()
     
-    cnt = contours[0]
     
-    if(len(cnt) > 0):
-        #print len(contours)
-        cnt = contours[0]
-        M = cv2.moments(cnt)
-        print M
-        
-        x,y,w,h = cv2.boundingRect(cnt)
-        pt1 = [x, y]
-        pt2 = [x + w, y + h]
-        
-        bpoints1.append(pt1)
-        bpoints2.append(pt2)
-        
-        z = np.array([])        
+    return [[0.45835412247904794,   0.4167330917312844],
+     [0.7046556740624649,   0.45390428836232344],
+     [0.7778487250094798, 0.07406413897305184],
+     [0.5418466718761972, 0.034360381218309734]]
     
-        if np.size(bpoints1) > 0:
-            #bpoints1 is top left, bpoints 2 is bottom right
-            pt1max = np.array([0,0])
-            pt2max = np.array([0,0])
-    
-            for i in range(len(bpoints1)):
-                maxdiag = np.linalg.norm(pt2max - pt1max)
-        
-                p1 = np.array([bpoints1[i][0],bpoints1[i][1]])
-                p2 = np.array([bpoints2[i][0],bpoints2[i][1]])
-                diag = np.linalg.norm(p2 - p1)
-                if diag > maxdiag:
-                    pt1max = p1
-                    pt2max = p2
-            
-            # UPPER LEFT CORNER OF THE LARGEST RECTANGLE
-            pt1 = pt1max
-            # LOWER RIGHT CORNER OF THE LARGEST RECTANGLE
-            pt2 = pt2max
-            cvimage = cv2.rectangle(cvimage,tuple(pt1),tuple(pt2),(0,255,0),2)
-            # HORIZON COORDINATE OF THE LARGEST RECTANGLE
-            centroidu = (pt1[0]+pt2[0])/2
-            # VERTICAL COORDINATE OF THE LARGEST RECTANGLE
-            centroidv = (pt1[1]+pt2[1])/2
-            
-            (x,y),radius = cv2.minEnclosingCircle(cnt)
-            center = (int(x),int(y))
-            radius = int(radius)
-            #frame = cv2.circle(frame,(centroidu,centroidv),(0,255,0),2)
-            cvimage = cv2.circle(cvimage,center,radius,(0,255,0),2)
-            
-            floor_point = pixel_to_floor(H,[centroidu,centroidv])
-            return floor_point + [Z]
 
 
- 
-def getObjectsPosition(H, Z):
-    color_location = {}
-   #Read image from camera
-    image = baxter.getImageFromRightHandCamera()
-    cvimage = baxter.getLastCvImage()
-    #publish the image on baxter face
-    baxter.send_image(cvimage)
-    # Convert BGR to HSV
-    hsv = cv2.cvtColor(cvimage, cv2.COLOR_BGR2RGB)
-   # define the list of boundaries
-    boundaries = {'red':([165,50,200], [175,255,255]),
-                 'blue' : ([100,150,0], [140,255,255]),
-                 'red2': ([0,50,50], [10, 100, 100])
-#                 'yellow':([25, 146, 190], [62, 174, 250]),
-#                 'green':([25, 146, 190], [62, 174, 250])
-                }
-    
-    for color_name in boundaries:
-        # create NumPy arrays from the boundaries
-        (lower, upper) = boundaries[color_name]
-        lower = np.array(lower, dtype=np.uint8)
-        upper = np.array(upper, dtype=np.uint8)
-        # find the colors within the specified boundaries and apply
-        # the mask
-        mask = cv2.inRange(hsv, lower, upper)
-        # Bitwise-AND mask and original image
-        res = cv2.bitwise_and(cvimage,cvimage, mask= mask)
-            # show the images
-        #cv2.imshow("images", np.hstack([cvimage, mask]))
-        #cv2.waitKey(0) & 0xFF
-        image, contours, hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-        
-        bpoints1 = []
-        bpoints2 = []
-            
-        if(len(contours) > 0):
-            print len(contours) 
-        else:
-            continue
-        
-        cnt = contours[0]
-        
-        if(len(cnt) > 0):
-            #print len(contours)
-            
-            x,y,w,h = cv2.boundingRect(cnt)
-            pt1 = [x, y]
-            pt2 = [x + w, y + h]
-            
-            bpoints1.append(pt1)
-            bpoints2.append(pt2)
-            
-            z = np.array([])        
-        
-            if np.size(bpoints1) > 0:
-                #bpoints1 is top left, bpoints 2 is bottom right
-                pt1max = np.array([0,0])
-                pt2max = np.array([0,0])
-        
-                for i in range(len(bpoints1)):
-                    maxdiag = np.linalg.norm(pt2max - pt1max)
-            
-                    p1 = np.array([bpoints1[i][0],bpoints1[i][1]])
-                    p2 = np.array([bpoints2[i][0],bpoints2[i][1]])
-                    diag = np.linalg.norm(p2 - p1)
-                    if diag > maxdiag:
-                        pt1max = p1
-                        pt2max = p2
-                
-                # UPPER LEFT CORNER OF THE LARGEST RECTANGLE
-                pt1 = pt1max
-                # LOWER RIGHT CORNER OF THE LARGEST RECTANGLE
-                pt2 = pt2max
-                cvimage = cv2.rectangle(cvimage,tuple(pt1),tuple(pt2),(0,255,0),2)
-                # HORIZON COORDINATE OF THE LARGEST RECTANGLE
-                centroidu = (pt1[0]+pt2[0])/2
-                # VERTICAL COORDINATE OF THE LARGEST RECTANGLE
-                centroidv = (pt1[1]+pt2[1])/2
-                
-                (x,y),radius = cv2.minEnclosingCircle(cnt)
-                center = (int(x),int(y))
-                radius = int(radius)
-                #frame = cv2.circle(frame,(centroidu,centroidv),(0,255,0),2)
-                cvimage = cv2.circle(cvimage,center,radius,(0,255,0),2)
-                
-                floor_point = pixel_to_floor(H,[centroidu,centroidv])
-                #return floor_point + [Z]
-                color_location.update({color_name : floor_point + [Z]})
-                raw_input('Enter to capture image.')
-                cv2.destroyAllWindows()
-    
-    
-    return color_location                    
+def calibrate_homography():
+    global H, Hinv
+    floor_points = get_floor_reference_points()
 
-def sendPoint(point):
-
-    pub = rospy.Publisher('obj_pos', PointStamped, queue_size=10)
-    points = [Point(x = point[0], y = point[1], z = point[2]),
-              Point(x = 8.0, y = 7.0, z = 2.0),
-              Point(x = 7.0, y = -4.0, z = -0.5), Point(x = -1, y = 1, z = 0)]
-    if not rospy.is_shutdown():
-        time.sleep(2)
-        p = points[0]
-        print("Sending point command:", p)
-        pub.publish(PointStamped(point = p))
         
-        
-def main(H, Z):
-    #print(H)
+def main():
     initial_setup_baxter()
-    #calibrate_homography()
-    color_position = getObjectsPosition(H, Z)
+    calibrate_homography()
+
     
-    return color_position
-    #baxter.closeLeftGripper()
-    #sendPoint(position)
-#     if(color_position.size() > 0):
-#         p = Point(x = position[0], y = position[1], z = position[2])
-#     
-#         return PointStamped(point = p)
-#     
-#     return None
+
+
 
 if __name__ == '__main__':
     main()

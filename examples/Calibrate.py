@@ -86,7 +86,7 @@ def get_img_reference_points():
     return points
 
 
-def get_floor_reference_points():
+def get_floor_reference_points(filename):
     """
     This function get 4 points of reference from the real world, asking the
     user to move the baxter arm to the position of each corresponding point
@@ -105,8 +105,8 @@ def get_floor_reference_points():
     global floor_reference_orientations # Maybe erase.
     
     #Z = (-0.04311285564353425  -0.04512672573083166 -0.04080078888404003 -0.046071914959185875)/4
-    Z= -0.04721129960500225
-    
+    #Z= -0.04721129960500225
+    Z = -0.15113003072395247
     print Z
 # [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
 # Point 1 = [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
@@ -126,7 +126,7 @@ def get_floor_reference_points():
     #return [[p1[0],p1[1]], [p2[0],p2[1]], [p3[0],p3[1]], [p4[0],p4[1]]]
    
     #print p4
-    filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
+    #filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
     f = open(filename, 'r')
     p1 = f.readline().split(' ')
     p2 = f.readline().split(' ')
@@ -143,9 +143,9 @@ def get_floor_reference_points():
 #      [0.7588658957428053, -0.14051425345680635],
 #      [0.5728275006876863, -0.1292139710808082]]
     
-def calibrate_homography():
+def calibrate_homography(filename):
     global H, Hinv
-    floor_points = get_floor_reference_points()
+    floor_points = get_floor_reference_points(filename)
     img_points = get_img_reference_points()
     print img_points
     print floor_points
@@ -176,9 +176,9 @@ def msg_as_string(H):
     HtoString = HtoString+","+Q[2,2]        
     return HtoString
     
-def calibrate():
+def calibrate(filename):
     initial_setup_baxter()
-    H = calibrate_homography()
+    H = calibrate_homography(filename)
     return H
     #sendPoint(msg_as_string(H), "calibrate_done")
 #     position = getObjectPosition()
