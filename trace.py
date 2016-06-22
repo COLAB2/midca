@@ -1,7 +1,6 @@
 from __future__ import print_function
 import copy
 import shlex, subprocess
-import os 
 from collections import OrderedDict
 
 """
@@ -206,11 +205,7 @@ class CogTrace:
         f. write(dotfilestr)
         f.close()
         print("Wrote dot file to " + dotfilename)
-        genPDFCommand = ""
-        if os.name == "nt": # if on windows run separate command
-            
-        else: # TODO: for now assume unix, but should check all OS's
-            genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
+        genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
         print("genPDFCommand = " + genPDFCommand)
         dot_output = subprocess.check_output(shlex.split(genPDFCommand))
         print("dot_output = " + str(dot_output))

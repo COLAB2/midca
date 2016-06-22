@@ -226,11 +226,28 @@ class MortarScorer:
             if 'predicate' in goal and goal['predicate'] == 'on':
                 return goal
         return None
-
+    
+    # TODO: should there only be 1 get_stacking_goal function?
+    # I added this function when the goal was multiple atoms, the previous method (above)
+    # was assuming goals were only single atoms (i.e. a single on(A,B) statement).
+    # which doesn't make sense if you want to specify all the blocks of a tower
+    def get_all_stacking_goals(self):
+        print("self.mem.get(self.mem.CURRENT_GOALS) = "+str(self.mem.get(self.mem.CURRENT_GOALS)))
+        if not self.mem.get(self.mem.CURRENT_GOALS):
+            return None
+        for goal in self.mem.get(self.mem.CURRENT_GOALS):
+            print("goal.args[0] = "+str(goal.args[0]))
+            if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
+                return goal
+        return None        
+                
     def has_mortar(self, block):
         # see if hasmortar on this block is true
+        print("self.world = "+str(self.world))
         for atom in self.world.atoms:
+            print("atom is "+str(atom))
             if atom.predicate.name == "hasmortar" and atom.args[0].name == block.name:
+                print("found hasmortar("+str(atom.args[0].name)+")")
                 return True 
         return False
 
@@ -238,7 +255,7 @@ class MortarScorer:
         if self.world.is_true("on-table", [block.name]):
             return None
         for atom in self.world.atoms:
-            if atom.predicate.name == "on" and atom.args[0] == block:
+            if (atom.predicate.name == "on" or atom.predicate.name == "stable-on") and atom.args[0] == block:
                 return atom.args[1]
         return None
     
@@ -248,6 +265,7 @@ class MortarScorer:
         regularblocks = 0
         block = self.world.objects[goal.args[0]]
         while block:
+            print("  now processing block "+str(block)+" in the tower")
             # every block is worth a point
             score += 1 
             # if the block also has mortar, give extra point
@@ -266,15 +284,16 @@ class MortarScorer:
 
     def run(self, cycle, verbose = 2):
         lastGoal = self.mem.get(LAST_SCORED_GOAL)
-        currentGoal = self.get_stacking_goal()
+        currentGoal = self.get_all_stacking_goals()
+        print("current goal is "+str(currentGoal))
         if not currentGoal or lastGoal == currentGoal:
             return #no goal or goal already scored
         try:
             achieved = self.world.atom_true(self.world.midcaGoalAsAtom(currentGoal))
         except Exception:
             print "unable to check goal", currentGoal, ". skipping scoring"
-        if 'negate' in currentGoal and currentGoal['negate']:
-            achieved = not achieved
+        #if 'negate' in currentGoal and currentGoal['negate']: # TODO add this back in, removed bceause don't want to think about negative goals
+        #    achieved = not achieved
         if not achieved:
             return
         self.mem.set(LAST_SCORED_GOAL, currentGoal)

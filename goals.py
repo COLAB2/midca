@@ -352,6 +352,7 @@ class GoalGraph:
         dotfilestr = "digraph\n{\n"
 
         for node in self._getAllNodes():
+            print("  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]")
             dotfilestr += "  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]\n"
 
         dotfilestr += "\n"
@@ -366,8 +367,8 @@ class GoalGraph:
         f.close()
         #print "Wrote dot file to " + dotfilename
         genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
-        dot_output = subprocess.check_output(shlex.split(genPDFCommand))
+        #dot_output = subprocess.check_output(shlex.split(genPDFCommand))
         #print "dot_output = " + str(dot_output)
-        subprocess.call(shlex.split("rm "+dotfilename))
+        #subprocess.call(shlex.split("del "+dotfilename))
         print "Drawing of current goal graph written to " + pdf_filename
 

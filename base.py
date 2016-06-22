@@ -523,6 +523,15 @@ class PhaseManager:
                         print("")
                 elif val == "worldstate":
                     print(str(self.mem.get("__world states")[-1]))
+                    print("----- now printing self.midca.world -----")
+                    print(str(self.midca.world))
+                    print('----- and now: self.midca.world.atoms ----')
+                    for atom in self.midca.world.atoms:
+                        print("  "+str(atom))
+                    print('----- and now: self.mem.get("__world states")[-1].atoms ----')
+                    for atom in self.mem.get("__world states")[-1].atoms:
+                        print("  "+str(atom))
+                        
                 elif val == "change":
                     print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:

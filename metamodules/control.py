@@ -68,6 +68,11 @@ class MRSimpleControl(base.BaseModule):
                 if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
                 return is_success
         elif action[0] == "TRANSFORM-GOAL":
+            # really: its going to have this meta plan by changing the things in orange - 
+            # you don't monitor and look at the trace to see if the goal transformation achieved something
+            # at the ground level, so then meta-evaluate can know if the metagoal succeeded. What if I made the
+            # wrong transformation? 
+            
             # specific to mortar and blocks world, not general
             # get the highest blocks
             goal_atoms = action[1]

@@ -87,9 +87,13 @@ class SimpleMortarGoalGen(base.BaseModule):
                   [goals.Goal(*['A_','B_'], predicate = 'stable-on'),
                    goals.Goal(*['C_','A_'], predicate = 'stable-on'),
                    goals.Goal(*['D_','C_'], predicate = 'stable-on')],
-                  [goals.Goal(*['A_','D_'], predicate = 'stable-on'),
-                   goals.Goal(*['C_','A_'], predicate = 'stable-on'),
-                   goals.Goal(*['B_','C_'], predicate = 'stable-on')]]
+                  [goals.Goal(*['D_','B_'], predicate = 'stable-on'),
+                   goals.Goal(*['B_','A_'], predicate = 'stable-on'),
+                   goals.Goal(*['A_','C_'], predicate = 'stable-on')]]
+
+    # starting state: on(D,B), on(B,A), ontable(A) ontable(C)
+    # first goal: on(C,B)
+    # second goal
 
     def next_goal(self):
         # get the next goal
