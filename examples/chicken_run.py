@@ -8,6 +8,10 @@ import inspect, os
 from MIDCA.modules import planning
 from MIDCA.modules._plan import sample_methods, sample_operators
 
+from MIDCA import base
+from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
+from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+
 '''
 This script runs a simple version of MIDCA in blocksworld in which fires do not start, all goals are input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
 '''
@@ -16,11 +20,27 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/sample_domain.sim", stateFile = MIDCA_ROOT + "worldsim/states/sample_state.sim")
+domainFile = MIDCA_ROOT + "worldsim/domains/sample_domain.sim"
+stateFile = MIDCA_ROOT + "worldsim/states/sample_state.sim"
+
+world = domainread.load_domain(domainFile)
+stateread.apply_state_file(world, stateFile)
+    #creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display = print, verbose=4)
+    #add phases by name
+for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+    myMidca.append_phase(phase)
+
+    #add the modules which instantiate basic blocksworld operation
+myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Act", act.SimpleAct())
 
 #set up planner for chicken domain
-myMidca.remove_module("Simulate", 1) #remove blocksworld viewer
-myMidca.clear_phase("Plan")
 myMidca.append_module("Plan", planning.GenericPyhopPlanner(
     sample_methods.declare_methods, sample_operators.declare_ops))
 myMidca.set_display_function(print) #set world viewer to output text
