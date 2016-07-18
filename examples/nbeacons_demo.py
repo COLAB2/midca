@@ -1,25 +1,45 @@
 #!/usr/bin/env python
 import MIDCA
+from MIDCA import base
 from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide, evaluate
+from MIDCA.modules import simulator, guide, evaluate, perceive
+from MIDCA.worldsim import domainread, stateread, worldsim
 import inspect, os
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 '''
 
+def pwrapper(x):
+    print(str(x))
+
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIDCA_ROOT = thisDir + "/../"
 
-# Load Domain Files  
+# Domain & State Files  
 domainFile = MIDCA_ROOT + "worldsim/domains/sample_domain.sim"
 stateFile = MIDCA_ROOT + "worldsim/states/sample_state.sim"
+
+# Load domain
 world = domainread.load_domain(domainFile)
-stateread.apply_state_file(world, stateFile)
+
+# Load state
+
+#   for state file, need to add number of mortar blocks to begin with
+state_str = open(stateFile).read() # first read file
+# now add new mortar blocks
+for i in range(self.currMortarCount):
+    state_str+="MORTARBLOCK(M"+str(i)+")\n"
+    state_str+="available(M"+str(i)+")\n"
+# now load the state    
+stateread.apply_state_str(self.world, state_str)
+
+
+
 
 # Creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = print, verbose=4)
+myMidca = base.PhaseManager(world, display=pwrapper, verbose=4)
 
 # Add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -36,7 +56,7 @@ myMidca.append_module("Plan", planning.GenericPyhopPlanner(
 myMidca.append_module("Act", act.SimpleAct())
 
 # Set world viewer to output text
-myMidca.set_display_function(print) 
+myMidca.set_display_function(pwrapper) 
 
 # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 # Note: Turning this on drastically increases MIDCA's running time.

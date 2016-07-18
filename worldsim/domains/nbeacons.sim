@@ -3,11 +3,16 @@
 type(TILE)
 type(AGENT)
 type(BEACON)
+type(BEACON-TYPE)
 
 predicate(agent-at, [agnt, loc], [AGENT, TILE])
 predicate(beacon-at, [bcn, loc], [BEACON, TILE])
+predicate(beacon-type, [bcn, bcntyp], [BEACON, BEACON-TYPE]
 predicate(activated, [bcn], [BEACON])
-predicate(adjacent, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-north, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-south, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-east, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-west, [loc1, loc2], [TILE, TILE])
 
 
 operator(move,
