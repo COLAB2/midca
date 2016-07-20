@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
+from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar,methods_nbeacons,operators_nbeacons
 from MIDCA import plans, base
 import collections
 import traceback
@@ -177,9 +177,15 @@ class PyHopPlanner(base.BaseModule):
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''
 
-    def __init__(self, extinguishers = False, mortar = False):
+    nbeacons = False # are we in nbeacons domain? TODO: make a more general way of doing this
+
+    def __init__(self, extinguishers = False, mortar = False, nbeacons = False):
         #declares pyhop methods. This is where the planner should be given the domain information it needs.
-        if extinguishers:
+        self.nbeacons = nbeacons
+        if nbeacons:
+            methods_nbeacons.declare_methods()
+            operators_nbeacons.declare_operators()
+        elif extinguishers:
             methods_extinguish.declare_methods()
             operators_extinguish.declare_ops()
         elif mortar:
@@ -240,11 +246,20 @@ class PyHopPlanner(base.BaseModule):
             if verbose >= 2:
                 print "Planning..."
             try:
-                pyhopState = pyhop_state_from_world(world)
+                pyhopState = None
+                if self.nbeacons:
+                    pyhopState = nbeacons_pyhop_state_from_world(world)
+                else:
+                    pyhopState = pyhop_state_from_world(world)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
-                pyhopTasks = pyhop_tasks_from_goals(goals)
+                pyhopTasks = None
+                if self.nbeacons:
+                    pyhopTasks = nbeacons_pyhop_tasks_from_goals(goals,pyhopState)
+                else:
+                    pyhopTasks = pyhop_tasks_from_goals(goals)
+                
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
@@ -452,3 +467,86 @@ def pyhop_tasks_from_goals(goals):
     if blkgoals.pos:
         alltasks.append(("move_blocks", blkgoals))
     return alltasks
+
+
+def nbeacons_pyhop_state_from_world(world, name = "state"):
+    s = pyhop.State(name)
+    s.agents={'curiosity':'3,3'} # put beacons here too? and mud tiles?
+    s.dim={'dim':-1}
+    s.agents = {}
+    s.beaconlocs = {} # key is beacon id (e.g. b1), val is tile str like Tx3y4 
+    s.beacontypes = {} # key is beacon id (e.g. b1), val is a number representing the type
+    s.activated = {} # key is beacon id (e.g. b1), val is True if activated, False otherwise
+    s.agents = {}
+    beacons = []
+    agent = None
+    for objname in world.objects:
+        if world.objects[objname].type.name == "BEACON":
+            beacons.append(objname)
+        elif world.objects[objname].type.name == "AGENT" and not agent: # if agent already set, means multi-agent
+            agent = objname
+        elif world.objects[objname].type.name == "DIM":
+            s.dim['dim'] = int(objname)
+    for atom in world.atoms:
+        if atom.predicate.name == "beacon-at":
+            b_id = atom.args[0].name
+            tile_str = atom.args[1].name
+            s.beaconlocs[b_id] = tile_str
+        elif atom.predicate.name == "activated":
+            b_id = atom.args[0].name
+            s.activated[b_id] = True
+        elif atom.predicate.name == "agent-at":
+            new_loc = atom.args[1].name
+            # quick formatting
+            new_loc = new_loc.replace("y",",")
+            new_loc = new_loc[2:]
+            s.agents[atom.args[0].name] = new_loc 
+            
+    # convert tile names to pyhop operators
+    for (k,v) in s.beaconlocs.items():
+        old_v = v
+        
+        # replace y with a comma
+        new_v = old_v.replace("y",",")
+        #trim off Tx at the beginning
+        new_v = new_v[2:]
+        
+        s.beaconlocs[k] = new_v
+            
+    print("at the end of nbeacons_pyhop_state_from_world:")
+    print_state(s)
+    return s
+
+#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
+def nbeacons_pyhop_tasks_from_goals(goals,state):
+    alltasks = []
+    beacongoals = pyhop.Goal("goals")
+    beacongoals.activated = {}
+    perimeter_goal_locs = []
+    agent_name = ""
+    
+    print("goals = "+str(goals))
+    for goal in goals:
+        #extract predicate
+        if 'predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['predicate'])
+        elif 'Predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['Predicate'])
+        elif goal.args:
+            predicate = str(goal.args[0])
+        else:
+            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        args = [str(arg) for arg in goal.args]
+        print("args[0] = "+str(args[0]))
+        print("predicate = "+str(predicate))
+        if args[0] == predicate:
+            args.pop(0)
+        if predicate == "activated":
+            loc = state.beaconlocs[str(args[0])]
+            perimeter_goal_locs.append(loc)
+
+        if perimeter_goal_locs:
+            alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
+    return alltasks
+
+

@@ -24,6 +24,7 @@ def _apply_state(world, lines):
 					if not name:
 						continue
 					if name not in world.objects:
+						
 						raise Exception("Line " + str(lineNum) + ": Object - " + name + " DNE " + line)
 					args.append(world.objects[name])
 				atom = world.predicates[call].instantiate(args)

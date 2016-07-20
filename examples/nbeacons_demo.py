@@ -2,12 +2,17 @@
 import MIDCA
 from MIDCA import base
 from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide, evaluate, perceive
+from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act
 from MIDCA.worldsim import domainread, stateread, worldsim
+from MIDCA.modules._plan import methods_nbeacons, operators_nbeacons
 import inspect, os
+
+import nbeacons_util
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
+
+Notes: I will generate a state file instead of reading in from a file
 '''
 
 def pwrapper(x):
@@ -17,26 +22,19 @@ def pwrapper(x):
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIDCA_ROOT = thisDir + "/../"
 
-# Domain & State Files  
-domainFile = MIDCA_ROOT + "worldsim/domains/sample_domain.sim"
-stateFile = MIDCA_ROOT + "worldsim/states/sample_state.sim"
+# Domain  
+domainFile = MIDCA_ROOT + "worldsim/domains/nbeacons.sim"
 
 # Load domain
 world = domainread.load_domain(domainFile)
 
+# Create Starting state
+state1 = nbeacons_util.NBeaconGrid()
+state1.generate()
+state1_str = state1.get_STRIPS_str()
+
 # Load state
-
-#   for state file, need to add number of mortar blocks to begin with
-state_str = open(stateFile).read() # first read file
-# now add new mortar blocks
-for i in range(self.currMortarCount):
-    state_str+="MORTARBLOCK(M"+str(i)+")\n"
-    state_str+="available(M"+str(i)+")\n"
-# now load the state    
-stateread.apply_state_str(self.world, state_str)
-
-
-
+stateread.apply_state_str(world, state1_str)
 
 # Creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display=pwrapper, verbose=4)
@@ -51,8 +49,7 @@ myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.GenericPyhopPlanner(
-    sample_methods.declare_methods, sample_operators.declare_ops)) # set up planner for sample domain
+myMidca.append_module("Plan", planning.PyHopPlanner(False,False,nbeacons = True)) # set up planner for sample domain
 myMidca.append_module("Act", act.SimpleAct())
 
 # Set world viewer to output text

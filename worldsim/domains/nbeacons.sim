@@ -1,5 +1,6 @@
 # NBEACONS domain (adapted from marsworld)
 
+type(DIM)
 type(TILE)
 type(AGENT)
 type(BEACON)
@@ -7,90 +8,59 @@ type(BEACON-TYPE)
 
 predicate(agent-at, [agnt, loc], [AGENT, TILE])
 predicate(beacon-at, [bcn, loc], [BEACON, TILE])
-predicate(beacon-type, [bcn, bcntyp], [BEACON, BEACON-TYPE]
+predicate(beacon-type, [bcn, bcntyp], [BEACON, BEACON-TYPE])
 predicate(activated, [bcn], [BEACON])
 predicate(adjacent-north, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-south, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-east, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-west, [loc1, loc2], [TILE, TILE])
 
-
-operator(move,
+operator(movenorth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
 	condition(agent-at, [agnt, start]),
-	condition(adjacent, [start, dest])],
+	condition(adjacent-north, [start, dest]),
+	condition(adjacent-south, [dest, start])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
-	condition(agent-at, [agnt, dest]),
-	condition(adjacent, [start, dest])])
+	condition(agent-at, [agnt, dest])])
+
+operator(movesouth,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-south, [start, dest]),
+	condition(adjacent-north, [dest, start])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest])])
+
+operator(moveeast,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-east, [start, dest]),
+	condition(adjacent-west, [dest, start])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest])])
+
+operator(movewest,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-west, [start, dest]),
+	condition(adjacent-east, [dest, start])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest])])
 
 operator(activate-beacon,
 args = [(agnt, AGENT), (loc, TILE), (bcn, BEACON)],
 preconditions = [
 	condition(agent-at, [agnt, loc]),
 	condition(beacon-at, [bcn, loc]),
-	condition(beacon-activated, [bcn], negate = TRUE)]
+	condition(activated, [bcn], negate = TRUE)],
 results = [
-	condition(beacon-activated, [bcn])]
-
-
-
-### BLOCKSWORLD ####
-type(BLOCK)
-
-predicate(clear, [blk], [BLOCK])
-predicate(holding, [blk], [BLOCK])
-predicate(arm-empty, [], [])
-predicate(on, [blk1, blk2], [BLOCK, BLOCK])
-predicate(on-table, [blk], [BLOCK])
-predicate(block, [blk], [BLOCK])
-predicate(triangle, [blk], [BLOCK])
-
-operator(stack, 
-args = [(topblk, BLOCK), (btmblk, BLOCK)], 
-preconditions = [
-	condition(clear, [btmblk]), 
-	condition(holding, [topblk])], 
-results = [
-	condition(clear, [btmblk], negate = True), 
-	condition(holding, [topblk], negate = True), 
-	condition(clear, [topblk]), 
-	condition(on, [topblk, btmblk]), 
-	condition(arm-empty, [])])
-
-operator(unstack, 
-args = [(topblk, BLOCK), (btmblk, BLOCK)], 
-preconditions = [
-	condition(clear, [topblk]), 
-	condition(arm-empty), 
-	condition(on, [topblk, btmblk])],
-results = [
-	condition(clear, [topblk], negate = True), 
-	condition(holding, [topblk]), 
-	condition(arm-empty, [], negate = True), 
-	condition(on, [topblk, btmblk], negate = True), 
-	condition(clear, [btmblk], negate = False)])
-
-operator(putdown, 
-args = [(blk, BLOCK)], 
-preconditions = [ 
-	condition(holding, [blk])], 
-results = [
-	condition(holding, [blk], negate = True), 
-	condition(clear, [blk]), 
-	condition(on-table, [blk]),
-	condition(arm-empty, [])])
-
-operator(pickup, 
-args = [(blk, BLOCK)], 
-preconditions = [ 
-	condition(on-table, [blk]),
-	condition(clear, [blk]),
-	condition(arm-empty, [])],
-results = [
-	condition(holding, [blk]), 
-	condition(clear, [blk], negate = True),
-	condition(on-table, [blk], negate = True),
-	condition(arm-empty, [], negate = True)])
+	condition(activated, [bcn])])
 

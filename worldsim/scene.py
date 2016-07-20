@@ -106,5 +106,4 @@ class Scene:
             toprint += "\n"
 
         return toprint
-
-
+    
