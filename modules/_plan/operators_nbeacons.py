@@ -84,16 +84,18 @@ def activatebeacon(state, agent):
     for beaconstr, beaconlocstr in state.beaconlocs.items():
         
         if state.agents[agent] == beaconlocstr:
-            # print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
+            #print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
             agent_at_beacon = True
             beacon_key = beaconstr
+            break
     
-    print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
+    #print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
     beacon_exists = beacon_key in state.activated.keys() 
     if agent_at_beacon:
         if beacon_exists and state.activated[beacon_key]:
             return False # already activated
         else:
+            #print("!!!!and we're here!")
             state.activated[beacon_key] = True
             return state
     else:

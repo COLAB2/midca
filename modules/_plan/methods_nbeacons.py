@@ -3,6 +3,7 @@ NBeacons methods for PyHOP
 """
 import pyhop
 from random import randint
+import copy
 
 """
 Assumptions of Domain:
@@ -11,14 +12,27 @@ Assumptions of Domain:
 """
 
 def move(state, agent, dest):
-    print("we are in move with state:")
-    pyhop.print_state(state)
-    print("agent is "+str(agent))
+    #print("we are in move with state:")
+    #pyhop.print_state(state)
+    #print("agent is "+str(agent))
+    
+    # the following catches the situation when the method may receive more than one
+    # destination, which is impossible for the agent to achieve (right now the agent
+    # can only ever be in one place)
+    
+    if type(dest) is list:
+        if len(dest) > 1:
+            return False # the agent can't be at more than one location
+        elif len(dest) == 1:
+            dest = dest[0]
+        else:
+            return [] # no destination, just succeed
+
     if state.agents[agent]:
-        print("um are we here?")
+        #print("um are we here?")
         xy_str = state.agents[agent]
         if xy_str == dest:
-            print("returning [] because we are done")
+            #print("returning [] because we are done")
             return [] # done
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
@@ -26,9 +40,9 @@ def move(state, agent, dest):
         y_dest = int(dest.split(',')[1])
         # choose direction to go
         # (ask hector about this)
-        print("about to do comparison to choose which direction to go")
+        #print("about to do comparison to choose which direction to go")
         if abs(x - x_dest) > abs(y - y_dest):
-            print("x="+str(x)+",x_dest="+str(x_dest)+"y="+str(y)+",y_dest="+str(y_dest))
+            #print("x="+str(x)+",x_dest="+str(x_dest)+"y="+str(y)+",y_dest="+str(y_dest))
             if x - x_dest > 0:
                 return [('movewest', agent),('navigate', agent, dest)]
             else:
@@ -57,11 +71,11 @@ def move(state, agent, dest):
 def perimeterize(state, agent, beacon_locs): 
     # if there are no more beacon locs we are done
     #print('beacon_locs are '+str(beacon_locs))
-    print("agent is "+str(agent))
-    print("WOOOO WE ARE IN PERIMETERIZE!!!")
-    print("beacon locs are "+str(beacon_locs))
+    #print("agent is "+str(agent))
+    #print("WOOOO WE ARE IN PERIMETERIZE!!!")
+    #print("beacon locs are "+str(beacon_locs))
     if beacon_locs: 
-        print("about to recur thru the HTN")
+        #print("about to recur thru the HTN w/ beacon_locs = "+str(beacon_locs))
         # get the first beacon loc
         return [('navigate',agent,beacon_locs[0]),
                 ('activatebeacon', agent),

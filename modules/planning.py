@@ -257,6 +257,7 @@ class PyHopPlanner(base.BaseModule):
                 pyhopTasks = None
                 if self.nbeacons:
                     pyhopTasks = nbeacons_pyhop_tasks_from_goals(goals,pyhopState)
+                    print "beacon pyhopTasks are "+str(pyhopTasks)
                 else:
                     pyhopTasks = pyhop_tasks_from_goals(goals)
                 
@@ -472,6 +473,24 @@ def pyhop_tasks_from_goals(goals):
     return alltasks
 
 
+def convert(midca_tile_str):
+    '''
+    Converts a MIDCA tile str like Tx4y6 into
+    a PyHOP str 4,6
+    
+    (it's not that PyHOP in general uses 4,6, just what the 
+    operators are expecting) 
+    '''
+    if midca_tile_str.startswith("Tx"):
+        # replace y with a comma
+        new_v = midca_tile_str.replace("y",",")
+        #trim off Tx at the beginning
+        new_v = new_v[2:]
+        #print("new_v is "+str(new_v))
+        return new_v
+    else:
+        return midca_tile_str
+
 def nbeacons_pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.agents={'curiosity':'3,3'} # put beacons here too? and mud tiles?
@@ -500,22 +519,13 @@ def nbeacons_pyhop_state_from_world(world, name = "state"):
             b_id = atom.args[0].name
             s.activated[b_id] = True
         elif atom.predicate.name == "agent-at":
-            new_loc = atom.args[1].name
-            # quick formatting
-            new_loc = new_loc.replace("y",",")
-            new_loc = new_loc[2:]
-            s.agents[atom.args[0].name] = new_loc 
+            s.agents[atom.args[0].name] = convert(atom.args[1].name) 
             
     # convert tile names to pyhop operators
     for (k,v) in s.beaconlocs.items():
-        old_v = v
+        s.beaconlocs[k] = convert(v)
         
-        # replace y with a comma
-        new_v = old_v.replace("y",",")
-        #trim off Tx at the beginning
-        new_v = new_v[2:]
-        
-        s.beaconlocs[k] = new_v
+    
             
     print("at the end of nbeacons_pyhop_state_from_world:")
     print_state(s)
@@ -527,6 +537,7 @@ def nbeacons_pyhop_tasks_from_goals(goals,state):
     beacongoals = pyhop.Goal("goals")
     beacongoals.activated = {}
     perimeter_goal_locs = []
+    agent_at_goal_locs = []
     agent_name = ""
     
     print("goals = "+str(goals))
@@ -548,9 +559,17 @@ def nbeacons_pyhop_tasks_from_goals(goals,state):
         if predicate == "activated":
             loc = state.beaconlocs[str(args[0])]
             perimeter_goal_locs.append(loc)
+        if predicate == "agent-at":
+            agent_dest = convert(args[1])
+            agent_at_goal_locs.append(agent_dest)
 
-        if perimeter_goal_locs:
-            alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
+    # important, only one goal for all activated beacons
+    if perimeter_goal_locs:
+        alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
+        
+    if agent_at_goal_locs:
+        alltasks.append(("navigate",state.agents.keys()[0],agent_at_goal_locs))
+    
     return alltasks
 
 
