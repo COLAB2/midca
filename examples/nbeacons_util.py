@@ -1,6 +1,8 @@
 # This file contains helpful functions for the nbeacons domain
 
 import random
+import MIDCA.modules.planning
+from MIDCA.modules._plan import pyhop
 
 class NBeaconGrid():
     '''
@@ -262,11 +264,139 @@ class Tile():
     def __eq__(self,anotherTile):
         return self.X == anotherTile.getX() and self.Y == anotherTile.getY()
             
+def convert(midca_tile_str):
+    '''
+    Converts a MIDCA tile str like Tx4y6 into
+    a PyHOP str 4,6
+    
+    (it's not that PyHOP in general uses 4,6, just what the 
+    operators are expecting) 
+    '''
+    if midca_tile_str.startswith("Tx"):
+        # replace y with a comma
+        new_v = midca_tile_str.replace("y",",")
+        #trim off Tx at the beginning
+        new_v = new_v[2:]
+        #print("new_v is "+str(new_v))
+        return new_v
+    else:
+        return midca_tile_str
+
+def nbeacons_pyhop_state_from_world(world, name = "state"):
+    s = pyhop.State(name)
+    s.agents={'curiosity':'3,3'} # put beacons here too? and mud tiles?
+    s.dim={'dim':-1}
+    s.agents = {}
+    s.beaconlocs = {} # key is beacon id (e.g. b1), val is tile str like Tx3y4 
+    s.beacontypes = {} # key is beacon id (e.g. b1), val is a number representing the type
+    s.activated = {} # key is beacon id (e.g. b1), val is True if activated, False otherwise
+    s.agents = {}
+    s.mud = {}
+    beacons = []
+    agent = None
+    for objname in world.objects:
+        if world.objects[objname].type.name == "BEACON":
+            beacons.append(objname)
+        elif world.objects[objname].type.name == "AGENT" and not agent: # if agent already set, means multi-agent
+            agent = objname
+        elif world.objects[objname].type.name == "DIM":
+            s.dim['dim'] = int(objname)
             
-def makeasciiframe(self, state): # state is a pyhop state
+    # by default, make all beacons deactivated (if they are activated, will be changed below)        
+    for bcn in beacons:
+        s.activated[bcn] = False
+    
+    # now process atoms
+    for atom in world.atoms:
+        if atom.predicate.name == "beacon-at":
+            b_id = atom.args[0].name
+            tile_str = atom.args[1].name
+            s.beaconlocs[b_id] = tile_str
+        elif atom.predicate.name == "activated":
+            b_id = atom.args[0].name
+            s.activated[b_id] = True
+        elif atom.predicate.name == "agent-at":
+            s.agents[atom.args[0].name] = convert(atom.args[1].name) 
+            
+    # convert tile names to pyhop operators
+    for (k,v) in s.beaconlocs.items():
+        s.beaconlocs[k] = convert(v)
+        
+    
+            
+    #print("at the end of nbeacons_pyhop_state_from_world:")
+    #print_state(s)
+    return s
+
+#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
+def nbeacons_pyhop_tasks_from_goals(goals,state):
+    alltasks = []
+    beacongoals = pyhop.Goal("goals")
+    beacongoals.activated = {}
+    perimeter_goal_locs = []
+    agent_at_goal_locs = []
+    agent_name = ""
+    
+    print("goals = "+str(goals))
+    for goal in goals:
+        #extract predicate
+        if 'predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['predicate'])
+        elif 'Predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['Predicate'])
+        elif goal.args:
+            predicate = str(goal.args[0])
+        else:
+            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        args = [str(arg) for arg in goal.args]
+        print("args[0] = "+str(args[0]))
+        print("predicate = "+str(predicate))
+        if args[0] == predicate:
+            args.pop(0)
+        if predicate == "activated":
+            loc = state.beaconlocs[str(args[0])]
+            perimeter_goal_locs.append(loc)
+        if predicate == "agent-at":
+            agent_dest = convert(args[1])
+            agent_at_goal_locs.append(agent_dest)
+
+    # important, only one goal for all activated beacons
+    if perimeter_goal_locs:
+        alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
+        
+    if agent_at_goal_locs:
+        alltasks.append(("navigate",state.agents.keys()[0],agent_at_goal_locs))
+    
+    return alltasks
+
+
+def asciiframestr(frame, numbered_borders = True):
+    print("in asciiframestr")
+    result = ""
+    if numbered_borders:
+        result +="  "
+        for i in range(len(frame)):
+            result += str(i)+" "
+        result+='\n'
+    r = 0
+    for row in frame:
+        if numbered_borders:
+            result += str(r)+" "
+        for val in row:
+            result += val + " "
+        result += "\n"
+        r+=1
+    # remove trailing newline
+    result = result[:len(result)-2]
+    return result   
+   
+def drawNBeaconsScene(midcastate):
     '''
-    Given a pyhop state, returns a drawing of the agent's state in ascii
+    Takes the world state MIDCA and returns a str of an ascii
+    drawing of the nbeacons domain for visual consumption by a human
     '''
+    
+    # SYMBOLS
     DIRT = '.'
     BEACON_UNACTIVATED = 'b'
     BEACON_ACTIVATED = 'B'                        
@@ -279,80 +409,51 @@ def makeasciiframe(self, state): # state is a pyhop state
     AGENT_WITH_FIRE = '%'
     AGENT_WITH_FLARE = '#'
     FLARE = '$'
-
-
+    
+    # convert MIDCA world to PyHop State (only doing this for code re-use
+    pyhopState = nbeacons_pyhop_state_from_world(midcastate)
+    print("successfully created pyhop state from midca state")
     # initialize the map with dirt
-    dim = state.dim
+    dim = pyhopState.dim['dim']
     grid = []
     for c in range(dim):
         row = []
         for r in range(dim):
                 row.append(DIRT)
         grid.append(row)
-    
+    print("here2")
     # Add agent
-    agentstr = state.agents[config.settings['AGENT_NAME']]
+    agentstr = pyhopState.agents['Curiosity']
     agent_x = int(agentstr.split(',')[0]) 
     agent_y = int(agentstr.split(',')[1])
     grid[agent_y][agent_x] = AGENT
-    
+     
     # now go through each attribute of the state, changing the grid
     # ADD ALL BEACONS
-    for beaconkey in state.activated.keys():
-        beaconstr = beaconkey[1:] # remove the 'b' at the beginning
+    for beaconkey in pyhopState.activated.keys():
+        beaconstr = pyhopState.beaconlocs[beaconkey]
         x = int(beaconstr.split(",")[0]) 
         y = int(beaconstr.split(",")[1]) 
-        
-        if state.activated[beaconkey]:
-            if state.beaconlocs[beaconkey] == state.agents[config.AGENT_NAME]:
+         
+        if pyhopState.activated[beaconkey]:
+            if pyhopState.beaconlocs[beaconkey] == pyhopState.agents['Curiosity']:
                 # Beacon is activated, with agent
                 grid[y][x] = AGENT_WITH_ACTIVATED_BEACON
             else:
                 # Beacon is activated, no agent
                 grid[y][x] = BEACON_ACTIVATED
         else:
-            if state.beaconlocs[beaconkey] == state.agents[config.settings['AGENT_NAME']]:
+            if pyhopState.beaconlocs[beaconkey] == pyhopState.agents['Curiosity']:
                 # Beacon is activated, with agent
                 grid[y][x] = AGENT_WITH_UNACTIVATED_BEACON
             else:
                 # Beacon is unactivated, no agent
                 grid[y][x] = BEACON_UNACTIVATED 
-                
-    if state.domainname == 'MARSWORLD':
-        for woodkey in state.wood.keys():
-            woodstr = woodkey[1:] # remove the 'w' at the beginning
-            x = int(woodstr.split(",")[0]) 
-            y = int(woodstr.split(",")[1]) 
-            
-            if state.fires[woodstr]:
-                if woodstr == state.agents[config.AGENT_NAME]:
-                    # There is a fire with the agent
-                    grid[y][x] = AGENT_WITH_FIRE
-                else:
-                    # fire no agent
-                    grid[y][x] = WOOD_ON_FIRE
-            else:
-                if state.wood[woodkey] == state.agents[config.settings['AGENT_NAME']]:
-                    # wood with agent
-                    grid[y][x] = AGENT_WITH_WOOD
-                else:
-                    # wood no agent
-                    grid[y][x] = WOOD 
-        
-         
-        for flare_id,flareloc in state.flarelocs.items():
-            if ',' in flareloc: #crude test to see if flareloc is an xystr
-                x = int(flareloc.split(',')[0])
-                y = int(flareloc.split(',')[1])
-                if state.flareslit[flare_id]:
-                    if flareloc == state.agents[config.settings['AGENT_NAME']]:
-                        # There is a lit flare with the agent
-                        grid[y][x] = AGENT_WITH_FLARE
-                    else:
-                        # flare no agent
-                        grid[y][x] = FLARE
+ 
+    print("successfully computed grid for drawing")
+    print(asciiframestr(grid))
 
-    return grid
+
     
 if __name__ == "__main__":
     env1 = NBeaconGrid()

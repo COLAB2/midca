@@ -53,7 +53,7 @@ myMidca.append_module("Plan", planning.PyHopPlanner(False,False,nbeacons = True)
 myMidca.append_module("Act", act.SimpleAct())
 
 # Set world viewer to output text
-myMidca.set_display_function(pwrapper) 
+myMidca.set_display_function(nbeacons_util.drawNBeaconsScene) 
 
 # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 # Note: Turning this on drastically increases MIDCA's running time.

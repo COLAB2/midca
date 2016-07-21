@@ -5,6 +5,7 @@ import traceback
 import copy
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
+from MIDCA.examples import nbeacons_util
 
 class GenericPyhopPlanner(base.BaseModule):
 
@@ -248,7 +249,7 @@ class PyHopPlanner(base.BaseModule):
             try:
                 pyhopState = None
                 if self.nbeacons:
-                    pyhopState = nbeacons_pyhop_state_from_world(world)
+                    pyhopState = nbeacons_util.nbeacons_pyhop_state_from_world(world)
                 else:
                     pyhopState = pyhop_state_from_world(world)
             except Exception:
@@ -256,7 +257,7 @@ class PyHopPlanner(base.BaseModule):
             try:
                 pyhopTasks = None
                 if self.nbeacons:
-                    pyhopTasks = nbeacons_pyhop_tasks_from_goals(goals,pyhopState)
+                    pyhopTasks = nbeacons_util.nbeacons_pyhop_tasks_from_goals(goals,pyhopState)
                     print "beacon pyhopTasks are "+str(pyhopTasks)
                 else:
                     pyhopTasks = pyhop_tasks_from_goals(goals)
@@ -471,105 +472,4 @@ def pyhop_tasks_from_goals(goals):
     if blkgoals.pos:
         alltasks.append(("move_blocks", blkgoals))
     return alltasks
-
-
-def convert(midca_tile_str):
-    '''
-    Converts a MIDCA tile str like Tx4y6 into
-    a PyHOP str 4,6
-    
-    (it's not that PyHOP in general uses 4,6, just what the 
-    operators are expecting) 
-    '''
-    if midca_tile_str.startswith("Tx"):
-        # replace y with a comma
-        new_v = midca_tile_str.replace("y",",")
-        #trim off Tx at the beginning
-        new_v = new_v[2:]
-        #print("new_v is "+str(new_v))
-        return new_v
-    else:
-        return midca_tile_str
-
-def nbeacons_pyhop_state_from_world(world, name = "state"):
-    s = pyhop.State(name)
-    s.agents={'curiosity':'3,3'} # put beacons here too? and mud tiles?
-    s.dim={'dim':-1}
-    s.agents = {}
-    s.beaconlocs = {} # key is beacon id (e.g. b1), val is tile str like Tx3y4 
-    s.beacontypes = {} # key is beacon id (e.g. b1), val is a number representing the type
-    s.activated = {} # key is beacon id (e.g. b1), val is True if activated, False otherwise
-    s.agents = {}
-    s.mud = {}
-    beacons = []
-    agent = None
-    for objname in world.objects:
-        if world.objects[objname].type.name == "BEACON":
-            beacons.append(objname)
-        elif world.objects[objname].type.name == "AGENT" and not agent: # if agent already set, means multi-agent
-            agent = objname
-        elif world.objects[objname].type.name == "DIM":
-            s.dim['dim'] = int(objname)
-    for atom in world.atoms:
-        if atom.predicate.name == "beacon-at":
-            b_id = atom.args[0].name
-            tile_str = atom.args[1].name
-            s.beaconlocs[b_id] = tile_str
-        elif atom.predicate.name == "activated":
-            b_id = atom.args[0].name
-            s.activated[b_id] = True
-        elif atom.predicate.name == "agent-at":
-            s.agents[atom.args[0].name] = convert(atom.args[1].name) 
-            
-    # convert tile names to pyhop operators
-    for (k,v) in s.beaconlocs.items():
-        s.beaconlocs[k] = convert(v)
-        
-    
-            
-    print("at the end of nbeacons_pyhop_state_from_world:")
-    print_state(s)
-    return s
-
-#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def nbeacons_pyhop_tasks_from_goals(goals,state):
-    alltasks = []
-    beacongoals = pyhop.Goal("goals")
-    beacongoals.activated = {}
-    perimeter_goal_locs = []
-    agent_at_goal_locs = []
-    agent_name = ""
-    
-    print("goals = "+str(goals))
-    for goal in goals:
-        #extract predicate
-        if 'predicate' in goal.kwargs:
-            predicate = str(goal.kwargs['predicate'])
-        elif 'Predicate' in goal.kwargs:
-            predicate = str(goal.kwargs['Predicate'])
-        elif goal.args:
-            predicate = str(goal.args[0])
-        else:
-            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
-        args = [str(arg) for arg in goal.args]
-        print("args[0] = "+str(args[0]))
-        print("predicate = "+str(predicate))
-        if args[0] == predicate:
-            args.pop(0)
-        if predicate == "activated":
-            loc = state.beaconlocs[str(args[0])]
-            perimeter_goal_locs.append(loc)
-        if predicate == "agent-at":
-            agent_dest = convert(args[1])
-            agent_at_goal_locs.append(agent_dest)
-
-    # important, only one goal for all activated beacons
-    if perimeter_goal_locs:
-        alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
-        
-    if agent_at_goal_locs:
-        alltasks.append(("navigate",state.agents.keys()[0],agent_at_goal_locs))
-    
-    return alltasks
-
 

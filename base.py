@@ -472,6 +472,7 @@ class PhaseManager:
                         try:
                             self.display(self.midca.world)
                         except Exception as e:
+                            print(e)
                             print("Error displaying world")
                     else:
                         print("No display function set. See PhaseManager.set_display_function()"    )
