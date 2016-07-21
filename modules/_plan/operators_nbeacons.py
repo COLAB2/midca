@@ -79,20 +79,43 @@ def moveeast(state, agent):
         return False
 
 def activatebeacon(state, agent):
-    if state.agents[agent]:
-        xy_str = state.agents[agent]
-        x = int(xy_str.split(',')[0])
-        y = int(xy_str.split(',')[1])
-        new_x = x
-        if xy_str in state.beacons.values():
-            # get the beacon_id at this loc
-            b_id = [b for (b,loc) in state.beaconlocs.items() if loc == xy_str][0]
-            state.activated[b_id] = True
-            return state
+    agent_at_beacon = False
+    beacon_key = None
+    for beaconstr, beaconlocstr in state.beaconlocs.items():
+        
+        if state.agents[agent] == beaconlocstr:
+            # print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
+            agent_at_beacon = True
+            beacon_key = beaconstr
+    
+    print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
+    beacon_exists = beacon_key in state.activated.keys() 
+    if agent_at_beacon:
+        if beacon_exists and state.activated[beacon_key]:
+            return False # already activated
         else:
-            return False # there is no beacon here
+            state.activated[beacon_key] = True
+            return state
     else:
-        return False    
+        return False   
+
+# from IJCAI-15 work
+# def activatebeacon(state, agent):
+#     if state.agents[agent]:
+#         xy_str = state.agents[agent]
+#         x = int(xy_str.split(',')[0])
+#         y = int(xy_str.split(',')[1])
+#         new_x = x
+#         print("in activate beacon with xy_str="+str(xy_str)+" and beaconlocs = "+str(state.beacons.values()))
+#         if xy_str in state.beacons.values():
+#             # get the beacon_id at this loc
+#             b_id = [b for (b,loc) in state.beaconlocs.items() if loc == xy_str][0]
+#             state.activated[b_id] = True
+#             return state
+#         else:
+#             return False # there is no beacon here
+#     else:
+#         return False    
     
 def declare_operators():
     pyhop.declare_operators(movenorth, movesouth, moveeast, movewest, activatebeacon)

@@ -18,6 +18,7 @@ def move(state, agent, dest):
         print("um are we here?")
         xy_str = state.agents[agent]
         if xy_str == dest:
+            print("returning [] because we are done")
             return [] # done
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])

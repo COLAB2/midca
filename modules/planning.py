@@ -264,6 +264,9 @@ class PyHopPlanner(base.BaseModule):
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
+                print("pyhopPlan is :")
+                for a in pyhopPlan:
+                    print("  "+str(a))
             except Exception:
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
@@ -478,6 +481,7 @@ def nbeacons_pyhop_state_from_world(world, name = "state"):
     s.beacontypes = {} # key is beacon id (e.g. b1), val is a number representing the type
     s.activated = {} # key is beacon id (e.g. b1), val is True if activated, False otherwise
     s.agents = {}
+    s.mud = {}
     beacons = []
     agent = None
     for objname in world.objects:
