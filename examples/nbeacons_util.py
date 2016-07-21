@@ -434,7 +434,7 @@ def drawNBeaconsScene(midcastate):
         beaconstr = pyhopState.beaconlocs[beaconkey]
         x = int(beaconstr.split(",")[0]) 
         y = int(beaconstr.split(",")[1]) 
-         
+        
         if pyhopState.activated[beaconkey]:
             if pyhopState.beaconlocs[beaconkey] == pyhopState.agents['Curiosity']:
                 # Beacon is activated, with agent
