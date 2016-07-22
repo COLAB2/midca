@@ -6,9 +6,7 @@ from random import randint
 import copy
 
 """
-Assumptions of Domain:
-1. The world is circular (no boundaries: going south when y=0 goes to y=6, etc)
-2. The world is a square, there is a single dimension value, and tiles are 0 to dim-1
+NBeacons domain
 """
 
 def move(state, agent, dest):

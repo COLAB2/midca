@@ -265,8 +265,13 @@ class PyHopPlanner(base.BaseModule):
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
+                #print_state(pyhopState)
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
                 print("pyhopPlan is :")
+                for a in pyhopPlan:
+                    print("  "+str(a))
+                pyhopPlan = nbeacons_util.nbeacons_plans_pyhop_to_midca(pyhopPlan,pyhopState)
+                print("pyhopPlan is after translation :")
                 for a in pyhopPlan:
                     print("  "+str(a))
             except Exception:

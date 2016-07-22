@@ -370,6 +370,29 @@ def nbeacons_pyhop_tasks_from_goals(goals,state):
     return alltasks
 
 
+def nbeacons_plans_pyhop_to_midca(plan,state):
+    '''
+    Returns a plan that can be executed by MIDCA
+    '''
+    print("about to print the state")
+    midcaPlan = []
+    agents_xy_str = state.agents['Curiosity']
+    midca_xy_str = "Tx" + agents_xy_str.replace(",","y")
+    for a in plan:
+        print("a="+str(a))
+        print("a[0]="+str(a[0]))
+        
+        if a[0] == 'moveeast':
+            new_a = (a[0],a[1],)
+        elif a[0] == 'movewest':
+            pass
+        elif a[0] == 'movenorth':
+            pass
+        elif a[0] == 'movesouth':
+            pass
+    #pyhop.print_state(state)
+    
+
 def asciiframestr(frame, numbered_borders = True):
     print("in asciiframestr")
     result = ""
