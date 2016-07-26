@@ -8,7 +8,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 import sys
 sys.path.append("../")
-import pyhop
+from MIDCA.modules._plan import pyhop
 import random 
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
