@@ -344,7 +344,7 @@ class World:
 					return True
 		return False
 	
-	def get_possible_objects(predicate, arg):
+	def get_possible_objects(self, predicate, arg):
 		return self.objects.values() #not, obviously, a good implementation
 	
 	def is_applicable(self, action):
@@ -380,7 +380,7 @@ class World:
 				raise Exception("Object " + name + " DNE")
 			args.append(self.objects[name])
 		if opName not in self.operators:
-			raise Exception("Operator " + opname + " DNE")
+			raise Exception("Operator " + opName + " DNE")
 		simAction = self.operators[opName].instantiate(args)
 		if not self.is_applicable(simAction):
 			raise Exception("Preconditions not met.")
