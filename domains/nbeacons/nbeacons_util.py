@@ -213,7 +213,7 @@ class Tile():
         
         # 3 & 4) Figure out what direction the tile is, and check not already set
         if xdiff != 0:
-            if xdiff > 0:
+            if xdiff < 0:
                 # x is less than (b/c diff), therefore dest is east
                 if self.eastTile:
                     raise Exception("Error: trying to set eastTile to "+str(dest)+" but eastTile already set to "+str(self.eastTile))

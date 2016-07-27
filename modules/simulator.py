@@ -1,5 +1,5 @@
 import sys, random
-from MIDCA import worldsim, goals
+from MIDCA import worldsim, goals, base
 
 class MidcaActionSimulator:
 
@@ -30,17 +30,19 @@ class MidcaActionSimulator:
 
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]
 
-from MIDCA.domains.blocksworld import blockstate, scene
+class ASCIIWorldViewer(base.BaseModule):
 
-class ASCIIWorldViewer:
-
+    def __init__(self, display=None):
+        self.display = display
+    
     def init(self, world, mem):
         self.world = world
 
     def run(self, cycle, verbose = 2):
         if verbose >= 2:
-            blocks = blockstate.get_block_list(self.world)
-            print str(scene.Scene(blocks))
+            if self.display:
+                self.display(self.world)
+
 
 class WorldChanger:
 

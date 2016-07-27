@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import MIDCA
 from MIDCA import base
-from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act
 from MIDCA.worldsim import domainread, stateread
 import inspect, os
@@ -37,6 +36,7 @@ world = domainread.load_domain(DOMAIN_FILE)
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
 state1.generate()
+print(state1.get_STRIPS_str())
 state1_str = state1.get_STRIPS_str()
 
 # Load state
@@ -51,6 +51,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())

@@ -5,7 +5,6 @@ import traceback
 import copy
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
-from MIDCA.examples import nbeacons_util
 
 class GenericPyhopPlanner(base.BaseModule):
 

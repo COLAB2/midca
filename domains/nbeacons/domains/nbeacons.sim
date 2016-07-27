@@ -55,7 +55,7 @@ results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
 
-operator(activate-beacon,
+operator(activatebeacon,
 args = [(agnt, AGENT), (loc, TILE), (bcn, BEACON)],
 preconditions = [
 	condition(agent-at, [agnt, loc]),
