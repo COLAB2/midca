@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-import MIDCA
 from MIDCA import base
-from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
 
 from MIDCA.worldsim import domainread, stateread

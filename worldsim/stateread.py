@@ -5,7 +5,7 @@ def _apply_state(world, lines):
 	lineNum = 1
 	for line in lines:
 		if "#" in line:
-			line = line[:line.index("#")] #commnents
+			line = line[:line.index("#")] #comments
 		if "(" in line:
 			if ")" not in line:
 				raise Exception("Line " + str(lineNum) + ": Declarations must be contained on single line: " + line)

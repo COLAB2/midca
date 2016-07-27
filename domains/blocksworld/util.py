@@ -25,6 +25,15 @@ def preferApprehend(goal1, goal2):
         return 1
     return 0
 
+def preferFire(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
+        return -1
+    elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
+        return 1
+    return 0
+
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.pos = {}
@@ -66,7 +75,7 @@ def pyhop_state_from_world(world, name = "state"):
             s.free[atom.args[0].name] = True
         elif atom.predicate.name == "available":
             s.mortaravailable[atom.args[0].name] = True
-        elif atom.predicate.name == "hasmortar":
+        elif "hasmortar" in world.types and atom.predicate.name == "hasmortar":
             s.hasmortar[atom.args[0].name] = atom.args[1].name
     for block in blocks:
         if block not in s.clear:

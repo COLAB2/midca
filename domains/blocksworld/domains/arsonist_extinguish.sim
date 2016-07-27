@@ -2,9 +2,9 @@
 type(BLOCK)
 type(ARSONIST)
 type(FIRE-EXTINGUISHER)
-#type(SQUARE, BLOCK)
-#type(TRIANGLE, BLOCK)
-#type(TABLE, BLOCK)
+type(SQUARE, BLOCK)
+type(TRIANGLE, BLOCK)
+type(TABLE, BLOCK)
 
 predicate(clear, [blk], [BLOCK])
 predicate(holding, [blk], [BLOCK])
