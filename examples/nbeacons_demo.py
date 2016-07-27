@@ -7,7 +7,7 @@ from MIDCA.worldsim import domainread, stateread, worldsim
 from MIDCA.modules._plan import methods_nbeacons, operators_nbeacons
 import inspect, os
 
-import nbeacons_util
+from MIDCA.domains.nbeacons import nbeacons_util
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).

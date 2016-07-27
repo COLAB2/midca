@@ -177,26 +177,7 @@ class PyHopPlanner(base.BaseModule):
     MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''
-<<<<<<< HEAD
 
-    nbeacons = False # are we in nbeacons domain? TODO: make a more general way of doing this
-
-    def __init__(self, extinguishers = False, mortar = False, nbeacons = False):
-        #declares pyhop methods. This is where the planner should be given the domain information it needs.
-        self.nbeacons = nbeacons
-        if nbeacons:
-            methods_nbeacons.declare_methods()
-            operators_nbeacons.declare_operators()
-        elif extinguishers:
-            methods_extinguish.declare_methods()
-            operators_extinguish.declare_ops()
-        elif mortar:
-            methods_mortar.declare_methods()
-            operators_mortar.declare_ops()
-        else:
-            methods.declare_methods()
-            operators.declare_ops()
-=======
     pyhop_state_from_world = None
     pyhop_tasks_from_goals = None
     
@@ -221,9 +202,6 @@ class PyHopPlanner(base.BaseModule):
             traceback.print_exc()
             self.working = False
         
-       
->>>>>>> issues3and4
-
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
