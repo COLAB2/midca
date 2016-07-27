@@ -1,7 +1,7 @@
 """
 NBeacons methods for PyHOP
 """
-import pyhop
+from MIDCA.modules._plan import pyhop
 from random import randint
 import copy
 

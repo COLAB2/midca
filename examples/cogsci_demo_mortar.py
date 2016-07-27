@@ -56,11 +56,11 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
-                                                    util.pyhop_tasks_from_goals,
+myMidca.append_module("Plan", planning.PyHopPlanner(util.mortar_pyhop_state_from_world,
+                                                    util.mortar_pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC,
                                                     extinguish,
@@ -76,7 +76,7 @@ myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
+myMidca.initGoalGraph()
 myMidca.init()
 myMidca.run()
 

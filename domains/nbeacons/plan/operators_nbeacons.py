@@ -1,7 +1,7 @@
 """
 NBeacons operators for PyHOP
 """
-import pyhop
+from MIDCA.modules._plan import pyhop
 
 """ World coordinates are bounded by [0,state.dim-1] for both x and y
 """

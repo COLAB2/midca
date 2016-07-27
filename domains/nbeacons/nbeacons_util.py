@@ -282,7 +282,7 @@ def convert(midca_tile_str):
     else:
         return midca_tile_str
 
-def nbeacons_pyhop_state_from_world(world, name = "state"):
+def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.agents={'curiosity':'3,3'} # put beacons here too? and mud tiles?
     s.dim={'dim':-1}
@@ -329,7 +329,7 @@ def nbeacons_pyhop_state_from_world(world, name = "state"):
     return s
 
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def nbeacons_pyhop_tasks_from_goals(goals,state):
+def pyhop_tasks_from_goals(goals,pyhopState):
     alltasks = []
     beacongoals = pyhop.Goal("goals")
     beacongoals.activated = {}
@@ -354,7 +354,7 @@ def nbeacons_pyhop_tasks_from_goals(goals,state):
         if args[0] == predicate:
             args.pop(0)
         if predicate == "activated":
-            loc = state.beaconlocs[str(args[0])]
+            loc = pyhopState.beaconlocs[str(args[0])]
             perimeter_goal_locs.append(loc)
         if predicate == "agent-at":
             agent_dest = convert(args[1])
@@ -362,10 +362,10 @@ def nbeacons_pyhop_tasks_from_goals(goals,state):
 
     # important, only one goal for all activated beacons
     if perimeter_goal_locs:
-        alltasks.append(("make_perimeter",state.agents.keys()[0],perimeter_goal_locs))
+        alltasks.append(("make_perimeter",pyhopState.agents.keys()[0],perimeter_goal_locs))
         
     if agent_at_goal_locs:
-        alltasks.append(("navigate",state.agents.keys()[0],agent_at_goal_locs))
+        alltasks.append(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs))
     
     return alltasks
 
@@ -434,7 +434,7 @@ def drawNBeaconsScene(midcastate):
     FLARE = '$'
     
     # convert MIDCA world to PyHop State (only doing this for code re-use
-    pyhopState = nbeacons_pyhop_state_from_world(midcastate)
+    pyhopState = pyhop_state_from_world(midcastate)
     print("successfully created pyhop state from midca state")
     # initialize the map with dirt
     dim = pyhopState.dim['dim']

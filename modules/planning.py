@@ -257,19 +257,12 @@ class PyHopPlanner(base.BaseModule):
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
-                pyhopTasks = self.pyhop_tasks_from_goals(goals)
+                pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 #print_state(pyhopState)
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
-                print("pyhopPlan is :")
-                for a in pyhopPlan:
-                    print("  "+str(a))
-                pyhopPlan = nbeacons_util.nbeacons_plans_pyhop_to_midca(pyhopPlan,pyhopState)
-                print("pyhopPlan is after translation :")
-                for a in pyhopPlan:
-                    print("  "+str(a))
             except Exception:
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
@@ -286,7 +279,9 @@ class PyHopPlanner(base.BaseModule):
             if verbose >= 1:
                 print "Planning complete."
             if verbose >= 2:
-                print "Plan: ", midcaPlan
+                print "Plan: "#, midcaPlan
+                for a in midcaPlan:
+                    print("  "+str(a))
             #save new plan
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)

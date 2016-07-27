@@ -3,11 +3,12 @@ import MIDCA
 from MIDCA import base
 from MIDCA.examples import predicateworld
 from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act
-from MIDCA.worldsim import domainread, stateread, worldsim
-from MIDCA.modules._plan import methods_nbeacons, operators_nbeacons
+from MIDCA.worldsim import domainread, stateread
 import inspect, os
 
+# Domain Specific Imports
 from MIDCA.domains.nbeacons import nbeacons_util
+from MIDCA.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -15,18 +16,23 @@ Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Mu
 Notes: I will generate a state file instead of reading in from a file
 '''
 
-def pwrapper(x):
-    print(str(x))
-
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIDCA_ROOT = thisDir + "/../"
 
+### Domain Specific Variables
+DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
+DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
+#STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
+DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
+DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
+DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
+GOAL_GRAPH_CMP_FUNC = None
+
 # Domain  
-domainFile = MIDCA_ROOT + "worldsim/domains/nbeacons.sim"
 
 # Load domain
-world = domainread.load_domain(domainFile)
+world = domainread.load_domain(DOMAIN_FILE)
 
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
@@ -37,7 +43,7 @@ state1_str = state1.get_STRIPS_str()
 stateread.apply_state_str(world, state1_str)
 
 # Creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display=pwrapper, verbose=4)
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
 
 # Add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -49,7 +55,10 @@ myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.PyHopPlanner(False,False,nbeacons = True)) # set up planner for sample domain
+myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
+                                                    nbeacons_util.pyhop_tasks_from_goals,
+                                                    DECLARE_METHODS_FUNC,
+                                                    DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
 myMidca.append_module("Act", act.SimpleAct())
 
 # Set world viewer to output text
@@ -77,22 +86,9 @@ myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
-def preferApprehend(goal1, goal2):
-    if 'predicate' not in goal1 or 'predicate' not in goal2:
-        return 0
-    elif goal1['predicate'] == 'free' and goal2['predicate'] != 'free':
-        return -1
-    elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
-        return 1
-    elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
-        return -1
-    elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
-        return 1
-    return 0
-
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = preferApprehend)
+myMidca.initGoalGraph()
 myMidca.init()
 myMidca.run()
 

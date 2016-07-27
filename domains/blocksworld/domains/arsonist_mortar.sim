@@ -7,6 +7,7 @@ predicate(clear, [blk], [BLOCK])
 predicate(holding, [blk], [BLOCK])
 predicate(arm-empty, [], [])
 predicate(on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(stable-on, [blk1, blk2], [BLOCK, BLOCK])
 predicate(on-table, [blk], [BLOCK])
 predicate(block, [blk], [BLOCK])
 predicate(triangle, [blk], [BLOCK])
@@ -40,7 +41,7 @@ results = [
 	condition(clear, [btmblk], negate = True), 
 	condition(holding, [topblk], negate = True), 
 	condition(clear, [topblk]), 
-	condition(on, [topblk, btmblk]),
+	condition(stable-on, [topblk, btmblk]),
 	condition(hasmortar, [btmblk, mortar]),
 	condition(used, [mortar]),
 	condition(available, [mortar], negate = True),
@@ -64,15 +65,15 @@ args = [(topblk, BLOCK), (btmblk, BLOCK), (mortar, MORTARBLOCK)],
 preconditions = [
 	condition(clear, [topblk]), 
 	condition(arm-empty), 
-	condition(on, [topblk, btmblk]),
+	condition(stable-on, [topblk, btmblk]),
 	condition(hasmortar, [btmblk, mortar]),
 	condition(used, [mortar])],
 results = [
 	condition(clear, [topblk], negate = True), 
 	condition(holding, [topblk]), 
 	condition(arm-empty, [], negate = True), 
-	condition(on, [topblk, btmblk], negate = True), 
-	condition(clear, [btmblk], negate = False),
+	condition(stable-on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False), 
 	condition(hasmortar, [btmblk, mortar], negate = True)])
 
 operator(putdown, 
