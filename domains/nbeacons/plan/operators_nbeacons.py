@@ -7,14 +7,16 @@ from MIDCA.modules._plan import pyhop
 """
 
 """ move down """
-def movesouth(state, agent):
+# start and dest are only to help conversion to MIDCA operators, they are not used in 
+# PyHop Planning
+def movesouth(state, agent, start, dest):
     if state.agents[agent] not in state.mud.values():
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_y = y
         if y == 0:
-            new_y = state.dim['dim']-1
+            return False
         else:
             new_y = y - 1
 
@@ -25,14 +27,14 @@ def movesouth(state, agent):
         return False
 
 """ move up """
-def movenorth(state, agent):
+def movenorth(state, agent, start, dest):
     if state.agents[agent] not in state.mud.values():
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_y = y
         if y == state.dim['dim']-1:
-            new_y = 0
+            return False
         else:
             new_y = y + 1
 
@@ -43,14 +45,14 @@ def movenorth(state, agent):
         return False
 
 """ move left """
-def movewest(state, agent):
+def movewest(state, agent, start, dest):
     if state.agents[agent] not in state.mud.values():
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_x = x
         if x == 0:
-            new_x = state.dim['dim']-1
+            return False
         else:
             new_x = x - 1
 
@@ -61,14 +63,14 @@ def movewest(state, agent):
         return False
 
 """ move right """
-def moveeast(state, agent):
+def moveeast(state, agent, start, dest):
     if state.agents[agent] not in state.mud.values():
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_x = x
         if x == state.dim['dim']-1:
-            new_x = 0
+            return False
         else:
             new_x = x + 1
 
@@ -78,11 +80,10 @@ def moveeast(state, agent):
     else:
         return False
 
-def activatebeacon(state, agent):
+def activatebeacon(state, agent, loc, bcn_id):
     agent_at_beacon = False
     beacon_key = None
     for beaconstr, beaconlocstr in state.beaconlocs.items():
-        
         if state.agents[agent] == beaconlocstr:
             #print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
             agent_at_beacon = True
@@ -95,7 +96,6 @@ def activatebeacon(state, agent):
         if beacon_exists and state.activated[beacon_key]:
             return False # already activated
         else:
-            #print("!!!!and we're here!")
             state.activated[beacon_key] = True
             return state
     else:

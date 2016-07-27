@@ -36,20 +36,31 @@ def move(state, agent, dest):
         y = int(xy_str.split(',')[1])
         x_dest = int(dest.split(',')[0])
         y_dest = int(dest.split(',')[1])
+        
+        agent_midca_str = "Tx"+str(x)+"y"+str(y)
+        
         # choose direction to go
         # (ask hector about this)
         #print("about to do comparison to choose which direction to go")
         if abs(x - x_dest) > abs(y - y_dest):
             #print("x="+str(x)+",x_dest="+str(x_dest)+"y="+str(y)+",y_dest="+str(y_dest))
             if x - x_dest > 0:
-                return [('movewest', agent),('navigate', agent, dest)]
+                agent_dest_midca_str = "Tx"+str(x-1)+"y"+str(y)
+                #print("going west")
+                return [('movewest', agent, agent_midca_str, agent_dest_midca_str),('navigate', agent, dest)]
             else:
-                return [('moveeast', agent),('navigate', agent, dest)]
+                #print("going east")
+                agent_dest_midca_str = "Tx"+str(x+1)+"y"+str(y)
+                return [('moveeast', agent, agent_midca_str, agent_dest_midca_str),('navigate', agent, dest)]
         else:
             if y - y_dest > 0:
-                return [('movesouth', agent),('navigate', agent, dest)]
+                agent_dest_midca_str = "Tx"+str(x)+"y"+str(y-1)
+                #print("going south")
+                return [('movesouth', agent, agent_midca_str, agent_dest_midca_str),('navigate', agent, dest)]
             else:
-                return [('movenorth', agent),('navigate', agent, dest)]
+                agent_dest_midca_str = "Tx"+str(x)+"y"+str(y+1)
+                #print("going north")
+                return [('movenorth', agent, agent_midca_str, agent_dest_midca_str),('navigate', agent, dest)]
         
         # if we get here that means we are exactly equidistant in all
         # directions from the destination, so pick a random direction
@@ -72,13 +83,31 @@ def perimeterize(state, agent, beacon_locs):
     #print("agent is "+str(agent))
     #print("WOOOO WE ARE IN PERIMETERIZE!!!")
     #print("beacon locs are "+str(beacon_locs))
-    if beacon_locs: 
+      
+    if len(beacon_locs) > 0: 
         #print("about to recur thru the HTN w/ beacon_locs = "+str(beacon_locs))
+        
+        xy_str = state.agents[agent]
+        x = int(xy_str.split(',')[0])
+        y = int(xy_str.split(',')[1])
+        agent_midca_str = "Tx"+str(x)+"y"+str(y)
+        
+        b_x = beacon_locs[0].split(',')[0]
+        b_y = beacon_locs[0].split(',')[1]
+        beacon_loc_midca_str = "Tx"+b_x+"y"+b_y
+        #print("about to get beacon_id")
+        pyhop.print_state(state)
+        #print("state.beacon_locs.items() = "+str(state.beaconlocs.items())+" and beacon_locs[0] = "+str(beacon_locs[0]))
+        beacon_id = [k for (k,v) in state.beaconlocs.items() if v == beacon_locs[0]][0]
+        #print("beacon_id ="+str(beacon_id))
+        
         # get the first beacon loc
+        #print("call activate beacon with "+beacon_loc_midca_str+" and "+beacon_id)
         return [('navigate',agent,beacon_locs[0]),
-                ('activatebeacon', agent),
+                ('activatebeacon', agent, beacon_loc_midca_str, beacon_id),
                 ('make_perimeter', agent, beacon_locs[1:])]
-    elif beacon_locs == []:
+    elif len(beacon_locs) == 0:
+        #print("and we're done in perimterize")
         return [] # done
     else: 
         return False

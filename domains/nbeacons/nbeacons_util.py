@@ -424,9 +424,9 @@ def drawNBeaconsScene(midcastate):
     BEACON_UNACTIVATED = 'b'
     BEACON_ACTIVATED = 'B'                        
     WOOD = 'x'
-    WOOD_ON_FIRE = '*'
+    #WOOD_ON_FIRE = '*'
     AGENT = 'a'
-    AGENT_WITH_UNACTIVATED_BEACON = '8'
+    AGENT_WITH_UNACTIVATED_BEACON = '*'
     AGENT_WITH_ACTIVATED_BEACON = 'A'
     AGENT_WITH_WOOD = '^'
     AGENT_WITH_FIRE = '%'
@@ -471,7 +471,14 @@ def drawNBeaconsScene(midcastate):
                 grid[y][x] = AGENT_WITH_UNACTIVATED_BEACON
             else:
                 # Beacon is unactivated, no agent
-                grid[y][x] = BEACON_UNACTIVATED 
+                beacon_id = ""
+                #pyhop.print_state(pyhopState)
+                for (k,v) in pyhopState.beaconlocs.items():
+                    if v == str(x)+","+str(y):
+                        beacon_id = k[1:] # remove the 'B'
+                
+                #grid[y][x] = BEACON_UNACTIVATED 
+                grid[y][x] = beacon_id
  
     print("successfully computed grid for drawing")
     print(asciiframestr(grid))
