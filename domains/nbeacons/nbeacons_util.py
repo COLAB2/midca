@@ -277,10 +277,10 @@ def convert(midca_tile_str):
         new_v = midca_tile_str.replace("y",",")
         #trim off Tx at the beginning
         new_v = new_v[2:]
-        print("new_v is "+str(new_v))
+        #print("new_v is "+str(new_v))
         return new_v
     else:
-        print("hit the else")
+        #print("hit the else")
         return midca_tile_str
 
 def pyhop_state_from_world(world, name = "state"):
@@ -336,9 +336,7 @@ def pyhop_tasks_from_goals(goals,pyhopState):
     beacongoals.activated = {}
     perimeter_goal_locs = []
     agent_at_goal_locs = []
-    agent_name = ""
     
-    print("goals = "+str(goals))
     for goal in goals:
         #extract predicate
         if 'predicate' in goal.kwargs:
@@ -350,56 +348,25 @@ def pyhop_tasks_from_goals(goals,pyhopState):
         else:
             raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
         args = [str(arg) for arg in goal.args]
-        print("args[0] = "+str(args[0]))
-        print("predicate = "+str(predicate))
         if args[0] == predicate:
             args.pop(0)
         if predicate == "activated":
             loc = pyhopState.beaconlocs[str(args[0])]
             perimeter_goal_locs.append(loc)
         if predicate == "agent-at":
-            print("here")
-            agent_dest = convert(args[0])
+            agent_dest = convert(args[1])
             agent_at_goal_locs.append(agent_dest)
-            print("annndd here")
 
     # important, only one goal for all activated beacons
     if perimeter_goal_locs:
         alltasks.append(("make_perimeter",pyhopState.agents.keys()[0],perimeter_goal_locs))
-
-    print("agent_at_goal_locs: "+str(agent_at_goal_locs))        
+        
     if agent_at_goal_locs:
-        print("adding navigate task:"+str(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs)))
         alltasks.append(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs))
     
     return alltasks
 
-
-def nbeacons_plans_pyhop_to_midca(plan,state):
-    '''
-    Returns a plan that can be executed by MIDCA
-    '''
-    print("about to print the state")
-    midcaPlan = []
-    agents_xy_str = state.agents['Curiosity']
-    midca_xy_str = "Tx" + agents_xy_str.replace(",","y")
-    for a in plan:
-        print("a="+str(a))
-        print("a[0]="+str(a[0]))
-        
-        if a[0] == 'moveeast':
-            new_a = (a[0],a[1],)
-        elif a[0] == 'movewest':
-            pass
-        elif a[0] == 'movenorth':
-            pass
-        elif a[0] == 'movesouth':
-            pass
-    #pyhop.print_state(state)
-    
-
 def asciiframestr(frame, numbered_borders = True):
-    print("in asciiframestr")
     result = ""
     if numbered_borders:
         result +="  "
@@ -440,7 +407,7 @@ def drawNBeaconsScene(midcastate):
     
     # convert MIDCA world to PyHop State (only doing this for code re-use
     pyhopState = pyhop_state_from_world(midcastate)
-    print("successfully created pyhop state from midca state")
+    #print("successfully created pyhop state from midca state")
     # initialize the map with dirt
     dim = pyhopState.dim['dim']
     grid = []
@@ -449,7 +416,7 @@ def drawNBeaconsScene(midcastate):
         for r in range(dim):
                 row.append(DIRT)
         grid.append(row)
-    print("here2")
+    
     # Add agent
     agentstr = pyhopState.agents['Curiosity']
     agent_x = int(agentstr.split(',')[0]) 
@@ -485,7 +452,6 @@ def drawNBeaconsScene(midcastate):
                 #grid[y][x] = BEACON_UNACTIVATED 
                 grid[y][x] = beacon_id
  
-    print("successfully computed grid for drawing")
     print(asciiframestr(grid))
 
 

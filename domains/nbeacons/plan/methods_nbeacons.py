@@ -96,7 +96,7 @@ def perimeterize(state, agent, beacon_locs):
         b_y = beacon_locs[0].split(',')[1]
         beacon_loc_midca_str = "Tx"+b_x+"y"+b_y
         #print("about to get beacon_id")
-        pyhop.print_state(state)
+        
         #print("state.beacon_locs.items() = "+str(state.beaconlocs.items())+" and beacon_locs[0] = "+str(beacon_locs[0]))
         beacon_id = [k for (k,v) in state.beaconlocs.items() if v == beacon_locs[0]][0]
         #print("beacon_id ="+str(beacon_id))

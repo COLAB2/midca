@@ -77,7 +77,6 @@ class SimpleAct(base.BaseModule):
         goalsAchieved = set()
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         for nextPlan in goalGraph.allMatchingPlans(goals):
-            print("nextPlan is "+str(nextPlan))
             achieved = world.goals_achieved(nextPlan, goals)
             if len(achieved) > len(goalsAchieved):
                 goalsAchieved = achieved
