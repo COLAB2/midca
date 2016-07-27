@@ -1,7 +1,8 @@
 from MIDCA import goals, base
 from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
-from MIDCA.worldsim import blockstate
+from MIDCA.domains.blocksworld import blockstate
+import copy 
 
 class UserGoalInput(base.BaseModule):
 

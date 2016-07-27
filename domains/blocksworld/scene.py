@@ -1,5 +1,5 @@
 import copy
-from block import Block
+from MIDCA.domains.blocksworld.block import Block
 
 class Scene:
     blocks = []         # contains all blocks

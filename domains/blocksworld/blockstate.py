@@ -1,5 +1,5 @@
-from block import Block
-import worldsim
+from MIDCA.domains.blocksworld.block import Block
+from MIDCA.worldsim import worldsim
 
 def b(name):
 	return "b" + str(name)
@@ -34,7 +34,7 @@ def get_block_list(world):
 			blocks[atom.args[0].name].clear = True
 		elif atom.predicate == world.predicates["onfire"]:
 			blocks[atom.args[0].name].onfire = True
-		elif atom.predicate == world.predicates["hasmortar"]:
+		elif "hasmortar" in world.predicates.keys() and atom.predicate == world.predicates["hasmortar"]:
 			blocks[atom.args[0].name].hasmortar = True
 	return sorted(blocks.values(), key = lambda x: x.id)
 
