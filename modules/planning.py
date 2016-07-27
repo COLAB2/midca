@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar,methods_nbeacons,operators_nbeacons
-=======
 from _plan import pyhop
->>>>>>> issues3and4
 from MIDCA import plans, base
 import collections
 import traceback
