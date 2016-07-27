@@ -277,9 +277,10 @@ def convert(midca_tile_str):
         new_v = midca_tile_str.replace("y",",")
         #trim off Tx at the beginning
         new_v = new_v[2:]
-        #print("new_v is "+str(new_v))
+        print("new_v is "+str(new_v))
         return new_v
     else:
+        print("hit the else")
         return midca_tile_str
 
 def pyhop_state_from_world(world, name = "state"):
@@ -357,14 +358,18 @@ def pyhop_tasks_from_goals(goals,pyhopState):
             loc = pyhopState.beaconlocs[str(args[0])]
             perimeter_goal_locs.append(loc)
         if predicate == "agent-at":
-            agent_dest = convert(args[1])
+            print("here")
+            agent_dest = convert(args[0])
             agent_at_goal_locs.append(agent_dest)
+            print("annndd here")
 
     # important, only one goal for all activated beacons
     if perimeter_goal_locs:
         alltasks.append(("make_perimeter",pyhopState.agents.keys()[0],perimeter_goal_locs))
-        
+
+    print("agent_at_goal_locs: "+str(agent_at_goal_locs))        
     if agent_at_goal_locs:
+        print("adding navigate task:"+str(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs)))
         alltasks.append(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs))
     
     return alltasks

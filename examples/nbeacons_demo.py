@@ -28,7 +28,6 @@ DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
 GOAL_GRAPH_CMP_FUNC = None
 
-# Domain  
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)
@@ -72,31 +71,5 @@ myMidca.mem.logEachAccess = False
 
 # Initialize and start running!
 myMidca.init()
-myMidca.run()
-
-
-thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-MIDCA_ROOT = thisDir + "/../"
-
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate.sim")
-
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
-myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
-myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
-
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
-myMidca.storeHistory = True
 myMidca.initGoalGraph()
-myMidca.init()
 myMidca.run()
-
-'''
-The code below would print out MIDCA's goal set for the first 20 phases of the run above. Note that any memory values can be accessed in this way, assuming that the storeHistory value was set to True during the run. This code is left as an example, but commented out because it will throw an error if fewer than 20 cycles were simulated.
-
-for i in range(20):
-    print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
-
-'''
