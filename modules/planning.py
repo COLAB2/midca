@@ -1,4 +1,4 @@
-from _plan import pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
+from _plan import pyhop
 from MIDCA import plans, base
 import collections
 import traceback
@@ -287,6 +287,7 @@ class PyHopPlanner(base.BaseModule):
 class PyHopPlanner2(base.BaseModule):
 
     '''
+    OLD #TODO
     MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''

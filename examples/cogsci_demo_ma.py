@@ -1,7 +1,7 @@
 #!/usr/bin/env python 
 import MIDCA
 from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide, evaluate
+from MIDCA.modules import simulator, guide, evaluate, perceive, assess
 import inspect, os
 
 '''
