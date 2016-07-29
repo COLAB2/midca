@@ -35,7 +35,6 @@ world = domainread.load_domain(DOMAIN_FILE)
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
 state1.generate()
-print(state1.get_STRIPS_str())
 state1_str = state1.get_STRIPS_str()
 
 # Load state
@@ -53,6 +52,7 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.RandomActivationGoals())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,

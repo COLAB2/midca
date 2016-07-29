@@ -3,6 +3,7 @@ from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.domains.blocksworld import blockstate
 import copy 
+import random
 
 class UserGoalInput(base.BaseModule):
 
@@ -76,6 +77,57 @@ class UserGoalInput(base.BaseModule):
             trace.add_data("USER GOALS", goals_entered)
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
+
+class RandomActivationGoals(base.BaseModule):
+    '''
+    MIDCA module for the nbeacons domain. Generates a goal to activate 3 different
+    beacons in the domain.
+    '''
+    
+    def __init__(self, numbeacons=3):
+        self.numbeacons = numbeacons
+    
+    def activateGoalsExist(self):
+        graph = self.mem.get(self.mem.GOAL_GRAPH)
+        for goal in graph.getAllGoals():
+            if goal['predicate'] == "activated":
+                return True
+        return False
+    
+    def generate_new_goals(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        goal_b_ids = []
+        # get all beacon ids
+        unactivated_b_ids = []
+        for obj in world.get_possible_objects("",""):
+            # test if a beacon id
+            if str(obj).startswith("B"):
+                # now test to see if it's activated
+                if not world.is_true('activated',[str(obj)]):
+                    unactivated_b_ids.append(str(obj))
+                    
+        num_chosen_beacons = 0
+        while len(unactivated_b_ids) > 0 and num_chosen_beacons < self.numbeacons:
+            b = random.choice(unactivated_b_ids)
+            unactivated_b_ids.remove(b)
+            goal_b_ids.append(b)
+            num_chosen_beacons+=1
+            
+        # turn into goals
+        new_goals = map(lambda x: goals.Goal(str(x), predicate = "activated"), goal_b_ids)
+        
+        return new_goals
+    
+    def run(self, cycle, verbose = 2):
+        if self.activateGoalsExist():
+            print "MIDCA already has an activation goal. Skipping goal generation"
+            return
+        else:
+            new_goals = self.generate_new_goals()
+            for g in new_goals:
+                self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                print("Inserted goal "+str(g))
+            
 
 class TFStack(base.BaseModule):
 
