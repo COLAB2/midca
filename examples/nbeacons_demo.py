@@ -28,6 +28,8 @@ DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
 GOAL_GRAPH_CMP_FUNC = None
 
+# percent chance each beacon will fail each tick
+BEACON_FAIL_RATE = 10
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)
@@ -41,7 +43,7 @@ state1_str = state1.get_STRIPS_str()
 stateread.apply_state_str(world, state1_str)
 
 # Creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=2)
 
 # Add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -49,6 +51,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())

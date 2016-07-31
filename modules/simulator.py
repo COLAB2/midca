@@ -82,7 +82,7 @@ class WorldChanger:
                         self.world.add_atom(atom)
                         print "Atom", atom, "was false and is now true"
                 except ValueError:
-                     "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
+                    print "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
 
 class ArsonSimulator:
 
@@ -154,6 +154,46 @@ class FireReset:
             print "Since a tower was just completed, putting out all fires."
         self.put_out_fires()
 
+
+class NBeaconsSimulator:
+    '''
+    Performs changes to the nbeacons domain, such as:
+    1. beacons becoming deactivated
+    '''
+
+    def __init__(self, beacon_fail_rate=1):
+        '''
+        beacon_fail_rate is out of 100. So 100 means 100% chance, 5 means 5% chance
+        '''
+        self.beacon_fail_rate = beacon_fail_rate
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        # deactivate beacons according to fail rate
+        world = None
+        try:
+            world = self.mem.get(self.mem.STATES)[-1]
+        except:
+            # probably failing on first try, just return and do nothing
+            return
+        # get all activated beacon ids
+        activated_b_ids = []
+        for obj in world.get_possible_objects("",""):
+            # test if a beacon id
+            if str(obj).startswith("B"):
+                # now test to see if it's activated
+                if world.is_true('activated',[str(obj)]):
+                    activated_b_ids.append(str(obj))
+
+        # for each beacon, run the fail rate
+        for b_id in activated_b_ids:
+            if random.choice(range(100)) < self.beacon_fail_rate:
+                self.world.apply_named_action("deactivatebeacon", [b_id])
+                if verbose >= 0:
+                        print "Simulating action: deactivatebeacon(" + str(b_id) + ")"
 
 class CustomRunSimulator:
     '''

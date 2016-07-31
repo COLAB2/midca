@@ -83,10 +83,12 @@ class SimpleAct(base.BaseModule):
                 plan = nextPlan
             if len(achieved) == len(goals):
                 break
-            elif verbose >= 1:
+            elif verbose >= 2:
                 print "Retrieved plan does not achieve all goals. Trying again."
-                if verbose >= 2:
-                    print "Plan:", str(nextPlan)
+                if verbose >= 3:
+                    print "  Retrieved Plan:"
+                    for a in nextPlan:
+                        print "  "+str(a)
                     print "Goals achieved:", [str(goal) for goal in achieved]
         if plan == None and verbose >= 1:
             print "No valid plan found that achieves any current goals."
@@ -122,7 +124,10 @@ class SimpleAct(base.BaseModule):
                 elif verbose >= 2:
                     if len(plan) > max_plan_print_size:
                         # print just the next 3 actions of the plan
-                        print "Selected action", action
+                        print "Selected action", action, "from plan:\n"
+                        if verbose >= 3:
+                            for a in plan:
+                                print "  "+str(a)
                     else:
                         # print the whole plan
                         print "Selected action", action, "from plan:\n", plan

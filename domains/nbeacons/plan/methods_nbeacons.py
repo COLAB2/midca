@@ -83,7 +83,17 @@ def perimeterize(state, agent, beacon_locs):
     #print("agent is "+str(agent))
     #print("WOOOO WE ARE IN PERIMETERIZE!!!")
     #print("beacon locs are "+str(beacon_locs))
-      
+    
+    # first check all the given beacon locs to make sure they are not already a
+    unactivated_beacon_locs = [] 
+    for (b_id,b_loc) in state.beaconlocs.items():
+        if b_loc in beacon_locs:
+            if not state.activated[b_id]:
+                unactivated_beacon_locs.append(b_loc)
+            else:
+                print("filtered out "+str((b_id,b_loc)))
+    
+    beacon_locs = unactivated_beacon_locs  
     if len(beacon_locs) > 0: 
         #print("about to recur thru the HTN w/ beacon_locs = "+str(beacon_locs))
         

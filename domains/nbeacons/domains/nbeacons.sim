@@ -64,3 +64,10 @@ preconditions = [
 results = [
 	condition(activated, [bcn])])
 
+# Note: this operator is not available to the agent via planning (i.e. pyhop)
+operator(deactivatebeacon,
+args = [(bcn, BEACON)],
+preconditions = [
+	condition(activated, [bcn])],
+results = [
+	condition(activated, [bcn], negate = TRUE)])
