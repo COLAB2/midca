@@ -105,6 +105,10 @@ class RandomActivationGoals(base.BaseModule):
                 # now test to see if it's activated
                 if not world.is_true('activated',[str(obj)]):
                     unactivated_b_ids.append(str(obj))
+        
+        if len(unactivated_b_ids) == 0:
+            print("All beacons are activated. No activation goals will be generated.")
+            return []
                     
         num_chosen_beacons = 0
         while len(unactivated_b_ids) > 0 and num_chosen_beacons < self.numbeacons:
@@ -127,7 +131,6 @@ class RandomActivationGoals(base.BaseModule):
             for g in new_goals:
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                 print("Inserted goal "+str(g))
-            
 
 class TFStack(base.BaseModule):
 

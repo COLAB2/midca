@@ -98,6 +98,7 @@ class SimpleAct(base.BaseModule):
         return plan
 
     def run(self, cycle, verbose = 2):
+        max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         plan = self.get_best_plan(world, goals, verbose)
@@ -119,7 +120,12 @@ class SimpleAct(base.BaseModule):
                 if verbose == 1:
                     print "Action selected:", action
                 elif verbose >= 2:
-                    print "Selected action", action, "from plan:\n", plan
+                    if len(plan) > max_plan_print_size:
+                        # print just the next 3 actions of the plan
+                        print "Selected action", action
+                    else:
+                        # print the whole plan
+                        print "Selected action", action, "from plan:\n", plan
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
 
