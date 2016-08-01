@@ -211,23 +211,22 @@ class ADistanceAnomalyNoter:
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
-                prevworld = copy.deepcopy(world) # for trace
+		prevworld = copy.deepcopy(world) # for trace
 		self.update(world)
-                currworld = copy.deepcopy(world) # for trace
+		currworld = copy.deepcopy(world) # for trace
 		self.mem.add(ANOMALY_STATE_KEY, self.anomalous())
 		if verbose >= 1 and self.anomalous():
 			print "Anomaly detected."
 		elif verbose >= 2 and not self.anomalous():
 			print "No anomaly detected."
 
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle,self.__class__.__name__)
+			trace.add_data("PREV WORLD", prevworld)
+			trace.add_data("CURR WORLD", currworld)
+			trace.add_data("ANOMALY", self.anomalous())
 
-                trace = self.mem.trace
-                if trace:
-                        trace.add_module(cycle,self.__class__.__name__)
-                        trace.add_data("PREV WORLD", prevworld)
-                        trace.add_data("CURR WORLD", currworld)
-                        trace.add_data("ANOMALY", self.anomalous())
-	
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):
 		s = str(self.detector)
@@ -236,4 +235,42 @@ class ADistanceAnomalyNoter:
 		except ValueError:
 			return s
 	
-			
+
+class InformedDiscrepancyDetector:
+	'''
+	Performs Discrepancy Detection using Informed Expectations
+	
+	'''		
+	def __init__(self):
+		pass
+	
+	def init(self, world, mem):
+		self.world = world
+		self.mem = mem
+	
+	def get_current_plan(self):
+		'''
+		Returns the current plan the agent is using
+		'''
+		
+	def generate_inf_exp(self, plan, prev_action):
+		'''
+		Returns a set of atoms to check against the state given the previous action
+		the agent executed and the current plan
+		
+		See Dannenhauer & Munoz-Avila IJCAI-2015 / Dannenhauer, Munoz-Avila, Cox IJCAI-2016 
+		for more information on informed expectations
+		'''
+		# sanity check, make sure prev_action is in the plan
+		if prev_action not in plan:
+			raise Exception("Cannot generate informed expectations: prev_action "+str(prev_action)+" was not given plan")
+		
+		exp = [] # expectations accumulator
+		
+	def run(self, cycle, verbose=2):
+		prev_action = self.mem.get(self.mem.ACTIONS)[-1]
+		curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
+		plan = self.mem.get(self.mem.GOAL_GRAPH).get_best_plan(curr_goals)
+		inf_exp = self.generate_inf_exp(prev_action)
+		for e in inf_exp:
+			if 
