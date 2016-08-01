@@ -29,7 +29,7 @@ DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
 GOAL_GRAPH_CMP_FUNC = None
 
 # percent chance each beacon will fail each tick
-BEACON_FAIL_RATE = 10
+BEACON_FAIL_RATE = 3
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)
