@@ -215,6 +215,10 @@ class NBeaconsActionSimulator:
         self.world = world
 
     def get_subsequent_action(self,action):
+        '''
+        Does not return a midcaAction, instead just returns an array
+        of the values that should be given to world.apply_named_action()
+        '''
         subsequent_loc = None
         subsequent_action = None
         if self.wind_dir == 'east':
@@ -227,12 +231,24 @@ class NBeaconsActionSimulator:
                     subsequent_loc = atom.args[1]
                     subsequent_action = copy.deepcopy(action)
                     self.mem.get(self.mem.STATES)[-1]
-                    print "previous action is " + str(subsequent_action) 
-                    if atom in self.world.get_atoms(filters=[]):
-                        pass
+                    print "previous action is " + str(subsequent_action)+" and of type "+str(type(subsequent_action))
+                    new_action_op = action.op
+                    new_action_args = [action.args[0],str(agent_loc),str(subsequent_loc)]
+                    subsequent_action = [new_action_op]+new_action_args
+                    print "new_action is "+str([new_action_op]+new_action_args)
+                   
                     
-        return subsequent_loc
+        return subsequent_action
             
+# 
+# def midca_action_applicable(self, midcaAction):
+#         try:
+#             operator = self.operators[midcaAction.op]
+#             args = [self.objects[arg] for arg in midcaAction.args]
+#         except KeyError:
+#             return False
+#         action = operator.instantiate(args)
+#         return self.is_applicable(action)
 
     def run(self, cycle, verbose = 2):
         try:
@@ -251,7 +267,8 @@ class NBeaconsActionSimulator:
                     
                     if self.wind and self.wind_dir in str(action):
                         # duplicate the effect because wind is pushing the agent
-                        self.get_subsequent_action(action)
+                        subseq_action = self.get_subsequent_action(action)
+                        self.world.apply_named_action(subseq_action[0],subseq_action[1:])
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"
