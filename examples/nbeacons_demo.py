@@ -27,6 +27,7 @@ DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
 GOAL_GRAPH_CMP_FUNC = None
+DIMENSION = 10
 
 # percent chance each beacon will fail each tick
 BEACON_FAIL_RATE = 3
@@ -36,7 +37,7 @@ world = domainread.load_domain(DOMAIN_FILE)
 
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
-state1.generate()
+state1.generate(width=DIMENSION,height=DIMENSION)
 state1_str = state1.get_STRIPS_str()
 
 # Load state
@@ -50,13 +51,14 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
     myMidca.append_phase(phase)
 
 # Add the modules which instantiate basic operation
-myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+#myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=True,wind_dir='east',dim=DIMENSION))
 myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", note.UserGoalInput())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Interpret", guide.RandomActivationGoals())
+
+myMidca.append_module("Interpret", guide.UserGoalInput())
+#myMidca.append_module("Interpret", guide.RandomActivationGoals())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,

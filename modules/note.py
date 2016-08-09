@@ -273,4 +273,4 @@ class InformedDiscrepancyDetector:
 		plan = self.mem.get(self.mem.GOAL_GRAPH).get_best_plan(curr_goals)
 		inf_exp = self.generate_inf_exp(prev_action)
 		for e in inf_exp:
-			if 
+			pass

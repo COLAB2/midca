@@ -275,6 +275,36 @@ class World:
 			self.objects[object.name] = object
 		self.atoms = atoms
 	
+	def get_atoms(self,filters=[]):
+		'''
+		Will return atoms if the filter (string) is within any pred or arg names
+		If more than one filter string, then all must match (conjunctive filters)
+		'''
+		
+		# if no filters, return everything
+		if len(filters) == 0:
+			return self.atoms
+		
+		# record which filters have matched
+		filter_matches = {k:False for k in filters}
+		print("filter matches = "+str(filter_matches))
+		relevant_atoms = []
+		if len(filters) > 0:
+			for atom in self.atoms:
+				atom_parts = [atom.predicate]+atom.args
+				for filter_str in filters: # assuming there shouldn't be more than 3-4 filters
+					for part in atom_parts: # assuming shouldn't be atoms with more than 4-5 parts
+						if (not filter_matches[filter_str]) and filter_str in str(part):
+							filter_matches[filter_str] = True
+							
+				if not False in filter_matches.values(): # check to see they are all True
+					relevant_atoms.append(atom)
+					print("Just added "+str(atom)+" to relevant atoms")
+				# reset filter matches
+				filter_matches = {k:False for k in filters}
+				
+		return relevant_atoms
+	
 	def copy(self):
 		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
 	

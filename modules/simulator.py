@@ -1,5 +1,6 @@
 import sys, random
 from MIDCA import worldsim, goals, base
+import copy 
 
 class MidcaActionSimulator:
 
@@ -171,6 +172,8 @@ class NBeaconsSimulator:
         self.mem = mem
         self.world = world
 
+    #def moverightright(self):
+
     def run(self, cycle, verbose = 2):
         # deactivate beacons according to fail rate
         world = None
@@ -194,6 +197,68 @@ class NBeaconsSimulator:
                 self.world.apply_named_action("deactivatebeacon", [b_id])
                 if verbose >= 0:
                         print "Simulating action: deactivatebeacon(" + str(b_id) + ")"
+
+class NBeaconsActionSimulator:
+    '''
+    Performs changes to the midca state specific to NBeacons.
+    '''
+    
+    def __init__(self, wind=False, wind_dir=None, dim=10):
+        self.wind = wind
+        self.wind_dir = wind_dir
+        self.dim = dim
+        if self.wind and not self.wind_dir in ['east','west','north','south']:
+            raise Exception("Turning wind on requires a wind direction of "+str(['east','west','north','south']))
+    
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def get_subsequent_action(self,action):
+        subsequent_loc = None
+        subsequent_action = None
+        if self.wind_dir == 'east':
+            # first check to see if the agent is in the right most tile
+            agent_loc = self.world.get_atoms(filters=["agent-at"])[0].args[1]
+            print "agent_loc is "+str(agent_loc)
+            print "about to get_atoms with (filters=[adjacent-east,"+str(agent_loc)+"]"
+            for atom in self.world.get_atoms(filters=["adjacent-east",str(agent_loc)]):
+                if atom.args[0] == agent_loc:
+                    subsequent_loc = atom.args[1]
+                    subsequent_action = copy.deepcopy(action)
+                    self.mem.get(self.mem.STATES)[-1]
+                    print "previous action is " + str(subsequent_action) 
+                    if atom in self.world.get_atoms(filters=[]):
+                        pass
+                    
+        return subsequent_loc
+            
+
+    def run(self, cycle, verbose = 2):
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except TypeError, IndexError:
+            if verbose >= 1:
+                print "Simulator: no actions selected yet by MIDCA."
+            return
+        if actions:
+            for action in actions:
+                if self.world.midca_action_applicable(action):
+                    if verbose >= 2:
+                        print "simulating MIDCA action:", action
+                    self.world.apply_midca_action(action)
+                    
+                    if self.wind and self.wind_dir in str(action):
+                        # duplicate the effect because wind is pushing the agent
+                        self.get_subsequent_action(action)
+                else:
+                    if verbose >= 1:
+                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+        else:
+            if verbose >= 2:
+                print "No actions selected this cycle by MIDCA."
+
 
 class CustomRunSimulator:
     '''
