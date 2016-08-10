@@ -261,6 +261,8 @@ class PyHopPlanner(base.BaseModule):
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 #print_state(pyhopState)
+                # record attempt to replann
+                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
             except Exception:
                 pyhopPlan = None

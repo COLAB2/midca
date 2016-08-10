@@ -53,13 +53,13 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 # Add the modules which instantiate basic operation
 #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=True,wind_dir='east',dim=DIMENSION))
-myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
+#myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 
-myMidca.append_module("Interpret", guide.UserGoalInput())
-#myMidca.append_module("Interpret", guide.RandomActivationGoals())
-myMidca.append_module("Eval", evaluate.SimpleEval())
+#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.RandomActivationGoals())
+myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
                                                     nbeacons_util.pyhop_tasks_from_goals,

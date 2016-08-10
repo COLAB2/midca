@@ -236,7 +236,6 @@ class NBeaconsActionSimulator:
                     new_action_args = [action.args[0],str(agent_loc),str(subsequent_loc)]
                     subsequent_action = [new_action_op]+new_action_args
                     print "new_action is "+str([new_action_op]+new_action_args)
-                   
                     
         return subsequent_action
             
@@ -264,6 +263,9 @@ class NBeaconsActionSimulator:
                     if verbose >= 2:
                         print "simulating MIDCA action:", action
                     self.world.apply_midca_action(action)
+                    
+                    # bump counter for actions executed
+                    self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
                     
                     if self.wind and self.wind_dir in str(action):
                         # duplicate the effect because wind is pushing the agent

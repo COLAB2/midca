@@ -27,6 +27,13 @@ class Memory:
     META_GOALS = "__meta goals"
     META_CURR_GOAL = "__meta current goal"
     META_PLAN = "__meta plan" #TODO allow more than one plan
+    # data recording
+    PLANNING_COUNT = "__PlanningCount" # number of times planning was performed (including replanning)
+    GOALS_ACHIEVED = "__GoalsAchieved" # number of goals achieved
+    ACTIONS_EXECUTED = "__ActionsExecuted" # number of actions executed
+    CURR_PLAN = "__CurrPlan"
+
+    
 
 
     def __init__(self, args = {}):
