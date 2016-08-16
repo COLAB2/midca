@@ -32,7 +32,8 @@ class Memory:
     GOALS_ACHIEVED = "__GoalsAchieved" # number of goals achieved
     ACTIONS_EXECUTED = "__ActionsExecuted" # number of actions executed
     CURR_PLAN = "__CurrPlan"
-
+    # GDA
+    DISCREPANCY = "__discrepancy"
     
 
 

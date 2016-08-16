@@ -107,7 +107,7 @@ class RandomActivationGoals(base.BaseModule):
                     unactivated_b_ids.append(str(obj))
         
         if len(unactivated_b_ids) == 0:
-            print("All beacons are activated. No activation goals will be generated.")
+            if self.verbose >= 1: print("All beacons are activated. No activation goals will be generated.")
             return []
                     
         num_chosen_beacons = 0
@@ -123,14 +123,15 @@ class RandomActivationGoals(base.BaseModule):
         return new_goals
     
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         if self.activateGoalsExist():
-            print "MIDCA already has an activation goal. Skipping goal generation"
+            if self.verbose >=1: print "MIDCA already has an activation goal. Skipping goal generation"
             return
         else:
             new_goals = self.generate_new_goals()
             for g in new_goals:
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
-                print("Inserted goal "+str(g))
+                if self.verbose >= 1: print("Inserted goal "+str(g))
 
 class TFStack(base.BaseModule):
 

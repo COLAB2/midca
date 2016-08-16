@@ -5,6 +5,7 @@ import traceback
 import copy
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
+import time
 
 class GenericPyhopPlanner(base.BaseModule):
 
@@ -378,3 +379,196 @@ class PyHopPlanner2(base.BaseModule):
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
 
+
+class HSPNode():
+    '''
+    A node that will be used in Heuristic Search Planner
+    '''
+    state = None # A state in MIDCA
+    parent_node = []
+    actions_taken = [] # actions taken to reach this node
+    depth = 0
+    
+    def __init__(self, state, parent_node, actions_taken):
+        self.state = state
+        self.parent_node = parent_node
+        if parent_node:
+            self.depth = parent_node.depth+1
+        else:
+            self.depth = 0
+        self.actions_taken = actions_taken
+
+    def __str__(self):
+        s = "state_x_len="+str(len(self.state))+"state_y_len"+str(len(self.state[0]))
+        return s
+
+import itertools
+
+class HeuristicSearchPlanner(base.BaseModule):
+    '''
+    Heuristic Search Planner.
+    
+    When initialized, this planner needs to be provided with:
+    1. Heuristic function that gives some value for a state (if none give, the depth will be the value)
+    2. Decomposition function, that given a node, will return the child nodes (if none given, will be Breadth First Search)
+    '''
+    
+    def __init__(self, hn=lambda n: n.get_depth(), dn=None):
+        self.hn = hn
+        #if not dn:
+        #    self.dn = self.bfs_dn
+    
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+    
+    def get_all_instantiations(self, operator):
+        '''
+        Returns all possible operator instantiations
+        '''
+        
+        
+        # go through each precondition
+        #print "operator is "+str(operator)
+        #print "operator takes args: " +str(operator.objnames)
+        
+        possible_arg_values = {}
+        # using two lists instead of a dict to preserve order
+        arg_names = []
+        arg_types = []
+        for o in operator.objnames:
+            arg_names.append(o)
+            arg_types.append(None)
+        #print "arg_names_and_types = "+str(zip(arg_names,arg_types))
+        for precond in operator.preconditions:
+            #print "precond is "+str(precond)
+            #print "precond atom is "+str(precond.atom)
+            args = map(str,precond.atom.args)
+            #print "args are "+str(map(str,args))
+            for i in range(len(args)):
+                arg_names_i = arg_names.index(args[i])
+                if arg_types[arg_names_i] is None:
+                    arg_types[arg_names_i] = precond.argtypes[i] 
+        
+        #print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
+        
+        possible_bindings = map(lambda t: self.world.get_objects_by_type(t),arg_types)
+        #for pb in possible_bindings:
+        #    print "outer"
+        #    for pb_i in pb:
+        #        print "  "+str(pb_i)
+        permutations = itertools.product(*possible_bindings)
+#         i_s = 0
+#         i_e = 5
+#         print "there are "+str(len(permutations))+" permutations"
+#         for p in permutations:
+#             print "p = "+str(map(str,p))
+#             time.sleep(1)
+#                  
+        applicable_permutations = []
+        # need to do a transpose on the permutations
+        #permutations = zip(*permutations)
+        for c in permutations:
+            #print "len(c) = "+str(len(c))
+            #print "c = "+str(c)
+            #print "attempting to instantiate operator "+str(operator)+" with args "+str(map(str,c))
+            if self.world.is_applicable(operator.instantiate(list(c))):
+                #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
+                applicable_permutations.append(operator.instantiate(list(c)))
+
+        
+        
+        #time.sleep(5)            
+        #print "preobjnames are: " +str(operator.preobjnames)
+        #print "preobjtypes are: " +str(operator.preobjtypes)
+        #for perm in applicable_permutations:
+        #    print "perm = "+str(perm)
+        
+        return applicable_permutations
+        
+        
+        #print "types = "
+        #for t in self.world.types:
+        #    print "  t = "+t
+        #print "all objects of each type"
+        
+        #print map(str,map(lambda o: o.type,self.world.get_possible_objects('_','_')))
+        for pre in operator.preconditions:
+            print "argtypes are "
+            print "  " +str(map(str,pre.argtypes))
+            possible_bindings = map(lambda t: self.world.get_objects_by_type(t),pre.argtypes)
+            print "possible bindings are"
+            pb = map(str,possible_bindings)
+            for pb_i in range(len(possible_bindings)):
+                print "There are "+str(len(possible_bindings[pb_i]))+ "following are possible bindings for "+str(pre.argtypes[pb_i])
+                #print possible_bindings[pb_i]
+                #for pb_ii in possible_bindings[pb_i]:
+                #    print "  "+str(pb_ii)
+#             pred_name = pre.atom.predicate.name
+#             # go through each arg type
+#             for arg in pre.atom.args
+#             
+        self.world.get_objects_by_type('TILE')
+        return
+#         possible_arg_values[pre] = map(str,self.world.get_atoms(filters=[pred_name])) 
+    
+        # now list all possible permutations
+        #print "input to product is "+str(possible_arg_values.values())
+        print " values per arg = "+str({k:len(v) for k,v in possible_arg_values.items()})
+        permutations = itertools.product(*possible_arg_values.values())
+        size_permutations = sum(1 for _ in permutations) # space efficient way of computing permutations
+        print " there are "+str(size_permutations)+" permuatations"
+        
+        # now go through all possible args, and record how many are applicable
+        valid_instantiations = []
+        for p in permutations:
+            if self.world.is_applicable(operator.instantiate(*p)):
+                print ("found valid instantiation: "+str(p))
+                valid_instantiations = [p]
+        
+        t1 = time.time()
+        timestr = '%.5f' % (t1-t0)
+        print("Took "+timestr+"s to get all "+str(len(valid_instantiations))+" instantiations of "+str(operator.name))
+        
+    def brute_force_decompose(self, node):
+        # get all operators (pre-variable bindings) in MIDCA
+        #print str(self.world.operators)
+        t0 = time.time()
+        possible_operators = []
+        for op in self.world.operators.values():
+            print "OPERATOR "+op.name
+            inst_operators = self.get_all_instantiations(op)
+            possible_operators += inst_operators
+            print "Instantiation: "
+            print str(map(str,inst_operators))
+            
+        
+        t1 = time.time()
+        timestr = '%.5f' % (t1-t0)
+        print("Took "+timestr+"s to get all "+str(len(possible_operators))+" instantiations of operators")
+#             
+#             print "Looking at "+str(op.name)
+#             for pre in op.preconditions:
+#                 print "  pre is "+str(pre.atom.predicate.name)
+#                 pred_name = pre.atom.predicate.name
+#                 # get all atoms that match predicate name
+#                 for atm in self.world.get_atoms(filters=[pred_name]):
+#                     print "    "+str(atm)
+#             
+            
+            
+    
+    
+#     def decompose(self, node):
+#         '''
+#         Returns the possible child nodes
+#         '''
+#     
+#         # Go through all operators (pre-variable bindings) in MIDCA
+#         for raw_op in operators:
+#             # go through all predicates in the op's preconditions
+#             for pred in raw_op.get_preconditions:
+#                 # retrieve all 
+#     
+    def run(self, cycle, verbose = 2):
+        self.brute_force_decompose(None)

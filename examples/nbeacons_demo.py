@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import MIDCA
 from MIDCA import base
-from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act
+from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
 from MIDCA.worldsim import domainread, stateread
 import inspect, os
 
@@ -30,7 +30,7 @@ GOAL_GRAPH_CMP_FUNC = None
 DIMENSION = 10
 
 # percent chance each beacon will fail each tick
-BEACON_FAIL_RATE = 3
+BEACON_FAIL_RATE = 0
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)
@@ -58,9 +58,12 @@ myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 
 #myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
+myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
 myMidca.append_module("Interpret", guide.RandomActivationGoals())
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
 myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
                                                     nbeacons_util.pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,

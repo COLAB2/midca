@@ -162,7 +162,7 @@ class NBeaconsSimulator:
     1. beacons becoming deactivated
     '''
 
-    def __init__(self, beacon_fail_rate=1):
+    def __init__(self, beacon_fail_rate=0):
         '''
         beacon_fail_rate is out of 100. So 100 means 100% chance, 5 means 5% chance
         '''
@@ -175,6 +175,7 @@ class NBeaconsSimulator:
     #def moverightright(self):
 
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         # deactivate beacons according to fail rate
         world = None
         try:
@@ -195,7 +196,7 @@ class NBeaconsSimulator:
         for b_id in activated_b_ids:
             if random.choice(range(100)) < self.beacon_fail_rate:
                 self.world.apply_named_action("deactivatebeacon", [b_id])
-                if verbose >= 0:
+                if self.verbose >= 1:
                         print "Simulating action: deactivatebeacon(" + str(b_id) + ")"
 
 class NBeaconsActionSimulator:
@@ -203,11 +204,11 @@ class NBeaconsActionSimulator:
     Performs changes to the midca state specific to NBeacons.
     '''
     
-    def __init__(self, wind=False, wind_dir=None, dim=10):
+    def __init__(self, wind=False, wind_dir='off', dim=10):
         self.wind = wind
         self.wind_dir = wind_dir
         self.dim = dim
-        if self.wind and not self.wind_dir in ['east','west','north','south']:
+        if self.wind and not self.wind_dir in ['east','west','north','south', 'off']:
             raise Exception("Turning wind on requires a wind direction of "+str(['east','west','north','south']))
     
     def init(self, world, mem):
@@ -224,18 +225,18 @@ class NBeaconsActionSimulator:
         if self.wind_dir == 'east':
             # first check to see if the agent is in the right most tile
             agent_loc = self.world.get_atoms(filters=["agent-at"])[0].args[1]
-            print "agent_loc is "+str(agent_loc)
-            print "about to get_atoms with (filters=[adjacent-east,"+str(agent_loc)+"]"
+            #print "agent_loc is "+str(agent_loc)
+            #print "about to get_atoms with (filters=[adjacent-east,"+str(agent_loc)+"]"
             for atom in self.world.get_atoms(filters=["adjacent-east",str(agent_loc)]):
                 if atom.args[0] == agent_loc:
                     subsequent_loc = atom.args[1]
                     subsequent_action = copy.deepcopy(action)
                     self.mem.get(self.mem.STATES)[-1]
-                    print "previous action is " + str(subsequent_action)+" and of type "+str(type(subsequent_action))
+                    #print "previous action is " + str(subsequent_action)+" and of type "+str(type(subsequent_action))
                     new_action_op = action.op
                     new_action_args = [action.args[0],str(agent_loc),str(subsequent_loc)]
                     subsequent_action = [new_action_op]+new_action_args
-                    print "new_action is "+str([new_action_op]+new_action_args)
+                    #print "new_action is "+str([new_action_op]+new_action_args)
                     
         return subsequent_action
             

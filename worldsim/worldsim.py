@@ -287,7 +287,7 @@ class World:
 		
 		# record which filters have matched
 		filter_matches = {k:False for k in filters}
-		print("filter matches = "+str(filter_matches))
+		#print("filter matches = "+str(filter_matches))
 		relevant_atoms = []
 		if len(filters) > 0:
 			for atom in self.atoms:
@@ -299,11 +299,31 @@ class World:
 							
 				if not False in filter_matches.values(): # check to see they are all True
 					relevant_atoms.append(atom)
-					print("Just added "+str(atom)+" to relevant atoms")
+					#print("Just added "+str(atom)+" to relevant atoms")
 				# reset filter matches
 				filter_matches = {k:False for k in filters}
 				
 		return relevant_atoms
+	
+	def diff(self,otherWorld):
+		'''
+		Given another world, return the differences in atoms.
+		Return value is a tuple where the first element is the atoms in this world not in the given world
+		Second element is the atoms not in this world but in given world
+		'''
+		atoms_not_in_other = []
+		atoms_not_in_self = []
+		# go through all atoms in this world, check to see if they are in other world
+		for atom in self.atoms:
+			if not otherWorld.atom_true(atom):
+				atoms_not_in_other.append(atom)
+				
+		# go through all atoms in given world, check to see if they are in this world
+		for atom in otherWorld.atoms:
+			if not self.atom_true(atom):
+				atoms_not_in_self.append(atom)
+		
+		return (atoms_not_in_self,atoms_not_in_other)
 	
 	def copy(self):
 		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
@@ -376,6 +396,32 @@ class World:
 	
 	def get_possible_objects(self, predicate, arg):
 		return self.objects.values() #not, obviously, a good implementation
+	
+	def get_objects_by_type(self, some_type):
+# 		for obj in self.objects.values():
+# 			print "  obj "+str(obj)+" is of type "+str(type(obj))
+		#print "some_type is "+str(some_type)+" and is of python type "+str(type(some_type))
+		#for t in self.get_types():
+		#	print "  type = "+str(t)+" and is of python type "+str(type(t))
+		if type(some_type) is str:
+			if some_type not in self.get_types():
+				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
+		else:
+			if some_type.name not in self.get_types():
+				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
+			
+		objs = []
+		for obj in self.objects.values():
+			#print "obj "+str(obj)+" is type of "+str(type(obj))
+			if obj.is_a(some_type):
+				objs.append(obj)
+		#print "returning the following objs:"
+		#for o in objs:
+		#	print "  " + str(o)
+		return objs
+	
+	def get_types(self):
+		return self.types
 	
 	def is_applicable(self, action):
 		for i in range(len(action.preconds)):

@@ -90,8 +90,9 @@ def perimeterize(state, agent, beacon_locs):
         if b_loc in beacon_locs:
             if not state.activated[b_id]:
                 unactivated_beacon_locs.append(b_loc)
-            else:
-                print("filtered out "+str((b_id,b_loc)))
+            #else:
+                #print("filtered out "+str((b_id,b_loc)))
+            #    pass
     
     beacon_locs = unactivated_beacon_locs  
     if len(beacon_locs) > 0: 

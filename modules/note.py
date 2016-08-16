@@ -234,6 +234,51 @@ class ADistanceAnomalyNoter:
 			return s[s.rindex("\n") + 1:]
 		except ValueError:
 			return s
+
+class StateDiscrepancyDetector:
+	'''
+	Uses Immediate Expectations to detect discrepancies.
+	For now, this only looks at effects of actions.
+	'''	
+	def init(self, world, mem):
+		self.world = world
+		self.mem = mem
+		
+	def run(self, cycle, verbose=2):
+		last_actions = None
+		try:
+			last_actions = self.mem.get(self.mem.ACTIONS)[-1]
+			print("last_actions are "+str(map(str,last_actions)))
+			# for now assume just one action
+			if len(last_actions) != 1:
+				print("Agent has "+str(len(last_actions))+" previous actions, will not proceed")
+				return
+		except:
+			print "No actions executed, skipping State Discrepancy Detection"
+			return
+		last_action = last_actions[0]
+		copy_world = self.mem.get(self.mem.STATES)[-2]
+		copy_world.apply_midca_action(last_action)
+		world_diff = self.world.diff(copy_world)
+		#print("World diff returned : "+str(world_diff))
+		print("Expected "+str(map(str,world_diff[0]))+ " but got "+str(map(str,world_diff[1])))
+		is_discrepancy = not (len(world_diff[0]) == 0 and len(world_diff[1]) == 0) 
+		
+		if is_discrepancy:
+			self.mem.set(self.mem.DISCREPANCY,world_diff)
+		else:
+			self.mem.set(self.mem.DISCREPANCY,None)
+		
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle,self.__class__.__name__)
+			trace.add_data("DISCREPANCY", is_discrepancy)
+			trace.add_data("EXPECTED", str(map(str,world_diff[0])))
+			trace.add_data("ACTUAL", str(map(str,world_diff[1])))
+		
+		
+		
+		return
 	
 
 class InformedDiscrepancyDetector:
