@@ -111,6 +111,12 @@ class Action:
 		self.results = results
 		self.postPos = postPos
 	
+	def set_args(self, args):
+		'''
+		TODO - make this an arg in the constructor
+		'''
+		self.args = args
+		
 	def __str__(self):
 		s = "Action - " + self.operator.name + ":\nPreconditions: ["
 		i = 0
@@ -325,6 +331,11 @@ class World:
 		
 		return (atoms_not_in_self,atoms_not_in_other)
 	
+	def equal(self,otherWorld):
+		diff_result = self.diff(otherWorld)
+		#print "diff_result inside equal() : "+str(map(str,diff_result[0]))+","+str(map(str,diff_result[1]))
+		return  diff_result == ([],[])
+	
 	def copy(self):
 		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
 	
@@ -535,6 +546,19 @@ class World:
 			if achieved:
 				achievedGoals.add(goal)
 		return achievedGoals
+	
+	def goals_achieved_now(self, goalSet):
+		'''
+		Same as goals_achieved but no plan, uses this world
+		'''
+		for goal in goalSet:
+			achieved = self.atom_true(self.midcaGoalAsAtom(goal))
+			if 'negate' in goal and goal['negate']:
+				achieved = not achieved
+			if not achieved:
+				return False
+			
+		return True
 	
 	def plan_goals_achieved(self, plan):
 		return self.goals_achieved(plan, plan.goals)

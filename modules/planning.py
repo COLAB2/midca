@@ -384,23 +384,19 @@ class HSPNode():
     '''
     A node that will be used in Heuristic Search Planner
     '''
-    state = None # A state in MIDCA
+    world = None # A state in MIDCA
     parent_node = []
     actions_taken = [] # actions taken to reach this node
     depth = 0
     
-    def __init__(self, state, parent_node, actions_taken):
-        self.state = state
+    def __init__(self, world, parent_node, actions_taken):
+        self.world = world
         self.parent_node = parent_node
         if parent_node:
             self.depth = parent_node.depth+1
         else:
             self.depth = 0
         self.actions_taken = actions_taken
-
-    def __str__(self):
-        s = "state_x_len="+str(len(self.state))+"state_y_len"+str(len(self.state[0]))
-        return s
 
 import itertools
 
@@ -422,7 +418,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         self.world = world
         self.mem = mem
     
-    def get_all_instantiations(self, operator):
+    def get_all_instantiations(self, world, operator):
         '''
         Returns all possible operator instantiations
         '''
@@ -452,7 +448,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         
         #print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
         
-        possible_bindings = map(lambda t: self.world.get_objects_by_type(t),arg_types)
+        possible_bindings = map(lambda t: world.get_objects_by_type(t),arg_types)
         #for pb in possible_bindings:
         #    print "outer"
         #    for pb_i in pb:
@@ -472,10 +468,12 @@ class HeuristicSearchPlanner(base.BaseModule):
             #print "len(c) = "+str(len(c))
             #print "c = "+str(c)
             #print "attempting to instantiate operator "+str(operator)+" with args "+str(map(str,c))
-            if self.world.is_applicable(operator.instantiate(list(c))):
+            op_inst = operator.instantiate(list(c))
+            op_inst.set_args(list(c))
+            if world.is_applicable(op_inst):
                 #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
-                applicable_permutations.append(operator.instantiate(list(c)))
-
+                applicable_permutations.append(op_inst)
+                break
         
         
         #time.sleep(5)            
@@ -530,23 +528,54 @@ class HeuristicSearchPlanner(base.BaseModule):
         timestr = '%.5f' % (t1-t0)
         print("Took "+timestr+"s to get all "+str(len(valid_instantiations))+" instantiations of "+str(operator.name))
         
-    def brute_force_decompose(self, node):
+    def brute_force_decompose(self, node, visited):
         # get all operators (pre-variable bindings) in MIDCA
         #print str(self.world.operators)
         t0 = time.time()
-        possible_operators = []
-        for op in self.world.operators.values():
-            print "OPERATOR "+op.name
-            inst_operators = self.get_all_instantiations(op)
-            possible_operators += inst_operators
-            print "Instantiation: "
-            print str(map(str,inst_operators))
+        child_nodes = []
+        t1=t0
+        for op in node.world.operators.values():
+            inst_operators = self.get_all_instantiations(node.world,op)
+            t2 = time.time()
+            timestr = '%.5f' % (t2-t1)
+            print("Took "+timestr+"s to get "+str(len(inst_operators))+ " instantiation(s) of "+str(map(lambda a: a.operator.name,inst_operators)))
+            t1=t2
+            for inst_op in inst_operators:
+                
+                #node.world.apply_midca_action(inst_op)
+                #print str(inst_op)+'\n ==== is of type '+ str(type(inst_op))+" dir(action) = \n"+str(dir(inst_op))
+                #print " looking at operator "+str(inst_op.operator.name)
+                #return
+                new_world = node.world.copy()
+                
+                try:
+                    new_world.apply(inst_op)
+                except:
+                    print("====== Tried to apply action:")
+                    print str(inst_op)
+                    print("====== On world:")
+                    print str(new_world)
+                    print("====== But Failed:")
+                # check to make sure its not
+                already_visited = False 
+                #print "visited = "+str(visited)
+                #print "diffs with current world = "
+                #for i in map(lambda n: new_world.diff(n.world),visited):
+                #    print "  ("+str(map(str,i[0]))+","+str(map(str,i[1]))+")"
+                for w in map(lambda n: n.world, visited):
+                    if new_world.equal(w):
+                        already_visited = True
+                #print "Already Visited is "+str(already_visited)
+                # add 
+                if not already_visited:
+                    child =  HSPNode(new_world.copy(),node,node.actions_taken+[inst_op])
+                    child_nodes.append(child)
+                    #print "adding child node with operator "+str(inst_op.operator.name)+" and depth "+str(child.depth)
             
-        
         t1 = time.time()
         timestr = '%.5f' % (t1-t0)
-        print("Took "+timestr+"s to get all "+str(len(possible_operators))+" instantiations of operators")
-#             
+        print("Took "+timestr+"s to get all "+str(len(child_nodes))+" child nodes")
+        return child_nodes
 #             print "Looking at "+str(op.name)
 #             for pre in op.preconditions:
 #                 print "  pre is "+str(pre.atom.predicate.name)
@@ -570,5 +599,110 @@ class HeuristicSearchPlanner(base.BaseModule):
 #             for pred in raw_op.get_preconditions:
 #                 # retrieve all 
 #     
+
+    def heuristic_search(self, goals, decompose):
+        #print "decompose is "+str(decompose)
+        t0 = time.time()
+        if not decompose:
+            #print "****************using built-in***************** "
+            decompose = self.brute_force_decompose
+            
+        Q = [HSPNode(self.world, None, [])]
+        visited = []
+        goal_reached_node = None
+        while len(Q) != 0:
+            # print Q
+            i = 0
+            for n in Q:
+                print "Node "+str(i)+": "+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
+                i+=1
+            
+            # take the first node off the queue
+            curr_node = Q[0]
+            #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
+            print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
+            Q = Q[1:]
+            visited.append(curr_node)
+            
+            # test if goal is reached
+            if curr_node.world.goals_achieved_now(goals):
+                goal_reached_node = curr_node
+                break
+            
+            # if not, get child nodes
+            Q += decompose(curr_node, visited)
+            Q = sorted(Q,key=lambda n: n.depth)    
+        
+        if goal_reached_node:
+            t1 = time.time()
+            timestr = '%.5f' % (t1-t0)
+            print "Heuristic Search Planning took "+timestr+"s"
+            return goal_reached_node.actions_taken
+        else:
+            print "Heuristic Search failed to produce a plan"
+            return []
+        
     def run(self, cycle, verbose = 2):
-        self.brute_force_decompose(None)
+        world = self.mem.get(self.mem.STATES)[-1]
+        goals = self.mem.get(self.mem.CURRENT_GOALS)
+        
+        midcaPlan = None
+        
+        if not goals:
+            if verbose >= 2:
+                print "No goals received by planner. Skipping planning."
+            return
+        try:
+            midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+        except AttributeError:
+            midcaPlan = None
+        if midcaPlan:
+            if verbose >= 2:
+                print "Old plan retrieved. Checking validity...",
+            valid = world.plan_correct(midcaPlan)
+            if not valid:
+                midcaPlan = None
+                #if plan modification is added to MIDCA, do it here.
+                if verbose >= 2:
+                    print "invalid."
+            elif verbose >= 2:
+                print "valid."
+            if valid:
+                if verbose >= 2:
+                    print "checking to see if all goals are achieved...",
+                achieved = world.plan_goals_achieved(midcaPlan)
+                if verbose >= 2:
+                    if len(achieved) == len(midcaPlan.goals):
+                        print "yes"
+                    else:
+                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                if len(achieved) != len(midcaPlan.goals):
+                    midcaPlan = None #triggers replanning.
+        
+        #ensure goals is a collection to simplify things later.
+        if not isinstance(goals, collections.Iterable):
+            goals = [goals]
+
+        if not midcaPlan:
+            #use pyhop to generate new plan
+            if verbose >= 2:
+                print "Planning..."
+            try:
+                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+                #print "Goals are "+str(map(str,goals))
+                hsp_plan = self.heuristic_search(goals, decompose=None)
+                #print "planning finished: "
+                for p in hsp_plan:
+                    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
+                
+                midcaPlan = plans.Plan([plans.Action(action.operator.name, *map(lambda o:o.name,action.args)) for action in hsp_plan], goals)
+                
+                if verbose >= 2:
+                    print "Plan: "#, midcaPlan
+                for a in midcaPlan:
+                    print("  "+str(a))
+                    
+                if midcaPlan != None:
+                        self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
+            except:
+                print "Planning Failed, skipping"

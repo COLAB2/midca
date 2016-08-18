@@ -14,13 +14,19 @@ predicate(adjacent-north, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-south, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-east, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-west, [loc1, loc2], [TILE, TILE])
+predicate(quicksand, [loc], [TILE])
+predicate(stuck, [agnt], [AGENT])
+predicate(mostly-stuck, [agnt], [AGENT])
+predicate(somewhat-stuck, [agnt], [AGENT])
+predicate(partly-stuck, [agnt], [AGENT])
+predicate(barely-stuck, [agnt], [AGENT])
+predicate(free, [agnt], [AGENT])
 
 operator(movenorth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
 	condition(agent-at, [agnt, start]),
-	condition(adjacent-north, [start, dest]),
-	condition(adjacent-south, [dest, start])],
+	condition(adjacent-north, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
@@ -29,8 +35,7 @@ operator(movesouth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
 	condition(agent-at, [agnt, start]),
-	condition(adjacent-south, [start, dest]),
-	condition(adjacent-north, [dest, start])],
+	condition(adjacent-south, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
@@ -39,8 +44,7 @@ operator(moveeast,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
 	condition(agent-at, [agnt, start]),
-	condition(adjacent-east, [start, dest]),
-	condition(adjacent-west, [dest, start])],
+	condition(adjacent-east, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
@@ -49,8 +53,7 @@ operator(movewest,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
 	condition(agent-at, [agnt, start]),
-	condition(adjacent-west, [start, dest]),
-	condition(adjacent-east, [dest, start])],
+	condition(adjacent-west, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
@@ -71,3 +74,43 @@ preconditions = [
 	condition(activated, [bcn])],
 results = [
 	condition(activated, [bcn], negate = TRUE)])
+
+operator(push1,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(stuck, [agnt])],
+results = [
+	condition(stuck, [agnt], negate= TRUE),
+	condition(mostly-stuck, [agnt])])
+
+operator(push2,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(mostly-stuck, [agnt])],
+results = [
+	condition(mostly-stuck, [agnt], negate= TRUE),
+	condition(somewhat-stuck, [agnt])])
+	
+operator(push3,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(somewhat-stuck, [agnt])],
+results = [
+	condition(somewhat-stuck, [agnt], negate= TRUE),
+	condition(partly-stuck, [agnt])])
+	
+operator(push4,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(partly-stuck, [agnt])],
+results = [
+	condition(partly-stuck, [agnt], negate= TRUE),
+	condition(barely-stuck, [agnt])])
+
+operator(push5,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(barely-stuck, [agnt])],
+results = [
+	condition(barely-stuck, [agnt], negate= TRUE),
+	condition(free, [agnt])])
