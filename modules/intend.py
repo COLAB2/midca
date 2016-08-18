@@ -16,7 +16,19 @@ class SimpleIntend(base.BaseModule):
                 print "Goal graph not initialized. Intend will do nothing."
             return
         goals = goalGraph.getUnrestrictedGoals()
-        self.mem.set(self.mem.CURRENT_GOALS, goals)
+        
+        # special code for NBeacons, need to change for later
+        exists_free_goal = False
+        free_goal = None
+        for g in goals:
+            if 'free' in str(g):
+                exists_free_goal = True
+                free_goal = g
+        
+        if free_goal:
+            self.mem.set(self.mem.CURRENT_GOALS, [free_goal])
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, goals)
 
         if trace:
             trace.add_data("GOALS",goals)

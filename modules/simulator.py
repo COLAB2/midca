@@ -270,7 +270,9 @@ class NBeaconsActionSimulator:
                     #    print "  "+str(qs_atoms)
                     #print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
                     if self.world.is_true('quicksand',[str(agent_tile)]):
-                        if self.world.is_true('free','Curiosity'):
+                        print "free related atoms = "+str(map(str,self.world.get_atoms(filters=['free'])))
+                        print 'self.world.is_true(free,Curiosity): '+str(self.world.is_true('free','Curiosity'))
+                        if self.world.is_true('free',['Curiosity']):
                             print "Agent is free, moving away from quicksand"
                             # remove free
                             self.world.remove_fact('free',['Curiosity'])
@@ -312,6 +314,7 @@ class NBeaconsActionSimulator:
                 if move_action_succeeded and self.wind and self.wind_dir in str(action):
                     # duplicate the effect because wind is pushing the agent
                     subseq_action = self.get_subsequent_action(action)
+                    print "Wind has blown the agent in the "+str(self.wind_dir)+" direction"
                     self.world.apply_named_action(subseq_action[0],subseq_action[1:])
                 #else:
                 #    if verbose >= 1:

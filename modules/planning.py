@@ -538,7 +538,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             inst_operators = self.get_all_instantiations(node.world,op)
             t2 = time.time()
             timestr = '%.5f' % (t2-t1)
-            print("Took "+timestr+"s to get "+str(len(inst_operators))+ " instantiation(s) of "+str(map(lambda a: a.operator.name,inst_operators)))
+            #print("Took "+timestr+"s to get "+str(len(inst_operators))+ " instantiation(s) of "+str(map(lambda a: a.operator.name,inst_operators)))
             t1=t2
             for inst_op in inst_operators:
                 
@@ -574,7 +574,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             
         t1 = time.time()
         timestr = '%.5f' % (t1-t0)
-        print("Took "+timestr+"s to get all "+str(len(child_nodes))+" child nodes")
+        #print("Took "+timestr+"s to get all "+str(len(child_nodes))+" child nodes")
         return child_nodes
 #             print "Looking at "+str(op.name)
 #             for pre in op.preconditions:
@@ -608,7 +608,13 @@ class HeuristicSearchPlanner(base.BaseModule):
             for goal in goals:
                 if 'free' in str(goal):
                     has_free_goal = True
-                
+            
+            # after checking free, if agent-at is in goals, rank move nodes higher
+            agent_at_goal = False
+            for goal in goals:
+                if 'agent-at' in str(goal):
+                    agent_at_goal = True
+            
             if has_free_goal:
                 # all push actions
                 exists_push_action = False
@@ -622,12 +628,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                 if exists_push_action and all_push_actions:
                     return 0+node.depth
             
-            agent_at_goal = False
-            for goal in goals:
-                if 'agent-at' in str(goal):
-                    agent_at_goal = True
-            
-            if agent_at_goal:
+            elif agent_at_goal:
                 # all move actions
                 exists_move_action = False
                 all_move_actions = True
@@ -655,15 +656,16 @@ class HeuristicSearchPlanner(base.BaseModule):
         goal_reached_node = None
         while len(Q) != 0:
             # print Q
+            print "  -- Q --  "
             i = 0
             for n in Q:
-                print "Node "+str(i)+": "+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
+                print "Node "+str(i)+": h(n)="+str(self.nbeacons_heuristic(goals)(n))+", actions="+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
                 i+=1
             
             # take the first node off the queue
             curr_node = Q[0]
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
-            print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
+            #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
             Q = Q[1:]
             visited.append(curr_node)
             
