@@ -258,33 +258,64 @@ class NBeaconsActionSimulator:
             if verbose >= 1:
                 print "Simulator: no actions selected yet by MIDCA."
             return
+        move_action_succeeded = False
         if actions:
             for action in actions:
                 print "dir(action) = "+str(dir(action))
                 if 'move' in action.op:
                     agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
                     agent_tile = agent_at_atom.args[1]
-                    print "all quicksand atoms: "
-                    for qs_atoms in self.world.get_atoms(filters=['quicksand']):
-                        print "  "+str(qs_atoms)
-                    print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
-                    if self.world.is_true('quicksand',[agent_tile]):
-                        print "Agent is trying to execute a move command while in quicksand"
-                if self.world.midca_action_applicable(action):
-                    if verbose >= 2:
-                        print "simulating MIDCA action:", action
-                    self.world.apply_midca_action(action)
+                    #print "all quicksand atoms: "
+                    #for qs_atoms in self.world.get_atoms(filters=['quicksand']):
+                    #    print "  "+str(qs_atoms)
+                    #print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
+                    if self.world.is_true('quicksand',[str(agent_tile)]):
+                        if self.world.is_true('free','Curiosity'):
+                            print "Agent is free, moving away from quicksand"
+                            # remove free
+                            self.world.remove_fact('free',['Curiosity'])
+                            # actually perform move action, assuming applicable
+                            if self.world.midca_action_applicable(action):
+                                if verbose >= 2:
+                                    print "simulating MIDCA action:", action
+                                self.world.apply_midca_action(action)
+                                move_action_succeeded = True
+                                # bump counter for actions executed
+                                self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
                     
-                    # bump counter for actions executed
-                    self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
-                    
-                    if self.wind and self.wind_dir in str(action):
-                        # duplicate the effect because wind is pushing the agent
-                        subseq_action = self.get_subsequent_action(action)
-                        self.world.apply_named_action(subseq_action[0],subseq_action[1:])
-                else:
-                    if verbose >= 1:
-                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+                
+                        else:
+                            print "Agent is not free, failing to attempt to move from quicksand"
+                            # insert the first stuck atom if no stuck is already in the state
+                            stuck_atoms = self.world.get_atoms(filters=['stuck'])
+                            if len(stuck_atoms) == 0:
+                                self.world.add_fact('stuck',['Curiosity'])
+                                
+                    else: # no quicksand, just perform move like normal
+                        if self.world.midca_action_applicable(action):
+                                if verbose >= 2:
+                                    print "simulating MIDCA action:", action
+                                self.world.apply_midca_action(action)
+                                move_action_succeeded = True
+                                # bump counter for actions executed
+                                self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
+                        
+                else: # an action other than move, no need to check if it will work
+                    if self.world.midca_action_applicable(action):
+                        if verbose >= 2:
+                            print "simulating MIDCA action:", action
+                        self.world.apply_midca_action(action)
+                        # bump counter for actions executed
+                        self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED)) 
+                
+                # apply wind
+                if move_action_succeeded and self.wind and self.wind_dir in str(action):
+                    # duplicate the effect because wind is pushing the agent
+                    subseq_action = self.get_subsequent_action(action)
+                    self.world.apply_named_action(subseq_action[0],subseq_action[1:])
+                #else:
+                #    if verbose >= 1:
+                #        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
         else:
             if verbose >= 2:
                 print "No actions selected this cycle by MIDCA."

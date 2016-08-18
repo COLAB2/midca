@@ -600,6 +600,49 @@ class HeuristicSearchPlanner(base.BaseModule):
 #                 # retrieve all 
 #     
 
+    def nbeacons_heuristic(self,goals):
+        
+        def heuristic(node):
+            # if 'free' is in goals, than rank push nodes higher
+            has_free_goal = False
+            for goal in goals:
+                if 'free' in str(goal):
+                    has_free_goal = True
+                
+            if has_free_goal:
+                # all push actions
+                exists_push_action = False
+                all_push_actions = True
+                for action in node.actions_taken:
+                    if 'push' in action.operator.name:
+                        exists_push_action = True
+                    else:
+                        all_push_actions = False
+                        
+                if exists_push_action and all_push_actions:
+                    return 0+node.depth
+            
+            agent_at_goal = False
+            for goal in goals:
+                if 'agent-at' in str(goal):
+                    agent_at_goal = True
+            
+            if agent_at_goal:
+                # all move actions
+                exists_move_action = False
+                all_move_actions = True
+                for action in node.actions_taken:
+                    if 'move' in action.operator.name:
+                        exists_move_action = True
+                    else:
+                        all_move_actions = False
+                        
+                if exists_move_action and all_move_actions:
+                    return 0+node.depth
+            
+            return 100+node.depth
+        return heuristic
+
     def heuristic_search(self, goals, decompose):
         #print "decompose is "+str(decompose)
         t0 = time.time()
@@ -631,7 +674,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             # if not, get child nodes
             Q += decompose(curr_node, visited)
-            Q = sorted(Q,key=lambda n: n.depth)    
+            Q = sorted(Q,key=self.nbeacons_heuristic(goals))    
         
         if goal_reached_node:
             t1 = time.time()
