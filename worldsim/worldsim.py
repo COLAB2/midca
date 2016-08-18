@@ -303,7 +303,7 @@ class World:
 						if (not filter_matches[filter_str]) and filter_str in str(part):
 							filter_matches[filter_str] = True
 							
-				if not False in filter_matches.values(): # check to see they are all True
+				if not (False in filter_matches.values()): # check to see they are all True
 					relevant_atoms.append(atom)
 					#print("Just added "+str(atom)+" to relevant atoms")
 				# reset filter matches

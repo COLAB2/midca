@@ -20,12 +20,13 @@ class NBeaconGrid():
     def __init__(self):
         pass
     
-    def generate(self,width=10,height=10,num_beacons=10):
+    def generate(self,width=10,height=10,num_beacons=10,num_quicksand_spots=5):
         if width != height:
             raise Exception("Sorry but only square environments are valid: width must equal height")
         self.DIM = width
         self.TILE_GRID = self.generate_tiles(width,height)
         self.BEACONS = self.generate_beacons(num_beacons)
+        self.QUICKSAND = self.generate_quicksand(num__quicksand_spots=num_quicksand_spots)
     
     def generate_tiles(self,width=10,height=10):
         '''
@@ -81,6 +82,21 @@ class NBeaconGrid():
             
         return BEACONS
     
+    def generate_quicksand(self, num__quicksand_spots=5):
+        '''
+        Quicksand will not be in the same tiles as beacons
+        '''
+        QUICKSAND_TILES = []
+        for i in range(num__quicksand_spots):
+            i+=1
+            while len(QUICKSAND_TILES) < i:
+                ran_tile = random.choice(random.choice(self.TILE_GRID))
+                 
+                if ran_tile not in map(lambda b: b.tile, self.BEACONS) and ran_tile not in QUICKSAND_TILES:
+                    QUICKSAND_TILES.append(ran_tile)
+                    
+        return QUICKSAND_TILES
+            
     def get_STRIPS_str(self):
         '''
         Returns the grid in a STRIPS format, to be loaded by MIDCA
@@ -120,9 +136,13 @@ class NBeaconGrid():
         y = random.choice(range(self.DIM))
         strips_result_str += "AGENT("+str(self.AGENT_NAME)+")\n"
         strips_result_str += "agent-at("+str(self.AGENT_NAME)+","+str("Tx"+str(x)+"y"+str(y))+")\n"
-        
-        
+
+        # add quicksand tiles
+        for qs_tile in self.QUICKSAND:
+            strips_result_str += "quicksand("+str(qs_tile)+")\n"
+            
         return strips_result_str
+
 
 class Beacon():
     
@@ -293,6 +313,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.activated = {} # key is beacon id (e.g. b1), val is True if activated, False otherwise
     s.agents = {}
     s.mud = {}
+    s.quicksand = []
     beacons = []
     agent = None
     for objname in world.objects:
@@ -318,12 +339,13 @@ def pyhop_state_from_world(world, name = "state"):
             s.activated[b_id] = True
         elif atom.predicate.name == "agent-at":
             s.agents[atom.args[0].name] = convert(atom.args[1].name) 
+        elif atom.predicate.name == "quicksand":
+            s.quicksand.append(convert(atom.args[0].name)) 
+        
             
     # convert tile names to pyhop operators
     for (k,v) in s.beaconlocs.items():
         s.beaconlocs[k] = convert(v)
-        
-    
             
     #print("at the end of nbeacons_pyhop_state_from_world:")
     #print_state(s)
@@ -404,6 +426,8 @@ def drawNBeaconsScene(midcastate):
     AGENT_WITH_FIRE = '%'
     AGENT_WITH_FLARE = '#'
     FLARE = '$'
+    QUICKSAND = '~'
+    AGENT_WITH_QUICKSAND = '?'
     
     # convert MIDCA world to PyHop State (only doing this for code re-use
     pyhopState = pyhop_state_from_world(midcastate)
@@ -417,6 +441,7 @@ def drawNBeaconsScene(midcastate):
                 row.append(DIRT)
         grid.append(row)
     
+        
     # Add agent
     agentstr = pyhopState.agents['Curiosity']
     agent_x = int(agentstr.split(',')[0]) 
@@ -451,6 +476,18 @@ def drawNBeaconsScene(midcastate):
                 
                 #grid[y][x] = BEACON_UNACTIVATED 
                 grid[y][x] = beacon_id
+ 
+    # add in quicksand
+    for qs in pyhopState.quicksand:
+        qs_str = qs
+        x = int(qs_str.split(",")[0]) 
+        y = int(qs_str.split(",")[1])
+        
+        if pyhopState.agents['Curiosity'] == qs:
+            grid[y][x] = AGENT_WITH_QUICKSAND
+        else:
+            grid[y][x] = QUICKSAND
+    
  
     print(asciiframestr(grid))
 

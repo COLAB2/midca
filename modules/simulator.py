@@ -260,6 +260,16 @@ class NBeaconsActionSimulator:
             return
         if actions:
             for action in actions:
+                print "dir(action) = "+str(dir(action))
+                if 'move' in action.op:
+                    agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
+                    agent_tile = agent_at_atom.args[1]
+                    print "all quicksand atoms: "
+                    for qs_atoms in self.world.get_atoms(filters=['quicksand']):
+                        print "  "+str(qs_atoms)
+                    print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
+                    if self.world.is_true('quicksand',[agent_tile]):
+                        print "Agent is trying to execute a move command while in quicksand"
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
                         print "simulating MIDCA action:", action
