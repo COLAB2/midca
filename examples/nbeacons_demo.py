@@ -27,7 +27,7 @@ DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
 GOAL_GRAPH_CMP_FUNC = None
-DIMENSION = 5
+DIMENSION = 4
 
 # percent chance each beacon will fail each tick
 BEACON_FAIL_RATE = 0
@@ -37,7 +37,7 @@ world = domainread.load_domain(DOMAIN_FILE)
 
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
-state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=7)
+state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=5)
 state1_str = state1.get_STRIPS_str()
 
 # Load state
@@ -57,10 +57,10 @@ myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=True,wi
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 
-myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
 myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
-#myMidca.append_module("Interpret", guide.RandomActivationGoals())
+myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.RandomActivationGoals(numbeacons=2))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.HeuristicSearchPlanner())

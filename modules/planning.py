@@ -432,6 +432,24 @@ class HeuristicSearchPlanner(base.BaseModule):
         # using two lists instead of a dict to preserve order
         arg_names = []
         arg_types = []
+        if 'move' in operator.name:
+            # get agent's tile
+            agent_loc = str(world.get_atoms(filters="agent-at")[0].args[1])
+            #print "agent_loc "+str(agent_loc)
+            #[0].args[1]
+            # get all adjacent tiles
+            adjacent_atoms = world.get_atoms(filters=["adjacent",agent_loc])
+            print "adjacent atoms are " +str(adjacent_atoms)
+            valid_tiles = []
+            for aa in adjacent_atoms:
+                print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                valid_tiles.append(aa.args[0])
+                valid_tiles.append(aa.args[1])
+            valid_tiles = set(valid_tiles)
+            # possible tiles
+            #for vt in valid_tiles:
+            #    print "  valid tile "+str(vt)
+            
         for o in operator.objnames:
             arg_names.append(o)
             arg_types.append(None)
@@ -446,13 +464,24 @@ class HeuristicSearchPlanner(base.BaseModule):
                 if arg_types[arg_names_i] is None:
                     arg_types[arg_names_i] = precond.argtypes[i] 
         
-        #print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
+        print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
         
-        possible_bindings = map(lambda t: world.get_objects_by_type(t),arg_types)
-        #for pb in possible_bindings:
-        #    print "outer"
-        #    for pb_i in pb:
-        #        print "  "+str(pb_i)
+        def better_mapping_func(t):
+            print "t is "+str(t)
+            if 'TILE' in str(t):
+                return valid_tiles
+            else:
+                return world.get_objects_by_type(t)
+        
+        def old_mapping_func(t):
+            return world.get_objects_by_type(t)
+        
+        possible_bindings = map(better_mapping_func,arg_types)
+        print "here"
+        for pb in possible_bindings:
+            print "outer"
+            for pb_i in pb:
+                print "  "+str(pb_i)
         permutations = itertools.product(*possible_bindings)
 #         i_s = 0
 #         i_e = 5
@@ -464,7 +493,9 @@ class HeuristicSearchPlanner(base.BaseModule):
         applicable_permutations = []
         # need to do a transpose on the permutations
         #permutations = zip(*permutations)
+        num_permutations = 0
         for c in permutations:
+            num_permutations+=1
             #print "len(c) = "+str(len(c))
             #print "c = "+str(c)
             #print "attempting to instantiate operator "+str(operator)+" with args "+str(map(str,c))
@@ -474,7 +505,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                 #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
                 applicable_permutations.append(op_inst)
                 break
-        
+        print " there are at least "+str(num_permutations)+" for operator "+str(operator.name)
         
         #time.sleep(5)            
         #print "preobjnames are: " +str(operator.preobjnames)
@@ -656,11 +687,11 @@ class HeuristicSearchPlanner(base.BaseModule):
         goal_reached_node = None
         while len(Q) != 0:
             # print Q
-            print "  -- Q --  "
-            i = 0
-            for n in Q:
-                print "Node "+str(i)+": h(n)="+str(self.nbeacons_heuristic(goals)(n))+", actions="+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
-                i+=1
+            #print "  -- Q --  "
+            #i = 0
+            #for n in Q:
+            #    print "Node "+str(i)+": h(n)="+str(self.nbeacons_heuristic(goals)(n))+", actions="+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
+            #    i+=1
             
             # take the first node off the queue
             curr_node = Q[0]
