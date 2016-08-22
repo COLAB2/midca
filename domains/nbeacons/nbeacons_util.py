@@ -391,14 +391,20 @@ def pyhop_tasks_from_goals(goals,pyhopState):
 def asciiframestr(frame, numbered_borders = True):
     result = ""
     if numbered_borders:
-        result +="  "
+        result +="   "
         for i in range(len(frame)):
-            result += str(i)+" "
+            if i >= 10:
+                result += str(i)[1]+" "
+            else:
+                result += str(i)+" "
         result+='\n'
     r = 0
     for row in frame:
         if numbered_borders:
-            result += str(r)+" "
+            if r < 10:
+                result += str(r)+"  " # two spaces to make it look nicer
+            else:
+                result += str(r)+" " # only one space
         for val in row:
             result += val + " "
         result += "\n"

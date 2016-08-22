@@ -7,6 +7,9 @@ from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 import time
 
+# profiling
+import cProfile, pstats, StringIO
+
 class GenericPyhopPlanner(base.BaseModule):
 
     '''
@@ -432,6 +435,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         # using two lists instead of a dict to preserve order
         arg_names = []
         arg_types = []
+        #print "operator.name = "+operator.name
         if 'move' in operator.name:
             # get agent's tile
             agent_loc = str(world.get_atoms(filters="agent-at")[0].args[1])
@@ -439,16 +443,21 @@ class HeuristicSearchPlanner(base.BaseModule):
             #[0].args[1]
             # get all adjacent tiles
             adjacent_atoms = world.get_atoms(filters=["adjacent",agent_loc])
-            print "adjacent atoms are " +str(adjacent_atoms)
+            #print "adjacent atoms are " +str(adjacent_atoms)
             valid_tiles = []
             for aa in adjacent_atoms:
-                print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
                 valid_tiles.append(aa.args[0])
                 valid_tiles.append(aa.args[1])
             valid_tiles = set(valid_tiles)
             # possible tiles
             #for vt in valid_tiles:
             #    print "  valid tile "+str(vt)
+        
+        if 'beacon' in operator.name:
+            beacon_atoms = world.get_atoms(filters=["beacon-at"])
+            beacon_tiles = map(lambda b: b.args[1],beacon_atoms)
+            valid_tiles = beacon_tiles
             
         for o in operator.objnames:
             arg_names.append(o)
@@ -464,11 +473,12 @@ class HeuristicSearchPlanner(base.BaseModule):
                 if arg_types[arg_names_i] is None:
                     arg_types[arg_names_i] = precond.argtypes[i] 
         
-        print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
+        #print "arg_names_and_types = "+str(zip(arg_names,map(str,arg_types)))
         
         def better_mapping_func(t):
-            print "t is "+str(t)
+            #print "t is "+str(t)
             if 'TILE' in str(t):
+                #print "we are here, returning "+str(valid_tiles)
                 return valid_tiles
             else:
                 return world.get_objects_by_type(t)
@@ -477,11 +487,11 @@ class HeuristicSearchPlanner(base.BaseModule):
             return world.get_objects_by_type(t)
         
         possible_bindings = map(better_mapping_func,arg_types)
-        print "here"
-        for pb in possible_bindings:
-            print "outer"
-            for pb_i in pb:
-                print "  "+str(pb_i)
+        #print "here"
+        #for pb in possible_bindings:
+        #    print "outer"
+        #    for pb_i in pb:
+        #        print "  "+str(pb_i)
         permutations = itertools.product(*possible_bindings)
 #         i_s = 0
 #         i_e = 5
@@ -505,7 +515,8 @@ class HeuristicSearchPlanner(base.BaseModule):
                 #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
                 applicable_permutations.append(op_inst)
                 break
-        print " there are at least "+str(num_permutations)+" for operator "+str(operator.name)
+        #print "here2"
+        #print " there are at least "+str(num_permutations)+" for operator "+str(operator.name)
         
         #time.sleep(5)            
         #print "preobjnames are: " +str(operator.preobjnames)
@@ -515,6 +526,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         
         return applicable_permutations
         
+        ### Everything below here is OLD
         
         #print "types = "
         #for t in self.world.types:
@@ -631,22 +643,33 @@ class HeuristicSearchPlanner(base.BaseModule):
 #                 # retrieve all 
 #     
 
-    def nbeacons_heuristic(self,goals):
+    def nbeacons_heuristic(self,goals,infinity=10000):
         
         def heuristic(node):
+            DEPTH_MULTIPLIER = 0.8
             # if 'free' is in goals, than rank push nodes higher
-            has_free_goal = False
+            goal_type_free_goal = False
             for goal in goals:
                 if 'free' in str(goal):
-                    has_free_goal = True
+                    goal_type_free_goal = True
             
             # after checking free, if agent-at is in goals, rank move nodes higher
-            agent_at_goal = False
+            goal_type_agent_at = False
             for goal in goals:
                 if 'agent-at' in str(goal):
-                    agent_at_goal = True
+                    goal_type_agent_at = True
             
-            if has_free_goal:
+            # check to see if this is a beacon activation node
+            goal_type_beacon_activation = False
+            for goal in goals:
+                if 'activated' in str(goal):
+                    goal_type_beacon_activation = True
+            
+            #print 'has_free_goal = '+str(goal_type_free_goal)
+            #print 'agent-at-goal = '+str(goal_type_agent_at)
+            #print 'activated_goal = '+str(goal_type_beacon_activation)
+            
+            if goal_type_free_goal:
                 # all push actions
                 exists_push_action = False
                 all_push_actions = True
@@ -657,10 +680,14 @@ class HeuristicSearchPlanner(base.BaseModule):
                         all_push_actions = False
                         
                 if exists_push_action and all_push_actions:
-                    return 0+node.depth
+                    return node.depth # depth only
+                else:
+                    return infinity+node.depth 
             
-            elif agent_at_goal:
-                # all move actions
+            # we will use manhatten distance to sort nodes for both
+            # beacon activation and navigation type goals
+            elif goal_type_agent_at: 
+                # check that all actions are move actions
                 exists_move_action = False
                 all_move_actions = True
                 for action in node.actions_taken:
@@ -670,12 +697,71 @@ class HeuristicSearchPlanner(base.BaseModule):
                         all_move_actions = False
                         
                 if exists_move_action and all_move_actions:
-                    return 0+node.depth
+                    # now compute distance because its relevant
+                    agent_loc = node.world.get_atoms(filters=['agent-at'])[0]
+                    agent_loc = str(agent_loc.args[1])[2:] # remove the 'Tx'
+                    agent_x = int(agent_loc.split('y')[0])
+                    agent_y = int(agent_loc.split('y')[1])
+                    goal_loc = str(goals[0].args[1])[2:]
+                    goal_x = int(goal_loc.split('y')[0])
+                    goal_y = int(goal_loc.split('y')[1])
+                    
+                    dist = (abs(goal_x - agent_x)+abs(goal_y-agent_y))
+                    return dist+(DEPTH_MULTIPLIER*node.depth)
+                else:
+                    # these nodes have actions other than movement, not relevant
+                    return infinity+node.depth
             
-            return 100+node.depth
-        return heuristic
+            elif goal_type_beacon_activation:
+                # get current location of agent
+                #print "goals are "+str(goals)
+                #print "goal is "+str(goals[0])
+                #print "activated goal dir "+str(map(str,goals[0].args))
+                
+                #print "agent_loc = "+str(agent_loc.args[1])
+                #print "activated goal args "+str(map(str,goals[0].args))
+                
+                #print "beacon loc = "+str(beacon_atom.args[1])
+                # get location of beacon
+                
+                # check that all actions are move actions, allow for one activate beacon action
+                exists_non_move_or_beacon_action = False 
+                num_beacon_activate_actions = 0
+                for action in node.actions_taken:
+                    if 'beacon' in action.operator.name:
+                        num_beacon_activate_actions+=1
+                    elif not ('move' in action.operator.name):
+                        exists_non_move_or_beacon_action = True    
+                        
+                if num_beacon_activate_actions <= 1 and not exists_non_move_or_beacon_action:
+                    # now distance is relevant
+                    agent_loc = node.world.get_atoms(filters=['agent-at'])[0]
+                    agent_loc = str(agent_loc.args[1])[2:] # remove the 'Tx'
+                    agent_x = int(agent_loc.split('y')[0])
+                    agent_y = int(agent_loc.split('y')[1])
+                    
+                    beacon_atom = node.world.get_atoms(filters=['beacon-at',goals[0].args[0]])[0]
+                    beacon_loc = str(beacon_atom.args[1])[2:] # remove the 'Tx' at the front 
+                    goal_x = int(beacon_loc.split('y')[0])
+                    goal_y = int(beacon_loc.split('y')[1])
+                    
+                #print "agent_x = "+str(agent_x)+" agent y = "+str(agent_y) + " goal x = "+str(goal_x)+" goal y "+str(goal_y)
+                
+                #(abs(goal_x - node.agent_loc[0])
+
+                    dist = abs(goal_x - agent_x) + abs(goal_y - agent_y)
+                #print "dist is "+str(dist)
+                    return dist+(DEPTH_MULTIPLIER*node.depth)
+                else:
+                    return infinity
+            else:
+                return infinity # this shouldn't happen because it means we have a different goal
+            # END HEURISTIC FUNCTION
+            
+        return heuristic # now return the internal function
 
     def heuristic_search(self, goals, decompose):
+        INFINITY = 10000
         #print "decompose is "+str(decompose)
         t0 = time.time()
         if not decompose:
@@ -685,21 +771,24 @@ class HeuristicSearchPlanner(base.BaseModule):
         Q = [HSPNode(self.world, None, [])]
         visited = []
         goal_reached_node = None
+        nodes_expanded = 0
         while len(Q) != 0:
             # print Q
-            #print "  -- Q --  "
+            #print "---- Q ----"
+            
             #i = 0
             #for n in Q:
-            #    print "Node "+str(i)+": h(n)="+str(self.nbeacons_heuristic(goals)(n))+", actions="+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
+            #    print "  Node "+str(i)+": h(n)="+str(self.nbeacons_heuristic(goals)(n))+", actions="+str(map(lambda a:a.operator.name,n.actions_taken))+", depth = "+str(n.depth)
             #    i+=1
             
             # take the first node off the queue
             curr_node = Q[0]
+            #print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
             Q = Q[1:]
             visited.append(curr_node)
-            
+            nodes_expanded+=1
             # test if goal is reached
             if curr_node.world.goals_achieved_now(goals):
                 goal_reached_node = curr_node
@@ -707,7 +796,9 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             # if not, get child nodes
             Q += decompose(curr_node, visited)
-            Q = sorted(Q,key=self.nbeacons_heuristic(goals))    
+            Q = sorted(Q,key=self.nbeacons_heuristic(goals,infinity=INFINITY))    
+            # now remove any node has a score >= infinity (because it's not relevant
+            Q = filter(lambda s: self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY, Q)
         
         if goal_reached_node:
             t1 = time.time()
@@ -719,6 +810,10 @@ class HeuristicSearchPlanner(base.BaseModule):
             return []
         
     def run(self, cycle, verbose = 2):
+        #pr = cProfile.Profile()
+        #pr.enable()
+        
+        # now actual code
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         
@@ -782,3 +877,11 @@ class HeuristicSearchPlanner(base.BaseModule):
                         self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             except:
                 print "Planning Failed, skipping"
+                
+        # now finish the profiling
+        #pr.disable()
+        #s = StringIO.StringIO()
+        #sortby = 'tottime'
+        #ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+        #ps.print_stats()
+        #print s.getvalue()

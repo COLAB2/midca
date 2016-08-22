@@ -52,7 +52,11 @@ class Atom:
 		'''
 		self.predicate = predicate
 		self.args = args
-	
+		#print "args = "+str(args)
+		self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
+		#                                                     # happens at initialization
+		#print "hashing from string "+predicate.name + str(map(str,args)) +" to " +str(self.hash)
+		
 	def __getitem__(self, item):
 		if item in self.predicate.argnames:
 			return self.args[self.predicate.argnames.index(item)]
@@ -69,13 +73,23 @@ class Atom:
 			s = s[:-2]
 		return s + ")"
 	
+	def __hash__(self):
+		return self.hash
+	
 	def __eq__(self, other):
-		if self.predicate != other.predicate:
-			return False
-		for i in range(len(self.args)):
-			if self[i] != other[i]:
-				return False
-		return True
+		return self.hash == other.hash
+	
+	def __ne__(self, other):
+		return self.hash != other.hash
+	
+	# OLD, not fast enough
+# 	def __eq__(self, other):
+# 		if self.predicate != other.predicate:
+# 			return False
+# 		for i in range(len(self.args)):
+# 			if self[i] != other[i]:
+# 				return False
+# 		return True
 
 class Predicate:
 	
@@ -279,7 +293,7 @@ class World:
 				self.objects[arg.name] = arg
 		for object in objects:
 			self.objects[object.name] = object
-		self.atoms = atoms
+		self.atoms = set(atoms)
 	
 	def get_atoms(self,filters=[]):
 		'''
@@ -300,7 +314,8 @@ class World:
 				atom_parts = [atom.predicate]+atom.args
 				for filter_str in filters: # assuming there shouldn't be more than 3-4 filters
 					for part in atom_parts: # assuming shouldn't be atoms with more than 4-5 parts
-						if (not filter_matches[filter_str]) and filter_str in str(part):
+						#print "type(part) == "+str(part.name)
+						if (not filter_matches[filter_str]) and filter_str in part.name:
 							filter_matches[filter_str] = True
 							
 				if not (False in filter_matches.values()): # check to see they are all True
@@ -336,8 +351,11 @@ class World:
 		#print "diff_result inside equal() : "+str(map(str,diff_result[0]))+","+str(map(str,diff_result[1]))
 		return  diff_result == ([],[])
 	
+	def fast_equal(self,otherworld):
+		pass
+	
 	def copy(self):
-		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
+		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
 	
 	def is_true(self, predname, argnames = []):
 		for atom in self.atoms:
@@ -352,10 +370,11 @@ class World:
 		return False
 	
 	def atom_true(self, atom):
+		# this is very fast, because atom objects have hashes and self.atoms is a set, not a list
 		return atom in self.atoms
 	
 	def add_atom(self, atom):
-		self.atoms.append(atom)
+		self.atoms.add(atom)
 	
 	def add_fact(self, predname, argnames = []):
 		if not self.is_true(predname, argnames):
