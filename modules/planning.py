@@ -526,51 +526,6 @@ class HeuristicSearchPlanner(base.BaseModule):
         
         return applicable_permutations
         
-        ### Everything below here is OLD
-        
-        #print "types = "
-        #for t in self.world.types:
-        #    print "  t = "+t
-        #print "all objects of each type"
-        
-        #print map(str,map(lambda o: o.type,self.world.get_possible_objects('_','_')))
-        for pre in operator.preconditions:
-            print "argtypes are "
-            print "  " +str(map(str,pre.argtypes))
-            possible_bindings = map(lambda t: self.world.get_objects_by_type(t),pre.argtypes)
-            print "possible bindings are"
-            pb = map(str,possible_bindings)
-            for pb_i in range(len(possible_bindings)):
-                print "There are "+str(len(possible_bindings[pb_i]))+ "following are possible bindings for "+str(pre.argtypes[pb_i])
-                #print possible_bindings[pb_i]
-                #for pb_ii in possible_bindings[pb_i]:
-                #    print "  "+str(pb_ii)
-#             pred_name = pre.atom.predicate.name
-#             # go through each arg type
-#             for arg in pre.atom.args
-#             
-        self.world.get_objects_by_type('TILE')
-        return
-#         possible_arg_values[pre] = map(str,self.world.get_atoms(filters=[pred_name])) 
-    
-        # now list all possible permutations
-        #print "input to product is "+str(possible_arg_values.values())
-        print " values per arg = "+str({k:len(v) for k,v in possible_arg_values.items()})
-        permutations = itertools.product(*possible_arg_values.values())
-        size_permutations = sum(1 for _ in permutations) # space efficient way of computing permutations
-        print " there are "+str(size_permutations)+" permuatations"
-        
-        # now go through all possible args, and record how many are applicable
-        valid_instantiations = []
-        for p in permutations:
-            if self.world.is_applicable(operator.instantiate(*p)):
-                print ("found valid instantiation: "+str(p))
-                valid_instantiations = [p]
-        
-        t1 = time.time()
-        timestr = '%.5f' % (t1-t0)
-        print("Took "+timestr+"s to get all "+str(len(valid_instantiations))+" instantiations of "+str(operator.name))
-        
     def brute_force_decompose(self, node, visited):
         # get all operators (pre-variable bindings) in MIDCA
         #print str(self.world.operators)
@@ -619,32 +574,9 @@ class HeuristicSearchPlanner(base.BaseModule):
         timestr = '%.5f' % (t1-t0)
         #print("Took "+timestr+"s to get all "+str(len(child_nodes))+" child nodes")
         return child_nodes
-#             print "Looking at "+str(op.name)
-#             for pre in op.preconditions:
-#                 print "  pre is "+str(pre.atom.predicate.name)
-#                 pred_name = pre.atom.predicate.name
-#                 # get all atoms that match predicate name
-#                 for atm in self.world.get_atoms(filters=[pred_name]):
-#                     print "    "+str(atm)
-#             
-            
-            
-    
-    
-#     def decompose(self, node):
-#         '''
-#         Returns the possible child nodes
-#         '''
-#     
-#         # Go through all operators (pre-variable bindings) in MIDCA
-#         for raw_op in operators:
-#             # go through all predicates in the op's preconditions
-#             for pred in raw_op.get_preconditions:
-#                 # retrieve all 
-#     
 
     def nbeacons_heuristic(self,goals,infinity=10000):
-        
+        # first define internal heuristic, then return it        
         def heuristic(node):
             DEPTH_MULTIPLIER = 0.8
             # if 'free' is in goals, than rank push nodes higher
@@ -757,7 +689,6 @@ class HeuristicSearchPlanner(base.BaseModule):
             else:
                 return infinity # this shouldn't happen because it means we have a different goal
             # END HEURISTIC FUNCTION
-            
         return heuristic # now return the internal function
 
     def heuristic_search(self, goals, decompose):
@@ -827,30 +758,10 @@ class HeuristicSearchPlanner(base.BaseModule):
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
         except AttributeError:
             midcaPlan = None
-        if midcaPlan:
             if verbose >= 2:
-                print "Old plan retrieved. Checking validity...",
-            valid = world.plan_correct(midcaPlan)
-            if not valid:
-                midcaPlan = None
-                #if plan modification is added to MIDCA, do it here.
-                if verbose >= 2:
-                    print "invalid."
-            elif verbose >= 2:
-                print "valid."
-            if valid:
-                if verbose >= 2:
-                    print "checking to see if all goals are achieved...",
-                achieved = world.plan_goals_achieved(midcaPlan)
-                if verbose >= 2:
-                    if len(achieved) == len(midcaPlan.goals):
-                        print "yes"
-                    else:
-                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
-                if len(achieved) != len(midcaPlan.goals):
-                    midcaPlan = None #triggers replanning.
-        
-        #ensure goals is a collection to simplify things later.
+                print "Did not retrieve plan, will plan from scratch"
+            
+        # ensure goals is a collection to simplify things later.
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
 
