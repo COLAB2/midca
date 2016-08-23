@@ -261,7 +261,7 @@ class NBeaconsActionSimulator:
         move_action_succeeded = False
         if actions:
             for action in actions:
-                print "dir(action) = "+str(dir(action))
+                #print "dir(action) = "+str(dir(action))
                 if 'move' in action.op:
                     agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
                     agent_tile = agent_at_atom.args[1]

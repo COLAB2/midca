@@ -765,6 +765,10 @@ class HeuristicSearchPlanner(base.BaseModule):
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
 
+        if midcaPlan:
+            print "Retrieved current plan. Skipping planning."
+            return
+
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:

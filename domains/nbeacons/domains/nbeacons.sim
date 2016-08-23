@@ -25,6 +25,7 @@ predicate(free, [agnt], [AGENT])
 operator(movenorth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
+	condition(free, [agnt]),
 	condition(agent-at, [agnt, start]),
 	condition(adjacent-north, [start, dest])],
 results = [
@@ -34,6 +35,7 @@ results = [
 operator(movesouth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
+	condition(free, [agnt]),
 	condition(agent-at, [agnt, start]),
 	condition(adjacent-south, [start, dest])],
 results = [
@@ -43,6 +45,7 @@ results = [
 operator(moveeast,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
+	condition(free, [agnt]),
 	condition(agent-at, [agnt, start]),
 	condition(adjacent-east, [start, dest])],
 results = [
@@ -52,6 +55,7 @@ results = [
 operator(movewest,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
+	condition(free, [agnt]),
 	condition(agent-at, [agnt, start]),
 	condition(adjacent-west, [start, dest])],
 results = [
