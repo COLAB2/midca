@@ -12,7 +12,8 @@ from MIDCA.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 
-THIS IS THE START SCRIPT FOR THE VANILLA AGENT (no gda, no meta)
+THIS IS THE START SCRIPT FOR THE GDA AGENT (no meta)
+
 '''
 
 # Setup
