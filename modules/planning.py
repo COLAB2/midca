@@ -420,6 +420,7 @@ class HeuristicSearchPlanner(base.BaseModule):
     def init(self, world, mem):
         self.world = world
         self.mem = mem
+        self.mem.set(self.mem.PLANNING_COUNT, 0)
     
     def get_all_instantiations(self, world, operator):
         '''

@@ -31,6 +31,7 @@ class Memory:
     PLANNING_COUNT = "__PlanningCount" # number of times planning was performed (including replanning)
     GOALS_ACHIEVED = "__GoalsAchieved" # number of goals achieved
     ACTIONS_EXECUTED = "__ActionsExecuted" # number of actions executed
+    MIDCA_CYCLES = "__MIDCA Cycles"
     CURR_PLAN = "__CurrPlan"
     # GDA
     DISCREPANCY = "__discrepancy"

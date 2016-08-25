@@ -215,6 +215,7 @@ class NBeaconsActionSimulator:
     def init(self, world, mem):
         self.mem = mem
         self.world = world
+        self.mem.set(self.mem.MIDCA_CYCLES, 0)
 
     def get_subsequent_action(self,action,dir):
         '''
@@ -358,6 +359,8 @@ class NBeaconsActionSimulator:
         multiple actions are selected by the agent and given to the simulator (by being stored in
         self.mem.ACTIONS) this will break
         '''
+        self.mem.set(self.mem.MIDCA_CYCLES, 1+self.mem.get(self.mem.MIDCA_CYCLES))
+        
         self.verbose = verbose
         first_action = None
         try:
