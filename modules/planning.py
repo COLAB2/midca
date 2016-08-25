@@ -577,7 +577,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
     def nbeacons_heuristic(self,goals,infinity=10000):
         # first define internal heuristic, then return it        
-        def heuristic(node):
+        def old_heuristic(node):
             DEPTH_MULTIPLIER = 0.8
             # if 'free' is in goals, than rank push nodes higher
             goal_type_free_goal = False
@@ -689,7 +689,34 @@ class HeuristicSearchPlanner(base.BaseModule):
             else:
                 return infinity # this shouldn't happen because it means we have a different goal
             # END HEURISTIC FUNCTION
-        return heuristic # now return the internal function
+            
+            
+        def new_heuristic(node):
+            DEPTH_MULTIPLIER = 0.8
+            
+            # if the goal is an agent-at, or beacon, get goal_x and goal_y functions
+            goal_x = -1
+            goal_y = -1
+            if 'agent-at' in str(goals[0]):
+                goal_loc = str(goals[0].args[1])[2:]
+                goal_x = int(goal_loc.split('y')[0])
+                goal_y = int(goal_loc.split('y')[1])
+            elif 'activated' in str(goals[0]):
+                beacon_atom = node.world.get_atoms(filters=['beacon-at',goals[0].args[0]])[0]
+                beacon_loc = str(beacon_atom.args[1])[2:] # remove the 'Tx' at the front 
+                goal_x = int(beacon_loc.split('y')[0])
+                goal_y = int(beacon_loc.split('y')[1])
+                
+            # now compute distance because its relevant
+            agent_loc = node.world.get_atoms(filters=['agent-at'])[0]
+            agent_loc = str(agent_loc.args[1])[2:] # remove the 'Tx'
+            agent_x = int(agent_loc.split('y')[0])
+            agent_y = int(agent_loc.split('y')[1])
+            
+            dist = (abs(goal_x - agent_x)+abs(goal_y-agent_y))
+            return dist+(DEPTH_MULTIPLIER*node.depth)
+        
+        return new_heuristic # now return the internal function
 
     def heuristic_search(self, goals, decompose):
         INFINITY = 10000
@@ -714,7 +741,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             # take the first node off the queue
             curr_node = Q[0]
-            #print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
+            print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
             Q = Q[1:]
@@ -756,6 +783,13 @@ class HeuristicSearchPlanner(base.BaseModule):
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+            
+            # check to see that midcaPlan has not been finished
+            if midcaPlan.finished():
+                # remove from goals and trigger replanning
+                self.mem.get(self.mem.GOALGRAPH).removePlan(midcaPlan)
+                print "Old plan finished, will re-plan"
+                midcaPlan = None
         except AttributeError:
             midcaPlan = None
             if verbose >= 2:

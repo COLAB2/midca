@@ -249,7 +249,9 @@ class Operator:
 			for name in names:
 				args.append(objdict[name])
 			results.append(condition.instantiate(args))
-		return Action(self, preconditions, self.prePos, results, self.postPos)
+		result_action = Action(self, preconditions, self.prePos, results, self.postPos)
+		result_action.set_args(args)
+		return result_action
 	
 	def __str__(self):
 		s = "Operator - " + self.name + "("

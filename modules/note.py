@@ -258,7 +258,10 @@ class StateDiscrepancyDetector:
 			return
 		last_action = last_actions[0]
 		copy_world = self.mem.get(self.mem.STATES)[-2]
-		copy_world.apply_midca_action(last_action)
+		try:
+			copy_world.apply_midca_action(last_action)
+		except:
+			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
 		#print("World diff returned : "+str(world_diff))
 		print("Expected "+str(map(str,world_diff[0]))+ " but got "+str(map(str,world_diff[1])))

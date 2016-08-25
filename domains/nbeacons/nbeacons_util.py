@@ -136,6 +136,7 @@ class NBeaconGrid():
         y = random.choice(range(self.DIM))
         strips_result_str += "AGENT("+str(self.AGENT_NAME)+")\n"
         strips_result_str += "agent-at("+str(self.AGENT_NAME)+","+str("Tx"+str(x)+"y"+str(y))+")\n"
+        strips_result_str += "free("+str(self.AGENT_NAME)+")\n"
 
         # add quicksand tiles
         for qs_tile in self.QUICKSAND:
