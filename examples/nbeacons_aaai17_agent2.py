@@ -27,7 +27,7 @@ DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
 DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
-GOAL_GRAPH_CMP_FUNC = None
+GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
 
 DIMENSION = 10 # width and height of grid
 BEACON_FAIL_RATE = 20 # percent chance each beacon will fail each tick
@@ -63,7 +63,11 @@ myMidca.append_module("Perceive", perceive.PerfectObserver())
 
 myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
 myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
-myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.SimpleNBeaconsGoalManager())
+#myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
+#myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
+
+#myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Interpret", guide.RandomActivationGoals(numbeacons=2))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
@@ -84,5 +88,5 @@ myMidca.mem.logEachAccess = False
 
 # Initialize and start running!
 myMidca.init()
-myMidca.initGoalGraph()
+myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
 myMidca.run()

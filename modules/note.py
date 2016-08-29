@@ -264,7 +264,10 @@ class StateDiscrepancyDetector:
 			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
 		#print("World diff returned : "+str(world_diff))
-		print("Expected "+str(map(str,world_diff[0]))+ " but got "+str(map(str,world_diff[1])))
+		if len(world_diff[0]) > 0 or len(world_diff[0]) > 0: 
+			print("Expected "+str(map(str,world_diff[0]))+ " but got "+str(map(str,world_diff[1])))
+		else:
+			print "No Discrepancy Detected"
 		is_discrepancy = not (len(world_diff[0]) == 0 and len(world_diff[1]) == 0) 
 		
 		if is_discrepancy:

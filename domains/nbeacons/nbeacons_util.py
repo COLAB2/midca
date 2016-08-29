@@ -499,6 +499,16 @@ def drawNBeaconsScene(midcastate):
     print(asciiframestr(grid))
 
 
+def preferFree(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'free' and goal2['predicate'] != 'free':
+        return -1
+    elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
+        return 1
+
+    return 0
+
     
 if __name__ == "__main__":
     env1 = NBeaconGrid()

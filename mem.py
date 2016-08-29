@@ -35,6 +35,8 @@ class Memory:
     CURR_PLAN = "__CurrPlan"
     # GDA
     DISCREPANCY = "__discrepancy"
+    EXPLANATION = "__explanation"
+    EXPLANATION_VAL = "__explanation_val"
     
 
 

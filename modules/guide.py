@@ -133,6 +133,33 @@ class RandomActivationGoals(base.BaseModule):
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                 if self.verbose >= 1: print("Inserted goal "+str(g))
 
+class SimpleNBeaconsGoalManager(base.BaseModule):
+    '''
+    MIDCA module for the nbeacons domain. Using the discrepancies and explanations from
+    note.DiscrepancyDetect and assess.SimpleExplain, this module will create new goals and 
+    insert / remove goals from the goal graph.
+    '''
+    
+    def run(self, cycle, verbose=2):
+        # get discrepancies
+        discrep = self.mem.get(self.mem.DISCREPANCY)
+        # if discrepancy, get explanation
+        print "discrep is "+str(discrep)
+        if discrep and (len(discrep[0]) > 0 or len(discrep[1]) > 0):
+            print "aware of actual discrepancy, retrieving explanation"
+            explain_exists = self.mem.get(self.mem.EXPLANATION)
+            explanation = self.mem.get(self.mem.EXPLANATION_VAL)
+            
+            if 'stuck' in explanation:
+                # remove current goal from goal graph
+                # insert goal to become free
+                # The priority will automatically be shifted to 
+                goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
+                free_goal = goals.Goal('Curiosity', predicate = "free")
+                goalgraph.insert(free_goal)
+        
+        
+
 class TFStack(base.BaseModule):
 
     '''
