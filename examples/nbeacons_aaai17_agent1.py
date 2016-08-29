@@ -60,9 +60,9 @@ myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=B
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 
-myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
-myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
-myMidca.append_module("Interpret", guide.UserGoalInput())
+#myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
+#myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
+#myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Interpret", guide.RandomActivationGoals(numbeacons=2))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
