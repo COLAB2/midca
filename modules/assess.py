@@ -84,17 +84,6 @@ class SimpleNBeaconsExplain(base.BaseModule):
         if discrepancy:    
             expected = discrepancy[0]
             actual = discrepancy[1]
-        
-            # we don't care about activated discrepancies right now
-            # beacon failures are only to ensure there is always a goal for the agent
-            # remove any 'activated' beacons
-            i = 0
-            for exp_atom in map(str,expected):
-                if 'activated' in exp_atom:
-                    print '  ignoring activated atoms in discrepancies'
-                    expected.remove(i)
-                i+=1
-                    
             
             if len(expected) > 0 or len(actual) > 0:
                 print "Explaining discrepancy of expected "+str(map(str,expected))+" vs. actual "+str(map(str,actual))+"..."

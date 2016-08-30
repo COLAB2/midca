@@ -196,7 +196,10 @@ class NBeaconsSimpleAct(base.BaseModule):
                         # print the whole plan
                         print "Selected action", action, "from plan:\n"
                         for a in plan:
-                            print "  "+str(a)
+                            if action == a:
+                                print "   *"+str(a)
+                            else:
+                                print "  "+str(a)
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
 

@@ -824,7 +824,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                     print("  "+str(a))
                     
                 if midcaPlan != None:
-                        self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
+                    self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             except:
                 print "Planning Failed, skipping"
                 

@@ -263,15 +263,32 @@ class StateDiscrepancyDetector:
 		except:
 			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
+		
+		# we don't care about activated discrepancies right now
+		# beacon failures are only to ensure there is always a goal for the agent
+		# remove any 'activated' beacons
+		expected = world_diff[0]
+		actual = world_diff[1]
+		expected_no_activate = []
+		i = 0
+		for exp_atom in expected:
+			if 'activated' in str(exp_atom):
+				print '  ignoring activated atoms in discrepancies'
+			else:
+				expected_no_activate.append(exp_atom)
+			i+=1
+			
+		expected = expected_no_activate
+	
 		#print("World diff returned : "+str(world_diff))
-		if len(world_diff[0]) > 0 or len(world_diff[0]) > 0: 
-			print("Expected "+str(map(str,world_diff[0]))+ " but got "+str(map(str,world_diff[1])))
+		if len(expected) > 0 or len(actual) > 0: 
+			print("Expected "+str(map(str,expected))+ " but got "+str(map(str,actual)))
 		else:
 			print "No Discrepancy Detected"
-		is_discrepancy = not (len(world_diff[0]) == 0 and len(world_diff[1]) == 0) 
+		is_discrepancy = not (len(expected) == 0 and len(actual) == 0) 
 		
 		if is_discrepancy:
-			self.mem.set(self.mem.DISCREPANCY,world_diff)
+			self.mem.set(self.mem.DISCREPANCY,(expected,actual))
 		else:
 			self.mem.set(self.mem.DISCREPANCY,None)
 		
@@ -279,9 +296,8 @@ class StateDiscrepancyDetector:
 		if trace:
 			trace.add_module(cycle,self.__class__.__name__)
 			trace.add_data("DISCREPANCY", is_discrepancy)
-			trace.add_data("EXPECTED", str(map(str,world_diff[0])))
-			trace.add_data("ACTUAL", str(map(str,world_diff[1])))
-		
+			trace.add_data("EXPECTED", str(map(str,expected)))
+			trace.add_data("ACTUAL", str(map(str,actual)))
 		
 		
 		return

@@ -149,15 +149,36 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
             print "aware of actual discrepancy, retrieving explanation"
             explain_exists = self.mem.get(self.mem.EXPLANATION)
             explanation = self.mem.get(self.mem.EXPLANATION_VAL)
-            
-            if 'stuck' in explanation:
-                # remove current goal from goal graph
-                # insert goal to become free
-                # The priority will automatically be shifted to 
-                goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
-                free_goal = goals.Goal('Curiosity', predicate = "free")
-                goalgraph.insert(free_goal)
-        
+            if explain_exists:
+                if 'stuck' in explanation:
+                    # remove current goal from goal graph
+                    # insert goal to become free
+                    # The priority will automatically be shifted to 
+                    goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
+                    free_goal = goals.Goal('Curiosity', predicate = "free")
+                    goalgraph.insert(free_goal)
+                    print "Just inserted goal "+str(free_goal)
+                    return
+                elif 'wind' in explanation:
+                    # refresh the goals to trigger replanning
+                    goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
+                    curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
+                    print "curr_goals are "+str(curr_goals)
+                    if type(curr_goals) is not list:
+                        curr_goals = [curr_goals] 
+                    for goal in curr_goals:
+                        print "processing goal "+str(goal)
+                        # get any plans associated with this goal, and remove them
+                        plan = goalgraph.getMatchingPlan([goal])
+                        if plan:
+                            print "about to process plan "+str(map(str,plan))
+                            goalgraph.removePlan(plan)
+                            print "Just removed a plan for goal " +str(goal)
+                    return
+            else:
+                print "No explanation, no goal management actions taken"    
+                return
+                
         
 
 class TFStack(base.BaseModule):
