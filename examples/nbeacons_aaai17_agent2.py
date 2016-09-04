@@ -34,7 +34,7 @@ BEACON_FAIL_RATE = 20 # percent chance each beacon will fail each tick
 WIND_ENABLED = True 
 WIND_DIR = 'east' # direction to push the agent if it moves in this direction
 WIND_STRENGTH = 2 # number of extra tiles for the agent to move
-NUM_QUICKSAND = 5
+NUM_QUICKSAND = 7
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)
@@ -68,7 +68,7 @@ myMidca.append_module("Interpret", guide.SimpleNBeaconsGoalManager())
 #myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
 
 #myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Interpret", guide.RandomActivationGoals(numbeacons=2))
+myMidca.append_module("Interpret", guide.NBeaconsGoalGenerator(numbeacons=2))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.HeuristicSearchPlanner())

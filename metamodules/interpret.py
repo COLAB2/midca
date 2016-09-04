@@ -1,16 +1,218 @@
 from MIDCA import base
+import inspect 
+from MIDCA.worldsim import domainread
+
+class MentalExpectation:
+    '''
+    An expectation about a mental state (which is a collection of variable bindings
+    '''
+    
+    def __init__(self):
+        self.vars_and_funcs = {}
+        
+    def add_var_expectaiton(self, varname, func):
+        '''
+        Adds an expectation about a single variable
+        
+        Example:
+        varname = 'CURRENT GOALS'
+        func = lambda x: len(x) > 0
+        '''
+    
+        self.vars_and_funcs[varname] = func
+    
+    def get_vars_and_funcs(self):
+        return self.vars_and_funcs
+    
+    def apply_expectation(self,var_vals):
+        '''
+        Given a segment of length one of a trace, return a dict of the variable
+        names and the results of calling the functions on the values of those variables
+        
+        returns True or False, True if all expectations, False if not
+        '''
+        all_true = True
+        at_least_one_true = False
+        for [var,val] in var_vals:
+            if var in self.vars_and_funcs.keys():
+                print "var is "+str(var)
+                print "val is "+str(val)
+                if self.vars_and_funcs[var](val):
+                    at_least_one_true = True
+                    print "TRUE"
+                else:
+                    print "FALSE"
+                    all_true = False
+        
+        if all_true and at_least_one_true:
+            print "========>>>>>>> EXPECTATIONS HAVE BEEN MET"
+            return True
+        elif at_least_one_true:
+            print "========>>>>>>> AT LEAST ONE, BUT NOT ALL, OF THE EXPECTATIONS WERE MET"
+        else:
+            print "========>>>>>>> NONE OF THE EXPECTATIONS WERE MET"
+    
+    
+        return False
+        #print "trace segment is "+str(trace_seg)
+
+class PrimitiveExpectationOfCognition():
+    '''
+    An expectation of cognition involving one mental action (a single cognitive process)
+    '''
+    
+    def __init__(self, action, priorMentalExp=None,postMentalExp=None):
+        '''
+        action needs to be a string which is the 
+        '''
+        if (priorMentalExp is None and postMentalExp is None):
+            raise Exception("Cannot create primitive expectaiton of cognition with no mental expectations")
+        
+        self.action = action
+        self.priorMentalExp = priorMentalExp
+        self.postMentalExp = postMentalExp
+    
+    def apply_on_curr_trace(self, mem):
+        '''
+        Returns true if expectation met, and false otherwise using the current trace stored in memory
+        '''     
+        trace = mem.trace
+        
+        # get the current data from the trace
+        post = trace.get_n_prev_phase()
+        # get the 2nd most
+        prior = trace.get_n_prev_phase(n=1)
+        
+        if prior is None or post is None:
+            return False 
+        
+        prior_result = self.priorMentalExp.apply_expectation(prior[1])
+        post_result = self.postMentalExp.apply_expectation(post[1])
+        
+        print "Prior result is "+str(prior_result)
+        print "Post result is "+str(post_result)
+        
+        if prior_result and not post_result:
+            print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
+            return True
+        else:
+            print "ALL GOOD SIR"
+            return False
+        
+        
+         
+    def __str__(self):
+        s = 'Prim. Exp. of Cog. for '+str(self.action)+":\n"
+        s += '  Prior Mental State Exp. :\n'
+        for var,func in self.priorMentalExp.get_vars_and_funcs().items():
+            s += '    '+str(var).strip()+": "+ str(inspect.getsource(func)).strip()+"\n"
+        s += '  Post Mental State Exp. :\n'
+        for var,func in self.postMentalExp.get_vars_and_funcs().items():
+            s += '    '+str(var).strip()+": "+ str(inspect.getsource(func)).strip()+"\n"
+        return s
 
 class MRSimpleDetect(base.BaseModule):
 
     # negative expectations: if equal to observed state, anomaly detected
-    neg_expectations = {"PyHopPlannerBroken":
-                        {"PLAN":[[None,"IMPASSE"]],
-                         "INPUT":[]}}
-    pos_expectations = {}
+    #neg_expectations = {"PyHopPlannerBroken":
+    #                    {"PLAN":[[None,"IMPASSE"]],
+    #                     "INPUT":[]}}
+    #pos_expectations = {}
 
+    
+    def createAlwaysExplanationExp(self):
+        # creates the expectation that there is always an explanation following an 
+        # discrepancy at the cognitive level
+        priorExpectation = MentalExpectation()
+        #discrepancyExists = lambda d: not (d is None) or (len(d[0]) > 0 or len(d[1]) > 0)
+        discrepancyExists = lambda d: d # identity for now
+        priorExpectation.add_var_expectaiton('DISCREPANCY', discrepancyExists)
+        
+        postExpectation = MentalExpectation()
+        hasExplanation = lambda e: e # identity
+        postExpectation.add_var_expectaiton('EXPLANATION', hasExplanation)
+    
+        # encode action
+        action = 'SimpleNBeaconsExplain'
+        
+        return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation)
+        
+        
+    
     def run(self, cycle, verbose=2):
         self.verbose = verbose
-        self.detect()
+        #exp1 = self.createAlwaysExplanationExp()
+        #print str(exp1)
+        
+#         # get the current data from the trace
+#         post = self.mem.trace.get_n_prev_phase()
+#         # get the 2nd most
+#         prior = self.mem.trace.get_n_prev_phase(n=1)
+#         
+        #exp_violation = exp1.apply_on_curr_trace(self.mem)
+        
+        #if exp_violation:
+            # hack, just go ahead and update the operator here
+            # always assume move east, just update it assuming
+            # wind speed of 2
+            
+        new_op_str = 'operator(moveeast, \
+                        args = [(agnt, AGENT), (start, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])' 
+        
+        try:
+            
+            # 1. get the current world state
+            world = self.mem.get(self.mem.STATES)[-1]
+            
+            # 2. find the old operator moveeast
+            prev_move_opname = ''
+            for op in world.get_operators().values():
+                if 'moveeast' in op.name:
+                    print "Found operator moveeast: \n"
+                    print "  "+str(op)
+                    prev_move_opname = op.name
+            
+            # 3. Remove the old move operator
+            rem_succes = world.remove_operator(prev_move_opname)
+            
+            print "The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes)
+            print "The following operators are available for planning: "
+            for op_k,op_v in world.operators.items():
+                print "    op["+str(op_k)+"] = "+str(op_v)
+            self.mem.add(self.mem.STATES, world)
+            
+            #print "Now adding in the new operator"
+        except:
+            pass
+        
+        # 4. replace with new moveeast operator
+        print "Now creating the new operator"
+        domainread.load_operator_str(new_op_str)
+        
+#         print("prior is \n"+str(prior))
+#         if prior:
+#             print("prior phase is "+str(prior[0][1]))
+#             print("prior variables are "+str(prior[1]))
+#         
+#         print("post is \n"+str(post))
+#         if post:
+#             print("post phase is "+str(post[0][1]))
+#             print("post variables are "+str(post[1]))
+#         
+        
+        # do matching
+        
+        
+        
+        
+        #self.detect()
 
 
     def detect(self):

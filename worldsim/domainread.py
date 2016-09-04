@@ -131,6 +131,10 @@ def load_domain_str(str):
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 
+def load_operator_str(op_str):
+	exec preprocess(op_str)
+	print "operators are "+str(operators)
+
 def to_shop2_domain(world, name):
 	strs = ["(in-package :shop2)\n\n"]
 	strs.append("(defdomain " + name)

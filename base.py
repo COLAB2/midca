@@ -70,7 +70,7 @@ class MIDCA:
         if metaEnabled:
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
-            self.mem.enableMeta(self.trace, phaseManager)
+            self.mem.enableMeta(phaseManager)
         if not logenabled:
             self.logger.working = False
         else:

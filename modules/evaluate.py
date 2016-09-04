@@ -398,7 +398,7 @@ class NBeaconsDataRecorder:
         self.mem = mem
         self.mem.set(LAST_SCORED_GOAL, None)
         self.mem.set(self.mem.PLANNING_COUNT, 0)
-        self.mem.set(self.mem.GOALS_ACHIEVED, 0)
+        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, [(0,0)])
         self.mem.set(self.mem.ACTIONS_EXECUTED, 0)
 
     def get_activation_goal(self):
@@ -436,8 +436,11 @@ class NBeaconsDataRecorder:
         
         if at_least_one_achieved and all_achieved:
             print("All goals "+str(map(str,currentGoal))+" were achieved")
-            self.mem.set(self.mem.GOALS_ACHIEVED, 1+self.mem.get(self.mem.GOALS_ACHIEVED))
-            
+            goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
+            last_pair = goal_action_pairs[-1]
+            actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED) 
+            self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(last_pair[0]+1,actions_executed_thus_far)])
+        
             
         if not all_achieved:
             return
@@ -478,10 +481,21 @@ class NBeaconsDataRecorder:
             
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             if all_goals_achieved:
-                # incrememnt goals achieved counter
-                self.mem.set(self.mem.GOALS_ACHIEVED, 1+self.mem.get(self.mem.GOALS_ACHIEVED))
                 # remove goals
                 for goal in goals:
+                    if 'activated' in str(goal):
+                        # incrememnt goals achieved counter
+                        goals_achieved = self.mem.get(self.mem.GOALS_ACHIEVED)
+                        if goals_achieved is None:
+                            goals_achieved = 0
+                        goals_achieved +=1
+                        self.mem.set(self.mem.GOALS_ACHIEVED, goals_achieved)
+                        # store goal achieved and actions executed
+                        goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
+                        actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED)
+                        print " just added goals actions pair: " +str((goals_achieved,actions_executed_thus_far)) 
+                        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(goals_achieved,actions_executed_thus_far)])
+            
                     goalGraph.remove(goal)
                     if trace: trace.add_data("REMOVED GOAL", goal)
                     goals_changed = True

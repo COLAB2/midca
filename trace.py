@@ -38,6 +38,8 @@ class CogTrace:
                              {"PLAN":[None], "INPUT":[]}}}
         self.valid_expectations = {}
 
+        self.all_modules = OrderedDict() # because I'm lazy, TODO
+
         #print("Calling init! Trace is: "+str(self.trace))
 
     # def getInstance():
@@ -66,6 +68,8 @@ class CogTrace:
 
         self.cycle = cycle
         self.module = module
+        self.all_modules[(cycle,module)] = []
+        
 
     def add_data(self, data_type, data):
         """
@@ -73,8 +77,9 @@ class CogTrace:
         """
         if self.cycle != -1 and self.module != "":
             self.trace[self.cycle][self.module].append([data_type,data])
-
-
+            self.all_modules[(self.cycle,self.module)].append([data_type,data])
+        
+        
     def get_data(self, cycle, phase):
         if cycle < 0:
             return [] # if not initialized, no data to return
@@ -91,6 +96,22 @@ class CogTrace:
     def get_current_phase(self):
         return self.module
 
+    def get_n_prev_phase(self,n=0):
+        '''
+        returns the nth previous phas, if n is 1, get the second to last phase executed, etc
+        '''
+        
+        all_modules_copy = copy.deepcopy(self.all_modules)
+    
+        try:
+            while n > 0:
+                all_modules_copy.popitem()
+                n -= 1
+            return all_modules_copy.popitem()
+        
+        except :
+            print("problem in get_n_prev_phase")
+                
     # When this is called, it means the current module failed for some reason
     #def failuredetected(self):
         # get the module

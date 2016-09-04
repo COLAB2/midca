@@ -584,6 +584,20 @@ class World:
 	def plan_goals_achieved(self, plan):
 		return self.goals_achieved(plan, plan.goals)
 
+	def get_operators(self):
+		return self.operators
+	
+	def add_operator(self, operator):
+		'''
+		
+		'''
+	
+	def remove_operator(self, opname):
+		if opname in self.operators.keys():
+			del self.operators[opname]
+			return True
+		return False
+	
 	def __str__(self):
 		s = "[\n"
 		for name in sorted(self.objects.keys()):

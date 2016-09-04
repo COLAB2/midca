@@ -78,14 +78,16 @@ class UserGoalInput(base.BaseModule):
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
 
-class RandomActivationGoals(base.BaseModule):
+class NBeaconsGoalGenerator(base.BaseModule):
     '''
     MIDCA module for the nbeacons domain. Generates a goal to activate 3 different
     beacons in the domain.
     '''
     
-    def __init__(self, numbeacons=3):
+    def __init__(self, numbeacons=3, goalList=[]):
         self.numbeacons = numbeacons
+        self.goalList = goalList
+        self.currGoalIndex = 0
     
     def activateGoalsExist(self):
         graph = self.mem.get(self.mem.GOAL_GRAPH)
@@ -95,6 +97,12 @@ class RandomActivationGoals(base.BaseModule):
         return False
     
     def generate_new_goals(self):
+        if self.currGoalIndex < len(self.goalList):
+            curr_goal = self.goalList[self.currGoalIndex]
+            print "inserting goal "+str(curr_goal)
+            return [curr_goal]
+        
+        #raise Exception("randomly inserting goals, shouldn't be here during experiments")
         world = self.mem.get(self.mem.STATES)[-1]
         goal_b_ids = []
         # get all beacon ids

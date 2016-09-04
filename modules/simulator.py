@@ -210,7 +210,9 @@ class NBeaconsActionSimulator:
         self.wind_strength = wind_strength
         self.dim = dim
         if self.wind and not self.wind_dir in ['east','west','north','south']:
-            raise Exception("Turning wind on requires a wind direction of "+str(['east','west','north','south']))
+            self.wind = False
+            self.wind_strength = 0
+            #raise Exception("Turning wind on requires a wind direction of "+str(['east','west','north','south']))
     
     def init(self, world, mem):
         self.mem = mem
@@ -267,6 +269,9 @@ class NBeaconsActionSimulator:
         
         
         '''
+        # bump counter for actions executed
+        self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
+        
         #print "dir(action) = "+str(dir(action))
         if 'move' in action.op:
             agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
@@ -287,8 +292,6 @@ class NBeaconsActionSimulator:
                         if self.verbose >= 2:
                             print "simulating MIDCA action:", action
                         self.world.apply_midca_action(action)
-                        # bump counter for actions executed
-                        self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
                         return True
                 else: # agent not free
                     print "Agent is not free, failing to attempt to move from quicksand"
@@ -303,8 +306,6 @@ class NBeaconsActionSimulator:
                     if self.verbose >= 2:
                         print "simulating MIDCA action:", action
                     self.world.apply_midca_action(action)
-                    # bump counter for actions executed
-                    self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
                     return True
                 else:
                     print "action "+str(action)+" is not applicable"
@@ -314,8 +315,6 @@ class NBeaconsActionSimulator:
                 if self.verbose >= 2:
                     print "simulating MIDCA action:", action
                 self.world.apply_midca_action(action)
-                # bump counter for actions executed
-                self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED)) 
                 return True
             else:
                 print "action "+str(action)+" is not applicable"

@@ -77,6 +77,8 @@ class SimpleNBeaconsExplain(base.BaseModule):
         
     def run(self, cycle, verbose=2):
         trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
         self.verbose = verbose
         explanation = None
         discrepancy = self.mem.get(self.mem.DISCREPANCY)
@@ -92,10 +94,10 @@ class SimpleNBeaconsExplain(base.BaseModule):
                 for actual_atom in actual:
                     if 'stuck' in str(actual_atom):
                         print "Explanation is that the agent is stuck"
-                        self.mem.set(self.mem.EXPLANATION, True)
+                        explanation = True
+                        self.mem.set(self.mem.EXPLANATION, explanation)
                         self.mem.set(self.mem.EXPLANATION_VAL, 'stuck')
                         if trace:
-                            trace.add_module(cycle,self.__class__.__name__)
                             trace.add_data("EXPLANATION", explanation)
                         return
                 
@@ -111,30 +113,47 @@ class SimpleNBeaconsExplain(base.BaseModule):
                 act_x = int(actual_tile[2:].split('y')[0])
                 act_y = int(actual_tile[2:].split('y')[1])
                 
-                if exp_x > act_x:
-                    # agent was blown east
-                    print "Explanation is that the agent was blown "+str(exp_x-act_x)+" tile(s) to the west"
-                    self.mem.set(self.mem.EXPLANATION, True)
-                    self.mem.set(self.mem.EXPLANATION_VAL, 'wind west '+str(exp_x-act_x))
-                    return
-                elif exp_x < act_x:
-                    # agent was blown east
-                    print "Explanation is that the agent was blown "+str(act_x-exp_x)+" tile(s) to the east"
-                    self.mem.set(self.mem.EXPLANATION, True)
-                    self.mem.set(self.mem.EXPLANATION_VAL, 'wind east '+str(act_x-exp_x))
-                    return
-                elif exp_y > act_y:
-                    # agent was blown south
-                    print "Explanation is that the agent was blown "+str(exp_y-act_y)+" tile(s) to the north"
-                    self.mem.set(self.mem.EXPLANATION, True)
-                    self.mem.set(self.mem.EXPLANATION_VAL, 'wind north '+str(exp_y-act_y))
-                    return
-                elif act_y > exp_y:
-                    # agent was blown south
-                    print "Explanation is that the agent was blown "+str(act_y-exp_y)+" tile(s) to the south"
-                    self.mem.set(self.mem.EXPLANATION, True)
-                    self.mem.set(self.mem.EXPLANATION_VAL, 'wind south '+str(act_y-exp_y))
-                    return
+                explanation = False
+                #print "Explanation is that the agent was blown "+str(exp_x-act_x)+" tile(s) to the west"
+                print "Could not generate an explanation"
+                self.mem.set(self.mem.EXPLANATION, explanation)
+                self.mem.set(self.mem.EXPLANATION_VAL, None)
+                if trace:
+                    trace.add_data("EXPLANATION", explanation)
+                return
+#                 
+#                 if exp_x > act_x:
+#                     # agent was blown east
+#                     explanation = True
+#                     print "Explanation is that the agent was blown "+str(exp_x-act_x)+" tile(s) to the west"
+#                     self.mem.set(self.mem.EXPLANATION, True)
+#                     self.mem.set(self.mem.EXPLANATION_VAL, 'wind west '+str(exp_x-act_x))
+#                     if trace: trace.add_data("EXPLANATION", explanation)
+#                     return
+#                 elif exp_x < act_x:
+#                     # agent was blown east
+#                     explanation = True
+#                     print "Explanation is that the agent was blown "+str(act_x-exp_x)+" tile(s) to the east"
+#                     self.mem.set(self.mem.EXPLANATION, True)
+#                     self.mem.set(self.mem.EXPLANATION_VAL, 'wind east '+str(act_x-exp_x))
+#                     if trace: trace.add_data("EXPLANATION", explanation)
+#                     return
+#                 elif exp_y > act_y:
+#                     # agent was blown south
+#                     explanation = True
+#                     print "Explanation is that the agent was blown "+str(exp_y-act_y)+" tile(s) to the north"
+#                     self.mem.set(self.mem.EXPLANATION, True)
+#                     self.mem.set(self.mem.EXPLANATION_VAL, 'wind north '+str(exp_y-act_y))
+#                     if trace: trace.add_data("EXPLANATION", explanation)
+#                     return
+#                 elif act_y > exp_y:
+#                     # agent was blown south
+#                     explanation = True
+#                     print "Explanation is that the agent was blown "+str(act_y-exp_y)+" tile(s) to the south"
+#                     self.mem.set(self.mem.EXPLANATION, True)
+#                     self.mem.set(self.mem.EXPLANATION_VAL, 'wind south '+str(act_y-exp_y))
+#                     if trace: trace.add_data("EXPLANATION", explanation)
+#                     return
 
         else:
             # no discrepancy, so no need to explain

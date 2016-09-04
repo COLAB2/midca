@@ -245,6 +245,10 @@ class StateDiscrepancyDetector:
 		self.mem = mem
 		
 	def run(self, cycle, verbose=2):
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle,self.__class__.__name__)
+			
 		last_actions = None
 		try:
 			last_actions = self.mem.get(self.mem.ACTIONS)[-1]
@@ -252,9 +256,14 @@ class StateDiscrepancyDetector:
 			# for now assume just one action
 			if len(last_actions) != 1:
 				print("Agent has "+str(len(last_actions))+" previous actions, will not proceed")
+				if trace:
+					trace.add_data("DISCREPANCY", None)
+					trace.add_data("EXPECTED", None)
+					trace.add_data("ACTUAL", None)
 				return
 		except:
 			print "No actions executed, skipping State Discrepancy Detection"
+			
 			return
 		last_action = last_actions[0]
 		copy_world = self.mem.get(self.mem.STATES)[-2]
@@ -292,9 +301,8 @@ class StateDiscrepancyDetector:
 		else:
 			self.mem.set(self.mem.DISCREPANCY,None)
 		
-		trace = self.mem.trace
+		
 		if trace:
-			trace.add_module(cycle,self.__class__.__name__)
 			trace.add_data("DISCREPANCY", is_discrepancy)
 			trace.add_data("EXPECTED", str(map(str,expected)))
 			trace.add_data("ACTUAL", str(map(str,actual)))

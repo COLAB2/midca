@@ -533,6 +533,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         t0 = time.time()
         child_nodes = []
         t1=t0
+        
         for op in node.world.operators.values():
             inst_operators = self.get_all_instantiations(node.world,op)
             t2 = time.time()
@@ -727,6 +728,11 @@ class HeuristicSearchPlanner(base.BaseModule):
             #print "****************using built-in***************** "
             decompose = self.brute_force_decompose
             
+        print "The following operators are available for planning: "
+        for op_k,op_v in self.world.operators.items():
+            print "    op["+str(op_k)+"] = "+str(op_v)
+            
+            
         Q = [HSPNode(self.world, None, [])]
         visited = []
         goal_reached_node = None
@@ -773,7 +779,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         #pr.enable()
         
         # now actual code
-        world = self.mem.get(self.mem.STATES)[-1]
+        self.world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         
         midcaPlan = None
@@ -813,8 +819,8 @@ class HeuristicSearchPlanner(base.BaseModule):
                 #print "Goals are "+str(map(str,goals))
                 hsp_plan = self.heuristic_search(goals, decompose=None)
                 #print "planning finished: "
-                for p in hsp_plan:
-                    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
+                #for p in hsp_plan:
+                #    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
                 
                 midcaPlan = plans.Plan([plans.Action(action.operator.name, *map(lambda o:o.name,action.args)) for action in hsp_plan], goals)
                 

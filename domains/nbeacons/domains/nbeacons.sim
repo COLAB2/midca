@@ -42,6 +42,7 @@ results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
 
+
 operator(moveeast,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
 preconditions = [
@@ -51,6 +52,7 @@ preconditions = [
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
 	condition(agent-at, [agnt, dest])])
+
 
 operator(movewest,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
