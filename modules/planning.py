@@ -442,8 +442,21 @@ class HeuristicSearchPlanner(base.BaseModule):
             agent_loc = str(world.get_atoms(filters="agent-at")[0].args[1])
             #print "agent_loc "+str(agent_loc)
             #[0].args[1]
-            # get all adjacent tiles
+            # get all adjacent tiles within a radius of 3
+            
+            # radius = 1
             adjacent_atoms = world.get_atoms(filters=["adjacent",agent_loc])
+            # radius = 2
+            
+            # LEFT OFF, need to make sure all atoms are available for operators
+            # that require multiple adjacent
+            # solution 1 - use moveeast2 or moveeast3 as operator names, and for those operators,
+            #              do brute force expansion
+            # solution 2 - brute force everything anyways because still should be fast enough
+            # solution 3 - enlarge the radius of adjacent tiles and just use those.
+            
+            #for adj_atom in copy(adjacent_atoms):
+            #    if adj_atom
             #print "adjacent atoms are " +str(adjacent_atoms)
             valid_tiles = []
             for aa in adjacent_atoms:

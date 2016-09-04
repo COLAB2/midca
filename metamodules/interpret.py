@@ -119,6 +119,10 @@ class MRSimpleDetect(base.BaseModule):
     #                     "INPUT":[]}}
     #pos_expectations = {}
 
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+        self.already_switched_moveeast = False
     
     def createAlwaysExplanationExp(self):
         # creates the expectation that there is always an explanation following an 
@@ -155,13 +159,24 @@ class MRSimpleDetect(base.BaseModule):
             # hack, just go ahead and update the operator here
             # always assume move east, just update it assuming
             # wind speed of 2
+        try:
+            world = self.mem.get(self.mem.STATES)[-1]
+            print "The following operators are in the most recent world state: "
+            for op_k,op_v in world.operators.items():
+                print "    op["+str(op_k)+"] = "+str(op_v)
+        except:
+            pass    
             
-        new_op_str = 'operator(moveeast, \
-                        args = [(agnt, AGENT), (start, TILE), (dest, TILE)], \
+        if self.already_switched_moveeast:
+            return
+        
+        new_op_str = 'operator_no_side_effect(moveeast, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (dest, TILE)], \
                         preconditions = [ \
                             condition(free, [agnt]), \
                             condition(agent-at, [agnt, start]), \
-                            condition(adjacent-east, [start, dest])], \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, dest])], \
                         results = [ \
                             condition(agent-at, [agnt, start], negate = TRUE), \
                             condition(agent-at, [agnt, dest])])' 
@@ -186,15 +201,24 @@ class MRSimpleDetect(base.BaseModule):
             print "The following operators are available for planning: "
             for op_k,op_v in world.operators.items():
                 print "    op["+str(op_k)+"] = "+str(op_v)
+                
+                
+            # 4. replace with new moveeast operator
+            print "Now creating the new operator"
+            worldsim_op = domainread.load_operator_str(new_op_str)
+            print "We now have worldsim op "+str(worldsim_op)
+            print "Adding it into the world"
+            world.operators[worldsim_op.name] = worldsim_op    
+            print "Saving world into memory"    
             self.mem.add(self.mem.STATES, world)
-            
+            self.already_switched_moveeast = True
             #print "Now adding in the new operator"
         except:
             pass
         
-        # 4. replace with new moveeast operator
-        print "Now creating the new operator"
-        domainread.load_operator_str(new_op_str)
+        
+        
+        
         
 #         print("prior is \n"+str(prior))
 #         if prior:
