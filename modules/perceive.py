@@ -54,11 +54,7 @@ class PerfectObserver(base.BaseModule):
 
     #perfect observation
     def observe(self):
-        try:
-            world = self.mem.get(self.mem.STATES)[-1]
-            return world
-        except:
-            return self.world.copy()
+        return self.world.copy()
 
     def run(self, cycle, verbose = 2):
         world = self.observe()
@@ -67,7 +63,7 @@ class PerfectObserver(base.BaseModule):
         self.mem.add(self.mem.STATES, world)
         if verbose >= 1:
             print "World observed."
-
+        
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)

@@ -453,6 +453,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             # solution 1 - use moveeast2 or moveeast3 as operator names, and for those operators,
             #              do brute force expansion
             # solution 2 - brute force everything anyways because still should be fast enough
+            #              TRIED THIS - WORKS but too slow
             # solution 3 - enlarge the radius of adjacent tiles and just use those.
             
             #for adj_atom in copy(adjacent_atoms):
@@ -463,6 +464,15 @@ class HeuristicSearchPlanner(base.BaseModule):
                 #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
                 valid_tiles.append(aa.args[0])
                 valid_tiles.append(aa.args[1])
+                double_adj_atoms = world.get_atoms(filters=["adjacent",str(aa.args[1])])
+                for da in double_adj_atoms:
+                    valid_tiles.append(da.args[0])
+                    valid_tiles.append(da.args[1])
+                    triple_adj_atoms = world.get_atoms(filters=["adjacent",str(da.args[1])])
+                    for ta in triple_adj_atoms:
+                        valid_tiles.append(da.args[0])
+                        valid_tiles.append(da.args[1])
+                        
             valid_tiles = set(valid_tiles)
             # possible tiles
             #for vt in valid_tiles:
@@ -501,6 +511,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             return world.get_objects_by_type(t)
         
         possible_bindings = map(better_mapping_func,arg_types)
+        #possible_bindings = map(old_mapping_func,arg_types)
         #print "here"
         #for pb in possible_bindings:
         #    print "outer"
@@ -591,7 +602,8 @@ class HeuristicSearchPlanner(base.BaseModule):
         return child_nodes
 
     def nbeacons_heuristic(self,goals,infinity=10000):
-        # first define internal heuristic, then return it        
+        # first define internal heuristic, then return it
+                    
         def old_heuristic(node):
             DEPTH_MULTIPLIER = 0.8
             # if 'free' is in goals, than rank push nodes higher
@@ -705,6 +717,21 @@ class HeuristicSearchPlanner(base.BaseModule):
                 return infinity # this shouldn't happen because it means we have a different goal
             # END HEURISTIC FUNCTION
             
+        def push_heuristic(node):
+            # all push actions
+            exists_push_action = False
+            all_push_actions = True
+            for action in node.actions_taken:
+                if 'push' in action.operator.name:
+                    exists_push_action = True
+                else:
+                    all_push_actions = False
+                    
+            if exists_push_action and all_push_actions:
+                return node.depth # depth only
+            else:
+                return infinity+node.depth 
+            
             
         def new_heuristic(node):
             DEPTH_MULTIPLIER = 0.8
@@ -730,6 +757,11 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             dist = (abs(goal_x - agent_x)+abs(goal_y-agent_y))
             return dist+(DEPTH_MULTIPLIER*node.depth)
+        
+        # return a different heuristic based on the goal
+        for goal in goals:
+            if 'free' in str(goal):
+                return push_heuristic
         
         return new_heuristic # now return the internal function
 
@@ -829,7 +861,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                 print "Planning..."
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-                #print "Goals are "+str(map(str,goals))
+                print "Goals are "+str(map(str,goals))
                 hsp_plan = self.heuristic_search(goals, decompose=None)
                 #print "planning finished: "
                 #for p in hsp_plan:

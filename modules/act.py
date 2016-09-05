@@ -164,7 +164,7 @@ class NBeaconsSimpleAct(base.BaseModule):
         return None
         
     def run(self, cycle, verbose = 2):
-        max_plan_print_size = 5
+        max_plan_print_size = 10
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         plan = self.get_first_plan(goals)
@@ -191,7 +191,10 @@ class NBeaconsSimpleAct(base.BaseModule):
                         print "Selected action", action, "from plan:\n"
                         if verbose >= 3:
                             for a in plan:
-                                print "  "+str(a)
+                                if action == a:
+                                    print "   *"+str(a)
+                                else:
+                                    print "  "+str(a)
                     else:
                         # print the whole plan
                         print "Selected action", action, "from plan:\n"

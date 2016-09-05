@@ -159,18 +159,18 @@ class MRSimpleDetect(base.BaseModule):
             # hack, just go ahead and update the operator here
             # always assume move east, just update it assuming
             # wind speed of 2
-        try:
-            world = self.mem.get(self.mem.STATES)[-1]
-            print "The following operators are in the most recent world state: "
-            for op_k,op_v in world.operators.items():
-                print "    op["+str(op_k)+"] = "+str(op_v)
-        except:
-            pass    
+        #try:
+        #    world = self.mem.get(self.mem.STATES)[-1]
+            #print "The following operators are in the most recent world state: "
+            #for op_k,op_v in world.operators.items():
+            #    print "    op["+str(op_k)+"] = "+str(op_v)
+        #except:
+        #    pass    
             
         if self.already_switched_moveeast:
             return
         
-        new_op_str = 'operator_no_side_effect(moveeast, \
+        new_op_str = 'operator_no_side_effect(moveeast2, \
                         args = [(agnt, AGENT), (start, TILE), (mid, TILE), (dest, TILE)], \
                         preconditions = [ \
                             condition(free, [agnt]), \
@@ -184,22 +184,22 @@ class MRSimpleDetect(base.BaseModule):
         try:
             
             # 1. get the current world state
-            world = self.mem.get(self.mem.STATES)[-1]
+            #world = self.mem.get(self.mem.STATES)[-1]
             
             # 2. find the old operator moveeast
             prev_move_opname = ''
-            for op in world.get_operators().values():
+            for op in self.world.get_operators().values():
                 if 'moveeast' in op.name:
                     print "Found operator moveeast: \n"
                     print "  "+str(op)
                     prev_move_opname = op.name
             
             # 3. Remove the old move operator
-            rem_succes = world.remove_operator(prev_move_opname)
+            rem_succes = self.world.remove_operator(prev_move_opname)
             
             print "The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes)
             print "The following operators are available for planning: "
-            for op_k,op_v in world.operators.items():
+            for op_k,op_v in self.world.operators.items():
                 print "    op["+str(op_k)+"] = "+str(op_v)
                 
                 
@@ -208,9 +208,9 @@ class MRSimpleDetect(base.BaseModule):
             worldsim_op = domainread.load_operator_str(new_op_str)
             print "We now have worldsim op "+str(worldsim_op)
             print "Adding it into the world"
-            world.operators[worldsim_op.name] = worldsim_op    
+            self.world.operators[worldsim_op.name] = worldsim_op    
             print "Saving world into memory"    
-            self.mem.add(self.mem.STATES, world)
+            self.mem.add(self.mem.STATES, self.world)
             self.already_switched_moveeast = True
             #print "Now adding in the new operator"
         except:

@@ -302,13 +302,39 @@ class NBeaconsActionSimulator:
                     #    self.world.add_fact('stuck',['Curiosity'])
                         
             else: # no quicksand, just perform move like normal
+                print "action is "+str(action)
                 if self.world.midca_action_applicable(action):
                     if self.verbose >= 2:
                         print "simulating MIDCA action:", action
-                    self.world.apply_midca_action(action)
-                    return True
+                        
+                    # if move action, check to see which tiles the agent would pass in what order
+                    # and check to see if those had quicksand
+                    agent_stuck_inbetween = False
+                    print "len(action.args) = "+str(len(action.args))
+                    if 'move' in str(action) and len(action.args) > 3:
+                        print "here"
+                        start_tile = action.args[1]
+                        tiles_passed = action.args[2:-1] # [0] = name (not a tile), [1] = start (already checked), [-1] = end (will be checked later)
+                        print "tiled passed = "+str(tiles_passed)
+                        # check to see if any of these have mud, in order, and if they do
+                        # place the agent there and make him stuck
+                        for tile in tiles_passed:
+                            if self.world.is_true('quicksand',[str(tile)]):
+                                # remove free and agent's old location
+                                self.world.remove_fact('free',['Curiosity'])
+                                self.world.remove_fact('agent-at',['Curiosity', str(start_tile)])
+                                # insert stuck and agents new location
+                                self.world.add_fact('stuck',['Curiosity'])
+                                self.world.add_fact('agent-at',['Curiosity', str(tile)])
+                                agent_stuck_inbetween = True
+                                print "Agent got stuck inbetween at loc "+str(tile)
+                                break
+                    if not agent_stuck_inbetween:
+                        self.world.apply_midca_action(action)
+                        return True
                 else:
                     print "action "+str(action)+" is not applicable"
+                    
                     
         else: # an action other than move, no need to check if it will work
             if self.world.midca_action_applicable(action):
@@ -376,18 +402,26 @@ class NBeaconsActionSimulator:
         # generate wind actions if applicable, and going in the same direction
         remaining_actions = [] # these will be wind pushes
                 
+        
         # add subsequent actions depending on wind strength
         if self.wind and self.wind_dir in str(first_action):
-            tiles_pushed = 0
-            prev_action = first_action
-            while tiles_pushed < self.wind_strength:
+            # check to see how far this move is
+            start_x, start_y = map(int,str(first_action.args[1])[2:].split('y')) #hacky - relies on tiles represented as 'Tx2y3'
+            end_x, end_y = map(int,str(first_action.args[-1])[2:].split('y')) # same kind of hackyness
+            move_dist = (abs(end_x - start_x)+abs(end_y-start_y))
+            print "move_dist is "+str(move_dist)
+            
+            pushes_needed = self.wind_strength+1 - move_dist
+            print "  -->> pushes needed is "+str(pushes_needed)
+            while pushes_needed > 0:
+                prev_action = first_action
                 curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
                 if not curr_push_action: 
                     break
                 print "added action "+str(curr_push_action)
                 remaining_actions.append(curr_push_action)
                 prev_action = curr_push_action
-                tiles_pushed+=1
+                pushes_needed-=1
 
         # now start execution by executing the first action
         if not self.execute_action(first_action):
@@ -398,7 +432,7 @@ class NBeaconsActionSimulator:
         else:
             # we need to have a special case where, when the agent executes a push to become free
             # the agent doesn't immediately become stuck in mud again
-            # so only if 'push' is not an action will we check for, and insert, stuck atoms
+            # so only when an action is not a 'push' will we check for, and insert, stuck atoms
             pass
 
         # now loop through the rest of the wind actions, unless the agent gets stuck in mud

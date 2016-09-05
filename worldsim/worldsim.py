@@ -478,8 +478,10 @@ class World:
 		for i in range(len(simAction.results)):
 			if simAction.postPos[i]:
 				self.add_atom(simAction.results[i])
+				#print "Just added atom "+str(simAction.results[i])
 			else:
 				self.remove_atom(simAction.results[i])
+				#print "Just removed atom "+str(simAction.results[i])
 	
 	def apply_named_action(self, opName, argNames):
 		args = []
