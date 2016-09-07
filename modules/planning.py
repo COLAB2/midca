@@ -472,8 +472,21 @@ class HeuristicSearchPlanner(base.BaseModule):
                     for ta in triple_adj_atoms:
                         valid_tiles.append(da.args[0])
                         valid_tiles.append(da.args[1])
-                        
-            valid_tiles = set(valid_tiles)
+            
+            # uncomment next 5 lines to make quicksand visible
+            #quicksand_tiles = map(lambda atom: atom.args[0], world.get_atoms(filters=["quicksand"]))
+            #valid_tiles = set(valid_tiles) - set(quicksand_tiles)
+            #for vt in valid_tiles:
+            #    if str(vt) in quicksand_tiles:
+            #        raise Exception("Failing to remove quicksand tile"+str(vt)+" from search")
+            
+            #print "quicksand tiles are "+str(map(str,quicksand_tiles))
+            #valid_tiles = filter(lambda vt: not (str(vt) in quicksand_tiles), valid_tiles)
+            
+            #print "valid tiles are "+str(map(str,valid_tiles))
+            
+            # this is a hack for now
+            
             # possible tiles
             #for vt in valid_tiles:
             #    print "  valid tile "+str(vt)
@@ -486,6 +499,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         for o in operator.objnames:
             arg_names.append(o)
             arg_types.append(None)
+        
         #print "arg_names_and_types = "+str(zip(arg_names,arg_types))
         for precond in operator.preconditions:
             #print "precond is "+str(precond)
@@ -558,7 +572,14 @@ class HeuristicSearchPlanner(base.BaseModule):
         child_nodes = []
         t1=t0
         
-        for op in node.world.operators.values():
+        available_operators = node.world.operators.values()
+        
+        is_stuck = len(node.world.get_atoms(filters=['stuck'])) > 0
+        if is_stuck:
+            available_operators = filter(lambda op: 'push' in str(op), node.world.operators.values())
+            #print "available operators are "+str(map(str,available_operators))
+            
+        for op in available_operators:
             inst_operators = self.get_all_instantiations(node.world,op)
             t2 = time.time()
             timestr = '%.5f' % (t2-t1)
@@ -735,7 +756,10 @@ class HeuristicSearchPlanner(base.BaseModule):
             
         def new_heuristic(node):
             DEPTH_MULTIPLIER = 0.8
-            
+            #is_stuck = len(node.world.get_atoms(filters=['stuck'])) > 0
+            #if is_stuck:
+            #    if 'push' not in map(str,node.actions_taken):
+            #        return infinity
             # if the goal is an agent-at, or beacon, get goal_x and goal_y functions
             goal_x = -1
             goal_y = -1
@@ -773,9 +797,9 @@ class HeuristicSearchPlanner(base.BaseModule):
             #print "****************using built-in***************** "
             decompose = self.brute_force_decompose
             
-        print "The following operators are available for planning: "
-        for op_k,op_v in self.world.operators.items():
-            print "    op["+str(op_k)+"] = "+str(op_v)
+        #print "The following operators are available for planning: "
+        #for op_k,op_v in self.world.operators.items():
+        #    print "    op["+str(op_k)+"] = "+str(op_v)
             
             
         Q = [HSPNode(self.world, None, [])]
@@ -793,7 +817,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             # take the first node off the queue
             curr_node = Q[0]
-            print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
+            if self.verbose >=2: print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
             Q = Q[1:]
@@ -813,13 +837,14 @@ class HeuristicSearchPlanner(base.BaseModule):
         if goal_reached_node:
             t1 = time.time()
             timestr = '%.5f' % (t1-t0)
-            print "Heuristic Search Planning took "+timestr+"s"
+            if self.verbose >= 1: print "Heuristic Search Planning took "+timestr+"s"
             return goal_reached_node.actions_taken
         else:
-            print "Heuristic Search failed to produce a plan"
+            if self.verbose >= 1: print "Heuristic Search failed to produce a plan"
             return []
         
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         #pr = cProfile.Profile()
         #pr.enable()
         
@@ -840,7 +865,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             if midcaPlan.finished():
                 # remove from goals and trigger replanning
                 self.mem.get(self.mem.GOALGRAPH).removePlan(midcaPlan)
-                print "Old plan finished, will re-plan"
+                if self.verbose >= 1: print "Old plan finished, will re-plan"
                 midcaPlan = None
         except AttributeError:
             midcaPlan = None
@@ -852,32 +877,33 @@ class HeuristicSearchPlanner(base.BaseModule):
             goals = [goals]
 
         if midcaPlan:
-            print "Retrieved current plan. Skipping planning."
+            if self.verbose >= 1: print "Retrieved current plan. Skipping planning."
             return
 
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:
                 print "Planning..."
-            try:
-                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-                print "Goals are "+str(map(str,goals))
-                hsp_plan = self.heuristic_search(goals, decompose=None)
-                #print "planning finished: "
-                #for p in hsp_plan:
-                #    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
-                
-                midcaPlan = plans.Plan([plans.Action(action.operator.name, *map(lambda o:o.name,action.args)) for action in hsp_plan], goals)
-                
-                if verbose >= 2:
-                    print "Plan: "#, midcaPlan
+            #try:
+            self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+            #print "Goals are "+str(map(str,goals))
+            hsp_plan = self.heuristic_search(goals, decompose=None)
+            if self.verbose >= 1: 
+                print "planning finished: "
+                for p in hsp_plan:
+                    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
+            
+            midcaPlan = plans.Plan([plans.Action(action.operator.name, *map(lambda o:o.name,action.args)) for action in hsp_plan], goals)
+            
+            if verbose >= 2:
+                print "Plan: "#, midcaPlan
                 for a in midcaPlan:
                     print("  "+str(a))
-                    
-                if midcaPlan != None:
-                    self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
-            except:
-                print "Planning Failed, skipping"
+                
+            if midcaPlan != None:
+                self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
+        #except:
+            #    print "Planning Failed, skipping"
                 
         # now finish the profiling
         #pr.disable()

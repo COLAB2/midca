@@ -398,7 +398,7 @@ class NBeaconsDataRecorder:
         self.mem = mem
         self.mem.set(LAST_SCORED_GOAL, None)
         self.mem.set(self.mem.PLANNING_COUNT, 0)
-        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, [(0,0)])
+        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, [(0,'',0)])
         self.mem.set(self.mem.ACTIONS_EXECUTED, 0)
 
     def get_activation_goal(self):
@@ -447,6 +447,7 @@ class NBeaconsDataRecorder:
         self.mem.set(LAST_SCORED_GOAL, currentGoal)
 
     def run(self,cycle,verbose=2):
+        self.verbose = verbose
         world = self.mem.get(self.mem.STATES)[-1]
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -493,8 +494,8 @@ class NBeaconsDataRecorder:
                         # store goal achieved and actions executed
                         goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
                         actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED)
-                        print " just added goals actions pair: " +str((goals_achieved,actions_executed_thus_far)) 
-                        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(goals_achieved,actions_executed_thus_far)])
+                        if self.verbose >= 1: print " just added goals actions pair: " +str((goals_achieved,str(goal.args[0]),actions_executed_thus_far)) 
+                        self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(goals_achieved,str(goal.args[0]),actions_executed_thus_far)])
             
                     goalGraph.remove(goal)
                     if trace: trace.add_data("REMOVED GOAL", goal)
@@ -503,7 +504,7 @@ class NBeaconsDataRecorder:
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                if self.verbose >= 1: print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
         else:
             if verbose >= 2:

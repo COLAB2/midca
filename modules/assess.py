@@ -88,12 +88,12 @@ class SimpleNBeaconsExplain(base.BaseModule):
             actual = discrepancy[1]
             
             if len(expected) > 0 or len(actual) > 0:
-                print "Explaining discrepancy of expected "+str(map(str,expected))+" vs. actual "+str(map(str,actual))+"..."
+                if self.verbose >= 1: print "Explaining discrepancy of expected "+str(map(str,expected))+" vs. actual "+str(map(str,actual))+"..."
                 
                 # first check to see if the agent got stuck
                 for actual_atom in actual:
                     if 'stuck' in str(actual_atom):
-                        print "Explanation is that the agent is stuck"
+                        if self.verbose >= 1: print "Explanation is that the agent is stuck"
                         explanation = True
                         self.mem.set(self.mem.EXPLANATION, explanation)
                         self.mem.set(self.mem.EXPLANATION_VAL, 'stuck')
@@ -115,7 +115,7 @@ class SimpleNBeaconsExplain(base.BaseModule):
                 
                 explanation = False
                 #print "Explanation is that the agent was blown "+str(exp_x-act_x)+" tile(s) to the west"
-                print "Could not generate an explanation"
+                if self.verbose >= 1: print "Could not generate an explanation"
                 self.mem.set(self.mem.EXPLANATION, explanation)
                 self.mem.set(self.mem.EXPLANATION_VAL, None)
                 if trace:
@@ -157,7 +157,7 @@ class SimpleNBeaconsExplain(base.BaseModule):
 
         else:
             # no discrepancy, so no need to explain
-            print "No Discrepancy, not running explanation"
+            if self.verbose >= 1: print "No Discrepancy, not running explanation"
         
         return
     

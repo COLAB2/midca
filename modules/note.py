@@ -245,6 +245,7 @@ class StateDiscrepancyDetector:
 		self.mem = mem
 		
 	def run(self, cycle, verbose=2):
+		self.verbose = verbose
 		trace = self.mem.trace
 		if trace:
 			trace.add_module(cycle,self.__class__.__name__)
@@ -252,17 +253,18 @@ class StateDiscrepancyDetector:
 		last_actions = None
 		try:
 			last_actions = self.mem.get(self.mem.ACTIONS)[-1]
-			print("last_actions are "+str(map(str,last_actions)))
+			if self.verbose >= 2: print("last_actions are "+str(map(str,last_actions)))
 			# for now assume just one action
 			if len(last_actions) != 1:
-				print("Agent has "+str(len(last_actions))+" previous actions, will not proceed")
+				if self.verbose >= 1: print("Agent has "+str(len(last_actions))+" previous actions, will not proceed")
 				if trace:
 					trace.add_data("DISCREPANCY", None)
 					trace.add_data("EXPECTED", None)
 					trace.add_data("ACTUAL", None)
 				return
 		except:
-			print "No actions executed, skipping State Discrepancy Detection"
+			if self.verbose >= 1:
+				print "No actions executed, skipping State Discrepancy Detection"
 			
 			return
 		last_action = last_actions[0]
@@ -270,7 +272,7 @@ class StateDiscrepancyDetector:
 		try:
 			copy_world.apply_midca_action(last_action)
 		except:
-			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
+			if self.verbose >= 1: print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
 		
 		# we don't care about activated discrepancies right now
@@ -282,7 +284,7 @@ class StateDiscrepancyDetector:
 		i = 0
 		for exp_atom in expected:
 			if 'activated' in str(exp_atom):
-				print '  ignoring activated atoms in discrepancies'
+				if self.verbose >= 1: print '  ignoring activated atoms in discrepancies'
 			else:
 				expected_no_activate.append(exp_atom)
 			i+=1
@@ -291,9 +293,9 @@ class StateDiscrepancyDetector:
 	
 		#print("World diff returned : "+str(world_diff))
 		if len(expected) > 0 or len(actual) > 0: 
-			print("Expected "+str(map(str,expected))+ " but got "+str(map(str,actual)))
+			if self.verbose >= 1: print("Expected "+str(map(str,expected))+ " but got "+str(map(str,actual)))
 		else:
-			print "No Discrepancy Detected"
+			if self.verbose >= 1: print "No Discrepancy Detected"
 		is_discrepancy = not (len(expected) == 0 and len(actual) == 0) 
 		
 		if is_discrepancy:

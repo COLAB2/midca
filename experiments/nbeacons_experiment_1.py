@@ -14,6 +14,8 @@ from MIDCA.domains.nbeacons import nbeacons_util
 from MIDCA.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 import datetime
 import os
+import os.path
+
 import inspect
 import time
 from multiprocessing import Pool
@@ -21,16 +23,20 @@ import sys
 import ctypes # for popups
 import random
 
+NUM_EXPERIMENTS = 1
+
 DATADIR = "experiments/nbeacons-experiment-1-data/"
 NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
 DATA_FILENAME = DATADIR + "NBeaconsExperiment1" + NOW_STR + ".csv"
 DATA_FILE_HEADER_STR = "runID,numCycles,agentType,windDir,windStrength,goalsActionsAchieved\n"
+SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
 
-NUM_CYCLES = 3000 # upper limit
-DIMENSION = 10
+WIND_SCHEDULE_1 = [[400,1],[700,2]]
+NUM_CYCLES = 1500 # upper limit
+DIMENSION = 16
 NUM_BEACONS = 10
-NUM_QUICKSAND = 7
-BEACON_FAIL_RATE = 20 # percent chance each beacon will fail each tick
+NUM_QUICKSAND = 15
+BEACON_FAIL_RATE = 100 # percent chance each beacon will fail each tick
 
 # multiprocessing (how many separate python processes to use)
 NUM_PROCESSES = 8 # Number of individual python processes to use
@@ -73,23 +79,49 @@ def singlerun(args):
     return result_str 
 
 def runexperiment():  
+    # reset in case we run multiple experiments
+    DATADIR = "experiments/nbeacons-experiment-1-data/"
+    NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
+    DATA_FILENAME = DATADIR + "NBeaconsExperiment1" + NOW_STR + ".csv"
+    DATA_FILE_HEADER_STR = "runID,numCycles,agentType,windDir,windStrength,goalsActionsAchieved\n"
+    SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
+    
     runs = []
     
-    goal_list = range(10)*10 # give 100 goals 
-    random.shuffle(goal_list)
+    # generate goals randomly, such that no goal is repeated or occurs in the last 3 goals
+    num_goals = 100
+    goal_list = []
+    i = 0
+    possible_goals = range(10)
+    last_chosen_goal = -1
+    while i < num_goals:
+        if last_chosen_goal == -1:
+            curr_goal = random.choice(possible_goals)
+            goal_list.append(curr_goal)
+            last_chosen_goal = curr_goal
+        else:
+            tmp_possible_goals = set(possible_goals) - set([last_chosen_goal])
+            curr_goal = random.sample(tmp_possible_goals,1)[0]
+            goal_list.append(curr_goal)
+            last_chosen_goal = curr_goal
+        i+=1
+            
     goal_list = map(lambda x: goals.Goal('B'+str(x), predicate = "activated"), goal_list)
-    print "goal list is "
-    for g in goal_list:
-        print "  "+str(g)
+    #print("goal list is ")
+    #for g in goal_list:
+    #    print("  "+str(g))
     state1 = nbeacons_util.NBeaconGrid()
     state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=NUM_BEACONS,num_quicksand_spots=NUM_QUICKSAND)
     state1_str = state1.get_STRIPS_str()
-
+#     DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
+#     DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
+#     world = domainread.load_domain(DOMAIN_FILE)
+    
     # args are [runID, agentType, windDir, windStrength, startingState, goalList]
     individual_runs = [
                        # no wind, same starting state
-                       #[0,'v','off',0,state1_str,goal_list],
-                       #[1,'g','off',0,state1_str,goal_list],
+                       [0,'v','east',0,state1_str,goal_list],
+                       [1,'g','east',0,state1_str,goal_list],
                        # wind strength of 1
                        #[2,'v','east',1,state1_str,goal_list],
                        #[3,'g','east',1,state1_str,goal_list],
@@ -97,8 +129,8 @@ def runexperiment():
                        #[4,'v','east',2,state1_str,goal_list],
                        #[5,'g','east',2,state1_str,goal_list],
                        # wind strength of 3
-                       [6,'v','east',3,state1_str,goal_list],
-                       [7,'g','east',3,state1_str,goal_list]
+                       #[6,'v','east',2,state1_str,goal_list],
+                       #[7,'g','east',2,state1_str,goal_list]
                       ]
     
     runs = individual_runs
@@ -166,7 +198,7 @@ class MIDCAInstance():
         DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
         DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
         DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
-        GOAL_GRAPH_CMP_FUNC = None
+        GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
         
         WIND_ENABLED = self.wind_dir == 'off' 
         
@@ -175,18 +207,29 @@ class MIDCAInstance():
         
         # Load state
         stateread.apply_state_str(world, self.start_state)
+        scenario_str = nbeacons_util.drawNBeaconsScene(world,rtn_str=True)
         
+        # the first time, save to file
+        if not os.path.isfile(SCENARIO_FILENAME): 
+            fs = open(SCENARIO_FILENAME, 'w')
+            fs.write(str(scenario_str))
+            fs.flush()
+            fs.close()
+        else:
+            nbeacons_util.drawNBeaconsScene(world)
+            
+        #time.sleep(10)
         # Creates a PhaseManager object, which wraps a MIDCA object
         myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=2)
         
         # Add phases by name
-        for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+        for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Cleanup", "Intend", "Plan", "Act"]:
             myMidca.append_phase(phase)
         
         # Add the modules which instantiate basic operation
         #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION))
-        myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
+        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1))
+        
         myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
         myMidca.append_module("Perceive", perceive.PerfectObserver())
         
@@ -195,6 +238,7 @@ class MIDCAInstance():
         #myMidca.append_module("Interpret", guide.UserGoalInput())
         myMidca.append_module("Interpret", guide.NBeaconsGoalGenerator(numbeacons=2,goalList=self.goal_list))
         myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
+        myMidca.append_module("Cleanup", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
         myMidca.append_module("Intend", intend.SimpleIntend())
         myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
         #myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
@@ -212,7 +256,7 @@ class MIDCAInstance():
         myMidca.mem.logEachAccess = False
         
         # Initialize and start running!
-        myMidca.initGoalGraph()
+        myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
         return myMidca
 
     
@@ -242,13 +286,12 @@ class MIDCAInstance():
         myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=2)
         
         # Add phases by name
-        for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+        for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Cleanup", "Intend", "Plan", "Act"]:
             myMidca.append_phase(phase)
         
         # Add the modules which instantiate basic operation
         #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION))
-        myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
+        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1))
         myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
         myMidca.append_module("Perceive", perceive.PerfectObserver())
         
@@ -261,6 +304,7 @@ class MIDCAInstance():
         #myMidca.append_module("Interpret", guide.UserGoalInput())
         myMidca.append_module("Interpret", guide.NBeaconsGoalGenerator(numbeacons=2,goalList=self.goal_list))
         myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
+        myMidca.append_module("Cleanup", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
         myMidca.append_module("Intend", intend.SimpleIntend())
         myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
         #myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
@@ -304,14 +348,14 @@ def goalsperactionslinegraph(prev_file):
     import matplotlib.pyplot as plt
     
     # get the most recent filename
-    files = sorted([f for f in os.listdir(DATADIR)])
+    files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
     datafile = DATADIR + files[-(prev_file+1)]
     print("-- About to graph data from "+str(datafile))
     header = True
     goals_achieved = []
     actions_executed = []
-    
-    linestyles = ['r--','b+']#,'b--','b+','g--','g+','c--','c+']
+    wind_str = ""
+    linestyles = ['r--','b+']*5#,'b--','b+','g--','g+','c--','c+']
     line_style_index = 0
     with open(datafile,'r') as f:
         for line in f.readlines():
@@ -326,29 +370,35 @@ def goalsperactionslinegraph(prev_file):
                 
                 row = line[:quote_1]
                 row = line.strip().split(',')
-                
+                #wind_str = row[4]
+                print "row is "+str(row)
                 agent_type = row[2]
-                run_id = row[0]
+                #run_id = row[0]
                 
                 goals_action_data = eval('list('+goals_achieved_str+')')
                 goals_achieved_data = map(lambda t: t[0], goals_action_data)
-                actions_executed_data = map(lambda t: t[1], goals_action_data)
+                actions_executed_data = map(lambda t: t[2], goals_action_data)
                 if agent_type == 'v':
                     agent_name = 'Vanilla'
                 else:
                     agent_name = 'GDA'  
                 plt.plot(goals_achieved_data,actions_executed_data,linestyles[line_style_index], label=agent_name)
                 line_style_index+=1
-                    
+            
+            # plot straight lines where wind strength changes
+            
+            
+                
+        plt.legend(loc=2)
+        plt.xlabel("Beacon Activation Goals Achieved")
+        plt.ylabel("Execution Cost (# of Actions Executed)")
+        plt.title("Execution Cost vs. Goal Achievement in NBeacons (wind_schedule="+str(WIND_SCHEDULE_1)+")")
+        plt.show()
+        
                 #goals_achieved.append(row[3])
                 #actions_executed.append(int(row[4]))
                 #planning_counts.append(int(row[5]))
     
-    plt.legend(loc=2)
-    plt.xlabel("Beacon Activation Goals Achieved")
-    plt.ylabel("Execution Cost (# of Actions Executed)")
-    plt.title("Execution Cost vs. Goal Achievement in NBeacons")
-    plt.show()
     
     
 
@@ -580,5 +630,9 @@ if __name__ == "__main__":
         #goalsperactionslinegraph
         pass
     else:   
-        runexperiment()
-          
+        exp_num = 0
+        while exp_num < NUM_EXPERIMENTS:
+            runexperiment()
+            time.sleep(10) # let my cpu rest a little bit
+            exp_num+=1
+            

@@ -99,10 +99,12 @@ class NBeaconsGoalGenerator(base.BaseModule):
     def generate_new_goals(self):
         if self.currGoalIndex < len(self.goalList):
             curr_goal = self.goalList[self.currGoalIndex]
-            print "inserting goal "+str(curr_goal)
+            #if self.verbose >= 1: print "inserting goal "+str(curr_goal)
+            self.currGoalIndex+=1
             return [curr_goal]
+        return []
         
-        #raise Exception("randomly inserting goals, shouldn't be here during experiments")
+        raise Exception("randomly inserting goals, shouldn't be here during experiments")
         world = self.mem.get(self.mem.STATES)[-1]
         goal_b_ids = []
         # get all beacon ids
@@ -149,12 +151,13 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
     '''
     
     def run(self, cycle, verbose=2):
+        self.verbose = verbose
         # get discrepancies
         discrep = self.mem.get(self.mem.DISCREPANCY)
         # if discrepancy, get explanation
-        print "discrep is "+str(discrep)
+        #print "discrep is "+str(discrep)
         if discrep and (len(discrep[0]) > 0 or len(discrep[1]) > 0):
-            print "aware of actual discrepancy, retrieving explanation"
+            #print "aware of actual discrepancy, retrieving explanation"
             explain_exists = self.mem.get(self.mem.EXPLANATION)
             explanation = self.mem.get(self.mem.EXPLANATION_VAL)
             if explain_exists:
@@ -165,26 +168,26 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
                     goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
                     free_goal = goals.Goal('Curiosity', predicate = "free")
                     goalgraph.insert(free_goal)
-                    print "Just inserted goal "+str(free_goal)
+                    if self.verbose >= 1: print "Just inserted goal "+str(free_goal)
                     return
-                elif 'wind' in explanation:
+                else: #if 'wind' in explanation:
                     # refresh the goals to trigger replanning
                     goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
                     curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
-                    print "curr_goals are "+str(curr_goals)
+                    #print "curr_goals are "+str(curr_goals)
                     if type(curr_goals) is not list:
                         curr_goals = [curr_goals] 
                     for goal in curr_goals:
-                        print "processing goal "+str(goal)
+                        #print "processing goal "+str(goal)
                         # get any plans associated with this goal, and remove them
                         plan = goalgraph.getMatchingPlan([goal])
                         if plan:
-                            print "about to process plan "+str(map(str,plan))
+                            #print "about to process plan "+str(map(str,plan))
                             goalgraph.removePlan(plan)
-                            print "Just removed a plan for goal " +str(goal)
+                            if self.verbose >= 1: print "Just removed a plan for goal " +str(goal)
                     return
             else:
-                print "No explanation, no goal management actions taken"    
+                if self.verbose >= 1: print "No explanation, no goal management actions taken"    
                 return
                 
         

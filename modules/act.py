@@ -11,6 +11,7 @@ class AsynchronousAct(base.BaseModule):
     '''
 
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         if not goals:
             if verbose >= 2:
@@ -100,6 +101,7 @@ class SimpleAct(base.BaseModule):
         return plan
         
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -155,15 +157,17 @@ class NBeaconsSimpleAct(base.BaseModule):
         for p in plans:
             if p.finished():
                 goalGraph.removePlan(p)
-                print "Just removed finished plan "
-                for ps in p:
-                    print "  "+str(ps)
+                if self.verbose >= 1:
+                    print "Just removed finished plan "
+                    for ps in p:
+                        print "  "+str(ps)
             else:
                 return p
-        print "Could not find an unfinished plan in get_first_plan() for goals "+str(goals)
+        if self.verbose >= 1: print "Could not find an unfinished plan in get_first_plan() for goals "+str(goals)
         return None
         
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         max_plan_print_size = 10
         world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -203,6 +207,7 @@ class NBeaconsSimpleAct(base.BaseModule):
                                 print "   *"+str(a)
                             else:
                                 print "  "+str(a)
+                                
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
 

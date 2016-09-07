@@ -16,9 +16,17 @@ class NBeaconGrid():
     BEACONS = []
     DIM = -1
     AGENT_NAME = 'Curiosity'
+    BORDER = 2
     
     def __init__(self):
         pass
+    
+    def generate_ideal_test(self):
+        '''
+        Generates a 16 by 16 ideal scenario for testing vanilla and gda agents (used for debuggin)
+        '''
+        pass
+        
     
     def generate(self,width=10,height=10,num_beacons=10,num_quicksand_spots=5):
         if width != height:
@@ -27,6 +35,27 @@ class NBeaconGrid():
         self.TILE_GRID = self.generate_tiles(width,height)
         self.BEACONS = self.generate_beacons(num_beacons)
         self.QUICKSAND = self.generate_quicksand(num__quicksand_spots=num_quicksand_spots)
+        self.BORDER = 2
+    
+    def get_inner_tile_grid(self):
+        inner_tiles = []
+        total_tile_count = 0
+        if len(self.TILE_GRID) > 0:
+            for col in self.TILE_GRID:
+                inner_col = []
+                for tile in col:
+                    if (tile.getX() > self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
+                        tile.getY() > self.BORDER and tile.getY() < (self.DIM - self.BORDER)):
+                        inner_tiles.append(tile)
+                        #print "adding tile "+str(tile)
+                        total_tile_count += 1 
+                #inner_grid.append(inner_col)
+            #print "inner grid has "+str(total_tile_count) +" tiles"
+            return inner_tiles
+        else:
+            print "please call generate_tiles() first"
+            return False
+    
     
     def generate_tiles(self,width=10,height=10):
         '''
@@ -73,10 +102,10 @@ class NBeaconGrid():
         
         for i in range(num_beacons):
             # get a random tile
-            ran_tile = random.choice(random.choice(self.TILE_GRID))
+            ran_tile = random.choice(self.get_inner_tile_grid())
             while ran_tile in tiles_chosen:
                 # loop until we get a unique tile
-                ran_tile = random.choice(random.choice(self.TILE_GRID))
+                ran_tile = random.choice(self.get_inner_tile_grid())
             tiles_chosen.append(ran_tile)
             BEACONS.append(Beacon(i,ran_tile)) # add type later
             
@@ -90,7 +119,8 @@ class NBeaconGrid():
         for i in range(num__quicksand_spots):
             i+=1
             while len(QUICKSAND_TILES) < i:
-                ran_tile = random.choice(random.choice(self.TILE_GRID))
+                
+                ran_tile = random.choice(self.get_inner_tile_grid())
                  
                 if ran_tile not in map(lambda b: b.tile, self.BEACONS) and ran_tile not in QUICKSAND_TILES:
                     QUICKSAND_TILES.append(ran_tile)
@@ -132,8 +162,8 @@ class NBeaconGrid():
             strips_result_str += b.get_all_STRIPS_str()
 
         # add agent's location
-        x = random.choice(range(self.DIM))
-        y = random.choice(range(self.DIM))
+        x = self.DIM / 2
+        y = self.DIM / 2
         strips_result_str += "AGENT("+str(self.AGENT_NAME)+")\n"
         strips_result_str += "agent-at("+str(self.AGENT_NAME)+","+str("Tx"+str(x)+"y"+str(y))+")\n"
         strips_result_str += "free("+str(self.AGENT_NAME)+")\n"
@@ -414,7 +444,7 @@ def asciiframestr(frame, numbered_borders = True):
     result = result[:len(result)-2]
     return result   
    
-def drawNBeaconsScene(midcastate):
+def drawNBeaconsScene(midcastate,rtn_str=False):
     '''
     Takes the world state MIDCA and returns a str of an ascii
     drawing of the nbeacons domain for visual consumption by a human
@@ -495,8 +525,10 @@ def drawNBeaconsScene(midcastate):
         else:
             grid[y][x] = QUICKSAND
     
- 
-    print(asciiframestr(grid))
+    if rtn_str:
+        return asciiframestr(grid) 
+    else:
+        print(asciiframestr(grid))
 
 
 def preferFree(goal1, goal2):
@@ -513,4 +545,6 @@ def preferFree(goal1, goal2):
 if __name__ == "__main__":
     env1 = NBeaconGrid()
     env1.generate()
-    print(env1.get_STRIPS_str())
+    world = env1.get_STRIPS_str()
+    drawNBeaconsScene(world)
+    #print(env1.get_STRIPS_str())

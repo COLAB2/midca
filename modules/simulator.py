@@ -197,14 +197,15 @@ class NBeaconsSimulator:
             if random.choice(range(100)) < self.beacon_fail_rate:
                 self.world.apply_named_action("deactivatebeacon", [b_id])
                 if self.verbose >= 1:
-                        print "Simulating action: deactivatebeacon(" + str(b_id) + ")"
+                    print "Simulating action: deactivatebeacon(" + str(b_id) + ")"
 
 class NBeaconsActionSimulator:
     '''
     Performs changes to the midca state specific to NBeacons.
     '''
     
-    def __init__(self, wind=False, wind_dir='off', wind_strength=1, dim=10):
+    def __init__(self, wind=False, wind_dir='off', wind_strength=1, dim=10, wind_schedule=[]):
+        self.wind_schedule = wind_schedule
         self.wind = wind
         self.wind_dir = wind_dir
         self.wind_strength = wind_strength
@@ -232,16 +233,16 @@ class NBeaconsActionSimulator:
         else:
             prev_action_dest = str(action.args[-1])
             
-        print "prev_action_dest is now " + prev_action_dest 
+        if self.verbose >= 1: print "prev_action_dest is now " + prev_action_dest 
         
         next_action_source = prev_action_dest
         next_action_dest = ''
         
         for atom in self.world.get_atoms(filters=["adjacent-"+dir,next_action_source]):
-            print "processing atom "+str(atom)
+            if self.verbose >= 1: print "processing atom "+str(atom)
             if atom.args[0].name == next_action_source:
                 next_action_dest = atom.args[1].name
-                print "next action dest = "+str(next_action_dest) 
+                if self.verbose >= 1: print "next action dest = "+str(next_action_dest) 
                 new_action_args = ['Curiosity',next_action_source,next_action_dest]
                 subsequent_action = ['move'+dir]+new_action_args
                 return subsequent_action
@@ -281,10 +282,10 @@ class NBeaconsActionSimulator:
             #    print "  "+str(qs_atoms)
             #print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
             if self.world.is_true('quicksand',[str(agent_tile)]):
-                print "free related atoms = "+str(map(str,self.world.get_atoms(filters=['free'])))
-                print 'self.world.is_true(free,Curiosity): '+str(self.world.is_true('free','Curiosity'))
+                if self.verbose >= 1: print "free related atoms = "+str(map(str,self.world.get_atoms(filters=['free'])))
+                if self.verbose >= 1: print 'self.world.is_true(free,Curiosity): '+str(self.world.is_true('free','Curiosity'))
                 if self.world.is_true('free',['Curiosity']):
-                    print "Agent is free, moving away from quicksand"
+                    if self.verbose >= 1: print "Agent is free, moving away from quicksand"
                     # remove free
                     # self.world.remove_fact('free',['Curiosity'])
                     # actually perform move action, assuming applicable
@@ -294,7 +295,7 @@ class NBeaconsActionSimulator:
                         self.world.apply_midca_action(action)
                         return True
                 else: # agent not free
-                    print "Agent is not free, failing to attempt to move from quicksand"
+                    if self.verbose >= 1: print "Agent is not free, failing to attempt to move from quicksand"
                     
                     # insert the first stuck atom if no stuck is already in the state
                     #stuck_atoms = self.world.get_atoms(filters=['stuck'])
@@ -302,7 +303,7 @@ class NBeaconsActionSimulator:
                     #    self.world.add_fact('stuck',['Curiosity'])
                         
             else: # no quicksand, just perform move like normal
-                print "action is "+str(action)
+                if self.verbose >= 2: print "action is "+str(action)
                 if self.world.midca_action_applicable(action):
                     if self.verbose >= 2:
                         print "simulating MIDCA action:", action
@@ -310,7 +311,7 @@ class NBeaconsActionSimulator:
                     # if move action, check to see which tiles the agent would pass in what order
                     # and check to see if those had quicksand
                     agent_stuck_inbetween = False
-                    print "len(action.args) = "+str(len(action.args))
+                    if self.verbose >=1 : print "len(action.args) = "+str(len(action.args))
                     if 'move' in str(action) and len(action.args) > 3:
                         print "here"
                         start_tile = action.args[1]
@@ -333,7 +334,7 @@ class NBeaconsActionSimulator:
                         self.world.apply_midca_action(action)
                         return True
                 else:
-                    print "action "+str(action)+" is not applicable"
+                    if self.verbose >=1 : print "action "+str(action)+" is not applicable"
                     
                     
         else: # an action other than move, no need to check if it will work
@@ -343,7 +344,7 @@ class NBeaconsActionSimulator:
                 self.world.apply_midca_action(action)
                 return True
             else:
-                print "action "+str(action)+" is not applicable"
+                if self.verbose >= 1: print "action "+str(action)+" is not applicable"
                 
         return False
     
@@ -361,10 +362,10 @@ class NBeaconsActionSimulator:
             stuck_atoms = self.world.get_atoms(filters=['stuck'])
             if len(stuck_atoms) == 0:
                 self.world.add_fact('stuck',['Curiosity'])
-                print "inserted stuck atom"
+                if self.verbose >= 1: print "inserted stuck atom"
             if self.world.is_true('free',['Curiosity']):
                 self.world.remove_fact('free',['Curiosity'])
-                print "removed free atom"
+                if self.verbose >= 1: print "removed free atom"
             agent_stuck_in_mud = True
             
         return agent_stuck_in_mud
@@ -385,8 +386,14 @@ class NBeaconsActionSimulator:
         self.mem.ACTIONS) this will break
         '''
         self.mem.set(self.mem.MIDCA_CYCLES, 1+self.mem.get(self.mem.MIDCA_CYCLES))
-        
         self.verbose = verbose
+        
+        # update wind if on schedule
+        for wind_sched_item in self.wind_schedule:
+            if wind_sched_item[0] == cycle:
+                self.wind_strength = wind_sched_item[1]
+                print "Just changed wind strength to "+str(self.wind_strength)
+        
         first_action = None
         try:
             #get selected actions for this cycle. This is set in the act phase.
@@ -409,16 +416,16 @@ class NBeaconsActionSimulator:
             start_x, start_y = map(int,str(first_action.args[1])[2:].split('y')) #hacky - relies on tiles represented as 'Tx2y3'
             end_x, end_y = map(int,str(first_action.args[-1])[2:].split('y')) # same kind of hackyness
             move_dist = (abs(end_x - start_x)+abs(end_y-start_y))
-            print "move_dist is "+str(move_dist)
+            if self.verbose >= 1: print "move_dist is "+str(move_dist)
             
             pushes_needed = self.wind_strength+1 - move_dist
-            print "  -->> pushes needed is "+str(pushes_needed)
+            if self.verbose >= 1: print "  -->> pushes needed is "+str(pushes_needed)
+            prev_action = first_action
             while pushes_needed > 0:
-                prev_action = first_action
                 curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
                 if not curr_push_action: 
                     break
-                print "added action "+str(curr_push_action)
+                if self.verbose >= 1:  print "added action "+str(curr_push_action)
                 remaining_actions.append(curr_push_action)
                 prev_action = curr_push_action
                 pushes_needed-=1
@@ -442,10 +449,11 @@ class NBeaconsActionSimulator:
             remaining_actions = remaining_actions[1:]
             # execute action
             try:
+                print "About to apply named action "+str(next_wind_action)
                 self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
-                print "Wind has blown the agent in the "+str(self.wind_dir)+" direction"
+                if self.verbose >= 1: print "Wind has blown the agent in the "+str(self.wind_dir)+" direction"
             except:
-                print "Error executing action "+str(next_wind_action)+": "+ str(sys.exc_info()[0])
+                if self.verbose >= 1: print "Error executing action "+str(next_wind_action)+": "+ str(sys.exc_info()[0])
             # check to see if agent in mud
             agent_stuck_in_mud = self.check_agent_in_mud()
             

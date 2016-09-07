@@ -174,6 +174,8 @@ class MRSimpleDetect(base.BaseModule):
                         args = [(agnt, AGENT), (start, TILE), (mid, TILE), (dest, TILE)], \
                         preconditions = [ \
                             condition(free, [agnt]), \
+                            condition(quicksand, [mid], negate = TRUE), \
+                            condition(quicksand, [dest], negate = TRUE), \
                             condition(agent-at, [agnt, start]), \
                             condition(adjacent-east, [start, mid]), \
                             condition(adjacent-east, [mid, dest])], \
