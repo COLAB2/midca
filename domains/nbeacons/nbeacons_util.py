@@ -21,11 +21,48 @@ class NBeaconGrid():
     def __init__(self):
         pass
     
-    def generate_ideal_test(self):
+    def generate_good_test(self):
         '''
         Generates a 16 by 16 ideal scenario for testing vanilla and gda agents (used for debuggin)
         '''
-        pass
+        beacon_tiles = [(6,5),
+                        (7,6),
+                        (4,6),
+                        (8,7),
+                        (9,8),
+                        (4,8),
+                        (4,10),
+                        (8,10),
+                        (4,12),
+                        (7,10)]
+        quicksand_tiles = [(7,5),
+                           (8,6),
+                           (9,7),
+                           (10,8),
+                           (6,7),
+                           (5,8),
+                           (7,9),
+                           (6,10),
+                           (8,11),
+                           (7,12)]
+        
+        self.DIM = 16
+        self.TILE_GRID = self.generate_tiles(16,16)
+
+        i = 0
+        self.BEACONS = []
+        for b_xy in beacon_tiles:
+            self.BEACONS.append(Beacon(i,self.TILE_GRID[b_xy[0]][b_xy[1]]))
+            i+=1
+          
+        
+        i = 0
+        self.QUICKSAND = []
+        for q_xy in quicksand_tiles:
+            self.QUICKSAND.append(self.TILE_GRID[q_xy[0]][q_xy[1]])
+            
+        self.BORDER = 2
+        
         
     
     def generate(self,width=10,height=10,num_beacons=10,num_quicksand_spots=5):
@@ -44,8 +81,9 @@ class NBeaconGrid():
             for col in self.TILE_GRID:
                 inner_col = []
                 for tile in col:
-                    if (tile.getX() > self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
-                        tile.getY() > self.BORDER and tile.getY() < (self.DIM - self.BORDER)):
+                    if ((not (tile.getX() == (self.DIM / 2) and (tile.getY() == self.DIM / 2))) and  
+                        (tile.getX() > self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
+                        tile.getY() > self.BORDER and tile.getY() < (self.DIM - self.BORDER))):
                         inner_tiles.append(tile)
                         #print "adding tile "+str(tile)
                         total_tile_count += 1 

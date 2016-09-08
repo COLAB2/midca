@@ -101,13 +101,11 @@ class CogTrace:
         returns the nth previous phas, if n is 1, get the second to last phase executed, etc
         '''
         
-        all_modules_copy = copy.deepcopy(self.all_modules)
+        #all_modules_copy = copy.deepcopy(self.all_modules)
     
         try:
-            while n > 0:
-                all_modules_copy.popitem()
-                n -= 1
-            return all_modules_copy.popitem()
+            if len(self.all_modules) > n:
+                return self.all_modules.items()[-(n+1)]
         
         except :
             print("problem in get_n_prev_phase")

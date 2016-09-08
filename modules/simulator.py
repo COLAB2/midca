@@ -1,5 +1,6 @@
 import sys, random
 from MIDCA import worldsim, goals, base
+from MIDCA.domains.nbeacons import nbeacons_util
 import copy 
 
 class MidcaActionSimulator:
@@ -287,6 +288,7 @@ class NBeaconsActionSimulator:
                 if self.world.is_true('free',['Curiosity']):
                     if self.verbose >= 1: print "Agent is free, moving away from quicksand"
                     # remove free
+                    
                     # self.world.remove_fact('free',['Curiosity'])
                     # actually perform move action, assuming applicable
                     if self.world.midca_action_applicable(action):
@@ -294,9 +296,12 @@ class NBeaconsActionSimulator:
                             print "simulating MIDCA action:", action
                         self.world.apply_midca_action(action)
                         return True
+                    else:
+                        print "It seems that even though the agent is free, action "+str(action)+" is not applicable"
+                        return False
                 else: # agent not free
                     if self.verbose >= 1: print "Agent is not free, failing to attempt to move from quicksand"
-                    
+                    return False
                     # insert the first stuck atom if no stuck is already in the state
                     #stuck_atoms = self.world.get_atoms(filters=['stuck'])
                     #if len(stuck_atoms) == 0:
@@ -335,6 +340,7 @@ class NBeaconsActionSimulator:
                         return True
                 else:
                     if self.verbose >=1 : print "action "+str(action)+" is not applicable"
+                    return False
                     
                     
         else: # an action other than move, no need to check if it will work
@@ -370,6 +376,26 @@ class NBeaconsActionSimulator:
             
         return agent_stuck_in_mud
 
+    def sim_action_push(self):
+        agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
+        # get agent's start loc
+        print "agent-at-atom = "+str(agent_at_atom)
+        start = str(agent_at_atom[1])
+        # get adjacent east atom
+        adj_atoms_east_to_agent = self.world.get_atoms(filters=['adjacent-east',start])
+        adj_atom_east = None
+        for a in adj_atoms_east_to_agent:
+            print "looking at a = "+str(a)
+            if str(a.args[0]) == start:
+                adj_atom_east = a
+        print "adj_east_to_agent = "+str(adj_atom_east)
+        # get new location
+        dest = str(adj_atom_east.args[1])
+        # now 'perform move'
+        self.world.add_fact('agent-at',['Curiosity',dest])
+        self.world.remove_fact('agent-at',['Curiosity',start])
+        print "Simulated a push from "+str(start)+" to "+str(dest)
+        
     def run(self, cycle, verbose = 2):
         '''
         nbeacons logic for obstacles:
@@ -408,7 +434,7 @@ class NBeaconsActionSimulator:
 
         # generate wind actions if applicable, and going in the same direction
         remaining_actions = [] # these will be wind pushes
-                
+        pushes_needed = 0
         
         # add subsequent actions depending on wind strength
         if self.wind and self.wind_dir in str(first_action):
@@ -420,15 +446,15 @@ class NBeaconsActionSimulator:
             
             pushes_needed = self.wind_strength+1 - move_dist
             if self.verbose >= 1: print "  -->> pushes needed is "+str(pushes_needed)
-            prev_action = first_action
-            while pushes_needed > 0:
-                curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
-                if not curr_push_action: 
-                    break
-                if self.verbose >= 1:  print "added action "+str(curr_push_action)
-                remaining_actions.append(curr_push_action)
-                prev_action = curr_push_action
-                pushes_needed-=1
+            #prev_action = first_action
+            #while pushes_needed > 0:
+            #    curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
+            #    if not curr_push_action: 
+            #        break
+            #    if self.verbose >= 1:  print "added action "+str(curr_push_action)
+            #    remaining_actions.append(curr_push_action)
+            #    prev_action = curr_push_action
+            #    pushes_needed-=1
 
         # now start execution by executing the first action
         if not self.execute_action(first_action):
@@ -443,20 +469,60 @@ class NBeaconsActionSimulator:
             pass
 
         # now loop through the rest of the wind actions, unless the agent gets stuck in mud
-        while len(remaining_actions) > 0 and not agent_stuck_in_mud:
+        while pushes_needed > 0 and not agent_stuck_in_mud:
             # get next action
-            next_wind_action = remaining_actions[0]
-            remaining_actions = remaining_actions[1:]
+            #next_wind_action = remaining_actions[0]
+            #remaining_actions = remaining_actions[1:]
             # execute action
             try:
-                print "About to apply named action "+str(next_wind_action)
-                self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
+                #print "About to apply named action "+str(next_wind_action)
+                #self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
+                self.sim_action_push()
+                pushes_needed -= 1
                 if self.verbose >= 1: print "Wind has blown the agent in the "+str(self.wind_dir)+" direction"
             except:
-                if self.verbose >= 1: print "Error executing action "+str(next_wind_action)+": "+ str(sys.exc_info()[0])
+                if self.verbose >= 1: print "Error executing sim push action : "+ str(sys.exc_info()[0])
+                break
             # check to see if agent in mud
             agent_stuck_in_mud = self.check_agent_in_mud()
             
+
+from Tkinter import *
+
+class Application(Frame):
+    
+    def set_world_str(self, world_str):
+        self.world_str.set(world_str)
+    
+    def createWidgets(self):
+        self.main_text_area = Label(self, text=self.world_str)
+        self.main_text_area.pack()
+    
+    def update_world_str(self, world_str):
+        self.world_str = world_str
+        
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.world_str = StringVar()
+        self.world_str.set("World has not been set yet")
+        self.pack()
+        self.createWidgets()
+        
+
+class NBeaconsGUIViewer(base.BaseModule):
+    
+    def init(self,world,mem):
+        self.world = world
+        self.mem = mem
+    
+    def run(self, cycle, verbose=2):
+        root = Tk()
+        app = Application(master=root)
+        app.set_world_str(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True))
+        app.mainloop()
+        root.destroy()
+    
+
 
 class CustomRunSimulator:
     '''

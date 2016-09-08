@@ -1,6 +1,7 @@
 import copy
 from MIDCA.modules._adist import ADistance, ChangeFinder, WindowPair, Interval
-
+from MIDCA.domains.nbeacons import nbeacons_util
+import sys
 '''
 See class ADistanceAnomalyNoter
 '''
@@ -270,8 +271,12 @@ class StateDiscrepancyDetector:
 		last_action = last_actions[0]
 		copy_world = self.mem.get(self.mem.STATES)[-2]
 		try:
+			#print " attempting to execute action "+str(last_action)+" on preivous state:"
+			#nbeacons_util.drawNBeaconsScene(copy_world)
 			copy_world.apply_midca_action(last_action)
+			
 		except:
+			print "Exeception is "+str(sys.exc_info()[0])
 			if self.verbose >= 1: print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
 		

@@ -470,16 +470,18 @@ class HeuristicSearchPlanner(base.BaseModule):
                     valid_tiles.append(da.args[1])
                     triple_adj_atoms = world.get_atoms(filters=["adjacent",str(da.args[1])])
                     for ta in triple_adj_atoms:
-                        valid_tiles.append(da.args[0])
-                        valid_tiles.append(da.args[1])
+                        valid_tiles.append(ta.args[0])
+                        valid_tiles.append(ta.args[1])
             
             # uncomment next 5 lines to make quicksand visible
-            #quicksand_tiles = map(lambda atom: atom.args[0], world.get_atoms(filters=["quicksand"]))
-            #valid_tiles = set(valid_tiles) - set(quicksand_tiles)
-            #for vt in valid_tiles:
-            #    if str(vt) in quicksand_tiles:
-            #        raise Exception("Failing to remove quicksand tile"+str(vt)+" from search")
-            
+            quicksand_tiles = map(lambda atom: atom.args[0], world.get_atoms(filters=["quicksand"]))
+            # if the agent's location is in quicksand, remove it
+            quicksand_tiles = [t for t in quicksand_tiles if str(t) != agent_loc]
+            valid_tiles = set(valid_tiles) - set(quicksand_tiles)
+            for vt in valid_tiles:
+                if str(vt) in quicksand_tiles:
+                    raise Exception("Failing to remove quicksand tile"+str(vt)+" from search")
+             
             #print "quicksand tiles are "+str(map(str,quicksand_tiles))
             #valid_tiles = filter(lambda vt: not (str(vt) in quicksand_tiles), valid_tiles)
             
@@ -768,7 +770,10 @@ class HeuristicSearchPlanner(base.BaseModule):
                 goal_x = int(goal_loc.split('y')[0])
                 goal_y = int(goal_loc.split('y')[1])
             elif 'activated' in str(goals[0]):
-                beacon_atom = node.world.get_atoms(filters=['beacon-at',goals[0].args[0]])[0]
+                relevant_beacon_atoms = node.world.get_atoms(filters=['beacon-at',goals[0].args[0]])
+                if len(relevant_beacon_atoms) == 0:
+                    raise Exception("Goal is "+str(goals[0])+" and no relevant beacon atoms for goals[0].args[0] = "+str(goals[0].args[0]))
+                beacon_atom = relevant_beacon_atoms[0]
                 beacon_loc = str(beacon_atom.args[1])[2:] # remove the 'Tx' at the front 
                 goal_x = int(beacon_loc.split('y')[0])
                 goal_y = int(beacon_loc.split('y')[1])
@@ -849,7 +854,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         #pr.enable()
         
         # now actual code
-        self.world = self.mem.get(self.mem.STATES)[-1]
+        #self.world = self.mem.get(self.mem.STATES)[-1]
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         
         midcaPlan = None

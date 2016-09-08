@@ -481,6 +481,13 @@ class PhaseManager:
                     txt = raw_input()
                     if txt:
                         self.logger.log(txt)
+                elif val == "toggle meta verbose":
+                    if self.meta_verbose > 0:
+                        self.meta_verbose = 0
+                        print("Turning OFF metacognitive phase outputs")
+                    else:
+                        self.meta_verbose = 2
+                        print("Turning ON metacognitive phase outputs")
                 elif val == "drawgoalgraph":
                     print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
                     txt = raw_input()

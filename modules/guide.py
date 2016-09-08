@@ -151,6 +151,9 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
     '''
     
     def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
         self.verbose = verbose
         # get discrepancies
         discrep = self.mem.get(self.mem.DISCREPANCY)
@@ -187,6 +190,21 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
                             if self.verbose >= 1: print "Just removed a plan for goal " +str(goal)
                     return
             else:
+                # even though no explanation, discrepancy exists so remove old plans
+                goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
+                curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
+                #print "curr_goals are "+str(curr_goals)
+                if type(curr_goals) is not list:
+                    curr_goals = [curr_goals] 
+                for goal in curr_goals:
+                    #print "processing goal "+str(goal)
+                    # get any plans associated with this goal, and remove them
+                    plan = goalgraph.getMatchingPlan([goal])
+                    if plan:
+                        #print "about to process plan "+str(map(str,plan))
+                        goalgraph.removePlan(plan)
+                        if self.verbose >= 1: print "Just removed a plan for goal " +str(goal)
+                
                 if self.verbose >= 1: print "No explanation, no goal management actions taken"    
                 return
                 

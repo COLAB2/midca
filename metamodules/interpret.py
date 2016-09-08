@@ -2,6 +2,9 @@ from MIDCA import base
 import inspect 
 from MIDCA.worldsim import domainread
 
+# profiling
+import cProfile, pstats, StringIO
+
 class MentalExpectation:
     '''
     An expectation about a mental state (which is a collection of variable bindings
@@ -45,12 +48,14 @@ class MentalExpectation:
                     all_true = False
         
         if all_true and at_least_one_true:
-            print "========>>>>>>> EXPECTATIONS HAVE BEEN MET"
+            #print "========>>>>>>> EXPECTATIONS HAVE BEEN MET"
             return True
         elif at_least_one_true:
-            print "========>>>>>>> AT LEAST ONE, BUT NOT ALL, OF THE EXPECTATIONS WERE MET"
+            #print "========>>>>>>> AT LEAST ONE, BUT NOT ALL, OF THE EXPECTATIONS WERE MET"
+            pass
         else:
-            print "========>>>>>>> NONE OF THE EXPECTATIONS WERE MET"
+            #print "========>>>>>>> NONE OF THE EXPECTATIONS WERE MET"
+            pass
     
     
         return False
@@ -89,14 +94,14 @@ class PrimitiveExpectationOfCognition():
         prior_result = self.priorMentalExp.apply_expectation(prior[1])
         post_result = self.postMentalExp.apply_expectation(post[1])
         
-        print "Prior result is "+str(prior_result)
-        print "Post result is "+str(post_result)
+        #print "Prior result is "+str(prior_result)
+        #print "Post result is "+str(post_result)
         
         if prior_result and not post_result:
             print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
             return True
         else:
-            print "ALL GOOD SIR"
+            print "    ALL GOOD SIR"
             return False
         
         
@@ -123,6 +128,8 @@ class MRSimpleDetect(base.BaseModule):
         self.world = world
         self.mem = mem
         self.already_switched_moveeast = False
+        self.wind_str = 0
+        self.exp1 = self.createAlwaysExplanationExp()
     
     def createAlwaysExplanationExp(self):
         # creates the expectation that there is always an explanation following an 
@@ -141,36 +148,12 @@ class MRSimpleDetect(base.BaseModule):
         
         return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation)
         
-        
-    
-    def run(self, cycle, verbose=2):
-        self.verbose = verbose
-        #exp1 = self.createAlwaysExplanationExp()
-        #print str(exp1)
-        
-#         # get the current data from the trace
-#         post = self.mem.trace.get_n_prev_phase()
-#         # get the 2nd most
-#         prior = self.mem.trace.get_n_prev_phase(n=1)
-#         
-        #exp_violation = exp1.apply_on_curr_trace(self.mem)
-        
-        #if exp_violation:
-            # hack, just go ahead and update the operator here
-            # always assume move east, just update it assuming
-            # wind speed of 2
-        #try:
-        #    world = self.mem.get(self.mem.STATES)[-1]
-            #print "The following operators are in the most recent world state: "
-            #for op_k,op_v in world.operators.items():
-            #    print "    op["+str(op_k)+"] = "+str(op_v)
-        #except:
-        #    pass    
-            
-        if self.already_switched_moveeast:
-            return
-        
-        new_op_str = 'operator_no_side_effect(moveeast2, \
+    def get_new_moveeast(self,wind_str):
+        mud = False
+        new_op_str = ""
+        if wind_str == 1:
+            if mud:
+                new_op_str = 'operator_no_side_effect(moveeast2, \
                         args = [(agnt, AGENT), (start, TILE), (mid, TILE), (dest, TILE)], \
                         preconditions = [ \
                             condition(free, [agnt]), \
@@ -181,46 +164,121 @@ class MRSimpleDetect(base.BaseModule):
                             condition(adjacent-east, [mid, dest])], \
                         results = [ \
                             condition(agent-at, [agnt, start], negate = TRUE), \
-                            condition(agent-at, [agnt, dest])])' 
+                            condition(agent-at, [agnt, dest])])'
+            else:
+                new_op_str = 'operator_no_side_effect(moveeast2, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+        elif wind_str == 2:
+            if mud:
+                new_op_str = 'operator_no_side_effect(moveeast3, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(quicksand, [mid], negate = TRUE), \
+                            condition(quicksand, [mid2], negate = TRUE), \
+                            condition(quicksand, [dest], negate = TRUE), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, mid2]), \
+                            condition(adjacent-east, [mid2, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+            else:
+                new_op_str = 'operator_no_side_effect(moveeast3, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, mid2]), \
+                            condition(adjacent-east, [mid2, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+        return new_op_str
+    
+    def run(self, cycle, verbose=2):
+        #pr = cProfile.Profile()
+        #pr.enable()
+        self.verbose = verbose
         
-        try:
-            
-            # 1. get the current world state
-            #world = self.mem.get(self.mem.STATES)[-1]
-            
-            # 2. find the old operator moveeast
-            prev_move_opname = ''
-            for op in self.world.get_operators().values():
-                if 'moveeast' in op.name:
-                    print "Found operator moveeast: \n"
-                    print "  "+str(op)
-                    prev_move_opname = op.name
-            
-            # 3. Remove the old move operator
-            rem_succes = self.world.remove_operator(prev_move_opname)
-            
-            print "The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes)
-            print "The following operators are available for planning: "
-            for op_k,op_v in self.world.operators.items():
-                print "    op["+str(op_k)+"] = "+str(op_v)
+        #print str(exp1)
+        
+        # get the current data from the trace
+        #post = self.mem.trace.get_n_prev_phase()
+        # get the 2nd most
+        #prior = self.mem.trace.get_n_prev_phase(n=1)
+         
+        exp_violation = self.exp1.apply_on_curr_trace(self.mem)
+        
+        if exp_violation:
+            # hack, just go ahead and update the operator here
+            # always assume move east, just update it assuming
+            new_move_op_str = ""
+            if self.wind_str == 0:
+                self.wind_str +=1
+                new_move_op_str = self.get_new_moveeast(self.wind_str)
+            elif self.wind_str == 1:
+                self.wind_str +=1
+                new_move_op_str = self.get_new_moveeast(self.wind_str)
+                
+            try:
+                # 1. get the current world state
+                #world = self.mem.get(self.mem.STATES)[-1]
+                
+                # 2. find the old operator moveeast
+                prev_move_opname = ''
+                for op in self.world.get_operators().values():
+                    if 'moveeast' in op.name:
+                        print "Found operator moveeast: \n"
+                        print "  "+str(op)
+                        prev_move_opname = op.name
+                
+                # 3. Remove the old move operator
+                rem_succes = self.world.remove_operator(prev_move_opname)
+                
+                print "The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes)
+                    
+                    
+                # 4. replace with new moveeast operator
+                print "Now creating the new operator"
+                worldsim_op = domainread.load_operator_str(new_move_op_str)
+                print "We now have worldsim op "+str(worldsim_op)
+                print "Adding it into the world"
+                self.world.operators[worldsim_op.name] = worldsim_op    
+                print "Saving world into memory"    
+                #self.mem.add(self.mem.STATES, self.world)
+                self.already_switched_moveeast = True
+                #print "Now adding in the new operator"
+                
+                print "The following operators are available for planning: "
+                for op_k,op_v in self.world.operators.items():
+                    print "    op["+str(op_k)+"] = "+str(op_v)
                 
                 
-            # 4. replace with new moveeast operator
-            print "Now creating the new operator"
-            worldsim_op = domainread.load_operator_str(new_op_str)
-            print "We now have worldsim op "+str(worldsim_op)
-            print "Adding it into the world"
-            self.world.operators[worldsim_op.name] = worldsim_op    
-            print "Saving world into memory"    
-            self.mem.add(self.mem.STATES, self.world)
-            self.already_switched_moveeast = True
-            #print "Now adding in the new operator"
-        except:
-            pass
+            except:
+                pass
+            
         
         
-        
-        
+            #try:
+        #    world = self.mem.get(self.mem.STATES)[-1]
+            #print "The following operators are in the most recent world state: "
+            #for op_k,op_v in world.operators.items():
+            #    print "    op["+str(op_k)+"] = "+str(op_v)
+        #except:
+        #    pass    
+            
+    
         
 #         print("prior is \n"+str(prior))
 #         if prior:
@@ -234,9 +292,14 @@ class MRSimpleDetect(base.BaseModule):
 #         
         
         # do matching
-        
-        
-        
+         
+#         pr.disable()
+#         s = StringIO.StringIO()
+#         sortby = 'tottime'
+#         ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+#         ps.print_stats()
+#         print s.getvalue()
+#         
         
         #self.detect()
 
