@@ -328,6 +328,7 @@ class PhaseManager:
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
         # phasemanager is passed in as a self pointer for metacognitive modification
         self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=False)
+        self.metaEnabled = metaEnabled
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
@@ -401,6 +402,28 @@ class PhaseManager:
         return val
 
 
+    def one_cycle_with_meta_intrlvd(self, verbose = 1, pause = 0.5, noInterface=True):
+        phases = self.midca.phases
+        metaPhases = self.midca.metaPhases
+        for i in range(len(phases)):
+            t1 = datetime.datetime.today()
+            # run a single next phase
+            self.next_phase(verbose)
+            # now run a full cycle of meta
+            for i in range(len(metaPhases)):
+                self.next_meta_phase(verbose)
+            t2 = datetime.datetime.today()
+            # make sure we pause correctly
+            try:
+                if (t2 - t1).total_seconds() < pause:
+                    time.sleep(pause - (t2 - t1).total_seconds())
+            except AttributeError:
+                if not self.twoSevenWarning:
+                    print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
+                    self.twoSevenWarning = True
+                time.sleep(pause)
+
+    
     def one_cycle(self, verbose = 1, pause = 0.5, meta=False, noInterface=True):
         phases = self.midca.phases
         if meta:

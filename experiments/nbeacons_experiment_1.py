@@ -32,8 +32,8 @@ DATA_FILENAME = DATADIR + "NBeaconsExperiment1" + NOW_STR + ".csv"
 DATA_FILE_HEADER_STR = "runID,numCycles,agentType,windDir,windStrength,goalsActionsAchieved\n"
 SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
 
-WIND_SCHEDULE_1 = [[100,1],[600,2]]
-NUM_CYCLES = 1500 # upper limit
+WIND_SCHEDULE_1 = [[100,1],[500,2]]
+NUM_CYCLES = 1000 # upper limit
 DIMENSION = 16
 NUM_BEACONS = 10
 NUM_QUICKSAND = 20
@@ -81,8 +81,11 @@ def singlerun(args):
     midca_inst.createMIDCAObj()
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
-    midca_inst.run_cycles(NUM_CYCLES)
-    
+    if agent_type == 'm':
+        midca_inst.run_cycles(NUM_CYCLES,meta=True)
+    else:
+        midca_inst.run_cycles(NUM_CYCLES)
+        
     # prepare data for writing output string
     result_str = singlerun_output_str(run_id,NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     return result_str 
@@ -130,8 +133,8 @@ def runexperiment():
     # args are [runID, agentType, windDir, windStrength, startingState, goalList]
     individual_runs = [
                        # no wind, same starting state
-                       [0,'v','east',0,state1_str,goal_list],
-                       [1,'g','east',0,state1_str,goal_list],
+                       #[0,'v','east',0,state1_str,goal_list],
+                       #[1,'g','east',0,state1_str,goal_list],
                        [2,'m','east',0,state1_str,goal_list],
                        # wind strength of 1
                        #[2,'v','east',1,state1_str,goal_list],
@@ -209,7 +212,7 @@ class MIDCAInstance():
         DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
         GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
         
-        WIND_ENABLED = self.wind_dir == 'off' 
+        WIND_ENABLED = True
         
         # Load domain
         world = domainread.load_domain(DOMAIN_FILE)
@@ -237,7 +240,7 @@ class MIDCAInstance():
         
         # Add the modules which instantiate basic operation
         #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1))
+        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1,logfilenm=DATADIR + "vanilla" + NOW_STR + ".log"))
         myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
         myMidca.append_module("Perceive", perceive.PerfectObserver())
         
@@ -275,7 +278,7 @@ class MIDCAInstance():
         DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
         GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
         
-        WIND_ENABLED = self.wind_dir == 'off'
+        WIND_ENABLED = True
         
         # Load domain
         world = domainread.load_domain(DOMAIN_FILE)
@@ -292,7 +295,7 @@ class MIDCAInstance():
         
         # Add the modules which instantiate basic operation
         #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1))
+        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1,logfilenm=DATADIR + "gda" + NOW_STR + ".log"))
         myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
         myMidca.append_module("Perceive", perceive.PerfectObserver())
         
@@ -333,7 +336,7 @@ class MIDCAInstance():
         DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
         GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
         
-        WIND_ENABLED = self.wind_dir == 'off'
+        WIND_ENABLED = True
         
         # Load domain
         world = domainread.load_domain(DOMAIN_FILE)
@@ -350,7 +353,7 @@ class MIDCAInstance():
         
         # Add the modules which instantiate basic operation
         #myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1))
+        myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_ENABLED,wind_dir=self.wind_dir,wind_strength=self.wind_strength,dim=DIMENSION,wind_schedule=WIND_SCHEDULE_1,logfilenm=DATADIR + "meta" + NOW_STR + ".log"))
         
         myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
         myMidca.append_module("Perceive", perceive.PerfectObserver())
@@ -397,11 +400,13 @@ class MIDCAInstance():
         myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
         return myMidca
 
-
-
-    def run_cycles(self, num):
-        for cycle in range(num):
-            self.myMidca.one_cycle(verbose = 0, pause = 0)
+    def run_cycles(self, num, meta=False):
+        if meta:
+            for cycle in range(num):
+                self.myMidca.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
+        else:
+            for cycle in range(num):
+                self.myMidca.one_cycle(verbose = 0, pause = 0)
             
     def getMIDCAObj(self):
         return self.myMidca

@@ -500,8 +500,8 @@ class World:
 	def apply_midca_action(self, midcaAction):
 		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
-		print "Opname = "+str(opname)
-		print "argnames = "+str(argnames)
+		#print "Opname = "+str(opname)
+		#print "argnames = "+str(argnames)
 		self.apply_named_action(opname, argnames)
 	
 	#interprets a MIDCA goal as a predicate statement. Expects the predciate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.

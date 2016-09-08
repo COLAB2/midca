@@ -276,8 +276,8 @@ class StateDiscrepancyDetector:
 			copy_world.apply_midca_action(last_action)
 			
 		except:
-			print "Exeception is "+str(sys.exc_info()[0])
-			if self.verbose >= 1: print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
+			print "Exception trying action "+str(last_action)+" is "+str(sys.exc_info()[0])
+			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
 		world_diff = self.world.diff(copy_world)
 		
 		# we don't care about activated discrepancies right now

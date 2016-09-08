@@ -38,13 +38,13 @@ class MentalExpectation:
         at_least_one_true = False
         for [var,val] in var_vals:
             if var in self.vars_and_funcs.keys():
-                print "var is "+str(var)
-                print "val is "+str(val)
+                #print "var is "+str(var)
+                #print "val is "+str(val)
                 if self.vars_and_funcs[var](val):
                     at_least_one_true = True
-                    print "TRUE"
+                    #print "TRUE"
                 else:
-                    print "FALSE"
+                    #print "FALSE"
                     all_true = False
         
         if all_true and at_least_one_true:
@@ -66,10 +66,11 @@ class PrimitiveExpectationOfCognition():
     An expectation of cognition involving one mental action (a single cognitive process)
     '''
     
-    def __init__(self, action, priorMentalExp=None,postMentalExp=None):
+    def __init__(self, action, priorMentalExp=None,postMentalExp=None, verbose=2):
         '''
         action needs to be a string which is the 
         '''
+        self.verbose = verbose
         if (priorMentalExp is None and postMentalExp is None):
             raise Exception("Cannot create primitive expectaiton of cognition with no mental expectations")
         
@@ -94,14 +95,14 @@ class PrimitiveExpectationOfCognition():
         prior_result = self.priorMentalExp.apply_expectation(prior[1])
         post_result = self.postMentalExp.apply_expectation(post[1])
         
-        #print "Prior result is "+str(prior_result)
-        #print "Post result is "+str(post_result)
+        #print "    Prior result is "+str(prior_result)
+        #print "    Post result is "+str(post_result)
         
         if prior_result and not post_result:
             print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
             return True
         else:
-            print "    ALL GOOD SIR"
+            if self.verbose >= 1: print "    ALL GOOD SIR"
             return False
         
         
@@ -127,9 +128,11 @@ class MRSimpleDetect(base.BaseModule):
     def init(self, world, mem):
         self.world = world
         self.mem = mem
+        self.verbose = 0 # set at zero, change later during run()
         self.already_switched_moveeast = False
         self.wind_str = 0
         self.exp1 = self.createAlwaysExplanationExp()
+         
     
     def createAlwaysExplanationExp(self):
         # creates the expectation that there is always an explanation following an 
@@ -146,10 +149,10 @@ class MRSimpleDetect(base.BaseModule):
         # encode action
         action = 'SimpleNBeaconsExplain'
         
-        return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation)
+        return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation,verbose=self.verbose)
         
     def get_new_moveeast(self,wind_str):
-        mud = False
+        mud = True
         new_op_str = ""
         if wind_str == 1:
             if mud:
@@ -239,8 +242,8 @@ class MRSimpleDetect(base.BaseModule):
                 prev_move_opname = ''
                 for op in self.world.get_operators().values():
                     if 'moveeast' in op.name:
-                        print "Found operator moveeast: \n"
-                        print "  "+str(op)
+                        if self.verbose >= 1: print "Found operator moveeast: \n"
+                        if self.verbose >= 1: print "  "+str(op)
                         prev_move_opname = op.name
                 
                 # 3. Remove the old move operator
@@ -260,9 +263,10 @@ class MRSimpleDetect(base.BaseModule):
                 self.already_switched_moveeast = True
                 #print "Now adding in the new operator"
                 
-                print "The following operators are available for planning: "
-                for op_k,op_v in self.world.operators.items():
-                    print "    op["+str(op_k)+"] = "+str(op_v)
+                if self.verbose >= 1: print "The following operators are available for planning: "
+                if self.verbose >= 1: 
+                    for op_k,op_v in self.world.operators.items():
+                        print "    op["+str(op_k)+"] = "+str(op_v)
                 
                 
             except:

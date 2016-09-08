@@ -205,7 +205,14 @@ class NBeaconsActionSimulator:
     Performs changes to the midca state specific to NBeacons.
     '''
     
-    def __init__(self, wind=False, wind_dir='off', wind_strength=1, dim=10, wind_schedule=[]):
+    def __init__(self, wind=False, wind_dir='off', wind_strength=1, dim=10, wind_schedule=[],logfilenm=""):
+        #import os
+        #cwd = os.getcwd()
+        #print "CURRENT WORKING DIR IN SIMULATOR IS "+str(cwd)
+        self.logfilenm = logfilenm
+        self.filehandle = None
+        if len(self.logfilenm) > 0:
+            self.filehandle = open(self.logfilenm, 'w')
         self.wind_schedule = wind_schedule
         self.wind = wind
         self.wind_dir = wind_dir
@@ -295,12 +302,15 @@ class NBeaconsActionSimulator:
                         if self.verbose >= 2:
                             print "simulating MIDCA action:", action
                         self.world.apply_midca_action(action)
+                        if self.filehandle: self.filehandle.write("simulating MIDCA action:"+ str(action)+"\n")
                         return True
                     else:
+                        if self.filehandle: self.filehandle.write("It seems that even though the agent is free, action "+str(action)+" is not applicable"+"\n")
                         print "It seems that even though the agent is free, action "+str(action)+" is not applicable"
                         return False
                 else: # agent not free
                     if self.verbose >= 1: print "Agent is not free, failing to attempt to move from quicksand"
+                    if self.filehandle: self.filehandle.write("Agent is not free, failing to attempt to move from quicksand"+"\n")
                     return False
                     # insert the first stuck atom if no stuck is already in the state
                     #stuck_atoms = self.world.get_atoms(filters=['stuck'])
@@ -309,9 +319,11 @@ class NBeaconsActionSimulator:
                         
             else: # no quicksand, just perform move like normal
                 if self.verbose >= 2: print "action is "+str(action)
+    
                 if self.world.midca_action_applicable(action):
                     if self.verbose >= 2:
                         print "simulating MIDCA action:", action
+                        
                         
                     # if move action, check to see which tiles the agent would pass in what order
                     # and check to see if those had quicksand
@@ -334,12 +346,15 @@ class NBeaconsActionSimulator:
                                 self.world.add_fact('agent-at',['Curiosity', str(tile)])
                                 agent_stuck_inbetween = True
                                 print "Agent got stuck inbetween at loc "+str(tile)
+                                if self.filehandle: self.filehandle.write("Agent got stuck inbetween at loc "+str(tile)+"\n")
                                 break
                     if not agent_stuck_inbetween:
                         self.world.apply_midca_action(action)
+                        if self.filehandle: self.filehandle.write("simulating MIDCA action:"+str(action)+"\n")
                         return True
                 else:
                     if self.verbose >=1 : print "action "+str(action)+" is not applicable"
+                    if self.filehandle: self.filehandle.write("action "+str(action)+" is not applicable"+"\n")
                     return False
                     
                     
@@ -348,10 +363,12 @@ class NBeaconsActionSimulator:
                 if self.verbose >= 2:
                     print "simulating MIDCA action:", action
                 self.world.apply_midca_action(action)
+                if self.filehandle: self.filehandle.write("simulating MIDCA action:"+str(action)+"\n")
                 return True
             else:
                 if self.verbose >= 1: print "action "+str(action)+" is not applicable"
-                
+                if self.filehandle: self.filehandle.write("action "+str(action)+" is not applicable"+"\n")
+        if self.filehandle: self.filehandle.write("did not execute action"+str(action)+" \n")
         return False
     
     def check_agent_in_mud(self):
@@ -369,9 +386,11 @@ class NBeaconsActionSimulator:
             if len(stuck_atoms) == 0:
                 self.world.add_fact('stuck',['Curiosity'])
                 if self.verbose >= 1: print "inserted stuck atom"
+                if self.filehandle: self.filehandle.write("inserted stuck atom"+"\n")
             if self.world.is_true('free',['Curiosity']):
                 self.world.remove_fact('free',['Curiosity'])
                 if self.verbose >= 1: print "removed free atom"
+                if self.filehandle: self.filehandle.write("removed free atom"+"\n")
             agent_stuck_in_mud = True
             
         return agent_stuck_in_mud
@@ -394,7 +413,8 @@ class NBeaconsActionSimulator:
         # now 'perform move'
         self.world.add_fact('agent-at',['Curiosity',dest])
         self.world.remove_fact('agent-at',['Curiosity',start])
-        print "Simulated a push from "+str(start)+" to "+str(dest)
+        print "Simulated a wind push from "+str(start)+" to "+str(dest)
+        if self.filehandle: self.filehandle.write("Simulated a wind push from "+str(start)+" to "+str(dest)+"\n")
         
     def run(self, cycle, verbose = 2):
         '''
@@ -413,12 +433,13 @@ class NBeaconsActionSimulator:
         '''
         self.mem.set(self.mem.MIDCA_CYCLES, 1+self.mem.get(self.mem.MIDCA_CYCLES))
         self.verbose = verbose
-        
+        if self.filehandle: self.filehandle.write("Cycle # "+str(cycle)+"\n")
         # update wind if on schedule
         for wind_sched_item in self.wind_schedule:
             if wind_sched_item[0] == cycle:
                 self.wind_strength = wind_sched_item[1]
                 print "Just changed wind strength to "+str(self.wind_strength)
+                if self.filehandle: self.filehandle.write("Just changed wind strength to "+str(self.wind_strength)+"\n")
         
         first_action = None
         try:
@@ -428,6 +449,10 @@ class NBeaconsActionSimulator:
         except TypeError, IndexError:
             if verbose >= 1:
                 print "Simulator: no actions selected yet by MIDCA."
+            if self.filehandle: self.filehandle.write("Simulator: no actions selected yet by MIDCA.\n")
+            if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
+            if self.filehandle: self.filehandle.write("----------------------------------------------\n")
+            if self.filehandle: self.filehandle.flush()
             return
         except:
             return
@@ -446,6 +471,7 @@ class NBeaconsActionSimulator:
             
             pushes_needed = self.wind_strength+1 - move_dist
             if self.verbose >= 1: print "  -->> pushes needed is "+str(pushes_needed)
+            if self.filehandle: self.filehandle.write("  -->> pushes needed is "+str(pushes_needed)+"\n")
             #prev_action = first_action
             #while pushes_needed > 0:
             #    curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
@@ -458,6 +484,9 @@ class NBeaconsActionSimulator:
 
         # now start execution by executing the first action
         if not self.execute_action(first_action):
+            if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
+            if self.filehandle: self.filehandle.write("----------------------------------------------\n")
+            if self.filehandle: self.filehandle.flush()
             return
 
         if 'push' not in str(first_action):
@@ -480,13 +509,17 @@ class NBeaconsActionSimulator:
                 self.sim_action_push()
                 pushes_needed -= 1
                 if self.verbose >= 1: print "Wind has blown the agent in the "+str(self.wind_dir)+" direction"
+                if self.filehandle: self.filehandle.write("Wind has blown the agent in the "+str(self.wind_dir)+" direction\n")
             except:
                 if self.verbose >= 1: print "Error executing sim push action : "+ str(sys.exc_info()[0])
+                if self.filehandle: self.filehandle.write("Error executing sim push action : "+ str(sys.exc_info()[0])+"\n")
                 break
             # check to see if agent in mud
             agent_stuck_in_mud = self.check_agent_in_mud()
+        if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
+        if self.filehandle: self.filehandle.write("----------------------------------------------\n")
+        if self.filehandle: self.filehandle.flush()
             
-
 from Tkinter import *
 
 class Application(Frame):
