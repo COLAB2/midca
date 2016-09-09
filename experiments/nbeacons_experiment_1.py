@@ -123,8 +123,8 @@ def runexperiment():
     #for g in goal_list:
     #    print("  "+str(g))
     state1 = nbeacons_util.NBeaconGrid()
-    state1.generate_good_test()
-    #state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=NUM_BEACONS,num_quicksand_spots=NUM_QUICKSAND)
+    #state1.generate_good_test()
+    state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=NUM_BEACONS,num_quicksand_spots=NUM_QUICKSAND)
     state1_str = state1.get_STRIPS_str()
 #     DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
 #     DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
@@ -133,8 +133,8 @@ def runexperiment():
     # args are [runID, agentType, windDir, windStrength, startingState, goalList]
     individual_runs = [
                        # no wind, same starting state
-                       #[0,'v','east',0,state1_str,goal_list],
-                       #[1,'g','east',0,state1_str,goal_list],
+                       [0,'v','east',0,state1_str,goal_list],
+                       [1,'g','east',0,state1_str,goal_list],
                        [2,'m','east',0,state1_str,goal_list],
                        # wind strength of 1
                        #[2,'v','east',1,state1_str,goal_list],

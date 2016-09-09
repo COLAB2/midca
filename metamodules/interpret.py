@@ -132,7 +132,8 @@ class MRSimpleDetect(base.BaseModule):
         self.already_switched_moveeast = False
         self.wind_str = 0
         self.exp1 = self.createAlwaysExplanationExp()
-         
+        self.updated_to_move2 = False
+        self.updated_to_move3 = False #hacky i know
     
     def createAlwaysExplanationExp(self):
         # creates the expectation that there is always an explanation following an 
@@ -227,12 +228,14 @@ class MRSimpleDetect(base.BaseModule):
             # hack, just go ahead and update the operator here
             # always assume move east, just update it assuming
             new_move_op_str = ""
-            if self.wind_str == 0:
+            if self.wind_str == 0 and not self.updated_to_move2:
                 self.wind_str +=1
                 new_move_op_str = self.get_new_moveeast(self.wind_str)
-            elif self.wind_str == 1:
+                self.updated_to_move2 = True
+            elif self.wind_str == 1 and self.updated_to_move2 and not self.updated_to_move3:
                 self.wind_str +=1
                 new_move_op_str = self.get_new_moveeast(self.wind_str)
+                self.updated_to_move3 = True
                 
             try:
                 # 1. get the current world state
