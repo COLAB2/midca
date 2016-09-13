@@ -34,7 +34,10 @@ SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
 
 #WIND_SCHEDULE_1 = [[300,1],[600,2],[1200,3],[2400,4]]
 WIND_SCHEDULE_1 = [[500,3],[1500,4]]
-NUM_CYCLES = 10000 # upper limit
+META_NUM_CYCLES = 11000 # upper limit
+GDA_NUM_CYCLES = 13000 # upper limit
+VANILLA_NUM_CYCLES = 15000 # upper limit
+
 DIMENSION = 20
 NUM_BEACONS = 10
 NUM_QUICKSAND = 20
@@ -83,9 +86,15 @@ def singlerun(args):
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     if agent_type == 'm':
-        midca_inst.run_cycles(NUM_CYCLES,meta=True)
-    else:
-        midca_inst.run_cycles(NUM_CYCLES)
+        midca_inst.run_cycles(META_NUM_CYCLES,meta=True)
+        print "Running Meta agent with "+str(META_NUM_CYCLES)
+    elif agent_type == 'g':
+        midca_inst.run_cycles(GDA_NUM_CYCLES)
+        print "Running GDA agent with "+str(GDA_NUM_CYCLES)
+    elif agent_type == 'v':
+        midca_inst.run_cycles(VANILLA_NUM_CYCLES)
+        print "Running Vanilla agent with "+str(VANILLA_NUM_CYCLES)
+
         
     # prepare data for writing output string
     result_str = singlerun_output_str(run_id,NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
