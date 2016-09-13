@@ -61,6 +61,16 @@ class PerfectObserver(base.BaseModule):
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
+        
+        # drop old memory states if not being used
+        # this should help with high memory costs
+        states = self.mem.get(self.mem.STATES)
+        if len(states) > 400:
+            #print "trimmed off 200 old stale states"
+            states = states[200:]
+            self.mem.set(self.mem.STATES, states)
+        
+        
         if verbose >= 1:
             print "World observed."
         

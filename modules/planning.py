@@ -460,19 +460,76 @@ class HeuristicSearchPlanner(base.BaseModule):
             #    if adj_atom
             #print "adjacent atoms are " +str(adjacent_atoms)
             valid_tiles = []
-            for aa in adjacent_atoms:
-                #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
-                valid_tiles.append(aa.args[0])
-                valid_tiles.append(aa.args[1])
-                double_adj_atoms = world.get_atoms(filters=["adjacent",str(aa.args[1])])
-                for da in double_adj_atoms:
-                    valid_tiles.append(da.args[0])
-                    valid_tiles.append(da.args[1])
-                    triple_adj_atoms = world.get_atoms(filters=["adjacent",str(da.args[1])])
-                    for ta in triple_adj_atoms:
-                        valid_tiles.append(ta.args[0])
-                        valid_tiles.append(ta.args[1])
-            
+            # this is hacky, but speeds up experiments
+            #t_1 = time.time()
+            if operator.name not in ['moveeast2','moveeast3','moveeast4', 'moveeast5']:
+                for aa in adjacent_atoms:
+                    #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                    valid_tiles.append(aa.args[0])
+                    valid_tiles.append(aa.args[1]) 
+            else:
+                adjacent_atoms = world.get_atoms(filters=["adjacent-east",agent_loc])
+                if operator.name == 'moveeast2':
+                    for aa in adjacent_atoms:
+                        #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                        valid_tiles.append(aa.args[0])
+                        valid_tiles.append(aa.args[1])
+                        double_adj_atoms = world.get_atoms(filters=["adjacent-east",str(aa.args[1])])
+                        for da in double_adj_atoms:
+                            valid_tiles.append(da.args[0])
+                            valid_tiles.append(da.args[1])
+                elif operator.name == 'moveeast3':
+                    for aa in adjacent_atoms:
+                        #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                        valid_tiles.append(aa.args[0])
+                        valid_tiles.append(aa.args[1])
+                        double_adj_atoms = world.get_atoms(filters=["adjacent-east",str(aa.args[1])])
+                        for da in double_adj_atoms:
+                            valid_tiles.append(da.args[0])
+                            valid_tiles.append(da.args[1])
+                            triple_adj_atoms = world.get_atoms(filters=["adjacent-east",str(da.args[1])])
+                            for ta in triple_adj_atoms:
+                                valid_tiles.append(ta.args[0])
+                                valid_tiles.append(ta.args[1])
+                elif operator.name == 'moveeast4':
+                    for aa in adjacent_atoms:
+                        #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                        valid_tiles.append(aa.args[0])
+                        valid_tiles.append(aa.args[1])
+                        double_adj_atoms = world.get_atoms(filters=["adjacent-east",str(aa.args[1])])
+                        for da in double_adj_atoms:
+                            valid_tiles.append(da.args[0])
+                            valid_tiles.append(da.args[1])
+                            triple_adj_atoms = world.get_atoms(filters=["adjacent-east",str(da.args[1])])
+                            for ta in triple_adj_atoms:
+                                valid_tiles.append(ta.args[0])
+                                valid_tiles.append(ta.args[1])
+                                quad_adj_atoms = world.get_atoms(filters=["adjacent-east",str(ta.args[1])])
+                                for qa in quad_adj_atoms:
+                                    valid_tiles.append(qa.args[0])
+                                    valid_tiles.append(qa.args[1])
+                elif operator.name == 'moveeast5':
+                    for aa in adjacent_atoms:
+                        #print "  aa.args[0] is " + str(aa.args[0])+" and "+str(aa.args[1])
+                        valid_tiles.append(aa.args[0])
+                        valid_tiles.append(aa.args[1])
+                        double_adj_atoms = world.get_atoms(filters=["adjacent-east",str(aa.args[1])])
+                        for da in double_adj_atoms:
+                            valid_tiles.append(da.args[0])
+                            valid_tiles.append(da.args[1])
+                            triple_adj_atoms = world.get_atoms(filters=["adjacent-east",str(da.args[1])])
+                            for ta in triple_adj_atoms:
+                                valid_tiles.append(ta.args[0])
+                                valid_tiles.append(ta.args[1])
+                                quad_adj_atoms = world.get_atoms(filters=["adjacent-east",str(ta.args[1])])
+                                for qa in quad_adj_atoms:
+                                    valid_tiles.append(qa.args[0])
+                                    valid_tiles.append(qa.args[1])
+                                    cinco_adj_atoms = world.get_atoms(filters=["adjacent-east",str(qa.args[1])])
+                                    for ca in cinco_adj_atoms:
+                                        valid_tiles.append(ca.args[0])
+                                        valid_tiles.append(ca.args[1])
+                
             # uncomment next 5 lines to make quicksand visible
             quicksand_tiles = map(lambda atom: atom.args[0], world.get_atoms(filters=["quicksand"]))
             # if the agent's location is in quicksand, remove it
@@ -481,6 +538,12 @@ class HeuristicSearchPlanner(base.BaseModule):
             for vt in valid_tiles:
                 if str(vt) in quicksand_tiles:
                     raise Exception("Failing to remove quicksand tile"+str(vt)+" from search")
+            
+            #if operator.name in ['moveeast2','moveeast3','moveeast4', 'moveeast5']:
+            #    t_2 = time.time()
+            #    t_str =  '%.2f' % (t_2-t_1)
+                #print "getting valid tiles for "+str(operator.name)+" took "+str(t_str)+"s"
+            #    print "valid tiles are "+str(map(str,valid_tiles))
              
             #print "quicksand tiles are "+str(map(str,quicksand_tiles))
             #valid_tiles = filter(lambda vt: not (str(vt) in quicksand_tiles), valid_tiles)
@@ -529,10 +592,11 @@ class HeuristicSearchPlanner(base.BaseModule):
         possible_bindings = map(better_mapping_func,arg_types)
         #possible_bindings = map(old_mapping_func,arg_types)
         #print "here"
-        #for pb in possible_bindings:
-        #    print "outer"
-        #    for pb_i in pb:
-        #        print "  "+str(pb_i)
+#         if operator.name in ['moveeast2','moveeast3','moveeast4']:
+#             for pb in possible_bindings:
+#                 print "outer"
+#                 for pb_i in pb:
+#                     print "  "+str(pb_i)
         permutations = itertools.product(*possible_bindings)
 #         i_s = 0
 #         i_e = 5
@@ -544,6 +608,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         applicable_permutations = []
         # need to do a transpose on the permutations
         #permutations = zip(*permutations)
+        
         num_permutations = 0
         for c in permutations:
             num_permutations+=1
@@ -555,6 +620,8 @@ class HeuristicSearchPlanner(base.BaseModule):
             if world.is_applicable(op_inst):
                 #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
                 applicable_permutations.append(op_inst)
+                #if operator.name in ['moveeast2','moveeast3','moveeast4', 'moveeast5']:
+                    #print "took "+str(num_permutations)+" permutations before "+str(operator.name)+" worked "
                 break
         #print "here2"
         #print " there are at least "+str(num_permutations)+" for operator "+str(operator.name)
@@ -575,6 +642,8 @@ class HeuristicSearchPlanner(base.BaseModule):
         t1=t0
         
         available_operators = node.world.operators.values()
+        
+        
         
         is_stuck = len(node.world.get_atoms(filters=['stuck'])) > 0
         if is_stuck:
@@ -805,7 +874,11 @@ class HeuristicSearchPlanner(base.BaseModule):
         #print "The following operators are available for planning: "
         #for op_k,op_v in self.world.operators.items():
         #    print "    op["+str(op_k)+"] = "+str(op_v)
-            
+        we_learned_an_op = False
+        for op_k,op_v in self.world.operators.items():
+            if op_k in ['moveeast2','moveeast3','moveeast4', 'moveeast5']:
+                we_learned_an_op = True
+                break
             
         Q = [HSPNode(self.world, None, [])]
         visited = []
@@ -822,8 +895,9 @@ class HeuristicSearchPlanner(base.BaseModule):
             
             # take the first node off the queue
             curr_node = Q[0]
-            if self.verbose >=2: 
+            if self.verbose >=2:# or we_learned_an_op: 
                 print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
+            
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
             Q = Q[1:]
@@ -839,6 +913,17 @@ class HeuristicSearchPlanner(base.BaseModule):
             Q = sorted(Q,key=self.nbeacons_heuristic(goals,infinity=INFINITY))    
             # now remove any node has a score >= infinity (because it's not relevant
             Q = filter(lambda s: self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY, Q)
+            # also remove any node that has an activate beacon action that is not the last action
+            def bad_activate(n):
+                try:
+                    activate_index = map(lambda a:a.operator.name,n.actions_taken).index('activatebeacon')
+                    last_element_index = len(n.actions_taken) - 1
+                    return activate_index == last_element_index
+                except ValueError:
+                    return True
+                 
+            Q = filter(lambda n: bad_activate(n), Q)
+             
         
         if goal_reached_node:
             t1 = time.time()

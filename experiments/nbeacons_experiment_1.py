@@ -16,7 +16,7 @@ from MIDCA.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 import datetime
 import os
 import os.path
-
+import collections
 import inspect
 import time
 from multiprocessing import Pool
@@ -32,9 +32,10 @@ DATA_FILENAME = DATADIR + "NBeaconsExperiment1" + NOW_STR + ".csv"
 DATA_FILE_HEADER_STR = "runID,numCycles,agentType,windDir,windStrength,goalsActionsAchieved\n"
 SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
 
-WIND_SCHEDULE_1 = [[100,1],[500,2]]
-NUM_CYCLES = 1000 # upper limit
-DIMENSION = 16
+#WIND_SCHEDULE_1 = [[300,1],[600,2],[1200,3],[2400,4]]
+WIND_SCHEDULE_1 = [[500,3],[1500,4]]
+NUM_CYCLES = 10000 # upper limit
+DIMENSION = 20
 NUM_BEACONS = 10
 NUM_QUICKSAND = 20
 BEACON_FAIL_RATE = 100 # percent chance each beacon will fail each tick
@@ -101,7 +102,7 @@ def runexperiment():
     runs = []
     
     # generate goals randomly, such that no goal is repeated or occurs in the last 3 goals
-    num_goals = 200
+    num_goals = 1000
     goal_list = []
     i = 0
     possible_goals = range(10)
@@ -403,6 +404,9 @@ class MIDCAInstance():
     def run_cycles(self, num, meta=False):
         if meta:
             for cycle in range(num):
+                #if cycle % 200 == 0:
+                    #gc.collect()
+                    #print("$$$$$$$$$$$$$$ JUST RAN GARBAGE COLLECTION $$$$$$$$$$$$$$$$")
                 self.myMidca.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
         else:
             for cycle in range(num):
@@ -424,6 +428,180 @@ class MIDCAInstance():
 ## Graph ##
 ###########
 
+def multiple_goalsperaction(n_files):
+    '''
+    Uses the last n files to graph the data. Averages the values per goal
+    '''
+    import matplotlib.pyplot as plt
+
+    files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
+    datafiles = map(lambda f: DATADIR+f, files[-(n_files):])
+
+    goal_action_sums_vanilla = collections.OrderedDict()
+    goal_action_sums_gda = collections.OrderedDict()
+    goal_action_sums_meta = collections.OrderedDict()
+
+    all_max_goal_values = []
+
+
+    def process_data_into_dicts(agent_type,goals_achieved,actions_executed):
+        if agent_type == 'v':
+            for g_i in range(len(goals_achieved)):
+                if g_i in goal_action_sums_vanilla.keys():
+                    goal_action_sums_vanilla[g_i].append(actions_executed_data[g_i])
+                else:
+                    goal_action_sums_vanilla[g_i] = [actions_executed_data[g_i]]
+        elif agent_type == 'g':
+            for g_i in range(len(goals_achieved)):
+                if g_i in goal_action_sums_gda.keys():
+                    goal_action_sums_gda[g_i].append(actions_executed_data[g_i])
+                else:
+                    goal_action_sums_gda[g_i] = [actions_executed_data[g_i]]
+        elif agent_type == 'm':
+            for g_i in range(len(goals_achieved)):
+                if g_i in goal_action_sums_meta.keys():
+                    goal_action_sums_meta[g_i].append(actions_executed_data[g_i])
+                else:
+                    goal_action_sums_meta[g_i] = [actions_executed_data[g_i]]
+        else:
+            raise Exception ("invalid agent_type "+str(agent_type))
+
+    # go through each file, and for the goal_id, store the score in the list
+    # in the dict
+    for df in datafiles:
+        header = True
+        print "Getting data from file "+str(df)
+        with open(df,'r') as f:
+            for line in f.readlines():
+                if header: 
+                    header = False
+                else:
+                    quote_1 = line.strip().find("\"")
+                    quote_2 = line.strip().find("\"",quote_1+1)
+                    goals_achieved_str = line[quote_1+1:quote_2]
+                    #print "Goals achieved: "+str(goals_achieved_str)
+                    
+                    
+                    row = line[:quote_1]
+                    row = line.strip().split(',')
+                    #wind_str = row[4]
+                    #print "row is "+str(row)
+                    agent_type = row[2]
+                    #run_id = row[0]
+                    
+                    goals_action_data = eval('list('+goals_achieved_str+')')
+                    goals_achieved_data = map(lambda t: t[0], goals_action_data)
+                    actions_executed_data = map(lambda t: t[2], goals_action_data)
+
+                    process_data_into_dicts(agent_type,goals_achieved_data,actions_executed_data)
+                    
+                    all_max_goal_values.append(max(goals_achieved_data))
+
+                    if agent_type == 'v':
+                        agent_name = 'Vanilla'
+                        print "  Finished processing vanilla data"
+                    elif agent_type == 'g':
+                        agent_name = 'GDA'
+                        print "  Finished processing gda data"
+                    elif agent_type == 'm':
+                        agent_name = 'Meta'
+                        print "  Finished processing meta data"
+            
+    min_of_all_the_maxes = min(all_max_goal_values)
+
+    goal_action_final_val_vanilla = collections.OrderedDict()
+    goal_action_final_val_gda = collections.OrderedDict()
+    goal_action_final_val_meta = collections.OrderedDict()
+
+    # now that we have all the sums, compute the averages per goal
+    for k in goal_action_sums_vanilla.keys():
+        goal_action_final_val_vanilla[k] = sum(goal_action_sums_vanilla[k]) / float(len(goal_action_sums_vanilla[k]))
+    for k in goal_action_sums_gda.keys():
+        goal_action_final_val_gda[k] = sum(goal_action_sums_gda[k]) / float(len(goal_action_sums_gda[k]))
+    for k in goal_action_sums_meta.keys():
+        goal_action_final_val_meta[k] = sum(goal_action_sums_meta[k]) / float(len(goal_action_sums_meta[k]))
+
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+
+    linestyles = ['r--','g-.','b:']#,'b--','b+','g--','g+','c--','c+']
+
+    for k,v in goal_action_final_val_vanilla.items():
+        print "  Goal #"+str(k)+" has average execution cost "+str(v) 
+
+    #x_vals = , goal)
+
+    # now plot the three lines
+    ax.plot(goal_action_final_val_vanilla.keys(),goal_action_final_val_vanilla.values(),'r--', label='Re-planning',lw=3)
+    ax.plot(goal_action_final_val_gda.keys(),goal_action_final_val_gda.values(),'g-.', label='GDA',lw=3)
+    ax.plot(goal_action_final_val_meta.keys(),goal_action_final_val_meta.values(),'b:', label='Meta',lw=3)
+    ax.set_xlim(0,550)
+
+    ax.legend(loc=2)
+    ax.set_xlabel("Beacon Activation Goals Achieved")
+    ax.set_ylabel("Execution Cost (No. of Actions Executed)")
+    ax.set_title("Execution Cost vs. Goal Achievement in NBeacons")# (Wind ="+str(WIND_SCHEDULE_1)+")")
+    plt.show()
+    
+
+def graph_each(n_files):
+    import matplotlib.pyplot as plt
+
+    files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
+    datafiles = map(lambda f: DATADIR+f, files[-(n_files):])
+
+    linestyles = {'v':'r--','g':'g-.','m':'b:'}
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    file_count = 0
+    for df in datafiles:
+        header = True
+        print "Getting data from file "+str(df)
+        with open(df,'r') as f:
+            for line in f.readlines():
+                if header: 
+                    header = False
+                else:
+                    quote_1 = line.strip().find("\"")
+                    quote_2 = line.strip().find("\"",quote_1+1)
+                    goals_achieved_str = line[quote_1+1:quote_2]
+                    #print "Goals achieved: "+str(goals_achieved_str)
+                    
+                    
+                    row = line[:quote_1]
+                    row = line.strip().split(',')
+                    #wind_str = row[4]
+                    #print "row is "+str(row)
+                    agent_type = row[2]
+                    #run_id = row[0]
+                    
+                    goals_action_data = eval('list('+goals_achieved_str+')')
+                    goals_achieved_data = map(lambda t: t[0], goals_action_data)
+                    actions_executed_data = map(lambda t: t[2], goals_action_data)
+
+                    if agent_type == 'v':
+                        agent_name = 'Vanilla'
+                        print "  Finished processing vanilla data"
+                    elif agent_type == 'g':
+                        agent_name = 'GDA'
+                        print "  Finished processing gda data"
+                    elif agent_type == 'm':
+                        agent_name = 'Meta'
+                        print "  Finished processing meta data"
+
+                    ax.plot(goals_achieved_data,actions_executed_data,linestyles[agent_type], label=agent_name+str(file_count),lw=2)
+
+
+        file_count+=1
+    ax.legend(loc=2)
+    ax.set_xlabel("Beacon Activation Goals Achieved")
+    ax.set_ylabel("Execution Cost (No. of Actions Executed)")
+    ax.set_title("*EACH* Execution Cost vs. Goal Achievement in NBeacons")# (Wind ="+str(WIND_SCHEDULE_1)+")")
+    plt.show()
+
+
 def goalsperactionslinegraph(prev_file):
     import matplotlib.pyplot as plt
     
@@ -435,8 +613,10 @@ def goalsperactionslinegraph(prev_file):
     goals_achieved = []
     actions_executed = []
     wind_str = ""
-    linestyles = ['r--','b+','g-']#,'b--','b+','g--','g+','c--','c+']
+    linestyles = ['r--','g-.','b:']#,'b--','b+','g--','g+','c--','c+']
     line_style_index = 0
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
     with open(datafile,'r') as f:
         for line in f.readlines():
             if header: 
@@ -445,13 +625,13 @@ def goalsperactionslinegraph(prev_file):
                 quote_1 = line.strip().find("\"")
                 quote_2 = line.strip().find("\"",quote_1+1)
                 goals_achieved_str = line[quote_1+1:quote_2]
-                print "Goals achieved: "+str(goals_achieved_str)
+                #print "Goals achieved: "+str(goals_achieved_str)
                 
                 
                 row = line[:quote_1]
                 row = line.strip().split(',')
                 #wind_str = row[4]
-                print "row is "+str(row)
+                #print "row is "+str(row)
                 agent_type = row[2]
                 #run_id = row[0]
                 
@@ -459,23 +639,26 @@ def goalsperactionslinegraph(prev_file):
                 goals_achieved_data = map(lambda t: t[0], goals_action_data)
                 actions_executed_data = map(lambda t: t[2], goals_action_data)
                 if agent_type == 'v':
-                    agent_name = 'Vanilla'
+                    agent_name = 'Re-planning'
+                    ax.set_xlim(0,max(goals_achieved_data))
                 elif agent_type == 'g':
                     agent_name = 'GDA'
                 elif agent_type == 'm':
                     agent_name = 'Meta'
                       
-                plt.plot(goals_achieved_data,actions_executed_data,linestyles[line_style_index], label=agent_name)
+                ax.plot(goals_achieved_data,actions_executed_data,linestyles[line_style_index], label=agent_name,lw=4)
                 line_style_index+=1
             
             # plot straight lines where wind strength changes
             
             
-                
-        plt.legend(loc=2)
-        plt.xlabel("Beacon Activation Goals Achieved")
-        plt.ylabel("Execution Cost (# of Actions Executed)")
-        plt.title("Execution Cost vs. Goal Achievement in NBeacons (wind_schedule="+str(WIND_SCHEDULE_1)+")")
+        #ax.set_yscale('log')
+        #ax.set_ylim(2000)
+        ax.legend(loc=2)
+
+        ax.set_xlabel("Beacon Activation Goals Achieved")
+        ax.set_ylabel("Execution Cost (No. of Actions Executed)")
+        ax.set_title("Execution Cost vs. Goal Achievement in NBeacons")# (Wind ="+str(WIND_SCHEDULE_1)+")")
         plt.show()
         
                 #goals_achieved.append(row[3])
@@ -703,7 +886,15 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'graph':
         # produce graph instead of running experiment
         if len(sys.argv) > 2:
-            goalsperactionslinegraph(int(sys.argv[2]))
+            if len(sys.argv) > 3:
+                if str(sys.argv[2]) == 'multiple':
+                    print "graphing an average of the last "+sys.argv[2]+" runs"
+                    multiple_goalsperaction(int(sys.argv[3]))
+                elif str(sys.argv[2]) == 'each':
+                    print "graphing each of the last "+sys.argv[3]+" runs"
+                    graph_each(int(sys.argv[3]))
+            else:
+                goalsperactionslinegraph(int(sys.argv[2]))
         else:
             goalsperactionslinegraph(0)
     elif len(sys.argv) > 1 and sys.argv[1] == 'graphslices':
@@ -713,6 +904,6 @@ if __name__ == "__main__":
         exp_num = 0
         while exp_num < NUM_EXPERIMENTS:
             runexperiment()
-            time.sleep(10) # let my cpu rest a little bit
+            time.sleep(180) # let my cpu rest a little bit
             exp_num+=1
             

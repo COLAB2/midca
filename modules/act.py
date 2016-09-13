@@ -134,6 +134,11 @@ class SimpleAct(base.BaseModule):
                         # print the whole plan
                         print "Selected action", action, "from plan:\n", plan
                 self.mem.add(self.mem.ACTIONS, [action])
+                actions = self.meme.get(self.mem.ACTIONS)
+                if len(actions) > 400:
+                    actions = actions[200:] # trim off old stale actions
+                    self.mem.set(self.mem.ACTIONS, actions)
+                    #print "Trimmed off 200 old stale actions to save space"
                 plan.advance()
 
                 if trace: trace.add_data("ACTION", action)

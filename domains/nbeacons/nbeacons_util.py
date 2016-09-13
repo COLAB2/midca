@@ -16,7 +16,7 @@ class NBeaconGrid():
     BEACONS = []
     DIM = -1
     AGENT_NAME = 'Curiosity'
-    BORDER = 2
+    BORDER = 5
     
     def __init__(self):
         pass
@@ -72,7 +72,7 @@ class NBeaconGrid():
         self.TILE_GRID = self.generate_tiles(width,height)
         self.BEACONS = self.generate_beacons(num_beacons)
         self.QUICKSAND = self.generate_quicksand(num__quicksand_spots=num_quicksand_spots)
-        self.BORDER = 2
+        
     
     def get_inner_tile_grid(self):
         inner_tiles = []
@@ -82,8 +82,8 @@ class NBeaconGrid():
                 inner_col = []
                 for tile in col:
                     if ((not (tile.getX() == (self.DIM / 2) and (tile.getY() == self.DIM / 2))) and  
-                        (tile.getX() > self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
-                        tile.getY() > self.BORDER and tile.getY() < (self.DIM - self.BORDER))):
+                        (tile.getX() >= self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
+                        tile.getY() >= self.BORDER and tile.getY() < (self.DIM - self.BORDER))):
                         inner_tiles.append(tile)
                         #print "adding tile "+str(tile)
                         total_tile_count += 1 

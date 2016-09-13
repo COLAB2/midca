@@ -134,6 +134,7 @@ class MRSimpleDetect(base.BaseModule):
         self.exp1 = self.createAlwaysExplanationExp()
         self.updated_to_move2 = False
         self.updated_to_move3 = False #hacky i know
+        self.updated_to_move4 = False #hacky i know
     
     def createAlwaysExplanationExp(self):
         # creates the expectation that there is always an explanation following an 
@@ -208,6 +209,69 @@ class MRSimpleDetect(base.BaseModule):
                         results = [ \
                             condition(agent-at, [agnt, start], negate = TRUE), \
                             condition(agent-at, [agnt, dest])])'
+                            
+        elif wind_str == 3:
+            print "wind_str = "+str(wind_str)
+            if mud:
+                new_op_str = 'operator_no_side_effect(moveeast4, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (mid3, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(quicksand, [mid], negate = TRUE), \
+                            condition(quicksand, [mid2], negate = TRUE), \
+                            condition(quicksand, [mid3], negate = TRUE), \
+                            condition(quicksand, [dest], negate = TRUE), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, mid2]), \
+                            condition(adjacent-east, [mid2, mid3]), \
+                            condition(adjacent-east, [mid3, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+                print "new op str is now moveast4"
+            else:
+                raise Exception("SHOULD NOT BE HERE - move east 4 with no mud")
+                new_op_str = 'operator_no_side_effect(moveeast3, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, mid2]), \
+                            condition(adjacent-east, [mid2, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+    
+    
+        elif wind_str == 4:
+            print "wind_str = "+str(wind_str)
+            if mud:
+                new_op_str = 'operator_no_side_effect(moveeast5, \
+                        args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (mid3, TILE), (mid4, TILE), (dest, TILE)], \
+                        preconditions = [ \
+                            condition(free, [agnt]), \
+                            condition(quicksand, [mid], negate = TRUE), \
+                            condition(quicksand, [mid2], negate = TRUE), \
+                            condition(quicksand, [mid3], negate = TRUE), \
+                            condition(quicksand, [mid4], negate = TRUE), \
+                            condition(quicksand, [dest], negate = TRUE), \
+                            condition(agent-at, [agnt, start]), \
+                            condition(adjacent-east, [start, mid]), \
+                            condition(adjacent-east, [mid, mid2]), \
+                            condition(adjacent-east, [mid2, mid3]), \
+                            condition(adjacent-east, [mid3, mid4]), \
+                            condition(adjacent-east, [mid4, dest])], \
+                        results = [ \
+                            condition(agent-at, [agnt, start], negate = TRUE), \
+                            condition(agent-at, [agnt, dest])])'
+                print "new op str is now moveast5"
+    
+            else:
+                raise Exception("WHY IS MUD FALSE?????? ")
+            
+            
         return new_op_str
     
     def run(self, cycle, verbose=2):
@@ -225,17 +289,38 @@ class MRSimpleDetect(base.BaseModule):
         exp_violation = self.exp1.apply_on_curr_trace(self.mem)
         
         if exp_violation:
+            
+            # get the distance the wind pushed the agent from its start location
+            # agents last action:
+            last_actions = None
+            dist = -1
+            try:
+                last_actions = self.mem.get(self.mem.ACTIONS)[-1]
+                last_action = last_actions[0]
+                last_action_start = str(last_action.args[1])
+                #print "last action start is "+str(last_action_start)
+                agents_loc = str(self.world.get_atoms(filters="agent-at")[0].args[1])
+                #print "agents_loc is "+str(agents_loc)
+                # now compute distance because its relevant
+                last_action_start = last_action_start[2:] #remove 'Tx'
+                start_x = int(last_action_start.split('y')[0])
+                start_y = int(last_action_start.split('y')[1])
+                #print "here"
+                agent_loc = agents_loc[2:] # remove the 'Tx'
+                agent_x = int(agent_loc.split('y')[0])
+                agent_y = int(agent_loc.split('y')[1])
+                #print "here"
+                dist = (abs(start_x - agent_x)+abs(start_y-agent_y))
+                self.wind_str = dist-1
+                print "Recorded a wind strength of "+str(self.wind_str)
+                
+            except:
+                raise Exception("Problem getting last action in meta interpret")
+            
             # hack, just go ahead and update the operator here
             # always assume move east, just update it assuming
             new_move_op_str = ""
-            if self.wind_str == 0 and not self.updated_to_move2:
-                self.wind_str +=1
-                new_move_op_str = self.get_new_moveeast(self.wind_str)
-                self.updated_to_move2 = True
-            elif self.wind_str == 1 and self.updated_to_move2 and not self.updated_to_move3:
-                self.wind_str +=1
-                new_move_op_str = self.get_new_moveeast(self.wind_str)
-                self.updated_to_move3 = True
+            new_move_op_str = self.get_new_moveeast(self.wind_str)
                 
             try:
                 # 1. get the current world state
@@ -256,15 +341,17 @@ class MRSimpleDetect(base.BaseModule):
                     
                     
                 # 4. replace with new moveeast operator
-                print "Now creating the new operator"
+                #print "Now creating the new operator"
+                #print "new op str is now: "
+                #print str(new_move_op_str)
                 worldsim_op = domainread.load_operator_str(new_move_op_str)
-                print "We now have worldsim op "+str(worldsim_op)
-                print "Adding it into the world"
+                #print "We now have worldsim op "+str(worldsim_op)
+                #print "Adding it into the world"
                 self.world.operators[worldsim_op.name] = worldsim_op    
-                print "Saving world into memory"    
+                #print "Saving world into memory"    
                 #self.mem.add(self.mem.STATES, self.world)
                 self.already_switched_moveeast = True
-                #print "Now adding in the new operator"
+                print "Successfully added in the new operator "+str(worldsim_op.name)
                 
                 if self.verbose >= 1: print "The following operators are available for planning: "
                 if self.verbose >= 1: 

@@ -4,11 +4,15 @@ import shlex, subprocess
 
 from collections import OrderedDict
 
+
+
 """
 How-To:
 1. In each module, before storing data into the trace call add_module() then
 2. for each piece of data you want to add into the trace, call add_data()
 """
+
+MAX_TRACE_SIZE = 100
 
 class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
@@ -53,7 +57,19 @@ class CogTrace:
            cycle := integer representing a cycle
            module := string representing the name of a module
         """
-
+        
+        
+        if self.all_modules and len(self.all_modules) > MAX_TRACE_SIZE:
+            i = MAX_TRACE_SIZE - 50
+            for j in range(i):
+                self.all_modules.popitem(last=False)
+            #print("Just popped "+str(i)+"items from all_modules")
+        
+        trace_cycle_keys = self.trace.keys()
+        if len(trace_cycle_keys) > MAX_TRACE_SIZE:
+            min_key = min(trace_cycle_keys)
+            del self.trace[min_key]
+             
         if cycle in self.trace.keys():
             if len(self.trace[cycle]) > 0 and module in self.trace[cycle].keys():
                 #print("Changing data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
@@ -75,6 +91,7 @@ class CogTrace:
         """
         data_type is one of "WORLD, GOALS, etc"
         """
+        
         if self.cycle != -1 and self.module != "":
             self.trace[self.cycle][self.module].append([data_type,data])
             self.all_modules[(self.cycle,self.module)].append([data_type,data])

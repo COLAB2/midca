@@ -280,6 +280,7 @@ class NBeaconsActionSimulator:
         '''
         # bump counter for actions executed
         self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
+    
         
         #print "dir(action) = "+str(dir(action))
         if 'move' in action.op:
@@ -330,10 +331,10 @@ class NBeaconsActionSimulator:
                     agent_stuck_inbetween = False
                     if self.verbose >=1 : print "len(action.args) = "+str(len(action.args))
                     if 'move' in str(action) and len(action.args) > 3:
-                        print "here"
+                        #print "here"
                         start_tile = action.args[1]
                         tiles_passed = action.args[2:-1] # [0] = name (not a tile), [1] = start (already checked), [-1] = end (will be checked later)
-                        print "tiled passed = "+str(tiles_passed)
+                        #print "tiled passed = "+str(tiles_passed)
                         # check to see if any of these have mud, in order, and if they do
                         # place the agent there and make him stuck
                         for tile in tiles_passed:
@@ -398,22 +399,22 @@ class NBeaconsActionSimulator:
     def sim_action_push(self):
         agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
         # get agent's start loc
-        print "agent-at-atom = "+str(agent_at_atom)
+        if self.verbose >= 1: print "agent-at-atom = "+str(agent_at_atom)
         start = str(agent_at_atom[1])
         # get adjacent east atom
         adj_atoms_east_to_agent = self.world.get_atoms(filters=['adjacent-east',start])
         adj_atom_east = None
         for a in adj_atoms_east_to_agent:
-            print "looking at a = "+str(a)
+            if self.verbose >= 1: print "looking at a = "+str(a)
             if str(a.args[0]) == start:
                 adj_atom_east = a
-        print "adj_east_to_agent = "+str(adj_atom_east)
+        if self.verbose >= 1: print "adj_east_to_agent = "+str(adj_atom_east)
         # get new location
         dest = str(adj_atom_east.args[1])
         # now 'perform move'
         self.world.add_fact('agent-at',['Curiosity',dest])
         self.world.remove_fact('agent-at',['Curiosity',start])
-        print "Simulated a wind push from "+str(start)+" to "+str(dest)
+        if self.verbose >= 1: print "Simulated a wind push from "+str(start)+" to "+str(dest)
         if self.filehandle: self.filehandle.write("Simulated a wind push from "+str(start)+" to "+str(dest)+"\n")
         
     def run(self, cycle, verbose = 2):

@@ -66,8 +66,8 @@ class MIDCA:
         self.metaPhaseNum = 1
         self.logger = logging.Logger(verbose=verbose)
         self.metaEnabled = metaEnabled
-        self.mem.enableTrace()
         if metaEnabled:
+            self.mem.enableTrace()
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
             self.mem.enableMeta(phaseManager)
@@ -476,14 +476,21 @@ class PhaseManager:
                 if val == "q":
                     break
                 elif val == "skip":
-                    self.one_cycle(verbose = 0, pause = 0)
+                    if self.metaEnabled:
+                        self.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
+                    else:
+                        self.one_cycle(verbose = 0, pause = 0)
                     print("cycle finished")
                 elif val.startswith("skip"):
                                     #disable output and run multiple cycles
                     try:
                         num = int(val[4:].strip())
                         for i in range(num):
-                            self.one_cycle(verbose = 0, pause = 0) # TODO - use several_cycles() instead?
+                            if self.metaEnabled:
+                                self.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
+                            else:
+                                self.one_cycle(verbose = 0, pause = 0)
+                            # TODO - use several_cycles() instead?
                             #print("  Score is "+str(self.mem.get("Score")))
                             #print("  cycle "+str(i))
                             #self.display(self.midca.world)
