@@ -6,15 +6,30 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 from __future__ import print_function
 from MIDCA.modules._plan.pyhop import *
+from MIDCA import base
+from MIDCA.worldsim import domainread, stateread, blockstate
+from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from MIDCA.modules._plan import methods_extinguish, operators_extinguish, monitors
 
-import blocks_world_operators
-print('')
-print_operators()
+import os
+import inspect
+import time
 
-import blocks_world_methods
-print('')
-print_methods()
+methods_extinguish.declare_methods()
+operators_extinguish.declare_ops()
+monitors.declare_monitors()
 
+thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
+MIDCA_ROOT = thisDir + "/../"
+domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim"
+stateFile = MIDCA_ROOT + "worldsim/states/state2.sim"
+
+
+world = domainread.load_domain(domainFile)
+state_str = open(stateFile).read()
+
+stateread.apply_state_str(world, state_str)
 
 #############     beginning of tests     ################
 

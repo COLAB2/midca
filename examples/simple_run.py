@@ -15,16 +15,21 @@ cript runs a
  
  
  
- not start, all goals are input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
+ not start, all goals are
+  input by the user, and state changes are only caused by MIDCA actions and user intervention through a text interface.
 '''
+
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
+
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim", stateFile = MIDCA_ROOT + "worldsim/states/state2.sim")
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
-myMidca.storeHistory = True
+myMidca.storeHistory = False
+
+
 myMidca.init()
 
 myMidca.run()

@@ -89,7 +89,8 @@ from __future__ import print_function
 import copy,sys, pprint
 from threading import Thread
 import time
-
+import datetime
+from __builtin__ import str
 ############################################################
 # States and goals
 
@@ -184,18 +185,20 @@ def check_monitors(depth, state):
 #     print("****The monitors are running:******") 
 #     for m in generated_monitors:
 #         print(m.name.__name__+" "+ m.block + " " + str(m.is_fired))
-    print("**********") 
+    #print("**********") 
       
     for m in generated_monitors:
-        if (depth == 50) and (state.fire['XX_'] == True):
+        if (depth == Delay) and (state.fire['XX_'] == True):
             m.is_fired == True
             state.fire['XX_'] = False
+            generated_monitors.remove(m)
             return m
-        if m.is_fired == True:
-            #m.is_fired = False
-            #m.is_activated = False
-            #generated_monitors.remove(m)
-            return m
+        
+#         if m.is_fired == True:
+#             m.is_fired = False
+#             m.is_activated = False
+#             generated_monitors.remove(m)
+#             return m
     return None
 
 def RemoveMonitors(method_name):
@@ -219,25 +222,43 @@ def print_methods(mlist=methods):
 
 ############################################################
 # The actual planner
+Delay = 0
 
-def pyhop(state,tasks,verbose=0):
+def pyhop(state,tasks, delay = 100, filename = "D:/exp1/a.txt",  verbose=0):
     """
     Try to find a plan that accomplishes tasks in state. 
     If successful, return the plan. Otherwise return False.
     """
+    Delay = delay
+    global counter, Delay
+    print("dd" + str(Delay))
+    state.fire['XX_'] = True
+    counter = 0
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
-    start_time = time.time()
+    start_time = datetime.datetime.now()
+    s_time = time.time()
     result = seek_plan(state,tasks,[],0, verbose)
-    print("--- %s seconds ---" % (time.time() - start_time))
+    
+    end_time = datetime.datetime.now()
+    d = end_time - start_time
+    mili_d = d.microseconds
+    print("--- %s seconds ---" % (time.time() - s_time))
+    print("count"+ str(counter))
+    f = open(filename, 'a')
+    f.write(str(mili_d))
+    
+    f.write("\n")
+   
     if verbose>0: print('** result =',result,'\n')
     return result
 
 fired_monitor = None
+counter = 0
 def seek_plan(state,tasks,plan,depth,verbose=0):
-    global fired_monitor
+    global fired_monitor, counter
+    counter = counter + 1
     
-    
-    print('depth {} tasks {}'.format(depth,tasks))
+    #print('depth {} tasks {}'.format(depth,tasks))
 #     for task in tasks:
 #         for elm in task:
 #             print(elm + " ")
@@ -248,7 +269,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-#     time.sleep(3)
+    #time.sleep(3)
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
@@ -258,8 +279,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     if fired_monitor:
         print("monitor fired at depth " + str(depth))
         if fired_monitor.depth < depth:
-            print("The clear-block monitor is fired for block " + fired_monitor.block+
-                  ", need to backtrack to level " + str(fired_monitor.depth))
+            #print("The clear-block monitor is fired for block " + fired_monitor.block+
+                 # ", need to backtrack to level " + str(fired_monitor.depth))
             return False
         else:
             fired_monitor.is_fired = False
@@ -276,11 +297,11 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
             if newstate:
                 if task1[0] in monitors:
                         monitor_list = monitors[task1[0]]
-                        print("monitor is generated for " + task1[0] + " at depth " + str(depth))
+                        #print("monitor is generated for " + task1[0] + " at depth " + str(depth))
                         
                         for monitor in monitor_list:
                             Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
-      
+                        #print("monitor is running")
                 solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
                 if solution != False:
                     return solution
@@ -294,7 +315,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                     print('depth {} new tasks: {}'.format(depth,subtasks))
                 if subtasks != False:
                     #add monitors here for the methods
-                    print("next subtask: " + task1[0])
+                    #print("next subtask: " + task1[0])
                     if task1[0] in monitors:
                         monitor_list = monitors[task1[0]]
                         print("monitor is generated for " + task1[0] + " at depth " + str(depth))
@@ -304,25 +325,25 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                     solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
                     if solution == False:
                         if fired_monitor and fired_monitor.depth > depth:
-                            print("fired-monitor")
-                            print(plan)
+                           # print("fired-monitor")
+                           # print(plan)
                             fired_monitor.is_fired = False
                             generated_monitors = []
                             #generated_monitors.remove(fired_monitor)
                             
                             k = 0
                             state.fire['XX_'] = False
-                            solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
+                            #solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
                             
                             #cut from the plan
                             #here I should check to see which method should be run next 
                             # here I should run all the methods to see which one work
-#                             for task in tasks:
-#                                 print("task = "+task[0])
-#                                 if task[0] != 'move_blocks':
-#                                     k = k + 1
-#                                 else:
-#                                     break
+                            for task in tasks:
+                                #print("task = "+task[0])
+                                if task[0] != 'move_blocks':
+                                    k = k + 1
+                                else:
+                                    break
 #                             for task in tasks:
 #                                 print("trying this task to see if it works with the new state "+task[0])
 #                                 print(str(k))
@@ -332,7 +353,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
 #                                 else:
 #                                     break
                                 
-                            #solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
+                            solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
                             
                         else:
                             print("'" + task1[0] + "' was failed, it will choose another method--")

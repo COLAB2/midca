@@ -110,17 +110,19 @@ def pos_of_block(state, depth, b, task_name):
         
         c = state.pos[b]
         print c
-        
-#         while(m.is_fired == False):
-#             i = i + 1
-#             time.sleep(2)
-#             if i > 5:
-#                 if b == "C_":
-#                     m.is_fired = True
-#                     state.clear[c] = True
-#                     state.pos.update({"C_" : 'table'})
-#                     print("monitor: " + b + "is not on " + c + "anymore")
-#                         
+        i = 0
+        while(m.is_fired == False):
+            i = i + 1
+            time.sleep(2)
+            if i > 5:
+                if b == "F_":
+                    m.is_fired = True
+                    state.clear[c] = True
+                    state.pos.update({"F_" : 'table'})
+                    print("monitor: " + b + "is not on " + c + "anymore")
+                    m.is_fired = True
+                else:
+                    break
 #             if state.pos[b] != c:
 #                 print("monitor: " + b + "is not on " + c + "anymore")
 #                 m.is_fired = True
@@ -136,7 +138,7 @@ def declare_monitors(longApprehend = True):
 #     #unstack
     #pyhop.declare_monitors('unstack', clear_block)
 #     #state.pos[b] == c
-    #pyhop.declare_monitors('unstack', pos_of_block)
+   # pyhop.declare_monitors('unstack', pos_of_block)
    #pickup
     #pyhop.declare_monitors('pickup', clear_block)
     pyhop.declare_monitors('put_out', on_fire)

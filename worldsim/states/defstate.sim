@@ -10,7 +10,7 @@ on(B_, A_)
 on(D_, B_)
 on-table(C_)
 on-table(A_)
-on-table(F_)
+on(F_,C_)
 
 block(A_)
 block(B_)
@@ -21,7 +21,7 @@ table(table)
 
 
 clear(D_)
-clear(C_)
+
 clear(F_)
 arm-empty()
 
