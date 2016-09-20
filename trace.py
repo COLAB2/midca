@@ -4,8 +4,6 @@ import shlex, subprocess
 
 from collections import OrderedDict
 
-
-
 """
 How-To:
 1. In each module, before storing data into the trace call add_module() then

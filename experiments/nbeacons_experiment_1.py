@@ -61,7 +61,7 @@ def singlerun_output_str(run_id, num_cycles, curr_midca, agent_type, wind_dir, w
     actions_executed = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
 
     result = (str(run_id) + ","
-              + str(NUM_CYCLES) + ","
+              + str(num_cycles) + ","
               + str(agent_type) + ","
               + str(wind_dir) + ","
               + str(wind_strength) + ","
@@ -86,18 +86,19 @@ def singlerun(args):
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     if agent_type == 'm':
-        midca_inst.run_cycles(META_NUM_CYCLES,meta=True)
         print "Running Meta agent with "+str(META_NUM_CYCLES)
+        midca_inst.run_cycles(META_NUM_CYCLES,meta=True)
+        # prepare data for writing output string
+        result_str = singlerun_output_str(run_id,META_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'g':
-        midca_inst.run_cycles(GDA_NUM_CYCLES)
         print "Running GDA agent with "+str(GDA_NUM_CYCLES)
+        midca_inst.run_cycles(GDA_NUM_CYCLES)
+        result_str = singlerun_output_str(run_id,GDA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'v':
-        midca_inst.run_cycles(VANILLA_NUM_CYCLES)
         print "Running Vanilla agent with "+str(VANILLA_NUM_CYCLES)
+        midca_inst.run_cycles(VANILLA_NUM_CYCLES)
+        result_str = singlerun_output_str(run_id,VANILLA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
 
-        
-    # prepare data for writing output string
-    result_str = singlerun_output_str(run_id,NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     return result_str 
 
 def runexperiment():  
@@ -441,7 +442,10 @@ def multiple_goalsperaction(n_files):
     '''
     Uses the last n files to graph the data. Averages the values per goal
     '''
+    import matplotlib
     import matplotlib.pyplot as plt
+
+    DATADIR = "C:\\Users\\Dustin\\Desktop\\first_average_ten_runs_data\\"
 
     files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
     datafiles = map(lambda f: DATADIR+f, files[-(n_files):])
@@ -541,16 +545,27 @@ def multiple_goalsperaction(n_files):
 
     #x_vals = , goal)
 
+
+    font = {'family' : 'normal',
+        'weight' : 'normal',
+        'size'   : 16}
+
+    matplotlib.rc('font', **font)
+
     # now plot the three lines
-    ax.plot(goal_action_final_val_vanilla.keys(),goal_action_final_val_vanilla.values(),'r--', label='Re-planning',lw=3)
-    ax.plot(goal_action_final_val_gda.keys(),goal_action_final_val_gda.values(),'g-.', label='GDA',lw=3)
-    ax.plot(goal_action_final_val_meta.keys(),goal_action_final_val_meta.values(),'b:', label='Meta',lw=3)
+    ax.plot(goal_action_final_val_vanilla.keys(),goal_action_final_val_vanilla.values(),'r--', label='Replanning',lw=4)
+    ax.plot(goal_action_final_val_gda.keys(),goal_action_final_val_gda.values(),'g-.', label='GDA',lw=4)
+    ax.plot(goal_action_final_val_meta.keys(),goal_action_final_val_meta.values(),'b:', label='Meta',lw=4)
     ax.set_xlim(0,550)
+    ax.set_ylim(0,8000)
 
     ax.legend(loc=2)
     ax.set_xlabel("Beacon Activation Goals Achieved")
     ax.set_ylabel("Execution Cost (No. of Actions Executed)")
     ax.set_title("Execution Cost vs. Goal Achievement in NBeacons")# (Wind ="+str(WIND_SCHEDULE_1)+")")
+    #ax.xaxis.label.set_size(20)
+    #ax.yaxis.label.set_size(20)
+    #ax.title.label.set_size(40)
     plt.show()
     
 
