@@ -414,8 +414,6 @@ class HeuristicSearchPlanner(base.BaseModule):
     
     def __init__(self, hn=lambda n: n.get_depth(), dn=None):
         self.hn = hn
-        #if not dn:
-        #    self.dn = self.bfs_dn
     
     def init(self, world, mem):
         self.world = world
@@ -425,14 +423,58 @@ class HeuristicSearchPlanner(base.BaseModule):
     def get_all_instantiations(self, world, operator):
         '''
         Returns all possible operator instantiations
+        Note: If the state is more than 50 or so atoms, 
+              this could be a slow and expensive
+              function
         '''
         
+        # need to preserve order of elements of the following lists
+        arg_names = []
+        arg_types = []
+            
+        # initialize with objnames
+        for o in operator.objnames:
+            arg_names.append(o)
+            arg_types.append(None)
         
-        # go through each precondition
-        #print "operator is "+str(operator)
-        #print "operator takes args: " +str(operator.objnames)
+        # find the correct types
+        for precond in operator.preconditions:
+            args = map(str,precond.atom.args)
+            for i in range(len(args)):
+                arg_names_i = arg_names.index(args[i])
+                if arg_types[arg_names_i] is None:
+                    arg_types[arg_names_i] = precond.argtypes[i] 
         
-        possible_arg_values = {}
+        def get_type(t):
+            return world.get_objects_by_type(t)
+        
+        # get all objects that match each type
+        possible_bindings = map(get_type,arg_types)
+        
+        # generate all possible arrangements
+        permutations = itertools.product(*possible_bindings)
+        
+        # now run through all possible bindings
+        applicable_permutations = []
+        num_permutations = 0
+        for c in permutations:
+            num_permutations+=1
+            op_inst = operator.instantiate(list(c))
+            op_inst.set_args(list(c))
+            if world.is_applicable(op_inst):
+                
+                applicable_permutations.append(op_inst)
+                # break # uncomment this line if you just want to get the first valid instantiation
+            
+        return applicable_permutations
+    
+    def get_instantiations_nbeacons(self, world, operator):
+        '''
+        Returns possible operator instantiations specifically optimized for operating in the NBeacons
+        domain. This function returns a significantly smaller number of possible instantiations of an
+        operator compared to instead of get_all_instantiations() 
+        '''
+        
         # using two lists instead of a dict to preserve order
         arg_names = []
         arg_types = []
@@ -633,29 +675,63 @@ class HeuristicSearchPlanner(base.BaseModule):
         #    print "perm = "+str(perm)
         
         return applicable_permutations
+    
         
     def brute_force_decompose(self, node, visited):
-        # get all operators (pre-variable bindings) in MIDCA
-        #print str(self.world.operators)
-        t0 = time.time()
+        '''
+        get all operators (pre-variable bindings) in MIDCA
+        '''
+        
         child_nodes = []
-        t1=t0
         
         available_operators = node.world.operators.values()
+            
+        for op in available_operators:
+            inst_operators = self.get_all_instantiations(node.world,op)
+            for inst_op in inst_operators:
+                
+                new_world = node.world.copy()
+                
+                try:
+                    new_world.apply(inst_op)
+                except:
+                    print("====== Tried to apply action:")
+                    print str(inst_op)
+                    print("====== On world:")
+                    print str(new_world)
+                    print("====== But Failed:")
+                
+                already_visited = False 
+                
+                for w in map(lambda n: n.world, visited):
+                    if new_world.equal(w):
+                        already_visited = True
+                 
+                if not already_visited:
+                    child =  HSPNode(new_world.copy(),node,node.actions_taken+[inst_op])
+                    child_nodes.append(child)
+            
+        return child_nodes
+
+    def brute_force_decompose_nbeacons(self, node, visited):
+        '''
+        Get all operators (pre-variable bindings) in MIDCA
         
+        This function is specific to NBeacons domain with MIDCA.
+        See brute_force_decompose() for a general solution
+        '''
         
+        child_nodes = []
+        
+        available_operators = node.world.operators.values()
         
         is_stuck = len(node.world.get_atoms(filters=['stuck'])) > 0
         if is_stuck:
             available_operators = filter(lambda op: 'push' in str(op), node.world.operators.values())
-            #print "available operators are "+str(map(str,available_operators))
-            
+        
         for op in available_operators:
             inst_operators = self.get_all_instantiations(node.world,op)
-            t2 = time.time()
-            timestr = '%.5f' % (t2-t1)
-            #print("Took "+timestr+"s to get "+str(len(inst_operators))+ " instantiation(s) of "+str(map(lambda a: a.operator.name,inst_operators)))
-            t1=t2
+
             for inst_op in inst_operators:
                 
                 #node.world.apply_midca_action(inst_op)
@@ -688,10 +764,8 @@ class HeuristicSearchPlanner(base.BaseModule):
                     child_nodes.append(child)
                     #print "adding child node with operator "+str(inst_op.operator.name)+" and depth "+str(child.depth)
             
-        t1 = time.time()
-        timestr = '%.5f' % (t1-t0)
-        #print("Took "+timestr+"s to get all "+str(len(child_nodes))+" child nodes")
         return child_nodes
+
 
     def nbeacons_heuristic(self,goals,infinity=10000):
         # first define internal heuristic, then return it
@@ -715,10 +789,6 @@ class HeuristicSearchPlanner(base.BaseModule):
             for goal in goals:
                 if 'activated' in str(goal):
                     goal_type_beacon_activation = True
-            
-            #print 'has_free_goal = '+str(goal_type_free_goal)
-            #print 'agent-at-goal = '+str(goal_type_agent_at)
-            #print 'activated_goal = '+str(goal_type_beacon_activation)
             
             if goal_type_free_goal:
                 # all push actions
@@ -936,11 +1006,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
-        #pr = cProfile.Profile()
-        #pr.enable()
-        
-        # now actual code
-        #self.world = self.mem.get(self.mem.STATES)[-1]
+
         goals = self.mem.get(self.mem.CURRENT_GOALS)
         
         midcaPlan = None
@@ -993,13 +1059,3 @@ class HeuristicSearchPlanner(base.BaseModule):
                 
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
-        #except:
-            #    print "Planning Failed, skipping"
-                
-        # now finish the profiling
-        #pr.disable()
-        #s = StringIO.StringIO()
-        #sortby = 'tottime'
-        #ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-        #ps.print_stats()
-        #print s.getvalue()

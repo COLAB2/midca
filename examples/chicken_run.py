@@ -28,7 +28,7 @@ GOAL_GRAPH_CMP_FUNC = None # not used in this example
 
 # Load Domain Files  
 world = domainread.load_domain(DOMAIN_FILE)
-stateread.apply_state_file(world, DOMAIN_FILE)
+stateread.apply_state_file(world, STATE_FILE)
 
 # Creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
