@@ -9,8 +9,6 @@ class ROSObserver:
 		self.mem = mem
 		self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 	
-	
-		
 	def run(self, cycle, verbose = 2):
 		#self.ObserveWorld() 
 		detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)

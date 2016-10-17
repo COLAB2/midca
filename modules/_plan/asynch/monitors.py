@@ -59,18 +59,13 @@ def clear_block(state, depth, task):
             pyhop.generated_monitors.append(m)
             
             
-#             rospy.loginfo("Reading point commands from topic " + unique_topic)
-#         #rospy.Subscriber(targetTopic, String, fake_point) 
-#             rospy.Subscriber(m.topic, String, monitor_fire_callback)    
-            
             block_on_top_of_this_block = clear_block_monitor.monitor_clear_block(b1)
             if block_on_top_of_this_block:
                 print("monitor fires!!")
                 m.is_fired = True 
                 set_clear_status(state, b1, 'not clear')
                 set_position(state, block_on_top_of_this_block, b1)
-                #update the state
-                #?????????????????
+            
 
 
 def clear_block_stack(state, depth, task):

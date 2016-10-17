@@ -125,10 +125,40 @@ def publish(msg, topic):
         pub.publish(msg)
         time.sleep(2)
     
+block_name = "red block"
+def monitor_clear_block(block_n='red block', topic='clear_block'):
+    rospy.init_node('clear_block_monitoring...')
+    block_name = block_n
+    handler.subscriber = rospy.Subscriber("obj_pos", String, m_callback)
 
-       
+def m_callback(data):
+    print("got data!")
+    strMsg = str(data.data).strip()
+    color_locations = strMsg.split(";")
+    color_location_dic = {}
+    for msg in color_locations:
+            
+        color_location = msg.split(":");
+            
+        pointstr = color_location[1].split(",")
+        p = Point(x = int(pointstr[0]), y = int(pointstr[1]), z = int(pointstr[2]))
+        color_location_dic.update({color_location[0]: p})
+            
     
-def monitor_clear_block(block_name='red block', topic='clear_block'):
+    
+    if len(color_location) >= 2:
+            pos_green = 'table'
+            pos_red = 'table'
+            clear_green = 'clear'
+            clear_red = 'clear'
+            for obj in color_location.keys():
+                if obj != block_name:
+                    if math.fabs(color_location[block_name].x - color_location[obj].x) < 12:
+                        if color_location[block_name].y> color_location[obj].y:
+                             #print block_name + " is not clear"
+                             return obj
+
+def monitor_clear_block2(block_name='red block', topic='clear_block'):
     print 'monitoring clear...'
     
     #rospy.init_node('clear_block_monitor', anonymous=True)
