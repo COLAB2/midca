@@ -33,10 +33,15 @@ DATA_FILE_HEADER_STR = "runID,numCycles,agentType,windDir,windStrength,goalsActi
 SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
 
 #WIND_SCHEDULE_1 = [[300,1],[600,2],[1200,3],[2400,4]]
-WIND_SCHEDULE_1 = [[500,3],[1500,4]]
-META_NUM_CYCLES = 11000 # upper limit
-GDA_NUM_CYCLES = 13000 # upper limit
-VANILLA_NUM_CYCLES = 15000 # upper limit
+#WIND_SCHEDULE_1 = [[500,3],[1500,4]]
+#META_NUM_CYCLES = 11000 # upper limit
+#GDA_NUM_CYCLES = 13000 # upper limit
+#VANILLA_NUM_CYCLES = 15000 # upper limit
+
+WIND_SCHEDULE_1 = [[50,3],[100,4]]
+META_NUM_CYCLES = 400 # upper limit
+GDA_NUM_CYCLES = 400 # upper limit
+VANILLA_NUM_CYCLES = 400 # upper limit
 
 DIMENSION = 20
 NUM_BEACONS = 10
@@ -86,16 +91,16 @@ def singlerun(args):
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     if agent_type == 'm':
-        print "Running Meta agent with "+str(META_NUM_CYCLES)
+        print "Running Meta agent for "+str(META_NUM_CYCLES)+" cycles"
         midca_inst.run_cycles(META_NUM_CYCLES,meta=True)
         # prepare data for writing output string
         result_str = singlerun_output_str(run_id,META_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'g':
-        print "Running GDA agent with "+str(GDA_NUM_CYCLES)
+        print "Running GDA agent for "+str(GDA_NUM_CYCLES)+" cycles"
         midca_inst.run_cycles(GDA_NUM_CYCLES)
         result_str = singlerun_output_str(run_id,GDA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'v':
-        print "Running Vanilla agent with "+str(VANILLA_NUM_CYCLES)
+        print "Running Vanilla agent for "+str(VANILLA_NUM_CYCLES)+" cycles"
         midca_inst.run_cycles(VANILLA_NUM_CYCLES)
         result_str = singlerun_output_str(run_id,VANILLA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
 
@@ -111,7 +116,7 @@ def runexperiment():
     
     runs = []
     
-    # generate goals randomly, such that no goal is repeated or occurs in the last 3 goals
+    # generate goals randomly, such that no goal is repeated twice
     num_goals = 1000
     goal_list = []
     i = 0
@@ -137,25 +142,13 @@ def runexperiment():
     #state1.generate_good_test()
     state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=NUM_BEACONS,num_quicksand_spots=NUM_QUICKSAND)
     state1_str = state1.get_STRIPS_str()
-#     DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
-#     DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
-#     world = domainread.load_domain(DOMAIN_FILE)
-    
+
     # args are [runID, agentType, windDir, windStrength, startingState, goalList]
     individual_runs = [
-                       # no wind, same starting state
+                       # no wind, same starting state, same starting goals
                        [0,'v','east',0,state1_str,goal_list],
                        [1,'g','east',0,state1_str,goal_list],
                        [2,'m','east',0,state1_str,goal_list],
-                       # wind strength of 1
-                       #[2,'v','east',1,state1_str,goal_list],
-                       #[3,'g','east',1,state1_str,goal_list],
-                       # wind strength of 2
-                       #[4,'v','east',2,state1_str,goal_list],
-                       #[5,'g','east',2,state1_str,goal_list],
-                       # wind strength of 3
-                       #[6,'v','east',2,state1_str,goal_list],
-                       #[7,'g','east',2,state1_str,goal_list]
                       ]
     
     runs = individual_runs
@@ -177,13 +170,14 @@ def runexperiment():
         f.write(r)
     print("-- Data written to file "+str(DATA_FILENAME))
     print("-- Experiment complete!")
+    
+    # if you have pyttsx installed, a voice will tell you your experiments are finished
     try:
         import pyttsx    
         engine = pyttsx.init()
         engine.setProperty('rate',70)
         engine.say('Your experiments are have finished running')
         engine.runAndWait()
-
     except:
         pass # do nothing
 
@@ -928,6 +922,6 @@ if __name__ == "__main__":
         exp_num = 0
         while exp_num < NUM_EXPERIMENTS:
             runexperiment()
-            time.sleep(180) # let my cpu rest a little bit
+            #time.sleep(5) # let my cpu rest a little bit
             exp_num+=1
             
