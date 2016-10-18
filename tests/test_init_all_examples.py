@@ -14,12 +14,27 @@ import time
 
 EXAMPLES_DIRECTORY = 'examples/'
 NUM_PROCESSES = 1 # number of python processes to run in parallel
+FILES_TO_IGNORE = ['__init__','predicateworld',] # will ignore any file containing one of these
+
 i = 0
-for script_file in glob.glob(EXAMPLES_DIRECTORY+"*.py"):
-    if not '__init__.py' in script_file:    
+
+os.chdir(EXAMPLES_DIRECTORY)
+script_files = glob.glob("*.py")
+
+# go back to top level MIDCA dir
+os.chdir('../')
+
+for script_file in script_files:
+    # ignore certain files
+    ignore_file = False
+    for ign in FILES_TO_IGNORE:
+        if ign in script_file:
+            ignore_file = True
+            
+    if not ignore_file:
         i += 1
         #print "|=|=|=|=|=|=| "+str(script_file)+" |=|=|=|=|=|=|"
-        script = subprocess.Popen(['python ',script_file],
+        script = subprocess.Popen(['python ',EXAMPLES_DIRECTORY+script_file],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,)
@@ -31,5 +46,5 @@ for script_file in glob.glob(EXAMPLES_DIRECTORY+"*.py"):
         
         if err_output == 'Next MIDCA command:':
             err_output = ''
-        print "\n"+underline+"\n"+script_name+underline+"\n", err_output
+        print "\n"+underline+"\n"+script_name+underline, err_output
         

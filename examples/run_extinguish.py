@@ -1,14 +1,48 @@
 #!/usr/bin/env python 
 import MIDCA
-from MIDCA.examples import predicateworld
-from MIDCA.modules import simulator, guide
+from MIDCA.worldsim import domainread, stateread
+from MIDCA.modules import simulator, guide, perceive, note, evaluate, simulator, intend, planning, act
+from MIDCA import base
 import inspect, os
+
+# Domain Specific Imports
+from MIDCA.domains.blocksworld import util
+from MIDCA.domains.blocksworld.plan import methods, operators
+
+DECLARE_METHODS_FUNC = methods.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist_extinguish.sim", stateFile = MIDCA_ROOT + "worldsim/states/extinguisher_state.sim", extinguish = True)
+domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist_extinguish.sim"
+stateFile = MIDCA_ROOT + "domains/blocksworld/states/extinguisher_state.sim"
+extinguish = True
+
+argsPyHopPlanner = [util.pyhop_state_from_world,
+					util.pyhop_tasks_from_goals,
+					DECLARE_METHODS_FUNC,
+					DECLARE_OPERATORS_FUNC]
+
+world = domainread.load_domain(domainFile)
+stateread.apply_state_file(world, stateFile)
+#creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display = util.asqiiDisplay, verbose=4)
+#add phases by name
+for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+	myMidca.append_phase(phase)
+
+#add the modules which instantiate basic blocksworld operation
+myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
+myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Plan", planning.PyHopPlanner(*argsPyHopPlanner))
+myMidca.append_module("Act", act.SimpleAct())
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 5), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
