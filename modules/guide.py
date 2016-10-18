@@ -107,7 +107,9 @@ class NBeaconsGoalGenerator(base.BaseModule):
             self.currGoalIndex+=1
         return []
         
-        raise Exception("randomly inserting goals, shouldn't be here during experiments")
+        # this is a safety check to make sure experiments are running correctly. 
+        # if running manual (like running from examples/nbeacons...agentx.py remove this line
+        raise Exception("randomly inserting goals, shouldn't be here when running from nbeacons_experiment_1.py")
         world = self.mem.get(self.mem.STATES)[-1]
         goal_b_ids = []
         # get all beacon ids
@@ -161,22 +163,19 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
         # get discrepancies
         discrep = self.mem.get(self.mem.DISCREPANCY)
         # if discrepancy, get explanation
-        #print "discrep is "+str(discrep)
         if discrep and (len(discrep[0]) > 0 or len(discrep[1]) > 0):
             # first remove old 
             # go ahead and remove old plans for any goals the agent has
             # refresh the goals to trigger replanning
             goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
             curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
-            #print "curr_goals are "+str(curr_goals)
+            
             if type(curr_goals) is not list:
                 curr_goals = [curr_goals] 
             for goal in curr_goals:
-                #print "processing goal "+str(goal)
                 # get any plans associated with this goal, and remove them
                 plan = goalgraph.getMatchingPlan([goal])
                 if plan:
-                    #print "about to process plan "+str(map(str,plan))
                     goalgraph.removePlan(plan)
                     if self.verbose >= 1: print "Just removed a plan for goal " +str(goal)
             
@@ -201,8 +200,6 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
             else:  
                 if self.verbose >= 1: print "No explanation, old plans removed, but no goal management actions"    
                 return
-                
-        
 
 class TFStack(base.BaseModule):
 

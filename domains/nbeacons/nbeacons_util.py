@@ -23,7 +23,7 @@ class NBeaconGrid():
     
     def generate_good_test(self):
         '''
-        Generates a 16 by 16 ideal scenario for testing vanilla and gda agents (used for debuggin)
+        Generates a 16 by 16 ideal scenario for testing vanilla and gda agents (used for debugging)
         '''
         beacon_tiles = [(6,5),
                         (7,6),
@@ -55,7 +55,6 @@ class NBeaconGrid():
             self.BEACONS.append(Beacon(i,self.TILE_GRID[b_xy[0]][b_xy[1]]))
             i+=1
           
-        
         i = 0
         self.QUICKSAND = []
         for q_xy in quicksand_tiles:

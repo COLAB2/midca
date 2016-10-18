@@ -403,6 +403,10 @@ class PhaseManager:
 
 
     def one_cycle_with_meta_intrlvd(self, verbose = 1, pause = 0.5, noInterface=True):
+        '''
+        Runs one cycle of cognition with one cycle of metacognition being run after each
+        module of each phase.
+        '''
         phases = self.midca.phases
         metaPhases = self.midca.metaPhases
         for i in range(len(phases)):
@@ -425,6 +429,11 @@ class PhaseManager:
 
     
     def one_cycle(self, verbose = 1, pause = 0.5, meta=False, noInterface=True):
+        '''
+        Runs one cycle of midca. If meta == True, it will run one cycle of metacognition, otherwise
+        it will run one cycle of cognition. If you want to run one cycle of cognition, with metacognition 
+        interleaved, use one_cycle_with_meta_intrlvd().
+        '''
         phases = self.midca.phases
         if meta:
             phases = self.midca.metaPhases
@@ -542,7 +551,7 @@ class PhaseManager:
                         for key in self.mem.knowledge.keys():
                             if str(key) == txt:
                                 keyfound = True
-                                print("    ["+key+"] = "+str(self.mem.get(key))+"\n")
+                                print("    ["+str(key)+"] = "+str(self.mem.get(key))+"\n")
                         if not keyfound:
                             print("  Error: Key "+txt+" not found in MIDCA's memory")
                             print("  [Available Keys] "+str(self.mem.knowledge.keys()))

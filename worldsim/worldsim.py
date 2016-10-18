@@ -43,19 +43,17 @@ class Atom:
 		if len(predicate.argnames) != len(args):
 			raise Exception("Wrong number of args for " + predicate.name)
 		i = 0
-		'''
+		
 		if predicate.argtypes:
 			for arg in args:
 				if not arg.is_a(predicate.argtypes[i]):
 					raise Exception("Instantiating argument " + predicate.argnames[i] + " with " + arg.name + ", which is the wrong type of object")
 				i += 1
-		'''
+		
 		self.predicate = predicate
 		self.args = args
-		#print "args = "+str(args)
 		self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
-		#                                                     # happens at initialization
-		#print "hashing from string "+predicate.name + str(map(str,args)) +" to " +str(self.hash)
+															  # happens at initialization
 		
 	def __getitem__(self, item):
 		if item in self.predicate.argnames:
@@ -82,15 +80,6 @@ class Atom:
 	def __ne__(self, other):
 		return self.hash != other.hash
 	
-	# OLD, not fast enough
-# 	def __eq__(self, other):
-# 		if self.predicate != other.predicate:
-# 			return False
-# 		for i in range(len(self.args)):
-# 			if self[i] != other[i]:
-# 				return False
-# 		return True
-
 class Predicate:
 	
 	def __init__(self, name, argnames, argtypes = []):
@@ -430,11 +419,6 @@ class World:
 		return self.objects.values() #not, obviously, a good implementation
 	
 	def get_objects_by_type(self, some_type):
-# 		for obj in self.objects.values():
-# 			print "  obj "+str(obj)+" is of type "+str(type(obj))
-		#print "some_type is "+str(some_type)+" and is of python type "+str(type(some_type))
-		#for t in self.get_types():
-		#	print "  type = "+str(t)+" and is of python type "+str(type(t))
 		if type(some_type) is str:
 			if some_type not in self.get_types():
 				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
@@ -444,12 +428,9 @@ class World:
 			
 		objs = []
 		for obj in self.objects.values():
-			#print "obj "+str(obj)+" is type of "+str(type(obj))
 			if obj.is_a(some_type):
 				objs.append(obj)
-		#print "returning the following objs:"
-		#for o in objs:
-		#	print "  " + str(o)
+		
 		return objs
 	
 	def get_types(self):
@@ -474,14 +455,11 @@ class World:
 		return self.is_applicable(action)
 
 	def apply(self, simAction):
-		#print("in apply: simAction is " + str(simAction))
 		for i in range(len(simAction.results)):
 			if simAction.postPos[i]:
 				self.add_atom(simAction.results[i])
-				#print "Just added atom "+str(simAction.results[i])
 			else:
 				self.remove_atom(simAction.results[i])
-				#print "Just removed atom "+str(simAction.results[i])
 	
 	def apply_named_action(self, opName, argNames):
 		args = []
@@ -500,8 +478,6 @@ class World:
 	def apply_midca_action(self, midcaAction):
 		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
-		#print "Opname = "+str(opname)
-		#print "argnames = "+str(argnames)
 		self.apply_named_action(opname, argnames)
 	
 	#interprets a MIDCA goal as a predicate statement. Expects the predciate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
@@ -590,11 +566,6 @@ class World:
 
 	def get_operators(self):
 		return self.operators
-	
-	def add_operator(self, operator):
-		'''
-		
-		'''
 	
 	def remove_operator(self, opname):
 		if opname in self.operators.keys():

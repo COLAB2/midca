@@ -2,12 +2,9 @@ from MIDCA import base
 import inspect 
 from MIDCA.worldsim import domainread
 
-# profiling
-import cProfile, pstats, StringIO
-
 class MentalExpectation:
     '''
-    An expectation about a mental state (which is a collection of variable bindings
+    An expectation about a mental state (a mental state is a collection of variable bindings)
     '''
     
     def __init__(self):
@@ -29,22 +26,18 @@ class MentalExpectation:
     
     def apply_expectation(self,var_vals):
         '''
-        Given a segment of length one of a trace, return a dict of the variable
+        Given a segment of length 1 of a trace, return a dict of the variable
         names and the results of calling the functions on the values of those variables
         
-        returns True or False, True if all expectations, False if not
+        returns True or False, True if all expectations met, False if not
         '''
         all_true = True
         at_least_one_true = False
         for [var,val] in var_vals:
             if var in self.vars_and_funcs.keys():
-                #print "var is "+str(var)
-                #print "val is "+str(val)
                 if self.vars_and_funcs[var](val):
                     at_least_one_true = True
-                    #print "TRUE"
                 else:
-                    #print "FALSE"
                     all_true = False
         
         if all_true and at_least_one_true:
@@ -68,11 +61,12 @@ class PrimitiveExpectationOfCognition():
     
     def __init__(self, action, priorMentalExp=None,postMentalExp=None, verbose=2):
         '''
-        action needs to be a string which is the 
+        action refers to the mental action, and should be the string name of a module, like
+        'PyHopPlanner' or 'SimpleNBeaconsExplain'
         '''
         self.verbose = verbose
         if (priorMentalExp is None and postMentalExp is None):
-            raise Exception("Cannot create primitive expectaiton of cognition with no mental expectations")
+            raise Exception("Cannot create primitive expectation of cognition with no mental expectations")
         
         self.action = action
         self.priorMentalExp = priorMentalExp
@@ -99,13 +93,11 @@ class PrimitiveExpectationOfCognition():
         #print "    Post result is "+str(post_result)
         
         if prior_result and not post_result:
-            print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
+            # print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
             return True
         else:
-            if self.verbose >= 1: print "    ALL GOOD SIR"
+            # if self.verbose >= 1: print "    ALL GOOD SIR: Expectations have been met"
             return False
-        
-        
          
     def __str__(self):
         s = 'Prim. Exp. of Cog. for '+str(self.action)+":\n"
@@ -119,12 +111,6 @@ class PrimitiveExpectationOfCognition():
 
 class MRSimpleDetect(base.BaseModule):
 
-    # negative expectations: if equal to observed state, anomaly detected
-    #neg_expectations = {"PyHopPlannerBroken":
-    #                    {"PLAN":[[None,"IMPASSE"]],
-    #                     "INPUT":[]}}
-    #pos_expectations = {}
-
     def init(self, world, mem):
         self.world = world
         self.mem = mem
@@ -137,8 +123,11 @@ class MRSimpleDetect(base.BaseModule):
         self.updated_to_move4 = False #hacky i know
     
     def createAlwaysExplanationExp(self):
-        # creates the expectation that there is always an explanation following an 
-        # discrepancy at the cognitive level
+        ''' 
+        creates the expectation that there is always an explanation following a 
+        discrepancy at the cognitive level
+        '''
+        
         priorExpectation = MentalExpectation()
         #discrepancyExists = lambda d: not (d is None) or (len(d[0]) > 0 or len(d[1]) > 0)
         discrepancyExists = lambda d: d # identity for now
@@ -154,6 +143,11 @@ class MRSimpleDetect(base.BaseModule):
         return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation,verbose=self.verbose)
         
     def get_new_moveeast(self,wind_str):
+        '''
+        Given the strength of the wind, this function will return the new operator that will take
+        wind into account. 
+        '''
+        
         mud = True
         new_op_str = ""
         if wind_str == 1:
@@ -270,13 +264,12 @@ class MRSimpleDetect(base.BaseModule):
     
             else:
                 raise Exception("WHY IS MUD FALSE?????? ")
+                # TODO: some old code could lead to here if mud is false, need to update
             
             
         return new_op_str
     
     def run(self, cycle, verbose=2):
-        #pr = cProfile.Profile()
-        #pr.enable()
         self.verbose = verbose
         
         #print str(exp1)
@@ -357,45 +350,9 @@ class MRSimpleDetect(base.BaseModule):
                 if self.verbose >= 1: 
                     for op_k,op_v in self.world.operators.items():
                         print "    op["+str(op_k)+"] = "+str(op_v)
-                
-                
+    
             except:
                 pass
-            
-        
-        
-            #try:
-        #    world = self.mem.get(self.mem.STATES)[-1]
-            #print "The following operators are in the most recent world state: "
-            #for op_k,op_v in world.operators.items():
-            #    print "    op["+str(op_k)+"] = "+str(op_v)
-        #except:
-        #    pass    
-            
-    
-        
-#         print("prior is \n"+str(prior))
-#         if prior:
-#             print("prior phase is "+str(prior[0][1]))
-#             print("prior variables are "+str(prior[1]))
-#         
-#         print("post is \n"+str(post))
-#         if post:
-#             print("post phase is "+str(post[0][1]))
-#             print("post variables are "+str(post[1]))
-#         
-        
-        # do matching
-         
-#         pr.disable()
-#         s = StringIO.StringIO()
-#         sortby = 'tottime'
-#         ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-#         ps.print_stats()
-#         print s.getvalue()
-#         
-        
-        #self.detect()
 
 
     def detect(self):
@@ -404,28 +361,20 @@ class MRSimpleDetect(base.BaseModule):
 
         # see if any expectations exist for this phase
         if last_phase_name in self.neg_expectations.keys():
-            relevant_neq_exp = self.neg_expectations[last_phase_name]
+            relevant_neg_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
-                if prev_phase_datum[0] in relevant_neq_exp.keys():
+                if prev_phase_datum[0] in relevant_neg_exp.keys():
                     #print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
 
-                    exp_to_check = relevant_neq_exp[prev_phase_datum[0]]
+                    exp_to_check = relevant_neg_exp[prev_phase_datum[0]]
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
                             #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])
-
-                    # for data in last_phase_data:
-                    #     # check against expectations
-                    #     if data[0] in self.neg_expectations[last_phase_data].keys():
-                    #         for exp in self.neg_expectations[last_phase_data][data[0]]:
-                    #             if data[1] == exp[0]:
-                    #             # anomaly detected in negative expectations
-
 
         # TODO: implement pos_expectations
         if (self.verbose >= 2): print("    Found anomalies: "+str(anomalies))
@@ -433,7 +382,7 @@ class MRSimpleDetect(base.BaseModule):
 
 class MRSimpleGoalGen(base.BaseModule):
 
-    anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
+    anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]} # mapping from anomalies to goals
 
     def run(self,cycle,verbose=2):
         self.verbose = verbose
@@ -448,6 +397,7 @@ class MRSimpleGoalGen(base.BaseModule):
                 goals.append(new_goal)
                 self.mem.set(self.mem.META_GOALS, goals)
         #print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
+        
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []

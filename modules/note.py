@@ -308,20 +308,17 @@ class StateDiscrepancyDetector:
 		else:
 			self.mem.set(self.mem.DISCREPANCY,None)
 		
-		
 		if trace:
 			trace.add_data("DISCREPANCY", is_discrepancy)
 			trace.add_data("EXPECTED", str(map(str,expected)))
 			trace.add_data("ACTUAL", str(map(str,actual)))
 		
-		
 		return
-	
 
 class InformedDiscrepancyDetector:
 	'''
 	Performs Discrepancy Detection using Informed Expectations
-	
+	TODO: This is a stub for now, not implemented yet
 	'''		
 	def __init__(self):
 		pass
@@ -334,7 +331,8 @@ class InformedDiscrepancyDetector:
 		'''
 		Returns the current plan the agent is using
 		'''
-		
+		pass
+	
 	def generate_inf_exp(self, plan, prev_action):
 		'''
 		Returns a set of atoms to check against the state given the previous action
@@ -342,13 +340,16 @@ class InformedDiscrepancyDetector:
 		
 		See Dannenhauer & Munoz-Avila IJCAI-2015 / Dannenhauer, Munoz-Avila, Cox IJCAI-2016 
 		for more information on informed expectations
+		
+		TODO: finish
 		'''
 		# sanity check, make sure prev_action is in the plan
 		if prev_action not in plan:
 			raise Exception("Cannot generate informed expectations: prev_action "+str(prev_action)+" was not given plan")
 		
 		exp = [] # expectations accumulator
-		
+		pass
+	
 	def run(self, cycle, verbose=2):
 		prev_action = self.mem.get(self.mem.ACTIONS)[-1]
 		curr_goals = self.mem.get(self.mem.CURRENT_GOALS)

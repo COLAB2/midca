@@ -30,7 +30,6 @@ class CogTrace:
             i = MAX_TRACE_SIZE - 50
             for j in range(i):
                 self.all_modules.popitem(last=False)
-            #print("Just popped "+str(i)+"items from all_modules")
         
         trace_cycle_keys = self.trace.keys()
         if len(trace_cycle_keys) > MAX_TRACE_SIZE:
@@ -63,7 +62,6 @@ class CogTrace:
             self.trace[self.cycle][self.module].append([data_type,data])
             self.all_modules[(self.cycle,self.module)].append([data_type,data])
         
-        
     def get_data(self, cycle, phase):
         if cycle < 0:
             return [] # if not initialized, no data to return
@@ -82,11 +80,8 @@ class CogTrace:
 
     def get_n_prev_phase(self,n=0):
         '''
-        returns the nth previous phas, if n is 1, get the second to last phase executed, etc
+        returns the nth previous phase, if n is 1, get the second to last phase executed, etc
         '''
-        
-        #all_modules_copy = copy.deepcopy(self.all_modules)
-    
         try:
             if len(self.all_modules) > n:
                 return self.all_modules.items()[-(n+1)]

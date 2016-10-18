@@ -1,14 +1,12 @@
 from _plan import pyhop
 from MIDCA import plans, base
+from MIDCA.modules._plan.asynch import asynch
+from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 import collections
 import traceback
 import copy
-from MIDCA.modules._plan.asynch import asynch
-from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 import time
-
-# profiling
-import cProfile, pstats, StringIO
+import itertools
 
 class GenericPyhopPlanner(base.BaseModule):
 
@@ -385,11 +383,11 @@ class PyHopPlanner2(base.BaseModule):
 
 class HSPNode():
     '''
-    A node that will be used in Heuristic Search Planner
+    A node that will be used in the Heuristic Search Planner
     '''
     world = None # A state in MIDCA
-    parent_node = []
-    actions_taken = [] # actions taken to reach this node
+    parent_node = [] # an HSPNode (or None for root)
+    actions_taken = [] # actions taken to reach this node (these are MIDCA actions)
     depth = 0
     
     def __init__(self, world, parent_node, actions_taken):
@@ -400,8 +398,6 @@ class HSPNode():
         else:
             self.depth = 0
         self.actions_taken = actions_taken
-
-import itertools
 
 class HeuristicSearchPlanner(base.BaseModule):
     '''
@@ -472,10 +468,10 @@ class HeuristicSearchPlanner(base.BaseModule):
         '''
         Returns possible operator instantiations specifically optimized for operating in the NBeacons
         domain. This function returns a significantly smaller number of possible instantiations of an
-        operator compared to instead of get_all_instantiations() 
+        operator compared to instead of get_all_instantiations(). It is specific to the nbeacons domain. 
         '''
         
-        # using two lists instead of a dict to preserve order
+        # using two lists instead of a dict to preserve order, could use an OrderedDict
         arg_names = []
         arg_types = []
         #print "operator.name = "+operator.name
@@ -679,7 +675,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         
     def brute_force_decompose(self, node, visited):
         '''
-        get all operators (pre-variable bindings) in MIDCA
+        get all operators (before finding variable bindings) in MIDCA
         '''
         
         child_nodes = []
@@ -715,7 +711,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
     def brute_force_decompose_nbeacons(self, node, visited):
         '''
-        Get all operators (pre-variable bindings) in MIDCA
+        Get all operators (before finding variable bindings) in MIDCA
         
         This function is specific to NBeacons domain with MIDCA.
         See brute_force_decompose() for a general solution
@@ -941,15 +937,6 @@ class HeuristicSearchPlanner(base.BaseModule):
             #print "****************using built-in***************** "
             decompose = self.brute_force_decompose
             
-        #print "The following operators are available for planning: "
-        #for op_k,op_v in self.world.operators.items():
-        #    print "    op["+str(op_k)+"] = "+str(op_v)
-        we_learned_an_op = False
-        for op_k,op_v in self.world.operators.items():
-            if op_k in ['moveeast2','moveeast3','moveeast4', 'moveeast5']:
-                we_learned_an_op = True
-                break
-            
         Q = [HSPNode(self.world, None, [])]
         visited = []
         goal_reached_node = None
@@ -993,7 +980,6 @@ class HeuristicSearchPlanner(base.BaseModule):
                     return True
                  
             Q = filter(lambda n: bad_activate(n), Q)
-             
         
         if goal_reached_node:
             t1 = time.time()

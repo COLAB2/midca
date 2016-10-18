@@ -35,8 +35,6 @@ class ROSObserver:
         if verbose > 1:
             print "World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
 
-
-
 class PerfectObserver(base.BaseModule):
 
     '''
@@ -62,6 +60,7 @@ class PerfectObserver(base.BaseModule):
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
         
+        # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
@@ -69,7 +68,7 @@ class PerfectObserver(base.BaseModule):
             #print "trimmed off 200 old stale states"
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
-        
+        # End Memory Usage Optimization
         
         if verbose >= 1:
             print "World observed."
@@ -78,7 +77,6 @@ class PerfectObserver(base.BaseModule):
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
-
 
 class MAReport:
 

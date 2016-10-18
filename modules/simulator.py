@@ -165,15 +165,14 @@ class NBeaconsSimulator:
 
     def __init__(self, beacon_fail_rate=0):
         '''
-        beacon_fail_rate is out of 100. So 100 means 100% chance, 5 means 5% chance
+        beacon_fail_rate is out of 100. So 100 means 100% chance, 5 means 5% chance.
+        Note this is per beacon, so each beacon has the given chance of failing
         '''
         self.beacon_fail_rate = beacon_fail_rate
 
     def init(self, world, mem):
         self.mem = mem
         self.world = world
-
-    #def moverightright(self):
 
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
@@ -184,6 +183,7 @@ class NBeaconsSimulator:
         except:
             # probably failing on first try, just return and do nothing
             return
+        
         # get all activated beacon ids
         activated_b_ids = []
         for obj in world.get_possible_objects("",""):
@@ -206,9 +206,6 @@ class NBeaconsActionSimulator:
     '''
     
     def __init__(self, wind=False, wind_dir='off', wind_strength=1, dim=10, wind_schedule=[],logfilenm=""):
-        #import os
-        #cwd = os.getcwd()
-        #print "CURRENT WORKING DIR IN SIMULATOR IS "+str(cwd)
         self.logfilenm = logfilenm
         self.filehandle = None
         if len(self.logfilenm) > 0:
@@ -257,16 +254,6 @@ class NBeaconsActionSimulator:
         
         return False
             
-# 
-# def midca_action_applicable(self, midcaAction):
-#         try:
-#             operator = self.operators[midcaAction.op]
-#             args = [self.objects[arg] for arg in midcaAction.args]
-#         except KeyError:
-#             return False
-#         action = operator.instantiate(args)
-#         return self.is_applicable(action)
-
     def execute_action(self, action):
         '''
         Simulates the execution of an action and performs all updates
@@ -276,12 +263,16 @@ class NBeaconsActionSimulator:
         as well as inserting 'stuck' and removing 'free' atoms
         if the agent ends up in quicksand.
         
+        When an agent attempts to move in a direction, wind may push it farther in that direction.
+        When wind pushes an agent, an agent will either be pushed an extra X number of tiles
+        (where X is the wind strength). While being pushed, if any tile contains mud (aka quicksand)
+        the agent will become stuck in that mud tile. (specifically the first mud tile encountered
+        while being pushed) 
         
         '''
         # bump counter for actions executed
         self.mem.set(self.mem.ACTIONS_EXECUTED, 1+self.mem.get(self.mem.ACTIONS_EXECUTED))
     
-        
         #print "dir(action) = "+str(dir(action))
         if 'move' in action.op:
             agent_at_atom = self.world.get_atoms(filters=['agent-at','Curiosity'])[0]
@@ -473,15 +464,6 @@ class NBeaconsActionSimulator:
             pushes_needed = self.wind_strength+1 - move_dist
             if self.verbose >= 1: print "  -->> pushes needed is "+str(pushes_needed)
             if self.filehandle: self.filehandle.write("  -->> pushes needed is "+str(pushes_needed)+"\n")
-            #prev_action = first_action
-            #while pushes_needed > 0:
-            #    curr_push_action = self.get_subsequent_action(prev_action,self.wind_dir) 
-            #    if not curr_push_action: 
-            #        break
-            #    if self.verbose >= 1:  print "added action "+str(curr_push_action)
-            #    remaining_actions.append(curr_push_action)
-            #    prev_action = curr_push_action
-            #    pushes_needed-=1
 
         # now start execution by executing the first action
         if not self.execute_action(first_action):
@@ -520,43 +502,6 @@ class NBeaconsActionSimulator:
         if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
         if self.filehandle: self.filehandle.write("----------------------------------------------\n")
         if self.filehandle: self.filehandle.flush()
-            
-from Tkinter import *
-
-class Application(Frame):
-    
-    def set_world_str(self, world_str):
-        self.world_str.set(world_str)
-    
-    def createWidgets(self):
-        self.main_text_area = Label(self, text=self.world_str)
-        self.main_text_area.pack()
-    
-    def update_world_str(self, world_str):
-        self.world_str = world_str
-        
-    def __init__(self, master=None):
-        Frame.__init__(self, master)
-        self.world_str = StringVar()
-        self.world_str.set("World has not been set yet")
-        self.pack()
-        self.createWidgets()
-        
-
-class NBeaconsGUIViewer(base.BaseModule):
-    
-    def init(self,world,mem):
-        self.world = world
-        self.mem = mem
-    
-    def run(self, cycle, verbose=2):
-        root = Tk()
-        app = Application(master=root)
-        app.set_world_str(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True))
-        app.mainloop()
-        root.destroy()
-    
-
 
 class CustomRunSimulator:
     '''
