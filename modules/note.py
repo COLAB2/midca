@@ -1,6 +1,7 @@
 import copy
 from MIDCA.modules._adist import ADistance, ChangeFinder, WindowPair, Interval
-
+from MIDCA.domains.nbeacons import nbeacons_util
+import sys
 '''
 See class ADistanceAnomalyNoter
 '''
@@ -211,23 +212,22 @@ class ADistanceAnomalyNoter:
 	
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATES)[-1]
-                prevworld = copy.deepcopy(world) # for trace
+		prevworld = copy.deepcopy(world) # for trace
 		self.update(world)
-                currworld = copy.deepcopy(world) # for trace
+		currworld = copy.deepcopy(world) # for trace
 		self.mem.add(ANOMALY_STATE_KEY, self.anomalous())
 		if verbose >= 1 and self.anomalous():
 			print "Anomaly detected."
 		elif verbose >= 2 and not self.anomalous():
 			print "No anomaly detected."
 
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle,self.__class__.__name__)
+			trace.add_data("PREV WORLD", prevworld)
+			trace.add_data("CURR WORLD", currworld)
+			trace.add_data("ANOMALY", self.anomalous())
 
-                trace = self.mem.trace
-                if trace:
-                        trace.add_module(cycle,self.__class__.__name__)
-                        trace.add_data("PREV WORLD", prevworld)
-                        trace.add_data("CURR WORLD", currworld)
-                        trace.add_data("ANOMALY", self.anomalous())
-	
 	#simple implementaton; will not work with multiple windows
 	def __str__(self):
 		s = str(self.detector)
@@ -235,5 +235,125 @@ class ADistanceAnomalyNoter:
 			return s[s.rindex("\n") + 1:]
 		except ValueError:
 			return s
-	
+
+class StateDiscrepancyDetector:
+	'''
+	Uses Immediate Expectations to detect discrepancies.
+	For now, this only looks at effects of actions.
+	'''	
+	def init(self, world, mem):
+		self.world = world
+		self.mem = mem
+		
+	def run(self, cycle, verbose=2):
+		self.verbose = verbose
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle,self.__class__.__name__)
 			
+		last_actions = None
+		try:
+			last_actions = self.mem.get(self.mem.ACTIONS)[-1]
+			if self.verbose >= 2: print("last_actions are "+str(map(str,last_actions)))
+			# for now assume just one action
+			if len(last_actions) != 1:
+				if self.verbose >= 1: print("Agent has "+str(len(last_actions))+" previous actions, will not proceed")
+				if trace:
+					trace.add_data("DISCREPANCY", None)
+					trace.add_data("EXPECTED", None)
+					trace.add_data("ACTUAL", None)
+				return
+		except:
+			if self.verbose >= 1:
+				print "No actions executed, skipping State Discrepancy Detection"
+			
+			return
+		last_action = last_actions[0]
+		copy_world = self.mem.get(self.mem.STATES)[-2]
+		try:
+			#print " attempting to execute action "+str(last_action)+" on preivous state:"
+			#nbeacons_util.drawNBeaconsScene(copy_world)
+			copy_world.apply_midca_action(last_action)
+			
+		except:
+			print "Exception trying action "+str(last_action)+" is "+str(sys.exc_info()[0])
+			print "Previous action "+str(last_action)+" not applicable, agent did not execute an action during last act phase"
+		world_diff = self.world.diff(copy_world)
+		
+		# we don't care about activated discrepancies right now
+		# beacon failures are only to ensure there is always a goal for the agent
+		# remove any 'activated' beacons
+		expected = world_diff[0]
+		actual = world_diff[1]
+		expected_no_activate = []
+		i = 0
+		for exp_atom in expected:
+			if 'activated' in str(exp_atom):
+				if self.verbose >= 1: print '  ignoring activated atoms in discrepancies'
+			else:
+				expected_no_activate.append(exp_atom)
+			i+=1
+			
+		expected = expected_no_activate
+	
+		#print("World diff returned : "+str(world_diff))
+		if len(expected) > 0 or len(actual) > 0: 
+			if self.verbose >= 1: print("Expected "+str(map(str,expected))+ " but got "+str(map(str,actual)))
+		else:
+			if self.verbose >= 1: print "No Discrepancy Detected"
+		is_discrepancy = not (len(expected) == 0 and len(actual) == 0) 
+		
+		if is_discrepancy:
+			self.mem.set(self.mem.DISCREPANCY,(expected,actual))
+		else:
+			self.mem.set(self.mem.DISCREPANCY,None)
+		
+		if trace:
+			trace.add_data("DISCREPANCY", is_discrepancy)
+			trace.add_data("EXPECTED", str(map(str,expected)))
+			trace.add_data("ACTUAL", str(map(str,actual)))
+		
+		return
+
+class InformedDiscrepancyDetector:
+	'''
+	Performs Discrepancy Detection using Informed Expectations
+	TODO: This is a stub for now, not implemented yet
+	'''		
+	def __init__(self):
+		pass
+	
+	def init(self, world, mem):
+		self.world = world
+		self.mem = mem
+	
+	def get_current_plan(self):
+		'''
+		Returns the current plan the agent is using
+		'''
+		pass
+	
+	def generate_inf_exp(self, plan, prev_action):
+		'''
+		Returns a set of atoms to check against the state given the previous action
+		the agent executed and the current plan
+		
+		See Dannenhauer & Munoz-Avila IJCAI-2015 / Dannenhauer, Munoz-Avila, Cox IJCAI-2016 
+		for more information on informed expectations
+		
+		TODO: finish
+		'''
+		# sanity check, make sure prev_action is in the plan
+		if prev_action not in plan:
+			raise Exception("Cannot generate informed expectations: prev_action "+str(prev_action)+" was not given plan")
+		
+		exp = [] # expectations accumulator
+		pass
+	
+	def run(self, cycle, verbose=2):
+		prev_action = self.mem.get(self.mem.ACTIONS)[-1]
+		curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
+		plan = self.mem.get(self.mem.GOAL_GRAPH).get_best_plan(curr_goals)
+		inf_exp = self.generate_inf_exp(prev_action)
+		for e in inf_exp:
+			pass

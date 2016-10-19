@@ -1,5 +1,6 @@
 from MIDCA import base
-from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
+from MIDCA.worldsim import domainread, stateread, worldsim
+from MIDCA.domains.blocksworld import blockstate, scene
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act, planningbroken
 from MIDCA.metamodules import monitor, control, interpret, metaintend,  plan
 
@@ -24,7 +25,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguish))
+    myMidca.append_module("Plan", planningbroken.PyHopPlanner(extinguish))
     myMidca.append_module("Act", act.SimpleAct())
 
     # add meta layer phases

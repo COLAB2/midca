@@ -48,7 +48,7 @@ class Cond:
 
 def condition(predicatename, args = [], negate = False):
 	if predicatename not in predicates:
-		raise Exception("predicate DNE.")
+		raise Exception("predicate "+str(predicatename)+" DNE.")
 	return Cond(predicates[predicatename], args, not negate)
 	
 #args is a dict: {argname: argtypename}
@@ -130,6 +130,53 @@ def load_domain_str(str):
 	exec preprocess(str)
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
+
+def operator_no_side_effect(name, args = [], preconditions = [], results = []):
+	'''
+	Just like operator function above, except doesn't save the operator into the global operators, instead
+	returns the operator
+	'''
+	objnames = []
+	argtypes = {}
+	for argname, argtype in args:
+		objnames.append(argname)	
+		if argtype not in types:
+			raise Exception("object type DNE.")
+		argtypes[argname] = types[argtype]
+	prepredicates = []
+	preobjnames = []
+	preobjtypes = []
+	prePositive = []
+	for condition in preconditions:
+		for argname in condition.argnames:
+			if argname not in objnames:
+				raise Exception("condition argument not listed as an object for this operator")
+		prepredicates.append(condition.predicate)
+		preobjnames.append(condition.argnames)
+		objtypes = []
+		for objname in preobjnames[-1]:
+			objtypes.append(argtypes[objname])
+		preobjtypes.append(objtypes)
+		prePositive.append(condition.positive)
+	postpredicates = []
+	postobjnames = []
+	postobjtypes = []
+	postPositive = []
+	for condition in results:
+		for argname in condition.argnames:
+			if argname not in objnames:
+				raise Exception("condition argument not listed as an object for this operator")
+		postpredicates.append(condition.predicate)
+		postobjnames.append(condition.argnames)
+		objtypes = []
+		for objname in postobjnames[-1]:
+			objtypes.append(argtypes[objname])
+		postobjtypes.append(objtypes)
+		postPositive.append(condition.positive)
+	return worldsim.Operator(name, objnames, prepredicates, preobjnames, preobjtypes, prePositive, postpredicates, postobjnames, postobjtypes, postPositive)
+
+def load_operator_str(op_str):
+	return eval(preprocess(op_str))
 
 def to_shop2_domain(world, name):
 	strs = ["(in-package :shop2)\n\n"]

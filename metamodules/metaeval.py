@@ -10,7 +10,7 @@ class MRSimpleEval(base.BaseModule):
                 pass
 
         else:
-            print("No goals - eval doing nothing")
+            if self.verbose >= 1: print("No goals - eval doing nothing")
 
     def goal_achieved(self, goal):
         pass
