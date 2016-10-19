@@ -4,6 +4,10 @@ from MIDCA.examples import predicateworld
 from MIDCA.logging import Logger
 import inspect, os
 
+# Domain Specific Imports
+from MIDCA.domains.blocksworld import util
+from MIDCA.domains.blocksworld.plan import methods, operators
+
 '''
 This script originally ran MIDCA with logging. Since logging now occurs by default, it is identical to simple_run.py.
 '''
@@ -12,8 +16,15 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim")
+DECLARE_METHODS_FUNC = methods.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
+argsPyHopPlanner = [util.pyhop_state_from_world,
+					util.pyhop_tasks_from_goals,
+					DECLARE_METHODS_FUNC,
+					DECLARE_OPERATORS_FUNC]
 
+
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim", argsPyHopPlanner=argsPyHopPlanner)
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True

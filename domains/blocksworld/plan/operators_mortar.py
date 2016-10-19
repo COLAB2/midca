@@ -5,9 +5,6 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 
-
-import sys
-sys.path.append("../")
 from MIDCA.modules._plan import pyhop
 import random 
 

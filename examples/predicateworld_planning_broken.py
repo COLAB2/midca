@@ -25,7 +25,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguish))
+    myMidca.append_module("Plan", planningbroken.PyHopPlanner(extinguish))
     myMidca.append_module("Act", act.SimpleAct())
 
     # add meta layer phases

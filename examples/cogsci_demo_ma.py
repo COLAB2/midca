@@ -18,12 +18,13 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-DECLARE_METHODS_FUNC = methods.declare_methods
-DECLARE_OPERATORS_FUNC = operators.declare_ops
+
 
 writePort = 5150
 readPort = 5151
 
+DECLARE_METHODS_FUNC = methods.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
 argsPyHopPlanner = [util.pyhop_state_from_world,
 					util.pyhop_tasks_from_goals,
 					DECLARE_METHODS_FUNC,
