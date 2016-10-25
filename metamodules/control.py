@@ -4,18 +4,19 @@ class MRSimpleControl(base.BaseModule):
     midca = None
 
     def run(self, cycle, verbose = 2):
+        self.verbose = verbose
         plan = self.mem.get(self.mem.META_PLAN)
         failed = False
         if plan:
             for action in plan:
                 if not self.act(action):
                     failed = True
-                    print("    MRSimpleControl failed to complete an action")
+                    if self.verbose >= 1: print("    MRSimpleControl failed to complete an action")
                     self.cleanup_and_reset()
             if not failed:
                 self.cleanup_and_reset()
         else:
-            print("    No actions taken")
+            if self.verbose >= 1: print("    No actions taken")
 
 
 

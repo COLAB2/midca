@@ -3,13 +3,9 @@ Blocks World domain definition for Pyhop 1.1.
 Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
-
-
-
 import sys
 sys.path.append("../")
-import pyhop
-import random 
+from MIDCA.modules._plan import pyhop
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
 the current state, and the others are the planning operator's usual arguments.
@@ -29,11 +25,6 @@ def pickup(state,b):
         state.pos[b] = 'hand'
         state.clear[b] = False
         state.holding = b
-        
-        # remove mortar if the block has it (just to be safe)
-        if hasattr(state, 'mortared') and state.mortared[b] == True:
-            state.mortared[b] == False
-        
         return state
     else: return False
 
@@ -43,27 +34,9 @@ def unstack(state,b,c):
         state.clear[b] = False
         state.holding = b
         state.clear[c] = True
-
-        # to undo mortar but doesn't increase quantity
-        if hasattr(state, 'mortared') and state.mortared[b] == True:
-            state.mortared[b] == False
-        
         return state
     else: return False
     
-def unstack_mortared(state,b,c,m):    
-    ''' m is for mortar '''
-    if state.pos[b] == c and c != 'table' and state.clear[b] == True and state.holding == False:
-        state.pos[b] = 'hand'
-        state.clear[b] = False
-        state.holding = b
-        state.clear[c] = True
-        if state.hasmortar[b] == m:
-            state.hasmortar[b] = False
-        
-        return state
-    else: return False
-
 def putdown(state,b):
     if state.pos[b] == 'hand':
         state.pos[b] = 'table'
@@ -81,22 +54,27 @@ def stack(state,b,c):
         return state
     else: return False
 
-def stack_mortared(state,b,c,m):
-    if state.pos[b] == 'hand' and state.clear[c] == True and state.mortaravailable[m]:
-        state.pos[b] = c
-        state.clear[b] = True
-        state.holding = False
-        state.clear[c] = False
-        state.hasmortar[b] = True
-        state.mortaravailable[m] = False
-        return state
-    else: return False    
-    
-def putoutfire(state, b):
-	if state.fire[b] == True:
+def putoutfire(state, b, ext):
+	if state.fire[b] == True and state.holdingfireext == ext:
 		state.fire[b] == False
 		return state
 	else: 
+		return False
+
+def pickup_extinguisher(state, extinguisher):
+	if extinguisher in state.fire_ext_avail and not state.holdingfireext:
+		state.holdingfireext = extinguisher
+		state.fire_ext_avail.remove(extinguisher)
+		return state
+	else:
+		return False
+
+def putdown_extinguisher(state, extinguisher):
+	if state.holdingfireext == extinguisher:
+		state.holdingfireext = None
+		state.fire_ext_avail.add(extinguisher)
+		return state
+	else:
 		return False
 
 def apprehend(state, perp):
@@ -113,6 +91,5 @@ def searchfor(state, perp):
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.
 """
-
 def declare_ops():
-	pyhop.declare_operators(pickup, unstack, unstack_mortared, putdown, stack, stack_mortared, putoutfire, apprehend, searchfor)
+	pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor, pickup_extinguisher, putdown_extinguisher)

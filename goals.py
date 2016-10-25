@@ -194,6 +194,7 @@ class GoalGraph:
             for goal in goals:
                 found = False
                 for planGoal in plan.goals:
+                    #print "goal is " + str([goal])
                     if self.consistentGoal(goal, planGoal):
                         found = True
                         break

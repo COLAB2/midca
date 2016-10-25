@@ -1,7 +1,6 @@
 from __future__ import print_function
 import copy
-import shlex, subprocess
-
+import shlex, subprocess # used for generating a pdf of the trace
 from collections import OrderedDict
 
 """
@@ -10,48 +9,33 @@ How-To:
 2. for each piece of data you want to add into the trace, call add_data()
 """
 
+MAX_TRACE_SIZE = 100
+
 class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
     # that module in that cycle
-
-
-    # Expectations are of the form: exp[key] = val, where key is the
-    # phase (i.e. Plan) and val is another dict mapping modules
-    # (i.e. PyHopPlanner) to specific expectations (a dict mapping
-    # variables to arrays of values for that variable) for that
-    # module.
-
-    # The following expectation data structure contains data that says
-    # that within the phase Plan, the module PyHopPlanner may not have
-    # the value None for the PLAN variable and that any value for the
-    # INPUT variable is okay.
-
-
 
     def __init__(self):
         self.trace = {}
         self.cycle = -1 # current cycle
         self.module = "" # current module
-
-        self.invalid_expectations = {"Plan":
-                            {"PyHopPlanner":
-                             {"PLAN":[None], "INPUT":[]}}}
-        self.valid_expectations = {}
-
-        #print("Calling init! Trace is: "+str(self.trace))
-
-    # def getInstance():
-    #     if instance == None:
-    #         return CogTrace()
-    #     else:
-    #         return instance
+        self.all_modules = OrderedDict() # alternative structure of the same data as self.trace
 
     def add_module(self, cycle, module):
         """args:
            cycle := integer representing a cycle
            module := string representing the name of a module
         """
-
+        if self.all_modules and len(self.all_modules) > MAX_TRACE_SIZE:
+            i = MAX_TRACE_SIZE - 50
+            for j in range(i):
+                self.all_modules.popitem(last=False)
+        
+        trace_cycle_keys = self.trace.keys()
+        if len(trace_cycle_keys) > MAX_TRACE_SIZE:
+            min_key = min(trace_cycle_keys)
+            del self.trace[min_key]
+             
         if cycle in self.trace.keys():
             if len(self.trace[cycle]) > 0 and module in self.trace[cycle].keys():
                 #print("Changing data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
@@ -66,15 +50,18 @@ class CogTrace:
 
         self.cycle = cycle
         self.module = module
+        self.all_modules[(cycle,module)] = []
+        
 
     def add_data(self, data_type, data):
         """
         data_type is one of "WORLD, GOALS, etc"
         """
+        
         if self.cycle != -1 and self.module != "":
             self.trace[self.cycle][self.module].append([data_type,data])
-
-
+            self.all_modules[(self.cycle,self.module)].append([data_type,data])
+        
     def get_data(self, cycle, phase):
         if cycle < 0:
             return [] # if not initialized, no data to return
@@ -91,17 +78,16 @@ class CogTrace:
     def get_current_phase(self):
         return self.module
 
-    # When this is called, it means the current module failed for some reason
-    #def failuredetected(self):
-        # get the module
-        #failed_phase = self.trace[-1].keys()[0]
-        #print("[trace.py] failed_phase is " + str(failed_phase))
-        # if it's a planning module then switch domain files
-        #if failed_phase == "PyHopPlanner":
-        #self.mem.myMidca.clear_phase("Plan")
-        #self.mem.myMidca.runtime_append_module("Plan", planning2.PyHopPlanner(True))
-        #print("swapped out the planner, try again")
-
+    def get_n_prev_phase(self,n=0):
+        '''
+        returns the nth previous phase, if n is 1, get the second to last phase executed, etc
+        '''
+        try:
+            if len(self.all_modules) > n:
+                return self.all_modules.items()[-(n+1)]
+        
+        except :
+            print("problem in get_n_prev_phase")
 
     def data_str(self, data_type, data):
         result_str = ""
@@ -127,7 +113,7 @@ class CogTrace:
         elif data_type == "REMOVED GOAL":
             result_str = "  REMOVED GOAL: "+str(data)
         else:
-            result_str = "  UNKNOWN_DATA_TYPE '" + data_type + "' : "+str(data)
+            result_str = "  UNKNOWN_DATA_TYPE '" + str(data_type) + "' : "+str(data)
 
         return result_str
 
@@ -205,9 +191,5 @@ class CogTrace:
         print("dot_output = " + str(dot_output))
         #subprocess.call(shlex.split("rm "+dotfilename))
         print("Drawing of current trace written to " + pdf_filename)
-
-
-#    def gen_trace_graph(self):
-
 
 

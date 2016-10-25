@@ -8,13 +8,13 @@ class MRSimplePlanner(base.BaseModule):
         self.verbose = verbose
         curr_goal = self.mem.get(self.mem.META_CURR_GOAL)
         if not curr_goal:
-            print("    No plan generated")
+            if self.verbose >= 1: print("    No plan generated")
             return
         else:
             plan = self.plan_for_goal(curr_goal)
             if plan:
                 self.mem.set(self.mem.META_PLAN, plan)
-                print("    Selected plan: "+str(plan))
+                if self.verbose >= 1: print("    Selected plan: "+str(plan))
 
     def plan_for_goal(self, goal):
         #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))

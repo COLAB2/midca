@@ -16,8 +16,28 @@ class SimpleIntend(base.BaseModule):
                 print "Goal graph not initialized. Intend will do nothing."
             return
         goals = goalGraph.getUnrestrictedGoals()
-        self.mem.set(self.mem.CURRENT_GOALS, goals)
-
+        goals_selected = []
+        # special code for NBeacons, need to change for later
+        exists_free_goal = False
+        free_goal = None
+        for g in goals:
+            if 'free' in str(g):
+                exists_free_goal = True
+                free_goal = g
+        
+        # activation goals: just pick one
+        
+        if free_goal:
+            goals_selected = [free_goal]
+            self.mem.set(self.mem.CURRENT_GOALS,goals_selected )
+        else:
+            if len(goals) > 1:
+                # just randomly pick the first one
+                goals_selected = [goals[0]]
+                self.mem.set(self.mem.CURRENT_GOALS,goals_selected )
+            else:
+                goals_selected = goals
+                self.mem.set(self.mem.CURRENT_GOALS, goals_selected)
         if trace:
             trace.add_data("GOALS",goals)
 
@@ -27,6 +47,6 @@ class SimpleIntend(base.BaseModule):
         else:
             if verbose >= 2:
                 print "Selecting goal(s):",
-                for goal in goals:
+                for goal in goals_selected:
                     print goal,
                 print

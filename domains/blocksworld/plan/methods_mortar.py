@@ -9,7 +9,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 
 """
 
-import pyhop
+from MIDCA.modules._plan import pyhop
 
 """
 Here are some helper functions that are used in the methods' preconditions.
@@ -141,8 +141,8 @@ def put_m(state,b1,b2):
             return [('stack_mortared',b1,b2,mortar_block)]
         else:
             # no mortar left, continue stacking like normal
-            #return [('stack',b1,b2)]
-            return False
+            return [('stack',b1,b2)]
+            #return False
     else:
         return False
             
