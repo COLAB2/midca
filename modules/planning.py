@@ -1,4 +1,4 @@
-from _plan import pyhop
+from _plan import JSHOP, pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
 from MIDCA import plans, base
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
@@ -171,6 +171,84 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
         #save new plan
         if asynchPlan != None:
             self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
+
+class JSHOPPlanner():
+    print "jshop planner..."
+    def __init__(self):
+        print init
+    
+    def run(self):
+        print "run"
+        world = self.mem.get(self.mem.STATES)[-1]
+        goals = self.mem.get(self.mem.CURRENT_GOALS)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals received by planner. Skipping planning."
+            return
+        try:
+            midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+        except AttributeError:
+            midcaPlan = None
+        if midcaPlan:
+            if verbose >= 2:
+                print "Old plan retrieved. Checking validity...",
+            valid = world.plan_correct(midcaPlan)
+            if not valid:
+                midcaPlan = None
+                #if plan modification is added to MIDCA, do it here.
+                if verbose >= 2:
+                    print "invalid."
+            elif verbose >= 2:
+                print "valid."
+            if valid:
+                if verbose >= 2:
+                    print "checking to see if all goals are achieved...",
+                achieved = world.plan_goals_achieved(midcaPlan)
+                if verbose >= 2:
+                    if len(achieved) == len(midcaPlan.goals):
+                        print "yes"
+                    else:
+                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                if len(achieved) != len(midcaPlan.goals):
+                    midcaPlan = None #triggers replanning.
+
+        #ensure goals is a collection to simplify things later.
+        if not isinstance(goals, collections.Iterable):
+            goals = [goals]
+
+        if not midcaPlan:
+            #use pyhop to generate new plan
+            if verbose >= 2:
+                print "Planning..."
+           
+            try:
+                pyhopTasks = pyhop_tasks_from_goals(goals)
+            except Exception:
+                print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+            try:
+                jshopPlan = JSHOP.jshop(pyhopTasks, verbose = 0)
+            except Exception:
+                jshopPlan = None
+            if not jshopPlan and jshopPlan != []:
+                if verbose >= 1:
+                    print "Planning failed for ",
+                    for goal in goals:
+                        print goal, " ",
+                    print
+                return
+            #change from pyhop plan to MIDCA plan
+            midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
+            
+            if verbose >= 1:
+                print "Planning complete."
+            if verbose >= 2:
+                print "Plan: ", midcaPlan
+            #save new plan
+            if midcaPlan != None:
+                self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
+            if trace: trace.add_data("PLAN",midcaPlan)
+
 
 class PyHopPlanner(base.BaseModule):
 
