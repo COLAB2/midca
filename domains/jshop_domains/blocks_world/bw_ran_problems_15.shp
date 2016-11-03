@@ -1,0 +1,103 @@
+;; name: bw-ran-problems.15.lisp
+;; #blocks: 15
+;; seed:948169918
+;;---------------------------------------------
+;;problem-name: bw-ran-15-1 towers: 3
+
+(defproblem bw-ran-15-1 blocks-normal
+ ((arm-empty)
+ (on-table b1) (on b2 b1) (on b3 b2) (on b4 b3) (on b9 b4) (on b10 b9) (clear b10)
+ (on-table b5) (on b8 b5) (on b11 b8) (on b13 b11) (on b15 b13) (clear b15)
+ (on-table b6) (on b7 b6) (on b12 b7) (on b14 b12) (clear b14)
+ )
+ ((achieve-goals ( list 
+ (on-table b1) (on b5 b1) (on b7 b5) (on b8 b7) (clear b8)
+ (on-table b2) (on b3 b2) (on b6 b3) (on b12 b6) (on b13 b12) (on b14 b13) (clear b14)
+ (on-table b4) (clear b4)
+ (on-table b9) (on b10 b9) (on b11 b10) (clear b11)
+ (on-table b15) (clear b15)
+ ))))
+
+
+;;---------------------------------------------
+;;problem-name: bw-ran-15-2 towers: 6
+
+(defproblem bw-ran-15-2 blocks-normal
+ ((arm-empty)
+ (on-table b1) (on b2 b1) (on b3 b2) (on b5 b3) (on b12 b5) (clear b12)
+ (on-table b4) (on b6 b4) (on b8 b6) (clear b8)
+ (on-table b7) (clear b7)
+ (on-table b9) (on b15 b9) (clear b15)
+ (on-table b10) (on b11 b10) (on b13 b11) (clear b13)
+ (on-table b14) (clear b14)
+ )
+ ((achieve-goals ( list 
+ (on-table b1) (on b3 b1) (on b8 b3) (on b14 b8) (clear b14)
+ (on-table b2) (on b4 b2) (on b5 b4) (on b6 b5) (on b7 b6) (on b13 b7) (clear b13)
+ (on-table b9) (on b12 b9) (clear b12)
+ (on-table b10) (on b11 b10) (clear b11)
+ (on-table b15) (clear b15)
+ ))))
+
+
+;;---------------------------------------------
+;;problem-name: bw-ran-15-3 towers: 5
+
+(defproblem bw-ran-15-3 blocks-normal
+ ((arm-empty)
+ (on-table b1) (on b2 b1) (clear b2)
+ (on-table b3) (on b4 b3) (on b6 b4) (on b10 b6) (on b12 b10) (on b13 b12) (on b14 b13) (clear b14)
+ (on-table b5) (on b8 b5) (on b11 b8) (clear b11)
+ (on-table b7) (on b9 b7) (clear b9)
+ (on-table b15) (clear b15)
+ )
+ ((achieve-goals ( list 
+ (on-table b1) (on b13 b1) (clear b13)
+ (on-table b2) (on b3 b2) (on b5 b3) (on b6 b5) (on b8 b6) (on b15 b8) (clear b15)
+ (on-table b4) (on b7 b4) (on b10 b7) (clear b10)
+ (on-table b9) (clear b9)
+ (on-table b11) (on b12 b11) (on b14 b12) (clear b14)
+ ))))
+
+
+;;---------------------------------------------
+;;problem-name: bw-ran-15-4 towers: 4
+
+(defproblem bw-ran-15-4 blocks-normal
+ ((arm-empty)
+ (on-table b1) (on b6 b1) (on b7 b6) (on b9 b7) (on b10 b9) (on b14 b10) (clear b14)
+ (on-table b2) (on b3 b2) (clear b3)
+ (on-table b4) (on b5 b4) (on b8 b5) (on b12 b8) (on b15 b12) (clear b15)
+ (on-table b11) (on b13 b11) (clear b13)
+ )
+ ((achieve-goals ( list 
+ (on-table b1) (on b5 b1) (on b7 b5) (clear b7)
+ (on-table b2) (on b3 b2) (on b4 b3) (on b6 b4) (on b8 b6) (on b14 b8) (clear b14)
+ (on-table b9) (on b11 b9) (clear b11)
+ (on-table b10) (on b12 b10) (clear b12)
+ (on-table b13) (clear b13)
+ (on-table b15) (clear b15)
+ ))))
+
+
+;;---------------------------------------------
+;;problem-name: bw-ran-15-5 towers: 5
+
+(defproblem bw-ran-15-5 blocks-normal
+ ((arm-empty)
+ (on-table b1) (on b2 b1) (on b5 b2) (clear b5)
+ (on-table b3) (on b7 b3) (on b8 b7) (clear b8)
+ (on-table b4) (on b6 b4) (on b9 b6) (on b10 b9) (on b12 b10) (on b14 b12) (clear b14)
+ (on-table b11) (on b13 b11) (clear b13)
+ (on-table b15) (clear b15)
+ )
+ ((achieve-goals ( list 
+ (on-table b1) (on b2 b1) (on b4 b2) (on b6 b4) (on b13 b6) (clear b13)
+ (on-table b3) (on b9 b3) (on b10 b9) (clear b10)
+ (on-table b5) (on b7 b5) (on b8 b7) (on b12 b8) (clear b12)
+ (on-table b11) (on b15 b11) (clear b15)
+ (on-table b14) (clear b14)
+ ))))
+
+
+
