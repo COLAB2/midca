@@ -253,14 +253,14 @@ class JSHOPPlanner(base.BaseModule):
             #use pyhop to generate new plan
             if verbose >= 2:
                 print "Planning..."
-            try:
-                jshopState = self.jshop_state_from_world(world)
-            except Exception:
-                print "Could not generate a valid pyhop state from current world state. Skipping planning"
-            try:
-                jshopTasks = self.jshop_tasks_from_goals(goals,jshopState)
-            except Exception:
-                print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+#             try:
+            jshopState = self.jshop_state_from_world(world)
+#             except Exception:
+#                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
+#             try:
+            jshopTasks = self.jshop_tasks_from_goals(goals,jshopState)
+#             except Exception:
+#                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
                 jshopPlan = JSHOP.jshop(jshopTasks)

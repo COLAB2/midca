@@ -1,7 +1,7 @@
 '''
 A collection of functions that are domain specific, which different MIDCA components use
 '''
-
+import os
 from MIDCA.domains.blocksworld import scene, blockstate
 from MIDCA.modules._plan import pyhop
 
@@ -35,9 +35,9 @@ def preferFire(goal1, goal2):
     return 0
 
 def jshop_state_from_world(world, name = "state"):
-    thisDir = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/"
-    MIDCA_ROOT = thisDir + "/../../../"
-    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    thisDir =  os.path.dirname(os.path.realpath(__file__))
+    MIDCA_ROOT = thisDir + "/../"
+    STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
     f = open(STATE_FILE, 'w')
     f.write('\n')
     f.write('(defproblem bw-ran-5-1 blocks-normal ((arm-empty)\n')
@@ -54,9 +54,9 @@ def jshop_state_from_world(world, name = "state"):
     f.close()
     
 def jshop_tasks_from_goals(goals,pyhopState):
-    thisDir = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/"
-    MIDCA_ROOT = thisDir + "/../../../"
-    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    thisDir =  os.path.dirname(os.path.realpath(__file__))
+    MIDCA_ROOT = thisDir + "/../"
+    STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
     f = open(STATE_FILE, 'a')
     
     alltasks = []

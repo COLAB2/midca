@@ -29,5 +29,7 @@ setup(name='MIDCA',
                 'MIDCA.experimental.baxter',
                 'MIDCA.experiment',
                 'MIDCA.metamodules'],
+      package_data={'': ['*.jar', 'MIDCA.modules._plan.jShop'],
+                    '': ['*.shp', 'MIDCA.domains.jshop_domains.blocks_world']},
       package_dir={"": ".."}
      )
