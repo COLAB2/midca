@@ -16,9 +16,10 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+print thisDir
 
 MIDCA_ROOT = thisDir + "/../"
-
+print MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"

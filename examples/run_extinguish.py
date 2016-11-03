@@ -23,7 +23,8 @@ extinguish = True
 argsPyHopPlanner = [util.pyhop_state_from_world,
 					util.pyhop_tasks_from_goals,
 					DECLARE_METHODS_FUNC,
-					DECLARE_OPERATORS_FUNC]
+					DECLARE_OPERATORS_FUNC,
+					extinguish]
 
 world = domainread.load_domain(domainFile)
 stateread.apply_state_file(world, stateFile)

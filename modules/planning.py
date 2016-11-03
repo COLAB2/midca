@@ -1,5 +1,6 @@
-from _plan import JSHOP, pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
+from _plan import  pyhop, methods, operators, methods_extinguish, operators_extinguish, methods_midca, operators_midca, methods_mortar,operators_mortar
 from MIDCA import plans, base
+from MIDCA.modules._plan.jShop import JSHOP
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 import collections
@@ -264,13 +265,13 @@ class JSHOPPlanner(base.BaseModule):
                 pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
-            try:
+            #try:
                 #print_state(pyhopState)
                 # record attempt to replann
-                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-                pyhopPlan = JSHOP.jshop(pyhopTasks)
-            except Exception:
-                pyhopPlan = None
+            self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+            pyhopPlan = JSHOP.jshop(pyhopTasks)
+            #except Exception:
+#                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:
                     print "Planning failed for ",
