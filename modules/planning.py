@@ -179,23 +179,19 @@ class JSHOPPlanner(base.BaseModule):
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''
 
-    pyhop_state_from_world = None
-    pyhop_tasks_from_goals = None
+    jshop_state_from_world = None
+    jshop_tasks_from_goals = None
     
     def __init__(self,
-                 pyhop_state_from_world,
-                 pyhop_tasks_from_goals,
-                 declare_methods,
-                 declare_operators,
+                 jshop_state_from_world,
+                 jshop_tasks_from_goals,
                  extinguishers = False,
                  mortar = False):
         
-        self.pyhop_state_from_world = pyhop_state_from_world
-        self.pyhop_tasks_from_goals = pyhop_tasks_from_goals
+        self.jshop_state_from_world = jshop_state_from_world
+        self.jshop_tasks_from_goals = jshop_tasks_from_goals
         
         try:
-            declare_methods()
-            declare_operators()
             self.working = True
         except:
             print "Error declaring pyhop methods and operators. This planner will be \
@@ -258,30 +254,28 @@ class JSHOPPlanner(base.BaseModule):
             if verbose >= 2:
                 print "Planning..."
             try:
-                pyhopState = self.pyhop_state_from_world(world)
+                jshopState = self.jshop_state_from_world(world)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
-                pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
+                jshopTasks = self.jshop_tasks_from_goals(goals,jshopState)
             except Exception:
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
-            #try:
-                #print_state(pyhopState)
-                # record attempt to replann
-            self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-            pyhopPlan = JSHOP.jshop(pyhopTasks)
-            #except Exception:
-#                 pyhopPlan = None
-            if not pyhopPlan and pyhopPlan != []:
+            try:
+                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+                jshopPlan = JSHOP.jshop(jshopTasks)
+            except Exception:
+                jshopPlan = None
+            if not jshopPlan and jshopPlan != []:
                 if verbose >= 1:
                     print "Planning failed for ",
                     for goal in goals:
                         print goal, " ",
                     print
-                if trace: trace.add_data("PLAN", pyhopPlan)
+                if trace: trace.add_data("PLAN", jshopPlan)
                 return
             #change from pyhop plan to MIDCA plan
-            midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
+            midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
             
             if verbose >= 1:
                 print "Planning complete."

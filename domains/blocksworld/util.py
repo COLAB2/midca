@@ -34,6 +34,58 @@ def preferFire(goal1, goal2):
         return 1
     return 0
 
+def jshop_state_from_world(world, name = "state"):
+    thisDir = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/"
+    MIDCA_ROOT = thisDir + "/../../../"
+    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    f = open(STATE_FILE, 'w')
+    f.write('\n')
+    f.write('(defproblem bw-ran-5-1 blocks-normal ((arm-empty)\n')
+    
+    for atom in world.atoms:
+        if atom.predicate.name == "clear":
+            f.write("(clear " +  atom.args[0].name+ ")\n")
+        elif atom.predicate.name == "on":
+            f.write("(on " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
+        elif atom.predicate.name == "on-table":
+            f.write("(on-table " +  atom.args[0].name + ")\n")
+    
+    f.write(")\n")
+    f.close()
+    
+def jshop_tasks_from_goals(goals,pyhopState):
+    thisDir = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/"
+    MIDCA_ROOT = thisDir + "/../../../"
+    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    f = open(STATE_FILE, 'a')
+    
+    alltasks = []
+    blkgoals = pyhop.Goal("goals")
+    blkgoals.pos = {}
+    f.write(" ((achieve-goals ( list\n")
+    for goal in goals:
+        #extract predicate
+        if 'predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['predicate'])
+        elif 'Predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['Predicate'])
+        elif goal.args:
+            predicate = str(goal.args[0])
+        else:
+            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        args = [str(arg) for arg in goal.args]
+        if args[0] == predicate:
+            args.pop(0)
+        if predicate == "on":
+            f.write("(on " +  args[0] + " " +  args[1] + ")\n")
+        elif predicate == 'on-table':
+            f.write("(on-table" + blkgoals.pos[args[0]]+ ")\n")
+        
+        else:
+            raise Exception("No task corresponds to predicate " + predicate)
+    f.write(" ))))")
+    f.close()
+    
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.pos = {}
