@@ -111,8 +111,8 @@ class Logger:
 		f = self.files[key]
 		if f:
 			f.write(txt + "\n")
-			if not self.filesStayOpen:
-				f.close()
+			#if not self.filesStayOpen:
+				#f.close()
 	
 	def writeError(self, e, filename = "", txt = ""):
 		print("Logger: trying to write " + txt + " to file " + filename + "; got error " + str(e), file = sys.stderr)

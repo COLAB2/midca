@@ -1,0 +1,607 @@
+3.066094 - -0.047211299605
+
+6.309744 - Enter to capture image.Point 1 captured: (326,84)
+
+7.258154 - Point 2 captured: (416,93)
+
+8.505521 - Point 3 captured: (415,262)
+
+9.977734 - Point 4 captured: (305,251)
+
+10.575242 - [[326, 84], [416, 93], [415, 262], [305, 251]]
+
+10.575491 - [[Decimal('0.5650985769266708'), Decimal('0.23299874879680552')], [Decimal('0.7618675766784712'), Decimal('0.23160832325774428')], [Decimal('0.7571842739032699'), Decimal('-0.16682397425958811')], [Decimal('0.54982243275158'), Decimal('-0.164252555097179')]]
+
+11.184279 - Enter ...Initializing Perceive module 1...
+
+11.184512 - done.
+
+11.184553 - Initializing Interpret module 1...
+
+11.184603 - done.
+
+11.184640 - Initializing Eval module 1...
+
+11.184677 - done.
+
+11.184808 - Initializing Intend module 1...
+
+11.184888 - done.
+
+11.184924 - Initializing Plan module 1...
+
+11.184974 - done.
+
+11.185023 - Initializing Act module 1...
+
+11.185057 - done.
+
+11.185131 - Goal Graph initialized.
+
+11.185163 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+11.185229 - Starting cycle 0
+
+11.185282 - ****** Starting Perceive Phase ******
+
+11.185471 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f06c41205a8>
+
+11.185516 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f06c41206c8>
+
+11.185667 - World observed: 10 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+11.285401 - ****** Starting Interpret Phase ******
+
+11.385400 - ****** Starting Eval Phase ******
+
+11.385652 - No current goals. Skipping eval
+
+11.485432 - ****** Starting Intend Phase ******
+
+11.485692 - No goals selected.
+
+11.585415 - ****** Starting Plan Phase ******
+
+11.585636 - No goals received by planner. Skipping planning.
+
+11.685420 - ****** Starting Act Phase ******
+
+11.685699 - No Active goals. Act phase will do nothing
+
+11.785382 - Starting cycle 1
+
+11.785523 - ****** Starting Perceive Phase ******
+
+11.785778 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+11.885401 - ****** Starting Interpret Phase ******
+
+11.985400 - ****** Starting Eval Phase ******
+
+11.985606 - No current goals. Skipping eval
+
+12.085423 - ****** Starting Intend Phase ******
+
+12.085658 - No goals selected.
+
+12.185445 - ****** Starting Plan Phase ******
+
+12.185754 - No goals received by planner. Skipping planning.
+
+12.285388 - ****** Starting Act Phase ******
+
+12.285594 - No Active goals. Act phase will do nothing
+
+12.385371 - Starting cycle 2
+
+12.385497 - ****** Starting Perceive Phase ******
+
+12.385651 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+12.485399 - ****** Starting Interpret Phase ******
+
+12.585452 - ****** Starting Eval Phase ******
+
+12.585834 - No current goals. Skipping eval
+
+12.685428 - ****** Starting Intend Phase ******
+
+12.685652 - No goals selected.
+
+12.785413 - ****** Starting Plan Phase ******
+
+12.785635 - No goals received by planner. Skipping planning.
+
+12.885416 - ****** Starting Act Phase ******
+
+12.885663 - No Active goals. Act phase will do nothing
+
+12.985396 - Starting cycle 3
+
+12.985506 - ****** Starting Perceive Phase ******
+
+12.985742 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+13.085406 - ****** Starting Interpret Phase ******
+
+13.185391 - ****** Starting Eval Phase ******
+
+13.185557 - No current goals. Skipping eval
+
+13.285396 - ****** Starting Intend Phase ******
+
+13.285608 - No goals selected.
+
+13.385347 - ****** Starting Plan Phase ******
+
+13.385566 - No goals received by planner. Skipping planning.
+
+13.485376 - ****** Starting Act Phase ******
+
+13.485579 - No Active goals. Act phase will do nothing
+
+13.585401 - Starting cycle 4
+
+13.585529 - ****** Starting Perceive Phase ******
+
+13.585689 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+13.685381 - ****** Starting Interpret Phase ******
+
+13.785382 - ****** Starting Eval Phase ******
+
+13.785600 - No current goals. Skipping eval
+
+13.885407 - ****** Starting Intend Phase ******
+
+13.885652 - No goals selected.
+
+13.985387 - ****** Starting Plan Phase ******
+
+13.985624 - No goals received by planner. Skipping planning.
+
+14.085526 - ****** Starting Act Phase ******
+
+14.085915 - No Active goals. Act phase will do nothing
+
+14.185379 - Starting cycle 5
+
+14.185571 - ****** Starting Perceive Phase ******
+
+14.185919 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+14.285422 - ****** Starting Interpret Phase ******
+
+14.385407 - ****** Starting Eval Phase ******
+
+14.385673 - No current goals. Skipping eval
+
+14.485403 - ****** Starting Intend Phase ******
+
+14.485628 - No goals selected.
+
+14.585386 - ****** Starting Plan Phase ******
+
+14.585626 - No goals received by planner. Skipping planning.
+
+14.685408 - ****** Starting Act Phase ******
+
+14.685663 - No Active goals. Act phase will do nothing
+
+14.785453 - Starting cycle 6
+
+14.785856 - ****** Starting Perceive Phase ******
+
+14.786487 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+14.885454 - ****** Starting Interpret Phase ******
+
+14.985404 - ****** Starting Eval Phase ******
+
+14.985706 - No current goals. Skipping eval
+
+15.085395 - ****** Starting Intend Phase ******
+
+15.085612 - No goals selected.
+
+15.185375 - ****** Starting Plan Phase ******
+
+15.185622 - No goals received by planner. Skipping planning.
+
+15.204176 - storing utterance: data: stack
+
+15.285383 - ****** Starting Act Phase ******
+
+15.285555 - No Active goals. Act phase will do nothing
+
+15.385365 - Starting cycle 7
+
+15.385503 - ****** Starting Perceive Phase ******
+
+15.385689 - World observed: 0 new detection event(s), 1 utterance(s) and 0 feedback msg(s)
+
+15.485406 - ****** Starting Interpret Phase ******
+
+15.485667 - received utterance: stack
+
+15.485817 - adding goal: Goal(objective: stacking, indirectObject: observer, pos: red block:green block, directObject: green block, subject: self)
+
+15.585396 - ****** Starting Eval Phase ******
+
+15.585592 - No current goals. Skipping eval
+
+15.685416 - ****** Starting Intend Phase ******
+
+15.685658 - Selecting goal(s): stacking the green block
+
+15.785413 - ****** Starting Plan Phase ******
+
+15.785694 - Planning...
+
+15.785751 - call seek_plan
+
+18.068873 - Enter ...storing utterance: data: if and when the tip of what you have the only to live our lives and now i know it today
+
+18.920425 - depth 0 tasks [('achieve_goals', [<MIDCA.goals.Goal instance at 0x7f06c4145ab8>])]
+
+18.921019 - achieve_goals_m
+
+18.921121 - holding
+
+18.921188 - next subtask: achieve_goals
+
+20.056201 - Enter ...depth 1 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+20.056343 - ___block: green block
+
+20.408282 - Enter ...statusgreen block
+
+20.408407 - ***********
+
+20.408455 - no!
+
+20.632941 - Enter ...green block
+
+20.633210 - return false
+
+20.633347 - move to table
+
+20.633453 - ___move one
+
+20.633554 - next subtask: move_blocks
+
+20.896184 - Enter ...depth 2 tasks [('move_one', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+20.896314 - next subtask: move_one
+
+21.160341 - Enter ...depth 3 tasks [('get', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+21.160503 - next subtask: get
+
+21.440319 - Enter ...depth 4 tasks [('unstack_task', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+21.440476 - next subtask: unstack_task
+
+21.688121 - Enter ...depth 5 tasks [('reach_to_unstack', 'green block', 'red block'), ('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+21.688921 - monitoring pos
+ monitoring clear...
+
+21.688799 - monitoring pos
+
+21.689036 - start
+
+21.869534 - [INFO] [WallTime: 1456342176.780072] Robot Enabled
+
+21.976249 - depth 6 tasks [('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+22.360702 - Enter ...depth 7 tasks [('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+22.680325 - Enter ...depth 8 tasks [('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+22.680496 - next subtask: put
+
+23.024345 - Enter ...depth 9 tasks [('putdown', 'green block'), ('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+23.312198 - Enter ...depth 10 tasks [('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+23.608313 - Enter ...depth 11 tasks [('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+23.928210 - Enter ...depth 12 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+23.928291 - ___block: green block
+
+24.360305 - Enter ...statusgreen block
+
+24.360512 - ***********
+
+24.360590 - no!
+
+24.360800 - done
+
+24.360848 - continue
+
+24.360894 - ___block: red block
+
+24.816834 - Enter ...statusred block
+
+24.817107 - green block
+
+24.817240 - ***********
+
+24.817360 - green block
+
+24.817503 - return false
+
+24.817643 - no!
+
+24.817786 - move to block
+
+24.817911 - next subtask: move_blocks
+
+25.200281 - Enter ...depth 13 tasks [('move_one', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+25.200598 - next subtask: move_one
+
+35.680369 - Enter ...depth 14 tasks [('get', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+35.680581 - next subtask: get
+
+36.248506 - Enter ...depth 15 tasks [('pickup_task', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+36.248735 - next subtask: pickup_task
+
+36.568271 - Enter ...depth 16 tasks [('reach_to_pickup', 'red block'), ('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+36.568944 - monitoring pos
+
+36.569200 - start
+
+36.569088 - monitoring pos
+ monitoring clear...
+
+36.569443 - start
+
+36.579852 - [INFO] [WallTime: 1456342191.490392] Robot Enabled
+
+36.589560 - [INFO] [WallTime: 1456342191.500106] Robot Enabled
+
+36.912236 - depth 17 tasks [('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+37.168247 - Enter ...depth 18 tasks [('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+37.360271 - Enter ...depth 19 tasks [('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+37.360454 - next subtask: put
+
+37.552328 - Enter ...depth 20 tasks [('stack', 'red block', 'green block'), ('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+37.752394 - Enter ...yes it is clear
+
+37.752742 - green block
+
+40.465802 - storing utterance: data: set in
+
+42.032550 - depth 21 tasks [('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+42.744284 - Enter ...depth 22 tasks [('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+43.192245 - Enter ...depth 23 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f06c4145ab8>)]
+
+43.192455 - ___block: green block
+
+43.688203 - Enter ...statusgreen block
+
+43.688383 - ***********
+
+43.688459 - no!
+
+43.688531 - done
+
+43.688569 - continue
+
+43.688629 - ___block: red block
+
+46.401166 - Enter ...storing utterance: data: the
+
+48.440418 - statusred block
+
+48.440561 - green block
+
+48.440603 - ***********
+
+48.440641 - green block
+
+48.944349 - Enter ...no!
+
+48.944475 - done
+
+48.944522 - continue
+
+48.944565 - statusgreen block
+
+48.944602 - ***********
+
+48.944647 - no!
+
+48.944701 - done
+
+48.944739 - statusred block
+
+48.944774 - green block
+
+48.944808 - ***********
+
+48.944843 - green block
+
+49.352482 - Enter ...no!
+
+49.352651 - done
+
+49.352726 - next subtask: move_blocks
+
+50.080311 - Enter ...depth 24 tasks []
+
+50.080552 - Planning complete.
+
+50.080625 - Plan:  [0m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+50.080798 - ****** Starting Act Phase ******
+
+50.080969 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+50.081013 - Beginning action execution for ('reach_to_unstack', 'green block', 'red block')
+
+50.081320 - {'y': -0.013282810950355325, 'x': 0.71803793799786575, 'z': 0.02277944410983878, 'cmd_id': 0, 'time': 1456324204.991492}
+
+50.081365 - trying to send
+
+50.081401 - loc_cmd
+
+50.081467 - trying to send message on topic loc_cmd
+
+50.081587 - [INFO] [WallTime: 1456342204.992133] Midca sending msg: data: y: -0.0132828109504 | x: 0.718037937998 | z: 0.0227794441098 | cmd_id: 0 | time: 1456324204.99
+
+50.180895 - Starting cycle 8
+
+50.181021 - ****** Starting Perceive Phase ******
+
+50.181548 - World observed: 34 new detection event(s), 3 utterance(s) and 0 feedback msg(s)
+
+50.280944 - ****** Starting Interpret Phase ******
+
+50.281224 - received utterance: if and when the tip of what you have the only to live our lives and now i know it today
+
+50.281296 - received utterance: set in
+
+50.281355 - received utterance: the
+
+50.380929 - ****** Starting Eval Phase ******
+
+50.480926 - ****** Starting Intend Phase ******
+
+50.481192 - Selecting goal(s): stacking the green block
+
+50.580923 - ****** Starting Plan Phase ******
+
+50.581222 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+50.680925 - ****** Starting Act Phase ******
+
+50.681194 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+50.780894 - Starting cycle 9
+
+50.781018 - ****** Starting Perceive Phase ******
+
+50.781271 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+50.880917 - ****** Starting Interpret Phase ******
+
+50.980913 - ****** Starting Eval Phase ******
+
+51.080943 - ****** Starting Intend Phase ******
+
+51.081255 - Selecting goal(s): stacking the green block
+
+51.180924 - ****** Starting Plan Phase ******
+
+51.181231 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+51.280937 - ****** Starting Act Phase ******
+
+51.281229 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+51.380898 - Starting cycle 10
+
+51.381033 - ****** Starting Perceive Phase ******
+
+51.381187 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+51.480932 - ****** Starting Interpret Phase ******
+
+51.580933 - ****** Starting Eval Phase ******
+
+51.680925 - ****** Starting Intend Phase ******
+
+51.681199 - Selecting goal(s): stacking the green block
+
+51.780952 - ****** Starting Plan Phase ******
+
+51.781298 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+51.880955 - ****** Starting Act Phase ******
+
+51.881329 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+51.980904 - Starting cycle 11
+
+51.981060 - ****** Starting Perceive Phase ******
+
+51.981210 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+52.080951 - ****** Starting Interpret Phase ******
+
+52.180926 - ****** Starting Eval Phase ******
+
+52.280931 - ****** Starting Intend Phase ******
+
+52.281185 - Selecting goal(s): stacking the green block
+
+52.380926 - ****** Starting Plan Phase ******
+
+52.381252 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+52.480917 - ****** Starting Act Phase ******
+
+52.481195 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+52.580904 - Starting cycle 12
+
+52.581056 - ****** Starting Perceive Phase ******
+
+52.581300 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+52.680917 - ****** Starting Interpret Phase ******
+
+52.780939 - ****** Starting Eval Phase ******
+
+52.880923 - ****** Starting Intend Phase ******
+
+52.881161 - Selecting goal(s): stacking the green block
+
+52.980929 - ****** Starting Plan Phase ******
+
+52.981311 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+53.080937 - ****** Starting Act Phase ******
+
+53.081258 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+53.180905 - Starting cycle 13
+
+53.181069 - ****** Starting Perceive Phase ******
+
+53.181258 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+53.280976 - ****** Starting Interpret Phase ******
+
+53.380916 - ****** Starting Eval Phase ******
+
+53.480933 - ****** Starting Intend Phase ******
+
+53.481219 - Selecting goal(s): stacking the green block
+
+53.580928 - ****** Starting Plan Phase ******
+
+53.581259 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+53.680926 - ****** Starting Act Phase ******
+
+53.681183 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+2:58.117405 - storing utterance: data: if this if
+
+2:58.774309 -  shutdown request: new node registered with same name
+
+

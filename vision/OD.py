@@ -45,8 +45,8 @@ def Getmask(hsv, lower, upper):
     return mask
 
 def GetmaskForBlue(hsv):
-    lower_blue = np.array([100,150,0], dtype=np.uint8)
-    upper_blue = np.array([140,255,255], dtype=np.uint8)
+    lower_blue = np.array([165,50,200], dtype=np.uint8)
+    upper_blue = np.array([175,255,255], dtype=np.uint8)
     
     mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
     
@@ -159,7 +159,7 @@ def main():
     
     rospy.init_node('rsdk_xdisplay_image', anonymous=True)
     baxter.enable()
-    boundaries = {'blue block':([100,150,0], [140,255,255]),
+    boundaries = {'blue block':([0,150,50], [10,255,255]),
                  #'pink block' : ([165,50,200], [175,255,255]),
                  #'darkgreen block': ([65,255,102], [85,255,102]),
                  'green block': ([30,100,50], [80,255,255]),

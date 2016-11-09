@@ -133,7 +133,7 @@ def monitor_clear_block(block_name='red block', topic='clear_block'):
     
     #rospy.init_node('clear_block_monitor', anonymous=True)
     baxter.enable()
-    boundaries = {'blue block':([100,150,0], [140,255,255]),
+    boundaries = {'blue block':([100,100,50], [140,255,255]),
                  'green block': ([30,100,50], [80,255,255]),
                  'red block':([0,150,50], [10,255,255])
                 }
@@ -157,11 +157,13 @@ def monitor_clear_block(block_name='red block', topic='clear_block'):
             if(p != None):
                 color_location.update({color_name : (p[0], p[1], 0)})
         time.sleep(2)
-        if len(color_location) == 2:
+        if len(color_location) == 3:
             pos_green = 'table'
             pos_red = 'table'
+            pos_blue = 'table'
             clear_green = 'clear'
             clear_red = 'clear'
+            clear_blue = 'clear'
             for obj in color_location.keys():
                 if obj != block_name:
                     if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 12:

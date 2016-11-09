@@ -128,4 +128,3 @@ def declare_ops():
 	pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
 						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release, raising_arm)
 
-
