@@ -232,6 +232,7 @@ def pyhop(state,tasks,verbose=0):
     """
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
     print("call seek_plan")
+
     result = seek_plan(state,tasks,[],0,verbose)
     if verbose>0: print('** result =',result,'\n')
     return result
@@ -239,9 +240,11 @@ def pyhop(state,tasks,verbose=0):
 fired_monitor = None
 def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor
-    raw_input('Enter ...')
+    
     
     print('depth {} tasks {}'.format(depth,tasks))
+
+    raw_input("enter...")
 #     for task in tasks:
 #         for elm in task:
 #             print(elm + " ")
@@ -267,7 +270,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
         else:
             fired_monitor.is_fired = False
     else:
-        
         if task1[0] in operators:
             if verbose>2: print('depth {} action {}'.format(depth,task1))
             operator = operators[task1[0]]
@@ -285,6 +287,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             #print(monitor)
       
                 solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+		print("Solution in operators")
+		print(solution)
                 if solution != False:
                     return solution
         if task1[0] in methods:
@@ -306,6 +310,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             #print(task1[1])
                             Thread(target=monitor, args=[state, depth, task1]).start()
                     solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+		    print("-----------------")
+		    print(solution)
                     if solution == False:
                         if fired_monitor and fired_monitor.depth > depth:
                             print("fired-monitor")
@@ -313,6 +319,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             fired_monitor.is_fired = False
                             #generated_monitors.remove(fired_monitor)
                             #replan
+			    del plan[:]
                             solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
                             
                             

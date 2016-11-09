@@ -213,10 +213,30 @@ class InstructionReceiver:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-						
+
+                        if utterance == "get the blue block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'blue block:arm')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"						
 			if utterance == "put the green block on table":
 				goal = goals.Goal(objective = "moving", subject = "self", 
 				directObject = "green block", indirectObject = "observer", pos = 'green block:table')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+                        if utterance == "put the blue block on table":
+				goal = goals.Goal(objective = "moving", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'blue block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
 					if added:
@@ -236,7 +256,7 @@ class InstructionReceiver:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 			
-			if utterance == "stack green block on red block":
+			if utterance == "stack the green block on the red block":
 				goal = goals.Goal(objective = "stacking", subject = "self", 
 				directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
@@ -247,8 +267,51 @@ class InstructionReceiver:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 			
-		
-			if utterance == "stack red block on green block":
+			if utterance == "stack the blue block on the red block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "red block", indirectObject = "observer", pos = 'blue block:red block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+		        if utterance == "stack the blue block on the green block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'blue block:green block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+                        if utterance == "stack the red block on the blue block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'red block:blue block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+                        if utterance == "stack the green block on the blue block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'green block:blue block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \ goal graph"
+			
+
+			if utterance == "stack the red block on the green block":
 				goal = goals.Goal(objective = "stacking", subject = "self", 
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)

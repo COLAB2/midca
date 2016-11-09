@@ -66,6 +66,8 @@ class GenericPyhopPlanner:
 	def get_new_plan(self, state, goals, verbose = 2):
 		if verbose >= 2:
 			print "Planning..."
+			raw_input('Enter...')
+
 		try:
 			plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
 			#note: MIDCA does not convert its state and goals to pyhop state and

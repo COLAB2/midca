@@ -1,0 +1,414 @@
+8.760776 - -0.151130030724
+
+24.694420 - Enter to capture image.Point 1 captured: (326,89)
+
+25.827254 - Point 2 captured: (415,93)
+
+26.859358 - Point 3 captured: (413,263)
+
+27.795230 - Point 4 captured: (302,253)
+
+28.243425 - [[326, 89], [415, 93], [413, 263], [302, 253]]
+
+28.243550 - [[Decimal('0.5530062817188712'), Decimal('0.22907569014989934')], [Decimal('0.7720891509802844'), Decimal('0.2223339473270695')], [Decimal('0.7540005960777079'), Decimal('-0.17865044828498183')], [Decimal('0.5399662728629409'), Decimal('-0.17177104982921526')]]
+
+29.377879 - Enter ...Initializing Perceive module 1...
+
+29.378033 - done.
+
+29.378068 - Initializing Interpret module 1...
+
+29.378114 - done.
+
+29.378147 - Initializing Eval module 1...
+
+29.378179 - done.
+
+29.378211 - Initializing Intend module 1...
+
+29.378241 - done.
+
+29.378272 - Initializing Plan module 1...
+
+29.378303 - done.
+
+29.378333 - Initializing Act module 1...
+
+29.378363 - done.
+
+29.378433 - Goal Graph initialized.
+
+29.378463 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+29.378659 - Starting cycle 0
+
+29.378753 - ****** Starting Perceive Phase ******
+
+29.378951 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f409c4b65a8>
+
+29.379011 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f409c4b6680>
+
+29.379291 - World observed: 28 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+29.478774 - ****** Starting Interpret Phase ******
+
+29.578825 - ****** Starting Eval Phase ******
+
+29.578978 - No current goals. Skipping eval
+
+29.678823 - ****** Starting Intend Phase ******
+
+29.679048 - No goals selected.
+
+29.778806 - ****** Starting Plan Phase ******
+
+29.779358 - No goals received by planner. Skipping planning.
+
+29.878810 - ****** Starting Act Phase ******
+
+29.878995 - No Active goals. Act phase will do nothing
+
+29.978807 - Starting cycle 1
+
+29.978927 - ****** Starting Perceive Phase ******
+
+29.979164 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+30.078827 - ****** Starting Interpret Phase ******
+
+30.178811 - ****** Starting Eval Phase ******
+
+30.178991 - No current goals. Skipping eval
+
+30.278806 - ****** Starting Intend Phase ******
+
+30.279039 - No goals selected.
+
+30.378817 - ****** Starting Plan Phase ******
+
+30.379029 - No goals received by planner. Skipping planning.
+
+30.478819 - ****** Starting Act Phase ******
+
+30.479005 - No Active goals. Act phase will do nothing
+
+30.578812 - Starting cycle 2
+
+30.578971 - ****** Starting Perceive Phase ******
+
+30.579177 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+30.678832 - ****** Starting Interpret Phase ******
+
+30.778834 - ****** Starting Eval Phase ******
+
+30.779079 - No current goals. Skipping eval
+
+30.878827 - ****** Starting Intend Phase ******
+
+30.879054 - No goals selected.
+
+30.978822 - ****** Starting Plan Phase ******
+
+30.979124 - No goals received by planner. Skipping planning.
+
+31.078838 - ****** Starting Act Phase ******
+
+31.079030 - No Active goals. Act phase will do nothing
+
+31.178798 - Starting cycle 3
+
+31.178932 - ****** Starting Perceive Phase ******
+
+31.179073 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+31.278842 - ****** Starting Interpret Phase ******
+
+31.378903 - ****** Starting Eval Phase ******
+
+31.379341 - No current goals. Skipping eval
+
+31.478841 - ****** Starting Intend Phase ******
+
+31.479110 - No goals selected.
+
+31.578819 - ****** Starting Plan Phase ******
+
+31.579042 - No goals received by planner. Skipping planning.
+
+31.678808 - ****** Starting Act Phase ******
+
+31.678999 - No Active goals. Act phase will do nothing
+
+31.778808 - Starting cycle 4
+
+31.778965 - ****** Starting Perceive Phase ******
+
+31.779165 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+31.878821 - ****** Starting Interpret Phase ******
+
+31.978809 - ****** Starting Eval Phase ******
+
+31.978993 - No current goals. Skipping eval
+
+32.078807 - ****** Starting Intend Phase ******
+
+32.079043 - No goals selected.
+
+32.178941 - ****** Starting Plan Phase ******
+
+32.179164 - No goals received by planner. Skipping planning.
+
+32.278838 - ****** Starting Act Phase ******
+
+32.279023 - No Active goals. Act phase will do nothing
+
+32.378823 - Starting cycle 5
+
+32.378940 - ****** Starting Perceive Phase ******
+
+32.379163 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+32.478824 - ****** Starting Interpret Phase ******
+
+32.578806 - ****** Starting Eval Phase ******
+
+32.578971 - No current goals. Skipping eval
+
+32.678827 - ****** Starting Intend Phase ******
+
+32.679044 - No goals selected.
+
+32.778870 - ****** Starting Plan Phase ******
+
+32.779497 - No goals received by planner. Skipping planning.
+
+32.878843 - ****** Starting Act Phase ******
+
+32.879028 - No Active goals. Act phase will do nothing
+
+32.978795 - Starting cycle 6
+
+32.978913 - ****** Starting Perceive Phase ******
+
+32.979050 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+33.078814 - ****** Starting Interpret Phase ******
+
+33.178817 - ****** Starting Eval Phase ******
+
+33.179054 - No current goals. Skipping eval
+
+33.278797 - ****** Starting Intend Phase ******
+
+33.279032 - No goals selected.
+
+33.378807 - ****** Starting Plan Phase ******
+
+33.379029 - No goals received by planner. Skipping planning.
+
+33.478838 - ****** Starting Act Phase ******
+
+33.479076 - No Active goals. Act phase will do nothing
+
+33.578809 - Starting cycle 7
+
+33.578987 - ****** Starting Perceive Phase ******
+
+33.579180 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+33.678830 - ****** Starting Interpret Phase ******
+
+33.778823 - ****** Starting Eval Phase ******
+
+33.779039 - No current goals. Skipping eval
+
+33.878819 - ****** Starting Intend Phase ******
+
+33.879044 - No goals selected.
+
+33.978823 - ****** Starting Plan Phase ******
+
+33.979059 - No goals received by planner. Skipping planning.
+
+34.078829 - ****** Starting Act Phase ******
+
+34.079021 - No Active goals. Act phase will do nothing
+
+34.178797 - Starting cycle 8
+
+34.178938 - ****** Starting Perceive Phase ******
+
+34.179187 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+34.278821 - ****** Starting Interpret Phase ******
+
+34.378815 - ****** Starting Eval Phase ******
+
+34.379008 - No current goals. Skipping eval
+
+34.478817 - ****** Starting Intend Phase ******
+
+34.479040 - No goals selected.
+
+34.578815 - ****** Starting Plan Phase ******
+
+34.579038 - No goals received by planner. Skipping planning.
+
+34.678841 - ****** Starting Act Phase ******
+
+34.679095 - No Active goals. Act phase will do nothing
+
+34.778804 - Starting cycle 9
+
+34.779296 - ****** Starting Perceive Phase ******
+
+34.779451 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+34.878831 - ****** Starting Interpret Phase ******
+
+34.978825 - ****** Starting Eval Phase ******
+
+34.979022 - No current goals. Skipping eval
+
+35.078822 - ****** Starting Intend Phase ******
+
+35.079099 - No goals selected.
+
+35.178936 - ****** Starting Plan Phase ******
+
+35.179179 - No goals received by planner. Skipping planning.
+
+35.278853 - ****** Starting Act Phase ******
+
+35.279142 - No Active goals. Act phase will do nothing
+
+35.378821 - Starting cycle 10
+
+35.378985 - ****** Starting Perceive Phase ******
+
+35.379171 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+35.478865 - ****** Starting Interpret Phase ******
+
+35.578842 - ****** Starting Eval Phase ******
+
+35.579044 - No current goals. Skipping eval
+
+35.678834 - ****** Starting Intend Phase ******
+
+35.679086 - No goals selected.
+
+35.778838 - ****** Starting Plan Phase ******
+
+35.779067 - No goals received by planner. Skipping planning.
+
+35.878820 - ****** Starting Act Phase ******
+
+35.879021 - No Active goals. Act phase will do nothing
+
+35.978802 - Starting cycle 11
+
+35.978947 - ****** Starting Perceive Phase ******
+
+35.979188 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+36.078825 - ****** Starting Interpret Phase ******
+
+36.178842 - ****** Starting Eval Phase ******
+
+36.179255 - No current goals. Skipping eval
+
+36.278843 - ****** Starting Intend Phase ******
+
+36.279147 - No goals selected.
+
+36.378823 - ****** Starting Plan Phase ******
+
+36.379062 - No goals received by planner. Skipping planning.
+
+36.478824 - ****** Starting Act Phase ******
+
+36.479023 - No Active goals. Act phase will do nothing
+
+36.578810 - Starting cycle 12
+
+36.579007 - ****** Starting Perceive Phase ******
+
+36.579233 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+36.679102 - ****** Starting Interpret Phase ******
+
+36.778891 - ****** Starting Eval Phase ******
+
+36.779150 - No current goals. Skipping eval
+
+36.878846 - ****** Starting Intend Phase ******
+
+36.879174 - No goals selected.
+
+36.978826 - ****** Starting Plan Phase ******
+
+36.979054 - No goals received by planner. Skipping planning.
+
+37.078832 - ****** Starting Act Phase ******
+
+37.079045 - No Active goals. Act phase will do nothing
+
+37.178811 - Starting cycle 13
+
+37.178990 - ****** Starting Perceive Phase ******
+
+37.179182 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+37.278833 - ****** Starting Interpret Phase ******
+
+37.378831 - ****** Starting Eval Phase ******
+
+37.379037 - No current goals. Skipping eval
+
+37.478845 - ****** Starting Intend Phase ******
+
+37.479093 - No goals selected.
+
+37.578830 - ****** Starting Plan Phase ******
+
+37.579060 - No goals received by planner. Skipping planning.
+
+37.678863 - ****** Starting Act Phase ******
+
+37.679067 - No Active goals. Act phase will do nothing
+
+37.778817 - Starting cycle 14
+
+37.778959 - ****** Starting Perceive Phase ******
+
+37.779110 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+37.878829 - ****** Starting Interpret Phase ******
+
+37.978830 - ****** Starting Eval Phase ******
+
+37.979023 - No current goals. Skipping eval
+
+38.078839 - ****** Starting Intend Phase ******
+
+38.079071 - No goals selected.
+
+38.178831 - ****** Starting Plan Phase ******
+
+38.179062 - No goals received by planner. Skipping planning.
+
+38.278840 - ****** Starting Act Phase ******
+
+38.279095 - No Active goals. Act phase will do nothing
+
+38.378818 - Starting cycle 15
+
+38.378949 - ****** Starting Perceive Phase ******
+
+38.379184 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+38.478821 - ****** Starting Interpret Phase ******
+
