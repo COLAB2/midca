@@ -327,7 +327,7 @@ class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
         # phasemanager is passed in as a self pointer for metacognitive modification
-        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=False)
+        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self, logenabled=False)
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
         self.history = []
