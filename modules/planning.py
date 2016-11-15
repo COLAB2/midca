@@ -203,6 +203,13 @@ class PyHopPlanner(base.BaseModule):
             traceback.print_exc()
             self.working = False
         
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+        self.mem.set(self.mem.PLANNING_COUNT, 0)
+    
+    
+        
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -264,9 +271,10 @@ class PyHopPlanner(base.BaseModule):
             try:
                 #print_state(pyhopState)
                 # record attempt to replann
-                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))            
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
             except Exception:
+                
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:

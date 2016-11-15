@@ -580,8 +580,25 @@ def preferFree(goal1, goal2):
 
     
 if __name__ == "__main__":
+    import os, inspect
+    from MIDCA.worldsim import domainread, stateread 
+    thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    MIDCA_ROOT = thisDir + "/../"
+    #DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
+    DOMAIN_ROOT = "domains/nbeacons/"
+    DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
+    
+    # generate an NBeacons Scenario
     env1 = NBeaconGrid()
-    env1.generate()
-    world = env1.get_STRIPS_str()
+    env1.generate_good_test()
+    
+    state1_str = env1.get_STRIPS_str()
+    
+    world = domainread.load_domain(DOMAIN_FILE)
+    
+    # Load state
+    stateread.apply_state_str(world, state1_str)
+    
     drawNBeaconsScene(world)
-    #print(env1.get_STRIPS_str())
+    
+    print(env1.get_STRIPS_str())

@@ -397,7 +397,6 @@ class NBeaconsDataRecorder:
     def init(self, world, mem):
         self.mem = mem
         self.mem.set(LAST_SCORED_GOAL, None)
-        self.mem.set(self.mem.PLANNING_COUNT, 0)
         self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, [(0,'',0)])
         self.mem.set(self.mem.ACTIONS_EXECUTED, 0)
 
