@@ -1,0 +1,3553 @@
+.810743 - Memory access at key __detected object queue
+.810878 - Memory access at key __detected object queue
+.810934 - Memory access at key __state
+.810975 - Memory access at key __state
+2.844149 - Memory access at key __detected object queue
+2.844289 - Memory access at key __detected object queue
+2.844349 - Memory access at key __state
+2.844384 - Memory access at key __state
+3.201240 - -0.151130030724
+
+4.877668 - Memory access at key __detected object queue
+4.877775 - Memory access at key __detected object queue
+4.877821 - Memory access at key __state
+4.877870 - Memory access at key __state
+6.593448 - Enter to capture image.Point 1 captured: (325,88)
+
+6.910867 - Memory access at key __detected object queue
+6.910971 - Memory access at key __detected object queue
+6.911019 - Memory access at key __state
+6.911058 - Memory access at key __state
+7.430136 - Point 2 captured: (419,92)
+
+8.389868 - Point 3 captured: (406,262)
+
+8.945151 - Memory access at key __detected object queue
+8.945265 - Memory access at key __detected object queue
+8.945317 - Memory access at key __state
+8.945359 - Memory access at key __state
+9.597265 - Point 4 captured: (302,251)
+
+10.069715 - [[325, 88], [419, 92], [406, 262], [302, 251]]
+
+10.069872 - [[Decimal('0.5530062817188712'), Decimal('0.22907569014989934')], [Decimal('0.7720891509802844'), Decimal('0.2223339473270695')], [Decimal('0.7540005960777079'), Decimal('-0.17865044828498183')], [Decimal('0.5399662728629409'), Decimal('-0.17177104982921526')]]
+
+10.070489 - Memory access at key __camera calibration status
+10.070574 - Memory access at key __Z
+10.070639 - Memory access at key __SZ
+10.070717 - Memory access at key __UZ
+10.070782 - Memory access at key __RP
+10.070843 - Memory access at key __PP
+10.981291 - Memory access at key __detected object queue
+10.981402 - Memory access at key __detected object queue
+10.981455 - Memory access at key __state
+10.981498 - Memory access at key __state
+13.015260 - Memory access at key __detected object queue
+13.015563 - Memory access at key __detected object queue
+13.015611 - Memory access at key __state
+13.015652 - Memory access at key __state
+15.048255 - Memory access at key __detected object queue
+15.048360 - Memory access at key __detected object queue
+15.048409 - Memory access at key __state
+15.048459 - Memory access at key __state
+17.078819 - Memory access at key __detected object queue
+17.078929 - Memory access at key __detected object queue
+17.078981 - Memory access at key __state
+17.079021 - Memory access at key __state
+19.116507 - Memory access at key __detected object queue
+19.116681 - Memory access at key __detected object queue
+19.116776 - Memory access at key __state
+19.116862 - Memory access at key __state
+19.535165 - Enter ...Initializing Perceive module 1...
+
+19.535285 - Memory access at key __current state
+19.535328 - done.
+
+19.535365 - Initializing Interpret module 1...
+
+19.535415 - done.
+
+19.535451 - Initializing Eval module 1...
+
+19.535493 - done.
+
+19.535536 - Initializing Intend module 1...
+
+19.535569 - done.
+
+19.535601 - Initializing Plan module 1...
+
+19.535632 - done.
+
+19.535663 - Initializing Act module 1...
+
+19.535694 - done.
+
+19.535741 - Memory access at key __goals
+19.535779 - Goal Graph initialized.
+
+19.535810 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+19.535859 - Starting cycle 0
+
+19.535910 - ****** Starting Perceive Phase ******
+
+19.535950 - Running module <MIDCA.modules.perceive.ROSObserver
+19.535987 - Memory access at key __detected object queue
+19.536021 - Memory access at key __state
+19.536052 - Memory access at key __current state
+19.536095 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f5a9c10fbd8>
+
+19.536140 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f5a9c10fcf8>
+
+19.536351 - World observed: 20 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+19.636014 - ****** Starting Interpret Phase ******
+
+19.636132 - Running module <MIDCA.modules.guide.InstructionReceiver
+19.636168 - Memory access at key __current state
+19.736028 - ****** Starting Eval Phase ******
+
+19.736133 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+19.736185 - No current goals. Skipping eval
+
+19.836016 - ****** Starting Intend Phase ******
+
+19.836120 - Running module <MIDCA.modules.intend.SimpleIntend
+19.836158 - Memory access at key __goals
+19.836197 - Memory access at key __current goals
+19.836245 - No goals selected.
+
+19.936010 - ****** Starting Plan Phase ******
+
+19.936127 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+19.936165 - Memory access at key __current state
+19.936199 - Memory access at key __current goals
+19.936240 - No goals received by planner. Skipping planning.
+
+20.036019 - ****** Starting Act Phase ******
+
+20.036161 - Running module <MIDCA.modules.act.AsynchronousAct
+20.036210 - Memory access at key __current goals
+20.036264 - No Active goals. Act phase will do nothing
+
+20.136001 - Starting cycle 1
+
+20.136119 - ****** Starting Perceive Phase ******
+
+20.136165 - Running module <MIDCA.modules.perceive.ROSObserver
+20.136213 - Memory access at key __current state
+20.136272 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+20.236104 - ****** Starting Interpret Phase ******
+
+20.236434 - Running module <MIDCA.modules.guide.InstructionReceiver
+20.236583 - Memory access at key __current state
+20.336166 - ****** Starting Eval Phase ******
+
+20.336380 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+20.336457 - Memory access at key __current goals
+20.336547 - No current goals. Skipping eval
+
+20.436043 - ****** Starting Intend Phase ******
+
+20.436211 - Running module <MIDCA.modules.intend.SimpleIntend
+20.436264 - Memory access at key __goals
+20.436319 - Memory access at key __current goals
+20.436400 - No goals selected.
+
+20.536028 - ****** Starting Plan Phase ******
+
+20.536141 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+20.536180 - Memory access at key __current state
+20.536215 - Memory access at key __current goals
+20.536255 - No goals received by planner. Skipping planning.
+
+20.636028 - ****** Starting Act Phase ******
+
+20.636136 - Running module <MIDCA.modules.act.AsynchronousAct
+20.636174 - Memory access at key __current goals
+20.636216 - No Active goals. Act phase will do nothing
+
+20.736013 - Starting cycle 2
+
+20.736128 - ****** Starting Perceive Phase ******
+
+20.736172 - Running module <MIDCA.modules.perceive.ROSObserver
+20.736211 - Memory access at key __current state
+20.736267 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+20.836010 - ****** Starting Interpret Phase ******
+
+20.836118 - Running module <MIDCA.modules.guide.InstructionReceiver
+20.836155 - Memory access at key __current state
+20.936041 - ****** Starting Eval Phase ******
+
+20.936175 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+20.936225 - Memory access at key __current goals
+20.936281 - No current goals. Skipping eval
+
+21.036017 - ****** Starting Intend Phase ******
+
+21.036132 - Running module <MIDCA.modules.intend.SimpleIntend
+21.036169 - Memory access at key __goals
+21.036206 - Memory access at key __current goals
+21.036245 - No goals selected.
+
+21.136023 - ****** Starting Plan Phase ******
+
+21.136120 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+21.136157 - Memory access at key __current state
+21.136193 - Memory access at key __current goals
+21.136231 - No goals received by planner. Skipping planning.
+
+21.149715 - Memory access at key __detected object queue
+21.149825 - Memory access at key __detected object queue
+21.149875 - Memory access at key __state
+21.149914 - Memory access at key __state
+21.236009 - ****** Starting Act Phase ******
+
+21.236115 - Running module <MIDCA.modules.act.AsynchronousAct
+21.236152 - Memory access at key __current goals
+21.236193 - No Active goals. Act phase will do nothing
+
+21.335996 - Starting cycle 3
+
+21.336127 - ****** Starting Perceive Phase ******
+
+21.336176 - Running module <MIDCA.modules.perceive.ROSObserver
+21.336210 - Memory access at key __detected object queue
+21.336245 - Memory access at key __state
+21.336286 - Memory access at key __current state
+21.336371 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+21.436041 - ****** Starting Interpret Phase ******
+
+21.436168 - Running module <MIDCA.modules.guide.InstructionReceiver
+21.436221 - Memory access at key __current state
+21.536027 - ****** Starting Eval Phase ******
+
+21.536122 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+21.536162 - Memory access at key __current goals
+21.536204 - No current goals. Skipping eval
+
+21.636020 - ****** Starting Intend Phase ******
+
+21.636111 - Running module <MIDCA.modules.intend.SimpleIntend
+21.636151 - Memory access at key __goals
+21.636191 - Memory access at key __current goals
+21.636230 - No goals selected.
+
+21.736024 - ****** Starting Plan Phase ******
+
+21.736124 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+21.736163 - Memory access at key __current state
+21.736200 - Memory access at key __current goals
+21.736239 - No goals received by planner. Skipping planning.
+
+21.836024 - ****** Starting Act Phase ******
+
+21.836116 - Running module <MIDCA.modules.act.AsynchronousAct
+21.836153 - Memory access at key __current goals
+21.836195 - No Active goals. Act phase will do nothing
+
+21.935993 - Starting cycle 4
+
+21.936108 - ****** Starting Perceive Phase ******
+
+21.936159 - Running module <MIDCA.modules.perceive.ROSObserver
+21.936196 - Memory access at key __current state
+21.936251 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+22.036053 - ****** Starting Interpret Phase ******
+
+22.036198 - Running module <MIDCA.modules.guide.InstructionReceiver
+22.036252 - Memory access at key __current state
+22.136033 - ****** Starting Eval Phase ******
+
+22.136146 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+22.136185 - Memory access at key __current goals
+22.136228 - No current goals. Skipping eval
+
+22.236073 - ****** Starting Intend Phase ******
+
+22.236240 - Running module <MIDCA.modules.intend.SimpleIntend
+22.236300 - Memory access at key __goals
+22.236363 - Memory access at key __current goals
+22.236427 - No goals selected.
+
+22.336050 - ****** Starting Plan Phase ******
+
+22.336173 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+22.336213 - Memory access at key __current state
+22.336250 - Memory access at key __current goals
+22.336289 - No goals received by planner. Skipping planning.
+
+22.436052 - ****** Starting Act Phase ******
+
+22.436201 - Running module <MIDCA.modules.act.AsynchronousAct
+22.436257 - Memory access at key __current goals
+22.436426 - No Active goals. Act phase will do nothing
+
+22.536055 - Starting cycle 5
+
+22.536182 - ****** Starting Perceive Phase ******
+
+22.536231 - Running module <MIDCA.modules.perceive.ROSObserver
+22.536270 - Memory access at key __current state
+22.536326 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+22.636027 - ****** Starting Interpret Phase ******
+
+22.636144 - Running module <MIDCA.modules.guide.InstructionReceiver
+22.636183 - Memory access at key __current state
+22.736044 - ****** Starting Eval Phase ******
+
+22.736148 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+22.736186 - Memory access at key __current goals
+22.736228 - No current goals. Skipping eval
+
+22.836021 - ****** Starting Intend Phase ******
+
+22.836144 - Running module <MIDCA.modules.intend.SimpleIntend
+22.836184 - Memory access at key __goals
+22.836224 - Memory access at key __current goals
+22.836263 - No goals selected.
+
+22.936167 - ****** Starting Plan Phase ******
+
+22.936283 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+22.936323 - Memory access at key __current state
+22.936359 - Memory access at key __current goals
+22.936398 - No goals received by planner. Skipping planning.
+
+23.036040 - ****** Starting Act Phase ******
+
+23.036151 - Running module <MIDCA.modules.act.AsynchronousAct
+23.036190 - Memory access at key __current goals
+23.036233 - No Active goals. Act phase will do nothing
+
+23.135997 - Starting cycle 6
+
+23.136124 - ****** Starting Perceive Phase ******
+
+23.136183 - Running module <MIDCA.modules.perceive.ROSObserver
+23.136223 - Memory access at key __current state
+23.136279 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+23.183500 - Memory access at key __detected object queue
+23.183613 - Memory access at key __detected object queue
+23.183665 - Memory access at key __state
+23.183703 - Memory access at key __state
+23.236031 - ****** Starting Interpret Phase ******
+
+23.236168 - Running module <MIDCA.modules.guide.InstructionReceiver
+23.236216 - Memory access at key __current state
+23.336018 - ****** Starting Eval Phase ******
+
+23.336126 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+23.336164 - Memory access at key __current goals
+23.336205 - No current goals. Skipping eval
+
+23.436037 - ****** Starting Intend Phase ******
+
+23.436160 - Running module <MIDCA.modules.intend.SimpleIntend
+23.436201 - Memory access at key __goals
+23.436239 - Memory access at key __current goals
+23.436278 - No goals selected.
+
+23.536033 - ****** Starting Plan Phase ******
+
+23.536143 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+23.536180 - Memory access at key __current state
+23.536216 - Memory access at key __current goals
+23.536254 - No goals received by planner. Skipping planning.
+
+23.635919 - ****** Starting Act Phase ******
+
+23.636057 - Running module <MIDCA.modules.act.AsynchronousAct
+23.636102 - Memory access at key __current goals
+23.636152 - No Active goals. Act phase will do nothing
+
+23.736007 - Starting cycle 7
+
+23.736167 - ****** Starting Perceive Phase ******
+
+23.736230 - Running module <MIDCA.modules.perceive.ROSObserver
+23.736275 - Memory access at key __detected object queue
+23.736321 - Memory access at key __state
+23.736376 - Memory access at key __current state
+23.736488 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+23.836014 - ****** Starting Interpret Phase ******
+
+23.836116 - Running module <MIDCA.modules.guide.InstructionReceiver
+23.836152 - Memory access at key __current state
+23.846654 - storing utterance: data: stack red block on green block
+
+23.846833 - Memory access at key __words heard queue
+23.936009 - ****** Starting Eval Phase ******
+
+23.936123 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+23.936162 - Memory access at key __current goals
+23.936211 - No current goals. Skipping eval
+
+24.036003 - ****** Starting Intend Phase ******
+
+24.036104 - Running module <MIDCA.modules.intend.SimpleIntend
+24.036151 - Memory access at key __goals
+24.036189 - Memory access at key __current goals
+24.036228 - No goals selected.
+
+24.136006 - ****** Starting Plan Phase ******
+
+24.136118 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+24.136156 - Memory access at key __current state
+24.136192 - Memory access at key __current goals
+24.136232 - No goals received by planner. Skipping planning.
+
+24.236006 - ****** Starting Act Phase ******
+
+24.236113 - Running module <MIDCA.modules.act.AsynchronousAct
+24.236150 - Memory access at key __current goals
+24.236191 - No Active goals. Act phase will do nothing
+
+24.335992 - Starting cycle 8
+
+24.336105 - ****** Starting Perceive Phase ******
+
+24.336152 - Running module <MIDCA.modules.perceive.ROSObserver
+24.336189 - Memory access at key __words heard queue
+24.336225 - Memory access at key __current state
+24.336288 - World observed: 0 new detection event(s), 1 utterance(s) and 0 feedback msg(s)
+
+24.436006 - ****** Starting Interpret Phase ******
+
+24.436111 - Running module <MIDCA.modules.guide.InstructionReceiver
+24.436148 - Memory access at key __current state
+24.436195 - received utterance: stack red block on green block
+
+24.436239 - Memory access at key __goals
+24.436305 - adding goal: Goal(objective: stacking, indirectObject: observer, pos: red block:green block, directObject: green block, subject: self)
+
+24.536018 - ****** Starting Eval Phase ******
+
+24.536610 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+24.536668 - Memory access at key __current goals
+24.536730 - No current goals. Skipping eval
+
+24.636031 - ****** Starting Intend Phase ******
+
+24.636142 - Running module <MIDCA.modules.intend.SimpleIntend
+24.636180 - Memory access at key __goals
+24.636220 - Memory access at key __current goals
+24.636265 - Selecting goal(s): stacking the green block
+
+24.736043 - ****** Starting Plan Phase ******
+
+24.736187 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+24.736245 - Memory access at key __current state
+24.736301 - Memory access at key __current goals
+24.736350 - Memory access at key __goals
+24.736412 - Planning...
+
+24.736481 - call seek_plan
+
+25.214984 - Memory access at key __detected object queue
+25.215166 - Memory access at key __detected object queue
+25.215222 - Memory access at key __state
+25.215263 - Memory access at key __state
+27.248176 - Memory access at key __detected object queue
+27.248293 - Memory access at key __detected object queue
+27.248349 - Memory access at key __state
+27.248404 - Memory access at key __state
+28.522728 - Enter ...depth 0 tasks [('achieve_goals', [<MIDCA.goals.Goal instance at 0x7f5a9c0135a8>])]
+
+28.522864 - achieve_goals_m
+
+28.522966 - holding
+
+28.523035 - next subtask: achieve_goals
+
+28.738747 - Enter ...depth 1 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+28.738859 - ___block: green block
+
+28.906441 - Enter ...statusgreen block
+
+28.906578 - ***********
+
+28.906625 - no!
+
+29.130477 - Enter ...green block
+
+29.130627 - return false
+
+29.130700 - move to table
+
+29.130753 - ___move one
+
+29.130806 - next subtask: move_blocks
+
+29.279263 - Memory access at key __detected object queue
+29.279386 - Memory access at key __detected object queue
+29.279447 - Memory access at key __state
+29.279496 - Memory access at key __state
+29.322267 - Enter ...depth 2 tasks [('move_one', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+29.322467 - next subtask: move_one
+
+29.514162 - Enter ...depth 3 tasks [('get', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+29.514300 - next subtask: get
+
+29.706102 - Enter ...depth 4 tasks [('unstack_task', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+29.706519 - next subtask: unstack_task
+
+29.898010 - Enter ...depth 5 tasks [('reach_to_unstack', 'green block', 'red block'), ('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+29.898978 - monitoring pos
+
+29.899156 - monitoring pos
+ monitoring clear...
+
+29.899277 - start
+
+29.899319 - start
+
+30.065636 - [INFO] [WallTime: 1462904981.285264] Robot Enabled
+
+30.097955 - depth 6 tasks [('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+30.297968 - Enter ...depth 7 tasks [('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+30.505839 - Enter ...depth 8 tasks [('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+30.505973 - next subtask: put
+
+30.713548 - Enter ...depth 9 tasks [('putdown', 'green block'), ('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+30.905510 - Enter ...depth 10 tasks [('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+31.113350 - Enter ...depth 11 tasks [('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+31.305387 - Enter ...depth 12 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+31.305516 - ___block: green block
+
+31.312934 - Memory access at key __detected object queue
+31.313049 - Memory access at key __detected object queue
+31.313107 - Memory access at key __state
+31.313147 - Memory access at key __state
+31.505327 - Enter ...statusgreen block
+
+31.505454 - ***********
+
+31.505514 - no!
+
+31.505571 - done
+
+31.505615 - continue
+
+31.505656 - ___block: red block
+
+31.729116 - Enter ...statusred block
+
+31.729233 - green block
+
+31.729283 - ***********
+
+31.729327 - green block
+
+31.729381 - return false
+
+31.729430 - no!
+
+31.729480 - move to block
+
+31.729525 - next subtask: move_blocks
+
+32.040953 - Enter ...depth 13 tasks [('move_one', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+32.041091 - next subtask: move_one
+
+32.248880 - Enter ...depth 14 tasks [('get', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+32.249025 - next subtask: get
+
+32.528690 - Enter ...depth 15 tasks [('pickup_task', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+32.528821 - next subtask: pickup_task
+
+32.744541 - Enter ...depth 16 tasks [('reach_to_pickup', 'red block'), ('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+32.745829 - monitoring pos
+
+32.745951 - monitoring pos
+ monitoring clear...
+
+32.746130 - start
+
+32.756515 - [INFO] [WallTime: 1462904983.976146] Robot Enabled
+
+32.984549 - depth 17 tasks [('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+33.336444 - Enter ...depth 18 tasks [('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+33.346541 - Memory access at key __detected object queue
+33.346680 - Memory access at key __detected object queue
+33.346750 - Memory access at key __state
+33.346806 - Memory access at key __state
+33.576158 - Enter ...depth 19 tasks [('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+33.576300 - next subtask: put
+
+33.824161 - Enter ...depth 20 tasks [('stack', 'red block', 'green block'), ('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+34.080047 - Enter ...yes it is clear
+
+34.080698 - green block
+
+34.343805 - depth 21 tasks [('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+34.703591 - Enter ...depth 22 tasks [('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+35.048519 - Enter ...depth 23 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5a9c0135a8>)]
+
+35.048927 - ___block: green block
+
+35.375606 - Enter ...statusgreen block
+
+35.375807 - ***********
+
+35.375898 - no!
+
+35.376008 - done
+
+35.376088 - continue
+
+35.376165 - ___block: red block
+
+35.381716 - Memory access at key __detected object queue
+35.381830 - Memory access at key __detected object queue
+35.381907 - Memory access at key __state
+35.381967 - Memory access at key __state
+35.671124 - Enter ...statusred block
+
+35.671233 - green block
+
+35.671274 - ***********
+
+35.671309 - green block
+
+36.039059 - Enter ...no!
+
+36.039155 - done
+
+36.039196 - continue
+
+36.039234 - statusgreen block
+
+36.039281 - ***********
+
+36.039317 - no!
+
+36.039355 - done
+
+36.039388 - statusred block
+
+36.039420 - green block
+
+36.039451 - ***********
+
+36.039482 - green block
+
+36.238875 - Enter ...no!
+
+36.239020 - done
+
+36.239091 - next subtask: move_blocks
+
+36.422848 - Enter ...depth 24 tasks []
+
+36.423240 - Planning complete.
+
+36.423365 - Plan:  [0m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+36.423450 - Memory access at key __goals
+36.423618 - ****** Starting Act Phase ******
+
+36.423700 - Running module <MIDCA.modules.act.AsynchronousAct
+36.423756 - Memory access at key __current goals
+36.423809 - Memory access at key __goals
+36.423950 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+36.424416 - Beginning action execution for ('reach_to_unstack', 'green block', 'red block')
+
+36.424497 - Memory access at key __current state
+36.424580 - Memory access at key __UZ
+36.424634 - Memory access at key __camera calibration status
+36.424733 - Memory access at key __camera calibration status
+36.424924 - {'y': 0.056947840986882076, 'x': 0.72579310790862162, 'z': -0.09434523370125365, 'cmd_id': 0, 'time': 1462890587.643518}
+
+36.425010 - trying to send
+
+36.425078 - loc_cmd
+
+36.425177 - trying to send message on topic loc_cmd
+
+36.425357 - [INFO] [WallTime: 1462904987.644987] Midca sending msg: data: y: 0.0569478409869 | x: 0.725793107909 | z: -0.0943452337013 | cmd_id: 0 | time: 1462890587.64
+
+36.523695 - Starting cycle 9
+
+36.523822 - ****** Starting Perceive Phase ******
+
+36.523873 - Running module <MIDCA.modules.perceive.ROSObserver
+36.523908 - Memory access at key __detected object queue
+36.523942 - Memory access at key __state
+36.523976 - Memory access at key __current state
+36.524135 - World observed: 12 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+36.623708 - ****** Starting Interpret Phase ******
+
+36.623823 - Running module <MIDCA.modules.guide.InstructionReceiver
+36.623862 - Memory access at key __current state
+36.723708 - ****** Starting Eval Phase ******
+
+36.723820 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+36.723858 - Memory access at key __current goals
+36.723893 - Memory access at key __goals
+36.823744 - ****** Starting Intend Phase ******
+
+36.823904 - Running module <MIDCA.modules.intend.SimpleIntend
+36.823962 - Memory access at key __goals
+36.824024 - Memory access at key __current goals
+36.824094 - Selecting goal(s): stacking the green block
+
+36.923739 - ****** Starting Plan Phase ******
+
+36.923855 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+36.923893 - Memory access at key __current state
+36.923930 - Memory access at key __current goals
+36.923962 - Memory access at key __goals
+36.924054 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+37.023728 - ****** Starting Act Phase ******
+
+37.023842 - Running module <MIDCA.modules.act.AsynchronousAct
+37.023880 - Memory access at key __current goals
+37.023916 - Memory access at key __goals
+37.023994 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+37.123690 - Starting cycle 10
+
+37.123854 - ****** Starting Perceive Phase ******
+
+37.123916 - Running module <MIDCA.modules.perceive.ROSObserver
+37.123963 - Memory access at key __current state
+37.124040 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+37.223726 - ****** Starting Interpret Phase ******
+
+37.223843 - Running module <MIDCA.modules.guide.InstructionReceiver
+37.223883 - Memory access at key __current state
+37.323834 - ****** Starting Eval Phase ******
+
+37.324173 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+37.324309 - Memory access at key __current goals
+37.324447 - Memory access at key __goals
+37.423848 - ****** Starting Intend Phase ******
+
+37.424102 - Running module <MIDCA.modules.intend.SimpleIntend
+37.424204 - Memory access at key __goals
+37.424331 - Memory access at key __current goals
+37.424461 - Selecting goal(s): stacking the green block
+
+37.426464 - Memory access at key __detected object queue
+37.426618 - Memory access at key __detected object queue
+37.426725 - Memory access at key __state
+37.426819 - Memory access at key __state
+37.523744 - ****** Starting Plan Phase ******
+
+37.523860 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+37.523906 - Memory access at key __current state
+37.523945 - Memory access at key __current goals
+37.523980 - Memory access at key __goals
+37.524073 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+37.623702 - ****** Starting Act Phase ******
+
+37.623812 - Running module <MIDCA.modules.act.AsynchronousAct
+37.623849 - Memory access at key __current goals
+37.623883 - Memory access at key __goals
+37.623959 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+37.723693 - Starting cycle 11
+
+37.723856 - ****** Starting Perceive Phase ******
+
+37.723939 - Running module <MIDCA.modules.perceive.ROSObserver
+37.723987 - Memory access at key __detected object queue
+37.724035 - Memory access at key __state
+37.724082 - Memory access at key __current state
+37.724202 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+37.823732 - ****** Starting Interpret Phase ******
+
+37.823841 - Running module <MIDCA.modules.guide.InstructionReceiver
+37.823878 - Memory access at key __current state
+37.923678 - ****** Starting Eval Phase ******
+
+37.923793 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+37.923830 - Memory access at key __current goals
+37.923865 - Memory access at key __goals
+38.023701 - ****** Starting Intend Phase ******
+
+38.023814 - Running module <MIDCA.modules.intend.SimpleIntend
+38.023852 - Memory access at key __goals
+38.023916 - Memory access at key __current goals
+38.023993 - Selecting goal(s): stacking the green block
+
+38.123712 - ****** Starting Plan Phase ******
+
+38.123814 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+38.123850 - Memory access at key __current state
+38.123887 - Memory access at key __current goals
+38.123919 - Memory access at key __goals
+38.124022 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+38.223694 - ****** Starting Act Phase ******
+
+38.223804 - Running module <MIDCA.modules.act.AsynchronousAct
+38.223841 - Memory access at key __current goals
+38.223876 - Memory access at key __goals
+38.223952 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+38.323685 - Starting cycle 12
+
+38.323803 - ****** Starting Perceive Phase ******
+
+38.323849 - Running module <MIDCA.modules.perceive.ROSObserver
+38.323887 - Memory access at key __current state
+38.323944 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+38.423693 - ****** Starting Interpret Phase ******
+
+38.423799 - Running module <MIDCA.modules.guide.InstructionReceiver
+38.423837 - Memory access at key __current state
+38.523697 - ****** Starting Eval Phase ******
+
+38.523934 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+38.523973 - Memory access at key __current goals
+38.524008 - Memory access at key __goals
+38.623696 - ****** Starting Intend Phase ******
+
+38.623808 - Running module <MIDCA.modules.intend.SimpleIntend
+38.623845 - Memory access at key __goals
+38.623884 - Memory access at key __current goals
+38.623929 - Selecting goal(s): stacking the green block
+
+38.723731 - ****** Starting Plan Phase ******
+
+38.723866 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+38.723918 - Memory access at key __current state
+38.723968 - Memory access at key __current goals
+38.724014 - Memory access at key __goals
+38.724144 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+38.823737 - ****** Starting Act Phase ******
+
+38.823849 - Running module <MIDCA.modules.act.AsynchronousAct
+38.823887 - Memory access at key __current goals
+38.823922 - Memory access at key __goals
+38.823999 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+38.923687 - Starting cycle 13
+
+38.923821 - ****** Starting Perceive Phase ******
+
+38.923870 - Running module <MIDCA.modules.perceive.ROSObserver
+38.923910 - Memory access at key __current state
+38.923967 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+39.023745 - ****** Starting Interpret Phase ******
+
+39.023884 - Running module <MIDCA.modules.guide.InstructionReceiver
+39.023934 - Memory access at key __current state
+39.123719 - ****** Starting Eval Phase ******
+
+39.123828 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+39.123866 - Memory access at key __current goals
+39.123901 - Memory access at key __goals
+39.223734 - ****** Starting Intend Phase ******
+
+39.223882 - Running module <MIDCA.modules.intend.SimpleIntend
+39.223934 - Memory access at key __goals
+39.224004 - Memory access at key __current goals
+39.224076 - Selecting goal(s): stacking the green block
+
+39.323757 - ****** Starting Plan Phase ******
+
+39.323929 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+39.323982 - Memory access at key __current state
+39.324032 - Memory access at key __current goals
+39.324518 - Memory access at key __goals
+39.324647 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+39.423731 - ****** Starting Act Phase ******
+
+39.423840 - Running module <MIDCA.modules.act.AsynchronousAct
+39.423878 - Memory access at key __current goals
+39.423913 - Memory access at key __goals
+39.423990 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+39.461406 - Memory access at key __detected object queue
+39.461529 - Memory access at key __detected object queue
+39.461579 - Memory access at key __state
+39.461619 - Memory access at key __state
+39.523680 - Starting cycle 14
+
+39.523804 - ****** Starting Perceive Phase ******
+
+39.523853 - Running module <MIDCA.modules.perceive.ROSObserver
+39.523887 - Memory access at key __detected object queue
+39.523921 - Memory access at key __state
+39.523954 - Memory access at key __current state
+39.524034 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+39.623704 - ****** Starting Interpret Phase ******
+
+39.623803 - Running module <MIDCA.modules.guide.InstructionReceiver
+39.623840 - Memory access at key __current state
+39.723722 - ****** Starting Eval Phase ******
+
+39.723835 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+39.723874 - Memory access at key __current goals
+39.723909 - Memory access at key __goals
+39.823725 - ****** Starting Intend Phase ******
+
+39.823855 - Running module <MIDCA.modules.intend.SimpleIntend
+39.823905 - Memory access at key __goals
+39.823960 - Memory access at key __current goals
+39.824021 - Selecting goal(s): stacking the green block
+
+39.915390 - Memory access at key __ros feedback
+39.923711 - ****** Starting Plan Phase ******
+
+39.923791 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+39.923827 - Memory access at key __current state
+39.923870 - Memory access at key __current goals
+39.923904 - Memory access at key __goals
+39.923995 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+40.023709 - ****** Starting Act Phase ******
+
+40.023817 - Running module <MIDCA.modules.act.AsynchronousAct
+40.023854 - Memory access at key __current goals
+40.023889 - Memory access at key __goals
+40.023966 - Action ('reach_to_unstack', 'green block', 'red block') not complete.
+
+40.123721 - Starting cycle 15
+
+40.123850 - ****** Starting Perceive Phase ******
+
+40.123899 - Running module <MIDCA.modules.perceive.ROSObserver
+40.123936 - Memory access at key __ros feedback
+40.123970 - Memory access at key __current state
+40.124021 - Memory access at key __feedback
+40.124073 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+40.223707 - ****** Starting Interpret Phase ******
+
+40.223813 - Running module <MIDCA.modules.guide.InstructionReceiver
+40.223849 - Memory access at key __current state
+40.323708 - ****** Starting Eval Phase ******
+
+40.323816 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+40.323854 - Memory access at key __current goals
+40.323889 - Memory access at key __goals
+40.423813 - ****** Starting Intend Phase ******
+
+40.424126 - Running module <MIDCA.modules.intend.SimpleIntend
+40.424244 - Memory access at key __goals
+40.424378 - Memory access at key __current goals
+40.424529 - Selecting goal(s): stacking the green block
+
+40.523763 - ****** Starting Plan Phase ******
+
+40.523869 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+40.523907 - Memory access at key __current state
+40.523943 - Memory access at key __current goals
+40.523974 - Memory access at key __goals
+40.524066 - Old plan found that tests as valid: [92m('reach_to_unstack', 'green block', 'red block') [0m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+40.623727 - ****** Starting Act Phase ******
+
+40.623871 - Running module <MIDCA.modules.act.AsynchronousAct
+40.623923 - Memory access at key __current goals
+40.623977 - Memory access at key __goals
+40.624059 - Memory access at key __feedback
+40.624136 - Action ('reach_to_unstack', 'green block', 'red block') complete.
+
+40.624212 - Action ('reach_to_unstack', 'green block', 'red block') completed
+
+40.624291 - Memory access at key __feedback
+40.624358 - Action ('grab', 'green block') not complete.
+
+40.624425 - Beginning action execution for ('grab', 'green block')
+
+40.624516 - trying to send message on topic grabbing_cmd
+
+40.624684 - [INFO] [WallTime: 1462904991.844314] Midca sending msg: data: cmd: Grab it | cmd_id: 1 | time: 1462890591.84
+
+40.625367 - Memory access at key __ros feedback
+40.723692 - Starting cycle 16
+
+40.723822 - ****** Starting Perceive Phase ******
+
+40.723872 - Running module <MIDCA.modules.perceive.ROSObserver
+40.723909 - Memory access at key __ros feedback
+40.723944 - Memory access at key __current state
+40.723996 - Memory access at key __feedback
+40.724049 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+40.823710 - ****** Starting Interpret Phase ******
+
+40.823817 - Running module <MIDCA.modules.guide.InstructionReceiver
+40.823855 - Memory access at key __current state
+40.923706 - ****** Starting Eval Phase ******
+
+40.923816 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+40.923855 - Memory access at key __current goals
+40.923890 - Memory access at key __goals
+41.023709 - ****** Starting Intend Phase ******
+
+41.023815 - Running module <MIDCA.modules.intend.SimpleIntend
+41.023851 - Memory access at key __goals
+41.023889 - Memory access at key __current goals
+41.023934 - Selecting goal(s): stacking the green block
+
+41.123706 - ****** Starting Plan Phase ******
+
+41.123811 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+41.123848 - Memory access at key __current state
+41.123884 - Memory access at key __current goals
+41.123916 - Memory access at key __goals
+41.124004 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') [92m('grab', 'green block') [0m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+41.223704 - ****** Starting Act Phase ******
+
+41.223811 - Running module <MIDCA.modules.act.AsynchronousAct
+41.223849 - Memory access at key __current goals
+41.223885 - Memory access at key __goals
+41.223944 - Memory access at key __feedback
+41.223998 - Action ('grab', 'green block') complete.
+
+41.224048 - Action ('grab', 'green block') completed
+
+41.224102 - Memory access at key __feedback
+41.224147 - Action ('raising', 'green block') not complete.
+
+41.224191 - Beginning action execution for ('raising', 'green block')
+
+41.224234 - Memory access at key __RP
+41.224292 - trying to send message on topic raise_cmd
+
+41.224416 - [INFO] [WallTime: 1462904992.444050] Midca sending msg: data: y: 0.478250384794 | x: 0.64801687664 | z: 0.289534050209 | cmd_id: 2 | time: 1462890592.44
+
+41.323684 - Starting cycle 17
+
+41.323799 - ****** Starting Perceive Phase ******
+
+41.323849 - Running module <MIDCA.modules.perceive.ROSObserver
+41.323887 - Memory access at key __current state
+41.323944 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+41.423726 - ****** Starting Interpret Phase ******
+
+41.423834 - Running module <MIDCA.modules.guide.InstructionReceiver
+41.423872 - Memory access at key __current state
+41.494586 - Memory access at key __detected object queue
+41.494694 - Memory access at key __detected object queue
+41.494749 - Memory access at key __state
+41.494794 - Memory access at key __state
+41.523711 - ****** Starting Eval Phase ******
+
+41.523822 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+41.523860 - Memory access at key __current goals
+41.523895 - Memory access at key __goals
+41.623751 - ****** Starting Intend Phase ******
+
+41.623886 - Running module <MIDCA.modules.intend.SimpleIntend
+41.623938 - Memory access at key __goals
+41.623997 - Memory access at key __current goals
+41.624140 - Selecting goal(s): stacking the green block
+
+41.723717 - ****** Starting Plan Phase ******
+
+41.723818 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+41.723856 - Memory access at key __current state
+41.723900 - Memory access at key __current goals
+41.723933 - Memory access at key __goals
+41.724026 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+41.823711 - ****** Starting Act Phase ******
+
+41.823815 - Running module <MIDCA.modules.act.AsynchronousAct
+41.823851 - Memory access at key __current goals
+41.823884 - Memory access at key __goals
+41.823943 - Memory access at key __feedback
+41.823995 - Action ('raising', 'green block') not complete.
+
+41.923681 - Starting cycle 18
+
+41.923807 - ****** Starting Perceive Phase ******
+
+41.923855 - Running module <MIDCA.modules.perceive.ROSObserver
+41.923890 - Memory access at key __detected object queue
+41.923931 - Memory access at key __state
+41.923965 - Memory access at key __current state
+41.924049 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+42.023706 - ****** Starting Interpret Phase ******
+
+42.023896 - Running module <MIDCA.modules.guide.InstructionReceiver
+42.023934 - Memory access at key __current state
+42.123708 - ****** Starting Eval Phase ******
+
+42.123796 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+42.123833 - Memory access at key __current goals
+42.123867 - Memory access at key __goals
+42.223712 - ****** Starting Intend Phase ******
+
+42.223827 - Running module <MIDCA.modules.intend.SimpleIntend
+42.223865 - Memory access at key __goals
+42.223904 - Memory access at key __current goals
+42.223948 - Selecting goal(s): stacking the green block
+
+42.323709 - ****** Starting Plan Phase ******
+
+42.323820 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+42.323857 - Memory access at key __current state
+42.323900 - Memory access at key __current goals
+42.323934 - Memory access at key __goals
+42.324025 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+42.330728 - state changed
+
+42.423710 - ****** Starting Act Phase ******
+
+42.423828 - Running module <MIDCA.modules.act.AsynchronousAct
+42.423867 - Memory access at key __current goals
+42.423903 - Memory access at key __goals
+42.423965 - Memory access at key __feedback
+42.424019 - Action ('raising', 'green block') not complete.
+
+42.523690 - Starting cycle 19
+
+42.523839 - ****** Starting Perceive Phase ******
+
+42.523897 - Running module <MIDCA.modules.perceive.ROSObserver
+42.523940 - Memory access at key __current state
+42.524004 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+42.623738 - ****** Starting Interpret Phase ******
+
+42.623898 - Running module <MIDCA.modules.guide.InstructionReceiver
+42.623957 - Memory access at key __current state
+42.723795 - ****** Starting Eval Phase ******
+
+42.724052 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+42.724154 - Memory access at key __current goals
+42.724256 - Memory access at key __goals
+42.823802 - ****** Starting Intend Phase ******
+
+42.824021 - Running module <MIDCA.modules.intend.SimpleIntend
+42.824102 - Memory access at key __goals
+42.824191 - Memory access at key __current goals
+42.824311 - Selecting goal(s): stacking the green block
+
+42.923710 - ****** Starting Plan Phase ******
+
+42.923821 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+42.923860 - Memory access at key __current state
+42.923897 - Memory access at key __current goals
+42.923929 - Memory access at key __goals
+42.924023 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+43.023710 - ****** Starting Act Phase ******
+
+43.023819 - Running module <MIDCA.modules.act.AsynchronousAct
+43.023856 - Memory access at key __current goals
+43.023890 - Memory access at key __goals
+43.023950 - Memory access at key __feedback
+43.024002 - Action ('raising', 'green block') not complete.
+
+43.123699 - Starting cycle 20
+
+43.123886 - ****** Starting Perceive Phase ******
+
+43.123965 - Running module <MIDCA.modules.perceive.ROSObserver
+43.124024 - Memory access at key __current state
+43.124112 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+43.223718 - ****** Starting Interpret Phase ******
+
+43.223834 - Running module <MIDCA.modules.guide.InstructionReceiver
+43.223872 - Memory access at key __current state
+43.323708 - ****** Starting Eval Phase ******
+
+43.323818 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+43.323856 - Memory access at key __current goals
+43.323891 - Memory access at key __goals
+43.423724 - ****** Starting Intend Phase ******
+
+43.423830 - Running module <MIDCA.modules.intend.SimpleIntend
+43.423867 - Memory access at key __goals
+43.423906 - Memory access at key __current goals
+43.423949 - Selecting goal(s): stacking the green block
+
+43.523730 - ****** Starting Plan Phase ******
+
+43.523840 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+43.523877 - Memory access at key __current state
+43.523912 - Memory access at key __current goals
+43.523944 - Memory access at key __goals
+43.524037 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+43.526747 - Memory access at key __detected object queue
+43.623732 - ****** Starting Act Phase ******
+
+43.623875 - Running module <MIDCA.modules.act.AsynchronousAct
+43.623929 - Memory access at key __current goals
+43.623983 - Memory access at key __goals
+43.624069 - Memory access at key __feedback
+43.624145 - Action ('raising', 'green block') not complete.
+
+43.723695 - Starting cycle 21
+
+43.723821 - ****** Starting Perceive Phase ******
+
+43.723871 - Running module <MIDCA.modules.perceive.ROSObserver
+43.723908 - Memory access at key __detected object queue
+43.723947 - Memory access at key __current state
+43.724013 - World observed: 1 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+43.823741 - ****** Starting Interpret Phase ******
+
+43.823905 - Running module <MIDCA.modules.guide.InstructionReceiver
+43.823967 - Memory access at key __current state
+43.923721 - ****** Starting Eval Phase ******
+
+43.923827 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+43.923865 - Memory access at key __current goals
+43.923900 - Memory access at key __goals
+44.023734 - ****** Starting Intend Phase ******
+
+44.023887 - Running module <MIDCA.modules.intend.SimpleIntend
+44.023943 - Memory access at key __goals
+44.024003 - Memory access at key __current goals
+44.024072 - Selecting goal(s): stacking the green block
+
+44.123741 - ****** Starting Plan Phase ******
+
+44.123872 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+44.123920 - Memory access at key __current state
+44.123969 - Memory access at key __current goals
+44.124013 - Memory access at key __goals
+44.124131 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+44.223940 - ****** Starting Act Phase ******
+
+44.224222 - Running module <MIDCA.modules.act.AsynchronousAct
+44.224989 - Memory access at key __current goals
+44.225232 - Memory access at key __goals
+44.225389 - Memory access at key __feedback
+44.225504 - Action ('raising', 'green block') not complete.
+
+44.323712 - Starting cycle 22
+
+44.324006 - ****** Starting Perceive Phase ******
+
+44.324057 - Running module <MIDCA.modules.perceive.ROSObserver
+44.324096 - Memory access at key __current state
+44.324164 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+44.423717 - ****** Starting Interpret Phase ******
+
+44.423822 - Running module <MIDCA.modules.guide.InstructionReceiver
+44.423859 - Memory access at key __current state
+44.523709 - ****** Starting Eval Phase ******
+
+44.523832 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+44.523873 - Memory access at key __current goals
+44.523909 - Memory access at key __goals
+44.623711 - ****** Starting Intend Phase ******
+
+44.623824 - Running module <MIDCA.modules.intend.SimpleIntend
+44.623873 - Memory access at key __goals
+44.623917 - Memory access at key __current goals
+44.623964 - Selecting goal(s): stacking the green block
+
+44.723756 - ****** Starting Plan Phase ******
+
+44.723949 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+44.724019 - Memory access at key __current state
+44.724090 - Memory access at key __current goals
+44.724151 - Memory access at key __goals
+44.724335 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+44.823886 - ****** Starting Act Phase ******
+
+44.824018 - Running module <MIDCA.modules.act.AsynchronousAct
+44.824056 - Memory access at key __current goals
+44.824092 - Memory access at key __goals
+44.824152 - Memory access at key __feedback
+44.824217 - Action ('raising', 'green block') not complete.
+
+44.871792 - Memory access at key __ros feedback
+44.923682 - Starting cycle 23
+
+44.923797 - ****** Starting Perceive Phase ******
+
+44.923846 - Running module <MIDCA.modules.perceive.ROSObserver
+44.923881 - Memory access at key __ros feedback
+44.923915 - Memory access at key __current state
+44.923971 - Memory access at key __feedback
+44.924033 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+45.023726 - ****** Starting Interpret Phase ******
+
+45.023892 - Running module <MIDCA.modules.guide.InstructionReceiver
+45.023948 - Memory access at key __current state
+45.123789 - ****** Starting Eval Phase ******
+
+45.124043 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+45.124131 - Memory access at key __current goals
+45.124248 - Memory access at key __goals
+45.223781 - ****** Starting Intend Phase ******
+
+45.223897 - Running module <MIDCA.modules.intend.SimpleIntend
+45.223944 - Memory access at key __goals
+45.223983 - Memory access at key __current goals
+45.224039 - Selecting goal(s): stacking the green block
+
+45.323711 - ****** Starting Plan Phase ******
+
+45.323838 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+45.323876 - Memory access at key __current state
+45.323912 - Memory access at key __current goals
+45.323944 - Memory access at key __goals
+45.324035 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') [92m('raising', 'green block') [0m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+45.423717 - ****** Starting Act Phase ******
+
+45.423841 - Running module <MIDCA.modules.act.AsynchronousAct
+45.423893 - Memory access at key __current goals
+45.423936 - Memory access at key __goals
+45.424004 - Memory access at key __feedback
+45.424066 - Action ('raising', 'green block') complete.
+
+45.424122 - Action ('raising', 'green block') completed
+
+45.424240 - Memory access at key __feedback
+45.424293 - Action ('putdown', 'green block') not complete.
+
+45.424344 - Beginning action execution for ('putdown', 'green block')
+
+45.424579 - Memory access at key __PP
+45.424659 - trying to send message on topic loc_cmd
+
+45.424794 - [INFO] [WallTime: 1462904996.644427] Midca sending msg: data: y: 0.348700560075 | x: 0.675447365002 | z: -0.141130030724 | cmd_id: 3 | time: 1462890596.64
+
+45.523697 - Starting cycle 24
+
+45.523822 - ****** Starting Perceive Phase ******
+
+45.523879 - Running module <MIDCA.modules.perceive.ROSObserver
+45.523918 - Memory access at key __current state
+45.523982 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+45.561265 - Memory access at key __detected object queue
+45.623707 - ****** Starting Interpret Phase ******
+
+45.623984 - Running module <MIDCA.modules.guide.InstructionReceiver
+45.624024 - Memory access at key __current state
+45.723894 - ****** Starting Eval Phase ******
+
+45.724003 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+45.724042 - Memory access at key __current goals
+45.724077 - Memory access at key __goals
+45.823716 - ****** Starting Intend Phase ******
+
+45.823825 - Running module <MIDCA.modules.intend.SimpleIntend
+45.823861 - Memory access at key __goals
+45.823900 - Memory access at key __current goals
+45.823955 - Selecting goal(s): stacking the green block
+
+45.923704 - ****** Starting Plan Phase ******
+
+45.923834 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+45.923873 - Memory access at key __current state
+45.923910 - Memory access at key __current goals
+45.923942 - Memory access at key __goals
+45.924042 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+46.023731 - ****** Starting Act Phase ******
+
+46.023893 - Running module <MIDCA.modules.act.AsynchronousAct
+46.023951 - Memory access at key __current goals
+46.024007 - Memory access at key __goals
+46.024114 - Memory access at key __feedback
+46.024196 - Action ('putdown', 'green block') not complete.
+
+46.123693 - Starting cycle 25
+
+46.123834 - ****** Starting Perceive Phase ******
+
+46.123885 - Running module <MIDCA.modules.perceive.ROSObserver
+46.123920 - Memory access at key __detected object queue
+46.123957 - Memory access at key __current state
+46.124023 - World observed: 1 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+46.223718 - ****** Starting Interpret Phase ******
+
+46.223828 - Running module <MIDCA.modules.guide.InstructionReceiver
+46.223865 - Memory access at key __current state
+46.323715 - ****** Starting Eval Phase ******
+
+46.323829 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+46.323866 - Memory access at key __current goals
+46.323901 - Memory access at key __goals
+46.423752 - ****** Starting Intend Phase ******
+
+46.423916 - Running module <MIDCA.modules.intend.SimpleIntend
+46.423973 - Memory access at key __goals
+46.424053 - Memory access at key __current goals
+46.424125 - Selecting goal(s): stacking the green block
+
+46.523716 - ****** Starting Plan Phase ******
+
+46.523837 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+46.523874 - Memory access at key __current state
+46.523911 - Memory access at key __current goals
+46.523948 - Memory access at key __goals
+46.524053 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+46.623724 - ****** Starting Act Phase ******
+
+46.624007 - Running module <MIDCA.modules.act.AsynchronousAct
+46.624048 - Memory access at key __current goals
+46.624102 - Memory access at key __goals
+46.624165 - Memory access at key __feedback
+46.624217 - Action ('putdown', 'green block') not complete.
+
+46.723694 - Starting cycle 26
+
+46.723813 - ****** Starting Perceive Phase ******
+
+46.723861 - Running module <MIDCA.modules.perceive.ROSObserver
+46.723908 - Memory access at key __current state
+46.723974 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+46.823712 - ****** Starting Interpret Phase ******
+
+46.823816 - Running module <MIDCA.modules.guide.InstructionReceiver
+46.823853 - Memory access at key __current state
+46.923716 - ****** Starting Eval Phase ******
+
+46.923854 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+46.923900 - Memory access at key __current goals
+46.923945 - Memory access at key __goals
+47.023721 - ****** Starting Intend Phase ******
+
+47.023845 - Running module <MIDCA.modules.intend.SimpleIntend
+47.023883 - Memory access at key __goals
+47.023923 - Memory access at key __current goals
+47.023968 - Selecting goal(s): stacking the green block
+
+47.123708 - ****** Starting Plan Phase ******
+
+47.123816 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+47.123853 - Memory access at key __current state
+47.123900 - Memory access at key __current goals
+47.123933 - Memory access at key __goals
+47.124022 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+47.223729 - ****** Starting Act Phase ******
+
+47.223864 - Running module <MIDCA.modules.act.AsynchronousAct
+47.223920 - Memory access at key __current goals
+47.223968 - Memory access at key __goals
+47.224043 - Memory access at key __feedback
+47.224110 - Action ('putdown', 'green block') not complete.
+
+47.323688 - Starting cycle 27
+
+47.323824 - ****** Starting Perceive Phase ******
+
+47.323873 - Running module <MIDCA.modules.perceive.ROSObserver
+47.323912 - Memory access at key __current state
+47.323978 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+47.423707 - ****** Starting Interpret Phase ******
+
+47.423822 - Running module <MIDCA.modules.guide.InstructionReceiver
+47.423861 - Memory access at key __current state
+47.523706 - ****** Starting Eval Phase ******
+
+47.523820 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+47.523858 - Memory access at key __current goals
+47.523893 - Memory access at key __goals
+47.595759 - Memory access at key __detected object queue
+47.596162 - Memory access at key __detected object queue
+47.596227 - Memory access at key __state
+47.596273 - Memory access at key __state
+47.623713 - ****** Starting Intend Phase ******
+
+47.623819 - Running module <MIDCA.modules.intend.SimpleIntend
+47.623868 - Memory access at key __goals
+47.623909 - Memory access at key __current goals
+47.623954 - Selecting goal(s): stacking the green block
+
+47.723722 - ****** Starting Plan Phase ******
+
+47.723828 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+47.723865 - Memory access at key __current state
+47.723902 - Memory access at key __current goals
+47.723946 - Memory access at key __goals
+47.724038 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+47.823706 - ****** Starting Act Phase ******
+
+47.823819 - Running module <MIDCA.modules.act.AsynchronousAct
+47.823855 - Memory access at key __current goals
+47.823890 - Memory access at key __goals
+47.823951 - Memory access at key __feedback
+47.824065 - Action ('putdown', 'green block') not complete.
+
+47.923686 - Starting cycle 28
+
+47.923819 - ****** Starting Perceive Phase ******
+
+47.923883 - Running module <MIDCA.modules.perceive.ROSObserver
+47.923918 - Memory access at key __detected object queue
+47.923955 - Memory access at key __state
+47.923997 - Memory access at key __current state
+47.924089 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+48.023738 - ****** Starting Interpret Phase ******
+
+48.023897 - Running module <MIDCA.modules.guide.InstructionReceiver
+48.023969 - Memory access at key __current state
+48.123866 - ****** Starting Eval Phase ******
+
+48.124220 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+48.125103 - Memory access at key __current goals
+48.125581 - Memory access at key __goals
+48.223755 - ****** Starting Intend Phase ******
+
+48.223869 - Running module <MIDCA.modules.intend.SimpleIntend
+48.223907 - Memory access at key __goals
+48.223945 - Memory access at key __current goals
+48.223990 - Selecting goal(s): stacking the green block
+
+48.323697 - ****** Starting Plan Phase ******
+
+48.323808 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+48.323846 - Memory access at key __current state
+48.323882 - Memory access at key __current goals
+48.323913 - Memory access at key __goals
+48.324006 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+48.423701 - ****** Starting Act Phase ******
+
+48.423814 - Running module <MIDCA.modules.act.AsynchronousAct
+48.423852 - Memory access at key __current goals
+48.423889 - Memory access at key __goals
+48.423951 - Memory access at key __feedback
+48.424007 - Action ('putdown', 'green block') not complete.
+
+48.523686 - Starting cycle 29
+
+48.523817 - ****** Starting Perceive Phase ******
+
+48.523867 - Running module <MIDCA.modules.perceive.ROSObserver
+48.523907 - Memory access at key __current state
+48.523963 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+48.623722 - ****** Starting Interpret Phase ******
+
+48.623883 - Running module <MIDCA.modules.guide.InstructionReceiver
+48.623947 - Memory access at key __current state
+48.723727 - ****** Starting Eval Phase ******
+
+48.723833 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+48.723871 - Memory access at key __current goals
+48.723905 - Memory access at key __goals
+48.823696 - ****** Starting Intend Phase ******
+
+48.823802 - Running module <MIDCA.modules.intend.SimpleIntend
+48.823839 - Memory access at key __goals
+48.823878 - Memory access at key __current goals
+48.823922 - Selecting goal(s): stacking the green block
+
+48.923697 - ****** Starting Plan Phase ******
+
+48.923807 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+48.923845 - Memory access at key __current state
+48.923881 - Memory access at key __current goals
+48.923913 - Memory access at key __goals
+48.924009 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+49.023843 - ****** Starting Act Phase ******
+
+49.023957 - Running module <MIDCA.modules.act.AsynchronousAct
+49.023994 - Memory access at key __current goals
+49.024029 - Memory access at key __goals
+49.024089 - Memory access at key __feedback
+49.024141 - Action ('putdown', 'green block') not complete.
+
+49.083155 - Memory access at key __ros feedback
+49.123717 - Starting cycle 30
+
+49.123853 - ****** Starting Perceive Phase ******
+
+49.123919 - Running module <MIDCA.modules.perceive.ROSObserver
+49.123986 - Memory access at key __ros feedback
+49.124069 - Memory access at key __current state
+49.124146 - Memory access at key __feedback
+49.124876 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+49.223719 - ****** Starting Interpret Phase ******
+
+49.223844 - Running module <MIDCA.modules.guide.InstructionReceiver
+49.223884 - Memory access at key __current state
+49.323714 - ****** Starting Eval Phase ******
+
+49.323829 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+49.323869 - Memory access at key __current goals
+49.323905 - Memory access at key __goals
+49.423712 - ****** Starting Intend Phase ******
+
+49.423831 - Running module <MIDCA.modules.intend.SimpleIntend
+49.423870 - Memory access at key __goals
+49.423910 - Memory access at key __current goals
+49.423956 - Selecting goal(s): stacking the green block
+
+49.523722 - ****** Starting Plan Phase ******
+
+49.523843 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+49.523883 - Memory access at key __current state
+49.523921 - Memory access at key __current goals
+49.523954 - Memory access at key __goals
+49.524047 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') [92m('putdown', 'green block') [0m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+49.623769 - ****** Starting Act Phase ******
+
+49.623925 - Running module <MIDCA.modules.act.AsynchronousAct
+49.623985 - Memory access at key __current goals
+49.624045 - Memory access at key __goals
+49.624142 - Memory access at key __feedback
+49.624228 - Action ('putdown', 'green block') complete.
+
+49.624333 - Action ('putdown', 'green block') completed
+
+49.624463 - Memory access at key __feedback
+49.624549 - Action ('release', 'green block') not complete.
+
+49.624640 - Beginning action execution for ('release', 'green block')
+
+49.624784 - trying to send message on topic release_cmd
+
+49.624983 - [INFO] [WallTime: 1462905000.844613] Midca sending msg: data: cmd: release it | cmd_id: 4 | time: 1462890600.84
+
+49.625764 - Memory access at key __ros feedback
+49.630322 - Memory access at key __detected object queue
+49.630421 - Memory access at key __detected object queue
+49.630466 - Memory access at key __state
+49.630502 - Memory access at key __state
+49.723708 - Starting cycle 31
+
+49.723834 - ****** Starting Perceive Phase ******
+
+49.723887 - Running module <MIDCA.modules.perceive.ROSObserver
+49.723922 - Memory access at key __detected object queue
+49.723958 - Memory access at key __state
+49.723991 - Memory access at key __ros feedback
+49.724023 - Memory access at key __current state
+49.724095 - Memory access at key __feedback
+49.724149 - World observed: 2 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+49.823714 - ****** Starting Interpret Phase ******
+
+49.823829 - Running module <MIDCA.modules.guide.InstructionReceiver
+49.823868 - Memory access at key __current state
+49.923725 - ****** Starting Eval Phase ******
+
+49.924156 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+49.924203 - Memory access at key __current goals
+49.924241 - Memory access at key __goals
+50.023758 - ****** Starting Intend Phase ******
+
+50.023897 - Running module <MIDCA.modules.intend.SimpleIntend
+50.023950 - Memory access at key __goals
+50.024005 - Memory access at key __current goals
+50.024093 - Selecting goal(s): stacking the green block
+
+50.123718 - ****** Starting Plan Phase ******
+
+50.123828 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+50.123866 - Memory access at key __current state
+50.123903 - Memory access at key __current goals
+50.123935 - Memory access at key __goals
+50.124030 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') [92m('release', 'green block') [0m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+50.223715 - ****** Starting Act Phase ******
+
+50.223827 - Running module <MIDCA.modules.act.AsynchronousAct
+50.223867 - Memory access at key __current goals
+50.223904 - Memory access at key __goals
+50.223970 - Memory access at key __feedback
+50.224027 - Action ('release', 'green block') complete.
+
+50.224080 - Action ('release', 'green block') completed
+
+50.224138 - Memory access at key __feedback
+50.224186 - Action ('raising', 'green block') not complete.
+
+50.224467 - Beginning action execution for ('raising', 'green block')
+
+50.224519 - Memory access at key __RP
+50.224585 - trying to send message on topic raise_cmd
+
+50.224713 - [INFO] [WallTime: 1462905001.444346] Midca sending msg: data: y: 0.478250384794 | x: 0.64801687664 | z: 0.289534050209 | cmd_id: 5 | time: 1462890601.44
+
+50.323686 - Starting cycle 32
+
+50.324048 - ****** Starting Perceive Phase ******
+
+50.324118 - Running module <MIDCA.modules.perceive.ROSObserver
+50.324159 - Memory access at key __current state
+50.324216 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+50.423709 - ****** Starting Interpret Phase ******
+
+50.423819 - Running module <MIDCA.modules.guide.InstructionReceiver
+50.423857 - Memory access at key __current state
+50.523715 - ****** Starting Eval Phase ******
+
+50.523828 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+50.523865 - Memory access at key __current goals
+50.523901 - Memory access at key __goals
+50.623719 - ****** Starting Intend Phase ******
+
+50.623822 - Running module <MIDCA.modules.intend.SimpleIntend
+50.623859 - Memory access at key __goals
+50.623899 - Memory access at key __current goals
+50.623945 - Selecting goal(s): stacking the green block
+
+50.723707 - ****** Starting Plan Phase ******
+
+50.723816 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+50.723853 - Memory access at key __current state
+50.723890 - Memory access at key __current goals
+50.723923 - Memory access at key __goals
+50.724017 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+50.823747 - ****** Starting Act Phase ******
+
+50.823859 - Running module <MIDCA.modules.act.AsynchronousAct
+50.823896 - Memory access at key __current goals
+50.823931 - Memory access at key __goals
+50.823995 - Memory access at key __feedback
+50.824048 - Action ('raising', 'green block') not complete.
+
+50.923704 - Starting cycle 33
+
+50.923834 - ****** Starting Perceive Phase ******
+
+50.923882 - Running module <MIDCA.modules.perceive.ROSObserver
+50.923922 - Memory access at key __current state
+50.923978 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+51.023727 - ****** Starting Interpret Phase ******
+
+51.023872 - Running module <MIDCA.modules.guide.InstructionReceiver
+51.023927 - Memory access at key __current state
+51.123721 - ****** Starting Eval Phase ******
+
+51.123834 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+51.123873 - Memory access at key __current goals
+51.123908 - Memory access at key __goals
+51.223712 - ****** Starting Intend Phase ******
+
+51.223807 - Running module <MIDCA.modules.intend.SimpleIntend
+51.223843 - Memory access at key __goals
+51.223882 - Memory access at key __current goals
+51.223926 - Selecting goal(s): stacking the green block
+
+51.323721 - ****** Starting Plan Phase ******
+
+51.323840 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+51.323878 - Memory access at key __current state
+51.323914 - Memory access at key __current goals
+51.323947 - Memory access at key __goals
+51.324039 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+51.423712 - ****** Starting Act Phase ******
+
+51.423872 - Running module <MIDCA.modules.act.AsynchronousAct
+51.423926 - Memory access at key __current goals
+51.423979 - Memory access at key __goals
+51.424070 - Memory access at key __feedback
+51.424149 - Action ('raising', 'green block') not complete.
+
+51.523695 - Starting cycle 34
+
+51.523824 - ****** Starting Perceive Phase ******
+
+51.523874 - Running module <MIDCA.modules.perceive.ROSObserver
+51.523915 - Memory access at key __current state
+51.523973 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+51.623712 - ****** Starting Interpret Phase ******
+
+51.623856 - Running module <MIDCA.modules.guide.InstructionReceiver
+51.623906 - Memory access at key __current state
+51.665069 - Memory access at key __detected object queue
+51.665192 - Memory access at key __detected object queue
+51.665243 - Memory access at key __state
+51.665281 - Memory access at key __state
+51.723716 - ****** Starting Eval Phase ******
+
+51.723820 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+51.723863 - Memory access at key __current goals
+51.723903 - Memory access at key __goals
+51.823696 - ****** Starting Intend Phase ******
+
+51.823807 - Running module <MIDCA.modules.intend.SimpleIntend
+51.823845 - Memory access at key __goals
+51.823884 - Memory access at key __current goals
+51.823928 - Selecting goal(s): stacking the green block
+
+51.923695 - ****** Starting Plan Phase ******
+
+51.923807 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+51.923845 - Memory access at key __current state
+51.923881 - Memory access at key __current goals
+51.923914 - Memory access at key __goals
+51.924009 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+52.023781 - ****** Starting Act Phase ******
+
+52.023976 - Running module <MIDCA.modules.act.AsynchronousAct
+52.024015 - Memory access at key __current goals
+52.024051 - Memory access at key __goals
+52.024114 - Memory access at key __feedback
+52.024168 - Action ('raising', 'green block') not complete.
+
+52.123682 - Starting cycle 35
+
+52.123814 - ****** Starting Perceive Phase ******
+
+52.123863 - Running module <MIDCA.modules.perceive.ROSObserver
+52.123898 - Memory access at key __detected object queue
+52.123932 - Memory access at key __state
+52.123967 - Memory access at key __current state
+52.124048 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+52.223725 - ****** Starting Interpret Phase ******
+
+52.223831 - Running module <MIDCA.modules.guide.InstructionReceiver
+52.223868 - Memory access at key __current state
+52.323705 - ****** Starting Eval Phase ******
+
+52.323814 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+52.323852 - Memory access at key __current goals
+52.323887 - Memory access at key __goals
+52.423707 - ****** Starting Intend Phase ******
+
+52.423817 - Running module <MIDCA.modules.intend.SimpleIntend
+52.423899 - Memory access at key __goals
+52.423946 - Memory access at key __current goals
+52.423992 - Selecting goal(s): stacking the green block
+
+52.523706 - ****** Starting Plan Phase ******
+
+52.523814 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+52.523851 - Memory access at key __current state
+52.523888 - Memory access at key __current goals
+52.523921 - Memory access at key __goals
+52.524015 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+52.623725 - ****** Starting Act Phase ******
+
+52.624217 - Running module <MIDCA.modules.act.AsynchronousAct
+52.624257 - Memory access at key __current goals
+52.624292 - Memory access at key __goals
+52.624356 - Memory access at key __feedback
+52.624409 - Action ('raising', 'green block') not complete.
+
+52.723686 - Starting cycle 36
+
+52.723811 - ****** Starting Perceive Phase ******
+
+52.723859 - Running module <MIDCA.modules.perceive.ROSObserver
+52.723899 - Memory access at key __current state
+52.723955 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+52.823707 - ****** Starting Interpret Phase ******
+
+52.823819 - Running module <MIDCA.modules.guide.InstructionReceiver
+52.823856 - Memory access at key __current state
+52.923725 - ****** Starting Eval Phase ******
+
+52.923836 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+52.923874 - Memory access at key __current goals
+52.923908 - Memory access at key __goals
+53.023727 - ****** Starting Intend Phase ******
+
+53.023870 - Running module <MIDCA.modules.intend.SimpleIntend
+53.023922 - Memory access at key __goals
+53.023980 - Memory access at key __current goals
+53.024046 - Selecting goal(s): stacking the green block
+
+53.123718 - ****** Starting Plan Phase ******
+
+53.123826 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+53.123864 - Memory access at key __current state
+53.123900 - Memory access at key __current goals
+53.123933 - Memory access at key __goals
+53.124026 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+53.223708 - ****** Starting Act Phase ******
+
+53.223821 - Running module <MIDCA.modules.act.AsynchronousAct
+53.223859 - Memory access at key __current goals
+53.223894 - Memory access at key __goals
+53.223957 - Memory access at key __feedback
+53.224010 - Action ('raising', 'green block') not complete.
+
+53.323716 - Starting cycle 37
+
+53.323880 - ****** Starting Perceive Phase ******
+
+53.323946 - Running module <MIDCA.modules.perceive.ROSObserver
+53.324000 - Memory access at key __current state
+53.324076 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+53.423715 - ****** Starting Interpret Phase ******
+
+53.423822 - Running module <MIDCA.modules.guide.InstructionReceiver
+53.423859 - Memory access at key __current state
+53.523706 - ****** Starting Eval Phase ******
+
+53.523810 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+53.523847 - Memory access at key __current goals
+53.523897 - Memory access at key __goals
+53.623721 - ****** Starting Intend Phase ******
+
+53.623833 - Running module <MIDCA.modules.intend.SimpleIntend
+53.623868 - Memory access at key __goals
+53.623905 - Memory access at key __current goals
+53.623957 - Selecting goal(s): stacking the green block
+
+53.699838 - Memory access at key __detected object queue
+53.699964 - Memory access at key __detected object queue
+53.700027 - Memory access at key __state
+53.700080 - Memory access at key __state
+53.723714 - ****** Starting Plan Phase ******
+
+53.723822 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+53.723864 - Memory access at key __current state
+53.723905 - Memory access at key __current goals
+53.723942 - Memory access at key __goals
+53.724049 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+53.823708 - ****** Starting Act Phase ******
+
+53.823818 - Running module <MIDCA.modules.act.AsynchronousAct
+53.823854 - Memory access at key __current goals
+53.823889 - Memory access at key __goals
+53.823952 - Memory access at key __feedback
+53.824003 - Action ('raising', 'green block') not complete.
+
+53.902726 - Memory access at key __ros feedback
+53.923708 - Starting cycle 38
+
+53.923834 - ****** Starting Perceive Phase ******
+
+53.923893 - Running module <MIDCA.modules.perceive.ROSObserver
+53.923935 - Memory access at key __detected object queue
+53.923977 - Memory access at key __state
+53.924016 - Memory access at key __ros feedback
+53.924056 - Memory access at key __current state
+53.924144 - Memory access at key __feedback
+53.924211 - World observed: 2 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+54.023716 - ****** Starting Interpret Phase ******
+
+54.023822 - Running module <MIDCA.modules.guide.InstructionReceiver
+54.023858 - Memory access at key __current state
+54.123708 - ****** Starting Eval Phase ******
+
+54.123814 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+54.123852 - Memory access at key __current goals
+54.123889 - Memory access at key __goals
+54.223759 - ****** Starting Intend Phase ******
+
+54.223864 - Running module <MIDCA.modules.intend.SimpleIntend
+54.223901 - Memory access at key __goals
+54.223941 - Memory access at key __current goals
+54.223985 - Selecting goal(s): stacking the green block
+
+54.323731 - ****** Starting Plan Phase ******
+
+54.323844 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+54.323882 - Memory access at key __current state
+54.323917 - Memory access at key __current goals
+54.323949 - Memory access at key __goals
+54.324041 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') [92m('raising', 'green block') [0m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+54.423751 - ****** Starting Act Phase ******
+
+54.423889 - Running module <MIDCA.modules.act.AsynchronousAct
+54.423940 - Memory access at key __current goals
+54.423988 - Memory access at key __goals
+54.424075 - Memory access at key __feedback
+54.424149 - Action ('raising', 'green block') complete.
+
+54.424219 - Action ('raising', 'green block') completed
+
+54.424294 - Memory access at key __feedback
+54.424362 - Action ('reach_to_pickup', 'red block') not complete.
+
+54.424425 - Beginning action execution for ('reach_to_pickup', 'red block')
+
+54.424489 - Memory access at key __current state
+54.424599 - (x: 396
+y: 157
+z: 0, 1462890605.143753)
+
+54.424670 - Memory access at key __camera calibration status
+54.424750 - Memory access at key __camera calibration status
+54.424799 - Memory access at key __Z
+54.424958 - {'y': 0.054517403643937298, 'x': 0.72587931350455159, 'z': -0.15113003072395248, 'cmd_id': 6, 'time': 1462890605.643922}
+
+54.425029 - trying to send
+
+54.425087 - loc_cmd
+
+54.425176 - trying to send message on topic loc_cmd
+
+54.425338 - [INFO] [WallTime: 1462905005.644968] Midca sending msg: data: y: 0.0545174036439 | x: 0.725879313505 | z: -0.151130030724 | cmd_id: 6 | time: 1462890605.64
+
+54.523697 - Starting cycle 39
+
+54.523818 - ****** Starting Perceive Phase ******
+
+54.523868 - Running module <MIDCA.modules.perceive.ROSObserver
+54.523907 - Memory access at key __current state
+54.523962 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+54.623709 - ****** Starting Interpret Phase ******
+
+54.623827 - Running module <MIDCA.modules.guide.InstructionReceiver
+54.623867 - Memory access at key __current state
+54.723721 - ****** Starting Eval Phase ******
+
+54.723863 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+54.723915 - Memory access at key __current goals
+54.723971 - Memory access at key __goals
+54.823658 - ****** Starting Intend Phase ******
+
+54.823788 - Running module <MIDCA.modules.intend.SimpleIntend
+54.823834 - Memory access at key __goals
+54.823884 - Memory access at key __current goals
+54.823940 - Selecting goal(s): stacking the green block
+
+54.923703 - ****** Starting Plan Phase ******
+
+54.924171 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+54.924215 - Memory access at key __current state
+54.924253 - Memory access at key __current goals
+54.924286 - Memory access at key __goals
+54.924382 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+55.023698 - ****** Starting Act Phase ******
+
+55.023812 - Running module <MIDCA.modules.act.AsynchronousAct
+55.023850 - Memory access at key __current goals
+55.023885 - Memory access at key __goals
+55.023950 - Memory access at key __feedback
+55.024138 - Action ('reach_to_pickup', 'red block') not complete.
+
+55.123686 - Starting cycle 40
+
+55.123823 - ****** Starting Perceive Phase ******
+
+55.123875 - Running module <MIDCA.modules.perceive.ROSObserver
+55.123917 - Memory access at key __current state
+55.123976 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+55.223704 - ****** Starting Interpret Phase ******
+
+55.223814 - Running module <MIDCA.modules.guide.InstructionReceiver
+55.223854 - Memory access at key __current state
+55.323697 - ****** Starting Eval Phase ******
+
+55.323811 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+55.323851 - Memory access at key __current goals
+55.323887 - Memory access at key __goals
+55.423709 - ****** Starting Intend Phase ******
+
+55.423826 - Running module <MIDCA.modules.intend.SimpleIntend
+55.423864 - Memory access at key __goals
+55.423904 - Memory access at key __current goals
+55.423949 - Selecting goal(s): stacking the green block
+
+55.523699 - ****** Starting Plan Phase ******
+
+55.523813 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+55.523852 - Memory access at key __current state
+55.523890 - Memory access at key __current goals
+55.523923 - Memory access at key __goals
+55.524020 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+55.623700 - ****** Starting Act Phase ******
+
+55.623813 - Running module <MIDCA.modules.act.AsynchronousAct
+55.623852 - Memory access at key __current goals
+55.623889 - Memory access at key __goals
+55.623955 - Memory access at key __feedback
+55.624009 - Action ('reach_to_pickup', 'red block') not complete.
+
+55.723687 - Starting cycle 41
+
+55.723801 - ****** Starting Perceive Phase ******
+
+55.723851 - Running module <MIDCA.modules.perceive.ROSObserver
+55.723890 - Memory access at key __current state
+55.723947 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+55.732433 - Memory access at key __detected object queue
+55.732534 - Memory access at key __detected object queue
+55.732785 - Memory access at key __state
+55.733171 - Memory access at key __state
+55.823712 - ****** Starting Interpret Phase ******
+
+55.823828 - Running module <MIDCA.modules.guide.InstructionReceiver
+55.823869 - Memory access at key __current state
+55.923699 - ****** Starting Eval Phase ******
+
+55.923815 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+55.923862 - Memory access at key __current goals
+55.923903 - Memory access at key __goals
+56.023740 - ****** Starting Intend Phase ******
+
+56.023896 - Running module <MIDCA.modules.intend.SimpleIntend
+56.023951 - Memory access at key __goals
+56.024010 - Memory access at key __current goals
+56.024092 - Selecting goal(s): stacking the green block
+
+56.123727 - ****** Starting Plan Phase ******
+
+56.123862 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+56.123911 - Memory access at key __current state
+56.123958 - Memory access at key __current goals
+56.124001 - Memory access at key __goals
+56.124122 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+56.223718 - ****** Starting Act Phase ******
+
+56.223865 - Running module <MIDCA.modules.act.AsynchronousAct
+56.223920 - Memory access at key __current goals
+56.223974 - Memory access at key __goals
+56.224063 - Memory access at key __feedback
+56.224141 - Action ('reach_to_pickup', 'red block') not complete.
+
+56.323695 - Starting cycle 42
+
+56.323828 - ****** Starting Perceive Phase ******
+
+56.323879 - Running module <MIDCA.modules.perceive.ROSObserver
+56.323917 - Memory access at key __detected object queue
+56.323959 - Memory access at key __state
+56.324001 - Memory access at key __current state
+56.324088 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+56.423698 - ****** Starting Interpret Phase ******
+
+56.423819 - Running module <MIDCA.modules.guide.InstructionReceiver
+56.423857 - Memory access at key __current state
+56.523711 - ****** Starting Eval Phase ******
+
+56.523827 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+56.523866 - Memory access at key __current goals
+56.523902 - Memory access at key __goals
+56.623719 - ****** Starting Intend Phase ******
+
+56.623885 - Running module <MIDCA.modules.intend.SimpleIntend
+56.623947 - Memory access at key __goals
+56.624014 - Memory access at key __current goals
+56.624087 - Selecting goal(s): stacking the green block
+
+56.723710 - ****** Starting Plan Phase ******
+
+56.723827 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+56.723867 - Memory access at key __current state
+56.723904 - Memory access at key __current goals
+56.723937 - Memory access at key __goals
+56.724034 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+56.823714 - ****** Starting Act Phase ******
+
+56.823874 - Running module <MIDCA.modules.act.AsynchronousAct
+56.823928 - Memory access at key __current goals
+56.823980 - Memory access at key __goals
+56.824081 - Memory access at key __feedback
+56.824161 - Action ('reach_to_pickup', 'red block') not complete.
+
+56.923694 - Starting cycle 43
+
+56.923818 - ****** Starting Perceive Phase ******
+
+56.923866 - Running module <MIDCA.modules.perceive.ROSObserver
+56.923906 - Memory access at key __current state
+56.923964 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+57.023718 - ****** Starting Interpret Phase ******
+
+57.023831 - Running module <MIDCA.modules.guide.InstructionReceiver
+57.023870 - Memory access at key __current state
+57.123712 - ****** Starting Eval Phase ******
+
+57.123827 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+57.123867 - Memory access at key __current goals
+57.123904 - Memory access at key __goals
+57.223832 - ****** Starting Intend Phase ******
+
+57.224118 - Running module <MIDCA.modules.intend.SimpleIntend
+57.224178 - Memory access at key __goals
+57.224233 - Memory access at key __current goals
+57.224292 - Selecting goal(s): stacking the green block
+
+57.323720 - ****** Starting Plan Phase ******
+
+57.323833 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+57.323871 - Memory access at key __current state
+57.323937 - Memory access at key __current goals
+57.323974 - Memory access at key __goals
+57.324076 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+57.423757 - ****** Starting Act Phase ******
+
+57.423878 - Running module <MIDCA.modules.act.AsynchronousAct
+57.423913 - Memory access at key __current goals
+57.423945 - Memory access at key __goals
+57.424015 - Memory access at key __feedback
+57.424075 - Action ('reach_to_pickup', 'red block') not complete.
+
+57.523886 - Starting cycle 44
+
+57.524012 - ****** Starting Perceive Phase ******
+
+57.524059 - Running module <MIDCA.modules.perceive.ROSObserver
+57.524097 - Memory access at key __current state
+57.524156 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+57.623732 - ****** Starting Interpret Phase ******
+
+57.623889 - Running module <MIDCA.modules.guide.InstructionReceiver
+57.623946 - Memory access at key __current state
+57.723716 - ****** Starting Eval Phase ******
+
+57.723827 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+57.723866 - Memory access at key __current goals
+57.723901 - Memory access at key __goals
+57.765957 - Memory access at key __detected object queue
+57.766124 - Memory access at key __detected object queue
+57.766176 - Memory access at key __state
+57.766216 - Memory access at key __state
+57.823701 - ****** Starting Intend Phase ******
+
+57.823814 - Running module <MIDCA.modules.intend.SimpleIntend
+57.823851 - Memory access at key __goals
+57.823890 - Memory access at key __current goals
+57.823935 - Selecting goal(s): stacking the green block
+
+57.923703 - ****** Starting Plan Phase ******
+
+57.923839 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+57.923886 - Memory access at key __current state
+57.923931 - Memory access at key __current goals
+57.923972 - Memory access at key __goals
+57.924086 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+58.023215 - Memory access at key __ros feedback
+58.023709 - ****** Starting Act Phase ******
+
+58.023767 - Running module <MIDCA.modules.act.AsynchronousAct
+58.023800 - Memory access at key __current goals
+58.023833 - Memory access at key __goals
+58.023898 - Memory access at key __feedback
+58.023950 - Action ('reach_to_pickup', 'red block') not complete.
+
+58.123684 - Starting cycle 45
+
+58.123802 - ****** Starting Perceive Phase ******
+
+58.123848 - Running module <MIDCA.modules.perceive.ROSObserver
+58.123881 - Memory access at key __detected object queue
+58.123915 - Memory access at key __state
+58.123947 - Memory access at key __ros feedback
+58.123978 - Memory access at key __current state
+58.124048 - Memory access at key __feedback
+58.124103 - World observed: 2 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+58.223716 - ****** Starting Interpret Phase ******
+
+58.223828 - Running module <MIDCA.modules.guide.InstructionReceiver
+58.223865 - Memory access at key __current state
+58.323705 - ****** Starting Eval Phase ******
+
+58.323818 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+58.323863 - Memory access at key __current goals
+58.323899 - Memory access at key __goals
+58.423726 - ****** Starting Intend Phase ******
+
+58.423863 - Running module <MIDCA.modules.intend.SimpleIntend
+58.423913 - Memory access at key __goals
+58.423966 - Memory access at key __current goals
+58.424026 - Selecting goal(s): stacking the green block
+
+58.523708 - ****** Starting Plan Phase ******
+
+58.523820 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+58.523866 - Memory access at key __current state
+58.523911 - Memory access at key __current goals
+58.523942 - Memory access at key __goals
+58.524031 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') [92m('reach_to_pickup', 'red block') [0m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+58.623727 - ****** Starting Act Phase ******
+
+58.623866 - Running module <MIDCA.modules.act.AsynchronousAct
+58.623911 - Memory access at key __current goals
+58.623957 - Memory access at key __goals
+58.624037 - Memory access at key __feedback
+58.624230 - Action ('reach_to_pickup', 'red block') complete.
+
+58.624294 - Action ('reach_to_pickup', 'red block') completed
+
+58.624354 - Memory access at key __feedback
+58.624414 - Action ('grab', 'red block') not complete.
+
+58.624464 - Beginning action execution for ('grab', 'red block')
+
+58.624539 - trying to send message on topic grabbing_cmd
+
+58.624680 - [INFO] [WallTime: 1462905009.844311] Midca sending msg: data: cmd: Grab it | cmd_id: 7 | time: 1462890609.84
+
+58.625532 - Memory access at key __ros feedback
+58.723729 - Starting cycle 46
+
+58.723846 - ****** Starting Perceive Phase ******
+
+58.723894 - Running module <MIDCA.modules.perceive.ROSObserver
+58.723932 - Memory access at key __ros feedback
+58.723977 - Memory access at key __current state
+58.724033 - Memory access at key __feedback
+58.724087 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+58.823699 - ****** Starting Interpret Phase ******
+
+58.823809 - Running module <MIDCA.modules.guide.InstructionReceiver
+58.823847 - Memory access at key __current state
+58.923695 - ****** Starting Eval Phase ******
+
+58.923805 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+58.923842 - Memory access at key __current goals
+58.923877 - Memory access at key __goals
+59.023697 - ****** Starting Intend Phase ******
+
+59.023807 - Running module <MIDCA.modules.intend.SimpleIntend
+59.023844 - Memory access at key __goals
+59.023883 - Memory access at key __current goals
+59.023927 - Selecting goal(s): stacking the green block
+
+59.123727 - ****** Starting Plan Phase ******
+
+59.123836 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+59.123873 - Memory access at key __current state
+59.123909 - Memory access at key __current goals
+59.123941 - Memory access at key __goals
+59.124036 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') [92m('grab', 'red block') [0m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+59.223709 - ****** Starting Act Phase ******
+
+59.223819 - Running module <MIDCA.modules.act.AsynchronousAct
+59.223855 - Memory access at key __current goals
+59.223890 - Memory access at key __goals
+59.223954 - Memory access at key __feedback
+59.224007 - Action ('grab', 'red block') complete.
+
+59.224056 - Action ('grab', 'red block') completed
+
+59.224107 - Memory access at key __feedback
+59.224154 - Action ('raising', 'red block') not complete.
+
+59.224197 - Beginning action execution for ('raising', 'red block')
+
+59.224239 - Memory access at key __RP
+59.224297 - trying to send message on topic raise_cmd
+
+59.224425 - [INFO] [WallTime: 1462905010.444059] Midca sending msg: data: y: 0.478250384794 | x: 0.64801687664 | z: 0.289534050209 | cmd_id: 8 | time: 1462890610.44
+
+59.323687 - Starting cycle 47
+
+59.323810 - ****** Starting Perceive Phase ******
+
+59.323861 - Running module <MIDCA.modules.perceive.ROSObserver
+59.323899 - Memory access at key __current state
+59.323954 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+59.423856 - ****** Starting Interpret Phase ******
+
+59.424065 - Running module <MIDCA.modules.guide.InstructionReceiver
+59.424105 - Memory access at key __current state
+59.523733 - ****** Starting Eval Phase ******
+
+59.523843 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+59.523880 - Memory access at key __current goals
+59.523915 - Memory access at key __goals
+59.623732 - ****** Starting Intend Phase ******
+
+59.623882 - Running module <MIDCA.modules.intend.SimpleIntend
+59.623931 - Memory access at key __goals
+59.623984 - Memory access at key __current goals
+59.624065 - Selecting goal(s): stacking the green block
+
+59.723716 - ****** Starting Plan Phase ******
+
+59.723820 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+59.723868 - Memory access at key __current state
+59.723906 - Memory access at key __current goals
+59.723937 - Memory access at key __goals
+59.724031 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+59.799805 - Memory access at key __detected object queue
+59.799926 - Memory access at key __detected object queue
+59.799974 - Memory access at key __state
+59.800014 - Memory access at key __state
+59.823730 - ****** Starting Act Phase ******
+
+59.823832 - Running module <MIDCA.modules.act.AsynchronousAct
+59.823868 - Memory access at key __current goals
+59.823902 - Memory access at key __goals
+59.823979 - Memory access at key __feedback
+59.824032 - Action ('raising', 'red block') not complete.
+
+59.923688 - Starting cycle 48
+
+59.924158 - ****** Starting Perceive Phase ******
+
+59.924214 - Running module <MIDCA.modules.perceive.ROSObserver
+59.924250 - Memory access at key __detected object queue
+59.924285 - Memory access at key __state
+59.924321 - Memory access at key __current state
+59.924404 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:00.023700 - ****** Starting Interpret Phase ******
+
+1:00.023816 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:00.023863 - Memory access at key __current state
+1:00.123730 - ****** Starting Eval Phase ******
+
+1:00.123874 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:00.123926 - Memory access at key __current goals
+1:00.123976 - Memory access at key __goals
+1:00.223701 - ****** Starting Intend Phase ******
+
+1:00.223817 - Running module <MIDCA.modules.intend.SimpleIntend
+1:00.223856 - Memory access at key __goals
+1:00.223897 - Memory access at key __current goals
+1:00.223942 - Selecting goal(s): stacking the green block
+
+1:00.323711 - ****** Starting Plan Phase ******
+
+1:00.323808 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:00.323846 - Memory access at key __current state
+1:00.323883 - Memory access at key __current goals
+1:00.323916 - Memory access at key __goals
+1:00.324011 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:00.423711 - ****** Starting Act Phase ******
+
+1:00.423823 - Running module <MIDCA.modules.act.AsynchronousAct
+1:00.423867 - Memory access at key __current goals
+1:00.423903 - Memory access at key __goals
+1:00.423970 - Memory access at key __feedback
+1:00.424023 - Action ('raising', 'red block') not complete.
+
+1:00.523683 - Starting cycle 49
+
+1:00.523822 - ****** Starting Perceive Phase ******
+
+1:00.523871 - Running module <MIDCA.modules.perceive.ROSObserver
+1:00.523910 - Memory access at key __current state
+1:00.523966 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:00.623737 - ****** Starting Interpret Phase ******
+
+1:00.623849 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:00.623887 - Memory access at key __current state
+1:00.723722 - ****** Starting Eval Phase ******
+
+1:00.723833 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:00.723872 - Memory access at key __current goals
+1:00.723908 - Memory access at key __goals
+1:00.823727 - ****** Starting Intend Phase ******
+
+1:00.823839 - Running module <MIDCA.modules.intend.SimpleIntend
+1:00.823876 - Memory access at key __goals
+1:00.823916 - Memory access at key __current goals
+1:00.823960 - Selecting goal(s): stacking the green block
+
+1:00.923750 - ****** Starting Plan Phase ******
+
+1:00.923932 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:00.923999 - Memory access at key __current state
+1:00.924070 - Memory access at key __current goals
+1:00.924133 - Memory access at key __goals
+1:00.924297 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:01.023744 - ****** Starting Act Phase ******
+
+1:01.023890 - Running module <MIDCA.modules.act.AsynchronousAct
+1:01.023939 - Memory access at key __current goals
+1:01.023988 - Memory access at key __goals
+1:01.024075 - Memory access at key __feedback
+1:01.024146 - Action ('raising', 'red block') not complete.
+
+1:01.123753 - Starting cycle 50
+
+1:01.124115 - ****** Starting Perceive Phase ******
+
+1:01.124168 - Running module <MIDCA.modules.perceive.ROSObserver
+1:01.124208 - Memory access at key __current state
+1:01.124265 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:01.223709 - ****** Starting Interpret Phase ******
+
+1:01.223830 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:01.223869 - Memory access at key __current state
+1:01.323709 - ****** Starting Eval Phase ******
+
+1:01.323837 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:01.323880 - Memory access at key __current goals
+1:01.323917 - Memory access at key __goals
+1:01.423711 - ****** Starting Intend Phase ******
+
+1:01.423834 - Running module <MIDCA.modules.intend.SimpleIntend
+1:01.423875 - Memory access at key __goals
+1:01.423916 - Memory access at key __current goals
+1:01.423961 - Selecting goal(s): stacking the green block
+
+1:01.523712 - ****** Starting Plan Phase ******
+
+1:01.523834 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:01.523875 - Memory access at key __current state
+1:01.523913 - Memory access at key __current goals
+1:01.523945 - Memory access at key __goals
+1:01.524041 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:01.623713 - ****** Starting Act Phase ******
+
+1:01.623835 - Running module <MIDCA.modules.act.AsynchronousAct
+1:01.623875 - Memory access at key __current goals
+1:01.623910 - Memory access at key __goals
+1:01.623978 - Memory access at key __feedback
+1:01.624039 - Action ('raising', 'red block') not complete.
+
+1:01.723699 - Starting cycle 51
+
+1:01.723833 - ****** Starting Perceive Phase ******
+
+1:01.723885 - Running module <MIDCA.modules.perceive.ROSObserver
+1:01.723924 - Memory access at key __current state
+1:01.723981 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:01.823712 - ****** Starting Interpret Phase ******
+
+1:01.823817 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:01.823856 - Memory access at key __current state
+1:01.831711 - Memory access at key __detected object queue
+1:01.923931 - ****** Starting Eval Phase ******
+
+1:01.924049 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:01.924089 - Memory access at key __current goals
+1:01.924126 - Memory access at key __goals
+1:02.023711 - ****** Starting Intend Phase ******
+
+1:02.023827 - Running module <MIDCA.modules.intend.SimpleIntend
+1:02.023865 - Memory access at key __goals
+1:02.023906 - Memory access at key __current goals
+1:02.023953 - Selecting goal(s): stacking the green block
+
+1:02.123707 - ****** Starting Plan Phase ******
+
+1:02.123822 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:02.124027 - Memory access at key __current state
+1:02.124079 - Memory access at key __current goals
+1:02.124115 - Memory access at key __goals
+1:02.124210 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:02.223717 - ****** Starting Act Phase ******
+
+1:02.223830 - Running module <MIDCA.modules.act.AsynchronousAct
+1:02.223867 - Memory access at key __current goals
+1:02.223903 - Memory access at key __goals
+1:02.223971 - Memory access at key __feedback
+1:02.224025 - Action ('raising', 'red block') not complete.
+
+1:02.323686 - Starting cycle 52
+
+1:02.323806 - ****** Starting Perceive Phase ******
+
+1:02.323854 - Running module <MIDCA.modules.perceive.ROSObserver
+1:02.323887 - Memory access at key __detected object queue
+1:02.323925 - Memory access at key __current state
+1:02.323992 - World observed: 1 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:02.423697 - ****** Starting Interpret Phase ******
+
+1:02.423806 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:02.423844 - Memory access at key __current state
+1:02.523696 - ****** Starting Eval Phase ******
+
+1:02.523809 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:02.523846 - Memory access at key __current goals
+1:02.523881 - Memory access at key __goals
+1:02.623695 - ****** Starting Intend Phase ******
+
+1:02.623801 - Running module <MIDCA.modules.intend.SimpleIntend
+1:02.623838 - Memory access at key __goals
+1:02.623879 - Memory access at key __current goals
+1:02.623924 - Selecting goal(s): stacking the green block
+
+1:02.723695 - ****** Starting Plan Phase ******
+
+1:02.723799 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:02.723836 - Memory access at key __current state
+1:02.723873 - Memory access at key __current goals
+1:02.723906 - Memory access at key __goals
+1:02.724000 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:02.823693 - ****** Starting Act Phase ******
+
+1:02.823803 - Running module <MIDCA.modules.act.AsynchronousAct
+1:02.823842 - Memory access at key __current goals
+1:02.823877 - Memory access at key __goals
+1:02.823943 - Memory access at key __feedback
+1:02.823999 - Action ('raising', 'red block') not complete.
+
+1:02.874516 - Memory access at key __ros feedback
+1:02.923692 - Starting cycle 53
+
+1:02.923782 - ****** Starting Perceive Phase ******
+
+1:02.923829 - Running module <MIDCA.modules.perceive.ROSObserver
+1:02.923864 - Memory access at key __ros feedback
+1:02.923898 - Memory access at key __current state
+1:02.923948 - Memory access at key __feedback
+1:02.924000 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+1:03.023696 - ****** Starting Interpret Phase ******
+
+1:03.023807 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:03.023845 - Memory access at key __current state
+1:03.123704 - ****** Starting Eval Phase ******
+
+1:03.123814 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:03.123852 - Memory access at key __current goals
+1:03.123887 - Memory access at key __goals
+1:03.223708 - ****** Starting Intend Phase ******
+
+1:03.223836 - Running module <MIDCA.modules.intend.SimpleIntend
+1:03.223884 - Memory access at key __goals
+1:03.223937 - Memory access at key __current goals
+1:03.223998 - Selecting goal(s): stacking the green block
+
+1:03.323720 - ****** Starting Plan Phase ******
+
+1:03.323831 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:03.323869 - Memory access at key __current state
+1:03.323905 - Memory access at key __current goals
+1:03.323937 - Memory access at key __goals
+1:03.324033 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') [92m('raising', 'red block') [0m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:03.423736 - ****** Starting Act Phase ******
+
+1:03.423851 - Running module <MIDCA.modules.act.AsynchronousAct
+1:03.423890 - Memory access at key __current goals
+1:03.423925 - Memory access at key __goals
+1:03.423992 - Memory access at key __feedback
+1:03.424046 - Action ('raising', 'red block') complete.
+
+1:03.424095 - Action ('raising', 'red block') completed
+
+1:03.424147 - Memory access at key __feedback
+1:03.424195 - Action ('stack', 'red block', 'green block') not complete.
+
+1:03.424239 - Beginning action execution for ('stack', 'red block', 'green block')
+
+1:03.424283 - Memory access at key __current state
+1:03.424361 - (x: 376
+y: 52
+z: 0, 1462890613.543601)
+
+1:03.424412 - Memory access at key __SZ
+1:03.424446 - Memory access at key __camera calibration status
+1:03.424500 - Memory access at key __camera calibration status
+1:03.424610 - {'y': 0.33342593418078964, 'x': 0.6683178699645802, 'z': -0.06482714195369622, 'cmd_id': 9, 'time': 1462890614.643781}
+
+1:03.424666 - trying to send
+
+1:03.424708 - raise_cmd
+
+1:03.424775 - trying to send message on topic raise_cmd
+
+1:03.424907 - [INFO] [WallTime: 1462905014.644541] Midca sending msg: data: y: 0.333425934181 | x: 0.668317869965 | z: -0.0648271419537 | cmd_id: 9 | time: 1462890614.64
+
+1:03.523686 - Starting cycle 54
+
+1:03.523801 - ****** Starting Perceive Phase ******
+
+1:03.523851 - Running module <MIDCA.modules.perceive.ROSObserver
+1:03.523890 - Memory access at key __current state
+1:03.523945 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:03.623731 - ****** Starting Interpret Phase ******
+
+1:03.623842 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:03.623882 - Memory access at key __current state
+1:03.723722 - ****** Starting Eval Phase ******
+
+1:03.723821 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:03.723858 - Memory access at key __current goals
+1:03.723892 - Memory access at key __goals
+1:03.823719 - ****** Starting Intend Phase ******
+
+1:03.823829 - Running module <MIDCA.modules.intend.SimpleIntend
+1:03.823866 - Memory access at key __goals
+1:03.823907 - Memory access at key __current goals
+1:03.823952 - Selecting goal(s): stacking the green block
+
+1:03.865133 - Memory access at key __detected object queue
+1:03.923716 - ****** Starting Plan Phase ******
+
+1:03.923831 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:03.923869 - Memory access at key __current state
+1:03.923905 - Memory access at key __current goals
+1:03.923937 - Memory access at key __goals
+1:03.924036 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:04.023709 - ****** Starting Act Phase ******
+
+1:04.023820 - Running module <MIDCA.modules.act.AsynchronousAct
+1:04.023858 - Memory access at key __current goals
+1:04.023892 - Memory access at key __goals
+1:04.023959 - Memory access at key __feedback
+1:04.024012 - Action ('stack', 'red block', 'green block') not complete.
+
+1:04.123684 - Starting cycle 55
+
+1:04.123819 - ****** Starting Perceive Phase ******
+
+1:04.123868 - Running module <MIDCA.modules.perceive.ROSObserver
+1:04.123903 - Memory access at key __detected object queue
+1:04.123940 - Memory access at key __current state
+1:04.124007 - World observed: 1 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:04.223709 - ****** Starting Interpret Phase ******
+
+1:04.223819 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:04.223856 - Memory access at key __current state
+1:04.323720 - ****** Starting Eval Phase ******
+
+1:04.323829 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:04.323868 - Memory access at key __current goals
+1:04.323902 - Memory access at key __goals
+1:04.423707 - ****** Starting Intend Phase ******
+
+1:04.423815 - Running module <MIDCA.modules.intend.SimpleIntend
+1:04.423851 - Memory access at key __goals
+1:04.423890 - Memory access at key __current goals
+1:04.423941 - Selecting goal(s): stacking the green block
+
+1:04.523706 - ****** Starting Plan Phase ******
+
+1:04.523816 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:04.523853 - Memory access at key __current state
+1:04.523889 - Memory access at key __current goals
+1:04.523920 - Memory access at key __goals
+1:04.524014 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:04.623707 - ****** Starting Act Phase ******
+
+1:04.623814 - Running module <MIDCA.modules.act.AsynchronousAct
+1:04.623850 - Memory access at key __current goals
+1:04.623884 - Memory access at key __goals
+1:04.623950 - Memory access at key __feedback
+1:04.624003 - Action ('stack', 'red block', 'green block') not complete.
+
+1:04.723684 - Starting cycle 56
+
+1:04.723808 - ****** Starting Perceive Phase ******
+
+1:04.723857 - Running module <MIDCA.modules.perceive.ROSObserver
+1:04.723894 - Memory access at key __current state
+1:04.723950 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:04.823643 - ****** Starting Interpret Phase ******
+
+1:04.823751 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:04.823788 - Memory access at key __current state
+1:04.923694 - ****** Starting Eval Phase ******
+
+1:04.924077 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:04.924121 - Memory access at key __current goals
+1:04.924159 - Memory access at key __goals
+1:05.023717 - ****** Starting Intend Phase ******
+
+1:05.023840 - Running module <MIDCA.modules.intend.SimpleIntend
+1:05.023887 - Memory access at key __goals
+1:05.023931 - Memory access at key __current goals
+1:05.023976 - Selecting goal(s): stacking the green block
+
+1:05.123716 - ****** Starting Plan Phase ******
+
+1:05.123837 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:05.123884 - Memory access at key __current state
+1:05.123923 - Memory access at key __current goals
+1:05.123956 - Memory access at key __goals
+1:05.124050 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:05.223716 - ****** Starting Act Phase ******
+
+1:05.223843 - Running module <MIDCA.modules.act.AsynchronousAct
+1:05.223883 - Memory access at key __current goals
+1:05.223921 - Memory access at key __goals
+1:05.223989 - Memory access at key __feedback
+1:05.224048 - Action ('stack', 'red block', 'green block') not complete.
+
+1:05.323686 - Starting cycle 57
+
+1:05.323827 - ****** Starting Perceive Phase ******
+
+1:05.323881 - Running module <MIDCA.modules.perceive.ROSObserver
+1:05.323920 - Memory access at key __current state
+1:05.323977 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:05.423706 - ****** Starting Interpret Phase ******
+
+1:05.423827 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:05.423866 - Memory access at key __current state
+1:05.523941 - ****** Starting Eval Phase ******
+
+1:05.524142 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:05.524190 - Memory access at key __current goals
+1:05.524234 - Memory access at key __goals
+1:05.623733 - ****** Starting Intend Phase ******
+
+1:05.623854 - Running module <MIDCA.modules.intend.SimpleIntend
+1:05.623894 - Memory access at key __goals
+1:05.623935 - Memory access at key __current goals
+1:05.623981 - Selecting goal(s): stacking the green block
+
+1:05.723751 - ****** Starting Plan Phase ******
+
+1:05.723922 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:05.723987 - Memory access at key __current state
+1:05.724051 - Memory access at key __current goals
+1:05.724108 - Memory access at key __goals
+1:05.724262 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:05.823734 - ****** Starting Act Phase ******
+
+1:05.823852 - Running module <MIDCA.modules.act.AsynchronousAct
+1:05.823891 - Memory access at key __current goals
+1:05.823926 - Memory access at key __goals
+1:05.823994 - Memory access at key __feedback
+1:05.824049 - Action ('stack', 'red block', 'green block') not complete.
+
+1:05.897782 - Memory access at key __detected object queue
+1:05.897886 - Memory access at key __detected object queue
+1:05.897939 - Memory access at key __state
+1:05.897979 - Memory access at key __state
+1:05.923705 - Starting cycle 58
+
+1:05.923892 - ****** Starting Perceive Phase ******
+
+1:05.923974 - Running module <MIDCA.modules.perceive.ROSObserver
+1:05.924027 - Memory access at key __detected object queue
+1:05.924068 - Memory access at key __state
+1:05.924103 - Memory access at key __current state
+1:05.924189 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:06.023715 - ****** Starting Interpret Phase ******
+
+1:06.023834 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:06.023873 - Memory access at key __current state
+1:06.123723 - ****** Starting Eval Phase ******
+
+1:06.123839 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:06.123880 - Memory access at key __current goals
+1:06.123916 - Memory access at key __goals
+1:06.223717 - ****** Starting Intend Phase ******
+
+1:06.224075 - Running module <MIDCA.modules.intend.SimpleIntend
+1:06.224120 - Memory access at key __goals
+1:06.224165 - Memory access at key __current goals
+1:06.224217 - Selecting goal(s): stacking the green block
+
+1:06.323715 - ****** Starting Plan Phase ******
+
+1:06.323841 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:06.323881 - Memory access at key __current state
+1:06.323920 - Memory access at key __current goals
+1:06.323954 - Memory access at key __goals
+1:06.324051 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:06.423715 - ****** Starting Act Phase ******
+
+1:06.423829 - Running module <MIDCA.modules.act.AsynchronousAct
+1:06.423868 - Memory access at key __current goals
+1:06.423915 - Memory access at key __goals
+1:06.423988 - Memory access at key __feedback
+1:06.424043 - Action ('stack', 'red block', 'green block') not complete.
+
+1:06.523699 - Starting cycle 59
+
+1:06.523886 - ****** Starting Perceive Phase ******
+
+1:06.523964 - Running module <MIDCA.modules.perceive.ROSObserver
+1:06.524019 - Memory access at key __current state
+1:06.524100 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:06.623752 - ****** Starting Interpret Phase ******
+
+1:06.623895 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:06.623946 - Memory access at key __current state
+1:06.723733 - ****** Starting Eval Phase ******
+
+1:06.723851 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:06.723891 - Memory access at key __current goals
+1:06.723927 - Memory access at key __goals
+1:06.823723 - ****** Starting Intend Phase ******
+
+1:06.823868 - Running module <MIDCA.modules.intend.SimpleIntend
+1:06.823918 - Memory access at key __goals
+1:06.823971 - Memory access at key __current goals
+1:06.824030 - Selecting goal(s): stacking the green block
+
+1:06.923738 - ****** Starting Plan Phase ******
+
+1:06.923894 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:06.923949 - Memory access at key __current state
+1:06.924015 - Memory access at key __current goals
+1:06.924065 - Memory access at key __goals
+1:06.924198 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:07.001450 - Memory access at key __ros feedback
+1:07.023718 - ****** Starting Act Phase ******
+
+1:07.023808 - Running module <MIDCA.modules.act.AsynchronousAct
+1:07.023844 - Memory access at key __current goals
+1:07.023879 - Memory access at key __goals
+1:07.023947 - Memory access at key __feedback
+1:07.024001 - Action ('stack', 'red block', 'green block') not complete.
+
+1:07.123689 - Starting cycle 60
+
+1:07.123842 - ****** Starting Perceive Phase ******
+
+1:07.123900 - Running module <MIDCA.modules.perceive.ROSObserver
+1:07.123945 - Memory access at key __ros feedback
+1:07.123998 - Memory access at key __current state
+1:07.124058 - Memory access at key __feedback
+1:07.124119 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+1:07.223733 - ****** Starting Interpret Phase ******
+
+1:07.223857 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:07.223898 - Memory access at key __current state
+1:07.323710 - ****** Starting Eval Phase ******
+
+1:07.323825 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:07.323866 - Memory access at key __current goals
+1:07.323901 - Memory access at key __goals
+1:07.423713 - ****** Starting Intend Phase ******
+
+1:07.423824 - Running module <MIDCA.modules.intend.SimpleIntend
+1:07.423862 - Memory access at key __goals
+1:07.423904 - Memory access at key __current goals
+1:07.423950 - Selecting goal(s): stacking the green block
+
+1:07.523709 - ****** Starting Plan Phase ******
+
+1:07.523827 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:07.523868 - Memory access at key __current state
+1:07.523905 - Memory access at key __current goals
+1:07.523937 - Memory access at key __goals
+1:07.524033 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') [92m('stack', 'red block', 'green block') [0m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:07.623711 - ****** Starting Act Phase ******
+
+1:07.623825 - Running module <MIDCA.modules.act.AsynchronousAct
+1:07.623864 - Memory access at key __current goals
+1:07.623899 - Memory access at key __goals
+1:07.623967 - Memory access at key __feedback
+1:07.624023 - Action ('stack', 'red block', 'green block') complete.
+
+1:07.624075 - Action ('stack', 'red block', 'green block') completed
+
+1:07.624129 - Memory access at key __feedback
+1:07.624179 - Action ('release', 'red block') not complete.
+
+1:07.624224 - Beginning action execution for ('release', 'red block')
+
+1:07.624291 - trying to send message on topic release_cmd
+
+1:07.624418 - [INFO] [WallTime: 1462905018.844051] Midca sending msg: data: cmd: release it | cmd_id: 10 | time: 1462890618.84
+
+1:07.625082 - Memory access at key __ros feedback
+1:07.723689 - Starting cycle 61
+
+1:07.723826 - ****** Starting Perceive Phase ******
+
+1:07.723879 - Running module <MIDCA.modules.perceive.ROSObserver
+1:07.723918 - Memory access at key __ros feedback
+1:07.723954 - Memory access at key __current state
+1:07.724009 - Memory access at key __feedback
+1:07.724065 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+1:07.823716 - ****** Starting Interpret Phase ******
+
+1:07.823839 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:07.823879 - Memory access at key __current state
+1:07.923750 - ****** Starting Eval Phase ******
+
+1:07.923856 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:07.923896 - Memory access at key __current goals
+1:07.923932 - Memory access at key __goals
+1:07.930965 - Memory access at key __detected object queue
+1:07.931068 - Memory access at key __detected object queue
+1:07.931117 - Memory access at key __state
+1:07.931165 - Memory access at key __state
+1:08.023721 - ****** Starting Intend Phase ******
+
+1:08.023848 - Running module <MIDCA.modules.intend.SimpleIntend
+1:08.023889 - Memory access at key __goals
+1:08.023930 - Memory access at key __current goals
+1:08.023977 - Selecting goal(s): stacking the green block
+
+1:08.123743 - ****** Starting Plan Phase ******
+
+1:08.123920 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:08.123982 - Memory access at key __current state
+1:08.124047 - Memory access at key __current goals
+1:08.124107 - Memory access at key __goals
+1:08.124299 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') [92m('release', 'red block') [0m('raising', 'red block')[0m
+
+1:08.223759 - ****** Starting Act Phase ******
+
+1:08.223869 - Running module <MIDCA.modules.act.AsynchronousAct
+1:08.223906 - Memory access at key __current goals
+1:08.223940 - Memory access at key __goals
+1:08.224007 - Memory access at key __feedback
+1:08.224061 - Action ('release', 'red block') complete.
+
+1:08.224111 - Action ('release', 'red block') completed
+
+1:08.224164 - Memory access at key __feedback
+1:08.224213 - Action ('raising', 'red block') not complete.
+
+1:08.224258 - Beginning action execution for ('raising', 'red block')
+
+1:08.224300 - Memory access at key __RP
+1:08.224359 - trying to send message on topic raise_cmd
+
+1:08.224478 - [INFO] [WallTime: 1462905019.444111] Midca sending msg: data: y: 0.478250384794 | x: 0.64801687664 | z: 0.289534050209 | cmd_id: 11 | time: 1462890619.44
+
+1:08.323687 - Starting cycle 62
+
+1:08.323789 - ****** Starting Perceive Phase ******
+
+1:08.323837 - Running module <MIDCA.modules.perceive.ROSObserver
+1:08.323871 - Memory access at key __detected object queue
+1:08.323906 - Memory access at key __state
+1:08.323940 - Memory access at key __current state
+1:08.324020 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:08.423697 - ****** Starting Interpret Phase ******
+
+1:08.423807 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:08.423845 - Memory access at key __current state
+1:08.523713 - ****** Starting Eval Phase ******
+
+1:08.523859 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:08.523924 - Memory access at key __current goals
+1:08.523984 - Memory access at key __goals
+1:08.623726 - ****** Starting Intend Phase ******
+
+1:08.623855 - Running module <MIDCA.modules.intend.SimpleIntend
+1:08.623901 - Memory access at key __goals
+1:08.623953 - Memory access at key __current goals
+1:08.624011 - Selecting goal(s): stacking the green block
+
+1:08.723713 - ****** Starting Plan Phase ******
+
+1:08.723814 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:08.723854 - Memory access at key __current state
+1:08.723890 - Memory access at key __current goals
+1:08.723923 - Memory access at key __goals
+1:08.724022 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:08.823709 - ****** Starting Act Phase ******
+
+1:08.823821 - Running module <MIDCA.modules.act.AsynchronousAct
+1:08.823859 - Memory access at key __current goals
+1:08.823894 - Memory access at key __goals
+1:08.823963 - Memory access at key __feedback
+1:08.824016 - Action ('raising', 'red block') not complete.
+
+1:08.923683 - Starting cycle 63
+
+1:08.923846 - ****** Starting Perceive Phase ******
+
+1:08.923892 - Running module <MIDCA.modules.perceive.ROSObserver
+1:08.923928 - Memory access at key __current state
+1:08.923980 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:09.023721 - ****** Starting Interpret Phase ******
+
+1:09.023865 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:09.023917 - Memory access at key __current state
+1:09.123703 - ****** Starting Eval Phase ******
+
+1:09.123808 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:09.123844 - Memory access at key __current goals
+1:09.123905 - Memory access at key __goals
+1:09.223706 - ****** Starting Intend Phase ******
+
+1:09.223840 - Running module <MIDCA.modules.intend.SimpleIntend
+1:09.223889 - Memory access at key __goals
+1:09.223941 - Memory access at key __current goals
+1:09.224000 - Selecting goal(s): stacking the green block
+
+1:09.323711 - ****** Starting Plan Phase ******
+
+1:09.323821 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:09.323859 - Memory access at key __current state
+1:09.323896 - Memory access at key __current goals
+1:09.323928 - Memory access at key __goals
+1:09.324020 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:09.417723 - state changed
+
+1:09.423690 - ****** Starting Act Phase ******
+
+1:09.423760 - Running module <MIDCA.modules.act.AsynchronousAct
+1:09.423795 - Memory access at key __current goals
+1:09.423829 - Memory access at key __goals
+1:09.423897 - Memory access at key __feedback
+1:09.423954 - Action ('raising', 'red block') not complete.
+
+1:09.523686 - Starting cycle 64
+
+1:09.523808 - ****** Starting Perceive Phase ******
+
+1:09.523855 - Running module <MIDCA.modules.perceive.ROSObserver
+1:09.523894 - Memory access at key __current state
+1:09.523952 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:09.623698 - ****** Starting Interpret Phase ******
+
+1:09.623812 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:09.623852 - Memory access at key __current state
+1:09.723698 - ****** Starting Eval Phase ******
+
+1:09.723807 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:09.723845 - Memory access at key __current goals
+1:09.723880 - Memory access at key __goals
+1:09.823709 - ****** Starting Intend Phase ******
+
+1:09.823853 - Running module <MIDCA.modules.intend.SimpleIntend
+1:09.823904 - Memory access at key __goals
+1:09.823958 - Memory access at key __current goals
+1:09.824018 - Selecting goal(s): stacking the green block
+
+1:09.923716 - ****** Starting Plan Phase ******
+
+1:09.924163 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:09.924227 - Memory access at key __current state
+1:09.924285 - Memory access at key __current goals
+1:09.924335 - Memory access at key __goals
+1:09.924469 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:09.964121 - Memory access at key __detected object queue
+1:09.964241 - Memory access at key __detected object queue
+1:09.964289 - Memory access at key __state
+1:09.964328 - Memory access at key __state
+1:10.023743 - ****** Starting Act Phase ******
+
+1:10.023865 - Running module <MIDCA.modules.act.AsynchronousAct
+1:10.023904 - Memory access at key __current goals
+1:10.023940 - Memory access at key __goals
+1:10.024011 - Memory access at key __feedback
+1:10.024066 - Action ('raising', 'red block') not complete.
+
+1:10.123692 - Starting cycle 65
+
+1:10.123841 - ****** Starting Perceive Phase ******
+
+1:10.123907 - Running module <MIDCA.modules.perceive.ROSObserver
+1:10.123943 - Memory access at key __detected object queue
+1:10.123979 - Memory access at key __state
+1:10.124012 - Memory access at key __current state
+1:10.124093 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:10.223738 - ****** Starting Interpret Phase ******
+
+1:10.223856 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:10.223895 - Memory access at key __current state
+1:10.323727 - ****** Starting Eval Phase ******
+
+1:10.323877 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:10.323932 - Memory access at key __current goals
+1:10.324042 - Memory access at key __goals
+1:10.423738 - ****** Starting Intend Phase ******
+
+1:10.423886 - Running module <MIDCA.modules.intend.SimpleIntend
+1:10.423939 - Memory access at key __goals
+1:10.423995 - Memory access at key __current goals
+1:10.424058 - Selecting goal(s): stacking the green block
+
+1:10.523729 - ****** Starting Plan Phase ******
+
+1:10.523862 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:10.523905 - Memory access at key __current state
+1:10.523943 - Memory access at key __current goals
+1:10.523977 - Memory access at key __goals
+1:10.524074 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:10.623738 - ****** Starting Act Phase ******
+
+1:10.623885 - Running module <MIDCA.modules.act.AsynchronousAct
+1:10.624034 - Memory access at key __current goals
+1:10.624107 - Memory access at key __goals
+1:10.624848 - Memory access at key __feedback
+1:10.624932 - Action ('raising', 'red block') not complete.
+
+1:10.723727 - Starting cycle 66
+
+1:10.724203 - ****** Starting Perceive Phase ******
+
+1:10.724251 - Running module <MIDCA.modules.perceive.ROSObserver
+1:10.724289 - Memory access at key __current state
+1:10.724343 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:10.823732 - ****** Starting Interpret Phase ******
+
+1:10.823838 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:10.823873 - Memory access at key __current state
+1:10.923720 - ****** Starting Eval Phase ******
+
+1:10.923866 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:10.923917 - Memory access at key __current goals
+1:10.923968 - Memory access at key __goals
+1:11.023724 - ****** Starting Intend Phase ******
+
+1:11.023833 - Running module <MIDCA.modules.intend.SimpleIntend
+1:11.023870 - Memory access at key __goals
+1:11.023912 - Memory access at key __current goals
+1:11.024009 - Selecting goal(s): stacking the green block
+
+1:11.123726 - ****** Starting Plan Phase ******
+
+1:11.123841 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:11.123879 - Memory access at key __current state
+1:11.123915 - Memory access at key __current goals
+1:11.123949 - Memory access at key __goals
+1:11.124045 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:11.223716 - ****** Starting Act Phase ******
+
+1:11.223854 - Running module <MIDCA.modules.act.AsynchronousAct
+1:11.223905 - Memory access at key __current goals
+1:11.223954 - Memory access at key __goals
+1:11.224048 - Memory access at key __feedback
+1:11.224122 - Action ('raising', 'red block') not complete.
+
+1:11.323712 - Starting cycle 67
+
+1:11.323842 - ****** Starting Perceive Phase ******
+
+1:11.323902 - Running module <MIDCA.modules.perceive.ROSObserver
+1:11.323951 - Memory access at key __current state
+1:11.324022 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:11.423699 - ****** Starting Interpret Phase ******
+
+1:11.423813 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:11.423851 - Memory access at key __current state
+1:11.523713 - ****** Starting Eval Phase ******
+
+1:11.523824 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:11.523862 - Memory access at key __current goals
+1:11.523899 - Memory access at key __goals
+1:11.623727 - ****** Starting Intend Phase ******
+
+1:11.623836 - Running module <MIDCA.modules.intend.SimpleIntend
+1:11.623874 - Memory access at key __goals
+1:11.623913 - Memory access at key __current goals
+1:11.623967 - Selecting goal(s): stacking the green block
+
+1:11.723706 - ****** Starting Plan Phase ******
+
+1:11.723812 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:11.723856 - Memory access at key __current state
+1:11.723893 - Memory access at key __current goals
+1:11.723926 - Memory access at key __goals
+1:11.724021 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:11.740516 - Memory access at key __ros feedback
+1:11.823717 - ****** Starting Act Phase ******
+
+1:11.823825 - Running module <MIDCA.modules.act.AsynchronousAct
+1:11.823863 - Memory access at key __current goals
+1:11.823903 - Memory access at key __goals
+1:11.823974 - Memory access at key __feedback
+1:11.824026 - Action ('raising', 'red block') not complete.
+
+1:11.923706 - Starting cycle 68
+
+1:11.923844 - ****** Starting Perceive Phase ******
+
+1:11.923905 - Running module <MIDCA.modules.perceive.ROSObserver
+1:11.923945 - Memory access at key __ros feedback
+1:11.923985 - Memory access at key __current state
+1:11.924037 - Memory access at key __feedback
+1:11.924091 - World observed: 0 new detection event(s), 0 utterance(s) and 1 feedback msg(s)
+
+1:11.997632 - Memory access at key __detected object queue
+1:11.997744 - Memory access at key __detected object queue
+1:11.997794 - Memory access at key __state
+1:11.997833 - Memory access at key __state
+1:12.023723 - ****** Starting Interpret Phase ******
+
+1:12.023835 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:12.023873 - Memory access at key __current state
+1:12.123716 - ****** Starting Eval Phase ******
+
+1:12.123839 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:12.123879 - Memory access at key __current goals
+1:12.123915 - Memory access at key __goals
+1:12.223711 - ****** Starting Intend Phase ******
+
+1:12.223831 - Running module <MIDCA.modules.intend.SimpleIntend
+1:12.223869 - Memory access at key __goals
+1:12.223908 - Memory access at key __current goals
+1:12.223953 - Selecting goal(s): stacking the green block
+
+1:12.323708 - ****** Starting Plan Phase ******
+
+1:12.323829 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:12.323870 - Memory access at key __current state
+1:12.323907 - Memory access at key __current goals
+1:12.323939 - Memory access at key __goals
+1:12.324034 - Old plan found that tests as valid: ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') [92m('raising', 'red block')[0m
+
+1:12.423710 - ****** Starting Act Phase ******
+
+1:12.423817 - Running module <MIDCA.modules.act.AsynchronousAct
+1:12.423862 - Memory access at key __current goals
+1:12.423907 - Memory access at key __goals
+1:12.423979 - Memory access at key __feedback
+1:12.424035 - Action ('raising', 'red block') complete.
+
+1:12.424087 - Action ('raising', 'red block') completed
+
+1:12.523689 - Starting cycle 69
+
+1:12.523821 - ****** Starting Perceive Phase ******
+
+1:12.523871 - Running module <MIDCA.modules.perceive.ROSObserver
+1:12.523912 - Memory access at key __detected object queue
+1:12.523950 - Memory access at key __state
+1:12.523985 - Memory access at key __current state
+1:12.524069 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:12.623722 - ****** Starting Interpret Phase ******
+
+1:12.623830 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:12.623869 - Memory access at key __current state
+1:12.723710 - ****** Starting Eval Phase ******
+
+1:12.723819 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:12.723858 - Memory access at key __current goals
+1:12.723893 - Memory access at key __goals
+1:12.723984 - Plan ('reach_to_unstack', 'green block', 'red block') ('grab', 'green block') ('raising', 'green block') ('putdown', 'green block') ('release', 'green block') ('raising', 'green block') ('reach_to_pickup', 'red block') ('grab', 'red block') ('raising', 'red block') ('stack', 'red block', 'green block') ('release', 'red block') ('raising', 'red block')[0m finished. Removing it and associated goals
+
+1:12.724043 - Memory access at key __goals
+1:12.823710 - ****** Starting Intend Phase ******
+
+1:12.823823 - Running module <MIDCA.modules.intend.SimpleIntend
+1:12.823860 - Memory access at key __goals
+1:12.823900 - Memory access at key __current goals
+1:12.823938 - No goals selected.
+
+1:12.923709 - ****** Starting Plan Phase ******
+
+1:12.923822 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:12.923861 - Memory access at key __current state
+1:12.923898 - Memory access at key __current goals
+1:12.923937 - No goals received by planner. Skipping planning.
+
+1:13.023731 - ****** Starting Act Phase ******
+
+1:13.023878 - Running module <MIDCA.modules.act.AsynchronousAct
+1:13.023931 - Memory access at key __current goals
+1:13.023992 - No Active goals. Act phase will do nothing
+
+1:13.123698 - Starting cycle 70
+
+1:13.123829 - ****** Starting Perceive Phase ******
+
+1:13.123882 - Running module <MIDCA.modules.perceive.ROSObserver
+1:13.123928 - Memory access at key __current state
+1:13.123992 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:13.223721 - ****** Starting Interpret Phase ******
+
+1:13.223827 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:13.223864 - Memory access at key __current state
+1:13.323712 - ****** Starting Eval Phase ******
+
+1:13.323831 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:13.323870 - Memory access at key __current goals
+1:13.323914 - No current goals. Skipping eval
+
+1:13.423717 - ****** Starting Intend Phase ******
+
+1:13.423823 - Running module <MIDCA.modules.intend.SimpleIntend
+1:13.423865 - Memory access at key __goals
+1:13.424052 - Memory access at key __current goals
+1:13.424097 - No goals selected.
+
+1:13.523710 - ****** Starting Plan Phase ******
+
+1:13.523813 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:13.523849 - Memory access at key __current state
+1:13.523885 - Memory access at key __current goals
+1:13.523940 - No goals received by planner. Skipping planning.
+
+1:13.623740 - ****** Starting Act Phase ******
+
+1:13.623846 - Running module <MIDCA.modules.act.AsynchronousAct
+1:13.623882 - Memory access at key __current goals
+1:13.623924 - No Active goals. Act phase will do nothing
+
+1:13.723699 - Starting cycle 71
+
+1:13.723831 - ****** Starting Perceive Phase ******
+
+1:13.723879 - Running module <MIDCA.modules.perceive.ROSObserver
+1:13.723917 - Memory access at key __current state
+1:13.723973 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:13.823717 - ****** Starting Interpret Phase ******
+
+1:13.823827 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:13.823868 - Memory access at key __current state
+1:13.923722 - ****** Starting Eval Phase ******
+
+1:13.923824 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:13.923862 - Memory access at key __current goals
+1:13.923904 - No current goals. Skipping eval
+
+1:14.023741 - ****** Starting Intend Phase ******
+
+1:14.023888 - Running module <MIDCA.modules.intend.SimpleIntend
+1:14.023940 - Memory access at key __goals
+1:14.023993 - Memory access at key __current goals
+1:14.024046 - No goals selected.
+
+1:14.030076 - Memory access at key __detected object queue
+1:14.030174 - Memory access at key __detected object queue
+1:14.030224 - Memory access at key __state
+1:14.030264 - Memory access at key __state
+1:14.123714 - ****** Starting Plan Phase ******
+
+1:14.123828 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:14.123871 - Memory access at key __current state
+1:14.123917 - Memory access at key __current goals
+1:14.123958 - No goals received by planner. Skipping planning.
+
+1:14.223825 - ****** Starting Act Phase ******
+
+1:14.224052 - Running module <MIDCA.modules.act.AsynchronousAct
+1:14.224093 - Memory access at key __current goals
+1:14.224151 - No Active goals. Act phase will do nothing
+
+1:14.323707 - Starting cycle 72
+
+1:14.323878 - ****** Starting Perceive Phase ******
+
+1:14.323966 - Running module <MIDCA.modules.perceive.ROSObserver
+1:14.324017 - Memory access at key __detected object queue
+1:14.324068 - Memory access at key __state
+1:14.324118 - Memory access at key __current state
+1:14.324246 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+1:14.423715 - ****** Starting Interpret Phase ******
+
+1:14.423827 - Running module <MIDCA.modules.guide.InstructionReceiver
+1:14.423864 - Memory access at key __current state
+1:14.523708 - ****** Starting Eval Phase ******
+
+1:14.523819 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+1:14.523858 - Memory access at key __current goals
+1:14.523908 - No current goals. Skipping eval
+
+1:14.623709 - ****** Starting Intend Phase ******
+
+1:14.623816 - Running module <MIDCA.modules.intend.SimpleIntend
+1:14.623861 - Memory access at key __goals
+1:14.623903 - Memory access at key __current goals
+1:14.623942 - No goals selected.
+
+1:14.723715 - ****** Starting Plan Phase ******
+
+1:14.723816 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+1:14.723855 - Memory access at key __current state
+1:14.723891 - Memory access at key __current goals
+1:14.723943 - No goals received by planner. Skipping planning.
+
+1:14.823724 - ****** Starting Act Phase ******
+
+1:14.823833 - Running module <MIDCA.modules.act.AsynchronousAct
+1:14.823870 - Memory access at key __current goals
+1:14.823911 - No Active goals. Act phase will do nothing
+
+1:14.923682 - Starting cycle 73
+
+1:14.923824 - ****** Starting Perceive Phase ******
+
+1:14.923874 - Running module <MIDCA.modules.perceive.ROSObserver
+1:14.923913 - Memory access at key __current state
+1:14.923969 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+

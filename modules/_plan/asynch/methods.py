@@ -235,4 +235,3 @@ def declare_methods():
 	pyhop.declare_methods('get',get_m)
 	pyhop.declare_methods('move_one',move1)
 	pyhop.declare_methods('move_blocks',moveb_m)
-
