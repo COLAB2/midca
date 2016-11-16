@@ -24,6 +24,8 @@ class Memory:
 	CALIBRATION_Z = "__Z"
 	STACK_Z = "__SZ"
 	UNSTACK_Z = "__UZ"
+	STACK_3Z = "__3SZ"
+	UNSTACK_3Z = "__3SZ"
 	RAISING_POINT = "__RP"
 	PUTTING_POINT = "__PP"
 	ROS_WORDS_HEARD = "__words heard queue"

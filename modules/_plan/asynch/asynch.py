@@ -4,6 +4,12 @@ from geometry_msgs.msg import PointStamped
 from MIDCA.examples import ObjectDetector
 from MIDCA.examples.homography import * 
 from std_msgs.msg import String
+import math
+import copy
+import numpy as np
+from scipy.spatial import distance
+from geometry_msgs.msg import Point
+
 
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
@@ -244,6 +250,106 @@ def get_last_location(mem, objectOrID):
 				return (detectionEvent.loc, detectionEvent.time)
 	return None
 
+def check_2height_stack(mem,objectOrID):
+	print("it is in check 3 height " )
+	print(objectOrID)
+	print("---------------------------------")
+	print(get_last_position(mem,objectOrID))
+	world = mem.get(mem.STATE)
+	allobject = world.all_objects()
+	for each in allobject:
+		if(get_last_position(mem,objectOrID) == each):
+			return each
+	return False
+
+def check_location_clear(mem,point,iterations):
+
+	world = mem.get(mem.STATE)
+	allobject = world.all_objects()
+	x1 = point.x
+	y1 = point.y
+	z1 = point.z
+	
+	for each in allobject:
+		lastLocReport = get_last_location(mem, each)
+		'''
+		x = lastLocReport[0].x 
+		y = lastLocReport[0].y
+		print("the object is " + str(each) +  "and its distance is")
+		print("its last position is " + str(get_last_position(mem, each)))
+		if mem.get(mem.CALIBRATION_MATRIX).any():
+			H = mem.get(mem.CALIBRATION_MATRIX)
+			z = mem.get(mem.CALIBRATION_Z)
+			floor_point = pixel_to_floor(H,[x, y])
+			x = floor_point[0]
+			y = floor_point[1]
+		d_point = (x ,y,z)
+		d1_point = (x1,y1,z1)
+		total_distance = distance.euclidean(d_point,d1_point)
+		print("the distance is")
+		print(total_distance)
+		raw_input("Enter")
+		'''
+	for each in allobject:
+		if (get_last_position(mem, each) == 'table'):
+			lastLocReport = get_last_location(mem, each)
+			x = lastLocReport[0].x 
+			y = lastLocReport[0].y
+			if mem.get(mem.CALIBRATION_MATRIX).any():
+				H = mem.get(mem.CALIBRATION_MATRIX)
+				z = mem.get(mem.CALIBRATION_Z)
+				floor_point = pixel_to_floor(H,[x, y])
+				x = floor_point[0]
+				y = floor_point[1]
+
+				d_point = (x , y,z)
+				d1_point = (x1,y1,z1)
+				total_distance = distance.euclidean(d_point,d1_point)
+
+			'''
+			if iterations == 1:
+				if (math.fabs(x1 - x) < 0.06):
+				 	if (math.fabs(y1 - y) < 0.07) :
+						point.x =  point.x + 0.076320692
+						point.y = point.y + 0.190633894
+						return point
+
+				if (math.fabs(y1 - y) < 0.10):
+				 	if (math.fabs(x1 - x) < 0.06) :
+						point.x =  point.x + 0.076320692
+						point.y = point.y + 0.190633894
+						return point
+			else:
+				if (math.fabs(x1 - x) < 0.10):
+				 	if (math.fabs(y1 - y) < 0.06) :
+						point.x = point.x - 0.15271527
+						point.y = point.y - 0.01682536
+						return point
+
+				if (math.fabs(y1 - y) < 0.10):
+				 	if (math.fabs(x1 - x) < 0.06) :
+						point.x = point.x - 0.15271527
+						point.y = point.y - 0.01682536
+						return point
+
+			'''
+			if iterations == 1:
+				if (total_distance < 0.10) :
+					point.x =  point.x + 0.076320692
+					point.y = point.y + 0.190633894
+					return point
+			if iterations == 2:
+				if (total_distance<0.10) :
+					point.x = point.x - 0.15271527
+					point.y = point.y - 0.01682536
+					return point
+			
+		
+	return point
+
+
+
+
 class AwaitCurrentLocation(AsynchAction):
 
 	'''
@@ -306,7 +412,7 @@ class DoPoint(AsynchAction):
 		if t - lastLocReport[1] > self.maxAllowedLag:
 			if verbose >= 1:
 				print "Last object location report is too old -", 
-				(t - lastLocReport[1]).total_seconds(), "seconds - so action:", self, 
+				str((t - lastLocReport[1]).total_seconds()), "seconds - so action:", self, 
 				"will fail."
 			self.status = FAILED
 			return
@@ -371,8 +477,14 @@ class DoReach(AsynchAction):
         
 	def send_point(self):
 		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		check2stack = check_2height_stack(self.mem, self.objectOrID)
+		check3stack = False
+		if check2stack:
+			lastLocReport = get_last_location(self.mem, check2stack)
+			check3stack = check_2height_stack(self.mem, check2stack)
+			if check3stack:
+				lastLocReport = get_last_location(self.mem, check3stack)
 		print lastLocReport
-		
 		t = time.now()
 		if not lastLocReport:
 			if verbose >= 1:
@@ -394,10 +506,35 @@ class DoReach(AsynchAction):
 		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
 			H = self.mem.get(self.mem.CALIBRATION_MATRIX)
 			z = self.mem.get(self.mem.CALIBRATION_Z)
+			print(z)
 			floor_point = pixel_to_floor(H,[x, y])
 			x = floor_point[0]
 			y = floor_point[1]
+
+#		y = y -0.02
+#		if(self.objectOrID == 'blue block'):
+#			y = y - 0.02
+
+
+		if check3stack:
+			z = self.mem.get(self.mem.UNSTACK_3Z)
+#			if check3stack == 'blue block':
+#				y = y - 0.01
+#			else:
+#				if(self.objectOrID == 'blue block'):
+#					y = y + 0.01
+			
+		elif check2stack:
+			z = self.mem.get(self.mem.UNSTACK_Z)
+			y=y+0.01
+#			if check2stack == 'blue block':
+#				y = y - 0.01
+#			else:
+#				if(self.objectOrID == 'blue block'):
+#					y = y + 0.01
+
 		
+			
 		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
@@ -462,9 +599,21 @@ class DoUnstack(AsynchAction):
         
 	def send_point(self):
 		#we reach the block using the position of the block
-		#pos_of_block = get_last_position(self.mem, self.objectOrID)
-		lastLocReport = get_last_location(self.mem, 'red block')
-		
+		lastLocReport = get_last_location(self.mem, self.objectOrID)
+		check2stack = check_2height_stack(self.mem, self.objectOrID)
+		check3stack = False
+		if check2stack:
+			lastLocReport = get_last_location(self.mem, check2stack)
+			check3stack = check_2height_stack(self.mem, check2stack)
+			if check3stack:
+				lastLocReport = get_last_location(self.mem, check3stack)
+		print lastLocReport
+		'''
+		if pos_of_block == 'table':
+			lastLocReport = get_last_location(self.mem, self.objectOrID)
+		else:
+			lastLocReport = get_last_location(self.mem, pos_of_block)
+		'''
 		t = time.now()
 		if not lastLocReport:
 			if verbose >= 1:
@@ -480,17 +629,37 @@ class DoUnstack(AsynchAction):
 # 			return
 		
 		
-		x = lastLocReport[0].x
+		x = lastLocReport[0].x 
 		y = lastLocReport[0].y
 		z = self.mem.get(self.mem.UNSTACK_Z)
 		#z = 0.02477944410983878
+
 		
 		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
 			H = self.mem.get(self.mem.CALIBRATION_MATRIX)
 			floor_point = pixel_to_floor(H,[x, y])
 			x = floor_point[0]
 			y = floor_point[1]
-		
+#		y = y -0.02
+
+#		
+		if check3stack:
+			z = self.mem.get(self.mem.UNSTACK_3Z)
+#			if check3stack == 'blue block':
+#				y = y - 0.01
+#			else:
+#				if(self.objectOrID == 'blue block'):
+#					y = y + 0.01
+			
+		elif check2stack:
+			z = self.mem.get(self.mem.UNSTACK_Z)
+#			y=y+0.01
+#			if check2stack == 'blue block':
+#				y = y - 0.01
+#			else:
+#				if(self.objectOrID == 'blue block'):
+#					y = y + 0.01
+
 		
 		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
@@ -556,9 +725,16 @@ class DoStack(AsynchAction):
         
 	def send_point(self):
 		#we need to find the target block?
-		lastLocReport = get_last_location(self.mem, self.midcaAction[2])
-		print lastLocReport
+		check3stack = check_2height_stack(self.mem, self.midcaAction[2])
 		
+		lastLocReport = get_last_location(self.mem, self.midcaAction[2])
+		if check3stack:
+			lastLocReport = get_last_location(self.mem, check3stack)
+			
+			
+		
+		
+		#print(check3stack)
 		t = time.now()
 		if not lastLocReport:
 			if verbose >= 1:
@@ -568,7 +744,7 @@ class DoStack(AsynchAction):
 		if t - lastLocReport[1] > self.maxAllowedLag:
 			if verbose >= 1:
 				print "Last object location report is too old -", 
-				(t - lastLocReport[1]).total_seconds(), "seconds - so action:", self, 
+				str((t - lastLocReport[1]).total_seconds()), "seconds - so action:", self, 
 				"will fail."
 			self.status = FAILED
 			return
@@ -576,6 +752,19 @@ class DoStack(AsynchAction):
 		x = lastLocReport[0].x
 		y = lastLocReport[0].y
 		z = self.mem.get(self.mem.STACK_Z)
+#		y=y+0.01
+	        #print("the z is " + str(z))
+
+		
+
+		
+		'''
+		print(z)
+		print("z3")
+		print(self.mem.get(self.mem.STACK_3Z))
+		print("z")
+		print(self.mem.get(self.mem.STACK_3Z))
+		'''
 		#z = 0.018148563732166244
 		
 		if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
@@ -583,6 +772,18 @@ class DoStack(AsynchAction):
 			floor_point = pixel_to_floor(H,[x, y])
 			x = floor_point[0]
 			y = floor_point[1]
+#		y = y -0.02
+
+		if check3stack:
+			print("it is of 3 height")
+			z = self.mem.get(self.mem.STACK_3Z)
+#			y= y + 0.01
+			#if check3stack == 'blue block':
+			     #y= y-0.02
+#		else:
+#			if self.midcaAction[2] == 'blue block':
+#				y= y - 0.02
+			
 		
 		self.msgDict = {'x': x, 'y': y, 
 		'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
@@ -647,11 +848,56 @@ class DoPut(AsynchAction):
 	def send_point(self):
 #0.6480168766398825, 0.4782503847940384, 0.289534050209461
 # 		self.msgDict = {'x': 0.6480168766398825, 'y': 0.4782503847940384, 
-# 		'z': -0.04665006901665164, 'time': self.startTime, 'cmd_id': self.msgID}
+# 		'z': 04665006901665164, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		point = self.mem.get(self.mem.PUTTING_POINT)
+#		point = Point(0.7450848313136519, 0.11634406023548731, -0.15821251824917773)
+		point1 = copy.deepcopy(point)
+		point2 = copy.deepcopy(point1)	
+
+		point1 = check_location_clear(self.mem,point1,1)
+		'''
+		print("got point")
+		print(point1)
+		print("given point")
+		print(point2)
+		'''
+		if (point1.x == point2.x) and (point1.y == point2.y) :
+			#print("The points are same")
+			x = point1.x
+			y = point1.y
+		else:
+			point1 = check_location_clear(self.mem,point1,2)
+#			print("The points are different")
+#			print(point1)
+			x = point1.x
+			y = point1.y
 		
-		self.msgDict = {'x': point.x, 'y': point.y, 
+#		raw_input("enter")
+		
+		'''
+		print(point1)
+		print("given point is ")
+		print(str(x) + "," + str(y) + "," + str(z))
+		raw_input("enter")
+		'''
+		'''
+		if not (point1.x == x and point1.y == y) :
+			print("the point i got if it is not clear ")
+			temps=  check_location_clear(self.mem,point1,2)
+			print("the point i got if it is further clear ")
+			print(str(x) ,str(y) ,str(z))
+			x = temps.x
+			y = temps.y
+			z = temps.z
+			#raw_input("enter")
+		'''
+			
+#		print(str(self.mem.get(self.mem.PUTTING_POINT)))
+#		raw_input("enter")
+		#print("the final point is ")
+		#print(point)
+		self.msgDict = {'x': x, 'y': y, 
 		'z': point.z, 'time': self.startTime, 'cmd_id': self.msgID}
 		
 		

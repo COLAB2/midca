@@ -51,6 +51,8 @@ def moveb_m(state,goal):
     do so and call move_blocks recursively. Otherwise, no blocks need
     to be moved.
     """
+
+
     for b1 in all_blocks(state):
         s = status(b1,state,goal)
         if s == 'move-to-table':

@@ -1,0 +1,789 @@
+1.708634 - Memory access at key __detected object queue
+1.708751 - Memory access at key __detected object queue
+1.708810 - Memory access at key __state
+1.708849 - Memory access at key __state
+3.091149 - -0.047211299605
+
+3.742298 - Memory access at key __detected object queue
+3.742442 - Memory access at key __detected object queue
+3.742507 - Memory access at key __state
+3.742540 - Memory access at key __state
+5.776124 - Memory access at key __detected object queue
+5.776222 - Memory access at key __detected object queue
+5.776268 - Memory access at key __state
+5.776317 - Memory access at key __state
+7.808698 - Memory access at key __detected object queue
+7.808797 - Memory access at key __detected object queue
+7.808841 - Memory access at key __state
+7.808877 - Memory access at key __state
+7.966085 - Enter to capture image.Point 1 captured: (327,85)
+
+9.634384 - Point 2 captured: (413,92)
+
+9.840301 - Memory access at key __detected object queue
+9.840390 - Memory access at key __detected object queue
+9.840442 - Memory access at key __state
+9.840479 - Memory access at key __state
+11.083116 - Point 3 captured: (415,261)
+
+11.873520 - Memory access at key __detected object queue
+11.873641 - Memory access at key __detected object queue
+11.873694 - Memory access at key __state
+11.873741 - Memory access at key __state
+12.610360 - Point 4 captured: (308,251)
+
+13.379668 - [[327, 85], [413, 92], [415, 261], [308, 251]]
+
+13.379855 - [[Decimal('0.5650985769266708'), Decimal('0.23299874879680552')], [Decimal('0.7618675766784712'), Decimal('0.23160832325774428')], [Decimal('0.7571842739032699'), Decimal('-0.16682397425958811')], [Decimal('0.54982243275158'), Decimal('-0.164252555097179')]]
+
+13.380661 - Memory access at key __camera calibration status
+13.380745 - Memory access at key __Z
+13.380808 - Memory access at key __SZ
+13.380848 - Memory access at key __UZ
+13.380890 - Memory access at key __RP
+13.380929 - Memory access at key __PP
+13.907639 - Memory access at key __detected object queue
+13.907743 - Memory access at key __detected object queue
+13.907787 - Memory access at key __state
+13.907823 - Memory access at key __state
+14.393191 - Enter ...Initializing Perceive module 1...
+
+14.393320 - Memory access at key __current state
+14.393360 - done.
+
+14.393392 - Initializing Interpret module 1...
+
+14.393433 - done.
+
+14.393473 - Initializing Eval module 1...
+
+14.393512 - done.
+
+14.393541 - Initializing Intend module 1...
+
+14.393569 - done.
+
+14.393598 - Initializing Plan module 1...
+
+14.393628 - done.
+
+14.393656 - Initializing Act module 1...
+
+14.393694 - done.
+
+14.393750 - Memory access at key __goals
+14.393780 - Goal Graph initialized.
+
+14.393814 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+14.393865 - Starting cycle 0
+
+14.393920 - ****** Starting Perceive Phase ******
+
+14.393965 - Running module <MIDCA.modules.perceive.ROSObserver
+14.394003 - Memory access at key __detected object queue
+14.394030 - Memory access at key __state
+14.394058 - Memory access at key __current state
+14.394099 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f5bbc01a758>
+
+14.394144 - <MIDCA.modules._robot_world.world_repr.DetectedObject instance at 0x7f5bbc01a878>
+
+14.394314 - World observed: 14 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+14.494037 - ****** Starting Interpret Phase ******
+
+14.494141 - Running module <MIDCA.modules.guide.InstructionReceiver
+14.494178 - Memory access at key __current state
+14.594033 - ****** Starting Eval Phase ******
+
+14.594186 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+14.594252 - No current goals. Skipping eval
+
+14.694044 - ****** Starting Intend Phase ******
+
+14.694169 - Running module <MIDCA.modules.intend.SimpleIntend
+14.694215 - Memory access at key __goals
+14.694262 - Memory access at key __current goals
+14.694306 - No goals selected.
+
+14.794055 - ****** Starting Plan Phase ******
+
+14.794201 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+14.794255 - Memory access at key __current state
+14.794305 - Memory access at key __current goals
+14.794379 - No goals received by planner. Skipping planning.
+
+14.894086 - ****** Starting Act Phase ******
+
+14.894237 - Running module <MIDCA.modules.act.AsynchronousAct
+14.894295 - Memory access at key __current goals
+14.894338 - No Active goals. Act phase will do nothing
+
+14.994008 - Starting cycle 1
+
+14.994150 - ****** Starting Perceive Phase ******
+
+14.994205 - Running module <MIDCA.modules.perceive.ROSObserver
+14.994243 - Memory access at key __current state
+14.994300 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+15.094057 - ****** Starting Interpret Phase ******
+
+15.094186 - Running module <MIDCA.modules.guide.InstructionReceiver
+15.094223 - Memory access at key __current state
+15.194052 - ****** Starting Eval Phase ******
+
+15.194183 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+15.194239 - Memory access at key __current goals
+15.194278 - No current goals. Skipping eval
+
+15.294020 - ****** Starting Intend Phase ******
+
+15.294154 - Running module <MIDCA.modules.intend.SimpleIntend
+15.294190 - Memory access at key __goals
+15.294226 - Memory access at key __current goals
+15.294262 - No goals selected.
+
+15.394038 - ****** Starting Plan Phase ******
+
+15.394163 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+15.394209 - Memory access at key __current state
+15.394252 - Memory access at key __current goals
+15.394288 - No goals received by planner. Skipping planning.
+
+15.494016 - ****** Starting Act Phase ******
+
+15.494153 - Running module <MIDCA.modules.act.AsynchronousAct
+15.494190 - Memory access at key __current goals
+15.494229 - No Active goals. Act phase will do nothing
+
+15.594033 - Starting cycle 2
+
+15.594158 - ****** Starting Perceive Phase ******
+
+15.594206 - Running module <MIDCA.modules.perceive.ROSObserver
+15.594265 - Memory access at key __current state
+15.594333 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+15.694019 - ****** Starting Interpret Phase ******
+
+15.694179 - Running module <MIDCA.modules.guide.InstructionReceiver
+15.694216 - Memory access at key __current state
+15.794022 - ****** Starting Eval Phase ******
+
+15.794132 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+15.794170 - Memory access at key __current goals
+15.794212 - No current goals. Skipping eval
+
+15.894046 - ****** Starting Intend Phase ******
+
+15.894161 - Running module <MIDCA.modules.intend.SimpleIntend
+15.894219 - Memory access at key __goals
+15.894260 - Memory access at key __current goals
+15.894299 - No goals selected.
+
+15.941229 - Memory access at key __detected object queue
+15.941348 - Memory access at key __detected object queue
+15.941392 - Memory access at key __state
+15.941429 - Memory access at key __state
+15.994025 - ****** Starting Plan Phase ******
+
+15.994140 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+15.994178 - Memory access at key __current state
+15.994215 - Memory access at key __current goals
+15.994252 - No goals received by planner. Skipping planning.
+
+16.094056 - ****** Starting Act Phase ******
+
+16.094619 - Running module <MIDCA.modules.act.AsynchronousAct
+16.094662 - Memory access at key __current goals
+16.094708 - No Active goals. Act phase will do nothing
+
+16.194014 - Starting cycle 3
+
+16.194151 - ****** Starting Perceive Phase ******
+
+16.194202 - Running module <MIDCA.modules.perceive.ROSObserver
+16.194236 - Memory access at key __detected object queue
+16.194268 - Memory access at key __state
+16.194300 - Memory access at key __current state
+16.194406 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+16.294046 - ****** Starting Interpret Phase ******
+
+16.294169 - Running module <MIDCA.modules.guide.InstructionReceiver
+16.294205 - Memory access at key __current state
+16.394062 - ****** Starting Eval Phase ******
+
+16.394224 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+16.394272 - Memory access at key __current goals
+16.394317 - No current goals. Skipping eval
+
+16.494041 - ****** Starting Intend Phase ******
+
+16.494190 - Running module <MIDCA.modules.intend.SimpleIntend
+16.494234 - Memory access at key __goals
+16.494275 - Memory access at key __current goals
+16.494314 - No goals selected.
+
+16.594036 - ****** Starting Plan Phase ******
+
+16.594160 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+16.594198 - Memory access at key __current state
+16.594240 - Memory access at key __current goals
+16.594288 - No goals received by planner. Skipping planning.
+
+16.694014 - ****** Starting Act Phase ******
+
+16.694150 - Running module <MIDCA.modules.act.AsynchronousAct
+16.694197 - Memory access at key __current goals
+16.694238 - No Active goals. Act phase will do nothing
+
+16.794005 - Starting cycle 4
+
+16.794127 - ****** Starting Perceive Phase ******
+
+16.794175 - Running module <MIDCA.modules.perceive.ROSObserver
+16.794214 - Memory access at key __current state
+16.794269 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+16.894015 - ****** Starting Interpret Phase ******
+
+16.894144 - Running module <MIDCA.modules.guide.InstructionReceiver
+16.894180 - Memory access at key __current state
+16.994017 - ****** Starting Eval Phase ******
+
+16.994199 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+16.994276 - Memory access at key __current goals
+16.994328 - No current goals. Skipping eval
+
+17.094039 - ****** Starting Intend Phase ******
+
+17.094148 - Running module <MIDCA.modules.intend.SimpleIntend
+17.094184 - Memory access at key __goals
+17.094220 - Memory access at key __current goals
+17.094257 - No goals selected.
+
+17.194050 - ****** Starting Plan Phase ******
+
+17.194172 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+17.194213 - Memory access at key __current state
+17.194251 - Memory access at key __current goals
+17.194289 - No goals received by planner. Skipping planning.
+
+17.294016 - ****** Starting Act Phase ******
+
+17.294130 - Running module <MIDCA.modules.act.AsynchronousAct
+17.294168 - Memory access at key __current goals
+17.294212 - No Active goals. Act phase will do nothing
+
+17.394005 - Starting cycle 5
+
+17.394132 - ****** Starting Perceive Phase ******
+
+17.394177 - Running module <MIDCA.modules.perceive.ROSObserver
+17.394215 - Memory access at key __current state
+17.394269 - World observed: 0 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+17.494015 - ****** Starting Interpret Phase ******
+
+17.494123 - Running module <MIDCA.modules.guide.InstructionReceiver
+17.494162 - Memory access at key __current state
+17.594014 - ****** Starting Eval Phase ******
+
+17.594126 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+17.594164 - Memory access at key __current goals
+17.594206 - No current goals. Skipping eval
+
+17.694038 - ****** Starting Intend Phase ******
+
+17.694149 - Running module <MIDCA.modules.intend.SimpleIntend
+17.694186 - Memory access at key __goals
+17.694231 - Memory access at key __current goals
+17.694277 - No goals selected.
+
+17.794027 - ****** Starting Plan Phase ******
+
+17.794139 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+17.794176 - Memory access at key __current state
+17.794213 - Memory access at key __current goals
+17.794253 - No goals received by planner. Skipping planning.
+
+17.894050 - ****** Starting Act Phase ******
+
+17.894167 - Running module <MIDCA.modules.act.AsynchronousAct
+17.894205 - Memory access at key __current goals
+17.894245 - No Active goals. Act phase will do nothing
+
+17.974180 - Memory access at key __detected object queue
+17.974316 - Memory access at key __detected object queue
+17.974361 - Memory access at key __state
+17.974395 - Memory access at key __state
+17.994027 - Starting cycle 6
+
+17.994133 - ****** Starting Perceive Phase ******
+
+17.994180 - Running module <MIDCA.modules.perceive.ROSObserver
+17.994212 - Memory access at key __detected object queue
+17.994242 - Memory access at key __state
+17.994271 - Memory access at key __current state
+17.994349 - World observed: 2 new detection event(s), 0 utterance(s) and 0 feedback msg(s)
+
+18.094031 - ****** Starting Interpret Phase ******
+
+18.094148 - Running module <MIDCA.modules.guide.InstructionReceiver
+18.094195 - Memory access at key __current state
+18.194034 - ****** Starting Eval Phase ******
+
+18.194178 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+18.194227 - Memory access at key __current goals
+18.194281 - No current goals. Skipping eval
+
+18.294035 - ****** Starting Intend Phase ******
+
+18.294173 - Running module <MIDCA.modules.intend.SimpleIntend
+18.294222 - Memory access at key __goals
+18.294274 - Memory access at key __current goals
+18.294331 - No goals selected.
+
+18.394039 - ****** Starting Plan Phase ******
+
+18.394186 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+18.394242 - Memory access at key __current state
+18.394295 - Memory access at key __current goals
+18.394354 - No goals received by planner. Skipping planning.
+
+18.474301 - storing utterance: data: stack
+
+18.474455 - Memory access at key __words heard queue
+18.494043 - ****** Starting Act Phase ******
+
+18.494149 - Running module <MIDCA.modules.act.AsynchronousAct
+18.494189 - Memory access at key __current goals
+18.494234 - No Active goals. Act phase will do nothing
+
+18.594015 - Starting cycle 7
+
+18.594193 - ****** Starting Perceive Phase ******
+
+18.594263 - Running module <MIDCA.modules.perceive.ROSObserver
+18.594315 - Memory access at key __words heard queue
+18.594364 - Memory access at key __current state
+18.594454 - World observed: 0 new detection event(s), 1 utterance(s) and 0 feedback msg(s)
+
+18.694089 - ****** Starting Interpret Phase ******
+
+18.694206 - Running module <MIDCA.modules.guide.InstructionReceiver
+18.694252 - Memory access at key __current state
+18.694310 - received utterance: stack
+
+18.694368 - Memory access at key __goals
+18.694443 - adding goal: Goal(objective: stacking, indirectObject: observer, pos: red block:green block, directObject: green block, subject: self)
+
+18.794049 - ****** Starting Eval Phase ******
+
+18.794206 - Running module <MIDCA.modules.evaluate.EvalPointingFromFeedback
+18.794242 - Memory access at key __current goals
+18.794279 - No current goals. Skipping eval
+
+18.894073 - ****** Starting Intend Phase ******
+
+18.894230 - Running module <MIDCA.modules.intend.SimpleIntend
+18.894290 - Memory access at key __goals
+18.894350 - Memory access at key __current goals
+18.894415 - Selecting goal(s): stacking the green block
+
+18.994055 - ****** Starting Plan Phase ******
+
+18.994193 - Running module <MIDCA.modules.planning.AsynchPyhopPlanner
+18.994243 - Memory access at key __current state
+18.994290 - Memory access at key __current goals
+18.994332 - Memory access at key __goals
+18.994385 - Planning...
+
+18.994441 - call seek_plan
+
+20.007661 - Memory access at key __detected object queue
+20.007761 - Memory access at key __detected object queue
+20.007805 - Memory access at key __state
+20.007859 - Memory access at key __state
+20.713328 - Enter ...depth 0 tasks [('achieve_goals', [<MIDCA.goals.Goal instance at 0x7f5bbc03fd40>])]
+
+20.713530 - achieve_goals_m
+
+20.713617 - holding
+
+20.713661 - next subtask: achieve_goals
+
+21.081301 - Enter ...depth 1 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+21.081480 - ___block: green block
+
+21.801283 - Enter ...statusgreen block
+
+21.801424 - ***********
+
+21.801492 - no!
+
+22.040457 - Memory access at key __detected object queue
+22.040550 - Memory access at key __detected object queue
+22.040604 - Memory access at key __state
+22.040641 - Memory access at key __state
+23.265401 - Enter ...green block
+
+23.265548 - return false
+
+23.265619 - move to table
+
+23.265673 - ___move one
+
+23.265727 - next subtask: move_blocks
+
+23.513208 - Enter ...depth 2 tasks [('move_one', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+23.513336 - next subtask: move_one
+
+23.729320 - Enter ...depth 3 tasks [('get', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+23.729552 - next subtask: get
+
+23.937370 - Enter ...depth 4 tasks [('unstack_task', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+23.937631 - next subtask: unstack_task
+
+24.074549 - Memory access at key __detected object queue
+24.074640 - Memory access at key __detected object queue
+24.074705 - Memory access at key __state
+24.074742 - Memory access at key __state
+24.161387 - Enter ...depth 5 tasks [('reach_to_unstack', 'green block', 'red block'), ('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+24.162208 - monitoring pos
+
+24.162387 - monitoring pos
+ monitoring clear...
+
+24.162459 - start
+
+24.162568 - start
+
+24.348276 - [INFO] [WallTime: 1456260727.150612] Robot Enabled
+
+24.353292 - depth 6 tasks [('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+24.577219 - Enter ...depth 7 tasks [('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+24.881285 - Enter ...depth 8 tasks [('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+24.881444 - next subtask: put
+
+25.113380 - Enter ...depth 9 tasks [('putdown', 'green block'), ('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+25.369491 - Enter ...depth 10 tasks [('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+25.625283 - Enter ...depth 11 tasks [('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+25.881340 - Enter ...depth 12 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+25.881470 - ___block: green block
+
+26.108287 - Memory access at key __detected object queue
+26.108392 - Memory access at key __detected object queue
+26.108436 - Memory access at key __state
+26.108470 - Memory access at key __state
+26.153284 - Enter ...statusgreen block
+
+26.153408 - ***********
+
+26.153453 - no!
+
+26.153509 - done
+
+26.153545 - continue
+
+26.153576 - ___block: red block
+
+26.577434 - Enter ...statusred block
+
+26.577599 - green block
+
+26.577638 - ***********
+
+26.577669 - green block
+
+26.577731 - return false
+
+26.577768 - no!
+
+26.577826 - move to block
+
+26.577858 - next subtask: move_blocks
+
+26.881280 - Enter ...depth 13 tasks [('move_one', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+26.881744 - next subtask: move_one
+
+27.145186 - Enter ...depth 14 tasks [('get', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+27.145315 - next subtask: get
+
+27.441289 - Enter ...depth 15 tasks [('pickup_task', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+27.441444 - next subtask: pickup_task
+
+27.777310 - Enter ...depth 16 tasks [('reach_to_pickup', 'red block'), ('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+27.778060 - monitoring pos
+
+27.778181 - start
+
+27.778358 - monitoring clear...
+
+27.778461 - start
+
+27.788490 - [INFO] [WallTime: 1456260730.590829] Robot Enabled
+
+27.789016 - [INFO] [WallTime: 1456260730.591360] Robot Enabled
+
+28.142766 - Memory access at key __detected object queue
+28.142862 - Memory access at key __detected object queue
+28.142905 - Memory access at key __state
+28.142939 - Memory access at key __state
+28.193224 - depth 17 tasks [('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+28.513521 - Enter ...depth 18 tasks [('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+28.761232 - Enter ...depth 19 tasks [('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+28.761391 - next subtask: put
+
+29.009316 - Enter ...depth 20 tasks [('stack', 'red block', 'green block'), ('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+29.265276 - Enter ...yes it is clear
+
+29.265679 - green block
+
+29.545259 - depth 21 tasks [('release', 'red block'), ('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+30.178775 - Memory access at key __detected object queue
+30.178875 - Memory access at key __detected object queue
+30.178918 - Memory access at key __state
+30.178951 - Memory access at key __state
+30.913155 - Enter ...monitor fires!!
+
+31.457316 - depth 22 tasks [('raising', 'red block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+31.457506 - monitor fired at depth 22
+
+31.457568 - The clear-block monitor is fired for block red block, need to backtrack to level 16
+
+31.457669 - 'put' was failed, it will choose another method--
+
+31.457751 - fired-monitor
+
+31.457807 - [('reach_to_unstack', 'green block', 'red block'), ('grab', 'green block'), ('raising', 'green block'), ('putdown', 'green block'), ('release', 'green block'), ('raising', 'green block')]
+
+31.721247 - Enter ...depth 16 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+31.721374 - ___block: green block
+
+31.993265 - Enter ...statusgreen block
+
+31.993426 - ***********
+
+31.993467 - no!
+
+32.211843 - Memory access at key __detected object queue
+32.211951 - Memory access at key __detected object queue
+32.212012 - Memory access at key __state
+32.212053 - Memory access at key __state
+32.257226 - Enter ...green block
+
+32.257344 - return false
+
+32.257390 - move to table
+
+32.257424 - ___move one
+
+32.257457 - next subtask: move_blocks
+
+32.577268 - Enter ...depth 17 tasks [('move_one', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+32.577456 - next subtask: move_one
+
+32.897418 - Enter ...depth 18 tasks [('get', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+32.897645 - next subtask: get
+
+33.201220 - Enter ...depth 19 tasks [('unstack_task', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+33.201405 - next subtask: unstack_task
+
+33.505368 - Enter ...depth 20 tasks [('reach_to_unstack', 'green block', 'red block'), ('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+33.769465 - Enter ...depth 21 tasks [('grab', 'green block'), ('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+34.017686 - Enter ...depth 22 tasks [('raising', 'green block'), ('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+34.245223 - Memory access at key __detected object queue
+34.245318 - Memory access at key __detected object queue
+34.245377 - Memory access at key __state
+34.245419 - Memory access at key __state
+34.249242 - Enter ...depth 23 tasks [('put', 'green block', 'table'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+34.249382 - next subtask: put
+
+34.465388 - Enter ...depth 24 tasks [('putdown', 'green block'), ('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+34.673347 - Enter ...depth 25 tasks [('release', 'green block'), ('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+34.905271 - Enter ...depth 26 tasks [('raising', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+35.137934 - Enter ...depth 27 tasks [('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+35.138257 - ___block: green block
+
+35.353328 - Enter ...statusgreen block
+
+35.353473 - ***********
+
+35.353561 - no!
+
+35.353648 - done
+
+35.353699 - continue
+
+35.353750 - ___block: red block
+
+35.601351 - Enter ...statusred block
+
+35.601512 - green block
+
+35.601583 - ***********
+
+35.601643 - green block
+
+35.601714 - return false
+
+35.601786 - no!
+
+35.601862 - move to block
+
+35.601928 - next subtask: move_blocks
+
+35.881258 - Enter ...depth 28 tasks [('move_one', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+35.881388 - next subtask: move_one
+
+36.089380 - Enter ...depth 29 tasks [('get', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+36.089565 - next subtask: get
+
+36.279906 - Memory access at key __detected object queue
+36.280040 - Memory access at key __detected object queue
+36.280088 - Memory access at key __state
+36.280124 - Memory access at key __state
+36.321201 - Enter ...depth 30 tasks [('pickup_task', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+36.321344 - next subtask: pickup_task
+
+36.521243 - Enter ...depth 31 tasks [('reach_to_pickup', 'red block'), ('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+36.729299 - Enter ...depth 32 tasks [('grab', 'red block'), ('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+36.929199 - Enter ...depth 33 tasks [('raising', 'red block'), ('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+37.153236 - Enter ...depth 34 tasks [('put', 'red block', 'green block'), ('move_blocks', <MIDCA.goals.Goal instance at 0x7f5bbc03fd40>)]
+
+37.153402 - next subtask: put
+
+38.316835 - Memory access at key __detected object queue
+38.317004 - Memory access at key __detected object queue
+38.317079 - Memory access at key __state
+38.317174 - Memory access at key __state
+40.352163 - Memory access at key __detected object queue
+40.352302 - Memory access at key __detected object queue
+40.352365 - Memory access at key __state
+40.352415 - Memory access at key __state
+42.384232 - Memory access at key __detected object queue
+42.384372 - Memory access at key __detected object queue
+42.384430 - Memory access at key __state
+42.384469 - Memory access at key __state
+22:40:30.224507 - Enter ...Error in planning: Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/planning.py", line 70, in get_new_plan
+    plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 235, in pyhop
+    result = seek_plan(state,tasks,[],0,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 316, in seek_plan
+    solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 287, in seek_plan
+    solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 308, in seek_plan
+    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+  File "/usr/local/lib/python2.7/dist-packages/MIDCA/modules/_plan/pyhop.py", line 242, in seek_plan
+    raw_input('Enter ...')
+EOFError: EOF when reading a line
+

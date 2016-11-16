@@ -86,7 +86,7 @@ def get_img_reference_points():
     return points
 
 
-def get_floor_reference_points(filename):
+def get_floor_reference_points():
     """
     This function get 4 points of reference from the real world, asking the
     user to move the baxter arm to the position of each corresponding point
@@ -126,30 +126,38 @@ def get_floor_reference_points(filename):
     #return [[p1[0],p1[1]], [p2[0],p2[1]], [p3[0],p3[1]], [p4[0],p4[1]]]
    
     #print p4
-    #filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
+    filename = "/home/baxter/git/MIDCA/examples/_baxter/calibration.txt"
     f = open(filename, 'r')
     p1 = f.readline().split(' ')
     p2 = f.readline().split(' ')
     p3 = f.readline().split(' ')
     p4 = f.readline().split(' ')
     
-    return [[Decimal(p1[0]), Decimal(p1[1])],
-     [Decimal(p2[0]), Decimal(p2[1])],
-     [Decimal(p3[0]), Decimal(p3[1])],
-     [Decimal(p4[0]), Decimal(p4[1])]]
+    p1[0] = float(p1[0])
+    p1[1] = float(p1[1])
+    p2[0] = float(p2[0])
+    p2[1] = float(p2[1])
+    p3[0] = float(p3[0])
+    p3[1] = float(p3[1])
+    p4[0] = float(p4[0])
+    p4[1] = float(p4[1])
     
-#     return [[0.5718602040826699, 0.2662634410884852],
-#      [0.7759924972395065, 0.2607727783310961],
-#      [0.7588658957428053, -0.14051425345680635],
-#      [0.5728275006876863, -0.1292139710808082]]
+    return [[p1[0], p1[1]],
+     [p2[0], p2[1]],
+     [p3[0], p3[1]],
+     [p4[0], p4[1]]]
     
-def calibrate_homography(filename):
+#    return [[0.5773763528146585, 0.3842165517841408],
+#     [0.7855928713464901, 0.37834930053240295],
+#     [0.76618765321789, -0.02885636412309065],
+#     [0.5568000497983868, -0.01377416902917198]]
+    
+def calibrate_homography():
     global H, Hinv
-    floor_points = get_floor_reference_points(filename)
+    floor_points = get_floor_reference_points()
     img_points = get_img_reference_points()
     print img_points
     print floor_points
-    
     H = homography_floor_to_img(img_points, floor_points)
     return H
     #I need to send H in string format
@@ -176,9 +184,9 @@ def msg_as_string(H):
     HtoString = HtoString+","+Q[2,2]        
     return HtoString
     
-def calibrate(filename):
+def calibrate():
     initial_setup_baxter()
-    H = calibrate_homography(filename)
+    H = calibrate_homography()
     return H
     #sendPoint(msg_as_string(H), "calibrate_done")
 #     position = getObjectPosition()
