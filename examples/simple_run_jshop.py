@@ -16,13 +16,14 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+print thisDir
 
 MIDCA_ROOT = thisDir + "/../"
-
+print MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
-STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
+STATE_FILE = DOMAIN_ROOT + "states/defstate_jshop.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
@@ -44,10 +45,9 @@ myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
-                                                    util.pyhop_tasks_from_goals,
-                                                    DECLARE_METHODS_FUNC,
-                                                    DECLARE_OPERATORS_FUNC))
+myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
+                                                    util.jshop_tasks_from_goals,
+                                                    ))
 myMidca.append_module("Act", act.SimpleAct())
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
