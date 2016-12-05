@@ -40,7 +40,7 @@ BEACON_FAIL_RATE = 20 # percent chance each beacon will fail each tick
 WIND_ENABLED = True 
 WIND_DIR = 'east' # direction to push the agent if it moves in this direction
 WIND_STRENGTH = 0 # number of extra tiles for the agent to move
-NUM_QUICKSAND = 20
+NUM_QUICKSAND = 10
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)

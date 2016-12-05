@@ -734,7 +734,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             available_operators = filter(lambda op: 'push' in str(op), node.world.operators.values())
         
         for op in available_operators:
-            inst_operators = self.get_all_instantiations(node.world,op)
+            inst_operators = self.get_instantiations_nbeacons(node.world,op)
 
             for inst_op in inst_operators:
                 
@@ -1038,7 +1038,8 @@ class HeuristicSearchPlanner(base.BaseModule):
             #try:
             self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
             #print "Goals are "+str(map(str,goals))
-            hsp_plan = self.heuristic_search(goals, decompose=None)
+            
+            hsp_plan = self.heuristic_search(goals, decompose=self.brute_force_decompose_nbeacons)
             if self.verbose >= 1: 
                 print "planning finished: "
                 for p in hsp_plan:
