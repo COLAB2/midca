@@ -8,7 +8,7 @@ README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture.
 
 4) For a simple interactive version of MIDCA, run examples/cogsci_demo.py
 
-5) To see how the MIDCA instantiation used in cogsci_demo.py is created and populated, open cogsci_demo.py
+5) To see how the MIDCA instantiation used in cogsci_demo.py is created and populated, see examples/cogsci_demo.py
 
 6) For an overview of MIDCA and more details about how it works, see the github wiki (https://github.com/mclumd/MIDCA/wiki) and/or docs folder.
 
