@@ -17,7 +17,8 @@ class Logger:
         self.keys = keys
         self.filesStayOpen = filesStayOpen
         self.verbose = verbose
-
+        #self.files = {}
+        
     def start(self):
         '''
         Creates the folder where log files will be stored and creates file(s)
@@ -93,6 +94,8 @@ class Logger:
         self.logEvent(event)
 
     def logEvent(self, event):
+        if not self.working:
+            return 
         event.time = datetime.now()
         if event.loggable:
             if not hasattr(event, 'keys') or not event.keys:
