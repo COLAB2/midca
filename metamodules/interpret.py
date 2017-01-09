@@ -24,16 +24,16 @@ class MRSimpleDetect(base.BaseModule):
             relevant_neq_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
-                #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
+                print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
                 if prev_phase_datum[0] in relevant_neq_exp.keys():
-                    #print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
+                    print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
 
                     exp_to_check = relevant_neq_exp[prev_phase_datum[0]]
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
-                            #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
+                            print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])
 
                     # for data in last_phase_data:

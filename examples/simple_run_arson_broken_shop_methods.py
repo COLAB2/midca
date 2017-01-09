@@ -1,19 +1,61 @@
 #!/usr/bin/env python
 import MIDCA
-from MIDCA.examples import predicateworld_planning_broken
-from MIDCA.modules import simulator, guide
+from MIDCA.modules import simulator, guide, perceive, note, evaluate, intend, planningbroken, planning, act
+from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
+from MIDCA.worldsim import domainread, stateread
+from MIDCA.domains.blocksworld import blockstate, scene
+from MIDCA import base
 import inspect, os
+
+def asqiiDisplay(world):
+    blocks = blockstate.get_block_list(world)
+    print str(scene.Scene(blocks))
+
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
-myMidca = predicateworld_planning_broken.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
+#myMidca = predicateworld_planning_broken.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
+domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim"
+stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire_pyhop_inducing_bug.sim"
+
+world = domainread.load_domain(domainFile)
+stateread.apply_state_file(world, stateFile)
+myMidca = base.PhaseManager(world, verbose=1, display = asqiiDisplay, metaEnabled=True)
+
+# add cognitive layer phases
+for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+    myMidca.append_phase(phase)
+
+# add cognitive layer modules
+myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
+myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguishers=False))
+myMidca.append_module("Act", act.SimpleAct())
+
+# add meta layer phases
+#for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
+    myMidca.append_meta_phase(phase)
+
+# add meta layer modules
+myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGen())
+myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
+myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
+myMidca.append_meta_module("Control", control.MRSimpleControl())
 
 #myMidca.mem.enableTracing(myMidca.trace)
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
+#myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
 def preferFire(goal1, goal2):

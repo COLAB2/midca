@@ -2,8 +2,8 @@ from MIDCA import base
 
 class MRSimplePlanner(base.BaseModule):
 
-    goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]]}
-    goals_to_plans = {"ACHIEVEABLE-GOAL":[["TRANSFORM-GOAL", "?g"]]}
+    goals_to_plans = {"SWAP-MODULE":[["REMOVE-MODULE", "?x"],["ADD-MODULE","?p","?x"]],
+                      "ACHIEVEABLE-GOAL":[["TRANSFORM-GOAL", "?g"]]}
 
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
@@ -18,7 +18,7 @@ class MRSimplePlanner(base.BaseModule):
                 if verbose >= 2: print("    Selected plan: "+str(plan))
 
     def plan_for_goal(self, goal):
-        #print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
+        print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
         plan = self.goals_to_plans[goal[0]]
         if goal[0] == "SWAP-MODULE":
             if self.mem.trace.module == "PyHopPlannerBroken":

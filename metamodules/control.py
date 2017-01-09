@@ -1,5 +1,6 @@
 import os
-from MIDCA import base, goals
+import importlib
+from MIDCA import base, goals, modules
 
 class MRSimpleControl(base.BaseModule):
     midca = None
@@ -60,9 +61,10 @@ class MRSimpleControl(base.BaseModule):
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
                 #print("current directory: "+str(os.getcwd()))
-                planningModuleInstance = __import__("modules.planning")
-                #print("loaded planning module, it has following attributes: "+str(dir(planningModuleInstance)))
-                pyHopPlannerInstance = planningModuleInstance.planning.PyHopPlanner(True)
+                #print("str(dir(modules)) = "+str(dir(modules)))
+                planningModuleInstance = importlib.import_module("MIDCA.modules.planning")
+                print("loaded planning module, it has following attributes: "+str(dir(planningModuleInstance)))
+                pyHopPlannerInstance = planningModuleInstance.PyHopPlanner(True)
                 self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
                 is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
                 if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out

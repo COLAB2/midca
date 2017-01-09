@@ -189,6 +189,11 @@ class PyHopPlanner(base.BaseModule):
             methods.declare_methods()
             operators.declare_ops()
 
+    def init(self, mem=None, world=None, verbose=None):
+        if mem: self.mem = mem
+        if world: self.world = world
+        if verbose: self.verbose = verbose
+    
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
