@@ -4,10 +4,14 @@ from MIDCA import base, goals, modules
 
 class MRSimpleControl(base.BaseModule):
     midca = None
-
+    prev_init_args = [] # TODO: fix, right now used only for planning and saving args
+                        # from a remove module action and then using the args to 
+                        # insert a new module action
+    
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         plan = self.mem.get(self.mem.META_PLAN)
+        self.prev_init_args = []
         failed = False
         if plan:
             for action in plan:
@@ -32,6 +36,7 @@ class MRSimpleControl(base.BaseModule):
         self.mem.set(self.mem.META_CURR_GOAL, None)
 
     def act(self, action, verbose = 2):
+        # TODO: figure out a way to make the init_args more general (so actions can be kept separate)
         if action[0] == "REMOVE-MODULE":
             # find the component
             module_index = -1
@@ -43,9 +48,9 @@ class MRSimpleControl(base.BaseModule):
                     i = 0
                     for mod in self.mem.myMidca.get_modules(phasei):
                         mod_str = str(mod.__class__.__name__)
-                        #print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))
+                        print("-*-*- act():  mod = "+mod_str+", action[1] = "+str(action[1]))
                         if mod_str == action[1]:
-                            #print("-*-*- act(): we got a match!")
+                            print("-*-*- act(): we got a match!")
                             module_index = i
                             phase = phasei
                             raise Found
@@ -55,7 +60,10 @@ class MRSimpleControl(base.BaseModule):
                 # remove the component
                 #print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
-                    self.mem.myMidca.remove_module(phase, module_index)
+                    mod = self.mem.myMidca.remove_module(phase, module_index)
+                    print "mod is "+str(mod)
+                    self.prev_init_args = mod.get_init_args() # TODO: only works for modules implementing get_init_args
+                    print"got init args: "+str(self.prev_init_args) 
                     is_success = mod_str not in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules(phase))
                     if is_success: print("    Metareasoner removed "+mod_str) # report any actions metareasoner carried out
                     return is_success
@@ -65,7 +73,21 @@ class MRSimpleControl(base.BaseModule):
                 #print("str(dir(modules)) = "+str(dir(modules)))
                 planningModuleInstance = importlib.import_module("MIDCA.modules.planning")
                 print("loaded planning module, it has following attributes: "+str(dir(planningModuleInstance)))
-                pyHopPlannerInstance = planningModuleInstance.PyHopPlanner(True)
+                # get the args used to init the old module and use them to init this one
+                print "init args is "+str(self.prev_init_args)
+                
+                # **** BEGIN: MAGIC! Transform the args *****
+                # This is where the real magic happens
+                # Hardcoded for now
+                # Very Important TODO but likely requires serious research effort
+                from MIDCA.domains.blocksworld.plan import methods
+                working_methods = methods.declare_methods
+                corrected_args = self.prev_init_args
+                hardcoded_index_of_methods_arg = 2 # TODO: I know, so hacky, ahhh magic numbers
+                corrected_args[2] = working_methods
+                # **** END: MAGIC! Transform the args *****
+                
+                pyHopPlannerInstance = planningModuleInstance.PyHopPlanner(*corrected_args)
                 self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
                 is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
                 if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out

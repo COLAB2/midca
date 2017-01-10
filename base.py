@@ -169,7 +169,13 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        module.init(mem=self.mem, world=self.world, verbose=self.verbose)
+        
+        try: # TODO: hacky fix for having modules with two kinds of init functions (one with verbose and one without)
+            # some modules use verbose to get the new verbose value
+            # and others don't 
+            module.init(mem=self.mem, world=self.world, verbose=self.verbose)
+        except:
+            module.init(mem=self.mem, world=self.world)
 
     def removeModule(self, phase, i):
         if isinstance(phase, str):
@@ -180,8 +186,8 @@ class MIDCA:
         if i < 0 or i >= len(modules):
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
-            modules.pop(i)
-
+            return modules.pop(i)
+                
     def clearPhase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -373,7 +379,7 @@ class PhaseManager:
         self.midca.insert_module(phase, module, i, meta=True)
 
     def remove_module(self, phase, i):
-        self.midca.removeModule(phase, i)
+        return self.midca.removeModule(phase, i)
 
     def clear_phase(self, phase):
         self.midca.clearPhase(phase)

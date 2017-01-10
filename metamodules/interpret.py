@@ -362,10 +362,14 @@ class MRSimpleDetectOld(base.BaseModule):
     '''
     
     # negative expectations: if equal to observed state, anomaly detected
-    neg_expectations = {"PyHopPlanner":
+    neg_expectations = {"PyHopPlannerBroken":
                         {"PLAN":[[None,"IMPASSE"]],
                          "INPUT":[]}}
     pos_expectations = {}
+
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
 
     def run(self, cycle, verbose=2):
         self.verbose = verbose
@@ -380,16 +384,16 @@ class MRSimpleDetectOld(base.BaseModule):
             relevant_neg_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
-                #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
+                print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
                 if prev_phase_datum[0] in relevant_neg_exp.keys():
-                    #print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
+                    print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neg_exp))
 
                     exp_to_check = relevant_neg_exp[prev_phase_datum[0]]
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
-                            #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
+                            print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])
 
         # TODO: implement pos_expectations

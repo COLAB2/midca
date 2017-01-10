@@ -14,6 +14,7 @@ class PyHopPlannerBroken(base.BaseModule):
 
     pyhop_state_from_world = None
     pyhop_tasks_from_goals = None
+    init_args = []
     
     def __init__(self,
                  pyhop_state_from_world,
@@ -22,7 +23,12 @@ class PyHopPlannerBroken(base.BaseModule):
                  declare_operators,
                  extinguishers = False,
                  mortar = False):
-        
+        self.init_args = [pyhop_state_from_world,
+                          pyhop_tasks_from_goals,
+                          declare_methods,
+                          declare_operators,
+                          extinguishers,
+                          mortar]
         self.pyhop_state_from_world = pyhop_state_from_world
         self.pyhop_tasks_from_goals = pyhop_tasks_from_goals
         
@@ -36,6 +42,19 @@ class PyHopPlannerBroken(base.BaseModule):
             traceback.print_exc()
             self.working = False
         
+    def get_init_args(self):
+        '''
+        init_args store the args that construct this object, so that
+        when the metareasoner replaces this module with a working one,
+        it can pass the same arguments to the new one. This function
+        essentially preserves knowledge related to this module (which in this
+        case is the planning module).
+        
+        TODO: build a wrapper around modules that store there init args behind
+        the scenes, and when swapping modules, give access to the old args
+        '''
+        return self.init_args
+    
     def init(self, world, mem):
         self.world = world
         self.mem = mem
@@ -97,7 +116,8 @@ class PyHopPlannerBroken(base.BaseModule):
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
                 pyhopTasks = self.pyhop_tasks_from_goals(goals, pyhopState)
-            except Exception:
+            except Exception as e:
+                print e
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
