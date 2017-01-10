@@ -1,5 +1,6 @@
 from MIDCA import base
-from MIDCA.worldsim import domainread, stateread, worldsim, blockstate, scene
+from MIDCA.worldsim import domainread, stateread, worldsim
+from MIDCA.domains.blocksworld import blockstate, scene
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act, planningbroken
 from MIDCA.metamodules import monitor, control, interpret, metaintend,  plan
 

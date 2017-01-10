@@ -51,22 +51,20 @@ class Operator:
 				raise ValueError("Operator args must be strings or MIDCA Argument objects")
 
 class Action:
-
-        def __init__(self, op, *args, **kwargs):
-                self.op = op
-                self.args = args
-
-        def __getitem__(self, item):
-                return self.args[item]
-
-        def __str__(self):
-                s = str(self.op) + "("
-                for arg in self.args:
-                        s += str(arg) + ", "
-                s = s[:-2] + ")"
-                return s
-                
-
+	def __init__(self, op, *args, **kwargs):
+		self.op = op
+		self.args = args
+	
+	def __getitem__(self, item):
+		return self.args[item]
+	
+	def __str__(self):
+		s = str(self.op) + "("
+		for arg in self.args:
+			s += str(arg) + ", "
+		s = s[:-2] + ")"
+		return s
+		
 class Action_Old:
 	
 	def __init__(self, op, *args, **kwargs):

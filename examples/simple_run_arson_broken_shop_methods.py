@@ -3,7 +3,8 @@ import MIDCA
 from MIDCA.modules import simulator, guide, perceive, note, evaluate, intend, planningbroken, planning, act
 from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from MIDCA.worldsim import domainread, stateread
-from MIDCA.domains.blocksworld import blockstate, scene
+from MIDCA.domains.blocksworld import blockstate, scene, util
+from MIDCA.domains.blocksworld.plan import methods_broken, operators
 from MIDCA import base
 import inspect, os
 
@@ -16,12 +17,17 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-#myMidca = predicateworld_planning_broken.UserGoalsMidca(domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim", stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire.sim")
-domainFile = MIDCA_ROOT + "worldsim/domains/arsonist.sim"
-stateFile = MIDCA_ROOT + "worldsim/states/defstate_fire_pyhop_inducing_bug.sim"
+### Domain Specific Variables
+DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
+DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
+STATE_FILE = DOMAIN_ROOT + "states/defstate_fire_pyhop_inducing_bug.sim"
+DISPLAY_FUNC = util.asqiiDisplay
+DECLARE_METHODS_FUNC = methods_broken.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
+GOAL_GRAPH_CMP_FUNC = util.preferFire
 
-world = domainread.load_domain(domainFile)
-stateread.apply_state_file(world, stateFile)
+world = domainread.load_domain(DOMAIN_FILE)
+stateread.apply_state_file(world, STATE_FILE)
 myMidca = base.PhaseManager(world, verbose=1, display = asqiiDisplay, metaEnabled=True)
 
 # add cognitive layer phases
@@ -36,7 +42,11 @@ myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguishers=False))
+myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(util.pyhop_state_from_world,
+                                                                util.pyhop_tasks_from_goals,
+                                                                DECLARE_METHODS_FUNC,
+                                                                DECLARE_OPERATORS_FUNC,
+                                                                extinguishers=False))
 myMidca.append_module("Act", act.SimpleAct())
 
 # add meta layer phases
@@ -46,7 +56,7 @@ for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
 
 # add meta layer modules
 myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
-myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleDetectOld())
 myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGen())
 myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
 myMidca.append_meta_module("Plan", plan.MRSimplePlanner())

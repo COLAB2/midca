@@ -1,15 +1,11 @@
 """
-Blocks World* methods for Pyhop 1.1.
+Blocks World methods for Pyhop 1.1.
 Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-"""
-* Modified by Dustin Dannenhauer: Added a new operator for stacking with mortar
-
-"""
-
-import pyhop
+from MIDCA.modules._plan import pyhop
+import random
 
 """
 Here are some helper functions that are used in the methods' preconditions.
@@ -21,7 +17,7 @@ def is_done(b1,state,goal):
         return False
     if state.pos[b1] == 'table': return True
     if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
-        return False
+    	return False
     return is_done(state.pos[b1],state,goal)
 
 def status(b1,state,goal):
@@ -32,12 +28,7 @@ def status(b1,state,goal):
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
         return 'move-to-table'
     elif is_done(goal.pos[b1],state,goal) and state.clear[goal.pos[b1]]:
-        btmblk = goal.pos[b1]
-        if btmblk in goal.hasmortar.keys() and goal.hasmortar[btmblk]:
-            ''' This check adds a status so we move blocks with mortar different then without mortar '''
-            return 'move-to-block-with-mortar'
-        else:
-            return 'move-to-block'
+        return 'move-to-block'
     else:
         return 'waiting'
 
@@ -56,7 +47,7 @@ def moveb_m(state,goal):
     This method implements the following block-stacking algorithm:
     If there's a block that can be moved to its final position, then
     do so and call move_blocks recursively. Otherwise, if there's a
-    block that needs to be moved and can be moved to the table, then
+    block that needs to be moved and can be moved to the table, then 
     do so and call move_blocks recursively. Otherwise, no blocks need
     to be moved.
     """
@@ -66,8 +57,6 @@ def moveb_m(state,goal):
             return [('move_one',b1,'table'),('move_blocks',goal)]
         elif s == 'move-to-block':
             return [('move_one',b1,goal.pos[b1]), ('move_blocks',goal)]
-        elif s == 'move-to-block-with-mortar':
-            return [('move_one_mortar',b1,goal.pos[b1]), ('move_blocks',goal)]
         else:
             continue
     #
@@ -91,21 +80,9 @@ def move1(state,b1,dest):
     Generate subtasks to get b1 and put it at dest.
     """
     if state.pos[b1] == "in-arm":
-        return [('put', b1,dest)]
+    	return [('put', b1,dest)]
     else:
-        return [('get', b1), ('put', b1,dest)]
-
-### methods for "move_one_mortar"
-
-def move1_mortar(state,b1,dest):
-    """
-    Generate subtasks to get b1 and put it at dest (with mortar)
-    """
-    if state.pos[b1] == "in-arm":
-        return [('put_mortar', b1,dest)]
-    else:
-        return [('get', b1), ('put_mortar', b1,dest)]
-
+    	return [('get', b1), ('put', b1,dest)]
 
 ### methods for "get"
 
@@ -118,7 +95,7 @@ def get_by_pickup(state,b1):
     """Generate a pickup subtask."""
     if state.clear[b1]: return [('pickup_task',b1)]
     return False
-
+    
 ### methods for "pickup_task"
 
 def pickup_m(state,b1):
@@ -130,15 +107,9 @@ def pickup_m(state,b1):
 
 def unstack_m(state,b1):
     """Generate a pickup subtask."""
-    if state.clear[b1]:
-        btmblk = state.pos[b1]
-        mortarblk = state.hasmortar[btmblk] 
-        if mortarblk: 
-            return [('unstack_mortared',b1,state.pos[b1],mortarblk)]
-        else:
-            return [('unstack',b1,state.pos[b1])]
+    if state.clear[b1]: return [('unstack',b1,state.pos[b1])]
     return False
-
+    
 ### methods for "put"
 
 def put_m(state,b1,b2):
@@ -146,74 +117,53 @@ def put_m(state,b1,b2):
     Generate either a putdown or a stack subtask for b1.
     b2 is b1's destination: either the table or another block.
     """
-    
     if state.holding == b1:
         if b2 == 'table':
-            return [('putdown',b1)]
+                return [('putdown',b1)]
         else:
-            return [('stack',b1,b2)]
+                return [('stack',b1,b2)]
     else:
         return False
-            
-### Methods for put_mortar
-            
-def put_m_mortar(state,b1,b2):
-    """
-    Generate either a putdown or a stack subtask for b1.
-    b2 is b1's destination: either the table or another block.
-    """
-    
-    available_mortar = [k for k,v in state.mortaravailable.items() if v]
-    mortar_block = False
-    if len(available_mortar) > 0:
-        mortar_block = available_mortar[0]
-    
-    if state.holding == b1:
-        if b2 == 'table':
-            return [('putdown',b1)]
-        elif mortar_block:
-            # new stack with mortar
-            #print("*-*-*-*-*-* stacking with mortar")
-            return [('stack_mortared',b1,b2,mortar_block)]
-        else:
-            # no mortar left, fail
-            #print("      *******\n       NO MORE MORTAR\n      *******")
-            return False
-    else:
-        return False
-            
-        
+
 def put_out_m(state, b1):
-    if state.fire[b1]:
-        return [("putoutfire", b1)]
-    else:
-        return []
+	if state.fire[b1]:
+		if state.holdingfireext:
+			return [("putoutfire", b1, state.holdingfireext)]
+		elif state.fire_ext_avail:
+			ext = random.choice(list(state.fire_ext_avail))
+			return [('get_extinguisher', ext), ("putoutfire", b1, ext)]
+	else:
+		return []
+
+def get_extinguisher_m(state, extinguisher):
+	if extinguisher in state.fire_ext_avail and not state.holdingfireext:
+		return [("pickup_extinguisher", extinguisher)]
+	else:
+		return False
 
 def quick_apprehend_m(state, perp):
-    if state.free[perp]:
-        return [("apprehend", perp)]
-    else:
-        return []
+	if state.free[perp]:
+		return [("apprehend", perp)]
+	else:
+		return []
 
 def long_apprehend_m(state, perp):
-    if state.free[perp]:
-        return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
-    else:
-        return []
+	if state.free[perp]:
+		return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
+	else:
+		return []
 
 def declare_methods(longApprehend = True):
-    if longApprehend:
-        pyhop.declare_methods("catch_arsonist", long_apprehend_m)
-    else:
-        pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
-    pyhop.declare_methods("put_out", put_out_m)
-    pyhop.declare_methods('put',put_m)
-    pyhop.declare_methods('put_mortar',put_m_mortar)
-    pyhop.declare_methods('unstack_task',unstack_m)
-    pyhop.declare_methods('pickup_task',pickup_m)
-    pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
-    pyhop.declare_methods('move_one',move1)
-    pyhop.declare_methods('move_one_mortar',move1_mortar)
-    pyhop.declare_methods('move_blocks',moveb_m)
-#    pyhop.declare_methods('put_with_mortar',put_with_mortar_m)
+	if longApprehend:
+		pyhop.declare_methods("catch_arsonist", long_apprehend_m)
+	else:
+		pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
+	pyhop.declare_methods("put_out", put_out_m)
+	pyhop.declare_methods('put',put_m)
+	pyhop.declare_methods('unstack_task',unstack_m)
+	pyhop.declare_methods('pickup_task',pickup_m)
+	pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
+	pyhop.declare_methods('move_one',move1)
+	pyhop.declare_methods('move_blocks',moveb_m)
+	pyhop.declare_methods('get_extinguisher',get_extinguisher_m)
 

@@ -1,6 +1,6 @@
 import random
 
-from MIDCA.worldsim.block import Block
+from MIDCA.domains.blocksworld.block import Block
 from MIDCA.goals import Goal
 
 class InternalNode:

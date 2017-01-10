@@ -4,8 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-import pyhop
-
+from MIDCA.modules._plan import pyhop
 
 """
 Here are some helper functions that are used in the methods' preconditions.
@@ -16,8 +15,6 @@ def is_done(b1,state,goal):
     if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
         return False
     if state.pos[b1] == 'table': return True
-    if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
-        return False
     return is_done(state.pos[b1],state,goal)
 
 def status(b1,state,goal):
@@ -47,7 +44,7 @@ def moveb_m(state,goal):
     This method implements the following block-stacking algorithm:
     If there's a block that can be moved to its final position, then
     do so and call move_blocks recursively. Otherwise, if there's a
-    block that needs to be moved and can be moved to the table, then
+    block that needs to be moved and can be moved to the table, then 
     do so and call move_blocks recursively. Otherwise, no blocks need
     to be moved.
     """
@@ -95,7 +92,7 @@ def get_by_pickup(state,b1):
     """Generate a pickup subtask."""
     if state.clear[b1]: return [('pickup_task',b1)]
     return False
-
+    
 ### methods for "pickup_task"
 
 def pickup_m(state,b1):
@@ -109,7 +106,7 @@ def unstack_m(state,b1):
     """Generate a pickup subtask."""
     if state.clear[b1]: return [('unstack',b1,state.pos[b1])]
     return False
-
+    
 ### methods for "put"
 
 def put_m(state,b1,b2):
