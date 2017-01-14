@@ -1,3 +1,4 @@
+import copy
 class Obj:
 	
 	def __init__(self, name, type):
@@ -346,7 +347,7 @@ class World:
 		pass
 	
 	def copy(self):
-		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
+		return World(self.operators.values(), self.predicates.values(), copy.deepcopy(self.atoms), self.types.copy(), self.objects.values())
 	
 	def is_true(self, predname, argnames = []):
 		for atom in self.atoms:
