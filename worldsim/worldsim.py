@@ -152,6 +152,8 @@ class Condition:
 	def instantiate(self, args):
 		if self.argtypes:
 			i = 0
+			print"args are "+str(map(str,args))
+			print "argtypes are "+str(map(str,self.argtypes))
 			for arg in args:
 				if not arg.is_a(self.argtypes[i]):
 					raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
@@ -253,6 +255,7 @@ class Operator:
 		s += ")\nPreconditions: ["
 		i = 0
 		for condition in self.preconditions:
+			print "precondition is "+str(condition)
 			if not self.prePos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
@@ -262,6 +265,7 @@ class Operator:
 		s += "]\nPostconditions: ["
 		i = 0
 		for condition in self.results:
+			print "postcondition is "+str(condition)
 			if not self.postPos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
