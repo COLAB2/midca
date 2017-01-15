@@ -133,7 +133,7 @@ if __name__ == '__main__':
     elif len(sys.argv) == 2:
         topic = sys.argv[1]
     else:
-        topic = "point_cmd"
+        topic = asynch.POINT_TOPIC
     try:
         start_node(topic)
     except rospy.ROSInterruptException:

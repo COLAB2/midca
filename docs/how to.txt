@@ -1,4 +1,5 @@
-Note: as with most files in this module, this one is intended to be read with word wrap enabled.
+﻿Note: as with most files in this module, this one is intended to be read with word wrap enabled.
+Note #2: If you edit this document, please update the wiki page
 
 I. Using MIDCA with simulated worlds using a predicate representation
 
@@ -26,7 +27,7 @@ myMidca.remove_phase(phaseName) #throws ValueError if phase named phaseName not 
 
 print myMidca.get_modules(phaseName)
 
-5) Create a custom phase implementation (module):
+5a) Create a custom phase implementation (module) - old style:
 
 -Create a python class with at least these two methods:
 
@@ -44,6 +45,10 @@ print myMidca.get_modules(phaseName)
 	-the run method will be called once per cycle in phase order. This method will define what the module actually does. Within a phase, modules will be called in the order listed, which can be modified as shown in 6.
 
 For examples, see MIDCA/modules/*
+
+5b) Create a custom phase implementation (module) - new style:
+
+-create a subclass of the base.BaseModule class. To do this, you must implement the run(self, cycle, verbose) method, which defines the module's behavior. In this method, you can access MIDCA's memory through the self.mem field.
 
 6) Add/remove custom or predefined modules to/from MIDCA
 
@@ -63,6 +68,25 @@ myMidca.init()
 8) run in interactive mode
 
 myMidca.run()
+
+9) logging
+
+from 'outside' MIDCA:
+myMidca.logger.log(msg)
+
+from a new-style MIDCA module's run method:
+self.log(msg)
+
+from an old-style MIDCA module's run method:
+not enabled; see first note for a workaround.
+
+note:
+by default, MIDCA will automatically log everything sent to standard output. To
+turn this off, set the MIDCA constructor argument 'logOutput' to False.
+
+note:
+by default, MIDCA also logs each memory access. To turn this off, set the MIDCA
+constructor argument logMemory to False, or set myMidca.mem.logEachAccess to False.
 
 II. Understanding how MIDCA works from the code
 

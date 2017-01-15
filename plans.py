@@ -1,3 +1,5 @@
+import os # used to detect operating system for unix-style color codes
+
 
 class Argument:
 	
@@ -49,6 +51,21 @@ class Operator:
 				raise ValueError("Operator args must be strings or MIDCA Argument objects")
 
 class Action:
+	def __init__(self, op, *args, **kwargs):
+		self.op = op
+		self.args = args
+	
+	def __getitem__(self, item):
+		return self.args[item]
+	
+	def __str__(self):
+		s = str(self.op) + "("
+		for arg in self.args:
+			s += str(arg) + ", "
+		s = s[:-2] + ")"
+		return s
+		
+class Action_Old:
 	
 	def __init__(self, op, *args, **kwargs):
 		self.op = op
@@ -122,7 +139,11 @@ class Plan:
 		s = ""
 		for i in range(len(self.actions)):
 			if self.step - 2 == i:
-				s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+				if os.name == 'nt': # we're on windows, don't use color codes
+					s += '[' + str(self.actions[i]) + ']'
+				else:
+					s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+					
 			else:
 				s += str(self.actions[i])
 			s += " "
@@ -132,7 +153,10 @@ class Plan:
 		s = ""
 		for i in range(len(self.actions)):
 			if self.step - 1 == i:
-				s += '\033[94m' + str(self.actions[i]) + '\033[0m'
+				if os.name == 'nt': # we're on windows, don't use color codes
+					s += '[' + str(self.actions[i]) + ']'
+				else:
+					s += '\033[94m' + str(self.actions[i]) + '\033]0m'
 			else:
 				s += str(self.actions[i])
 			s += " "

@@ -3,6 +3,8 @@ import time
 import rospy
 from geometry_msgs.msg import Point, PointStamped
 
+OBJ_LOC_TOPIC = 'quad_pos'
+
 class FakeQuad:
     
     '''
@@ -37,7 +39,7 @@ class FakeQuad:
 
 def send_msgs():
     rospy.init_node('baxter_pointing_test')
-    pub = rospy.Publisher('quad_pos', PointStamped, queue_size=10)
+    pub = rospy.Publisher(OBJ_LOC_TOPIC, PointStamped, queue_size=10)
     points = [Point(x = 5.0, y = 0.0, z = 0.0),
               Point(x = 8.0, y = 7.0, z = 2.0),
               Point(x = 7.0, y = -4.0, z = -0.5), Point(x = -1, y = 1, z = 0)]
@@ -49,5 +51,15 @@ def send_msgs():
         print("Sending point command:", p)
         pub.publish(PointStamped(point = p))
 
+def straight_ahead_msgs():
+    rospy.init_node('baxter_pointing_test')
+    pub = rospy.Publisher(OBJ_LOC_TOPIC, PointStamped, queue_size=10)
+    point = Point(x = 5.0, y = 0.0, z = 0.0)    n = 0
+    while not rospy.is_shutdown():
+        time.sleep(2)
+        print("Sending point command:", point)
+        pub.publish(PointStamped(point = point))
+
 if __name__ == "__main__":
     send_msgs()
+    #straight_ahead_msgs()

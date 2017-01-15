@@ -1,5 +1,5 @@
-
 from MIDCA.logging import Event
+from MIDCA.trace import CogTrace
 import threading
 
 class Memory:
@@ -32,12 +32,37 @@ class Memory:
 	ROS_FEEDBACK = "__ros feedback"
 	Objects = "__objects"
 	
+	#MetaCognitive
+	TRACE_SEGMENT = "__trace segment"
+	META_ANOMALIES = "__meta anomalies"
+	META_GOALS = "__meta goals"
+	META_CURR_GOAL = "__meta current goal"
+	META_PLAN = "__meta plan" #TODO allow more than one plan
+	
+	# data recording
+	PLANNING_COUNT = "__PlanningCount" # number of times planning was performed (including replanning)
+	GOALS_ACTIONS_ACHIEVED = "__GoalsActionsAchieved" # number of goals achieved
+	GOALS_ACHIEVED = "__GoalsAchieved" # number of goals achieved
+	ACTIONS_EXECUTED = "__ActionsExecuted" # number of actions executed
+	MIDCA_CYCLES = "__MIDCA Cycles"
+	CURR_PLAN = "__CurrPlan"
+	
+	# GDA
+	DISCREPANCY = "__discrepancy"
+	EXPLANATION = "__explanation"
+	EXPLANATION_VAL = "__explanation_val"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)
 		self.logger = None
 		self.mainLock = threading.Lock() #to synchronize lock creation
 		self.locks = {} #lock for each key
+		self.logEachAccess = True
+		#MetaCognitive Variables
+		self.metaEnabled = False
+		self.myMidca = None # pointer to MIDCA object
+		self.trace = False	
 
 	#Handles structs with custom update methods, dict update by dict or tuple, list append, and simple assignment.
 	def _update(self, structname, val):
@@ -57,7 +82,7 @@ class Memory:
 			else:
 				self.knowledge[structname] = val #assignment
 			self.logAccess(structname)
-	
+
 	def add(self, structname, val):
 		'''
 		Used to create lists of items. If nothing is stored under structname, will create
@@ -76,7 +101,7 @@ class Memory:
 			else:
 				self.knowledge[structname] = [self.knowledge[structname], val]
 			self.logAccess(structname)
-	
+
 	def set(self, structname, val):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -84,11 +109,11 @@ class Memory:
 		with self.locks[structname]:
 			self.knowledge[structname] = val
 			self.logAccess(structname)
-	
+
 	def update(self, args):
 		for structname, val in args.items():
 			self._update(structname, val)
-	
+
 	def update_all(self, structname, val):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -103,7 +128,7 @@ class Memory:
 				elif hasattr(struct, "update"):
 					struct.update(val)
 			self.logAccess(structname)
-	
+
 	def remove(self, structname):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -113,11 +138,11 @@ class Memory:
 			if structname in self.knowledge:
 				del self.knowledge[structname]
 				del self.locks[structname]
-	
+
 	def clear(self):
 		self.knowledge.clear()
 		self.locks.clear()
-	
+
 	def get(self, structname):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -127,7 +152,7 @@ class Memory:
 			if structname in self.knowledge:
 				return self.knowledge[structname]
 			return None
-	
+
 	def get_and_clear(self, structname):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -138,7 +163,7 @@ class Memory:
 			del self.knowledge[structname]
 			del self.locks[structname]
 			return val
-	
+
 	def get_and_lock(self, structname):
 		with self.mainLock:
 			if structname not in self.locks:
@@ -148,19 +173,29 @@ class Memory:
 		self.locks[structname].acquire()
 		self.logAccess(structname)
 		return self.knowledge[structname]
-	
+
 	def unlock(self, structname):
 		try:
 			self.locks[structname].release()
 		except KeyError:
 			pass
-	
+
 	def enableLogging(self, logger):
 		self.logger = logger
-	
+
 	def logAccess(self, key):
-		if self.logger:
+		if self.logger and self.logEachAccess:
 			self.logger.logEvent(MemAccessEvent(key))
+
+	def enableMeta(self, phaseManager):
+		if not self.trace:
+			raise Exception("Please call mem.enableTrace() before calling enableMeta()")
+		self.metaEnabled = True
+		self.myMidca = phaseManager
+
+	def enableTrace(self):
+		if not self.trace:
+			self.trace = CogTrace()
 
 class MemAccessEvent(Event):
 
@@ -168,8 +203,6 @@ class MemAccessEvent(Event):
 		self.keys = ['log', 'Memory Access']
 		self.loggable = True
 		self.memKey = keyAccessed
-	
+
 	def __str__(self):
 		return "Memory access at key " + str(self.memKey)
-	
-	

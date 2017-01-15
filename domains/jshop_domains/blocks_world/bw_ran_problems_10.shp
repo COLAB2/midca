@@ -1,0 +1,22 @@
+;; name: bw-ran-problems.5.lisp
+;; #blocks: 5
+;; seed:948169917
+;;---------------------------------------------
+;;problem-name: bw-ran-5-1 towers: 3
+
+(defproblem bw-ran-5-1 blocks-normal
+ ((arm-empty)
+ (on-table a) 
+ (on b a)
+ (on d b)
+
+ (on-table c) 
+ (clear c)
+ (clear d)
+ )
+ ((achieve-goals ( list 
+  (on c b) 
+ 
+ ))))
+
+

@@ -43,14 +43,18 @@ class Atom:
 		if len(predicate.argnames) != len(args):
 			raise Exception("Wrong number of args for " + predicate.name)
 		i = 0
+		
 		if predicate.argtypes:
 			for arg in args:
 				if not arg.is_a(predicate.argtypes[i]):
 					raise Exception("Instantiating argument " + predicate.argnames[i] + " with " + arg.name + ", which is the wrong type of object")
 				i += 1
+		
 		self.predicate = predicate
 		self.args = args
-	
+		self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
+															  # happens at initialization
+		
 	def __getitem__(self, item):
 		if item in self.predicate.argnames:
 			return self.args[self.predicate.argnames.index(item)]
@@ -67,14 +71,15 @@ class Atom:
 			s = s[:-2]
 		return s + ")"
 	
+	def __hash__(self):
+		return self.hash
+	
 	def __eq__(self, other):
-		if self.predicate != other.predicate:
-			return False
-		for i in range(len(self.args)):
-			if self[i] != other[i]:
-				return False
-		return True
-
+		return self.hash == other.hash
+	
+	def __ne__(self, other):
+		return self.hash != other.hash
+	
 class Predicate:
 	
 	def __init__(self, name, argnames, argtypes = []):
@@ -109,6 +114,12 @@ class Action:
 		self.results = results
 		self.postPos = postPos
 	
+	def set_args(self, args):
+		'''
+		TODO - make this an arg in the constructor
+		'''
+		self.args = args
+		
 	def __str__(self):
 		s = "Action - " + self.operator.name + ":\nPreconditions: ["
 		i = 0
@@ -227,7 +238,9 @@ class Operator:
 			for name in names:
 				args.append(objdict[name])
 			results.append(condition.instantiate(args))
-		return Action(self, preconditions, self.prePos, results, self.postPos)
+		result_action = Action(self, preconditions, self.prePos, results, self.postPos)
+		result_action.set_args(args)
+		return result_action
 	
 	def __str__(self):
 		s = "Operator - " + self.name + "("
@@ -238,6 +251,7 @@ class Operator:
 		s += ")\nPreconditions: ["
 		i = 0
 		for condition in self.preconditions:
+			#print "precondition is "+str(condition)
 			if not self.prePos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
@@ -247,6 +261,7 @@ class Operator:
 		s += "]\nPostconditions: ["
 		i = 0
 		for condition in self.results:
+			#print "postcondition is "+str(condition)
 			if not self.postPos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
@@ -271,31 +286,114 @@ class World:
 				self.objects[arg.name] = arg
 		for object in objects:
 			self.objects[object.name] = object
-		self.atoms = atoms
+		self.atoms = set(atoms)
+	
+	def get_atoms(self,filters=[]):
+		'''
+		Will return atoms if the filter (string) is within any pred or arg names
+		If more than one filter string, then all must match (conjunctive filters)
+		'''
+		
+		# if no filters, return everything
+		if len(filters) == 0:
+			return self.atoms
+		
+		# record which filters have matched
+		filter_matches = {k:False for k in filters}
+		#print("filter matches = "+str(filter_matches))
+		relevant_atoms = []
+		if len(filters) > 0:
+			for atom in self.atoms:
+				atom_parts = [atom.predicate]+atom.args
+				for filter_str in filters: # assuming there shouldn't be more than 3-4 filters
+					for part in atom_parts: # assuming shouldn't be atoms with more than 4-5 parts
+						#print "type(part) == "+str(part.name)
+						if (not filter_matches[filter_str]) and filter_str in part.name:
+							filter_matches[filter_str] = True
+							
+				if not (False in filter_matches.values()): # check to see they are all True
+					relevant_atoms.append(atom)
+					#print("Just added "+str(atom)+" to relevant atoms")
+				# reset filter matches
+				filter_matches = {k:False for k in filters}
+				
+		return relevant_atoms
+	
+	def diff(self,otherWorld):
+		'''
+		Given another world, return the differences in atoms.
+		Return value is a tuple where the first element is the atoms in this world not in the given world
+		Second element is the atoms not in this world but in given world
+		'''
+		atoms_not_in_other = []
+		atoms_not_in_self = []
+		# go through all atoms in this world, check to see if they are in other world
+		for atom in self.atoms:
+			if not otherWorld.atom_true(atom):
+				atoms_not_in_other.append(atom)
+				
+		# go through all atoms in given world, check to see if they are in this world
+		for atom in otherWorld.atoms:
+			if not self.atom_true(atom):
+				atoms_not_in_self.append(atom)
+		
+		return (atoms_not_in_self,atoms_not_in_other)
+	
+	def equal(self,otherWorld):
+		diff_result = self.diff(otherWorld)
+		#print "diff_result inside equal() : "+str(map(str,diff_result[0]))+","+str(map(str,diff_result[1]))
+		return  diff_result == ([],[])
+	
+	def fast_equal(self,otherworld):
+		pass
 	
 	def copy(self):
-		return World(self.operators.values(), self.predicates.values(), self.atoms[:], self.types.copy(), self.objects.values())
+		# safety check, in case a list is passed for atoms instead of a set
+		if not type(self.atoms) is set:
+			self.atoms = set(self.atoms)
+			
+		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
 	
-	def is_true(self, predname, argnames):
-		try:
-			args = [self.objects[name] for name in argnames]
-			return self.atom_true(Atom(self.predicates[predname], args))
-		except Exception:
-			return False
+	def is_true(self, predname, argnames = []):
+		for atom in self.atoms:
+			if atom.predicate.name == predname:
+				if len(atom.args) == len(argnames):
+					namesCorrect = True
+					for i in range(len(atom.args)):
+						if atom.args[i].name != argnames[i]:
+							namesCorrect = False
+					if namesCorrect:
+						return True
+		return False
 	
 	def atom_true(self, atom):
+		# this is very fast, because atom objects have hashes and self.atoms is a set, not a list
 		return atom in self.atoms
 	
 	def add_atom(self, atom):
-		if atom not in self.atoms:
-			self.atoms.append(atom)
+		self.atoms.add(atom)
 	
-	def add_fact(self, predname, argnames):
-		self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
+	def add_fact(self, predname, argnames = []):
+		if not self.is_true(predname, argnames):
+			self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 	
 	def remove_atom(self, atom):
-		if atom in self.atoms:
-			self.atoms.remove(atom)
+		self.atoms.remove(atom)
+				
+	def remove_fact(self, predname, argnames = []):
+		toRemove = None
+		for atom in self.atoms:
+			if atom.predicate.name == predname:
+				if len(atom.args) == len(argnames):
+					namesCorrect = True
+					for i in range(len(atom.args)):
+						if atom.args[i].name != argnames[i]:
+							namesCorrect = False
+					if namesCorrect:
+						toRemove = atom
+						break
+		if toRemove:
+			self.remove_atom(toRemove)
 	
 	def add_object(self, object):
 		self.objects[object.name] = object
@@ -323,8 +421,26 @@ class World:
 					return True
 		return False
 	
-	def get_possible_objects(predicate, arg):
+	def get_possible_objects(self, predicate, arg):
 		return self.objects.values() #not, obviously, a good implementation
+	
+	def get_objects_by_type(self, some_type):
+		if type(some_type) is str:
+			if some_type not in self.get_types():
+				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
+		else:
+			if some_type.name not in self.get_types():
+				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
+			
+		objs = []
+		for obj in self.objects.values():
+			if obj.is_a(some_type):
+				objs.append(obj)
+		
+		return objs
+	
+	def get_types(self):
+		return self.types
 	
 	def is_applicable(self, action):
 		for i in range(len(action.preconds)):
@@ -337,7 +453,7 @@ class World:
 	#convenience method for operating with MIDCA
 	def midca_action_applicable(self, midcaAction):
 		try:
-			operator = self.operators[midcaAction.op.name]
+			operator = self.operators[midcaAction.op]
 			args = [self.objects[arg] for arg in midcaAction.args]
 		except KeyError:
 			return False
@@ -349,6 +465,7 @@ class World:
 			if simAction.postPos[i]:
 				self.add_atom(simAction.results[i])
 			else:
+				#print("removing_atom "+str(simAction.results[i]))
 				self.remove_atom(simAction.results[i])
 	
 	def apply_named_action(self, opName, argNames):
@@ -358,7 +475,7 @@ class World:
 				raise Exception("Object " + name + " DNE")
 			args.append(self.objects[name])
 		if opName not in self.operators:
-			raise Exception("Operator " + opname + " DNE")
+			raise Exception("Operator " + opName + " DNE")
 		simAction = self.operators[opName].instantiate(args)
 		if not self.is_applicable(simAction):
 			raise Exception("Preconditions not met.")
@@ -366,11 +483,11 @@ class World:
 	
 	#convenience method for operating with MIDCA
 	def apply_midca_action(self, midcaAction):
-		opname = midcaAction.op.name
+		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
 		self.apply_named_action(opname, argnames)
 	
-	#interprets a MIDCA goal as a predicate statement. Expects the predciate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
+	#interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
 	def midcaGoalAsAtom(self, goal):
 		try:
 			predName = str(goal['predicate'])
@@ -438,9 +555,31 @@ class World:
 				achievedGoals.add(goal)
 		return achievedGoals
 	
+	def goals_achieved_now(self, goalSet):
+		'''
+		Same as goals_achieved but no plan, uses this world
+		'''
+		for goal in goalSet:
+			achieved = self.atom_true(self.midcaGoalAsAtom(goal))
+			if 'negate' in goal and goal['negate']:
+				achieved = not achieved
+			if not achieved:
+				return False
+			
+		return True
+	
 	def plan_goals_achieved(self, plan):
 		return self.goals_achieved(plan, plan.goals)
 
+	def get_operators(self):
+		return self.operators
+	
+	def remove_operator(self, opname):
+		if opname in self.operators.keys():
+			del self.operators[opname]
+			return True
+		return False
+	
 	def __str__(self):
 		s = "[\n"
 		for name in sorted(self.objects.keys()):
