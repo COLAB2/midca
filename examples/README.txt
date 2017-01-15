@@ -7,3 +7,8 @@ simple_run_arson: Adds to simple_run TF-Tree goal generation and an arsonist who
 run_extinguish: adds to simple_run the need to be holding a fire extinguisher to put out a fire
 
 cogsci_demo: the example from a 2014 MIDCA paper. Incorporates TF-Trees, a simulation of Meta-AQUA used to generate goals to apprehend the arsonist, and a scoring system for analyzing MIDCA's success in tower construction
+
+cogsci_demo_ma: connects to Meta-AQUA instead of using simulated goal generation.
+
+chicken_run: simple example domain where chickens can cross a road. Goals must be
+input by the user using the text interface in the interpret phase.

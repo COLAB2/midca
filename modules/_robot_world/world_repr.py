@@ -1,4 +1,4 @@
-from MIDCA import time
+from MIDCA import midcatime
 
 class Location:
 	
@@ -32,7 +32,7 @@ class DetectionEvent:
 	'''
 	
 	def __init__(self, id = None, type = None, loc = None, **kwargs):
-		self.time = time.now()
+		self.time = midcatime.now()
 		self.id = id
 		self.type = type
 		self.loc = loc
@@ -40,7 +40,7 @@ class DetectionEvent:
 class UtteranceEvent:
 	
 	def __init__(self, utterance):
-		self.time = time.now()
+		self.time = midcatime.now()
 		self.utterance = utterance
 	
 class SimpleWorld:
@@ -107,7 +107,7 @@ class SimpleWorld:
 		last maxTimeSinceSeen at a specific location, will return that location. Otherwise
 		will return None.
 		'''
-		currentTime = time.now()
+		currentTime = midcatime.now()
 		object = self.get_object(objectOrID)
 		if object and object in sightings:
 			for detectionEvent in sightings[object].reverse():
@@ -156,8 +156,8 @@ class SimpleWorld:
 		
 	def location_history(self, objectOrID):
 		'''
-		returns a list of tuples (loc, time) for the locations of the designated object.
-		These are ordered by sighting time earliest -> latest. 
+		returns a list of tuples (loc, midcatime) for the locations of the designated object.
+		These are ordered by sighting midcatime earliest -> latest. 
 		'''
 		object = self.get_object(objectOrID)
 		if object and object in sightings:

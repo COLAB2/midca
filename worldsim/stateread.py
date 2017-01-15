@@ -5,7 +5,7 @@ def _apply_state(world, lines):
 	lineNum = 1
 	for line in lines:
 		if "#" in line:
-			line = line[:line.index("#")] #commnents
+			line = line[:line.index("#")] #comments
 		if "(" in line:
 			if ")" not in line:
 				raise Exception("Line " + str(lineNum) + ": Declarations must be contained on single line: " + line)
@@ -24,9 +24,12 @@ def _apply_state(world, lines):
 					if not name:
 						continue
 					if name not in world.objects:
+						
 						raise Exception("Line " + str(lineNum) + ": Object - " + name + " DNE " + line)
 					args.append(world.objects[name])
 				atom = world.predicates[call].instantiate(args)
+				#if len(args) > 0:
+				#	print("just instantiated atom: "+str(atom)+" args[0]: "+str(args[0]))
 				if negate:
 					world.remove_atom(atom)
 				else:

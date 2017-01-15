@@ -1,9 +1,6 @@
+from MIDCA import base
 
-class Example:
-	
-	def init(self, world, mem):
-		#save MIDCA memory object for reference. Most modules should do this.
-		self.mem = mem
+class Example(base.BaseModule):
 	
 	def run(self, cycle, verbose):
 		#load state from memory

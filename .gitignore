@@ -37,3 +37,7 @@ nosetests.xml
 #ignore MIDCA log files
 log/**
 _log/**
+
+# ignore development settings
+.project
+.pydevproject
