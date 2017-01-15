@@ -26,8 +26,14 @@ def get_block_list(world):
 			table = block
 		blocks[obj.name] = block
 	for atom in world.atoms:
-		if atom.predicate == world.predicates["on"]: # or atom.predicate == world.predicates["stable-on"]:
-			blocks[atom.args[0].name].on = blocks[atom.args[1].name]
+		try: # some domains won't use stable-on, so if we get a KeyError just ignore
+			if atom.predicate == world.predicates["stable-on"]:
+				blocks[atom.args[0].name].on = blocks[atom.args[1].name]
+		except KeyError:
+			pass
+		
+		if atom.predicate == world.predicates["on"]: # or :
+			blocks[atom.args[0].name].on = blocks[atom.args[1].name] 
 		elif atom.predicate == world.predicates["on-table"]:
 			blocks[atom.args[0].name].on = table
 		elif atom.predicate == world.predicates["clear"]:
