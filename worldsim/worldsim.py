@@ -1,4 +1,3 @@
-import copy
 class Obj:
 	
 	def __init__(self, name, type):
@@ -147,13 +146,10 @@ class Condition:
 	def __init__(self, atom, argtypes):
 		self.atom = atom
 		self.argtypes = argtypes
-		print "Self.argtypes = "+str(map(str,self.argtypes))
 	
 	def instantiate(self, args):
 		if self.argtypes:
 			i = 0
-			print"args are "+str(map(str,args))
-			print "argtypes are "+str(map(str,self.argtypes))
 			for arg in args:
 				if not arg.is_a(self.argtypes[i]):
 					raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
@@ -255,7 +251,7 @@ class Operator:
 		s += ")\nPreconditions: ["
 		i = 0
 		for condition in self.preconditions:
-			print "precondition is "+str(condition)
+			#print "precondition is "+str(condition)
 			if not self.prePos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
@@ -265,7 +261,7 @@ class Operator:
 		s += "]\nPostconditions: ["
 		i = 0
 		for condition in self.results:
-			print "postcondition is "+str(condition)
+			#print "postcondition is "+str(condition)
 			if not self.postPos[i]:
 				s += "Not "
 			s += str(condition) + " ; "
@@ -352,7 +348,11 @@ class World:
 		pass
 	
 	def copy(self):
-		return World(self.operators.values(), self.predicates.values(), copy.deepcopy(self.atoms), self.types.copy(), self.objects.values())
+		# safety check, in case a list is passed for atoms instead of a set
+		if not type(self.atoms) is set:
+			self.atoms = set(self.atoms)
+			
+		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
 	
 	def is_true(self, predname, argnames = []):
 		for atom in self.atoms:
