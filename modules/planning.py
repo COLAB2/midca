@@ -570,11 +570,11 @@ class HeuristicSearchPlanner(base.BaseModule):
         for c in permutations:
             num_permutations+=1
             #print "len(c) = "+str(len(c))
-            print "c = "+str(map(str,c))
-            print "attempting to instantiate operator "+str(operator)#+" with args "+str(map(str,c))
+            #print "c = "+str(map(str,c))
+            #print "attempting to instantiate operator "+str(operator)#+" with args "+str(map(str,c))
             op_inst = operator.instantiate(list(c))
-            print "successfully instantiated the following operator:"
-            print operator
+            #print "successfully instantiated the following operator:"
+            #print operator
             op_inst.set_args(list(c))
             if world.is_applicable(op_inst):
                 #print "just instantiated operator "+str(operator)+" with args "+str(map(str,c))
