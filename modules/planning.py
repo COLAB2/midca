@@ -569,9 +569,9 @@ class HeuristicSearchPlanner(base.BaseModule):
         num_permutations = 0
         for c in permutations:
             num_permutations+=1
-            #print "len(c) = "+str(len(c))
-            #print "c = "+str(c)
-            #print "attempting to instantiate operator "+str(operator)+" with args "+str(map(str,c))
+            print "len(c) = "+str(len(c))
+            print "c = "+str(map(str,c))
+            print "attempting to instantiate operator "+str(operator)+" with args "+str(map(str,c))
             op_inst = operator.instantiate(list(c))
             op_inst.set_args(list(c))
             if world.is_applicable(op_inst):

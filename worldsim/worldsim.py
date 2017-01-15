@@ -147,6 +147,7 @@ class Condition:
 	def __init__(self, atom, argtypes):
 		self.atom = atom
 		self.argtypes = argtypes
+		print "Self.argtypes = "+str(map(str,self.argtypes))
 	
 	def instantiate(self, args):
 		if self.argtypes:
