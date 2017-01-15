@@ -263,6 +263,7 @@ class PyHopPlanner(base.BaseModule):
                 pyhopState = self.pyhop_state_from_world(world)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
+            pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             try:
                 pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             except Exception:

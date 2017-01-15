@@ -119,11 +119,13 @@ class SimpleMortarGoalGen(base.BaseModule):
             for g in goal_set:
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             # update trace
-            trace.add_data("NEXT GOAL(s)", goal_set)
-            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+            if trace:
+                trace.add_data("NEXT GOAL(s)", goal_set)
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
         else:
-            trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
-            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+            if trace:
+                trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
         
 
 

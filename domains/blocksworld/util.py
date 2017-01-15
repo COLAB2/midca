@@ -246,7 +246,7 @@ def mortar_pyhop_state_from_world(world, name = "state"):
     return s
 
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def mortar_pyhop_tasks_from_goals(goals):
+def mortar_pyhop_tasks_from_goals(goals, pyhopState):
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
