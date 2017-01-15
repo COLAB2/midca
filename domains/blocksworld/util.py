@@ -148,7 +148,7 @@ def pyhop_state_from_world(world, name = "state"):
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
 # pyhopState doesn't need to be used, but pyhop_tasks_from_goals() will be passed two arguments and needs
 # to have it as an arg
-def pyhop_tasks_from_goals(goals,pyhopState):
+def pyhop_tasks_from_goals(goals, pyhopState):
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
@@ -162,6 +162,7 @@ def pyhop_tasks_from_goals(goals,pyhopState):
             predicate = str(goal.args[0])
         else:
             raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        
         args = [str(arg) for arg in goal.args]
         if args[0] == predicate:
             args.pop(0)
@@ -245,7 +246,7 @@ def mortar_pyhop_state_from_world(world, name = "state"):
     return s
 
 #note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def mortar_pyhop_tasks_from_goals(goals):
+def mortar_pyhop_tasks_from_goals(goals, pyhopState):
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}

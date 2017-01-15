@@ -114,7 +114,7 @@ class State():
 class Goal():
     """A goal is just a collection of variable bindings."""
     def __init__(self,name):
-        self.__name__ = name
+        self.__name__ = name        
 
 
 ### print_state and print_goal are identical except for the name

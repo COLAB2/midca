@@ -11,7 +11,7 @@ class Scene:
         print self.layers_to_s(self._makelayers())
     
     def __str__(self):
-    	return self.layers_to_s(self._makelayers())
+        return self.layers_to_s(self._makelayers())
 
     def _makelayers(self):
         blockscopy = copy.deepcopy(self.blocks)
@@ -43,7 +43,7 @@ class Scene:
             currentlayer = nextlayer
             layers.append(currentlayer)
             if not currentlayer:
-            	break
+                break
 
         return layers
 

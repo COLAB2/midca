@@ -85,7 +85,7 @@ class SimpleAct(base.BaseModule):
             if len(achieved) == len(goals):
                 break
             elif verbose >= 2:
-                print "Retrieved plan does not achieve all goals. Trying again."
+                print "Retrieved plan does not achieve all goals. Trying to retrieve a different plan..."
                 if verbose >= 3:
                     print "  Retrieved Plan:"
                     for a in nextPlan:

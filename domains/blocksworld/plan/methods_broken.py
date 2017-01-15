@@ -77,9 +77,9 @@ def move1(state,b1,dest):
     Generate subtasks to get b1 and put it at dest.
     """
     if state.pos[b1] == "in-arm":
-    	return [('put', b1,dest)]
+        return [('put', b1,dest)]
     else:
-    	return [('get', b1), ('put', b1,dest)]
+        return [('get', b1), ('put', b1,dest)]
 
 ### methods for "get"
 
@@ -123,33 +123,33 @@ def put_m(state,b1,b2):
         return False
 
 def put_out_m(state, b1):
-	if state.fire[b1]:
-		return [("putoutfire", b1)]
-	else:
-		return []
+    if state.fire[b1]:
+        return [("putoutfire", b1)]
+    else:
+        return []
 
 def quick_apprehend_m(state, perp):
-	if state.free[perp]:
-		return [("apprehend", perp)]
-	else:
-		return []
+    if state.free[perp]:
+        return [("apprehend", perp)]
+    else:
+        return []
 
 def long_apprehend_m(state, perp):
-	if state.free[perp]:
-		return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
-	else:
-		return []
+    if state.free[perp]:
+        return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
+    else:
+        return []
 
 def declare_methods(longApprehend = True):
-	if longApprehend:
-		pyhop.declare_methods("catch_arsonist", long_apprehend_m)
-	else:
-		pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
-	pyhop.declare_methods("put_out", put_out_m)
-	pyhop.declare_methods('put',put_m)
-	pyhop.declare_methods('unstack_task',unstack_m)
-	pyhop.declare_methods('pickup_task',pickup_m)
-	pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
-	pyhop.declare_methods('move_one',move1)
-	pyhop.declare_methods('move_blocks',moveb_m)
+    if longApprehend:
+        pyhop.declare_methods("catch_arsonist", long_apprehend_m)
+    else:
+        pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
+    pyhop.declare_methods("put_out", put_out_m)
+    pyhop.declare_methods('put',put_m)
+    pyhop.declare_methods('unstack_task',unstack_m)
+    pyhop.declare_methods('pickup_task',pickup_m)
+    pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
+    pyhop.declare_methods('move_one',move1)
+    pyhop.declare_methods('move_blocks',moveb_m)
 

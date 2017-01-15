@@ -32,7 +32,12 @@ def status(b1,state,goal):
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
         return 'move-to-table'
     elif is_done(goal.pos[b1],state,goal) and state.clear[goal.pos[b1]]:
-        return 'move-to-block'
+        btmblk = goal.pos[b1]
+        if btmblk in goal.hasmortar.keys() and goal.hasmortar[btmblk]:
+            ''' This check adds a status so we move blocks with mortar different then without mortar '''
+            return 'move-to-block-with-mortar'
+        else:
+            return 'move-to-block'
     else:
         return 'waiting'
 
@@ -61,6 +66,8 @@ def moveb_m(state,goal):
             return [('move_one',b1,'table'),('move_blocks',goal)]
         elif s == 'move-to-block':
             return [('move_one',b1,goal.pos[b1]), ('move_blocks',goal)]
+        elif s == 'move-to-block-with-mortar':
+            return [('move_one_mortar',b1,goal.pos[b1]), ('move_blocks',goal)]
         else:
             continue
     #
@@ -87,6 +94,18 @@ def move1(state,b1,dest):
         return [('put', b1,dest)]
     else:
         return [('get', b1), ('put', b1,dest)]
+
+### methods for "move_one_mortar"
+
+def move1_mortar(state,b1,dest):
+    """
+    Generate subtasks to get b1 and put it at dest (with mortar)
+    """
+    if state.pos[b1] == "in-arm":
+        return [('put_mortar', b1,dest)]
+    else:
+        return [('get', b1), ('put_mortar', b1,dest)]
+
 
 ### methods for "get"
 
@@ -128,6 +147,22 @@ def put_m(state,b1,b2):
     b2 is b1's destination: either the table or another block.
     """
     
+    if state.holding == b1:
+        if b2 == 'table':
+            return [('putdown',b1)]
+        else:
+            return [('stack',b1,b2)]
+    else:
+        return False
+            
+### Methods for put_mortar
+            
+def put_m_mortar(state,b1,b2):
+    """
+    Generate either a putdown or a stack subtask for b1.
+    b2 is b1's destination: either the table or another block.
+    """
+    
     available_mortar = [k for k,v in state.mortaravailable.items() if v]
     mortar_block = False
     if len(available_mortar) > 0:
@@ -137,15 +172,18 @@ def put_m(state,b1,b2):
         if b2 == 'table':
             return [('putdown',b1)]
         elif mortar_block:
-        	# new stack with mortar
+            # new stack with mortar
+            #print("*-*-*-*-*-* stacking with mortar")
             return [('stack_mortared',b1,b2,mortar_block)]
         else:
             # no mortar left, continue stacking like normal
             return [('stack',b1,b2)]
-            #return False
+            #return False # change to use this line instead of above to fail on no more mortar
+
     else:
         return False
             
+        
 def put_out_m(state, b1):
     if state.fire[b1]:
         return [("putoutfire", b1)]
@@ -171,10 +209,12 @@ def declare_methods(longApprehend = True):
         pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
     pyhop.declare_methods("put_out", put_out_m)
     pyhop.declare_methods('put',put_m)
+    pyhop.declare_methods('put_mortar',put_m_mortar)
     pyhop.declare_methods('unstack_task',unstack_m)
     pyhop.declare_methods('pickup_task',pickup_m)
     pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
     pyhop.declare_methods('move_one',move1)
+    pyhop.declare_methods('move_one_mortar',move1_mortar)
     pyhop.declare_methods('move_blocks',moveb_m)
 #    pyhop.declare_methods('put_with_mortar',put_with_mortar_m)
 

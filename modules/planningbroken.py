@@ -3,6 +3,8 @@ from MIDCA.domains.blocksworld.plan import methods_broken, operators, operators_
 from MIDCA import plans, base
 import collections
 import copy
+import traceback
+
 class PyHopPlannerBroken(base.BaseModule):
 
     '''
@@ -10,17 +12,54 @@ class PyHopPlannerBroken(base.BaseModule):
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
     '''
 
-    def __init__(self, extinguishers = False):
-        #declares pyhop methods. This is where the planner should be given the domain information it needs.
-        if extinguishers:
-            # TODO: need to check this is still working because methods_broken might need to be changed
-            # to methods_extinguisher_broken
-            methods_broken.declare_methods()
-            operators_extinguish.declare_ops()
-        else:
-            methods_broken.declare_methods()
-            operators.declare_ops()
-
+    pyhop_state_from_world = None
+    pyhop_tasks_from_goals = None
+    init_args = []
+    
+    def __init__(self,
+                 pyhop_state_from_world,
+                 pyhop_tasks_from_goals,
+                 declare_methods,
+                 declare_operators,
+                 extinguishers = False,
+                 mortar = False):
+        self.init_args = [pyhop_state_from_world,
+                          pyhop_tasks_from_goals,
+                          declare_methods,
+                          declare_operators,
+                          extinguishers,
+                          mortar]
+        self.pyhop_state_from_world = pyhop_state_from_world
+        self.pyhop_tasks_from_goals = pyhop_tasks_from_goals
+        
+        try:
+            declare_methods()
+            declare_operators()
+            self.working = True
+        except:
+            print "Error declaring pyhop methods and operators. This planner will be \
+            disabled"
+            traceback.print_exc()
+            self.working = False
+        
+    def get_init_args(self):
+        '''
+        init_args store the args that construct this object, so that
+        when the metareasoner replaces this module with a working one,
+        it can pass the same arguments to the new one. This function
+        essentially preserves knowledge related to this module (which in this
+        case is the planning module).
+        
+        TODO: build a wrapper around modules that store there init args behind
+        the scenes, and when swapping modules, give access to the old args
+        '''
+        return self.init_args
+    
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+        self.mem.set(self.mem.PLANNING_COUNT, 0)
+    
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -72,12 +111,13 @@ class PyHopPlannerBroken(base.BaseModule):
             if verbose >= 2:
                 print "Planning..."
             try:
-                pyhopState = pyhop_state_from_world(world)
+                pyhopState = self.pyhop_state_from_world(world)
             except Exception:
                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
             try:
-                pyhopTasks = pyhop_tasks_from_goals(goals)
-            except Exception:
+                pyhopTasks = self.pyhop_tasks_from_goals(goals, pyhopState)
+            except Exception as e:
+                print e
                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
@@ -102,78 +142,3 @@ class PyHopPlannerBroken(base.BaseModule):
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN",midcaPlan)
-
-def pyhop_state_from_world(world, name = "state"):
-    s = pyhop.State(name)
-    s.pos = {}
-    s.clear = {}
-    s.holding = False
-    s.fire = {}
-    s.free = {}
-    s.fire_ext_avail = set()
-    s.holdingfireext = None
-    blocks = []
-    for objname in world.objects:
-        if world.objects[objname].type.name == "BLOCK" and objname != "table":
-            blocks.append(objname)
-        elif world.objects[objname].type.name == "ARSONIST":
-            s.free[objname] = False
-    for atom in world.atoms:
-        if atom.predicate.name == "clear":
-            s.clear[atom.args[0].name] = True
-        elif atom.predicate.name == "holding":
-            s.holding = atom.args[0].name
-        elif atom.predicate.name == "fire-extinguisher":
-            s.fire_ext_avail.add(atom.args[0].name)
-        elif atom.predicate.name == "holdingextinguisher":
-            s.holdingfireext = atom.args[0].name
-        elif atom.predicate.name == "arm-empty":
-            s.holding = False
-        elif atom.predicate.name == "on":
-            s.pos[atom.args[0].name] = atom.args[1].name
-        elif atom.predicate.name == "on-table":
-            s.pos[atom.args[0].name] = "table"
-        elif atom.predicate.name == "onfire":
-            s.fire[atom.args[0].name] = True
-        elif atom.predicate.name == "free":
-            s.free[atom.args[0].name] = True
-    for block in blocks:
-        if block not in s.clear:
-            s.clear[block] = False
-        if block not in s.fire:
-            s.fire[block] = False
-        if block not in s.pos:
-            s.pos[block] = "in-arm"
-    return s
-
-#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
-def pyhop_tasks_from_goals(goals):
-    alltasks = []
-    blkgoals = pyhop.Goal("goals")
-    blkgoals.pos = {}
-    for goal in goals:
-        #extract predicate
-        if 'predicate' in goal.kwargs:
-            predicate = str(goal.kwargs['predicate'])
-        elif 'Predicate' in goal.kwargs:
-            predicate = str(goal.kwargs['Predicate'])
-        elif goal.args:
-            predicate = str(goal.args[0])
-        else:
-            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
-        args = [str(arg) for arg in goal.args]
-        if args[0] == predicate:
-            args.pop(0)
-        if predicate == "on":
-            blkgoals.pos[args[0]] = args[1]
-        elif predicate == 'on-table':
-            blkgoals.pos[args[0]] = 'table'
-        elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:
-            alltasks.append(("put_out", args[0]))
-        elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
-            alltasks.append(("catch_arsonist", args[0]))
-        else:
-            raise Exception("No task corresponds to predicate " + predicate)
-    if blkgoals.pos:
-        alltasks.append(("move_blocks", blkgoals))
-    return alltasks

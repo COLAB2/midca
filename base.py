@@ -70,7 +70,9 @@ class MIDCA:
             self.mem.enableTrace()
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
+
             self.mem.enableMeta(phaseManager)
+
         if not logenabled:
             self.logger.working = False
         else:
@@ -167,7 +169,13 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        module.init(mem=self.mem, world=self.world, verbose=self.verbose)
+        
+        try: # TODO: hacky fix for having modules with two kinds of init functions (one with verbose and one without)
+            # some modules use verbose to get the new verbose value
+            # and others don't 
+            module.init(mem=self.mem, world=self.world, verbose=self.verbose)
+        except:
+            module.init(mem=self.mem, world=self.world)
 
     def removeModule(self, phase, i):
         if isinstance(phase, str):
@@ -178,8 +186,8 @@ class MIDCA:
         if i < 0 or i >= len(modules):
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
-            modules.pop(i)
-
+            return modules.pop(i)
+                
     def clearPhase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -335,6 +343,7 @@ class PhaseManager:
         self.display = display
         self.twoSevenWarning = False
         self.logger = self.midca.logger
+        self.meta_verbose = verbose
 
     '''
     convenience functions which wrap MIDCA functions
@@ -370,7 +379,7 @@ class PhaseManager:
         self.midca.insert_module(phase, module, i, meta=True)
 
     def remove_module(self, phase, i):
-        self.midca.removeModule(phase, i)
+        return self.midca.removeModule(phase, i)
 
     def clear_phase(self, phase):
         self.midca.clearPhase(phase)
@@ -398,9 +407,8 @@ class PhaseManager:
         #if self.storeHistory:
         #    self.history.append(self.midca.copy())
         if self.storeHistory and verbose >= 3: print("Warning: History not being stored during meta phase") #TODO
-        val = self.midca.next_phase(verbose, meta=True)
+        val = self.midca.next_phase(self.meta_verbose, meta=True)
         return val
-
 
     def one_cycle_with_meta_intrlvd(self, verbose = 1, pause = 0.5, noInterface=True):
         '''
@@ -562,6 +570,15 @@ class PhaseManager:
                         print("")
                 elif val == "worldstate":
                     print(str(self.mem.get("__world states")[-1]))
+                    print("----- now printing self.midca.world -----")
+                    print(str(self.midca.world))
+                    print('----- and now: self.midca.world.atoms ----')
+                    for atom in self.midca.world.atoms:
+                        print("  "+str(atom))
+                    print('----- and now: self.mem.get("__world states")[-1].atoms ----')
+                    for atom in self.mem.get("__world states")[-1].atoms:
+                        print("  "+str(atom))
+                        
                 elif val == "change":
                     print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:

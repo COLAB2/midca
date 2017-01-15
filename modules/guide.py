@@ -77,6 +77,57 @@ class UserGoalInput(base.BaseModule):
             trace.add_data("USER GOALS", goals_entered)
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
+class SimpleMortarGoalGen(base.BaseModule):
+    '''
+    MIDCA module that cycles through goals for the agent to achieve.
+    '''
+    
+    curr_goal_index = 0
+
+    curr_goal_sets = [
+                  [goals.Goal(*['A_','B_'], predicate = 'stable-on'),
+                   goals.Goal(*['C_','A_'], predicate = 'stable-on'),
+                   goals.Goal(*['D_','C_'], predicate = 'stable-on')],
+                  [goals.Goal(*['D_','B_'], predicate = 'stable-on'),
+                   goals.Goal(*['B_','A_'], predicate = 'stable-on'),
+                   goals.Goal(*['A_','C_'], predicate = 'stable-on')]]
+
+    # starting state: on(D,B), on(B,A), ontable(A) ontable(C)
+    # first goal: on(C,B)
+    # second goal
+
+    def next_goal(self):
+        # get the next goal
+        curr_goal_set = self.curr_goal_sets[self.curr_goal_index]
+        # update index for next time around
+        if self.curr_goal_index == len(self.curr_goal_sets)-1:
+            self.curr_goal_index = 0
+        else:
+            self.curr_goal_index+=1
+        return curr_goal_set
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            
+        # first, check to see if we need a new goal, and only then insert a new one
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            # get the next goal
+            goal_set = self.next_goal()
+            # insert that goal
+            for g in goal_set:
+                self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            # update trace
+            if trace:
+                trace.add_data("NEXT GOAL(s)", goal_set)
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+        else:
+            if trace:
+                trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+        
+
 
 class NBeaconsGoalGenerator(base.BaseModule):
     '''

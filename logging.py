@@ -94,6 +94,8 @@ class Logger:
         self.logEvent(event)
 
     def logEvent(self, event):
+        if not self.working:
+            return 
         event.time = datetime.now()
         if event.loggable:
             if not hasattr(event, 'keys') or not event.keys:

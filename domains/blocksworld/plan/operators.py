@@ -55,21 +55,21 @@ def stack(state,b,c):
     else: return False
 
 def putoutfire(state, b):
-	if state.fire[b] == True:
-		state.fire[b] == False
-		return state
-	else: 
-		return False
+    if state.fire[b] == True:
+        state.fire[b] = False
+        return state
+    else: 
+        return False
 
 def apprehend(state, perp):
-	if state.free[perp] == True:
-		state.free[perp] = False
-		return state
-	else:
-		return False
+    if state.free[perp] == True:
+        state.free[perp] = False
+        return state
+    else:
+        return False
 
 def searchfor(state, perp):
-	return state
+    return state
 
 """
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
