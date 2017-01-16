@@ -352,7 +352,7 @@ class InstructionReceiver:
         world = self.mem.get(self.mem.STATE)
         i = len(world.utterances)
         while i > 0:
-            if self.lastTime - world.utterances[i - 1].midcatime > 0:
+            if self.lastTime - world.utterances[i - 1].time > 0:
                 break
             i -= 1
         newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
