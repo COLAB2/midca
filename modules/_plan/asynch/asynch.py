@@ -5,13 +5,14 @@ from MIDCA.examples.homography import *
 import math
 import copy
 import numpy as np
-from scipy.spatial import distance
+
 
 try:
     from geometry_msgs.msg import PointStamped
     from geometry_msgs.msg import Point
     from MIDCA.examples import ObjectDetector
     from std_msgs.msg import String
+    from scipy.spatial import distance
 except:
     pass #if ROS is not installed, an error message will already have been generated.
 
