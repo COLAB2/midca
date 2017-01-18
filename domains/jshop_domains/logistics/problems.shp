@@ -1,0 +1,56 @@
+;; name: Log_ran_problems.lisp
+;; #packages: 10 #citys: NUM_CITY
+;; #planes: 2 seed:930942051
+;;--------------------------------------
+(defproblem log-ran-10-1 logistics
+   (
+   (SAIRPLANE SPLANE)
+ (AIRPLANE PLANE1)
+ (AIRPLANE PLANE2)
+
+ (airplane-at PLANE1 AP1)
+;; (sairplane-at SPLANE AP3)
+ (airplane-at PLANE2 AP2)
+
+ (CITY CITY1)
+ (CITY CITY2)
+ (CITY CITY3)
+
+ (NearBy CITY1 CITY2)
+ (NearBy CITY2 CITY3)
+
+ (AIRPORT AP1)
+ (AIRPORT AP2)
+ (AIRPORT AP3)
+
+ (TRUCK T1 CITY1)
+ (truck-at T1 LOC1)
+ (TRUCK T2 CITY2)
+ (truck-at T2 LOC2)
+ (TRUCK T3 CITY3)
+ (truck-at T3 LOC3)
+
+
+ (LOCATION LOC1)
+ (IN-CITY LOC1 CITY1)
+ (LOCATION LOC2)
+ (IN-CITY LOC2 CITY2)
+ (LOCATION LOC3)
+ (IN-CITY LOC3 CITY3)
+
+ 
+ (IN-CITY AP1 CITY1)
+ (IN-CITY AP2 CITY2)
+ (IN-CITY AP3 CITY3)
+
+ 
+ (obj-at PACK1 LOC1)
+
+ 
+)
+
+((achieve-goal 
+ (obj-at PACK1 LOC3)
+)))
+
+
