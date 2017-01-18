@@ -4,7 +4,7 @@ from MIDCA.modules._robot_world import world_repr
 from MIDCA import midcatime
 import math
 import numpy as np
-from scipy.spatial import distance
+
 
 try:
     import rospy
@@ -13,6 +13,7 @@ try:
     import baxter_interface
     import baxter_external_devices
     from baxter_interface import CHECK_VERSION
+    from scipy.spatial import distance
 except:
     pass
 
