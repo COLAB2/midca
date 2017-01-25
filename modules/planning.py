@@ -276,7 +276,7 @@ class JSHOPPlanner(base.BaseModule):
                     print
                 if trace: trace.add_data("PLAN", jshopPlan)
                 return
-            #change from pyhop plan to MIDCA plan
+            #change from jshop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
             
             if verbose >= 1:

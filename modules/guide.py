@@ -1,7 +1,7 @@
 from MIDCA import goals, base
 from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
-from MIDCA.domains.blocksworld import blockstate
+from MIDCA.domains.logistics import deliverstate
 import copy 
 import random
 
@@ -252,6 +252,40 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
                 if self.verbose >= 1: print "No explanation, old plans removed, but no goal management actions"    
                 return
 
+
+class DeliverGoal(base.BaseModule):
+
+    '''
+    MIDCA module that generates goals to stack blocks using Michael Maynord's TF-Trees. These trees are trained to cycle through 3 specific states; behavior is unknown for other states. See implementation in modules/_goalgen/tf_3_scen.py for details.
+    '''
+
+    def __init__(self):
+        ''
+
+    def deliveringGoalsExist(self):
+        graph = self.mem.get(self.mem.GOAL_GRAPH)
+        for goal in graph.getAllGoals():
+            if goal['predicate'] == "deliver":
+                return True
+        return False
+
+    def run(self, cycle, verbose = 2):
+        if self.deliveringGoalsExist():
+            if verbose >= 2:
+                print "MIDCA already has a delivering goal. Skipping delivering goal generation"
+            return
+        #if obj-at(p,l) is in the state, it means it needs to be delivered! 
+        world = self.mem.get(self.mem.STATES)[-1]
+        order = deliverstate.get_order_list(world)
+#\         goal = self.tree.givegoal(blocks)
+        goal = goals.Goal(order.id, order.destination, predicate = "deliver")
+        added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+        if goal:
+            if verbose >= 2:
+                print "goal generated:", goal
+            self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+
+
 class TFStack(base.BaseModule):
 
     '''
@@ -352,7 +386,7 @@ class InstructionReceiver:
         world = self.mem.get(self.mem.STATE)
         i = len(world.utterances)
         while i > 0:
-            if self.lastTime - world.utterances[i - 1].time > 0:
+            if self.lastTime - world.utterances[i - 1].midcatime > 0:
                 break
             i -= 1
         newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
