@@ -2,6 +2,7 @@ from MIDCA import goals, base
 from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from MIDCA.domains.logistics import deliverstate
+from MIDCA.domains.blocksworld import blockstate
 import copy 
 import random
 
@@ -265,7 +266,7 @@ class DeliverGoal(base.BaseModule):
     def deliveringGoalsExist(self):
         graph = self.mem.get(self.mem.GOAL_GRAPH)
         for goal in graph.getAllGoals():
-            if goal['predicate'] == "deliver":
+            if goal['predicate'] == "obj-at":
                 return True
         return False
 
@@ -278,7 +279,7 @@ class DeliverGoal(base.BaseModule):
         world = self.mem.get(self.mem.STATES)[-1]
         order = deliverstate.get_order_list(world)
 #\         goal = self.tree.givegoal(blocks)
-        goal = goals.Goal(order.id, order.destination, predicate = "deliver")
+        goal = goals.Goal(order.id, order.destination, predicate = "obj-at")
         added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
         if goal:
             if verbose >= 2:

@@ -1,22 +1,19 @@
 
 type(SAIRPLANE)
-type(AIRPLANE)
 type(CITY)
 type(TRUCK)
 type(LOCATION)
 type(PACKAGE)
-type(AIRPORT)
 
-predicate(airplane-at, [plane1,aport1], [AIRPLANE,AIRPORT])
+
 predicate(in-truck, [obj,truck], [PACKAGE,TRUCK])
-predicate(in-airplane, [obj,plane], [PACKAGE,AIRPLANE])
-predicate(sairplane-at, [splane1,aport1], [SAIRPLANE,AIRPORT])
+predicate(in-airplane, [obj,plane], [PACKAGE,SAIRPLANE])
+predicate(sairplane-at, [splane1,aport1], [SAIRPLANE,LOCATION])
 predicate(NearBy, [city1,city2], [CITY,CITY])
 predicate(truck-at, [truck1, loc1], [TRUCK, LOCATION])
 predicate(IN-CITY, [loc,city], [LOCATION,CITY])
-predicate(IN-CITY-A, [loc,city], [AIRPORT,CITY])
+predicate(IN-CITY-A, [loc,city], [LOCATION,CITY])
 predicate(obj-at, [obj,loc3], [PACKAGE,LOCATION])
-predicate(obj-at-a, [obj,loc2], [PACKAGE,AIRPORT])
 predicate(deliver, [obj,loc1], [PACKAGE,LOCATION])
 
 operator(load-truck, 
@@ -37,21 +34,21 @@ results = [
 
 
 operator(load-airplane, 
-args = [(obj, PACKAGE), (plane, AIRPLANE), (ap1, AIRPORT)], 
+args = [(obj, PACKAGE), (plane, SAIRPLANE), (ap1, LOCATION)], 
 preconditions = [
-	condition(obj-at-a, [obj, ap1]),
-	condition(airplane-at, [plane,ap1])], 
+	condition(obj-at, [obj, ap1]),
+	condition(sairplane-at, [plane,ap1])], 
 results = [
 	condition(in-airplane, [obj, plane])])
 
 
 operator(unload-airplane, 
-args = [(obj, PACKAGE), (plane, AIRPLANE), (ap1, AIRPORT)], 
+args = [(obj, PACKAGE), (plane, SAIRPLANE), (ap1, LOCATION)], 
 preconditions = [
 	condition(in-airplane, [obj, plane]),
-	condition(airplane-at, [plane,ap1])], 
+	condition(sairplane-at, [plane,ap1])], 
 results = [
-	condition(obj-at-a, [obj,ap1])])
+	condition(obj-at, [obj,ap1])])
 
 
 operator(drive-truck, 
@@ -62,8 +59,8 @@ results = [
 	condition(truck-at, [truck, loc2])])
 
 operator(fly-airplane, 
-args = [(plane, AIRPLANE), (ap1, AIRPORT), (ap2, AIRPORT)], 
+args = [(plane, SAIRPLANE), (ap1, LOCATION), (ap2, LOCATION)], 
 preconditions = [
-	condition(airplane-at, [plane,ap1])], 
+	condition(sairplane-at, [plane,ap1])], 
 results = [
-	condition(airplane-at, [plane, ap2])])
+	condition(sairplane-at, [plane, ap2])])
