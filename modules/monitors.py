@@ -33,37 +33,19 @@ class Monitor():
                 if atom.predicate.name == predicate and atom.args[0].name == id and  atom.args[1].name == location:
                     flag = 1
             
+            #this part is only for testing
+            #___________________________
             if cheatcount == 7:
+                for atom in world.atoms:
+                    if atom.predicate.name == predicate and atom.args[0].name == id and  atom.args[1].name == location:
+                        world.atoms.remove(atom)
+                        break
+            #___________________________
+                       
+            if flag == 0:        
                 print('fire, goal should be removed')
                 self.mem.get(self.mem.GOAL_GRAPH).remove(self.goal)
+                return
+            
             time.sleep(3)
             
-
-        
-        
-    
-def clear_block(state, depth, task):
-        i = 0
-        b1 = task[1]
-        task_name = task[0]
-        m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == b1, pyhop.generated_monitors)
-        if m: 
-            m[0].add_task(task_name)    
-            #print "monitor is already running for " + b1
-        else:
-            #print "monitor is added for" + b1 + "to check if it is clear"
-            
-            m = Monitor(clear_block, b1, depth)
-            m.add_task(task_name)
-            m.change_state = change_state
-            pyhop.generated_monitors.append(m)
-            
-            
-            block_on_top_of_this_block = clear_block_monitor.monitor_clear_block(b1)
-            if block_on_top_of_this_block:
-                print("monitor fires!!")
-                m.is_fired = True 
-                set_clear_status(state, b1, 'not clear')
-                set_position(state, block_on_top_of_this_block, b1)
-            
-
