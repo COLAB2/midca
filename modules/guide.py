@@ -5,6 +5,8 @@ from MIDCA.domains.logistics import deliverstate
 from MIDCA.domains.blocksworld import blockstate
 import copy 
 import random
+from MIDCA.modules.monitors import Monitor
+from threading import Thread
 
 class UserGoalInput(base.BaseModule):
 
@@ -277,14 +279,18 @@ class DeliverGoal(base.BaseModule):
             return
         #if obj-at(p,l) is in the state, it means it needs to be delivered! 
         world = self.mem.get(self.mem.STATES)[-1]
-        order = deliverstate.get_order_list(world)
+        orders = deliverstate.get_order_list(world)
 #\         goal = self.tree.givegoal(blocks)
-        goal = goals.Goal(order.id, order.destination, predicate = "obj-at")
-        added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-        if goal:
-            if verbose >= 2:
-                print "goal generated:", goal
-            self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+        for order in orders:
+            goal = goals.Goal(order.id, order.destination, predicate = "obj-at")
+            added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            if goal:
+                if verbose >= 2:
+                    print "goal generated:", goal
+                ##call monitors
+                m = Monitor(self.mem, "m" + order.id, order.id, goal)
+                Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
+                self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
 
 class TFStack(base.BaseModule):

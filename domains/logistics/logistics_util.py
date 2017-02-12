@@ -88,7 +88,7 @@ def jshop_tasks_from_goals(goals,pyhopState):
         args = [str(arg) for arg in goal.args]
         if args[0] == predicate:
             args.pop(0)
-        if predicate == "deliver":
+        if predicate == "obj-at":
             f.write("(obj-at " +  args[0] + " " +  args[1] + ")\n")
         
         
@@ -96,4 +96,7 @@ def jshop_tasks_from_goals(goals,pyhopState):
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" )))")
     f.close()
+
+
+   
     

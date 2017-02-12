@@ -15,7 +15,6 @@ def jshop(tasks):
     
     f = open(STATE_FILE, 'r')
     a = f.read()
-    print a
 #     STATE_FILE = "C:/Users/Zohreh/git/MIDCA/domains/jshop_domains/logistics/problems.shp"
     
 #     path = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/"
