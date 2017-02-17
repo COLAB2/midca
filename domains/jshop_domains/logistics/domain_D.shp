@@ -38,7 +38,18 @@
                 ()
                 ((airplane-at ?airplane ?airportfrom))
                 ((airplane-at ?airplane ?airportto)))
-           
+          
+  
+     (:method (achieve-goals (list ?goal . ?goals))
+     ()
+     ((achieve-goal ?goal)(achieve-goals list ?goals)))
+    
+    (:method (achieve-goals nil ?goal)
+             ()
+             ((achieve-goal ?goal)))
+             
+       
+     
       
 ;;; Assumes that the destination location and starting location ;;;
 ;;; are in same city assumes there is a truck in starting location

@@ -282,7 +282,7 @@ class DeliverGoal(base.BaseModule):
         orders = deliverstate.get_order_list(world)
 #\         goal = self.tree.givegoal(blocks)
         for order in orders:
-            goal = goals.Goal(order.id, order.destination, predicate = "obj-at")
+            goal = goals.Goal(order.id, order.destination, order.location, predicate = "obj-at")
             added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
             if goal:
                 if verbose >= 2:
@@ -293,6 +293,9 @@ class DeliverGoal(base.BaseModule):
                 self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
 
+
+    
+        
 class TFStack(base.BaseModule):
 
     '''

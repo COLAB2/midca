@@ -42,9 +42,9 @@ myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.DeliverGoal())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.JSHOPPlanner(logistics_util.jshop_state_from_world,
-                                                    logistics_util.jshop_tasks_from_goals,
+myMidca.append_module("Intend", intend.WarehouseIntend())
+myMidca.append_module("Plan", planning.JSHOP2Planner(logistics_util.jshop2_state_from_world,
+                                                    logistics_util.jshop2_tasks_from_goals,
                                                     ))
 myMidca.append_module("Act", act.SimpleAct())
 
