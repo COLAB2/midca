@@ -22,8 +22,8 @@ MIDCA_ROOT = thisDir + "/../"
 print MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/domain.sim"
-STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
+STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
 
 
 
