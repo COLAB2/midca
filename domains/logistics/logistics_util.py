@@ -101,55 +101,34 @@ def jshop_tasks_from_goals(goals,pyhopState):
 def jshop2_state_from_world(world, name = "state"):
     thisDir =  os.path.dirname(os.path.realpath(__file__))
     MIDCA_ROOT = thisDir + "/../"
-    STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
-    
+#     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
+    STATE_FILE = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/problem"
     f = open(STATE_FILE, 'w')
     f.write('\n')
-    f.write('(defproblem log-ran-10-1 logistics')
-    f.write(' (')
+    f.write("(defproblem problem logistics\n")
+    f.write("(\n")
     
     for obj in world.objects.keys():
-        if  world.objects[obj].type.name == "SAIRPLANE":
-            f.write("(SAIRPLANE " + obj + ")\n")
-        elif world.objects[obj].type.name == "AIRPLANE":
-            f.write("(AIRPLANE " + obj + ")\n")
-        elif world.objects[obj].type.name == "TRUCK":
-            f.write("(TRUCK " + obj + ")\n")
-        elif world.objects[obj].type.name == "LOCATION":
-            if "ap_" in obj:
-                f.write("(AIRPORT " + obj + ")\n")
-            else:
-                f.write("(LOCATION " + obj + ")\n")
-        elif world.objects[obj].type.name == "CITY":
-            f.write("(CITY " + obj + ")\n")
-        elif world.objects[obj].type.name == "AIRPORT":
+
+        
+        if world.objects[obj].type.name == "AIRPORT":
             f.write("(AIRPORT " + obj + ")\n")
-        elif world.objects[obj].type.name == "PACKAGE":
-            f.write("(PACKAGE " + obj + ")\n") 
+   
               
     
     for atom in world.atoms:
         
         if atom.predicate.name == "airplane-at":
             f.write("(airplane-at " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-            
-        elif atom.predicate.name == "sairplane-at":
-            f.write("(sairplane-at " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-            
-        elif atom.predicate.name == "NearBy":
-            f.write("(NearBy " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-            
+        elif atom.predicate.name == "truck-c":
+            f.write("(TRUCK " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
+                    
         elif atom.predicate.name == "truck-at":
             f.write("(truck-at " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
             
         elif atom.predicate.name == "IN-CITY":
             f.write("(IN-CITY " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-        
-        elif atom.predicate.name == "IN-CITY-A":
-            f.write("(IN-CITY " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-        
-        elif atom.predicate.name == "IN-CITY":
-            f.write("(IN-CITY " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
+                
         elif atom.predicate.name == "obj-at":
             f.write("(obj-at " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
     
@@ -164,7 +143,8 @@ translate MIDCA goal to JSHOP tasks
 def jshop2_tasks_from_goals(goals,pyhopState):
     thisDir =  os.path.dirname(os.path.realpath(__file__))
     MIDCA_ROOT = thisDir + "/../"
-    STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
+#     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
+    STATE_FILE = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/problem"
     f = open(STATE_FILE, 'a')
     
     alltasks = []
@@ -191,4 +171,4 @@ def jshop2_tasks_from_goals(goals,pyhopState):
     f.write(" ))")
     f.close()
    
-    
+   
