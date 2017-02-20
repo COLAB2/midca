@@ -4,23 +4,41 @@ AIRPLANE(plane3)
 AIRPLANE(plane4)
 CITY(city1)
 CITY(city2)
-CITY(city3)
+CITY(city7)
 CITY(city8)
 PACKAGE(package1)
 PACKAGE(package2)
 PACKAGE(package3)
 PACKAGE(package4)
 TRUCK (truck81)
-  AIRPORT(loc81)
-  AIRPORT(loc83)
-  truck-c (truck81 ,city8)
-  truck-at(truck81 ,loc81)
-  IN-CITY(loc81 ,city8)
 
-  IN-CITY (loc83 ,city8)
-  obj-at(package1 ,loc81)
+AIRPORT(loc81)
+AIRPORT(loc82)
+AIRPORT(loc83)
 
- 
-deliver (package1,loc83)
+truck-c (truck81 ,city8)
+truck-at(truck81 ,loc81)
 
+IN-CITY(loc81 ,city8)
+IN-CITY(loc82 ,city8)
+IN-CITY (loc83 ,city8)
+
+
+
+TRUCK (truck71)
+AIRPORT(loc71)
+AIRPORT(loc73)
+truck-c (truck71 ,city7)
+truck-at(truck71 ,loc71)
+IN-CITY(loc71 ,city7)
+IN-CITY (loc73 ,city7)
+
+airplane-at (plane1,loc82)
+
+obj-at(package1 ,loc83)
+obj-at(package2 ,loc83) 
+
+
+deliver (package1,loc81)
+deliver (package2,loc73)
 
