@@ -279,11 +279,7 @@ class DeliverGoal(base.BaseModule):
             return
         #if obj-at(p,l) is in the state, it means it needs to be delivered! 
         world = self.mem.get(self.mem.STATES)[-1]
-        for i in range(1,4):
-            current_atom =  filter(lambda a: a.predicate.name == "obj-at" and a.args[0].name == "package"+str(i), world.atoms)
-            if current_atom:
-                print("package"+str(i))
-        
+       
         orders = deliverstate.get_order_list(world)
 #\         goal = self.tree.givegoal(blocks)
         for order in orders:
@@ -296,9 +292,6 @@ class DeliverGoal(base.BaseModule):
                 m = Monitor(self.mem, "m" + order.id, order.id, goal)
                 Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
                 self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-
-
-
     
         
 class TFStack(base.BaseModule):
