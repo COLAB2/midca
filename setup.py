@@ -34,6 +34,7 @@ setup(name='MIDCA',
                 'MIDCA.metamodules'],
     
       package_data={'': ['*.jar', 'MIDCA.modules._plan.jShop'],
+                    '': ['*.txt', 'MIDCA.domains.logistics'],
                     '': ['*.*', 'MIDCA.modules._plan.jShop'],
                     '': ['*.shp', 'MIDCA.domains.jshop_domains.blocks_world']},
       package_dir={"": ".."}

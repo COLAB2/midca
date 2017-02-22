@@ -38,7 +38,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 #add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 #myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Perceive", perceive.PerfectObserverWithThief())
 myMidca.append_module("Interpret", guide.DeliverGoal())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
