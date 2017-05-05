@@ -264,7 +264,11 @@ class DeliverGoal(base.BaseModule):
 
     def __init__(self):
         ''
-
+    def alreadygenerated(self):
+        g = self.mem.get(self.mem.DELIVERED)
+        if g:
+            return True
+        
     def deliveringGoalsExist(self):
         graph = self.mem.get(self.mem.GOAL_GRAPH)
         for goal in graph.getAllGoals():
@@ -276,6 +280,11 @@ class DeliverGoal(base.BaseModule):
         if self.deliveringGoalsExist():
             if verbose >= 2:
                 print "MIDCA already has a delivering goal. Skipping delivering goal generation"
+            return
+        
+        if self.alreadygenerated():
+            if verbose >= 2:
+                print "MIDCA already generated the goals for this problem"
             return
         #if obj-at(p,l) is in the state, it means it needs to be delivered! 
         world = self.mem.get(self.mem.STATES)[-1]
@@ -290,9 +299,11 @@ class DeliverGoal(base.BaseModule):
                     print "goal generated:", goal
                 ##call monitors
                 m = Monitor(self.mem, "m" + order.id, order.id, goal)
-                Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
+#                 Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
                 self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
     
+        
+        
         
 class TFStack(base.BaseModule):
 

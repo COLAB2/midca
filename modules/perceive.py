@@ -119,8 +119,9 @@ class PerfectObserverWithThief(base.BaseModule):
         theft_items=[]
         
         with open(thief_file) as f:
-	    	line = f.readline().split(" ")
-	    	theft_items.append(line)
+	    	lines = f.readlines()
+	    	for line in lines:
+	    		theft_items.append(line.split(" "))
 	    	
         if not world:
             raise Exception("World observation failed.")
@@ -130,7 +131,7 @@ class PerfectObserverWithThief(base.BaseModule):
         for item in theft_items:
         	
 			for atom in world.atoms:
-				if atom.predicate.name == item[0] and atom.args[0].name == item[1] and  atom.args[1].name == item[2]:
+				if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
 					world.atoms.remove(atom)   
 					print("removed:" + atom.args[0].name)
 					break
@@ -154,6 +155,8 @@ class PerfectObserverWithThief(base.BaseModule):
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
+        
+        
 
 class MAReport:
 

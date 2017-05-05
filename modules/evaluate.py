@@ -84,6 +84,95 @@ class SimpleEval(base.BaseModule):
 
         if trace and goals_changed: trace.add_data("GOALS",goals)
 
+
+class SimpleEval2(base.BaseModule):
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)
+        except KeyError:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+        if goals:
+            for goal in goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if achieved:
+                        print "achieved"
+                        score = self.mem.get(self.mem.DELIVERED)
+                        lastGoals = self.mem.get(LAST_SCORED_GOAL)
+                        if not lastGoals:
+                            self.mem.set(LAST_SCORED_GOAL, [goal])
+                            self.mem.set(self.mem.DELIVERED, 1)
+                            self.generate_thief_file(goal, 5)
+                        elif not (goal in lastGoals):
+                            self.mem.add(LAST_SCORED_GOAL, goal)
+                            self.mem.set(self.mem.DELIVERED, score+1)
+                        
+                        
+                        print str(self.mem.get(self.mem.DELIVERED))    
+                    if not achieved:
+                        if verbose >= 2:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All current goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+        else:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+
+        if trace and goals_changed: trace.add_data("GOALS",goals)
+    
+    
+    def generate_thief_file(self,goal, stolen_number):
+        args = [str(arg) for arg in goal.args]
+        current_w = args[2]
+        graph = self.mem.get(self.mem.GOAL_GRAPH)
+        goals = graph.getAllGoals()
+        
+        other_w_goals = []
+        
+        for g in goals:
+            args = [str(arg) for arg in g.args]
+            if args[2] != current_w:
+                other_w_goals.append(g)
+#         other_w_goals =  filter(lambda g: str(g.args[2]) != current_w, goals.copy())
+        randomgoals = random.sample(other_w_goals, stolen_number)
+        
+        thisDir =  "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop"
+        thief_file = thisDir + "/theif.txt"
+        
+        f = open(thief_file, 'w')
+        
+        for g in randomgoals:
+            f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
+            1
+
 LAST_SCORED_GOAL = "Last Scored Goal"
 SCORE = "Score"
 
