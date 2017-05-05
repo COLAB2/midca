@@ -20,10 +20,11 @@ print thisDir
 
 MIDCA_ROOT = thisDir + "/../"
 print MIDCA_ROOT
+
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
-STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
+STATE_FILE = DOMAIN_ROOT + "states/defstate3.sim"
 
 
 
@@ -41,7 +42,7 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Perceive", perceive.PerfectObserverWithThief())
 myMidca.append_module("Interpret", guide.DeliverGoal())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Eval", evaluate.SimpleEval2())
 myMidca.append_module("Intend", intend.WarehouseIntend())
 myMidca.append_module("Plan", planning.JSHOP2Planner(logistics_util.jshop2_state_from_world,
                                                     logistics_util.jshop2_tasks_from_goals,

@@ -105,3 +105,4 @@ class WarehouseIntend(base.BaseModule):
                 for goal in goals_selected:
                     print goal,
                 print
+                

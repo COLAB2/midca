@@ -34,28 +34,16 @@ class Monitor():
             current_atom =  filter(lambda a: a.predicate.name == predicate and a.args[0].name == id, world.atoms)
             if current_atom:
                 flag = 1
-#             for atom in world.atoms:
-#                 if atom.predicate.name == predicate and atom.args[0].name == id and  atom.args[1].name == location:
-#                     print(id)
-#                     flag = 1
-            
-            #this part is only for testing
-            #_need to create a list o monitors here; and drop  the goal here__________________________
-#             if cheatcount == 3:
-#                 m =  filter(lambda a: a.predicate.name == predicate and a.args[0].name == "package3", world.atoms.copy())
-#                
-#                 if m:
-#                     world.atoms.remove(m[0])
-#                     print(id + "is removed")    
-                       
+                     
             if flag == 0: 
-                goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
-                goals = goalGraph.getUnrestrictedGoals()       
-                print('monitor fires, '+ id +' is lost;warehouse goal should be removed(' + self.goal.args[2]+")")
-                warehouse = self.goal.args[2]
-                for g in goals:
-                    if g.args[2] == warehouse:
-                        self.mem.get(self.mem.GOAL_GRAPH).remove(g)
+                self.mem.get(self.mem.GOAL_GRAPH).remove(self.goal)
+#                 goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+#                 goals = goalGraph.getUnrestrictedGoals()       
+                print('monitor fires, '+ id +' is lost; goal should be removed(' + self.goal.args[0]+")")
+#                 warehouse = self.goal.args[2]
+#                 for g in goals:
+#                     if g.args[2] == warehouse:
+#                         self.mem.get(self.mem.GOAL_GRAPH).remove(g)
                 return
             
             time.sleep(3)
