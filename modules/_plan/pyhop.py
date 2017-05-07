@@ -188,9 +188,10 @@ def check_monitors(depth, state):
     #print("**********") 
       
     for m in generated_monitors:
-        if (depth == Delay) and (state.fire['XX_'] == True):
+        if (depth == 6):
             m.is_fired == True
-            state.fire['XX_'] = False
+            print("here!!")
+            state.clear['B_'] = False
             generated_monitors.remove(m)
             return m
         
@@ -232,7 +233,7 @@ def pyhop(state,tasks, delay = 100, filename = "D:/exp1/a.txt",  verbose=0):
     Delay = delay
     global counter, Delay
     print("dd" + str(Delay))
-    state.fire['XX_'] = True
+#     state.fire['XX_'] = True
     counter = 0
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
     start_time = datetime.datetime.now()
@@ -258,7 +259,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor, counter
     counter = counter + 1
     
-    #print('depth {} tasks {}'.format(depth,tasks))
+    print('depth {} tasks {}'.format(depth,tasks))
 #     for task in tasks:
 #         for elm in task:
 #             print(elm + " ")
@@ -279,8 +280,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     if fired_monitor:
         print("monitor fired at depth " + str(depth))
         if fired_monitor.depth < depth:
-            #print("The clear-block monitor is fired for block " + fired_monitor.block+
-                 # ", need to backtrack to level " + str(fired_monitor.depth))
+            print("The clear-block monitor is fired for block " + fired_monitor.block+
+                  ", need to backtrack to level " + str(fired_monitor.depth))
             return False
         else:
             fired_monitor.is_fired = False
@@ -332,7 +333,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             #generated_monitors.remove(fired_monitor)
                             
                             k = 0
-                            state.fire['XX_'] = False
+                            state.clear['B_'] = False
+                            state.pos.update({"D_" : 'B_'})
                             #solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
                             
                             #cut from the plan

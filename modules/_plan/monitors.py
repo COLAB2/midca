@@ -78,6 +78,22 @@ def clear_block(state, depth, b1, task_name):
         m.change_state = change_state
         pyhop.generated_monitors.append(m)
     
+    
+        while(m.is_fired == False):
+                        #f.write (b1 + " true")
+            i = i + 1
+           
+            if i > 3:
+                if b1 == "B_":
+                    m.is_fired = True
+                    state.clear['B_'] = False
+                    state.pos.update({"D_" : 'B_'})
+                    print("monitor: " + b1 + "clear status changed")
+                         
+            if state.clear[b1] == False:
+                print("monitor: " + b1 + "is not clear!")
+                m.is_fired = True
+    
 #         while(m.is_fired == False):
 #                         #f.write (b1 + " true")
 #             i = i + 1
@@ -132,15 +148,15 @@ def pos_of_block(state, depth, b, task_name):
 """for each task we know what kind of monitors we should run"""
     
 def declare_monitors(longApprehend = True):    
-    #pyhop.declare_monitors('pickup_task',clear_block)
+#     pyhop.declare_monitors('pickup_task',clear_block)
 #     #unstack_task 
-    #pyhop.declare_monitors('unstack_task', clear_block)
+#     pyhop.declare_monitors('unstack_task', clear_block)
 #     #unstack
-    #pyhop.declare_monitors('unstack', clear_block)
-#     #state.pos[b] == c
+    pyhop.declare_monitors('unstack', clear_block)
+#     state.pos[b] == c
    # pyhop.declare_monitors('unstack', pos_of_block)
    #pickup
-    #pyhop.declare_monitors('pickup', clear_block)
+#     pyhop.declare_monitors('pickup', clear_block)
     pyhop.declare_monitors('put_out', on_fire)
           
 #     #get

@@ -1,34 +1,30 @@
 BLOCK(1)
-
+BLOCK(2)
 BLOCK(table)
 
 
 BLOCK(XX_)
 FIRE-EXTINGUISHER(AA_)
 
-ARSONIST(Gui Montag)
 
-
-
-
-ext_in_box(AA_, 1)
 on-table(1)
+on(3,1)
+on-table(2)
 on-table(XX_)
 
 
 block(1)
-
-fire-extinguisher(AA_)
+block(2)
+block(3)
 triangle(XX_)
 table(table)
 
 
 
 clear(XX_)
-onfire(XX_)
+clear(2)
+clear(3)
 arm-empty()
 
 
 
-free(Gui Montag)
-arsonist(Gui Montag)
