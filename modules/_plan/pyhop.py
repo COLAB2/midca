@@ -188,11 +188,11 @@ def check_monitors(depth, state):
     #print("**********") 
       
     for m in generated_monitors:
-        if (depth == 7 and m.is_fired):
+        if (depth == 10 and m.is_fired):
             m.is_fired == True
             print("here!!")
             state.clear['A_'] = True
-            generated_monitors.remove(m)
+#             generated_monitors.remove(m)
             return m
         
 #         if m.is_fired == True:
@@ -276,6 +276,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
         return plan
     task1 = tasks[0]
+    print('chk for fired monitor')
     fired_monitor = check_monitors(depth, state)
     if fired_monitor:
         print("monitor fired at depth " + str(depth))
@@ -284,6 +285,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                   ", need to backtrack to level " + str(fired_monitor.depth))
             return False
         else:
+            print("we are in the depth")
             fired_monitor.is_fired = False
     else:
         
@@ -304,7 +306,9 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             Thread(target=monitor, args=[state, depth, task1[1], task1[0]]).start()
                         #print("monitor is running")
                 solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
-                if solution != False:
+                if solution == False:
+                    print("+++++++")
+                else:
                     return solution
         if task1[0] in methods:
             if verbose>2: print('depth {} method instance {}'.format(depth,task1))
@@ -326,40 +330,23 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                     solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
                     if solution == False:
                         if fired_monitor and fired_monitor.depth > depth:
-                           # print("fired-monitor")
-                           # print(plan)
+                            print("fired-monitor*******************")
                             fired_monitor.is_fired = False
                             generated_monitors = []
-                            #generated_monitors.remove(fired_monitor)
-                            
                             k = 0
                             state.clear['A_'] = True
                             state.pos.update({"B_" : 'table'})
-                            #solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
-                            
-                            #cut from the plan
-                            #here I should check to see which method should be run next 
-                            # here I should run all the methods to see which one work
                             for task in tasks:
                                 #print("task = "+task[0])
                                 if task[0] != 'move_blocks':
                                     k = k + 1
                                 else:
                                     break
-#                             for task in tasks:
-#                                 print("trying this task to see if it works with the new state "+task[0])
-#                                 print(str(k))
-#                                 solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
-#                                 if solution == False:
-#                                     k = k + 1
-#                                 else:
-#                                     break
-                                
                             solution = seek_plan(state,tasks[k:],plan,depth+1, verbose)
-                            
+                        elif fired_monitor:
+                            print('&&&&&&&&&&&&&&&&&&&7')
                         else:
                             print("'" + task1[0] + "' was failed, it will choose another method--")
-                            #RemoveMonitors(task1[0])
                         
                     if solution != False:
                         return solution

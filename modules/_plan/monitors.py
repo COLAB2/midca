@@ -133,7 +133,7 @@ def pos_of_block(state, depth, b, task_name):
                 if b == "B_":
                     m.is_fired = True
                     state.clear[c] = True
-                    state.pos.update({"B_" : 'table'})
+                    state.pos.update({"B_" : 'C_'})
                     print("monitor: " + b + "is not on " + c + "anymore")
                     m.is_fired = True
                 else:
