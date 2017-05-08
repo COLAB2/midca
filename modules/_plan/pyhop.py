@@ -188,10 +188,10 @@ def check_monitors(depth, state):
     #print("**********") 
       
     for m in generated_monitors:
-        if (depth == 6):
+        if (depth == 7 and m.is_fired):
             m.is_fired == True
             print("here!!")
-            state.clear['B_'] = False
+            state.clear['A_'] = True
             generated_monitors.remove(m)
             return m
         
@@ -333,8 +333,8 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             #generated_monitors.remove(fired_monitor)
                             
                             k = 0
-                            state.clear['B_'] = False
-                            state.pos.update({"D_" : 'B_'})
+                            state.clear['A_'] = True
+                            state.pos.update({"B_" : 'table'})
                             #solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
                             
                             #cut from the plan
