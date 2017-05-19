@@ -66,8 +66,8 @@ class MIDCA:
         self.metaPhaseNum = 1
         self.logger = logging.Logger(verbose=verbose)
         self.metaEnabled = metaEnabled
+        self.mem.enableTrace() # enable always for printtrace command
         if metaEnabled:
-            self.mem.enableTrace()
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
 
