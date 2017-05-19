@@ -1,7 +1,7 @@
 from _plan import pyhop
 from MIDCA import plans, base
 from MIDCA.modules._plan.asynch import asynch
-from MIDCA.modules._plan.jShop import JSHOP, JSHOP2
+from MIDCA.modules._plan.jShop import JSHOP#, JSHOP2
 from MIDCA.modules._plan.pyhop import print_state,  print_methods, print_operators
 import collections
 import traceback
