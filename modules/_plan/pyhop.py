@@ -188,10 +188,12 @@ def check_monitors(depth, state):
     #print("**********") 
       
     for m in generated_monitors:
-        if (depth == 10 and m.is_fired):
+        if (depth == 200 and m.is_fired):
             m.is_fired == True
             print("here!!")
-            state.clear['A_'] = True
+            state.clear['IA_'] = True
+            state.clear['XX_'] = False
+            state.pos.update({"JA_" : 'XX_'})
 #             generated_monitors.remove(m)
             return m
         
@@ -334,8 +336,9 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
                             fired_monitor.is_fired = False
                             generated_monitors = []
                             k = 0
-                            state.clear['A_'] = True
-                            state.pos.update({"B_" : 'table'})
+                            state.clear['IA_'] = True
+                            state.clear['XX_'] = False
+                            state.pos.update({"JA_" : 'XX_'})
                             for task in tasks:
                                 #print("task = "+task[0])
                                 if task[0] != 'move_blocks':

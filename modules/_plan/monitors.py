@@ -130,10 +130,10 @@ def pos_of_block(state, depth, b, task_name):
         while(m.is_fired == False):
             i = i + 1
             if i > 0:
-                if b == "B_":
+                if b == "JA_":
                     m.is_fired = True
                     state.clear[c] = True
-                    state.pos.update({"B_" : 'C_'})
+                    state.pos.update({"JA_" : 'XX_'})
                     print("monitor: " + b + "is not on " + c + "anymore")
                     m.is_fired = True
                 else:
