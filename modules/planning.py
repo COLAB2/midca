@@ -1,4 +1,5 @@
 from _plan import pyhop
+from _plan import modified_pyhop
 from MIDCA import plans, base
 from MIDCA.modules._plan.asynch import asynch
 from MIDCA.modules._plan.jShop import JSHOP#, JSHOP2
@@ -22,10 +23,11 @@ class GenericPyhopPlanner(base.BaseModule):
     only be called on old plans that are retrieved.
     '''
 
-    def __init__(self, declare_methods, declare_operators, plan_validator = None):
+    def __init__(self, declare_methods, declare_operators, declare_monitors, plan_validator = None):
         try:
             declare_methods()
             declare_operators()
+            declare_monitors()
             self.working = True
         except:
             print "Error declaring pyhop methods and operators. This planner will be \
@@ -84,7 +86,25 @@ class GenericPyhopPlanner(base.BaseModule):
                 print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
             return None
         return plan
+    
+    def get_new_modified_plan(self, state, goals, verbose = 2):
+        '''
+            Calls the pyhop planner to generate a new plan.
+        '''
 
+        if verbose >= 2:
+            print "Planning..."
+        try:
+            plan = modified_pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
+            #note: MIDCA does not convert its state and goals to pyhop state and
+            #goal objects. Therefore, pyhop will not print correctly if verbose is
+            #set to other than 0.
+        except:
+            if verbose >= 1:
+                print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
+            return None
+        return plan
+    
     def run(self, cycle, verbose = 2):
         state = self.mem.get(self.mem.STATE)
         if not state:
@@ -131,7 +151,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
     '''
 
     def __init__(self, declare_methods, declare_operators):
-                GenericPyhopPlanner.__init__(self, declare_methods,declare_operators,
+                GenericPyhopPlanner.__init__(self, declare_methods,declare_operators, declare_monitors,
                 lambda state, plan: asynch.FAILED not in [action.status for action in plan])
 
     def run(self, cycle, verbose = 2):
@@ -160,7 +180,8 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
         if plan:
             return
         if not plan:
-            plan = self.get_new_plan(state, goals, verbose)
+            # 1 specifies to monitor 
+            plan = self.get_new_modified_plan(state, goals, verbose)
         if not plan:
             return
         midcaPlan = plans.Plan(plan, goals)
