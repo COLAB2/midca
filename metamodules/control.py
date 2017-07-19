@@ -34,6 +34,7 @@ class MRSimpleControl(base.BaseModule):
         self.mem.set(self.mem.META_PLAN, None)
         self.mem.set(self.mem.META_GOALS, None)
         self.mem.set(self.mem.META_CURR_GOAL, None)
+        self.mem.set(self.mem.PLAN, [])
 
     def act(self, action, verbose = 2):
         # TODO: figure out a way to make the init_args more general (so actions can be kept separate)
@@ -91,6 +92,35 @@ class MRSimpleControl(base.BaseModule):
                 self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
                 is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
                 if is_success: print("    Metareasoner added PyHopPlanner") # report any actions metareasoner carried out
+                return is_success
+            elif action[2] == "AsynchPyhopPlanner":
+                #print("current directory: "+str(os.getcwd()))
+                #print("str(dir(modules)) = "+str(dir(modules)))
+                planningModuleInstance = importlib.import_module("MIDCA.modules.planning")
+                print("loaded asynchronous planning module, it has following attributes: "+str(dir(planningModuleInstance)))
+                # get the args used to init the old module and use them to init this one
+                #print "init args is "+str(self.prev_init_args)
+                ###### HACK: hardcoded for now as a demo, this is because the initial broken
+                # planner had different parameters for instantiating it, so we cant use the\
+                # same prev_init_args, and thus changing them here
+                from MIDCA.modules._plan.asynch import operators_sr, methods_sr
+                self.prev_init_args = [methods_sr.declare_methods, operators_sr.declare_ops]
+                
+                # **** BEGIN: MAGIC! Transform the args *****
+                # This is where the real magic happens
+                # Hardcoded for now
+                # Very Important TODO but likely requires serious research effort
+                #from MIDCA.domains.blocksworld.plan import methods
+                #working_methods = methods.declare_methods
+                corrected_args = self.prev_init_args
+                #hardcoded_index_of_methods_arg = 2 # TODO: I know, so hacky, ahhh magic numbers
+                #corrected_args[2] = working_methods
+                # **** END: MAGIC! Transform the args *****
+                
+                pyHopPlannerInstance = planningModuleInstance.AsynchPyhopPlanner(*corrected_args)
+                self.mem.myMidca.runtime_append_module("Plan", pyHopPlannerInstance) # TODO: hardcoded knowledge of Plan phase
+                is_success = "AsynchPyhopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
+                if is_success: print("    Metareasoner added AsynchPyhopPlanner") # report any actions metareasoner carried out
                 return is_success
         elif action[0] == "TRANSFORM-GOAL":
             # really: its going to have this meta plan by changing the things in orange - 

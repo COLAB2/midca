@@ -77,7 +77,9 @@ class RosMidca:
         cycleRate = rospy.Rate(cycleRate)
         while not rospy.is_shutdown():
             try:
-                self.midca.next_phase(verbose = 2)
+                self.midca.next_phase(verbose = self.midca.verbose)
+                if self.midca.mem.metaEnabled:
+                        metaval = self.midca.one_cycle(verbose = self.midca.verbose, pause=0.01, meta=True)
             except rospy.ROSInterruptException:
                 break
             cycleRate.sleep()

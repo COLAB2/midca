@@ -10,7 +10,7 @@ class Location:
 
 class pos_block:
 	def __init__(self, id, position, isclear):
-		self.time = time.now()
+		self.time = midcatime.now()
 		self.id = id
 		self.position = position
 		self.isclear = isclear
