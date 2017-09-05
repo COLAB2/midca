@@ -15,3 +15,5 @@ README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture.
 7) Questions and comments are welcome, please email wsri-midca-help@wright.edu
 
 This page is being loaded from the docs/ directory
+
+Testing another change - will jekyll automatically reload?
