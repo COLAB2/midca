@@ -2,6 +2,15 @@
 layout: default
 ---
 
+# Welcome to the MIDCA Project Page
+
+## Recent News
+
+- **[January 13th, 2017]** The First Annual MIDCA Workshop was held January 13th, 2017 at Wright State University in Dayton, OH.
+
+
+
+
 README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture. 
 
 1) Most code and documentation in this module is intended to be read with word wrap (<=80 chrs) enabled.
