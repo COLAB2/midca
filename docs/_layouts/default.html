@@ -28,7 +28,7 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="{{ 'assets/favicon/ms-icon-144x144.png' | append: site.github.build_revision | relative_url }}">
 	<meta name="theme-color" content="#ffffff"> -->
-  <link rel="shortcut icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<!-- End Favicon Images -->
 
   </head>
@@ -36,10 +36,11 @@
     <section class="page-header">
       <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
-      <a href="{{ site.github.url }}" class="btn">Home</a>
+      <a href="{{ site.github }}" class="btn">Home</a>
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       {% endif %}
+      <a href="{{ site.github.wiki_url }}" class="btn">Wiki</a>
       <a href="{{ site.github.url }}/workshops" class="btn">Workshops</a>
       <!-- <a href="{{ site.github.url }}/workshops" class="btn">Publications</a> -->
       <!-- { % if site.show_downloads % }
