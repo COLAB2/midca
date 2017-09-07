@@ -8,15 +8,15 @@ layout: default
 
 ## Recent News
 
-- **[January 13th, 2017]** The First Annual MIDCA Workshop was held January 13th, 2017 at Wright State University in Dayton, OH.
+**[January 13th, 2017]** The [First Annual MIDCA Workshop](workshops/first_workshop) was held January 13th, 2017 at Wright State University in Dayton, OH.
 
 ## Quickstart Guide
 
-README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture. 
+README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture.
 
 1) Most code and documentation in this module is intended to be read with word wrap (<=80 chrs) enabled.
 
-2) MIDCA is written for python 2.7; currently it will not run with other python versions. 
+2) MIDCA is written for python 2.7; currently it will not run with other python versions.
 
 3) To install MIDCA, run the setup.py file in this folder using python 2.7. Use the install option, so "python setup.py install" assuming 2.7 is your default python.
 
