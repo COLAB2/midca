@@ -37,7 +37,7 @@ Speaker: Dustin Dannenhauer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zawQho-89Lg" frameborder="0" allowfullscreen></iframe>
 
-### JSHOP: A new planner for MIDCA
+### JSHOP: A New Planner for MIDCA
 Speaker: Zohreh Alavi Dannenhauer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/h6hLWj9joJ0" frameborder="0" allowfullscreen></iframe>
