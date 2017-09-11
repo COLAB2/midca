@@ -28,6 +28,6 @@ README for MIDCA, the Metacognitive Integrated Dual-Cycle Architecture.
 
 7) Questions and comments are welcome, please email wsri-midca-help@wright.edu
 
-See [First Annual MIDCA Workshop](First-Annual-MIDCA-Workshop) for news regarding our most recent MIDCA workshop!
+
 ## Are you using MIDCA?
  We'd love to hear about it! Shoot us an email at wsri-midca-help@wright.edu
