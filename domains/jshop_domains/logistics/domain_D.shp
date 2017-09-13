@@ -38,7 +38,18 @@
                 ()
                 ((airplane-at ?airplane ?airportfrom))
                 ((airplane-at ?airplane ?airportto)))
-           
+          
+  
+     (:method (achieve-goals (list ?goal . ?goals))
+     ()
+     ((achieve-goal ?goal)(achieve-goals list ?goals)))
+    
+    (:method (achieve-goals nil ?goal)
+             ()
+             ((achieve-goal ?goal)))
+             
+       
+     
       
 ;;; Assumes that the destination location and starting location ;;;
 ;;; are in same city assumes there is a truck in starting location
@@ -92,7 +103,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LO ?ap2)
 		  (sameCity ?ap2 ?l)
 		  (NearByAirport ?ap1 ?ap2)
          )
@@ -116,7 +127,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LOCATION  ?ap2)
 		  (sameCity ?ap2 ?l)
 		  (NearByAirport ?ap1 ?ap3)
 		  (different ?ap3 ?ap2)
@@ -141,7 +152,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LOCATION  ?ap2)
 		  (sameCity ?ap2 ?l)
 		  
          )
@@ -169,7 +180,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LOCATION  ?ap2)
 		  (sameCity ?ap2 ?l)
 		  (NearByAirport ?ap1 ?ap2)
          )
@@ -193,7 +204,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LOCATION  ?ap2)
 		  (sameCity ?ap2 ?l)
 		  (NearByAirport ?ap1 ?ap3)
 		  (different ?ap3 ?ap2)
@@ -217,7 +228,7 @@
           (sameCity ?l1 ?ap1)          
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
-		  (AIRPORT ?ap2)
+		  (LOCATION  ?ap2)
 		  (sameCity ?ap2 ?l)
 		  
          )
@@ -240,8 +251,8 @@
           (differentCity ?l2 ?l1)
           (differentCity ?l1 ?l2)
           (airplane-at ?a1 ?ap3)
-		  (AIRPORT ?ap2)
-		  (AIRPORT ?ap3)
+		  (LOCATION  ?ap2)
+		  (LOCATION  ?ap3)
           (sameCity ?l2 ?l)
           (sameCity ?l ?l2)
           (sameCity ?ap2 ?l1)
@@ -262,7 +273,7 @@
     ((IN-CITY ?a ?c) (IN-CITY ?b ?c))
     )
 	(:- (NearByAirport ?a ?b) 
-    ((AIRPORT ?a)(AIRPORT ?b)(IN-CITY ?a ?c) (IN-CITY ?b ?d) (NearBy ?c ?d))
+    ((LOCATION  ?a)(LOCATION ?b)(IN-CITY ?a ?c) (IN-CITY ?b ?d) (NearBy ?c ?d))
     )
 	
     (:- (differentCity ?a ?b) 

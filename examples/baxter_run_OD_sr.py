@@ -19,7 +19,7 @@ def ros_style_midca():
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
 	myMidca.append_module("Intend", intend.SimpleIntend())
 	myMidca.append_module("Plan", planning.AsynchPyhopPlanner(methods_sr.declare_methods, 
-	operators_sr.declare_ops
+	operators_sr.declare_ops,monitors.declare_monitors
 	
 	))
 	myMidca.append_module("Act", act.AsynchronousAct())

@@ -31,7 +31,7 @@ class Memory:
 	ROS_WORDS_HEARD = "__words heard queue"
 	ROS_FEEDBACK = "__ros feedback"
 	Objects = "__objects"
-	
+	DELIVERED = "__deliveredscore"
 	#MetaCognitive
 	TRACE_SEGMENT = "__trace segment"
 	META_ANOMALIES = "__meta anomalies"
