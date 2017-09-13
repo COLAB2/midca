@@ -146,7 +146,9 @@ class SimpleAct(base.BaseModule):
             if verbose >= 1:
                 print "MIDCA will not select an action this cycle."
             self.mem.add(self.mem.ACTIONS, [])
-
+            for g in goals:
+                self.mem.get(self.mem.GOAL_GRAPH).remove(g)
+                
             if trace: trace.add_data("ACTION", None)
 
 class NBeaconsSimpleAct(base.BaseModule):

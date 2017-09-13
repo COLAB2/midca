@@ -1,0 +1,24 @@
+BLOCK(A_)
+BLOCK(B_)
+BLOCK(C_)
+BLOCK(table)
+ARSONIST(Gui Montag)
+
+on(A_, B_)
+on-table(B_)
+on-table(C_)
+onfire(B_)
+
+block(A_)
+block(B_)
+block(C_)
+table(table)
+
+clear(C_)
+clear(A_)
+arm-empty()
+
+
+
+free(Gui Montag)
+arsonist(Gui Montag)

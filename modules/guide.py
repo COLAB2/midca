@@ -1,9 +1,12 @@
 from MIDCA import goals, base
 from MIDCA import midcatime
 from _goalgen import tf_3_scen, tf_fire
+from MIDCA.domains.logistics import deliverstate
 from MIDCA.domains.blocksworld import blockstate
 import copy 
 import random
+from MIDCA.modules.monitors import Monitor
+from threading import Thread
 
 class UserGoalInput(base.BaseModule):
 
@@ -252,6 +255,56 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
                 if self.verbose >= 1: print "No explanation, old plans removed, but no goal management actions"    
                 return
 
+
+class DeliverGoal(base.BaseModule):
+
+    '''
+    MIDCA module that generates goals to stack blocks using Michael Maynord's TF-Trees. These trees are trained to cycle through 3 specific states; behavior is unknown for other states. See implementation in modules/_goalgen/tf_3_scen.py for details.
+    '''
+
+    def __init__(self):
+        ''
+    def alreadygenerated(self):
+        g = self.mem.get(self.mem.DELIVERED)
+        if g:
+            return True
+        
+    def deliveringGoalsExist(self):
+        graph = self.mem.get(self.mem.GOAL_GRAPH)
+        for goal in graph.getAllGoals():
+            if goal['predicate'] == "obj-at":
+                return True
+        return False
+    
+    def run(self, cycle, verbose = 2):
+        if self.deliveringGoalsExist():
+            if verbose >= 2:
+                print "MIDCA already has a delivering goal. Skipping delivering goal generation"
+            return
+        
+        if self.alreadygenerated():
+            if verbose >= 2:
+                print "MIDCA already generated the goals for this problem"
+            return
+        #if obj-at(p,l) is in the state, it means it needs to be delivered! 
+        world = self.mem.get(self.mem.STATES)[-1]
+       
+        orders = deliverstate.get_order_list(world)
+#\         goal = self.tree.givegoal(blocks)
+        for order in orders:
+            goal = goals.Goal(order.id, order.destination, order.location, predicate = "obj-at")
+            added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            if goal:
+                if verbose >= 2:
+                    print "goal generated:", goal
+                ##call monitors
+                m = Monitor(self.mem, "m" + order.id, order.id, goal)
+#                 Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
+                self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+    
+        
+        
+        
 class TFStack(base.BaseModule):
 
     '''
@@ -529,7 +582,7 @@ class InstructionReceiver:
         world = self.mem.get(self.mem.STATE)
         i = len(world.utterances)
         while i > 0:
-            if self.lastTime - world.utterances[i - 1].time > 0:
+            if self.lastTime - world.utterances[i - 1].midcatime > 0:
                 break
             i -= 1
         newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
@@ -694,4 +747,181 @@ class InstructionReceiver:
 #                 print "message is unknown"
                             
         self.lastTime = midcatime.now()
-        
+
+class InstructionReceiver_sr:
+	
+	def init(self, world, mem):
+		self.mem = mem
+		self.lastTime = midcatime.now()
+	
+	def run(self, cycle, verbose = 2):
+		world = self.mem.get(self.mem.STATE)
+		i = len(world.utterances)
+		while i > 0:
+			if self.lastTime - world.utterances[i - 1].time > 0:
+				break
+			i -= 1
+		newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
+		#now add goals based on new utterances
+		for utterance in newUtterances:
+			if verbose >= 2:
+				print "received utterance:", utterance
+			if utterance == "point to the quad" or utterance == "goodbye baxter":
+				goal = goals.Goal(objective = "show-loc", subject = "self", 
+				directObject = "quad", indirectObject = "observer")
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			if utterance == "get the red block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "red block", indirectObject = "observer", pos = 'red block:arm')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "get the green block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'green block:arm')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+                        if utterance == "get the blue block":
+				goal = goals.Goal(objective = "holding", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'blue block:arm')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"						
+			if utterance == "put the green block on table":
+				goal = goals.Goal(objective = "moving", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'green block:table')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+                        if utterance == "put the blue block on table":
+				goal = goals.Goal(objective = "moving", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'blue block:table')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "put the red block on table":
+				goal = goals.Goal(objective = "moving", subject = "self", 
+				directObject = "red block", indirectObject = "observer", pos = 'red block:table')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "stack the green block on the red block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "stack the blue block on the red block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "red block", indirectObject = "observer", pos = 'blue block:red block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+		        if utterance == "stack the blue block on the green block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'blue block:green block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+                        if utterance == "stack the red block on the blue block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'red block:blue block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+
+                        if utterance == "stack the green block on the blue block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "blue block", indirectObject = "observer", pos = 'green block:blue block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \ goal graph"
+			
+
+			if utterance == "stack the red block on the green block":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			if utterance == "stack":
+				goal = goals.Goal(objective = "stacking", subject = "self", 
+				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
+				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+				if verbose >= 2:
+					if added:
+						print "adding goal:", str(goal)
+					else:
+						print "generated goal:", str(goal), "but it is already in the \
+						goal graph"
+			
+			
+				
+# 			else:
+# 				print "message is unknown"
+							
+		self.lastTime = midcatime.now()
+
+      
