@@ -77,7 +77,9 @@ class RosMidca:
         cycleRate = rospy.Rate(cycleRate)
         while not rospy.is_shutdown():
             try:
-                self.midca.next_phase(verbose = 2)
+                self.midca.next_phase(verbose = self.midca.verbose)
+                if self.midca.mem.metaEnabled:
+                        metaval = self.midca.one_cycle(verbose = self.midca.verbose, pause=0.01, meta=True)
             except rospy.ROSInterruptException:
                 break
             cycleRate.sleep()
@@ -652,6 +654,70 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
 #                 
 #                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
 #                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green))    
+
+
+class MultipleObjectsLocationHandler(IncomingMsgHandler):
+
+    '''
+    class that receives Point messages, where each message indicates that the given object
+    has been identified at that location. Args include the topic to listen to, object id,
+    and midca object to whose memory observations will be stored. Optionally the memory
+    key to be stored to can also be specified.
+    '''
+    
+    def __init__(self, topic, midcaObject, memKey = None):
+        callback = lambda strMsg: self.store_locations(strMsg)
+        msgType = String
+        super(MultipleObjectsLocationHandler, self).__init__(topic, msgType, callback,
+        midcaObject)
+        #self.objID = objID
+        if memKey:
+            self.memKey = memKey
+        else:
+            self.memKey = self.mem.ROS_OBJS_DETECTED
+        
+    def store_locations(self, data):
+        if not self.mem:
+            rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+        
+        strMsg = str(data.data).strip()
+        color_locations = strMsg.split(";")
+	color_locations.pop() # remove last unwanted ;
+        color_location_dic = {}
+        for msg in color_locations:
+            
+            color_location = msg.split(":");
+            
+            pointstr = color_location[1].split(",")
+            p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
+            color_location_dic.update({color_location[0]: p})
+            
+                
+            self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
+        loc = p))
+
+	# complexity of this code is O(n2) will probably reduce some time
+	# take each block and compare with all the blocks with certain thresholds
+	# initially assume the block is on table and clear
+	if color_location_dic :
+		for each_block in color_location_dic:
+			pos = 'table'
+			clear = 'clear'
+			for cmp_block in color_location_dic:
+				if not each_block == cmp_block:
+					# check stack condition
+					x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
+					y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
+					z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
+					if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
+						if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
+							clear = 'not clear'
+						else:
+							pos = cmp_block;
+			# add it to the state
+			self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_block, position = pos, isclear = clear))
+			#if you want to know the position of the block, uncomment this
+			#print ( each_block + ":  " +  pos + clear)
 
 
 class CalibrationHandler(IncomingMsgHandler):

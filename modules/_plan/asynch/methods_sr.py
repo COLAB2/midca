@@ -1,4 +1,4 @@
-from MIDCA.modules._plan import pyhop
+from MIDCA.modules._plan import modified_pyhop
 import time 
 
 def point_at_m(state, objectID):
@@ -554,13 +554,13 @@ def long_apprehend_m(state, perp):
 		return []
 	
 def declare_methods():
-	pyhop.declare_methods("point_at", point_at_m)
-	pyhop.declare_methods("achieve_goals", achieve_goals_m)
-	pyhop.declare_methods("put_out", put_out_m)
-	pyhop.declare_methods('put',put_m)
-	pyhop.declare_methods('unstack_task',unstack_m)
-	pyhop.declare_methods('pickup_task',pickup_m)
-	pyhop.declare_methods('get',get_m)
-	pyhop.declare_methods('move_one',move1)
-	pyhop.declare_methods('move_blocks',moveb_m)
+	modified_pyhop.declare_methods("point_at", point_at_m)
+	modified_pyhop.declare_methods("achieve_goals", achieve_goals_m)
+	modified_pyhop.declare_methods("put_out", put_out_m)
+	modified_pyhop.declare_methods('put',put_m)
+	modified_pyhop.declare_methods('unstack_task',unstack_m)
+	modified_pyhop.declare_methods('pickup_task',pickup_m)
+	modified_pyhop.declare_methods('get',get_m)
+	modified_pyhop.declare_methods('move_one',move1)
+	modified_pyhop.declare_methods('move_blocks',moveb_m)
 

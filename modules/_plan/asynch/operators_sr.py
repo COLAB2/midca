@@ -1,4 +1,4 @@
-from MIDCA.modules._plan import pyhop
+from MIDCA.modules._plan import modified_pyhop
 import time
 
 
@@ -129,7 +129,7 @@ def set_clear_status(state, objectOrID, newClearStatus):
 
 
 def declare_ops():
-	pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
+	modified_pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
 						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release, raising_arm)
 
 

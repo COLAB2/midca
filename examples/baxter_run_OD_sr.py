@@ -15,11 +15,11 @@ def ros_style_midca():
 		myMidca.append_phase(phase)
 
 	myMidca.append_module("Perceive", perceive.ROSObserver())
-	myMidca.append_module("Interpret", guide.InstructionReceiver())
+	myMidca.append_module("Interpret", guide.InstructionReceiver_sr())
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
 	myMidca.append_module("Intend", intend.SimpleIntend())
 	myMidca.append_module("Plan", planning.AsynchPyhopPlanner(methods_sr.declare_methods, 
-	operators_sr.declare_ops, monitors.declare_monitors
+	operators_sr.declare_ops,monitors.declare_monitors
 	
 	))
 	myMidca.append_module("Act", act.AsynchronousAct())

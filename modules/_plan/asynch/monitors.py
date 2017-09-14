@@ -5,7 +5,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 
-from MIDCA.modules._plan import pyhop
+from MIDCA.modules._plan import modified_pyhop
 from _io import open
 import time
 from MIDCA.vision import clear_block_monitor, pos_block_monitor
@@ -46,7 +46,7 @@ def clear_block(state, depth, task):
         i = 0
         b1 = task[1]
         task_name = task[0]
-        m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == b1, pyhop.generated_monitors)
+        m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == b1, modified_pyhop.generated_monitors)
         if m: 
             m[0].add_task(task_name)    
             #print "monitor is already running for " + b1
@@ -56,10 +56,10 @@ def clear_block(state, depth, task):
             m = Monitor(clear_block, b1, depth)
             m.add_task(task_name)
             m.change_state = change_state
-            pyhop.generated_monitors.append(m)
+            modified_pyhop.generated_monitors.append(m)
             
             
-            block_on_top_of_this_block = clear_block_monitor.monitor_clear_block(b1)
+            block_on_top_of_this_block = clear_block_monitor.monitor_clear_block2(b1)
             if block_on_top_of_this_block:
                 print("monitor fires!!")
                 m.is_fired = True 
@@ -75,7 +75,7 @@ def clear_block_stack(state, depth, task):
         #stack b on c; c should be clear
         task_name = task[0]
         print c
-        m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == c, pyhop.generated_monitors)
+        m =  filter(lambda x: x.name.__name__ == "clear_block" and x.block == c, modified_pyhop.generated_monitors)
         if m: 
             m[0].add_task(task_name)    
             #print "monitor is already running for " + c
@@ -85,7 +85,7 @@ def clear_block_stack(state, depth, task):
             m = Monitor(clear_block, c, depth)
             m.add_task(task_name)
             m.change_state = change_state
-            pyhop.generated_monitors.append(m)
+            modified_pyhop.generated_monitors.append(m)
             
             
 #             rospy.loginfo("Reading point commands from topic " + unique_topic)
@@ -132,7 +132,7 @@ def pos_of_block(state, depth, task):
     i = 0
     b = task[1]
     task_name = task[0]
-    m =  filter(lambda x: x.name.__name__ == "pos_of_block" and x.block == b, pyhop.generated_monitors)
+    m =  filter(lambda x: x.name.__name__ == "pos_of_block" and x.block == b, modified_pyhop.generated_monitors)
     if m: 
         m[0].add_task(task_name)    
         #print "monitor is already running for " + b
@@ -142,7 +142,7 @@ def pos_of_block(state, depth, task):
         m = Monitor(pos_of_block, b, depth)
         m.add_task(task_name)
         m.change_state = change_state
-        pyhop.generated_monitors.append(m)
+        modified_pyhop.generated_monitors.append(m)
         
         c = get_last_position(state, b)
         new_pos = pos_block_monitor.monitor_pos_block(b, c)
@@ -172,12 +172,12 @@ def declare_monitors(longApprehend = True):
 #     #unstack_task 
     #pyhop.declare_monitors('unstack_task', clear_block)
 #     #unstack
-    #pyhop.declare_monitors('reach_to_unstack', clear_block)
+    modified_pyhop.declare_monitors('reach_to_unstack', clear_block)
 #     #state.pos[b] == c
-    pyhop.declare_monitors('reach_to_unstack', clear_block)
-    pyhop.declare_monitors('reach_to_pickup', clear_block)
+#     modified_pyhop.declare_monitors('reach_to_unstack', clear_block)
+    modified_pyhop.declare_monitors('reach_to_pickup', clear_block)
    #pickup
     #pyhop.declare_monitors('reach_to_pickup', clear_block)      
 #     #get
-    pyhop.declare_monitors('stack', clear_block_stack)
+#     modified_pyhop.declare_monitors('stack', clear_block_stack)
 #     

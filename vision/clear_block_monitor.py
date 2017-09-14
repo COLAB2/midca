@@ -57,7 +57,7 @@ def GetmaskForGreen(hsv):
     return mask_green
 
 def findContour(frame, mask):
-    contours1,hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+    a,contours1,hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
         
     if not contours1:
         return None
@@ -127,7 +127,8 @@ def publish(msg, topic):
     
 block_name = "red block"
 def monitor_clear_block(block_n='red block', topic='clear_block'):
-    rospy.init_node('clear_block_monitoring...')
+    print 'call monitor'
+#     rospy.init_node('clear_block_monitoring_____...')
     block_name = block_n
     handler.subscriber = rospy.Subscriber("obj_pos", String, m_callback)
 
@@ -163,8 +164,8 @@ def monitor_clear_block2(block_name='red block', topic='clear_block'):
     
     #rospy.init_node('clear_block_monitor', anonymous=True)
     baxter.enable()
-    boundaries = {'blue block':([100,100,50], [140,255,255]),
-                 'green block': ([30,100,50], [80,255,255]),
+    boundaries = {'blue block':([90,120,60], [120,255,255]),
+                 'green block': ([50,100,50], [80,255,255]),
                  'red block':([0,150,50], [10,255,255])
                 }
    

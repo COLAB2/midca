@@ -242,7 +242,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor
     
     
-    print('depth {} tasks {}'.format(depth,tasks))
+#    print('depth {} tasks {}'.format(depth,tasks))
 
     raw_input("enter...")
 #     for task in tasks:
