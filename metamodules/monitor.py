@@ -5,6 +5,7 @@ class MRSimpleMonitor(base.BaseModule):
     
 
     def run(self, cycle, verbose = 2):
+        print("*********************IN META MONITOR*******************")
         self.verbose = verbose
         self.mem.set(self.mem.TRACE_SEGMENT, [self.mem.trace.get_current_phase(),self.get_last_phase()])
         

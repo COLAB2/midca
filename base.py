@@ -285,7 +285,7 @@ class MIDCA:
         i = 0
         while i < len(modules[phases[self.phasei]]):
             module = modules[phases[self.phasei]][i]
-            if self.logger.working: self.logger.logEvent(logging.ModuleStartEvent(module))
+            if self.logger.working: print("") #self.logger.logEvent(logging.ModuleStartEvent(module))
             try:
                 retVal = module.run((phaseNum - 1) / len(phases), verbose)
                 i += 1
@@ -335,6 +335,7 @@ class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
         # phasemanager is passed in as a self pointer for metacognitive modification
+        self.verbose = verbose
         self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=False)
         self.metaEnabled = metaEnabled
         self.mem = self.midca.mem
@@ -358,6 +359,7 @@ class PhaseManager:
         self.midca.append_phase(phase)
 
     def append_meta_phase(self, phase):
+        print("appending phase: "+str(phase))
         self.midca.append_phase(phase, meta=True)
 
     def get_phases(self):
@@ -452,14 +454,14 @@ class PhaseManager:
             else:
                 self.next_phase(verbose)
             t2 = datetime.datetime.today()
-            try:
-                if (t2 - t1).total_seconds() < pause:
-                    time.sleep(pause - (t2 - t1).total_seconds())
-            except AttributeError:
-                if not self.twoSevenWarning:
-                    print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
-                    self.twoSevenWarning = True
-                time.sleep(pause)
+#             try:
+#                 if (t2 - t1).total_seconds() < pause:
+#                     time.sleep(pause - (t2 - t1).total_seconds())
+#             except AttributeError:
+#                 if not self.twoSevenWarning:
+#                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
+#                     self.twoSevenWarning = True
+#                 time.sleep(pause)
 
     def several_cycles(self, num, verbose = 1, pause = 0.01, meta=False, noInterface=True):
         for i in range(num):
@@ -494,7 +496,7 @@ class PhaseManager:
                     break
                 elif val == "skip":
                     if self.metaEnabled:
-                        self.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
+                        self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose,pause=0)
                     else:
                         self.one_cycle(verbose = 0, pause = 0)
                     print("cycle finished")
@@ -504,7 +506,7 @@ class PhaseManager:
                         num = int(val[4:].strip())
                         for i in range(num):
                             if self.metaEnabled:
-                                self.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
+                                self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose,pause=0)
                             else:
                                 self.one_cycle(verbose = 0, pause = 0)
                             # TODO - use several_cycles() instead?

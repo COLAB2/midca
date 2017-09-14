@@ -62,7 +62,8 @@ class PyHopPlannerBroken(base.BaseModule):
     
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
-        world = self.mem.get(self.mem.STATES)[-1]
+        #world = self.mem.get(self.mem.STATES)[-1]
+        world = self.mem.get(self.mem.STATE)
         goals = self.mem.get(self.mem.CURRENT_GOALS)
 
         trace = self.mem.trace
@@ -70,6 +71,7 @@ class PyHopPlannerBroken(base.BaseModule):
             trace.add_module(cycle,self.__class__.__name__)
             trace.add_data("WORLD", copy.deepcopy(world))
             trace.add_data("GOALS", copy.deepcopy(goals))
+            trace.add_data("PLAN", None)
 
         if not goals:
             if verbose >= 2:

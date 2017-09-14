@@ -150,7 +150,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
     plan.
     '''
 
-    def __init__(self, declare_methods, declare_operators):
+    def __init__(self, declare_methods, declare_operators,declare_monitors):
                 GenericPyhopPlanner.__init__(self, declare_methods,declare_operators, declare_monitors,
                 lambda state, plan: asynch.FAILED not in [action.status for action in plan])
 
