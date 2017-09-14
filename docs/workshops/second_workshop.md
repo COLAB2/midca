@@ -21,8 +21,8 @@ Tentative Schedule (subject to change):
 | TBD                | 6:30 pm      | 10:30 am                | TBD |
 | TBD                | 6:50 pm      | 10:50 am                | TBD |
 | Coffe Break        | 7:10 pm      | 11:10 am                |  |
-| Discussion         | 7:20 pm      | 10:10 am                | TBD |
-| Closing            | 8:00 pm      | 10:10 am                | Dustin Dannenhauer |
+| Discussion         | 7:20 pm      | 11:20 am                | TBD |
+| Closing            | 8:00 pm      | 12:00 pm                | Dustin Dannenhauer |
 
 
 Organizer: Dustin Dannenhauer (dustin.dannenhauer.ctr@nrl.navy.mil)
