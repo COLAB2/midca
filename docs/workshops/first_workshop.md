@@ -6,7 +6,8 @@ layout: default
 
 The First Annual MIDCA Workshop took place January 13th, 2017 at Wright State University in Dayton, OH. All talks were live-streamed over Youtube. The workshop was a big success in bringing together the developers of MIDCA and new folks interested in learning more. Below are the technical proceedings and youtube videos of each of the talks. If you have any questions or comments, please feel free to reach out to us at wsri-midca-help@wright.edu
 
-[Technical Proceedings](workshops/first_ws_proceedings.pdf) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.893104.svg)](https://doi.org/10.5281/zenodo.893104)
+[Technical Proceedings](workshops/first_ws_proceedings.pdf) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.893104.svg)](https://doi.org/10.5281/zenodo.893104)
 
 # Videos
 
