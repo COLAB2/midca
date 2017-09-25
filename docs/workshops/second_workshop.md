@@ -17,8 +17,8 @@ Tentative Schedule (subject to change):
 | Coffee Break       | 5:10 pm      | 8:40 am                 |                    |
 | TBD                | 5:30 pm      | 9:00 am                 | Martin Oxenham |
 | TBD                | 5:50 pm      | 9:20 am                 | Ryan Green |
-| TBD                | 6:10 pm      | 9:40 am                 | TBD |
-| TBD                | 6:30 pm      | 10:00 am                | TBD |
+| TBD                | 6:10 pm      | 9:40 am                 | Venkatsampath Gogineni |
+| TBD                | 6:30 pm      | 10:00 am                | Zohreh A. Dannenhauer |
 | Coffee Break       | 6:50 pm      | 10:20 am                |     |
 | Discussion         | 7:00 pm      | 10:30 am                | TBD |
 | Closing            | 7:45 pm      | 11:15 am                | Dustin Dannenhauer |
