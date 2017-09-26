@@ -1,0 +1,16 @@
+1- Run the service Right_hand_camera.py from baxter_srv package
+2- Run grabbing.py-- midca/examples/_baxter/grabbing.py
+3- run OD.py to detect the objects
+4- to calibrate the camera run midca/examples/ObjectDetector.py
+It will write the x y coordinates in a file 
+Here the file is "/home/baxter/git/midca/examples/_baxter/calibration.txt"
+
+see the example to know the format. 
+Calibrate.py then use this file to make the matrix. The path for the file is specified in baxter_run_OD.py in line 50. 
+
+Make sure these two files are the same.
+
+
+5- run baxter_run_OD.py
+
+6- send command like "pick up the red block"
