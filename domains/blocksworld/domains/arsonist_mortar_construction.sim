@@ -1,7 +1,40 @@
 type(root)
-type(BLOCK)
-type(ARSONIST)
-type(MORTARBLOCK)
+type(BLOCK,root)
+type(ARSONIST,root)
+type(MORTARBLOCK,root)
+type(A_,BLOCK)
+type(B_,BLOCK)
+type(C_,BLOCK)
+type(D_,BLOCK)
+type(E_,BLOCK)
+type(F_,BLOCK)
+type(G_,BLOCK)
+type(H_,BLOCK)
+type(I_,BLOCK)
+type(J_,BLOCK)
+type(K_,BLOCK)
+type(L_,BLOCK)
+type(M_,BLOCK)
+type(N_,BLOCK)
+type(O_,BLOCK)
+type(P_,BLOCK)
+type(Q_,BLOCK)
+type(R_,BLOCK)
+type(S_,BLOCK)
+type(T_,BLOCK)
+type(U_,BLOCK)
+type(V_,BLOCK)
+type(W_,BLOCK)
+type(X_,BLOCK)
+type(Y_,BLOCK)
+type(Z_,BLOCK)
+type(Z_1_,BLOCK)
+type(Z_2_,BLOCK)
+
+ptype(root)
+ptype(on,root)
+ptype(stable-on,on)
+
 
 predicate(clear, [blk], [BLOCK])
 predicate(holding, [blk], [BLOCK])
@@ -18,6 +51,7 @@ predicate(free, [ars], [ARSONIST])
 predicate(hasmortar, [blk, mortar], [BLOCK, MORTARBLOCK])
 predicate(used, [mortar], [MORTARBLOCK])
 predicate(available, [mortar], [MORTARBLOCK])
+predicate(in_store, [blk], [BLOCK])
 
 operator(stack, 
 args = [(topblk, BLOCK), (btmblk, BLOCK)], 
@@ -129,3 +163,16 @@ results = [
 	
 operator(searchfor,
 args = [(arsonist, ARSONIST)])
+
+operator(get_from_store,
+args = [(blk, BLOCK)],
+preconditions = [ 
+	condition(in_store, [blk]),
+	condition(clear, [blk]),
+	condition(arm-empty, [])],
+results = [
+	condition(holding, [blk]), 
+	condition(clear, [blk], negate = True),
+	condition(in_store, [blk], negate = True),
+	condition(arm-empty, [], negate = True)])
+

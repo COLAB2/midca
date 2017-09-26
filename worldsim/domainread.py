@@ -5,6 +5,8 @@ objects = {}
 predicates = {}
 atoms = []
 operators = {}
+cltree = {"rootnode": "" , "allnodes" : [] , "checked" : [] } 
+obtree = {"rootnode": "" , "allnodes" : [] , "checked" : [] }
 
 def type(name, parentnames = ["obj"]):
 	if isinstance(parentnames, basestring):
@@ -15,6 +17,28 @@ def type(name, parentnames = ["obj"]):
 			raise Exception("parent type DNE.")
 		parents.append(types[parent])
 	types[name] = worldsim.Type(name, parents)
+	if not parentnames == ["obj"]:
+		temp = parentnames		
+	otree = worldsim.ObjectTree(obtree['rootnode'] , 
+				    obtree['allnodes'], 
+				    obtree['checked'] , 
+				    temp)
+	obtree['rootnode'] = otree.rootnode
+	obtree['allnodes'] = otree.allnodes
+	obtree['checked'] = otree.checked
+
+
+def ptype(*args):
+	'''
+	Create a class hierarchy tree and get the result into cltree,
+        which is a global variable inorder to store previous nodes of tree.
+	'''
+	temp = list(args)
+	tree = worldsim.Tree(cltree['rootnode'] , cltree['allnodes'], cltree['checked'] , temp)
+	cltree['rootnode'] = tree.rootnode
+	cltree['allnodes'] = tree.allnodes
+	cltree['checked'] = tree.checked
+
 
 def instance(name, typename):
 	if typename not in types:

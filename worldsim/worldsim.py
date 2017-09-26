@@ -1,3 +1,4 @@
+import copy
 class Obj:
 	
 	def __init__(self, name, type):
@@ -269,12 +270,184 @@ class Operator:
 		if self.results:
 			s = s[:-3] + "]"
 		return s
+
+
+
+class Tree:
+	'''
+	Class heirarchy tree which contains insert and print functions
+	'''
+
+	def __init__(self,rootnode,allnodes,checked,args):
+		'''
+		initialize the rootnode , allnodes and checked .rootnode is the main 			node that contains the trace of all nodes.
+		checked is something which is usefull in goaltransforms , to check 			whether the result is not as same as what to be transformed.
+		'''
+                self.rootnode = rootnode
+                self.allnodes = allnodes
+                self.checked = checked
+		if not args == 0:
+			self.insert(args)
+
+        def printall(self,space,printed,root):
+		'''
+		Print the predicates in the heirarchy of spaces. for example rootnode 			should contain no space while the following children should contain a 			tab space and so on.
+		'''
+		if (len(root.parents) == 0) and (not( len(printed) == 0)):
+			return 0
+		if not root.predicate in printed:
+			printed.append(root.predicate)
+			print(space + root.predicate)
+			space =  space[0:4] + space
+		else:
+			space = space[0:-4]
+		if len(root.children) == 0:
+			self.printall(space, printed,root.parents.pop())
+		else:
+			for s in root.children:
+				self.printall(space, printed,s)
+
+        def printtree(self):
+		'''
+		Start from the root node and print all the predicates by parsing 			through the children.
+		'''
+                root = copy.deepcopy(self.rootnode)
+                printed = list()
+                space = "  "
+                print("--------- Class Hierarchy Predicate Tree ----------")
+                self.printall(space,printed,root)
+                print("")
+                print("--------- Class Hierarchy Predicate Tree Ends ----------")
+                print("")
+
+	def insert(self,content):
+		'''
+		create a node for each new argument and call it predicate , if there 			is no root node initialize root node else check the node to add a 			branch for and add a branch to it.
+		'''
+	     	for i in range(0,len(content)):
+			newnode = Node()
+			temp_string = content
+			newnode = newnode.insert(temp_string[len(temp_string)-1])
+		
+		if not(self.rootnode):
+                 	 self.rootnode= newnode
+                 	 self.allnodes.append(newnode)
+		
+		for i in range(0,len(temp_string)-1):
+			newnode = Node()
+			newnode = newnode.insert(temp_string[i])
+			newnode.insertbranch(self.check_in_all_tree_nodes(temp_string[len(temp_string)-1]),self)
+			self.allnodes.append(newnode)
+
+	def check_in_all_tree_nodes(self,predicate):
+		for a in range(0,len(self.allnodes)):
+			if self.allnodes[a].predicate == predicate:
+				return self.allnodes[a]
+
+
+class ObjectTree:
+
+	'''
+	Class heirarchy tree which contains insert and print functions
+	'''
+
+	def __init__(self,rootnode,allnodes,checked,args):
+                self.rootnode = rootnode
+                self.allnodes = allnodes
+                self.checked = checked
+		if not args == 0:
+			self.objectinsert(args)
+
+        def printall(self,space,printed,root):
+		'''
+		Print the predicates in the heirarchy of spaces. for example rootnode 			should contain no space while the following children 			should contain a tab space and so on.
+		'''
+	
+		if (len(root.parents) == 0) and (not( len(printed) == 0)):
+			return 0
+
+		if not root.predicate in printed:
+			printed.append(root.predicate)
+			print(space + root.predicate)
+			space =  space[0:4] + space
+		else:
+				
+			space = space[0:-4]
+
+		if len(root.children) == 0:
+			self.printall(space, printed,root.parents.pop())
+		else:
+			for s in root.children:
+				self.printall(space, printed,s)
+
+        
+        def printtree(self):
+		'''
+		Start from the root node and print all the predicates by parsing 			through the children.
+		'''
+                root = copy.deepcopy(self.rootnode)
+                printed = list()
+                space = "  "
+                print("--------- Class Hierarchy Object Tree ----------")
+                self.printall(space,printed,root)
+                print("")
+                print("--------- Class Hierarchy Object Tree Ends ----------")
+                print("")
+
+	def objectinsert(self,content):
+		'''
+		create a node for each new argument and call it predicate , if there 			is no root node initialize root node else check the node to add a 			branch for and add a branch to it.
+		'''
+	   	for i in range(0,len(content)):
+			temp_string = content
+			newnode = Node()
+			newnode = newnode.insert(temp_string[len(temp_string)-1])
+		
+		if not(self.rootnode):
+                 	 self.rootnode= newnode
+                 	 self.allnodes.append(newnode)
+		
+		for i in range(0,len(temp_string)-1):
+			newnode = Node()
+			newnode = newnode.insert(temp_string[i])
+			newnode.insertbranch(self.check_in_all_object_nodes(temp_string[len(temp_string)-1]),self)
+			self.allnodes.append(newnode)
+		
+	def check_in_all_object_nodes(self,predicate):
+		for a in range(0,len(self.allnodes)):
+			if self.allnodes[a].predicate == predicate:	
+				return self.allnodes[a]	
+
+class Node:
+	'''
+	Node for creating a tree which contains predicate as name , parents and 	children as data members.
+	'''
+        def __init__(self):
+                self.predicate = ""
+                self.parents = list()
+                self.children = list()
+
+        def insert(self,predicate):
+                self.predicate = predicate
+                return self
+                       
+                                       
+        def insertbranch(self,s,tree):
+                self.parents.append(s)
+                s.children.append(self)
+                for a in range(0,len(tree.allnodes)):
+                        if tree.allnodes[a].predicate is s.predicate:
+                                tree.allnodes[a] = s                         
+                return self
+
 		
 class World:
 	
-	def __init__(self, operators, predicates, atoms, types, objects = []):
+	def __init__(self,cltree,obtree,operators, predicates, atoms, types, objects = []):
 		self.operators = {}
 		self.types = types
+		self.cltree = cltree
+		self.obtree = obtree
 		for operator in operators:
 			self.operators[operator.name] = operator
 		self.predicates = {}
