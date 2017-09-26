@@ -53,6 +53,32 @@ class Memory:
 	EXPLANATION = "__explanation"
 	EXPLANATION_VAL = "__explanation_val"
 
+
+    	#Goal Tranformation
+    	CL_TREE = "__class heirarchy tree"
+    	OB_TREE = "__object heirarchy tree"
+
+    	#Construction 
+    	TIME_CONSTRUCTION = "__Construction Time"
+    	ACTUAL_TIME_CONSTRUCTION = "__Actual Time"
+    	EXPECTED_TIME_CONSTRUCTION = "__Expected Time"
+    	SELECTED_BUILDING_LIST = "__Buildings Selected"
+    	COMPLETE_BUILDING_LIST = "__Buildings"
+    	EXECUTED_BUILDING_LIST = "__Executed Buildings"
+    	REJECTED_GOALS = "__rejected goals"
+    	ACTUAL_SCORES ="__Expected Scores"
+    	P = "__ list of scores"
+    	t = "__list of times"
+
+    	# Restaurant
+    	MONEY = "__money limit"
+    	SELECTED_ORDERS = "__selected orders"
+    	COMPLETED_ORDERS = "__completed orders"
+    	EXPECTED_SCORE = "__expected score"
+    	ACTUAL_SCORE = "__actual score"
+    	EXPECTED_COST= "__expected cost"
+    	ACTUAL_COST= "__actual cost"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)
