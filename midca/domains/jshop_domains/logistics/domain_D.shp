@@ -1,0 +1,292 @@
+;;;; !!!! Reminder: without drive truck it will not solve
+;;;; the problem of driving the truck between locations
+
+
+
+(defdomain neo-trans
+  (  
+
+
+     (:operator (!load-truck ?obj ?truck ?loc)
+                ();;; preconditions
+                ((obj-at ?obj ?loc));;; delete list
+                ((in-truck ?obj ?truck)));;; add list
+           
+     (:operator (!unload-truck ?obj ?truck ?loc)
+                ()
+                ((in-truck ?obj ?truck))
+                ((obj-at ?obj ?loc)))
+
+     ;;; Modified by Dustin Dannenhauer
+     (:operator (!load-airplane ?obj ?airplane ?loc)
+                ()
+                ((obj-at ?obj ?loc))
+                ((in-airplane ?obj ?airplane)));; please complete this operator
+
+     (:operator (!unload-airplane ?obj ?airplane ?loc)
+                ()
+                ((in-airplane ?obj ?airplane))
+                ((obj-at ?obj ?loc)))
+
+     ;;; Modified by Dustin Dannenhauer     
+     (:operator (!drive-truck ?truck ?locfrom ?locto)
+                ()
+                ((truck-at ?truck ?locfrom))
+                ((truck-at ?truck ?locto)));; please complete this operator
+
+     (:operator (!fly-airplane ?airplane ?airportfrom ?airportto)
+                ()
+                ((airplane-at ?airplane ?airportfrom))
+                ((airplane-at ?airplane ?airportto)))
+          
+  
+     (:method (achieve-goals (list ?goal . ?goals))
+     ()
+     ((achieve-goal ?goal)(achieve-goals list ?goals)))
+    
+    (:method (achieve-goals nil ?goal)
+             ()
+             ((achieve-goal ?goal)))
+             
+       
+     
+      
+;;; Assumes that the destination location and starting location ;;;
+;;; are in same city assumes there is a truck in starting location
+      (:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) ;;;; preconditions
+          (truck-at ?t ?l1)
+          (sameCity ?l1 ?l)
+         )
+         ((!load-truck ?p ?t ?l1)  ;;;; subtasks
+          (!drive-truck ?t ?l1 ?l)
+	   (!unload-truck ?p ?t ?l) 
+         )
+       )
+
+	   (:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) ;;;; preconditions
+          
+          (same ?l1 ?l)
+         )
+         ( 
+         )
+       )
+;;; Assumes that the destination location and starting location ;;; are in same city
+;;; assumes there is no truck in starting location
+;;1
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) 
+          (truck-at ?t ?l2)
+          (sameCity ?l2 ?l)
+          (sameCity ?l1 ?l)
+          (different ?l2 ?l1)
+         )
+         ((!drive-truck ?t ?l2 ?l1)
+	 (achieve-goal (obj-at ?p ?l))
+         )
+       )
+
+	   ;;2
+;;; Created by Dustin Dannenhauer        
+;;; Assumes destination and starting location are in different cities
+;;; assumes package IS AT AIRPORT
+;;; assumes there is an airplane in the starting location
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?ap1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (airplane-at ?a1 ?ap1)
+		  (not (sairplane-at ?a2 ?ap1))
+		  (AIRPLANE ?a1)
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LO ?ap2)
+		  (sameCity ?ap2 ?l)
+		  (NearByAirport ?ap1 ?ap2)
+         )
+         (
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap2)
+          (!unload-airplane ?p  ?a1 ?ap2)
+		  (!fly-airplane ?a1 ?ap2 ?ap1)
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )
+;;3	   
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?ap1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (airplane-at ?a1 ?ap1)
+		   (not (sairplane-at ?a2 ?ap1))
+		  (AIRPLANE ?a1)
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LOCATION  ?ap2)
+		  (sameCity ?ap2 ?l)
+		  (NearByAirport ?ap1 ?ap3)
+		  (different ?ap3 ?ap2)
+         )
+         (
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap3)
+          (!unload-airplane ?p  ?a1 ?ap3)
+		 (!fly-airplane ?a1 ?ap3 ?ap1)
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )  
+	;;4
+		 ;;;Super plane
+	  (:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?ap1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (sairplane-at ?a1 ?ap1)
+		  (SAIRPLANE ?a1)
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LOCATION  ?ap2)
+		  (sameCity ?ap2 ?l)
+		  
+         )
+         (
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap2)
+          (!unload-airplane ?p  ?a1 ?ap2)
+		  
+          (achieve-goal (obj-at ?p ?l))
+          )
+         ) 
+;;5		 
+;;; Created by Dustin Dannenhauer        
+;;; Assumes destination and starting location are in different cities
+;;; assumes package IS IN SAME CITY BUT NOT AT AIRPORT
+;;; assumes there is an airplane in the starting location
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (airplane-at ?a1 ?ap1)
+		  (AIRPLANE ?a1)
+		   (not (sairplane-at ?a2 ?ap1))
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LOCATION  ?ap2)
+		  (sameCity ?ap2 ?l)
+		  (NearByAirport ?ap1 ?ap2)
+         )
+         ((achieve-goal (obj-at ?p ?ap1))
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap2)
+          (!unload-airplane ?p  ?a1 ?ap2)
+		  (!fly-airplane ?a1 ?ap2 ?ap1)
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )
+;;6		 
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (airplane-at ?a1 ?ap1)
+		   (not (sairplane-at ?a2 ?ap1))
+		  (AIRPLANE ?a1)
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LOCATION  ?ap2)
+		  (sameCity ?ap2 ?l)
+		  (NearByAirport ?ap1 ?ap3)
+		  (different ?ap3 ?ap2)
+         )
+         ((achieve-goal (obj-at ?p ?ap1))
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap3)
+          (!unload-airplane ?p  ?a1 ?ap3)
+		  (!fly-airplane ?a1 ?ap3 ?ap1)
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )	
+;;7		 
+     (:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)          
+          (sairplane-at ?a1 ?ap1)
+		  (SAIRPLANE ?a1)
+          (sameCity ?ap1 ?l1) ;; airport is in this city
+          (sameCity ?l1 ?ap1)          
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+		  (LOCATION  ?ap2)
+		  (sameCity ?ap2 ?l)
+		  
+         )
+         ((achieve-goal (obj-at ?p ?ap1))
+		 (!load-airplane ?p ?a1 ?ap1)
+          (!fly-airplane ?a1 ?ap1 ?ap2)
+          (!unload-airplane ?p  ?a1 ?ap2)
+		 
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )	    
+
+		 ;;8
+;; Created by Dustin Dannenhauer (Not sure if this is needed)     
+;; Assumes destination and starting location are in different cities
+;; assumes there is NOT an airplane in the starting location,
+;; instead there is an airplane in another city
+	(:method (achieve-goal (obj-at ?p ?l))
+         ((obj-at ?p ?l1) 
+          (differentCity ?l2 ?l1)
+          (differentCity ?l1 ?l2)
+          (airplane-at ?a1 ?ap3)
+		  (LOCATION  ?ap2)
+		  (LOCATION  ?ap3)
+          (sameCity ?l2 ?l)
+          (sameCity ?l ?l2)
+          (sameCity ?ap2 ?l1)
+          (sameCity ?l1 ?ap2)
+          (different ?ap2 ?ap3)
+         )
+         ((achieve-goal (obj-at ?p ?ap2))
+		 (!fly-airplane ?a1 ?ap3 ?ap2)
+          (achieve-goal (obj-at ?p ?l))
+          )
+         )
+	
+;;; please add methods for other cases
+
+	
+    (:- (same ?x ?x) ())
+    (:- (sameCity ?a ?b) 
+    ((IN-CITY ?a ?c) (IN-CITY ?b ?c))
+    )
+	(:- (NearByAirport ?a ?b) 
+    ((LOCATION  ?a)(LOCATION ?b)(IN-CITY ?a ?c) (IN-CITY ?b ?d) (NearBy ?c ?d))
+    )
+	
+    (:- (differentCity ?a ?b) 
+    ((IN-CITY ?a ?c) (IN-CITY ?b ?d) (different ?c ?d))
+    )
+    (:- (different ?x ?y) ((not (same ?x ?y))))
+
+    (:- (vehicle ?v) ((smallVehicle ?v)))
+    (:- (vehicle ?v) ((bigVehicle ?v)))
+    (:- (transport ?x) ((vehicle ?x)))
+
+  ))
+
+;;;--------------------------------------------------------------
+
+
