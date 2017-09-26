@@ -320,7 +320,16 @@ class GoalGraph:
         return "Goals: " + str([str(goal) + " " for goal in self.getAllGoals()])
 
     def getUnrestrictedGoals(self):
-        return [node.goal for node in self.roots]
+	'''
+	sort the nodes according to the node.id and return node.goal accordingly
+	'''
+	nodes_list = []
+	# get all the nodes of root into a list for sorting
+        for node in self.roots:
+	     nodes_list.append(node)
+	# sort according to the node id
+	nodes_list.sort(key = lambda x: x.id)
+	return [node.goal for node in nodes_list]
 
     def writeToPDF(self, pdf_filename="goalgraph.pdf"):
         """ Requires the 'dot' command be installed on the current system. To

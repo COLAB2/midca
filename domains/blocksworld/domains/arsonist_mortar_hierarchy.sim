@@ -1,7 +1,17 @@
 type(root)
-type(BLOCK)
-type(ARSONIST)
-type(MORTARBLOCK)
+type(BLOCK,root)
+type(ARSONIST,root)
+type(MORTARBLOCK,root)
+type(A_,BLOCK)
+type(B_,BLOCK)
+type(C_,BLOCK)
+type(D_,BLOCK)
+
+
+ptype(root)
+ptype(on,root)
+ptype(stable-on,on)
+
 
 predicate(clear, [blk], [BLOCK])
 predicate(holding, [blk], [BLOCK])
