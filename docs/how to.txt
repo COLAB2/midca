@@ -9,7 +9,7 @@ I. Using MIDCA with simulated worlds using a predicate representation
 domainFilename = "myDomainFile"
 stateFileName = "myStateFile"
 
-from MIDCA.examples import predicateworld
+from midca.examples import predicateworld
 
 myMIDCA = predicateworld.UserGoalsMidca(domainFilename, stateFileName)
 
@@ -44,7 +44,7 @@ print myMidca.get_modules(phaseName)
 
 	-the run method will be called once per cycle in phase order. This method will define what the module actually does. Within a phase, modules will be called in the order listed, which can be modified as shown in 6.
 
-For examples, see MIDCA/modules/*
+For examples, see midca/modules/*
 
 5b) Create a custom phase implementation (module) - new style:
 
