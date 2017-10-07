@@ -609,8 +609,6 @@ class PyHopPlanner(base.BaseModule):
             if trace: trace.add_data("PLAN",midcaPlan)
 
 
-class PyHopPlanner_restaurant(base.BaseModule):
-
     '''
     MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
     Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.

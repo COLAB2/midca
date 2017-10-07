@@ -9,6 +9,9 @@ cltree = {"rootnode": "" , "allnodes" : [] , "checked" : [] }
 obtree = {"rootnode": "" , "allnodes" : [] , "checked" : [] }
 
 def type(name, parentnames = ["obj"]):
+	temp = [name]
+	if not parentnames == ["obj"]:
+		temp.append(parentnames)
 	if isinstance(parentnames, basestring):
 		parentnames = [parentnames]
 	parents = []
@@ -16,9 +19,7 @@ def type(name, parentnames = ["obj"]):
 		if parent not in types:
 			raise Exception("parent type DNE.")
 		parents.append(types[parent])
-	types[name] = worldsim.Type(name, parents)
-	if not parentnames == ["obj"]:
-		temp = parentnames		
+	types[name] = worldsim.Type(name, parents)	
 	otree = worldsim.ObjectTree(obtree['rootnode'] , 
 				    obtree['allnodes'], 
 				    obtree['checked'] , 
@@ -147,7 +148,7 @@ def load_domain(filename):
 	f = open(filename)
 	exec preprocess(f.read())
 	f.close()
-	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
+	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values(),cltree,obtree)
 	return world
 
 def load_domain_str(str):

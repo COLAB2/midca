@@ -19,6 +19,12 @@ class SimpleIntend(base.BaseModule):
             return
 	# get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
+
+	if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+		
 	# take the first goal
 	goals = [goals[0]]
 	# add it to the current goal in memory
@@ -946,9 +952,6 @@ class SimpleIntend_construction(base.BaseModule):
 		zone = 0
 		if not (self.count == i):
 			random.seed(i)
-			print(i)
-			print(self.count)
-			
 			action_score = random.uniform(1 - time_variation*1,1 + time_variation*1)	
                         action_time = random.uniform(self.t_copy[i] - time_variation*self.t_copy[i], self.t_copy[i] + time_variation*self.t_copy[i])
                         print("Actual Time Taken For Previous Action :" + str(action_time))
@@ -1269,6 +1272,7 @@ class SimpleIntend_construction(base.BaseModule):
 		for each in p_t:
 			for i in range(0,len(self.selected_buildings)):
 				if each == (len(self.selected_buildings[i])/self.t[len(self.selected_buildings[i])-1]):
+				  if not self.selected_buildings[i][0].args[0] in towers:
 					temp.append(self.selected_buildings[i])
 					towers.append(self.selected_buildings[i][0].args[0])
 

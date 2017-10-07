@@ -280,8 +280,10 @@ class Tree:
 
 	def __init__(self,rootnode,allnodes,checked,args):
 		'''
-		initialize the rootnode , allnodes and checked .rootnode is the main 			node that contains the trace of all nodes.
-		checked is something which is usefull in goaltransforms , to check 			whether the result is not as same as what to be transformed.
+		initialize the rootnode , allnodes and checked .
+		rootnode is the main node that contains the trace of all nodes.
+		checked is something which is usefull in goaltransforms , 
+		to check whether the result is not as same as what to be transformed.
 		'''
                 self.rootnode = rootnode
                 self.allnodes = allnodes
@@ -291,7 +293,9 @@ class Tree:
 
         def printall(self,space,printed,root):
 		'''
-		Print the predicates in the heirarchy of spaces. for example rootnode 			should contain no space while the following children should contain a 			tab space and so on.
+		Print the predicates in the heirarchy of spaces. 
+		for example rootnode should contain no space while the following children 
+		should contain a tab space and so on.
 		'''
 		if (len(root.parents) == 0) and (not( len(printed) == 0)):
 			return 0
@@ -309,7 +313,7 @@ class Tree:
 
         def printtree(self):
 		'''
-		Start from the root node and print all the predicates by parsing 			through the children.
+		Start from the root node and print all the predicates by parsing through the children.
 		'''
                 root = copy.deepcopy(self.rootnode)
                 printed = list()
@@ -322,7 +326,9 @@ class Tree:
 
 	def insert(self,content):
 		'''
-		create a node for each new argument and call it predicate , if there 			is no root node initialize root node else check the node to add a 			branch for and add a branch to it.
+		create a node for each new argument and call it predicate , 
+		if there is no root node initialize root node 
+		else check the node to add a branch for and add a branch to it.
 		'''
 	     	for i in range(0,len(content)):
 			newnode = Node()
@@ -360,7 +366,9 @@ class ObjectTree:
 
         def printall(self,space,printed,root):
 		'''
-		Print the predicates in the heirarchy of spaces. for example rootnode 			should contain no space while the following children 			should contain a tab space and so on.
+		Print the predicates in the heirarchy of spaces. for example rootnode 		
+		should contain no space while the following children 			
+		should contain a tab space and so on.
 		'''
 	
 		if (len(root.parents) == 0) and (not( len(printed) == 0)):
@@ -383,7 +391,7 @@ class ObjectTree:
         
         def printtree(self):
 		'''
-		Start from the root node and print all the predicates by parsing 			through the children.
+		Start from the root node and print all the predicates by parsing through the children.
 		'''
                 root = copy.deepcopy(self.rootnode)
                 printed = list()
@@ -396,7 +404,9 @@ class ObjectTree:
 
 	def objectinsert(self,content):
 		'''
-		create a node for each new argument and call it predicate , if there 			is no root node initialize root node else check the node to add a 			branch for and add a branch to it.
+		create a node for each new argument and call it predicate , 
+		if there is no root node initialize root node 
+		else check the node to add a branch for and add a branch to it.
 		'''
 	   	for i in range(0,len(content)):
 			temp_string = content
@@ -420,7 +430,8 @@ class ObjectTree:
 
 class Node:
 	'''
-	Node for creating a tree which contains predicate as name , parents and 	children as data members.
+	Node for creating a tree which contains predicate as name , 
+	parents and children as data members.
 	'''
         def __init__(self):
                 self.predicate = ""
@@ -443,7 +454,7 @@ class Node:
 		
 class World:
 	
-	def __init__(self,cltree,obtree,operators, predicates, atoms, types, objects = []):
+	def __init__(self,operators, predicates, atoms, types, objects = [],cltree = [] , obtree = []):
 		self.operators = {}
 		self.types = types
 		self.cltree = cltree
@@ -491,6 +502,13 @@ class World:
 				filter_matches = {k:False for k in filters}
 				
 		return relevant_atoms
+
+	def get_objects_names_by_type(self, typename):
+		objs = []
+		for each_obj in self.objects.keys():
+			if(str(self.obj_type(each_obj)) == str(typename)):
+				objs.append(each_obj)
+		return objs
 	
 	def diff(self,otherWorld):
 		'''

@@ -271,7 +271,7 @@ class SimpleEval_construction(base.BaseModule):
 
 	# this variable is to skip one eval phase, when the building gets completed
 	try:
-		print(self.skip)
+		self.skip
 	except AttributeError:
 		self.skip = False
 
@@ -286,20 +286,20 @@ class SimpleEval_construction(base.BaseModule):
                 goalGraph.remove(goal)
 	    goalGraph.removeOldPlans()
             self.mem.set(self.mem.CURRENT_GOALS , [])
-            self.mem.set(self.mem.SELECTED_GOALS , None)
+            self.mem.set(self.mem.REJECTED_GOALS , None)
             self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
             goals = []
 
 	
-        selected_goals = self.mem.get(self.mem.SELECTED_GOALS)
+        rejected_goals = self.mem.get(self.mem.REJECTED_GOALS)
 
-	if selected_goals :
+	if rejected_goals :
                 print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient Time")
 		for goal in goalGraph.getUnrestrictedGoals():
 			goalGraph.remove(goal)
 		self.mem.set(self.mem.CURRENT_GOALS , [])
 		goals_changed = True
-		self.mem.set(self.mem.SELECTED_GOALS , None)
+		self.mem.set(self.mem.REJECTED_GOALS , None)
 		self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
 		goals=[]
 	
