@@ -3,7 +3,8 @@ from midca import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from midca.domains.logistics import deliverstate
 from midca.domains.blocksworld import blockstate
-import copy 
+from midca.worldsim import stateread
+import copy,csv
 import random
 from midca.modules.monitors import Monitor
 from threading import Thread
@@ -151,8 +152,8 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 	# This function removes all the atoms in the world,follows recursion
 	if(len(atoms) == 0):
 		return 
-	if(self.world.atom_true(atoms[len(atoms) - 1])):
-		self.world.remove_atom(atoms[len(atoms) - 1])
+	if(self.world.atom_true(list(atoms)[len(atoms) - 1])):
+		self.world.remove_atom(list(atoms)[len(atoms) - 1])
 		if(len(atoms) == 0):
 			return 
 		else:
@@ -275,11 +276,11 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 	stateread.apply_state_str(self.world, self.state_str)
 	self.mem.add(self.mem.STATES, copy.deepcopy(self.world))
         # Create the random set of goals with random dishes and persons
-	#self.create_random_goals()
-	#self.save_30_goal_sets()
-	self.write_memory_to_file()
 	self.curr_goal_sets[:] = []
-	self.select_random_goals_from_30_sets()
+	self.create_random_goals()
+	#self.save_30_goal_sets()
+	#self.write_memory_to_file()	
+	#self.select_random_goals_from_30_sets()
 	# print the generated goals
 	print("")
 	for each_goal in self.curr_goal_sets:
@@ -315,23 +316,26 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 class SimpleMortarGoalGen_construction(base.BaseModule):
     '''
     MIDCA module that cycles through goals for the agent to achieve.
+    Generates the building goals(towers) to acheive
     '''
     initial_world = "__initial state"
     selected_goals = []
     count = 0
 
-    # building blocks total of 5 
     curr_goal_sets = []
 
-    # starting state: on(D,B), on(B,A), ontable(A) ontable(C)
-    # first goal: on(C,B)
-    # second goal
-	
+
     def remove_bunch_atoms(self,atoms):
+	'''
+	input : atoms (state) of the world
+	functionality : removes the atoms form the world
+	output : none
+	'''
+
 	if(len(atoms) == 0):
 		return 
-	if(self.world.atom_true(atoms[len(atoms) - 1])):
-		self.world.remove_atom(atoms[len(atoms) - 1])
+	if(self.world.atom_true(list(atoms)[len(atoms) - 1])):
+		self.world.remove_atom(list(atoms)[len(atoms) - 1])
 		if(len(atoms) == 0):
 			return 
 		else:
@@ -339,16 +343,34 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 		self.remove_bunch_atoms(atoms)
 
     def __init__(self,stateFile,state_str,T):
+		'''
+		input : stateFile (contains states)
+			state_str( contains the mortar atoms)
+			Time ( starting time)
+
+		functionality : initialization
+		output : class variables 		
+		'''
 		self.stateFile = stateFile
 		self.state_str = state_str
 		self.Time = T
 
     def find_sum_natural_numbers_nearest_number(self, number):
+	'''
+	input : random number
+	functionality :  find the nearest natural number
+	output : return the number
+	'''
 	for i in range(0,number):
 		if (i*(i+1))/2 > number:
 			return i
 
     def build_current_goal_sets(self , objs):
+	'''
+	input : generate the goals
+	functionality : generate the building goals in the oreder of 1,2 -- nearest natural number
+	output: update self.curr_goal_sets with building goals
+	'''
 	number = self.find_sum_natural_numbers_nearest_number(len(objs))
 	index = 0
 	for goals_number in range(1,number):
@@ -360,10 +382,15 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			else:
 				each_goal_set.append(goals.Goal(*[objs[index],objs[index-1]], predicate = 'stable-on'))
 				index = index + 1
-		
-		
+		self.curr_goal_sets.append(each_goal_set)
 
     def build_current_goal_sets_same(self, objs):
+	'''
+	input : generate the goals
+	functionality : generate the building goals,
+			 might be same number of goals in towers as well
+	output: update self.curr_goal_sets with building goals
+	'''
 	number = self.find_sum_natural_numbers_nearest_number(len(objs))
 	index = 0
 	for goals_number in range(1,number-1):
@@ -385,6 +412,9 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 
 		
     def save_30_buildings(self):
+       '''
+       save the 30 building goals into the 30_problem_set_ijcai.pickle file
+       '''
        a = {}
        for k in range(0,30):
 	self.curr_goal_sets[:] = []
@@ -436,6 +466,9 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
    		 pickle.dump(a, handle)
 
     def next_goal_30(self):
+	'''
+	Generate the goals from the 30 sets
+	'''
 	actual_time = self.mem.get(self.mem.ACTUAL_TIME_CONSTRUCTION)
 	expected_time = self.mem.get(self.mem.EXPECTED_TIME_CONSTRUCTION)
 	selected_buildings = self.mem.get(self.mem.SELECTED_BUILDING_LIST)
@@ -558,12 +591,12 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 
         return self.selected_goals
 
-    def next_goal_30_goal_transformations(self):
+    def next_goal_30_goal_transformations(self,write_to_file = False):
 	selected_buildings = self.mem.get(self.mem.SELECTED_BUILDING_LIST)
 	executed_buildings = self.mem.get(self.mem.EXECUTED_BUILDING_LIST)
 	actual_scores = self.mem.get(self.mem.ACTUAL_SCORES)
 
-	if executed_buildings:
+	if executed_buildings :
 		myfile  = open('evaluation.csv', "a")
 		writer = csv.writer(myfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 		with open("evaluation.csv", "a") as myfile:
@@ -631,7 +664,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	
 	
 
-    def next_goal(self):
+    def next_goal(self,write_to_file = False):
 	actual_time = self.mem.get(self.mem.ACTUAL_TIME_CONSTRUCTION)
 	expected_time = self.mem.get(self.mem.EXPECTED_TIME_CONSTRUCTION)
 	selected_buildings = self.mem.get(self.mem.SELECTED_BUILDING_LIST)
@@ -645,11 +678,26 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	if actual_time and expected_time:
 		expected_p_t = float(expected_scores/expected_time[0])
 		actual_p_t = float(actual_scores/actual_time[0])
-		with open("evaluation.txt", "a") as myfile:
 		
-		  myfile.write("%-5s %-5s %-5s %-5s " % ( str(complete_buildings), str(selected_buildings) , str(expected_time), str(actual_time)))
-		  myfile.write("%-5s %-5s %-5s %-5s %-5s " % (  str([expected_scores]) , str([actual_scores]) , str([expected_p_t]) , str([actual_p_t]) , str(executed_buildings) ))
-		  myfile.write("\n")
+		if write_to_file :
+			with open("evaluation.txt", "a") as myfile:
+		
+		  		myfile.write("%-5s %-5s %-5s %-5s " 
+					     %( str(complete_buildings), 
+						str(selected_buildings) , 
+						str(expected_time), 
+						str(actual_time)
+					      )
+					    )
+		  		myfile.write("%-5s %-5s %-5s %-5s %-5s " 
+					     % (  str([expected_scores]) , 
+						  str([actual_scores]) , 
+						  str([expected_p_t]) , 
+						  str([actual_p_t]) , 
+						  str(executed_buildings) 
+						)
+					    )
+		  		myfile.write("\n")
 			
 		self.mem.set(self.mem.ACTUAL_TIME_CONSTRUCTION , None)
 		self.mem.set(self.mem.EXPECTED_TIME_CONSTRUCTION , None)
@@ -679,7 +727,8 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	objs_names.remove("table")
 	random.shuffle(objs_names)
 	# builds the gaol sets
-	self.build_current_goal_sets(objs_names)
+	#self.build_current_goal_sets(objs_names)
+	self.build_current_goal_sets_same(objs_names)
 	atoms = self.world.get_atoms()
 	self.remove_bunch_atoms(atoms)
 	stateread.apply_state_file(self.world, self.stateFile)
@@ -709,7 +758,6 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 		for j in self.curr_goal_sets[i]:			
 			#print(j)
 			self.selected_goals.append(j)
-		#print("")
 	print("]")
 	print("")
 
@@ -729,8 +777,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # get the next goal
 	    #self.save_30_buildings()
-	    #raw_input("enter")
-            goal_set = self.next_goal_30()
+            goal_set = self.next_goal()
             # insert that goal
             for g in goal_set:
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
