@@ -113,7 +113,6 @@ def achieve_goals_m(state, goals):
 			return [("point_at", goal["directObject"]), ("achieve_goals", goals[1:])]
 		
 		if goal["objective"] == "stacking":
-			time.sleep(1)
 			print("holding")
 			return [("move_blocks", goal), ("achieve_goals", goals[1:])]
 		
@@ -162,7 +161,6 @@ def achieve_goals_m(state, goals):
 			print("")
 			raw_input("enter")
 			'''
-			time.sleep(1)
 			
 			if get_last_position(state, goal["directObject"]) == 'in-arm':
 						return [("achieve_goals", goals[1:])]
@@ -184,7 +182,6 @@ def achieve_goals_m(state, goals):
 		
 		if goal["objective"] == "moving":
 			
-			time.sleep(1)
 			if get_last_position(state, goal["directObject"]) == 'table':
 						return [("achieve_goals", goals[1:])]
 

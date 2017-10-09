@@ -665,9 +665,10 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
     key to be stored to can also be specified.
     '''
     
-    def __init__(self, topic, midcaObject, memKey = None):
+    def __init__(self, topic, midcaObject, memKey = None, history = None):
         callback = lambda strMsg: self.store_locations(strMsg)
         msgType = String
+	self.left = None
         super(MultipleObjectsLocationHandler, self).__init__(topic, msgType, callback,
         midcaObject)
         #self.objID = objID
@@ -675,10 +676,17 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
             self.memKey = memKey
         else:
             self.memKey = self.mem.ROS_OBJS_DETECTED
+	if history:
+	    self.history = history
+	else:
+	    self.history = self.mem.STATE_HISTORY
         
     def store_locations(self, data):
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
+	if not self.left:
+		rospy.sleep(0.1)
+		self.left = baxter_interface.Gripper('left')
         
         strMsg = str(data.data).strip()
         color_locations = strMsg.split(";")
@@ -687,7 +695,6 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
         for msg in color_locations:
             
             color_location = msg.split(":");
-            
             pointstr = color_location[1].split(",")
             p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
             color_location_dic.update({color_location[0]: p})
@@ -718,6 +725,20 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
 			self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_block, position = pos, isclear = clear))
 			#if you want to know the position of the block, uncomment this
 			#print ( each_block + ":  " +  pos + clear)
+	# check if there is something in the baxter's hand
+	found  = 0
+	if self.left._state.position < 70:
+		print(self.left._state.position)
+		if self.mem.get(self.history):
+			for each_history in self.mem.get(self.history):
+				objects  = each_history
+				for each_object in objects:
+					if not each_object in color_location_dic:
+						self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_object, position = 'holding', isclear = 'not clear'))
+						found = 1						
+						break
+				if found == 1:
+					break
 
 
 class CalibrationHandler(IncomingMsgHandler):
