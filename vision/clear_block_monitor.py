@@ -205,6 +205,53 @@ def monitor_clear_block2(block_name='red block', topic='clear_block'):
 #                             print block_name + "is clear"
                 
 
+def monitor_clear_block_asus(block_n='red block', topic='clear_block'):
+    #rospy.init_node('clear_block_monitoring...')
+    block_name = block_n
+    while(1):
+    	msg = rospy.wait_for_message(topic, String)
+    	obj,loc = m_asus(msg,block_name)
+    	if obj:
+		return obj,loc	    
+	  
+def m_asus(data,block_name):
+
+    #print("got data!")
+    strMsg = str(data.data).strip()
+    color_locations = strMsg.split(";")
+    color_locations.pop() # remove last unwanted ;
+    color_location_dic = {}
+    for msg in color_locations:   
+        color_location = msg.split(":")    
+        pointstr = color_location[1].split(",")
+        p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
+        color_location_dic.update({color_location[0]: p})
+
+
+    if color_location_dic :
+		for each_block in color_location_dic:
+			pos = 'table'
+			clear = 'clear'
+			cmp_block = block_name
+			if not cmp_block in color_location_dic:
+				break
+			if not each_block == cmp_block:
+				# check stack condition
+				x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
+				y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
+				z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
+				if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
+					if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
+						clear = 'not clear'
+					else:
+						pos = cmp_block;
+						block_pos = each_block
+						return each_block,color_location_dic[each_block]
+            
+
+
+
+
 
 if __name__ == '__main__':
 
