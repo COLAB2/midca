@@ -36,7 +36,6 @@
 #
 #############################################################################
 import rospy
-from baxter_gui.post_threading import Post
 import baxter_interface
 from std_msgs.msg import Float32
 
@@ -46,7 +45,6 @@ class HaloLed():
         self.pub = {}
         self.pub["red"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_red_level",Float32,queue_size = 1)
         self.pub["green"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_green_level",Float32,queue_size = 1)
-        self.post = Post(self) 
 
     def setLed(self,color, intensity):
         """
@@ -72,10 +70,12 @@ class HaloLed():
 
 
     def setGreen(self):
+	rospy.sleep(0.3)
         self.setLed("green",100)
         self.setLed("red",0)
         
     def setRed(self):
+	rospy.sleep(0.3)
         self.setLed("red",100)
         self.setLed("green",0)
         
