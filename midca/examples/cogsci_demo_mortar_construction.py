@@ -17,7 +17,7 @@ Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
-MORTAR_COUNT = 4
+MORTAR_COUNT = 0
 T = 10
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -81,8 +81,9 @@ myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1
 for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
     myMidca.append_meta_phase(phase)
 
-'''
+
 # add meta layer modules
+'''
 myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
 myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect_construction())
 myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGenForGoalTrans())
@@ -91,22 +92,11 @@ myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
 myMidca.append_meta_module("Control", control.MRSimpleControl1())
 '''
 
-def preferApprehend(goal1, goal2):
-    if 'predicate' not in goal1 or 'predicate' not in goal2:
-        return 0
-    elif goal1['predicate'] == 'free' and goal2['predicate'] != 'free':
-        return -1
-    elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
-        return 1
-    elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
-        return -1
-    elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
-        return 1
-    return 0
+
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = preferApprehend)
+myMidca.initGoalGraph(GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 #a = goaltransform.choose(myMidca.midca.world , "stable-on(A_,B_)")
 #tree = cl.Tree()
