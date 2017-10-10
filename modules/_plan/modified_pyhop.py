@@ -263,7 +263,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - verbose is whether to print debugging messages
     """
     if depth == 1 and not wait_time:
-	time.sleep(6)
+	time.sleep(0)
 	wait_time = 1
 	try:
 		hallo = halo_color.HaloLed()
