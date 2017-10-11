@@ -105,6 +105,11 @@ import copy,sys, pprint
 from threading import Thread
 import time
 
+try:
+   from MIDCA.examples._gazebo_baxter import halo_color
+except ImportError:
+   pass
+
 ############################################################
 # States and goals
 
@@ -166,6 +171,7 @@ operators = {}
 methods = {}
 monitors_l = {}
 generated_monitors = []
+wait_time = None
 
 def declare_operators(*op_list):
     """
@@ -240,6 +246,7 @@ def pyhop(state,tasks,verbose=0):
 fired_monitor = None
 def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor
+    global wait_time
     
     
 #    print('depth {} tasks {}'.format(depth,tasks))
@@ -255,6 +262,19 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
+    if depth == 1 and not wait_time:
+	time.sleep(0)
+	wait_time = 1
+	try:
+		hallo = halo_color.HaloLed()
+		# set hallo to red as a sign for monitors
+		hallo.setRed()
+		    
+	finally:
+		    print("robot stuff")  
+
+
+
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))

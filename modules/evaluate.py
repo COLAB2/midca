@@ -1,6 +1,12 @@
 from MIDCA import base
 from MIDCA import midcatime
 import copy
+from MIDCA.modules._plan import modified_pyhop
+try:
+   from MIDCA.examples._gazebo_baxter import halo_color
+except ImportError:
+   pass
+
 
 class EvalPointingFromFeedback(base.BaseModule):
 
@@ -21,6 +27,14 @@ class EvalPointingFromFeedback(base.BaseModule):
                     "Skipping eval based on plan completion"
             else:
                 if plan.finished():
+		    try:
+			hallo = halo_color.HaloLed()
+			# set hallo to green as a sign for monitors
+			hallo.setGreen()
+		    except:
+			pass
+	    	    finally:
+			print("robot stuff")
                     if verbose >= 1:
                         print "Plan:", plan, "complete. Removing its goals"
                     for goal in plan.goals:

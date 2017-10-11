@@ -1,0 +1,89 @@
+Language model created by QuickLM on Tue Sep 26 09:24:10 EDT 2017
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 20 sentences and 13 words
+
+\data\
+ngram 1=13
+ngram 2=19
+ngram 3=34
+
+\1-grams:
+-1.2455 </s> -0.3010
+-1.2455 <s> -0.2756
+-1.0414 BLOCK -0.2542
+-1.6435 BLUE -0.2596
+-1.9445 GET -0.2596
+-1.6435 GREEN -0.2596
+-1.3424 ON -0.2542
+-1.6435 ORANGE -0.2596
+-1.9445 PUT -0.2596
+-1.6435 RED -0.2596
+-1.4674 STACK -0.2596
+-1.9445 TABLE -0.2756
+-1.0414 THE -0.2596
+
+\2-grams:
+-1.0000 <s> GET 0.0000
+-1.0000 <s> PUT 0.0000
+-0.5229 <s> STACK 0.0000
+-0.6021 BLOCK </s> -0.3010
+-0.6021 BLOCK ON 0.0000
+-0.3010 BLUE BLOCK 0.0000
+-0.3010 GET THE 0.0000
+-0.3010 GREEN BLOCK 0.0000
+-0.9031 ON TABLE 0.0000
+-0.4260 ON THE 0.0000
+-0.3010 ORANGE BLOCK 0.0000
+-0.3010 PUT THE 0.0000
+-0.3010 RED BLOCK 0.0000
+-0.3010 STACK THE 0.0000
+-0.3010 TABLE </s> -0.3010
+-0.9031 THE BLUE 0.0000
+-0.9031 THE GREEN 0.0000
+-0.9031 THE ORANGE 0.0000
+-0.9031 THE RED 0.0000
+
+\3-grams:
+-0.3010 <s> GET THE
+-0.3010 <s> PUT THE
+-0.3010 <s> STACK THE
+-0.9031 BLOCK ON TABLE
+-0.4260 BLOCK ON THE
+-0.6021 BLUE BLOCK </s>
+-0.6021 BLUE BLOCK ON
+-0.9031 GET THE BLUE
+-0.9031 GET THE GREEN
+-0.9031 GET THE ORANGE
+-0.9031 GET THE RED
+-0.6021 GREEN BLOCK </s>
+-0.6021 GREEN BLOCK ON
+-0.3010 ON TABLE </s>
+-0.9031 ON THE BLUE
+-0.9031 ON THE GREEN
+-0.9031 ON THE ORANGE
+-0.9031 ON THE RED
+-0.6021 ORANGE BLOCK </s>
+-0.6021 ORANGE BLOCK ON
+-0.9031 PUT THE BLUE
+-0.9031 PUT THE GREEN
+-0.9031 PUT THE ORANGE
+-0.9031 PUT THE RED
+-0.6021 RED BLOCK </s>
+-0.6021 RED BLOCK ON
+-0.9031 STACK THE BLUE
+-0.9031 STACK THE GREEN
+-0.9031 STACK THE ORANGE
+-0.9031 STACK THE RED
+-0.3010 THE BLUE BLOCK
+-0.3010 THE GREEN BLOCK
+-0.3010 THE ORANGE BLOCK
+-0.3010 THE RED BLOCK
+
+\end\
