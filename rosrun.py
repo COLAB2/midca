@@ -567,9 +567,12 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
                         clear_red = 'clear'
                         clear_blue = 'not clear'
 
+            # TODO: Use status of 'open' or 'closed' instead of > 80
+            # TODO: This is not a good solution to solve this problem
             if not(left._state.position > 80):
                     pos_green = 'in-arm'
                     clear_green = 'not clear'
+                    # TODO: BAD ASSUMPTION: if there are only two blocks, cannot assume y ou are holding the green block
                     self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green))
                 
             
