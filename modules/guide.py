@@ -410,6 +410,7 @@ class InstructionReceiver_sr:
 			i -= 1
 		newUtterances = [utterance.utterance for utterance in world.utterances[i:]]
 		#now add goals based on new utterances
+        # TODO: too much repeating code, wrap each of these cases into a function
 		for utterance in newUtterances:
 			if verbose >= 2:
 				print "received utterance:", utterance
