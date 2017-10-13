@@ -2,13 +2,17 @@
 
 1. MIDCA is written for python 2.7; currently it will not run with other python versions.
 
-2. To install MIDCA, run the setup.py file in this folder using python 2.7. If you will be making changes to MIDCA's
-   code, use the `develop` option, like the following (assuming 2.7 is your default python).
+2. To install MIDCA, run the setup.py file in this folder using python 2.7. 
 
     ```
+    python setup.py install
+    ```
+    
+    If you will be making changes to MIDCA's code, use the `develop` option, like the following (assuming 2.7 is your default python).
+
+     ```
     python setup.py develop
     ```
-
 
 3. For a simple interactive version of MIDCA, run
 
