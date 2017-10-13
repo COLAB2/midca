@@ -1,0 +1,79 @@
+Language model created by QuickLM on Fri Sep 30 01:32:24 EDT 2016
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 12 sentences and 12 words
+
+\data\
+ngram 1=12
+ngram 2=17
+ngram 3=27
+
+\1-grams:
+-1.1761 </s> -0.3010
+-1.2304 <s> -0.2747
+-0.9445 BLOCK -0.2539
+-1.5315 BLUE -0.2609
+-1.8325 GET -0.2609
+-1.5315 GREEN -0.2609
+-1.3554 ON -0.2539
+-1.8325 PUT -0.2609
+-1.8771 RED -0.2809
+-1.5315 STACK -0.2609
+-1.8325 TABLE -0.2747
+-1.9771 THE -0.2609
+
+\2-grams:
+-0.9031 <s> GET 0.0000
+-0.9031 <s> PUT 0.0000
+-0.6021 <s> STACK 0.0000
+-0.6021 BLOCK </s> -0.3010
+-0.6021 BLOCK ON 0.0000
+-0.3010 BLUE BLOCK 0.0000
+-0.3010 GET THE 0.0000
+-0.3010 GREEN BLOCK 0.0000
+-0.7782 ON TABLE 0.0000
+-0.4771 ON THE 0.0000
+-0.3010 PUT THE 0.0000
+-0.3010 RED BLOCK 0.0000
+-0.3010 STACK THE 0.0000
+-0.3010 TABLE </s> -0.3010
+-0.7782 THE BLUE 0.0000
+-0.7782 THE GREEN 0.0000
+-0.7782 THE RED 0.0000
+
+\3-grams:
+-0.3010 <s> GET THE
+-0.3010 <s> PUT THE
+-0.3010 <s> STACK THE
+-0.7782 BLOCK ON TABLE
+-0.4771 BLOCK ON THE
+-0.6021 BLUE BLOCK </s>
+-0.6021 BLUE BLOCK ON
+-0.7782 GET THE BLUE
+-0.7782 GET THE GREEN
+-0.7782 GET THE RED
+-0.6021 GREEN BLOCK </s>
+-0.6021 GREEN BLOCK ON
+-0.3010 ON TABLE </s>
+-0.7782 ON THE BLUE
+-0.7782 ON THE GREEN
+-0.7782 ON THE RED
+-0.7782 PUT THE BLUE
+-0.7782 PUT THE GREEN
+-0.7782 PUT THE RED
+-0.6021 RED BLOCK </s>
+-0.6021 RED BLOCK ON
+-0.7782 STACK THE BLUE
+-0.7782 STACK THE GREEN
+-0.7782 STACK THE RED
+-0.3010 THE BLUE BLOCK
+-0.3010 THE GREEN BLOCK
+-0.3010 THE RED BLOCK
+
+\end\
