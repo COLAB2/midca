@@ -1,0 +1,107 @@
+; This file contains a SHOP domain representation of the block-stacking
+;;; algorithm from the following paper:
+;;;    N. Gupta and D. Nau, On the complexity of blocks-world planning,
+;;;    Artificial Intelligence 56(2-3):223-254, August 1992.
+
+
+;;; ------------------------------------------------------------------------
+;;; Declare all the data
+;;; ------------------------------------------------------------------------
+
+
+(defdomain blocks-normal
+  (
+    ;; basic block-stacking operators
+    
+    (:operator (!pickup ?a)
+               ()
+               ((clear ?a) (on-table ?a))
+               ((holding ?a)) )
+    
+    (:operator (!putdown ?b) 
+               ()
+               ((holding ?b))
+               ((on-table ?b) (clear ?b)) )
+    
+    (:operator (!stack ?c ?d)
+               ()
+               ((holding ?c) (clear ?d))
+               ((on ?c ?d) (clear ?c)) )
+    
+    (:operator (!unstack ?e ?f)
+               ()
+               ((clear ?e) (on ?e ?f))
+               ((holding ?e) (clear ?f)) )
+    
+    ;; book-keeping methods & ops, to keep track of what needs to be done
+    
+    (:operator (!assert ?g)
+               ()
+               ()
+               ?g
+               ;; Since !ASSERT isn't a real blocks-world operator, make its cost 0
+               0)
+    
+    (:method (achieve-goals ?goals)
+             ()
+             ((assert-goals ?goals nil) (move-block nil)))
+
+    (:method (assert-goals (list ?goal . ?goals) ?out)
+             ()
+             ((assert-goals ?goals (list (goal ?goal) . ?out))))
+
+    (:method (assert-goals nil ?out)
+             ()
+             ((!assert ?out)))
+    
+    ;; The methods and operators for doing the actual planning
+    
+    (:method (move-block ?nomove)
+             
+             ;; method for moving x from y to z
+             (:first (clear ?x) (not ( call member ?x ?nomove)) (on ?x ?y)
+              (goal (on ?x ?z)) (different ?x ?z) (clear ?z) (not (need-to-move ?z)))
+             ((!unstack ?x ?y) (!stack ?x ?z) (move-block (list ?x . ?nomove)))
+             
+             ;; method for moving x from y to table
+             (:first (clear ?x) ( not ( call member ?x ?nomove))
+              (on ?x ?y) (goal (on-table ?x)))
+             ((!unstack ?x ?y) (!putdown ?x) (move-block (list ?x . ?nomove)))
+             
+             ;; method for moving x from table to y
+             (:first (clear ?x) (not ( call member ?x ?nomove))
+              (on-table ?x) (goal (on ?x ?y)) (clear ?y) (not (need-to-move ?y)))
+             ((!pickup ?x) (!stack ?x ?y) (move-block (list ?x . ?nomove)))
+             
+             ;; method for moving x out of the way
+             ((clear ?x)  (not (call member ?x  ?nomove))
+              (on ?x ?y) (need-to-move ?x))
+             ((!unstack ?x ?y) (!putdown ?x) (move-block ?nomove))
+             
+             ;; if nothing else matches, then we're done
+             ()
+             ())
+
+    ;; state axioms
+
+     (:- (different ?x ?y) ((not (same ?x ?y))))
+     (:- (same ?x ?x) ())
+     (:- (need-to-move ?x)
+         ;; need to move x if x needs to go from one block to another   
+         ((on ?x ?y) (goal (on ?x ?z)) (different ?y ?z))         
+         ;; need to move x if x needs to go from table to block  
+         ((on-table ?x) (goal (on ?x ?z)))         
+         ;; need to move x if x needs to go from block to table   
+         ((on ?x ?y) (goal (on-table ?x)))         
+         ;; need to move x if x is on y and y needs to be clear
+         ((on ?x ?y) (goal (clear ?y)))         
+         ;; need to move x if x is on z and something else needs to be on z
+         ((on ?x ?z) (goal (on ?y ?z)) (different ?x ?y))         
+         ;; need to move x if x is on something else that needs to be moved 
+         ((on ?x ?w) (need-to-move ?w)))
+         (:- (moveable-to-goal ?x)
+         ((clear ?x) (on ?x ?y) (goal (on ?x ?z))
+         (different ?x ?z) (clear ?z) (not (need-to-move ?z)))
+         ((clear ?x) (on ?x ?y) (goal (on-table ?x)))
+         ((clear ?x) (on-table ?x) (goal (on ?x ?y))
+         (clear ?y) (not (need-to-move ?y))))))

@@ -1,0 +1,63 @@
+type(root)
+type(PERSON,root)
+type(NUMBER,root)
+type(DISH,root)
+type(CHICKEN,DISH)
+type(SALAD,DISH)
+type(HASHBROWN,DISH)
+type(EGGMUFFIN,DISH)
+type(MOCKTAIL,DISH)
+type(STRAWBERYCAKE,DISH)
+type(VEGETARIAN_BURGER,DISH)
+type(VEGIE_SANDWICH,DISH)
+type(STRAWBERYCAKE,DISH)
+type(WAFFLES,DISH)
+type(GOLD_FISH,DISH)
+type(TUNA_FISH,DISH)
+type(HOT_DOG,DISH)
+type(COOKIES,DISH)
+type(ICE_CAKE,DISH)
+type(A_,PERSON)
+type(B_,PERSON)
+type(C_,PERSON)
+type(D_,PERSON)
+type(E_,PERSON)
+type(F_,PERSON)
+type(G_,PERSON)
+type(H_,PERSON)
+
+
+predicate(costofdish, [dsh, num], [DISH, NUMBER])
+predicate(order_received, [per, dsh], [PERSON, DISH])
+predicate(order_pending, [per, dsh], [PERSON, DISH])
+predicate(order_prepared, [per, dsh], [PERSON, DISH])
+predicate(order_serve, [per, dsh], [PERSON, DISH])
+
+
+operator(take_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_received, [per, dsh], negate = True)], 
+results = [
+	condition(order_received, [per, dsh]),
+	condition(order_pending, [per, dsh])])
+
+operator(prepare_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_pending, [per, dsh])], 
+results = [
+	condition(order_pending, [per, dsh], negate= True),
+	condition(order_prepared, [per, dsh])])
+
+operator(serve_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_prepared, [per, dsh])], 
+results = [
+	condition(order_serve, [per, dsh]),
+	condition(order_prepared, [per, dsh], negate = True),
+	condition(order_received, [per, dsh], negate = True)])
+
+
+
