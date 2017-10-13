@@ -4,11 +4,11 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-from MIDCA.modules._robot_world import world_repr
-from MIDCA.modules._plan import modified_pyhop
+from midca.modules._robot_world import world_repr
+from midca.modules._plan import modified_pyhop
 from _io import open
 import time
-from MIDCA.vision import clear_block_monitor, pos_block_monitor
+from midca.vision import clear_block_monitor, pos_block_monitor
 import rospy
 from std_msgs.msg import String
 import uuid
