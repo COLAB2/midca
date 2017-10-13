@@ -1,9 +1,8 @@
 from midca import base
 from midca import midcatime
 import copy
-from MIDCA.modules._plan import modified_pyhop
 try:
-   from MIDCA.examples._gazebo_baxter import halo_color
+   from midca.examples._gazebo_baxter import halo_color
 except ImportError:
    pass
 
