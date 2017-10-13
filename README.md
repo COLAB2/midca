@@ -6,7 +6,7 @@
    code, use the `develop` option, like the following (assuming 2.7 is your default python).
 
     ```
-    python setup.py install
+    python setup.py develop
     ```
 
 
