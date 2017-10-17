@@ -244,6 +244,8 @@ def pyhop(state,tasks,verbose=0):
     return result
 
 fired_monitor = None
+
+
 def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor
     global wait_time
@@ -262,6 +264,10 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
+    
+    '''
+    The timer is set to make a delay while planing. It gives the human enough time to change the world. 
+    '''
     if depth == 1 and not wait_time:
 	time.sleep(0)
 	wait_time = 1
