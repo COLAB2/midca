@@ -193,7 +193,10 @@ class ObjectsLocationHandler(IncomingMsgHandler):
             self.memKey = memKey
         else:
             self.memKey = self.mem.ROS_OBJS_DETECTED
-        
+
+    '''
+    This function updates the list of seen objects and their locations in the memory
+    '''
     def store_locations(self, data):
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
@@ -213,45 +216,45 @@ class ObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
         loc = p))
         
-        if color_location_dic and ('red block' in color_location_dic.keys()) and ('green block' in color_location_dic.keys()):
-            pos_green = 'table'
-            pos_red = 'table'
-            clear_green = 'clear'
-            clear_red = 'clear'
-            if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 12:
-                if color_location_dic['red block'].y > color_location_dic['green block'].y:
-                    pos_green = "red block"
-                    clear_red = 'not clear'
-                else:
-                    pos_red = "green block"
-                    clear_green = 'not clear'     
-                
-                self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
-                self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green)) 
-        
-        elif len(color_location) == 1:
-            color_block = color_location_dic.keys()[0]
-            pos = 'table'
-            clear = 'clear'
-            self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = color_block, position = pos, isclear = clear))
-        
-#         if 'red block' in color_location_dic.keys() and color_location_dic['red block']:
-#             if 'green block' in color_location_dic.keys() and color_location_dic['green block']:
-#                 pos_green = 'table'
-#                 pos_red = 'table'
-#                 clear_green = 'clear'
-#                 clear_red = 'clear'
-#                 if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 10:
-#                     if color_location_dic['red block'].y > color_location_dic['green block'].y:
-#                         pos_green = "red block"
-#                         clear_red = 'not clear'
-#                     else:
-#                         pos_red = "green block"
-#                         clear_green = 'not clear'     
-#                 
+#         if color_location_dic and ('red block' in color_location_dic.keys()) and ('green block' in color_location_dic.keys()):
+#             pos_green = 'table'
+#             pos_red = 'table'
+#             clear_green = 'clear'
+#             clear_red = 'clear'
+#             if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 12:
+#                 if color_location_dic['red block'].y > color_location_dic['green block'].y:
+#                     pos_green = "red block"
+#                     clear_red = 'not clear'
+#                 else:
+#                     pos_red = "green block"
+#                     clear_green = 'not clear'
+#
 #                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
-#                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green))    
-
+#                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green))
+#
+#         elif len(color_location) == 1:
+#             color_block = color_location_dic.keys()[0]
+#             pos = 'table'
+#             clear = 'clear'
+#             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = color_block, position = pos, isclear = clear))
+#
+# #         if 'red block' in color_location_dic.keys() and color_location_dic['red block']:
+# #             if 'green block' in color_location_dic.keys() and color_location_dic['green block']:
+# #                 pos_green = 'table'
+# #                 pos_red = 'table'
+# #                 clear_green = 'clear'
+# #                 clear_red = 'clear'
+# #                 if math.fabs(color_location_dic['red block'].x - color_location_dic['green block'].x) < 10:
+# #                     if color_location_dic['red block'].y > color_location_dic['green block'].y:
+# #                         pos_green = "red block"
+# #                         clear_red = 'not clear'
+# #                     else:
+# #                         pos_red = "green block"
+# #                         clear_green = 'not clear'
+# #
+# #                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
+# #                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green))
+#
 
 
 class threeObjectsLocationHandler(IncomingMsgHandler):

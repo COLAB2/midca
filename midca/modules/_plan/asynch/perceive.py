@@ -8,13 +8,26 @@ class ROSObserver:
 	def init(self, world, mem):
 		self.mem = mem
 		self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
-	
-	
-		
+
+	'''
+	We assume that the objects are on a table; 
+	This function works for 
+	'''
+	def get_predicates(self, objects):
+		color_location_dic = {}
+		for block_name in object:
+			for obj in objects:
+				if obj != block_name:
+					if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 12:
+						if color_location[block_name][1] > color_location[obj][1]:
+							print block_name + " is not clear"
+
+
 	def run(self, cycle, verbose = 2):
 		#self.ObserveWorld() 
 		detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
-		detecttionBlockState = self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
+		detecttionBlockState = get_predicates(detectionEvents)
+			# self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
 		utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
 		feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
 		world = self.mem.get_and_lock(self.mem.STATE)
