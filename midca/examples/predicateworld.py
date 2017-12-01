@@ -15,7 +15,7 @@ def UserGoalsMidca(domainFile, stateFile, display=print, goalsFile = None, argsP
 
         #add the modules which instantiate basic blocksworld operation
     myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-    myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
+    myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display))
     myMidca.append_module("Perceive", perceive.PerfectObserver())
     myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
     #myMidca.append_module("Interpret", guide.UserGoalInput())

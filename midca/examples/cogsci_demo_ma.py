@@ -1,7 +1,7 @@
 #!/usr/bin/env python 
 import midca
 from midca.examples import predicateworld
-from midca.modules import simulator, guide, evaluate, perceive, assess
+from midca.modules import simulator, guide, evaluate, perceive, assess 
 import inspect, os
 
 # Domain Specific Imports
@@ -22,22 +22,23 @@ MIDCA_ROOT = thisDir + "/../"
 
 writePort = 5150
 readPort = 5151
-
+DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
 argsPyHopPlanner = [util.pyhop_state_from_world,
 					util.pyhop_tasks_from_goals,
 					DECLARE_METHODS_FUNC,
 					DECLARE_OPERATORS_FUNC]
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate.sim",argsPyHopPlanner=argsPyHopPlanner)
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate.sim", display = DISPLAY_FUNC, argsPyHopPlanner=argsPyHopPlanner)
 
 myMidca.append_module('Perceive', perceive.MAReporter(writePort))
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.5, arsonStart = 10), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 2), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.append_module('Interpret', assess.MAQuery(readPort), 3)
+myMidca.insert_module('Interpret', assess.MAQuery(readPort), 3)
 myMidca.insert_module('Eval', evaluate.Scorer(), 0)
+
 
 def preferApprehend(goal1, goal2):
 	if 'predicate' not in goal1 or 'predicate' not in goal2:
