@@ -2,6 +2,7 @@ from midca.modules._robot_world import world_repr
 from midca import rosrun, midcatime, base
 import copy
 import os
+import socket
 try:
 	# baxter robot requirements
 	from midca.examples import ObjectDetector
@@ -272,6 +273,9 @@ class MAReport:
 
 
     def __str__(self):
+        if not self.actions:
+            return "incomplete"
+        # if there is no state do not send report to meta aqua
         if not self.finalstate:
             return "incomplete"
         else:
@@ -317,6 +321,7 @@ class MAReporter(base.BaseModule):
             objectname != "table":
                 res.append(objectname)
         return res
+    
 
     def run(self, cycle, verbose = 2):
         world = None
@@ -324,20 +329,21 @@ class MAReporter(base.BaseModule):
         try:
             world = self.mem.get(self.mem.STATES)[-1]
             lastWorld = self.mem.get(self.mem.STATES)[-2]
-        except TypeError, IndexError:
-            pass #leave as None
+        except (TypeError,IndexError):
+            pass
         if not world:
             return #no report if not world observed
         report = MAReport()
-        report.finalState = world
+        report.finalstate = world
         try:
-            actions = self.mem.get(self.memKeys.MEM_ACTIONS)[-1]
-        except TypeError, IndexError:
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except (TypeError, IndexError):
             actions = []
         blocksPutOut = []
         for action in actions:
-            report.actions.append([action.op.name] + action.args)
-            if action.op.name == "putoutfire":
+            action.args = list(action.args)
+            report.actions.append([action.op] + action.args)
+            if action.op == "putoutfire":
                 blocksPutOut.append(action.args[0])
         if lastWorld:
             lastBurning = self.get_lit_blocks(lastWorld)
@@ -346,11 +352,14 @@ class MAReporter(base.BaseModule):
                 if block not in lastBurning or block in blocksPutOut:
                     report.actions.append(["burns", block])
         #report is finished, send to Meta-AQUA
+		#report contains actions and state, 
+		#for every action there will be the state attached to it
         if verbose >= 1:
             print "Sending report to Meta-AQUA",
             if verbose >= 2:
                 print ":\n", report
-        self.writeS.send(str(report))
+        if not str(report ) == "incomplete":
+            self.writeS.send(str(report))
 
     def __del__(self):
         '''

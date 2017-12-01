@@ -2,8 +2,15 @@ import socket
 from midca.modules._xp_goal.parser import *
 from midca.modules._xp_goal.traverser import *
 from midca import goals, base
+import socket
 
 class MAQuery(base.BaseModule):
+    '''
+    Reads the ouput from Meta-Aqua, builds the meta-aqua frame system.
+    Every frame has values,relations and roles.
+    searches for CRIMINAL-VOLITIONAL-AGENT from the frames and
+    adds a goal if the operator is apprehend.
+    '''
 
     endMsg = "Done"
     readSize = 100000
@@ -18,17 +25,20 @@ class MAQuery(base.BaseModule):
             text = self.readS.recv(self.readSize)
             if text != "None\n":
                p = Parser()
+               # create frames
                frames = p.makeframegraph(text)
                noem = {}   # Node Operator Effect Mapping
-               noem['CRIMINAL-VOLITIONAL-AGENT.4697'] = [['apprehend', OPERATOR_EFFECT_NEGATION]]
+               noem['CRIMINAL-VOLITIONAL-AGENT'] = [['apprehend', OPERATOR_EFFECT_NEGATION]]
+               # traverser class, initializes frames and noem
                t = Traverser(frames, noem)
+               # gets the frame operator and effect
                (frame, operator, effect) = t.traverse()
                if operator == "apprehend":
                    apprehendGoal = goals.Goal("Gui Montag", predicate = "free",
                                               negate = True)
-                   inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                   inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(apprehendGoal)
                    if verbose >= 2:
-                       print "Meta-AQUA goal generated:", goal,
+                       print "Meta-AQUA goal generated:", apprehendGoal,
                        if inserted:
                            print
                        else:
@@ -42,9 +52,10 @@ class MAQuery(base.BaseModule):
                 print "Error: no data received from Meta-AQUA before timeout."
         except:
             if verbose >= 1:
-                print "Error reading from Meta-AQUA.",
+                print "Error reading from Meta-AQUA.", + str(text)
                 try:
-                    print " Got:\n" + text
+                    #print " Got:\n" + text
+                    pass
                 except NameError:
                     print " Unable to read from socket."
                

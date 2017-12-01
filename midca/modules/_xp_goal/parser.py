@@ -15,8 +15,18 @@ class Parser:
         lines = text.split("\n")
 
         # make frames
+        # parses the lines from the meta-aqua and gets all the frames
         centerflag = True
         for l in lines:
+            if "For the abstract-object frame " in l:
+                l = l.replace("For the abstract-object frame ","For the frame ")
+
+            if "For the physical-object frame " in l:
+                l = l.replace("For the physical-object frame ","For the frame ")
+
+            if "For the process frame " in l:
+                l = l.replace("For the process frame ", "For the frame ")
+
             if l[0:14] == "For the frame ":
                 framename = l[14:-1]
                 if not framename in frames:
@@ -29,10 +39,24 @@ class Parser:
                     frames[framename] = Frame(framename, isstate=True, iscenter=centerflag)
                     centerflag = False
 
+
+
         # establish frame relations
+        # gets the relations from the frames
+        # gets the values from the frames
         curframe = None
         for l_index in range(len(lines)):
             l = lines[l_index]
+
+            if "For the abstract-object frame " in l:
+                l = l.replace("For the abstract-object frame ","For the frame ")
+
+            if "For the physical-object frame " in l:
+                l = l.replace("For the physical-object frame ","For the frame ")
+
+            if "For the process frame " in l:
+                l = l.replace("For the process frame ", "For the frame ")
+
             if len(l) > 14 and l[0:14] == "For the frame ":
                 curframe = l[14:-1]
             if len(l) > 20 and l[0:20] == "For the state frame ":
@@ -52,7 +76,7 @@ class Parser:
                         w = w.replace(").","")
                         facetvalues.append(w)
                 if words[-1][-2:] != ").":
-                    i = 1
+                    i = 0
                     while len(lines) > 38 and lines[l_index + i][0:38] == "                                      ":
                         addwords = lines[l_index + i].split()
                         for w in addwords:
@@ -63,14 +87,15 @@ class Parser:
 
                 if not roletype in frames[curframe].roles:
                     frames[curframe].roles[roletype] = Role()
+
                 if facettype == "VALUE":
                     for framename in facetvalues:
                         if not frames[framename] in frames[curframe].roles[roletype].facetvalue:
-                            frames[curframe].roles[roletype].facetvalue.append(frames[framename])
+                            frames[curframe].roles[roletype].facetvalue.append(framename)
                 elif facettype == "RELATION":
                     for framename in facetvalues:
                         if not frames[framename] in frames[curframe].roles[roletype].facetrelation:
-                            frames[curframe].roles[roletype].facetrelation.append(frames[framename])
+                            frames[curframe].roles[roletype].facetrelation.append(framename)
                 else:
                     print "Unrecognized facet type!"
                     print "    " + facettype

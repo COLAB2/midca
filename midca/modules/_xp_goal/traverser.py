@@ -2,6 +2,7 @@ from frame import Frame
 from parser import Parser
 from settings import *
 
+
 class Traverser:
     def __init__(self, frames, mapping):
         self.frames = frames
@@ -13,6 +14,7 @@ class Traverser:
         # Want search in a BFS manner
         queue = []          # queue for BFS
 
+
         # Find anomaly center
         center = None
         for f in self.frames.values():
@@ -21,17 +23,25 @@ class Traverser:
 
         covered = []        # do not re-search nodes
         queue.append(center)
-
         while len(queue) > 0:
             node = queue.pop(0)
             covered.append(node)
             for role in node.roles.values():
                 for rn in set(role.facetvalue + role.facetrelation):
-                    if rn not in covered and rn not in queue:
-                        queue.append(rn)
+                    if self.frames[rn] not in covered and self.frames[rn] not in queue:
+                        queue.append(self.frames[rn])
 
-            if node.name in self.mapping.keys():
-                for [operator, effect] in self.mapping[node.name]:
+
+            # searches for CRIMINAL-VOLITIONAL-AGENT and splits the number associated to it
+            # So that it will work with any instance of CRIMINAL-VOLITIONAL-AGENT
+            if "." in node.name:
+                check_name = node.name.split(".")[0]
+            else:
+                check_name = node.name
+            print check_name
+
+            if check_name in self.mapping.keys():
+                for [operator, effect] in self.mapping[check_name]:
                     if self.evaluate(node, effect):
                         return (node, operator, effect)
 
@@ -48,12 +58,12 @@ class Traverser:
             # Assumption: All edges indicate dependencies. This is invalid and will need to be updated.
             expanded = True
             while expanded:
-                expaned = False
+                expanded = False
                 for frame in self.frames.values():
                     if not frame in negated:
                         for role in frame.roles.values():
                             for rn in set(role.facetvalue + role.facetrelation):
-                                if rn in negated and not frame in negated:
+                                if self.frames[rn] in negated and not frame in negated:
                                     if frame.iscenter:  
                                         return True
                                     negated.append(frame)
