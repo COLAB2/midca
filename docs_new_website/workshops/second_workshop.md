@@ -12,7 +12,7 @@ Tentative Schedule (subject to change):
 | ------------------                | ------------ | ----------------------- | ------- |
 | Introduction                      | 4:00 pm      | 7:30 am                 | Dustin Dannenhauer |
 | Cognitive Architectures and MIDCA | 4:10 pm      | 7:40 am                 | Michael T. Cox |
-| TBD                               | 4:30 pm      | 8:00 am                 | Alexandra Coman |
+| TBD                               | 4:30 pm      | 8:00 am                 | James Boggs |
 | TBD                               | 4:50 pm      | 8:20 am                 | Sravya Kondrakunta |
 | Coffee Break                      | 5:10 pm      | 8:40 am                 |                    |
 | TBD                               | 5:30 pm      | 9:00 am                 | Martin Oxenham |
