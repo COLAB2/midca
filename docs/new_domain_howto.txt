@@ -1,0 +1,40 @@
+Steps to add a new predicate logic domain to MIDCA and run an example in it:
+
+1) Create a new domain file for the MIDCA world simulator
+
+2) Create pyhop methods and operators for the planner to use in the domain
+
+3) Instantiate a version of MIDCA using these files. One way to do this is to 
+create a MIDCA object using the examples/predicateworld.UserGoalsMidca() generator,
+then clear its 'Plan' phase and add a new planning module. The planning module can
+be an instance of modules/planning.GenericPyhopPlanner(). Several notes:
+
+	a) the UserGoalsMidca method takes as mandatory arguments domain and
+	state files. See, for example, examples/simple_run.py for a use case.
+
+	b) the GenericPyhopPlanner will assume that the methods and operators
+	provided use the same state representation that MIDCA stores in its memory.
+	In the default implementation this will be a copy of the worldsim.World 
+	object used by the simulator. Also, the GenericPyhopPlanner assume a method
+	'achieve_goals' is defined and will always try to implement this method on
+	its current goals. If your planning methods and operators use a different 
+	representation of either the state or tasks, you must provide a custom 
+	planning module which translates from MIDCA's stored world state  and
+	goals to your planner's representation. The modules/planning.PyHopPlanner 
+	module uses this approach for the blocksworld-arson example domain MIDCA 
+	ships with; see especially the pyhop_state_from_world() and 
+	pyhop_tasks_from_goals() methods in modules/planning.py.
+
+As an example, I have added a "chicken crossing the road" domain to MIDCA. This
+domain is fully implemented by the following files:
+
+worldsim/domains/sample_domain.sim #MIDCA domain file
+worldsim/states/sample_state.sim #Starting world state
+modules/_plan/sample_methods.py #pyhop methods
+modules/_plan/sample_operators.py #pyhop operators
+examples/chicken_run.py #script that creates and runs a MIDCA object
+
+Comments in these files are meant to further explain the domain extension process.
+Full documentation for pyhop customization is best found in the comments of the 
+pyhop python module - modules/_plan/pyhop.py. Note that MIDCA does not use pyhop
+states; pyhop's flexibility allows MIDCA states to be used in planning instead.
