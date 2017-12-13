@@ -4,7 +4,13 @@ layout: default
 
 # Second Annual MIDCA Workshop
 
-The Second Annual MIDCA Workshop is scheduled to take place Thursday, January 18th. The workshop will be hosted at Wright State University in Dayton, OH with all the talks being live-streamed over youtube. Stay tuned for more details.
+**Date:** Thursday, January 18th, 2018
+
+**Time:** 4pm - 8pm EST, 7:30am - 11:30am (Adelaide, ACDT)
+
+**Location:** Wright State University in Dayton, OH, USA
+
+**Note:** Some speakers with present their talks remotely. All talks will be live-streamed over youtube.
 
 Tentative Schedule (subject to change):
 
@@ -25,6 +31,11 @@ Tentative Schedule (subject to change):
 | Closing                           | 7:50 pm      | 11:20 am                | Dustin Dannenhauer |
 
 
-Organizer: Dustin Dannenhauer (dustin.dannenhauer.ctr@nrl.navy.mil)
+**Organizers:**
+
+Dustin Dannenhauer (dustin.dannenhauer.ctr@nrl.navy.mil)
+
+Michael T. Cox (michael.cox@wright.edu)
+
 
 Please email questions/comments to Dustin Dannenhauer.
