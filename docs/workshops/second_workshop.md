@@ -23,8 +23,8 @@ Tentative Schedule (subject to change):
 | TBD                               | 5:10 pm      | 8:40 am                 | Dustin Dannenhauer |
 | Coffee Break                      | 5:30 pm      | 9:00 am                 |                    |
 | TBD                               | 5:50 pm      | 9:20 am                 | Martin Oxenham |
-| TBD                               | 6:10 pm      | 9:40 am                 | Ryan Green |
-| TBD                               | 6:30 pm      | 10:00 am                | Venkatsampath Gogineni |
+| Meta-cognition for power management in autonomous systems | 6:10 pm      | 9:40 am                 | Ryan Green |
+| Baxter robot with MIDCA           | 6:30 pm      | 10:00 am                | Venkatsampath Gogineni |
 | TBD                               | 6:50 pm      | 10:20 am                | Zohreh A. Dannenhauer |
 | Coffee Break                      | 7:10 pm      | 10:40 am                |  |
 | Discussion                        | 7:20 pm      | 10:50 am                |  |
