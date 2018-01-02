@@ -14,21 +14,21 @@ layout: default
 
 Tentative Schedule (subject to change):
 
-| Presentation Title                | Timing (EST) | Timing (Adelaide, ACDT) | Speaker |
-| ------------------                | ------------ | ----------------------- | ------- |
-| Introduction                      | 4:00 pm      | 7:30 am                 | Dustin Dannenhauer |
-| Cognitive Architectures and MIDCA | 4:10 pm      | 7:40 am                 | Michael T. Cox |
-| TBD                               | 4:30 pm      | 8:00 am                 | Sravya Kondrakunta |
-| TBD                               | 4:50 pm      | 8:20 am                 | James Boggs |
-| TBD                               | 5:10 pm      | 8:40 am                 | Dustin Dannenhauer |
-| Coffee Break                      | 5:30 pm      | 9:00 am                 |                    |
-| TBD                               | 5:50 pm      | 9:20 am                 | Martin Oxenham |
-| Meta-cognition for power management in autonomous systems | 6:10 pm      | 9:40 am                 | Ryan Green |
-| Baxter robot with MIDCA           | 6:30 pm      | 10:00 am                | Venkatsampath Gogineni |
-| TBD                               | 6:50 pm      | 10:20 am                | Zohreh A. Dannenhauer |
-| Coffee Break                      | 7:10 pm      | 10:40 am                |  |
-| Discussion                        | 7:20 pm      | 10:50 am                |  |
-| Closing                           | 7:50 pm      | 11:20 am                | Dustin Dannenhauer |
+| Presentation Title                                         | Timing (EST) | Timing (Adelaide, ACDT) | Speaker |
+| ------------------                                         | ------------ | ----------------------- | ------- |
+| Introduction                                               | 4:00 pm      | 7:30 am                 | Dustin Dannenhauer |
+| Cognitive Architectures and MIDCA                          | 4:10 pm      | 7:40 am                 | Michael T. Cox |
+| TBD                                                        | 4:30 pm      | 8:00 am                 | Sravya Kondrakunta |
+| Rebel Agents                                               | 4:50 pm      | 8:20 am                 | James Boggs |
+| MIDCA's Architectural Commitments                          | 5:10 pm      | 8:40 am                 | Dustin Dannenhauer |
+| Coffee Break                                               | 5:30 pm      | 9:00 am                 |                    |
+| Establishing Situation Awareness to Support Goal Reasoning | 5:50 pm      | 9:20 am                 | Martin Oxenham |
+| Meta-cognition for power management in autonomous systems  | 6:10 pm      | 9:40 am                 | Ryan Green |
+| Baxter robot with MIDCA                                    | 6:30 pm      | 10:00 am                | Venkatsampath Gogineni |
+| Goal Monitors: Planning, Interpretation and Perception     | 6:50 pm      | 10:20 am                | Zohreh A. Dannenhauer |
+| Coffee Break                                               | 7:10 pm      | 10:40 am                |  |
+| Discussion                                                 | 7:20 pm      | 10:50 am                |  |
+| Closing                                                    | 7:50 pm      | 11:20 am                | Dustin Dannenhauer |
 
 
 **Organizers:**
