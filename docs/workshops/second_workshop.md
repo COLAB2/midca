@@ -10,7 +10,7 @@ layout: default
 
 **Location:** Wright State University in Dayton, OH, USA
 
-**Note:** Some speakers with present their talks remotely. All talks will be live-streamed over youtube.
+**Note:** Some speakers will present their talks remotely. All talks will be live-streamed over youtube.
 
 Tentative Schedule (subject to change):
 
