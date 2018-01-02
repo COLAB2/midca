@@ -18,7 +18,7 @@ Tentative Schedule (subject to change):
 | ------------------                                         | ------------ | ----------------------- | ------- |
 | Introduction                                               | 4:00 pm      | 7:30 am                 | Dustin Dannenhauer |
 | Cognitive Architectures and MIDCA                          | 4:10 pm      | 7:40 am                 | Michael T. Cox |
-| TBD                                                        | 4:30 pm      | 8:00 am                 | Sravya Kondrakunta |
+| Goal Graph and Goal Operations in MIDCA                    | 4:30 pm      | 8:00 am                 | Sravya Kondrakunta |
 | Rebel Agents                                               | 4:50 pm      | 8:20 am                 | James Boggs |
 | MIDCA's Architectural Commitments                          | 5:10 pm      | 8:40 am                 | Dustin Dannenhauer |
 | Coffee Break                                               | 5:30 pm      | 9:00 am                 |                    |
