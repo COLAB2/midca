@@ -273,8 +273,8 @@ class MAReport:
 
 
     def __str__(self):
-        if not self.actions:
-            return "incomplete"
+        #if not self.actions:
+        #    return "incomplete"
         # if there is no state do not send report to meta aqua
         if not self.finalstate:
             return "incomplete"
