@@ -13,7 +13,10 @@ class AsynchronousAct(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         if not goals:
             if verbose >= 2:
                 print "No Active goals. Act phase will do nothing"
@@ -105,9 +108,11 @@ class SimpleAct(base.BaseModule):
         self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
-        plan = self.get_best_plan(world, goals, verbose)
-
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except :
+            goals = []
+	plan = self.get_best_plan(world, goals, verbose)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
@@ -179,7 +184,10 @@ class NBeaconsSimpleAct(base.BaseModule):
         self.verbose = verbose
         max_plan_print_size = 10
         world = self.mem.get(self.mem.STATES)[-1]
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         plan = self.get_first_plan(goals)
 
         trace = self.mem.trace

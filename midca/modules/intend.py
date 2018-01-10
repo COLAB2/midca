@@ -28,7 +28,17 @@ class SimpleIntend(base.BaseModule):
 	# take the first goal
 	goals = [goals[0]]
 	# add it to the current goal in memory
-        self.mem.set(self.mem.CURRENT_GOALS, goals)
+
+	# current goals as a stack
+	if self.mem.get(self.mem.CURRENT_GOALS) :
+		current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+		if not current_goals[-1] == goals:
+			current_goals.append(goals)
+        		self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+		else:
+			goals = []
+	else:
+		self.mem.set(self.mem.CURRENT_GOALS, [goals])
 
         if trace:
             trace.add_data("GOALS",goals)
