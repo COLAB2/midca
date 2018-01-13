@@ -501,13 +501,17 @@ class MortarScorer:
     # which doesn't make sense if you want to specify all the blocks of a tower
     def get_all_stacking_goals(self):
         #print("self.mem.get(self.mem.CURRENT_GOALS) = "+str(self.mem.get(self.mem.CURRENT_GOALS)))
-        if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+        # try-catch for making current goals as stack
+        try:
+            if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+                return None
+            for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+                #print("goal.args[0] = "+str(goal.args[0]))
+                if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
+                    return goal
             return None
-        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
-            #print("goal.args[0] = "+str(goal.args[0]))
-            if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
-                return goal
-        return None        
+        except:
+            return None
                 
     def has_mortar(self, block):
         # see if hasmortar on this block is true
