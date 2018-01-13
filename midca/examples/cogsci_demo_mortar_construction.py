@@ -64,11 +64,11 @@ myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval_construction())
 myMidca.append_module("Intend", intend.SimpleIntend_construction())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
+myMidca.append_module("Plan", planning.PyHopPlanner_temporary(util.pyhop_state_from_world,
                                                     util.pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", act.SimpleAct_temporary())
 #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
 #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen_construction(STATE_FILE,state_str,T), 1)
