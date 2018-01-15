@@ -8,11 +8,10 @@ except ImportError:
 
 
 class EvalPointingFromFeedback(base.BaseModule):
-
     def run(self, cycle, verbose = 2):
         try:
-            goals = self.mem.get(self.mem.CURRENT_GOALS)
-        except KeyError:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
             goals = []
         if not goals:
             if verbose >= 2:
@@ -44,6 +43,8 @@ class EvalPointingFromFeedback(base.BaseModule):
                     if numPlans != newNumPlans and verbose >= 1:
                         print "removing", numPlans - newNumPlans,
                         "plans that no longer apply."
+		    del goals[-1]
+	    	    self.mem.set(self.mem.CURRENT_GOALS,goals)
                 else:
                     if verbose >= 2:
                         print "Plan:", plan, "not complete"
@@ -53,8 +54,8 @@ class SimpleEval(base.BaseModule):
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
         try:
-            goals = self.mem.get(self.mem.CURRENT_GOALS)
-        except KeyError:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
             goals = []
 
         trace = self.mem.trace
@@ -91,6 +92,8 @@ class SimpleEval(base.BaseModule):
             if numPlans != newNumPlans and verbose >= 1:
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
+	    del goals[-1]
+	    self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
@@ -103,8 +106,8 @@ class SimpleEval2(base.BaseModule):
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
         try:
-            goals = self.mem.get(self.mem.CURRENT_GOALS)
-        except KeyError:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
             goals = []
 
         trace = self.mem.trace
@@ -155,6 +158,8 @@ class SimpleEval2(base.BaseModule):
             if numPlans != newNumPlans and verbose >= 1:
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
+	    del goals[-1]
+	    self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
@@ -386,9 +391,9 @@ class Scorer:
 
     #returns one current block stacking goal, if one exists.
     def get_stacking_goal(self):
-        if not self.mem.get(self.mem.CURRENT_GOALS):
+        if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             return None
-        for goal in self.mem.get(self.mem.CURRENT_GOALS):
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on'):
                 return goal
         return None
@@ -483,9 +488,9 @@ class MortarScorer:
 
     #returns one current block stacking goal, if one exists.
     def get_stacking_goal(self):
-        if not self.mem.get(self.mem.CURRENT_GOALS):
+        if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             return None
-        for goal in self.mem.get(self.mem.CURRENT_GOALS):
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and goal['predicate'] == 'on':
                 return goal
         return None
@@ -496,9 +501,9 @@ class MortarScorer:
     # which doesn't make sense if you want to specify all the blocks of a tower
     def get_all_stacking_goals(self):
         #print("self.mem.get(self.mem.CURRENT_GOALS) = "+str(self.mem.get(self.mem.CURRENT_GOALS)))
-        if not self.mem.get(self.mem.CURRENT_GOALS):
+        if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             return None
-        for goal in self.mem.get(self.mem.CURRENT_GOALS):
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             #print("goal.args[0] = "+str(goal.args[0]))
             if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
                 return goal
@@ -685,10 +690,10 @@ class NBeaconsDataRecorder:
         activation_goals = []
         
         # safety check
-        if not self.mem.get(self.mem.CURRENT_GOALS):
+        if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             return activation_goals
         
-        for goal in self.mem.get(self.mem.CURRENT_GOALS):
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and goal['predicate'] == 'activated':
                 activation_goals.append(goal)
         return activation_goals
@@ -730,8 +735,8 @@ class NBeaconsDataRecorder:
         self.verbose = verbose
         world = self.mem.get(self.mem.STATES)[-1]
         try:
-            goals = self.mem.get(self.mem.CURRENT_GOALS)
-        except KeyError:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
             goals = []
 
         trace = self.mem.trace
@@ -786,6 +791,8 @@ class NBeaconsDataRecorder:
             if numPlans != newNumPlans and verbose >= 1:
                 if self.verbose >= 1: print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
+	    del goals[-1]
+	    self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
