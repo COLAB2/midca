@@ -10,6 +10,8 @@ layout: default
 
 **Location:** Wright State University in Dayton, OH, USA
 
+**YouTube Live Stream URL:** https://www.youtube.com/watch?v=0lmksAokA0Y
+
 **Note:** Some speakers will present their talks remotely. All talks will be live-streamed over youtube.
 
 Tentative Schedule (subject to change):
