@@ -118,7 +118,10 @@ class GenericPyhopPlanner(base.BaseModule):
                     print "No world state loaded. Skipping planning."
                 return
         #now state is the most recent (or only) state and is non-null
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+       	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         if not goals:
             if verbose >= 2:
                 print "No goals received by planner. Skipping planning."
@@ -167,8 +170,10 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
                     print "No world state loaded. Skipping planning."
                 return
         #now state is the most recent (or only) state and is non-null
-
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         if not goals:
             if verbose >= 2:
                 print "No goals received by planner. Skipping planning."
@@ -220,7 +225,10 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
                 return
         #now state is the most recent (or only) state and is non-null
 
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         if not goals:
             if verbose >= 2:
                 print "No goals received by planner. Skipping planning."
@@ -282,7 +290,10 @@ class JSHOP2Planner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
 
         trace = self.mem.trace
         if trace:
@@ -398,7 +409,10 @@ class JSHOPPlanner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
 
         trace = self.mem.trace
         if trace:
@@ -521,8 +535,10 @@ class PyHopPlanner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
-
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
@@ -1223,7 +1239,10 @@ class HeuristicSearchPlanner(base.BaseModule):
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
 
-        goals = self.mem.get(self.mem.CURRENT_GOALS)
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
 
         midcaPlan = None
 
