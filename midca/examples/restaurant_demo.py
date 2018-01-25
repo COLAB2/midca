@@ -57,11 +57,11 @@ myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 myMidca.append_module("Interpret", guide.SimpleMortarGoalGen_Restaurant(STATE_FILE,state_str,Money))
 myMidca.append_module("Eval", evaluate.SimpleEval_Restaurant())
 myMidca.append_module("Intend", intend.SimpleIntend_Restaurant())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world_restaurant,
+myMidca.append_module("Plan", planning.PyHopPlanner_temporary(util.pyhop_state_from_world_restaurant,
                                                     util.pyhop_tasks_from_goals_restaurant,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", act.SimpleAct_temporary())
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True

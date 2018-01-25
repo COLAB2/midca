@@ -38,7 +38,6 @@ class Traverser:
                 check_name = node.name.split(".")[0]
             else:
                 check_name = node.name
-            print check_name
 
             if check_name in self.mapping.keys():
                 for [operator, effect] in self.mapping[check_name]:
