@@ -8,7 +8,7 @@ layout: default
 
 ## Recent News
 
-- We are getting ready for our [Second Annual MIDCA Workshop](workshops/second_workshop) set for Thursday, January 18th, 2018 at Wright State University in Dayton, OH.
+- The [Second Annual MIDCA Workshop](workshops/second_workshop) was held Thursday, January 18th, 2018 at Wright State University in Dayton, OH.
 
 - The [First Annual MIDCA Workshop](workshops/first_workshop) was held January 13th, 2017 at Wright State University in Dayton, OH.
 
