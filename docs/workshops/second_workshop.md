@@ -37,43 +37,69 @@ Speaker: Dustin Dannenhauer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8obn7R0YJFU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+---
+
 ### Cognitive Architectures and MIDCA
 Speaker: Michael T. Cox
 
+This talk presents an overview of the concept of a cognitive architecture. We provide two definitions from the literature and place the subject within the context of related terms such as cognitive system and cognitive agent. We briefly survey a small number of existing architectures and compare and contrast them to the Metacognitive Integrated Dual-Cycle Architecture or MIDCA.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UdeNHEJUtds" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+---
 
 ### Goal Graph and Goal Operations in MIDCA
 Speaker: Sravya Kondrakunta
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8fGUgnLf3j8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+---
+
 ### Using MIDCA to Enable Intelligent Rebellion
 Speaker: James Boggs
 
+This talk demonstrates how MIDCA can be used in unorthodox ways to create
+rebellious autonomous agents and the benefits of using MIDCA for this
+purpose. It discusses both the practical question of how MIDCA was used to
+create rebel agents and higher-level  considerations about the nature of
+MIDCA itself.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Oow9qTX43jg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+---
 
 ### MIDCA's Architectural Commitments
 Speaker: Dustin Dannenhauer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LHZVGgfXayM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+---
+
 ### Meta-cognition for power management in autonomous systems
 Speaker: Ryan Green
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8Ju_aTHaHTM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+---
 
 ### Baxter Robot with MIDCA
 Speaker: Venkatsampath Gogineni
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ktXnCzE8WKE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+---
+
 ### Goal Monitors: Planning, Interpretation and Perception
 Speaker: Zohreh A. Dannenhauer
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/v6jhO0tX9yc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+---
+
 ### Discussion and Closing
 <iframe width="560" height="315" src="https://www.youtube.com/embed/a6Sgab2nfSo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+---
 
 **Organizers:**
 
