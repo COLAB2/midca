@@ -35,6 +35,8 @@ Tentative Schedule (subject to change):
 ### Introduction
 Speaker: Dustin Dannenhauer
 
+Introduction to the workshop and the MIDCA project in general.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8obn7R0YJFU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ---
@@ -71,6 +73,11 @@ MIDCA itself.
 ### MIDCA's Architectural Commitments
 Speaker: Dustin Dannenhauer
 
+This talk starts by asking the question: "What are MIDCA's Architectural Commitments"? One of
+the core commitments is metacognition. I talk about work on metacognitive expectations, including some
+early results, followed by some limitations and directions for future work.
+
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LHZVGgfXayM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ---
@@ -97,6 +104,9 @@ Speaker: Zohreh A. Dannenhauer
 ---
 
 ### Discussion and Closing
+
+A discussion between the audience and speakers. Basically an informal conversation around MIDCA, goal reasoning, and metacognition.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/a6Sgab2nfSo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ---
