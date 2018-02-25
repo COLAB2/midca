@@ -12,7 +12,7 @@
  (AIRPLANE PLANE5)
  (AIRPLANE PLANE6)
  (airplane-at PLANE1 AP1)
-;; (sairplane-at SPLANE AP3)
+ (sairplane-at SPLANE AP3)
  (airplane-at PLANE2 AP2)
  (airplane-at PLANE3 AP3)
  (airplane-at PLANE4 AP4)
@@ -74,7 +74,7 @@
 )
 
 ((achieve-goal 
- (obj-at PACK1 LOC5)
+ (obj-at PACK1 LOC3)
 )))
 
 
