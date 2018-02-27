@@ -384,16 +384,22 @@ class JSHOPPlanner(base.BaseModule):
 
     jshop_state_from_world = None
     jshop_tasks_from_goals = None
-
+    domain_file = ""
+    state_file = ""
+    
     def __init__(self,
                  jshop_state_from_world,
                  jshop_tasks_from_goals,
+                 domain_file,
+                 state_file,
                  extinguishers = False,
                  mortar = False):
 
         self.jshop_state_from_world = jshop_state_from_world
         self.jshop_tasks_from_goals = jshop_tasks_from_goals
-
+        self.domain_file = domain_file
+        self.state_file= state_file
+        
         try:
             self.working = True
         except:
@@ -456,20 +462,20 @@ class JSHOPPlanner(base.BaseModule):
             goals = [goals]
 
         if not midcaPlan:
-            #use pyhop to generate new plan
+            #use jshop to generate new plan
             if verbose >= 2:
                 print "Planning..."
-#             try:
-            jshopState = self.jshop_state_from_world(world)
-#             except Exception:
-#                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
-#             try:
-            jshopTasks = self.jshop_tasks_from_goals(goals,jshopState)
-#             except Exception:
-#                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+            try:
+                jshopState = self.jshop_state_from_world(world, self.state_file)
+            except Exception:
+                print "Could not generate a valid jshop state from current world state. Skipping planning"
+            try:
+                jshopTasks = self.jshop_tasks_from_goals(goals,jshopState, self.state_file)
+            except Exception:
+                print "Could not generate a valid jshop task from current goal set. Skipping planning"
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-                jshopPlan = JSHOP.jshop(jshopTasks)
+                jshopPlan = JSHOP.jshop(jshopTasks, self.domain_file, self.state_file)
             except Exception:
                 jshopPlan = None
             if not jshopPlan and jshopPlan != []:
