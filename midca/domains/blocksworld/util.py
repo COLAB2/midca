@@ -34,31 +34,39 @@ def preferFire(goal1, goal2):
         return 1
     return 0
 
-def jshop_state_from_world(world, name = "state"):
-    thisDir =  os.path.dirname(os.path.realpath(__file__))
-    MIDCA_ROOT = thisDir + "/../"
-    STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
-    f = open(STATE_FILE, 'w')
-    f.write('\n')
-    f.write('(defproblem bw-ran-5-1 blocks-normal ((arm-empty)\n')
+def jshop_state_from_world(world, STATE_FILE, name = "state"):
+#     thisDir =  os.path.dirname(os.path.realpath(__file__))
+#     MIDCA_ROOT = thisDir + "/../"
+#     STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    try:
+        f = open(STATE_FILE, 'w')
     
-    for atom in world.atoms:
-        if atom.predicate.name == "clear":
-            f.write("(clear " +  atom.args[0].name+ ")\n")
-        elif atom.predicate.name == "on":
-            f.write("(on " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
-        elif atom.predicate.name == "on-table":
-            f.write("(on-table " +  atom.args[0].name + ")\n")
-    
-    f.write(")\n")
-    f.close()
-    
-def jshop_tasks_from_goals(goals,pyhopState):
-    thisDir =  os.path.dirname(os.path.realpath(__file__))
-    MIDCA_ROOT = thisDir + "/../"
-    STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
-    f = open(STATE_FILE, 'a')
-    
+        f.write('\n')
+        f.write('(defproblem bw-ran-5-1 blocks-normal ((arm-empty)\n')
+        
+        for atom in world.atoms:
+            if atom.predicate.name == "clear":
+                f.write("(clear " +  atom.args[0].name+ ")\n")
+            elif atom.predicate.name == "on":
+                f.write("(on " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
+            elif atom.predicate.name == "on-table":
+                f.write("(on-table " +  atom.args[0].name + ")\n")
+        
+        f.write(")\n")
+        f.close()
+        
+    except Exception:
+        print "could not read the state file. Check the path..."
+        
+        
+def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
+#     thisDir =  os.path.dirname(os.path.realpath(__file__))
+#     MIDCA_ROOT = thisDir + "/../"
+#     STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
+    try:
+        f = open(STATE_FILE, 'a')
+    except Exception:
+        print "could not read the state file. Check the path..."
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
