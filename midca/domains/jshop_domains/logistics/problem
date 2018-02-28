@@ -1,0 +1,24 @@
+
+(defproblem problem logistics
+(
+(AIRPORT loc73)
+(AIRPORT loc71)
+(AIRPORT loc83)
+(AIRPORT loc82)
+(AIRPORT loc81)
+(IN-CITY loc73 city7)
+(IN-CITY loc81 city8)
+(IN-CITY loc82 city8)
+(truck-at truck81 loc81)
+(truck-at truck71 loc71)
+(obj-at package2 loc83)
+(TRUCK truck71 city7)
+(obj-at package1 loc83)
+(IN-CITY loc83 city8)
+(airplane-at plane1 loc82)
+(IN-CITY loc71 city7)
+(TRUCK truck81 city8)
+)
+ (:unordered
+(obj-at package1 loc81)
+ ))

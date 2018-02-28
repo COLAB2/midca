@@ -12,18 +12,17 @@ from midca.domains.blocksworld.plan import methods, operators
 
 
 '''
-Simulation of tower construction and arson prevention in blocksworld. Uses
-TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
+Simulation of tower construction 
 '''
 
-'''
--Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE. 
 
--util.jshop_state_from_world transfers the state file in MIDCA to state file for JSHOP. You can find the 
-generated file in domains/jshop_domains. Another util function put the goal in the state file too.
+###-Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE. 
+
+###-util.jshop_state_from_world transfers the state file in MIDCA to state file for JSHOP. You can find the 
+###generated file in domains/jshop_domains. Another util function put the goal in the state file too.
 
  
-'''
+
 
 
 #TODO: make the JSHOP.py to read the path. 

@@ -171,11 +171,11 @@ class PerfectObserverWithThief(base.BaseModule):
         thief_file = thisDir + "/theif.txt"
         theft_items=[]
         
-        with open(thief_file) as f:
-	    	lines = f.readlines()
-	    	for line in lines:
-	    		theft_items.append(line.split(" "))
-	    	
+#         with open(thief_file) as f:
+# 	    	lines = f.readlines()
+# 	    	for line in lines:
+# 	    		theft_items.append(line.split(" "))
+# 	    	
         if not world:
             raise Exception("World observation failed.")
         
