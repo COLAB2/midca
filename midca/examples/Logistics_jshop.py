@@ -9,6 +9,7 @@ import inspect, os
 from midca.domains.logistics import logistics_util
 from midca.domains.blocksworld.plan import methods, operators
 
+### this script is not working for now. 
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
@@ -24,9 +25,11 @@ print MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
-STATE_FILE = DOMAIN_ROOT + "states/defstate3.sim"
+STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
 
-
+### Domain Specific Variables for JSHOP planner
+JSHOP_DOMAIN_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/logistics"
+JSHOP_STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/problem"
 
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
@@ -43,9 +46,11 @@ myMidca.append_module("Perceive", perceive.PerfectObserverWithThief())
 myMidca.append_module("Interpret", guide.DeliverGoal())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval2())
-myMidca.append_module("Intend", intend.WarehouseIntend())
+myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.JSHOP2Planner(logistics_util.jshop2_state_from_world,
                                                     logistics_util.jshop2_tasks_from_goals,
+                                                    JSHOP_DOMAIN_FILE,
+                                                    JSHOP_STATE_FILE
                                                     ))
 myMidca.append_module("Act", act.SimpleAct())
 

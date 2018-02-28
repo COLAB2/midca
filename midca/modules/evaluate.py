@@ -130,7 +130,7 @@ class SimpleEval2(base.BaseModule):
                         if not lastGoals:
                             self.mem.set(LAST_SCORED_GOAL, [goal])
                             self.mem.set(self.mem.DELIVERED, 1)
-                            self.generate_thief_file(goal, 5)
+#                             self.generate_thief_file(goal, 5)
                         elif not (goal in lastGoals):
                             self.mem.add(LAST_SCORED_GOAL, goal)
                             self.mem.set(self.mem.DELIVERED, score+1)
@@ -189,7 +189,7 @@ class SimpleEval2(base.BaseModule):
         
         for g in randomgoals:
             f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
-            1
+            
 
 
 class SimpleEval_Restaurant(base.BaseModule):

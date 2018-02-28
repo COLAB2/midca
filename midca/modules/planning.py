@@ -2,7 +2,7 @@ from _plan import pyhop
 from _plan import modified_pyhop
 from midca import plans, base
 from midca.modules._plan.asynch import asynch
-from midca.modules._plan.jShop import JSHOP#, JSHOP2
+from midca.modules._plan.jShop import JSHOP, JSHOP2
 from midca.modules._plan.pyhop import print_state,  print_methods, print_operators
 import collections
 import traceback
@@ -265,15 +265,21 @@ class JSHOP2Planner(base.BaseModule):
 
     jshop_state_from_world = None
     jshop_tasks_from_goals = None
-
+    domain_file = ""
+    state_file = ""
+    
     def __init__(self,
                  jshop_state_from_world,
                  jshop_tasks_from_goals,
+                 domain_file,
+                 state_file,
                  extinguishers = False,
                  mortar = False):
 
         self.jshop_state_from_world = jshop_state_from_world
         self.jshop_tasks_from_goals = jshop_tasks_from_goals
+        self.domain_file = domain_file
+        self.state_file= state_file
 
         try:
             self.working = True
@@ -341,16 +347,16 @@ class JSHOP2Planner(base.BaseModule):
             if verbose >= 2:
                 print "Planning..."
 #             try:
-            jshopState = self.jshop_state_from_world(world)
+            jshopState = self.jshop_state_from_world(world, self.state_file)
 #             except Exception:
 #                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
 #             try:
-            jshopTasks = self.jshop_tasks_from_goals(goals,jshopState)
+            jshopTasks = self.jshop_tasks_from_goals(goals,jshopState, self.state_file)
 #             except Exception:
 #                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
-                jshopPlan = JSHOP2.jshop(jshopTasks)
+                jshopPlan = JSHOP2.jshop(jshopTasks, self.domain_file, self.state_file)
             except Exception:
                 jshopPlan = None
             if not jshopPlan and jshopPlan != []:
