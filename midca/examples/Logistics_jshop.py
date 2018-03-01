@@ -46,7 +46,7 @@ myMidca.append_module("Perceive", perceive.PerfectObserverWithThief())
 myMidca.append_module("Interpret", guide.DeliverGoal())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval2())
-myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Intend", intend.WarehouseIntend())
 myMidca.append_module("Plan", planning.JSHOP2Planner(logistics_util.jshop2_state_from_world,
                                                     logistics_util.jshop2_tasks_from_goals,
                                                     JSHOP_DOMAIN_FILE,

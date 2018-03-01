@@ -167,7 +167,7 @@ class PerfectObserverWithThief(base.BaseModule):
 	
     def run(self, cycle, verbose = 2):
         world = self.observe()
-        thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+        thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
         theft_items=[]
         

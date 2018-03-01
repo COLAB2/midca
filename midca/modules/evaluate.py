@@ -182,7 +182,8 @@ class SimpleEval2(base.BaseModule):
 #         other_w_goals =  filter(lambda g: str(g.args[2]) != current_w, goals.copy())
         randomgoals = random.sample(other_w_goals, stolen_number)
         
-        thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+#         thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+        thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
         
         f = open(thief_file, 'w')

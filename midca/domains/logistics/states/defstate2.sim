@@ -36,3 +36,29 @@ obj-at(package2 ,loc83)
 
 
 deliver (package1,loc81)
+deliver (package2,loc73)
+
+
+TRUCK (truck61)
+AIRPORT(loc61)
+AIRPORT(loc62)
+AIRPORT(loc63)
+truck-c (truck61 ,city6)
+truck-at(truck61 ,loc61)
+IN-CITY(loc61 ,city6)
+IN-CITY(loc62 ,city6)
+IN-CITY (loc63 ,city6)
+TRUCK (truck51)
+AIRPORT(loc51)
+AIRPORT(loc53)
+truck-c (truck51 ,city5)
+truck-at(truck51 ,loc51)
+IN-CITY(loc51 ,city5)
+IN-CITY (loc53 ,city5)
+airplane-at (plane2,loc62)
+obj-at(package3 ,loc63)
+obj-at(package4 ,loc63) 
+
+
+deliver (package3,loc61)
+deliver (package4,loc53)
