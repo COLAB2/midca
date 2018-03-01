@@ -81,7 +81,7 @@ class WarehouseIntend(base.BaseModule):
         
         if free_goal:
             goals_selected = [free_goal]
-            self.mem.set(self.mem.CURRENT_GOALS,goals_selected )
+            self.mem.set(self.mem.CURRENT_GOALS,[goals_selected] )
         else:
             if len(goals) > 1:
                 # accomplish one of the warehouse packages
@@ -91,10 +91,10 @@ class WarehouseIntend(base.BaseModule):
                     if g.args[2] == goals_selected_warehouse:
                         goals_selected.append(g)
                         
-                self.mem.set(self.mem.CURRENT_GOALS,goals_selected )        
+                self.mem.set(self.mem.CURRENT_GOALS,[goals_selected] )        
             else:
                 goals_selected = goals
-                self.mem.set(self.mem.CURRENT_GOALS, goals_selected)
+                self.mem.set(self.mem.CURRENT_GOALS, [goals_selected])
         if trace:
             trace.add_data("GOALS",goals)
 

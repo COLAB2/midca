@@ -80,15 +80,8 @@ def jshop(tasks, DOMAIN_FIILE,STATE_FILE):
     p,l = proc.communicate()
     
     plans = p.split("\r\n")
-    midcaplan = []
-    for elm in plans:
-        if(elm.startswith("(!")):
-            elm = elm[2:]
-            elm = elm[:-1]
-#             print elm
-            action_list = elm.strip().split(' ')
-            midcaplan.append(action_list)
-            
+    midcaplan = parse(p)
+
      
     
      
@@ -110,7 +103,7 @@ def parse(str):
     for elm in elements:
         if(elm[0] == '!' and '(' not in elm):
             elm = elm[1:]
-            print elm
+#             print elm
             action_list = elm.strip().split(' ')
             plan.append(action_list)
     
