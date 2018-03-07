@@ -1,0 +1,41 @@
+(defdomain minecraft
+
+
+	;; ----------------------------------------------------
+	(:operator (!move ?from  ?to )
+	()
+	
+	((player-at ?from) (connect ?from ?to))
+		
+	((player-at ?to))
+	)
+	;;------------------------------------------------------
+	
+	(:operator (!harvest ?target  ?tool  ?obj)
+	()
+	(
+	(player-at ?target) (thing-at-map ?obj ?target) (tool-in-hand ?tool)
+	(harvest_tool ?tool ?obj)			
+	)
+	(
+	(increase (current-harvest-duration) 1) (decrease (tool-current-health ?tool) 1)
+	)
+	)
+	
+	;;----------------------------------------------------
+	
+	
+	(:operator (!eat)
+	()
+	(greater (current_food_resources 1))
+	((increase (current-health 1) (decrease (current_food_resources ?tool) 1))
+	)
+	
+	(:operator (!shoot ?arrow ?target)
+	()
+	(greater (current_food_resources 1))
+	((increase (current-health 1) (decrease (current_food_resources ?tool) 1))
+	)
+	
+	
+)
