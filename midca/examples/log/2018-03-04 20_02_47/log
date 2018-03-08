@@ -1,0 +1,191 @@
+.000865 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001636 - Memory access at key __goals
+.003158 - Goal Graph initialized.
+
+.003356 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003557 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+1.755318 - Starting cycle 0
+
+1.755872 - ****** Starting Perceive Phase ******
+
+1.757943 - at_location(remus,qroute)
+
+1.758526 - Memory access at key __world states
+1.759246 - Memory access at key __world states
+1.759633 - World observed.
+
+3.660335 - Starting cycle 1
+
+3.661366 - ****** Starting Perceive Phase ******
+
+3.662765 - at_location(remus,qroute)
+
+3.663065 - Memory access at key __world states
+3.663265 - Memory access at key __world states
+3.663461 - World observed.
+
+4.315262 - Starting cycle 2
+
+4.315883 - ****** Starting Perceive Phase ******
+
+4.318859 - at_location(remus,qroute)
+
+4.319268 - Memory access at key __world states
+4.319501 - Memory access at key __world states
+4.319744 - World observed.
+
+7.453666 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+9.596582 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+21.946430 - Starting cycle 3
+
+21.947039 - ****** Starting Perceive Phase ******
+
+21.949107 - removed:remus
+
+21.949429 - Memory access at key __world states
+21.949803 - World observed.
+
+22.249663 - Starting cycle 4
+
+22.250158 - ****** Starting Perceive Phase ******
+
+22.250546 - Memory access at key __world states
+22.250825 - World observed.
+
+22.523934 - Starting cycle 5
+
+22.524393 - ****** Starting Perceive Phase ******
+
+22.526213 - Memory access at key __world states
+22.526441 - World observed.
+
+22.722136 - Starting cycle 6
+
+22.722556 - ****** Starting Perceive Phase ******
+
+22.724532 - Memory access at key __world states
+22.724864 - World observed.
+
+22.889652 - Starting cycle 7
+
+22.890139 - ****** Starting Perceive Phase ******
+
+22.892020 - Memory access at key __world states
+22.892319 - World observed.
+
+23.025995 - Starting cycle 8
+
+23.026603 - ****** Starting Perceive Phase ******
+
+23.028879 - Memory access at key __world states
+23.029700 - World observed.
+
+23.186659 - Starting cycle 9
+
+23.187307 - ****** Starting Perceive Phase ******
+
+23.189217 - Memory access at key __world states
+23.189611 - World observed.
+
+23.314127 - Starting cycle 10
+
+23.314741 - ****** Starting Perceive Phase ******
+
+23.316795 - Memory access at key __world states
+23.317117 - World observed.
+
+24.458376 - [
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+26.266994 - [
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+27.489895 - [
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+2:39:34.612624 - Starting cycle 11
+
+2:39:34.613245 - ****** Starting Perceive Phase ******
+
+2:39:34.615087 - Memory access at key __world states
+2:39:34.615431 - World observed.
+
+2:39:35.787872 - Starting cycle 12
+
+2:39:35.788635 - ****** Starting Perceive Phase ******
+
+2:39:35.791709 - Memory access at key __world states
+2:39:35.792426 - World observed.
+
+2:39:36.603256 - Starting cycle 13
+
+2:39:36.603756 - ****** Starting Perceive Phase ******
+
+2:39:36.605809 - Memory access at key __world states
+2:39:36.606066 - World observed.
+
+2:39:48.818502 - command not understood
+
+2:39:53.706198 - Starting cycle 14
+
+2:39:53.706566 - ****** Starting Perceive Phase ******
+
+2:39:53.708437 - at_location(remus,qroute)
+
+2:39:53.708706 - Memory access at key __world states
+2:39:53.708898 - Memory access at key __world states
+2:39:53.709071 - World observed.
+
+2:39:53.970459 - Starting cycle 15
+
+2:39:53.970839 - ****** Starting Perceive Phase ******
+
+2:39:53.972590 - at_location(remus,qroute)
+
+2:39:53.972924 - Memory access at key __world states
+2:39:53.973194 - Memory access at key __world states
+2:39:53.973665 - World observed.
+
+2:39:56.306654 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+2:40:00.917193 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+2:40:04.146666 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+2:40:05.666540 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+2:40:08.042071 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+

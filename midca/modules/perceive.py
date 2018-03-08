@@ -1,8 +1,11 @@
 from midca.modules._robot_world import world_repr
+from midca.worldsim import domainread, stateread
 from midca import rosrun, midcatime, base
 import copy
 import os
+import zmq
 import socket
+
 try:
 	# baxter robot requirements
 	from midca.examples import ObjectDetector
@@ -11,7 +14,7 @@ except:
 	pass
 
 class ROSObserver:
-    
+
     def init(self, world, mem):
         self.mem = mem
         self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
@@ -40,7 +43,7 @@ class ROSObserver:
 	return None
 	
 
-    
+
 
     def check_with_history(self,world,history,detectionEvents):
 	'''
@@ -56,15 +59,15 @@ class ROSObserver:
 		if not len(blocks) == len(history[len(history) -1]):
 			history = self.store_history(world,history,blocks)
 	return history
-    
+
     def run(self, cycle, verbose = 2):
-        #self.ObserveWorld() 
+        #self.ObserveWorld()
         detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
         detecttionBlockState = self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
         utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
         feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
         world = self.mem.get_and_lock(self.mem.STATE)
-	history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
+        history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
 
         if not detectionEvents:
             detectionEvents = []
@@ -100,8 +103,8 @@ class ROSObserver:
 
         if verbose > 1:
             print "World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
-            
-    
+
+
 
 class PerfectObserver(base.BaseModule):
 
@@ -127,7 +130,7 @@ class PerfectObserver(base.BaseModule):
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
-        
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
@@ -137,14 +140,121 @@ class PerfectObserver(base.BaseModule):
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
             print "World observed."
-        
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
+
+
+class MoosObserver(base.BaseModule):
+    '''
+    MIDCA Module which interacts with moos to get the current states
+    of the vehicle in the moos.
+    '''
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber.connect("tcp://127.0.0.1:5563")
+
+
+    # perfect observation
+    def observe(self):
+        return self.world.copy()
+
+    def run(self, cycle, verbose=2):
+        '''
+        Read from the subscriber in the format "X:float,Y:float,SPEED:float"
+        '''
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+        self.mem.add(self.mem.STATES, world)
+
+        x = -1
+        y = -1
+        speed = -1
+        states = ""
+
+        '''
+        The following code gets the current X,Y,Speed and updates the location of uuv.
+        i.e., if the vehicle is in qroute or green area 1 or green area 2. 
+        the else part is to remove the state after the vehicle leaves the specific location
+        '''
+
+        try:
+            current_position = self.subscriber.recv()
+            x,y,speed = current_position.split(",")
+            x = float(x.split(":")[1])
+            y = float(y.split(":")[1])
+            speed = float(speed.split(":")[1])
+
+            if y >=-98 and y<=-48:
+                states+="at_location(remus,qroute)\n"
+            else:
+                for atom in self.world.atoms:
+                    if atom.predicate.name == "at_location" \
+                            and atom.args[0].name == "remus"\
+                            and atom.args[1].name == "qroute":
+                        self.world.atoms.remove(atom)
+                        break
+
+            if x>=-2 and x<=40 and y>=-96 and y<=-63:
+                states+="at_location(remus,ga1)"
+            else:
+                for atom in self.world.atoms:
+                    if atom.predicate.name == "at_location" \
+                            and atom.args[0].name == "remus"\
+                            and atom.args[1].name == "ga1":
+                        self.world.atoms.remove(atom)
+                        break
+
+            if x>=120 and x<=175 and y>=-96 and y<=-63:
+                states+="at_location(remus,ga2)"
+            else:
+                for atom in self.world.atoms:
+                    if atom.predicate.name == "at_location" \
+                            and atom.args[0].name == "remus"\
+                            and atom.args[1].name == "ga2":
+                        self.world.atoms.remove(atom)
+                        break
+        except:
+            pass
+        # this is to update the world into memory
+        if not states == "":
+            if verbose >= 1:
+                print(states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, self.world)
+
+
+        states = self.mem.get(self.mem.STATES)
+        if len(states) > 400:
+            # print "trimmed off 200 old stale states"
+            states = states[200:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(self.world))
+
+
 
 class PerfectObserverWithThief(base.BaseModule):
 
@@ -170,27 +280,27 @@ class PerfectObserverWithThief(base.BaseModule):
         thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
         thief_file = thisDir + "/theif.txt"
         theft_items=[]
-        
+
         with open(thief_file) as f:
 	    	lines = f.readlines()
 	    	for line in lines:
 	    		theft_items.append(line.split(" "))
-	    	
+
         if not world:
             raise Exception("World observation failed.")
-        
+
 #         self.mem.add(self.mem.STATES, world)
-        
+
         for item in theft_items:
-        	
+
 			for atom in world.atoms:
 				if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
 					world.atoms.remove(atom)   
 					print("removed:" + atom.args[0].name)
 					break
-         			
-        self.mem.add(self.mem.STATES, world) 
-        
+
+        self.mem.add(self.mem.STATES, world)
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
@@ -200,16 +310,16 @@ class PerfectObserverWithThief(base.BaseModule):
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
             print "World observed."
-        
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
-        
-        
+
+
 
 class MAReport:
 
@@ -321,7 +431,7 @@ class MAReporter(base.BaseModule):
             objectname != "table":
                 res.append(objectname)
         return res
-    
+
 
     def run(self, cycle, verbose = 2):
         world = None

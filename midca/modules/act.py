@@ -1,6 +1,7 @@
 from midca.modules._plan.asynch import asynch
 from midca import base
 import copy
+import zmq
 
 
 class AsynchronousAct(base.BaseModule):
@@ -326,3 +327,48 @@ class NBeaconsSimpleAct(base.BaseModule):
 
             if trace: trace.add_data("ACTION", None)
 
+class Moosact(base.BaseModule):
+
+    def init(self, world, mem):
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUB)
+        self.publisher.bind("tcp://127.0.0.1:5560")
+        self.mem = mem
+        self.world = world
+
+
+    def run(self, cycle, verbose = 2):
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except TypeError, IndexError:
+            if verbose >= 1:
+                print "Simulator: no actions selected yet by MIDCA."
+            return
+        if actions:
+            for action in actions:
+                if self.world.midca_action_applicable(action):
+                    if verbose >= 2:
+                        print "simulating MIDCA action:", action
+
+                    if (action.op == "survey"):
+                        argnames = [str(arg) for arg in action.args]
+                        if ("ga1" in argnames):
+                            self.publisher.send_multipart(
+                                [b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER"])
+                            self.world.apply_midca_action(action)
+
+                        if ("ga2" in argnames):
+                            self.publisher.send_multipart([b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER"])
+                            self.world.apply_midca_action(action)
+
+                        if ("home" in argnames):
+                            self.publisher.send_multipart([b"M", b"point = 0,0"])
+                            self.world.apply_midca_action(action)
+
+                else:
+                    if verbose >= 1:
+                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+        else:
+            if verbose >= 2:
+                print "No actions selected this cycle by MIDCA."

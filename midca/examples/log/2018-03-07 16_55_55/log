@@ -1,0 +1,100 @@
+.001092 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001559 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001818 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002061 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002331 - Memory access at key __PlanningCount
+.002582 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002804 - Memory access at key __goals
+.003074 - Goal Graph initialized.
+
+.003283 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003507 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+4.336146 - Starting cycle 0
+
+4.337022 - ****** Starting Perceive Phase ******
+
+4.338767 - Memory access at key __world states
+4.340426 - Memory access at key __world states
+4.340894 - World observed.
+
+5.095937 - ****** Starting Interpret Phase ******
+
+5.096571 - Memory access at key __goals
+5.098462 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.687681 - ****** Starting Eval Phase ******
+
+6.688331 - Memory access at key __world states
+6.689328 - No current goals. Skipping eval
+
+7.999954 - ****** Starting Intend Phase ******
+
+8.000627 - Memory access at key __goals
+8.002494 - No Goals in Goal graph. Intend will do nothing.
+
+8.543849 - ****** Starting Plan Phase ******
+
+8.544512 - Memory access at key __world states
+8.545668 - No goals received by planner. Skipping planning.
+
+9.456008 - Starting cycle 1
+
+9.456614 - ****** Starting Perceive Phase ******
+
+9.458859 - Memory access at key __world states
+9.460445 - Memory access at key __world states
+9.460870 - World observed.
+
+10.904149 - ****** Starting Interpret Phase ******
+
+10.904779 - Memory access at key __goals
+10.906622 - Please input a goal if desired. Otherwise, press enter to continue
+
+27.263252 - Memory access at key __world states
+27.263733 - Memory access at key __goals
+27.265760 - Goal added.
+
+27.266117 - Please input a goal if desired. Otherwise, press enter to continue
+
+29.270927 - ****** Starting Eval Phase ******
+
+29.271555 - Memory access at key __world states
+29.274025 - No current goals. Skipping eval
+
+30.151114 - ****** Starting Intend Phase ******
+
+30.151792 - Memory access at key __goals
+30.153519 - Memory access at key __current goals
+30.153910 - Selecting goal(s): Goal(remus, qroute, predicate: at_location)
+
+33.736920 - ****** Starting Plan Phase ******
+
+33.737543 - Memory access at key __world states
+33.739299 - Memory access at key __current goals
+33.740328 - Memory access at key __goals
+33.740734 - Planning...
+
+33.741000 - Could not generate a valid pyhop state from current world state. Skipping planning
+
+33.741233 - Could not generate a valid pyhop task from current goal set. Skipping planning
+
+33.741454 - Memory access at key __PlanningCount
+33.741771 - Memory access at key __PlanningCount
+33.742655 - Planning failed for  Goal(remus, qroute, predicate: at_location)  
+
+38.017570 - Starting cycle 2
+
+38.018170 - ****** Starting Perceive Phase ******
+
+38.020177 - Memory access at key __world states
+38.021883 - Memory access at key __world states
+38.022290 - World observed.
+

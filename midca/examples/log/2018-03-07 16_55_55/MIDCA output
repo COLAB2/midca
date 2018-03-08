@@ -1,0 +1,77 @@
+.001092 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001559 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001818 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002061 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002582 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003074 - Goal Graph initialized.
+
+.003283 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003507 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+4.336146 - Starting cycle 0
+
+4.337022 - ****** Starting Perceive Phase ******
+
+4.340894 - World observed.
+
+5.095937 - ****** Starting Interpret Phase ******
+
+5.098462 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.687681 - ****** Starting Eval Phase ******
+
+6.689328 - No current goals. Skipping eval
+
+7.999954 - ****** Starting Intend Phase ******
+
+8.002494 - No Goals in Goal graph. Intend will do nothing.
+
+8.543849 - ****** Starting Plan Phase ******
+
+8.545668 - No goals received by planner. Skipping planning.
+
+9.456008 - Starting cycle 1
+
+9.456614 - ****** Starting Perceive Phase ******
+
+9.460870 - World observed.
+
+10.904149 - ****** Starting Interpret Phase ******
+
+10.906622 - Please input a goal if desired. Otherwise, press enter to continue
+
+27.265760 - Goal added.
+
+27.266117 - Please input a goal if desired. Otherwise, press enter to continue
+
+29.270927 - ****** Starting Eval Phase ******
+
+29.274025 - No current goals. Skipping eval
+
+30.151114 - ****** Starting Intend Phase ******
+
+30.153910 - Selecting goal(s): Goal(remus, qroute, predicate: at_location)
+
+33.736920 - ****** Starting Plan Phase ******
+
+33.740734 - Planning...
+
+33.741000 - Could not generate a valid pyhop state from current world state. Skipping planning
+
+33.741233 - Could not generate a valid pyhop task from current goal set. Skipping planning
+
+33.742655 - Planning failed for  Goal(remus, qroute, predicate: at_location)  
+
+38.017570 - Starting cycle 2
+
+38.018170 - ****** Starting Perceive Phase ******
+
+38.022290 - World observed.
+

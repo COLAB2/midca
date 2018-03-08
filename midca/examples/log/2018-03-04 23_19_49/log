@@ -1,0 +1,23 @@
+.001049 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001513 - [cognitive] Initializing Interpret module 1 MoosGoalInput1...done.
+
+.001803 - Memory access at key __goals
+.002117 - Goal Graph initialized.
+
+.002367 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002615 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.462138 - Starting cycle 0
+
+.462783 - ****** Starting Perceive Phase ******
+
+.464694 - Memory access at key __world states
+.466221 - Memory access at key __world states
+.466508 - World observed.
+
+.758339 - ****** Starting Interpret Phase ******
+
+.758990 - Memory access at key __goals

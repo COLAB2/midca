@@ -81,6 +81,21 @@ class UserGoalInput(base.BaseModule):
             trace.add_data("USER GOALS", goals_entered)
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
+
+
+class MoosGoalInput(UserGoalInput):
+
+    '''
+    MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+    '''
+
+    def run(self, cycle, verbose = 2):
+
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            UserGoalInput.run(self, cycle, verbose = 2)
+
+
+
 class SimpleMortarGoalGen(base.BaseModule):
     '''
     MIDCA module that cycles through goals for the agent to achieve.

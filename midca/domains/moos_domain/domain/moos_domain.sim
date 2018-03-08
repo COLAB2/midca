@@ -1,0 +1,13 @@
+type(UUV)
+type(SEA_ROUTE)
+
+
+predicate(at_location,[uuv,location], [UUV,SEA_ROUTE])
+predicate(enabled,[uuv],[UUV])
+
+operator(survey, 
+args = [(uuv, UUV), (location, SEA_ROUTE)], 
+preconditions = [condition(enabled, [uuv])], 
+results = [
+	condition(at_location, [uuv, location])])
+

@@ -1,0 +1,69 @@
+.001003 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001474 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001699 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001901 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002378 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002816 - Goal Graph initialized.
+
+.003021 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003333 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.590866 - Starting cycle 0
+
+.591458 - ****** Starting Perceive Phase ******
+
+.595230 - World observed.
+
+1.102447 - ****** Starting Interpret Phase ******
+
+1.103334 - Please input a goal if desired. Otherwise, press enter to continue
+
+12.688685 - Goal added.
+
+12.689032 - Please input a goal if desired. Otherwise, press enter to continue
+
+14.758128 - ****** Starting Eval Phase ******
+
+14.761391 - No current goals. Skipping eval
+
+15.542229 - ****** Starting Intend Phase ******
+
+15.545068 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+17.454107 - ****** Starting Plan Phase ******
+
+17.457944 - Planning...
+
+17.458770 - ('achieve_goals', [<midca.goals.Goal instance at 0x10376b170>])
+
+17.459484 - Goal(remus, ga1, predicate: at_location)
+
+17.459943 - at_location
+
+17.460321 - ['remus']
+
+17.460598 - ga1
+
+17.460840 - ('survey', 'remus', 'ga1')
+
+17.461151 - ('achieve_goals', [])
+
+17.461424 - Planning complete.
+
+17.461652 - Plan: 
+
+17.461889 -   survey(remus, ga1)
+
+24.226058 - Starting cycle 1
+
+24.226693 - ****** Starting Perceive Phase ******
+
+24.230577 - World observed.
+

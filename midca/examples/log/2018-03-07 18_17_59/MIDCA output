@@ -1,0 +1,214 @@
+.000827 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001226 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001418 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001633 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002126 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002350 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002948 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.003391 - Goal Graph initialized.
+
+.003597 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003827 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+14.126234 - Starting cycle 0
+
+14.126769 - ****** Starting Perceive Phase ******
+
+14.129411 - World observed.
+
+15.106440 - ****** Starting Interpret Phase ******
+
+15.108692 - Please input a goal if desired. Otherwise, press enter to continue
+
+32.669904 - Goal added.
+
+32.670159 - Please input a goal if desired. Otherwise, press enter to continue
+
+34.872879 - ****** Starting Eval Phase ******
+
+34.875733 - No current goals. Skipping eval
+
+35.565305 - ****** Starting Intend Phase ******
+
+35.567892 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+36.781202 - ****** Starting Plan Phase ******
+
+36.784433 - Planning...
+
+36.785221 - Planning complete.
+
+36.785703 - Plan: 
+
+36.786026 -   survey(remus, ga1)
+
+38.301855 - ****** Starting Act Phase ******
+
+38.304476 - Selected action survey(remus, ga1) from plan:
+
+38.304790 - survey(remus, ga1)]0m
+
+38.305921 - simulating MIDCA action: survey(remus, ga1)
+
+1:54.481590 - Starting cycle 1
+
+1:54.482093 - ****** Starting Perceive Phase ******
+
+1:54.484261 - at_location(remus,qroute)
+at_location(remus,ga1)
+
+1:54.485026 - World observed.
+
+2:04.853614 - ****** Starting Interpret Phase ******
+
+2:06.497550 - ****** Starting Eval Phase ******
+
+2:06.500602 - All current goals achieved. Removing them from goal graph
+
+2:06.501291 - removing 1 plans that no longer apply.
+
+2:13.772655 - ****** Starting Intend Phase ******
+
+2:13.774583 - No Goals in Goal graph. Intend will do nothing.
+
+2:16.328077 - ****** Starting Plan Phase ******
+
+2:16.331292 - No goals received by planner. Skipping planning.
+
+2:17.724768 - ****** Starting Act Phase ******
+
+2:17.728517 - No valid plan found that achieves any current goals.
+
+2:17.730662 - MIDCA will not select an action this cycle.
+
+2:17.731502 - No actions selected this cycle by MIDCA.
+
+2:18.836356 - Starting cycle 2
+
+2:18.837018 - ****** Starting Perceive Phase ******
+
+2:18.839457 - at_location(remus,qroute)
+at_location(remus,ga1)
+
+2:18.840326 - World observed.
+
+2:20.556315 - ****** Starting Interpret Phase ******
+
+2:20.558701 - Please input a goal if desired. Otherwise, press enter to continue
+
+2:40.038510 - Goal added.
+
+2:40.038746 - Please input a goal if desired. Otherwise, press enter to continue
+
+2:41.372179 - ****** Starting Eval Phase ******
+
+2:41.375612 - No current goals. Skipping eval
+
+2:41.875490 - ****** Starting Intend Phase ******
+
+2:41.878547 - Selecting goal(s): Goal(remus, ga2, predicate: at_location)
+
+2:42.492371 - ****** Starting Plan Phase ******
+
+2:42.496680 - Planning...
+
+2:42.497660 - Planning complete.
+
+2:42.498279 - Plan: 
+
+2:42.498630 -   survey(remus, ga2)
+
+2:43.259452 - ****** Starting Act Phase ******
+
+2:43.263781 - Selected action survey(remus, ga2) from plan:
+
+2:43.264149 - survey(remus, ga2)]0m
+
+2:43.266120 - simulating MIDCA action: survey(remus, ga2)
+
+3:24.622973 - Starting cycle 3
+
+3:24.623483 - ****** Starting Perceive Phase ******
+
+3:24.625480 - removed:remus
+
+3:24.625686 - at_location(remus,qroute)
+at_location(remus,ga2)
+
+3:24.626266 - World observed.
+
+3:25.046670 - ****** Starting Interpret Phase ******
+
+3:25.351284 - ****** Starting Eval Phase ******
+
+3:25.355363 - All current goals achieved. Removing them from goal graph
+
+3:25.356352 - removing 1 plans that no longer apply.
+
+3:25.639535 - ****** Starting Intend Phase ******
+
+3:25.641838 - No Goals in Goal graph. Intend will do nothing.
+
+3:25.990981 - ****** Starting Plan Phase ******
+
+3:25.994223 - No goals received by planner. Skipping planning.
+
+3:26.278840 - ****** Starting Act Phase ******
+
+3:26.279984 - No valid plan found that achieves any current goals.
+
+3:26.280750 - MIDCA will not select an action this cycle.
+
+3:26.281431 - No actions selected this cycle by MIDCA.
+
+3:26.630591 - Starting cycle 4
+
+3:26.631058 - ****** Starting Perceive Phase ******
+
+3:26.633110 - at_location(remus,qroute)
+at_location(remus,ga2)
+
+3:26.633727 - World observed.
+
+3:26.879279 - ****** Starting Interpret Phase ******
+
+3:26.882374 - Please input a goal if desired. Otherwise, press enter to continue
+
+3:27.374295 - ****** Starting Eval Phase ******
+
+3:27.377157 - No current goals. Skipping eval
+
+3:27.727151 - ****** Starting Intend Phase ******
+
+3:27.729520 - No Goals in Goal graph. Intend will do nothing.
+
+3:28.073055 - ****** Starting Plan Phase ******
+
+3:28.076251 - No goals received by planner. Skipping planning.
+
+3:28.326869 - ****** Starting Act Phase ******
+
+3:28.329731 - No valid plan found that achieves any current goals.
+
+3:28.330492 - MIDCA will not select an action this cycle.
+
+3:28.331322 - No actions selected this cycle by MIDCA.
+
+3:28.526707 - Starting cycle 5
+
+3:28.527138 - ****** Starting Perceive Phase ******
+
+3:28.529238 - at_location(remus,qroute)
+at_location(remus,ga2)
+
+3:28.529925 - World observed.
+

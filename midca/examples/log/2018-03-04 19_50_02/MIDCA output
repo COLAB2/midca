@@ -1,0 +1,67 @@
+.000904 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001782 - Goal Graph initialized.
+
+.001970 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002162 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.746607 - Starting cycle 0
+
+.747506 - ****** Starting Perceive Phase ******
+
+.749298 - at_location(remus,qroute)
+
+.750267 - World observed.
+
+1.202973 - Starting cycle 1
+
+1.203882 - ****** Starting Perceive Phase ******
+
+1.204395 - at_location(remus,qroute)
+
+1.205289 - World observed.
+
+1.809817 - Starting cycle 2
+
+1.810462 - ****** Starting Perceive Phase ******
+
+1.812317 - at_location(remus,qroute)
+
+1.813148 - World observed.
+
+2.337489 - Starting cycle 3
+
+2.338109 - ****** Starting Perceive Phase ******
+
+2.340176 - at_location(remus,qroute)
+
+2.341125 - World observed.
+
+2.617609 - Starting cycle 4
+
+2.618244 - ****** Starting Perceive Phase ******
+
+2.620178 - at_location(remus,qroute)
+
+2.621176 - World observed.
+
+3.073711 - Starting cycle 5
+
+3.074364 - ****** Starting Perceive Phase ******
+
+3.076300 - at_location(remus,qroute)
+
+3.077093 - World observed.
+
+4.473732 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+
+9.289782 - [
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+]
+

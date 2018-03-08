@@ -1,0 +1,140 @@
+.000916 - [cognitive] Initializing Simulate module 1 MidcaActionSimulator...done.
+
+.001578 - [cognitive] Initializing Perceive module 1 PerfectObserver...done.
+
+.001794 - [cognitive] Initializing Interpret module 1 UserGoalInput...done.
+
+.002022 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002265 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002469 - [cognitive] Initializing Plan module 1 GenericPyhopPlanner...done.
+
+.002719 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002986 - Goal Graph initialized.
+
+.003239 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003501 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+4.679115 - Starting cycle 0
+
+4.679664 - ****** Starting Simulate Phase ******
+
+4.681378 - Simulator: no actions selected yet by MIDCA.
+
+8.246349 - ****** Starting Perceive Phase ******
+
+8.247112 - World observed.
+
+11.205818 - ****** Starting Interpret Phase ******
+
+11.206328 - Please input a goal if desired. Otherwise, press enter to continue
+
+24.109224 - Goal(clucky, predicate: left) is not a valid goal
+Possible predicates: ['onleft', 'onright'] 
+Possible arguments ['clucky', 'lady cluck']
+
+24.109720 - Please input a goal if desired. Otherwise, press enter to continue
+
+38.812376 - Goal added.
+
+38.812887 - Please input a goal if desired. Otherwise, press enter to continue
+
+41.389160 - ****** Starting Eval Phase ******
+
+41.390666 - No current goals. Skipping eval
+
+42.292242 - ****** Starting Intend Phase ******
+
+42.292932 - Selecting goal(s): Goal(clucky, predicate: onleft)
+
+43.107486 - ****** Starting Plan Phase ******
+
+43.107935 - Planning from scratch
+
+43.109600 - Planning...
+
+43.109990 - Planning complete.
+
+43.110302 - Plan:  crossleft(clucky)]0m
+
+46.036784 - ****** Starting Act Phase ******
+
+46.038744 - Selected action crossleft(clucky) from plan:
+
+46.039241 - crossleft(clucky)]0m
+
+47.500403 - Starting cycle 1
+
+47.500915 - ****** Starting Simulate Phase ******
+
+47.503166 - simulating MIDCA action: crossleft(clucky)
+
+48.636015 - ****** Starting Perceive Phase ******
+
+48.636611 - World observed.
+
+49.675946 - ****** Starting Interpret Phase ******
+
+49.676487 - Please input a goal if desired. Otherwise, press enter to continue
+
+50.627931 - ****** Starting Eval Phase ******
+
+50.629487 - All current goals achieved. Removing them from goal graph
+
+50.630394 - removing 1 plans that no longer apply.
+
+51.251910 - ****** Starting Intend Phase ******
+
+51.252562 - No Goals in Goal graph. Intend will do nothing.
+
+51.603980 - ****** Starting Plan Phase ******
+
+51.604570 - No goals received by planner. Skipping planning.
+
+52.387861 - ****** Starting Act Phase ******
+
+52.388455 - No valid plan found that achieves any current goals.
+
+52.390929 - MIDCA will not select an action this cycle.
+
+52.635774 - Starting cycle 2
+
+52.636295 - ****** Starting Simulate Phase ******
+
+52.638327 - No actions selected this cycle by MIDCA.
+
+52.883858 - ****** Starting Perceive Phase ******
+
+52.884452 - World observed.
+
+53.339800 - ****** Starting Interpret Phase ******
+
+53.340342 - Please input a goal if desired. Otherwise, press enter to continue
+
+53.579749 - ****** Starting Eval Phase ******
+
+53.581191 - No current goals. Skipping eval
+
+53.803749 - ****** Starting Intend Phase ******
+
+53.804391 - No Goals in Goal graph. Intend will do nothing.
+
+54.948325 - ****** Starting Plan Phase ******
+
+54.948981 - No goals received by planner. Skipping planning.
+
+55.203706 - ****** Starting Act Phase ******
+
+55.204303 - No valid plan found that achieves any current goals.
+
+55.207114 - MIDCA will not select an action this cycle.
+
+1:03.075506 - [
+clucky (CHICKEN) : onleft(clucky)
+lady cluck (HEN) : onleft(lady cluck)
+]
+

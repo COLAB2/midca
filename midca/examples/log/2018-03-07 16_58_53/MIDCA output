@@ -1,0 +1,51 @@
+.000967 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001419 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001695 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001954 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002545 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003107 - Goal Graph initialized.
+
+.003319 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003529 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+1.072022 - Starting cycle 0
+
+1.072716 - ****** Starting Perceive Phase ******
+
+1.076757 - World observed.
+
+1.838866 - ****** Starting Interpret Phase ******
+
+1.841353 - Please input a goal if desired. Otherwise, press enter to continue
+
+18.848748 - Goal added.
+
+18.849094 - Please input a goal if desired. Otherwise, press enter to continue
+
+21.693975 - ****** Starting Eval Phase ******
+
+21.695794 - No current goals. Skipping eval
+
+22.942158 - ****** Starting Intend Phase ******
+
+22.945054 - Selecting goal(s): Goal(remus, qroute, predicate: at_location)
+
+24.710005 - ****** Starting Plan Phase ******
+
+24.713829 - Planning...
+
+24.714108 - helloooooooooooooooooooo
+
+24.714416 - Could not generate a valid pyhop state from current world state. Skipping planning
+
+24.714658 - Could not generate a valid pyhop task from current goal set. Skipping planning
+
+24.716138 - Planning failed for  Goal(remus, qroute, predicate: at_location)  
+
