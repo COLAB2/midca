@@ -10,20 +10,41 @@
 	((player-at ?to))
 	)
 	;;------------------------------------------------------
+	;;to be added: (increase (current-harvest-duration) 1) (decrease (tool-current-health ?tool) 1)
 	
 	(:operator (!harvest ?target  ?tool  ?obj)
 	()
 	(
-	(player-at ?target) (thing-at-map ?obj ?target) (tool-in-hand ?tool)
+	(player-at ?player ?target) (resource-at ?obj ?target) (tool-in-hand ?tool)
 	(harvest_tool ?tool ?obj)			
 	)
 	(
-	(increase (current-harvest-duration) 1) (decrease (tool-current-health ?tool) 1)
+	(has_resource ?player ?obj)
 	)
 	)
-	
 	;;----------------------------------------------------
-	
+	;;assume harvesting gives you one resource, and when you use it, it is finished. 
+	(:operator(!craft-wood-axe  ?tool)
+	()
+	(
+	(resource-available stick)(resource-available plank)
+	)
+	(
+	(not(resource-available stick))(not(resource-available plank))
+	(resource-available wood-axe)
+	)
+	)
+	;;----------------------------------------------------
+	(:operator(!craft-wood-plank ?rsrc  ?tool)
+	()
+	(
+	(has_resource ?rsrc)(rsr_tool ?rsrc ?tool)
+	)
+	(
+	(has_item ?agnt ?item)
+	)
+	)
+	;;------------------------
 	
 	(:operator (!eat)
 	()
@@ -37,5 +58,41 @@
 	((increase (current-health 1) (decrease (current_food_resources ?tool) 1))
 	)
 	
+	;;-------------------------------
+	;;if he has the resources to craft pickaxe
+    (:method (get_pickaxe ?player)
+             
+             ((rsr_tool ?rsrc ?tool)(has_resource ?rsrc))
+            
+             ((!craft-pickaxe ?rsrc ?tool))
+    )
+    
+    ;;-------------------------------------
+    ;;if he does not have the resources, but he has tool to harvest that resource, and he is the same location at the resource
+    (:method (get_pickaxe ?player)
+             
+             (
+             (rsrc_tool ?rsrc ?tool) (not(has_resource ?rsrc)) (tool_rsrc ?tool ?rsrc) (has_tool ?tool)
+             (player-at ?loc) (obj-at ?loc) 
+             )
+            
+             ((!harvest ?rsrc ?tool)(get_pickaxe ?player))
+    )
+    
+    ;;------------------------------------
+     ;;if he does not have the resources, but he has tool to harvest that resource, 
+     ;;and he is not the same location at the resource
+    
+   (:method (get_pickaxe ?player)
+             
+             (
+             (rsrc_tool ?rsrc ?tool) (not(has_resource ?rsrc)) (tool_rsrc ?tool ?rsrc) (has_tool ?tool)
+             (player-at ?loc1) (obj-at ?loc2) (different ?loc1 ?loc2)
+             )
+            
+             ((!move ?player ?loc2)(get_pickaxe ?player))
+    )
 	
+	(:- (same ?x ?x) nil)
+    (:- (different ?x ?y) ((not (same ?x ?y))))
 )

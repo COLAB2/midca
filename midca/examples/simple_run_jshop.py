@@ -67,8 +67,7 @@ myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
                                                     ))
 myMidca.append_module("Act", act.SimpleAct())
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
-myMidca.insert_module('Simulate', simulator.FireReset(), 0)
+
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
