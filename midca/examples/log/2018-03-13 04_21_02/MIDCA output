@@ -1,0 +1,31 @@
+.000360 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001175 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001451 - Goal Graph initialized.
+
+.001565 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.001699 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+2.641787 - Starting cycle 0
+
+2.642205 - ****** Starting Simulate Phase ******
+
+2.642598 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+3.729978 - ****** Starting Perceive Phase ******
+
+3.733125 - World observed.
+
+4.903329 - ****** Starting Interpret Phase ******
+
+5.533724 - ****** Starting Eval Phase ******
+

@@ -94,6 +94,13 @@ class MoosGoalInput(UserGoalInput):
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             UserGoalInput.run(self, cycle, verbose = 2)
 
+	world = self.mem.get(self.mem.STATES)[-1]
+	atoms = copy.deepcopy(world.atoms)
+        for atom in atoms:
+             if atom.predicate.name == "hazard_at_location":
+                        g = goals.Goal(*[atom.args[0].name,atom.args[1].name], predicate = 'hazard_checked')
+			self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+
 
 
 class SimpleMortarGoalGen(base.BaseModule):

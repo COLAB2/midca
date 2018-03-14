@@ -1,0 +1,4041 @@
+.000398 - Memory access at key __goals
+.000550 - Goal Graph initialized.
+
+.000688 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001442 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001579 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001730 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001886 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002012 - Memory access at key __PlanningCount
+.002103 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002730 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.002881 - Memory access at key __goals
+.002975 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.003061 - Starting cycle 0
+
+.003173 - ****** Starting Simulate Phase ******
+
+.003323 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.003449 - ****** Starting Perceive Phase ******
+
+.003580 - Memory access at key __world states
+.013925 - states not received
+
+.014232 - Memory access at key __world states
+.014360 - World observed.
+
+.015337 - ****** Starting Interpret Phase ******
+
+.015468 - Memory access at key __goals
+.015550 - Please input a goal if desired. Otherwise, press enter to continue
+
+7.634774 - Memory access at key __world states
+7.635110 - Memory access at key __goals
+7.635438 - Goal added.
+
+7.635631 - Please input a goal if desired. Otherwise, press enter to continue
+
+8.875879 - Memory access at key __world states
+8.876527 - ****** Starting Eval Phase ******
+
+8.876801 - Memory access at key __world states
+8.878450 - No current goals. Skipping eval
+
+8.878794 - ****** Starting Intend Phase ******
+
+8.879141 - Memory access at key __goals
+8.879477 - Memory access at key __current goals
+8.879732 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+8.880030 - ****** Starting Plan Phase ******
+
+8.880294 - Memory access at key __world states
+8.880462 - Memory access at key __current goals
+8.882621 - Memory access at key __goals
+8.882876 - Planning...
+
+8.883191 - Memory access at key __PlanningCount
+8.883332 - Memory access at key __PlanningCount
+8.883527 - ('achieve_goals', [<midca.goals.Goal instance at 0x7f7ca869a290>])
+
+9.907995 - enter('survey', 'remus', 'ga1')
+
+11.624356 - enter('achieve_goals', [])
+
+16.979801 - enterPlanning complete.
+
+16.980166 - Plan: 
+
+16.980384 -   survey(remus, ga1)
+
+16.980561 - Memory access at key __goals
+16.981553 - ****** Starting Act Phase ******
+
+16.981942 - Memory access at key __world states
+16.982120 - Memory access at key __current goals
+16.982263 - Memory access at key __goals
+16.984975 - Selected action survey(remus, ga1) from plan:
+
+16.985900 - survey(remus, ga1)]0m
+
+16.986137 - Memory access at key __actions
+16.986314 - Memory access at key __actions
+16.986448 - Memory access at key __actions
+16.986878 - Starting cycle 1
+
+16.987155 - ****** Starting Simulate Phase ******
+
+16.987511 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+16.987808 - ****** Starting Perceive Phase ******
+
+16.988101 - Memory access at key __world states
+16.998568 - Mine Report not received
+
+16.999115 - at_location(remus,transit)
+at_location(remus,home)
+
+16.999439 - Memory access at key __world states
+16.999613 - Memory access at key __world states
+16.999800 - World observed.
+
+17.001550 - ****** Starting Interpret Phase ******
+
+17.001746 - Memory access at key __goals
+17.001858 - Memory access at key __world states
+17.002257 - ****** Starting Eval Phase ******
+
+17.002430 - Memory access at key __world states
+17.002552 - Memory access at key __current goals
+17.003801 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.003974 - ****** Starting Intend Phase ******
+
+17.004148 - Memory access at key __goals
+17.004241 - Memory access at key __current goals
+17.004312 - Memory access at key __current goals
+17.004398 - No goals selected.
+
+17.004556 - ****** Starting Plan Phase ******
+
+17.004678 - Memory access at key __world states
+17.004750 - Memory access at key __current goals
+17.005783 - Memory access at key __goals
+17.006408 - Old plan retrieved. Checking validity... valid.
+
+17.006984 - checking to see if all goals are achieved... yes
+
+17.007270 - ****** Starting Act Phase ******
+
+17.007520 - Memory access at key __world states
+17.007675 - Memory access at key __current goals
+17.007795 - Memory access at key __goals
+17.010150 - Selected action survey(remus, ga1) from plan:
+
+17.010364 - survey(remus, ga1)]0m
+
+17.010502 - Memory access at key __actions
+17.010623 - Memory access at key __actions
+17.010749 - Memory access at key __actions
+17.011030 - Starting cycle 2
+
+17.011206 - ****** Starting Simulate Phase ******
+
+17.011489 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.011686 - ****** Starting Perceive Phase ******
+
+17.011884 - Memory access at key __world states
+17.023875 - Mine Report not received
+
+17.024390 - at_location(remus,transit)
+at_location(remus,home)
+
+17.024569 - Memory access at key __world states
+17.024675 - Memory access at key __world states
+17.024767 - World observed.
+
+17.026206 - ****** Starting Interpret Phase ******
+
+17.026600 - Memory access at key __goals
+17.026822 - Memory access at key __world states
+17.027365 - ****** Starting Eval Phase ******
+
+17.027518 - Memory access at key __world states
+17.027592 - Memory access at key __current goals
+17.028587 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.028731 - ****** Starting Intend Phase ******
+
+17.028881 - Memory access at key __goals
+17.028970 - Memory access at key __current goals
+17.029059 - Memory access at key __current goals
+17.029180 - No goals selected.
+
+17.029312 - ****** Starting Plan Phase ******
+
+17.029441 - Memory access at key __world states
+17.029515 - Memory access at key __current goals
+17.030583 - Memory access at key __goals
+17.031029 - Old plan retrieved. Checking validity... valid.
+
+17.031924 - checking to see if all goals are achieved... yes
+
+17.032202 - ****** Starting Act Phase ******
+
+17.032370 - Memory access at key __world states
+17.032463 - Memory access at key __current goals
+17.032566 - Memory access at key __goals
+17.033869 - Selected action survey(remus, ga1) from plan:
+
+17.034063 - survey(remus, ga1)]0m
+
+17.034187 - Memory access at key __actions
+17.034299 - Memory access at key __actions
+17.034418 - Memory access at key __actions
+17.034686 - Starting cycle 3
+
+17.034819 - ****** Starting Simulate Phase ******
+
+17.035015 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.035166 - ****** Starting Perceive Phase ******
+
+17.035305 - Memory access at key __world states
+17.045648 - states not received
+
+17.046077 - Memory access at key __world states
+17.046177 - World observed.
+
+17.047157 - ****** Starting Interpret Phase ******
+
+17.047304 - Memory access at key __goals
+17.047411 - Memory access at key __world states
+17.047682 - ****** Starting Eval Phase ******
+
+17.047819 - Memory access at key __world states
+17.047912 - Memory access at key __current goals
+17.048950 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.049146 - ****** Starting Intend Phase ******
+
+17.049353 - Memory access at key __goals
+17.049445 - Memory access at key __current goals
+17.049519 - Memory access at key __current goals
+17.049608 - No goals selected.
+
+17.049760 - ****** Starting Plan Phase ******
+
+17.049892 - Memory access at key __world states
+17.049967 - Memory access at key __current goals
+17.050976 - Memory access at key __goals
+17.051243 - Old plan retrieved. Checking validity... valid.
+
+17.051476 - checking to see if all goals are achieved... yes
+
+17.051629 - ****** Starting Act Phase ******
+
+17.051751 - Memory access at key __world states
+17.051840 - Memory access at key __current goals
+17.051913 - Memory access at key __goals
+17.053011 - Selected action survey(remus, ga1) from plan:
+
+17.053145 - survey(remus, ga1)]0m
+
+17.053243 - Memory access at key __actions
+17.053318 - Memory access at key __actions
+17.053403 - Memory access at key __actions
+17.053603 - Starting cycle 4
+
+17.053743 - ****** Starting Simulate Phase ******
+
+17.053899 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.054023 - ****** Starting Perceive Phase ******
+
+17.054158 - Memory access at key __world states
+17.073985 - Mine Report not received
+
+17.074399 - at_location(remus,transit)
+at_location(remus,home)
+
+17.074657 - Memory access at key __world states
+17.074775 - Memory access at key __world states
+17.074875 - World observed.
+
+17.077109 - ****** Starting Interpret Phase ******
+
+17.077403 - Memory access at key __goals
+17.077558 - Memory access at key __world states
+17.078109 - ****** Starting Eval Phase ******
+
+17.078318 - Memory access at key __world states
+17.078445 - Memory access at key __current goals
+17.080315 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.080540 - ****** Starting Intend Phase ******
+
+17.081190 - Memory access at key __goals
+17.081374 - Memory access at key __current goals
+17.081504 - Memory access at key __current goals
+17.081664 - No goals selected.
+
+17.081883 - ****** Starting Plan Phase ******
+
+17.082079 - Memory access at key __world states
+17.082204 - Memory access at key __current goals
+17.084406 - Memory access at key __goals
+17.085135 - Old plan retrieved. Checking validity... valid.
+
+17.085590 - checking to see if all goals are achieved... yes
+
+17.085829 - ****** Starting Act Phase ******
+
+17.086212 - Memory access at key __world states
+17.086350 - Memory access at key __current goals
+17.086480 - Memory access at key __goals
+17.089269 - Selected action survey(remus, ga1) from plan:
+
+17.089497 - survey(remus, ga1)]0m
+
+17.089642 - Memory access at key __actions
+17.089773 - Memory access at key __actions
+17.089901 - Memory access at key __actions
+17.090228 - Starting cycle 5
+
+17.090426 - ****** Starting Simulate Phase ******
+
+17.090697 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.090880 - ****** Starting Perceive Phase ******
+
+17.091026 - Memory access at key __world states
+17.101337 - states not received
+
+17.102136 - Memory access at key __world states
+17.102377 - World observed.
+
+17.103983 - ****** Starting Interpret Phase ******
+
+17.104248 - Memory access at key __goals
+17.104390 - Memory access at key __world states
+17.104885 - ****** Starting Eval Phase ******
+
+17.105105 - Memory access at key __world states
+17.105228 - Memory access at key __current goals
+17.106985 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.107322 - ****** Starting Intend Phase ******
+
+17.107554 - Memory access at key __goals
+17.107676 - Memory access at key __current goals
+17.107766 - Memory access at key __current goals
+17.107874 - No goals selected.
+
+17.108053 - ****** Starting Plan Phase ******
+
+17.108219 - Memory access at key __world states
+17.108301 - Memory access at key __current goals
+17.110915 - Memory access at key __goals
+17.111358 - Old plan retrieved. Checking validity... valid.
+
+17.111618 - checking to see if all goals are achieved... yes
+
+17.111773 - ****** Starting Act Phase ******
+
+17.111904 - Memory access at key __world states
+17.111986 - Memory access at key __current goals
+17.112066 - Memory access at key __goals
+17.113344 - Selected action survey(remus, ga1) from plan:
+
+17.113461 - survey(remus, ga1)]0m
+
+17.113551 - Memory access at key __actions
+17.113665 - Memory access at key __actions
+17.113807 - Memory access at key __actions
+17.114011 - Starting cycle 6
+
+17.114149 - ****** Starting Simulate Phase ******
+
+17.114305 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.114444 - ****** Starting Perceive Phase ******
+
+17.114585 - Memory access at key __world states
+17.124931 - Mine Report not received
+
+17.125464 - at_location(remus,transit)
+
+17.125702 - Memory access at key __world states
+17.125830 - Memory access at key __world states
+17.125960 - World observed.
+
+17.128086 - ****** Starting Interpret Phase ******
+
+17.128377 - Memory access at key __goals
+17.128532 - Memory access at key __world states
+17.129042 - ****** Starting Eval Phase ******
+
+17.129309 - Memory access at key __world states
+17.129446 - Memory access at key __current goals
+17.131651 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.131943 - ****** Starting Intend Phase ******
+
+17.132250 - Memory access at key __goals
+17.132429 - Memory access at key __current goals
+17.132566 - Memory access at key __current goals
+17.132733 - No goals selected.
+
+17.132930 - ****** Starting Plan Phase ******
+
+17.133157 - Memory access at key __world states
+17.133281 - Memory access at key __current goals
+17.135580 - Memory access at key __goals
+17.136134 - Old plan retrieved. Checking validity... valid.
+
+17.136562 - checking to see if all goals are achieved... yes
+
+17.136793 - ****** Starting Act Phase ******
+
+17.136996 - Memory access at key __world states
+17.137148 - Memory access at key __current goals
+17.137269 - Memory access at key __goals
+17.139630 - Selected action survey(remus, ga1) from plan:
+
+17.139861 - survey(remus, ga1)]0m
+
+17.140004 - Memory access at key __actions
+17.140132 - Memory access at key __actions
+17.140231 - Memory access at key __actions
+17.140557 - Starting cycle 7
+
+17.140790 - ****** Starting Simulate Phase ******
+
+17.141027 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.141237 - ****** Starting Perceive Phase ******
+
+17.141469 - Memory access at key __world states
+17.151862 - states not received
+
+17.152307 - Memory access at key __world states
+17.152411 - World observed.
+
+17.153804 - ****** Starting Interpret Phase ******
+
+17.154006 - Memory access at key __goals
+17.154139 - Memory access at key __world states
+17.154577 - ****** Starting Eval Phase ******
+
+17.154837 - Memory access at key __world states
+17.154927 - Memory access at key __current goals
+17.156041 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.156228 - ****** Starting Intend Phase ******
+
+17.156396 - Memory access at key __goals
+17.156499 - Memory access at key __current goals
+17.156573 - Memory access at key __current goals
+17.156666 - No goals selected.
+
+17.156781 - ****** Starting Plan Phase ******
+
+17.156901 - Memory access at key __world states
+17.157013 - Memory access at key __current goals
+17.157978 - Memory access at key __goals
+17.158245 - Old plan retrieved. Checking validity... valid.
+
+17.158521 - checking to see if all goals are achieved... yes
+
+17.158691 - ****** Starting Act Phase ******
+
+17.158825 - Memory access at key __world states
+17.158925 - Memory access at key __current goals
+17.159002 - Memory access at key __goals
+17.160374 - Selected action survey(remus, ga1) from plan:
+
+17.160518 - survey(remus, ga1)]0m
+
+17.160630 - Memory access at key __actions
+17.160735 - Memory access at key __actions
+17.160849 - Memory access at key __actions
+17.161116 - Starting cycle 8
+
+17.161275 - ****** Starting Simulate Phase ******
+
+17.161464 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.161598 - ****** Starting Perceive Phase ******
+
+17.161761 - Memory access at key __world states
+17.174234 - Mine Report not received
+
+17.174624 - at_location(remus,transit)
+
+17.174791 - Memory access at key __world states
+17.174896 - Memory access at key __world states
+17.174988 - World observed.
+
+17.176167 - ****** Starting Interpret Phase ******
+
+17.176500 - Memory access at key __goals
+17.176714 - Memory access at key __world states
+17.177299 - ****** Starting Eval Phase ******
+
+17.177471 - Memory access at key __world states
+17.177602 - Memory access at key __current goals
+17.178880 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.179108 - ****** Starting Intend Phase ******
+
+17.179317 - Memory access at key __goals
+17.179418 - Memory access at key __current goals
+17.179500 - Memory access at key __current goals
+17.179622 - No goals selected.
+
+17.179834 - ****** Starting Plan Phase ******
+
+17.180002 - Memory access at key __world states
+17.180115 - Memory access at key __current goals
+17.181424 - Memory access at key __goals
+17.181916 - Old plan retrieved. Checking validity... valid.
+
+17.182286 - checking to see if all goals are achieved... yes
+
+17.182520 - ****** Starting Act Phase ******
+
+17.182670 - Memory access at key __world states
+17.182791 - Memory access at key __current goals
+17.182869 - Memory access at key __goals
+17.184929 - Selected action survey(remus, ga1) from plan:
+
+17.185151 - survey(remus, ga1)]0m
+
+17.185279 - Memory access at key __actions
+17.185377 - Memory access at key __actions
+17.185458 - Memory access at key __actions
+17.185711 - Starting cycle 9
+
+17.185953 - ****** Starting Simulate Phase ******
+
+17.186225 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.186422 - ****** Starting Perceive Phase ******
+
+17.186616 - Memory access at key __world states
+17.196977 - states not received
+
+17.197485 - Memory access at key __world states
+17.197604 - World observed.
+
+17.198655 - ****** Starting Interpret Phase ******
+
+17.198822 - Memory access at key __goals
+17.198936 - Memory access at key __world states
+17.199230 - ****** Starting Eval Phase ******
+
+17.199390 - Memory access at key __world states
+17.199488 - Memory access at key __current goals
+17.200605 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.200789 - ****** Starting Intend Phase ******
+
+17.201102 - Memory access at key __goals
+17.201203 - Memory access at key __current goals
+17.201283 - Memory access at key __current goals
+17.201377 - No goals selected.
+
+17.201533 - ****** Starting Plan Phase ******
+
+17.201679 - Memory access at key __world states
+17.201775 - Memory access at key __current goals
+17.202879 - Memory access at key __goals
+17.203247 - Old plan retrieved. Checking validity... valid.
+
+17.203534 - checking to see if all goals are achieved... yes
+
+17.203725 - ****** Starting Act Phase ******
+
+17.203873 - Memory access at key __world states
+17.203969 - Memory access at key __current goals
+17.204049 - Memory access at key __goals
+17.205418 - Selected action survey(remus, ga1) from plan:
+
+17.205729 - survey(remus, ga1)]0m
+
+17.205909 - Memory access at key __actions
+17.206036 - Memory access at key __actions
+17.206118 - Memory access at key __actions
+17.206374 - Starting cycle 10
+
+17.206543 - ****** Starting Simulate Phase ******
+
+17.206741 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.206909 - ****** Starting Perceive Phase ******
+
+17.207124 - Memory access at key __world states
+17.224517 - Mine Report not received
+
+17.224956 - at_location(remus,transit)
+
+17.225237 - Memory access at key __world states
+17.225339 - Memory access at key __world states
+17.225461 - World observed.
+
+17.227300 - ****** Starting Interpret Phase ******
+
+17.227577 - Memory access at key __goals
+17.227725 - Memory access at key __world states
+17.228214 - ****** Starting Eval Phase ******
+
+17.228372 - Memory access at key __world states
+17.228462 - Memory access at key __current goals
+17.229806 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.229990 - ****** Starting Intend Phase ******
+
+17.230166 - Memory access at key __goals
+17.230271 - Memory access at key __current goals
+17.230360 - Memory access at key __current goals
+17.230464 - No goals selected.
+
+17.230644 - ****** Starting Plan Phase ******
+
+17.230789 - Memory access at key __world states
+17.230904 - Memory access at key __current goals
+17.232059 - Memory access at key __goals
+17.232426 - Old plan retrieved. Checking validity... valid.
+
+17.232933 - checking to see if all goals are achieved... yes
+
+17.233254 - ****** Starting Act Phase ******
+
+17.233511 - Memory access at key __world states
+17.233675 - Memory access at key __current goals
+17.233798 - Memory access at key __goals
+17.235546 - Selected action survey(remus, ga1) from plan:
+
+17.235756 - survey(remus, ga1)]0m
+
+17.235901 - Memory access at key __actions
+17.236022 - Memory access at key __actions
+17.236151 - Memory access at key __actions
+17.236484 - Starting cycle 11
+
+17.236694 - ****** Starting Simulate Phase ******
+
+17.237001 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.237246 - ****** Starting Perceive Phase ******
+
+17.237632 - Memory access at key __world states
+17.248025 - states not received
+
+17.248448 - Memory access at key __world states
+17.248560 - World observed.
+
+17.249787 - ****** Starting Interpret Phase ******
+
+17.250042 - Memory access at key __goals
+17.250193 - Memory access at key __world states
+17.250631 - ****** Starting Eval Phase ******
+
+17.250809 - Memory access at key __world states
+17.250938 - Memory access at key __current goals
+17.252150 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.252338 - ****** Starting Intend Phase ******
+
+17.252532 - Memory access at key __goals
+17.252691 - Memory access at key __current goals
+17.252816 - Memory access at key __current goals
+17.253025 - No goals selected.
+
+17.253569 - ****** Starting Plan Phase ******
+
+17.254300 - Memory access at key __world states
+17.254529 - Memory access at key __current goals
+17.256185 - Memory access at key __goals
+17.256731 - Old plan retrieved. Checking validity... valid.
+
+17.256986 - checking to see if all goals are achieved... yes
+
+17.257148 - ****** Starting Act Phase ******
+
+17.257287 - Memory access at key __world states
+17.257425 - Memory access at key __current goals
+17.257503 - Memory access at key __goals
+17.258694 - Selected action survey(remus, ga1) from plan:
+
+17.258821 - survey(remus, ga1)]0m
+
+17.258904 - Memory access at key __actions
+17.258975 - Memory access at key __actions
+17.259044 - Memory access at key __actions
+17.259214 - Starting cycle 12
+
+17.259344 - ****** Starting Simulate Phase ******
+
+17.259482 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.259604 - ****** Starting Perceive Phase ******
+
+17.259767 - Memory access at key __world states
+17.274217 - Mine Report not received
+
+17.274554 - at_location(remus,transit)
+
+17.274705 - Memory access at key __world states
+17.274782 - Memory access at key __world states
+17.274861 - World observed.
+
+17.275784 - ****** Starting Interpret Phase ******
+
+17.275915 - Memory access at key __goals
+17.275998 - Memory access at key __world states
+17.276498 - ****** Starting Eval Phase ******
+
+17.276819 - Memory access at key __world states
+17.276960 - Memory access at key __current goals
+17.278106 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.278296 - ****** Starting Intend Phase ******
+
+17.278448 - Memory access at key __goals
+17.278534 - Memory access at key __current goals
+17.278604 - Memory access at key __current goals
+17.278686 - No goals selected.
+
+17.278792 - ****** Starting Plan Phase ******
+
+17.278900 - Memory access at key __world states
+17.278970 - Memory access at key __current goals
+17.279927 - Memory access at key __goals
+17.280189 - Old plan retrieved. Checking validity... valid.
+
+17.280411 - checking to see if all goals are achieved... yes
+
+17.280541 - ****** Starting Act Phase ******
+
+17.280652 - Memory access at key __world states
+17.280722 - Memory access at key __current goals
+17.280793 - Memory access at key __goals
+17.282373 - Selected action survey(remus, ga1) from plan:
+
+17.282846 - survey(remus, ga1)]0m
+
+17.282947 - Memory access at key __actions
+17.283021 - Memory access at key __actions
+17.283094 - Memory access at key __actions
+17.283430 - Starting cycle 13
+
+17.283742 - ****** Starting Simulate Phase ******
+
+17.284376 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.284622 - ****** Starting Perceive Phase ******
+
+17.284836 - Memory access at key __world states
+17.295219 - states not received
+
+17.295587 - Memory access at key __world states
+17.295678 - World observed.
+
+17.296572 - ****** Starting Interpret Phase ******
+
+17.296704 - Memory access at key __goals
+17.296788 - Memory access at key __world states
+17.297164 - ****** Starting Eval Phase ******
+
+17.297282 - Memory access at key __world states
+17.297353 - Memory access at key __current goals
+17.298249 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.298370 - ****** Starting Intend Phase ******
+
+17.298507 - Memory access at key __goals
+17.298589 - Memory access at key __current goals
+17.298659 - Memory access at key __current goals
+17.298742 - No goals selected.
+
+17.298874 - ****** Starting Plan Phase ******
+
+17.298983 - Memory access at key __world states
+17.299053 - Memory access at key __current goals
+17.299906 - Memory access at key __goals
+17.300151 - Old plan retrieved. Checking validity... valid.
+
+17.300390 - checking to see if all goals are achieved... yes
+
+17.300511 - ****** Starting Act Phase ******
+
+17.300621 - Memory access at key __world states
+17.300691 - Memory access at key __current goals
+17.300761 - Memory access at key __goals
+17.301813 - Selected action survey(remus, ga1) from plan:
+
+17.301916 - survey(remus, ga1)]0m
+
+17.301995 - Memory access at key __actions
+17.302066 - Memory access at key __actions
+17.302137 - Memory access at key __actions
+17.302326 - Starting cycle 14
+
+17.302471 - ****** Starting Simulate Phase ******
+
+17.302620 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.302778 - ****** Starting Perceive Phase ******
+
+17.302909 - Memory access at key __world states
+17.313178 - states not received
+
+17.313483 - Memory access at key __world states
+17.313574 - World observed.
+
+17.316543 - ****** Starting Interpret Phase ******
+
+17.316777 - Memory access at key __goals
+17.316882 - Memory access at key __world states
+17.317122 - ****** Starting Eval Phase ******
+
+17.317240 - Memory access at key __world states
+17.317311 - Memory access at key __current goals
+17.318204 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.318329 - ****** Starting Intend Phase ******
+
+17.318464 - Memory access at key __goals
+17.318546 - Memory access at key __current goals
+17.318616 - Memory access at key __current goals
+17.318699 - No goals selected.
+
+17.318807 - ****** Starting Plan Phase ******
+
+17.318917 - Memory access at key __world states
+17.319002 - Memory access at key __current goals
+17.319809 - Memory access at key __goals
+17.320044 - Old plan retrieved. Checking validity... valid.
+
+17.320262 - checking to see if all goals are achieved... yes
+
+17.320392 - ****** Starting Act Phase ******
+
+17.320504 - Memory access at key __world states
+17.320575 - Memory access at key __current goals
+17.320645 - Memory access at key __goals
+17.323091 - Selected action survey(remus, ga1) from plan:
+
+17.323260 - survey(remus, ga1)]0m
+
+17.323365 - Memory access at key __actions
+17.323449 - Memory access at key __actions
+17.323517 - Memory access at key __actions
+17.323727 - Starting cycle 15
+
+17.323889 - ****** Starting Simulate Phase ******
+
+17.324102 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.324292 - ****** Starting Perceive Phase ******
+
+17.324428 - Memory access at key __world states
+17.334813 - Mine Report not received
+
+17.335225 - at_location(remus,transit)
+
+17.335435 - Memory access at key __world states
+17.335564 - Memory access at key __world states
+17.335657 - World observed.
+
+17.336640 - ****** Starting Interpret Phase ******
+
+17.336937 - Memory access at key __goals
+17.337134 - Memory access at key __world states
+17.337467 - ****** Starting Eval Phase ******
+
+17.337599 - Memory access at key __world states
+17.337669 - Memory access at key __current goals
+17.338687 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.338839 - ****** Starting Intend Phase ******
+
+17.338984 - Memory access at key __goals
+17.339068 - Memory access at key __current goals
+17.339149 - Memory access at key __current goals
+17.339235 - No goals selected.
+
+17.339360 - ****** Starting Plan Phase ******
+
+17.339470 - Memory access at key __world states
+17.339539 - Memory access at key __current goals
+17.340471 - Memory access at key __goals
+17.340685 - Old plan retrieved. Checking validity... valid.
+
+17.340899 - checking to see if all goals are achieved... yes
+
+17.341045 - ****** Starting Act Phase ******
+
+17.341178 - Memory access at key __world states
+17.341253 - Memory access at key __current goals
+17.341324 - Memory access at key __goals
+17.342391 - Selected action survey(remus, ga1) from plan:
+
+17.342493 - survey(remus, ga1)]0m
+
+17.342572 - Memory access at key __actions
+17.342642 - Memory access at key __actions
+17.342711 - Memory access at key __actions
+17.342893 - Starting cycle 16
+
+17.343014 - ****** Starting Simulate Phase ******
+
+17.343170 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.343292 - ****** Starting Perceive Phase ******
+
+17.343417 - Memory access at key __world states
+17.353708 - states not received
+
+17.354087 - Memory access at key __world states
+17.354200 - World observed.
+
+17.355716 - ****** Starting Interpret Phase ******
+
+17.355903 - Memory access at key __goals
+17.355990 - Memory access at key __world states
+17.356265 - ****** Starting Eval Phase ******
+
+17.356384 - Memory access at key __world states
+17.356456 - Memory access at key __current goals
+17.357604 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.357829 - ****** Starting Intend Phase ******
+
+17.358183 - Memory access at key __goals
+17.358311 - Memory access at key __current goals
+17.358403 - Memory access at key __current goals
+17.358505 - No goals selected.
+
+17.358624 - ****** Starting Plan Phase ******
+
+17.358737 - Memory access at key __world states
+17.358807 - Memory access at key __current goals
+17.359638 - Memory access at key __goals
+17.359855 - Old plan retrieved. Checking validity... valid.
+
+17.360071 - checking to see if all goals are achieved... yes
+
+17.360234 - ****** Starting Act Phase ******
+
+17.360381 - Memory access at key __world states
+17.360454 - Memory access at key __current goals
+17.360524 - Memory access at key __goals
+17.361610 - Selected action survey(remus, ga1) from plan:
+
+17.361716 - survey(remus, ga1)]0m
+
+17.361795 - Memory access at key __actions
+17.361866 - Memory access at key __actions
+17.361939 - Memory access at key __actions
+17.362189 - Starting cycle 17
+
+17.362303 - ****** Starting Simulate Phase ******
+
+17.362452 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.362580 - ****** Starting Perceive Phase ******
+
+17.362704 - Memory access at key __world states
+17.374540 - Mine Report not received
+
+17.374992 - at_location(remus,transit)
+
+17.375251 - Memory access at key __world states
+17.375381 - Memory access at key __world states
+17.375512 - World observed.
+
+17.377258 - ****** Starting Interpret Phase ******
+
+17.377652 - Memory access at key __goals
+17.377865 - Memory access at key __world states
+17.378750 - ****** Starting Eval Phase ******
+
+17.378918 - Memory access at key __world states
+17.378992 - Memory access at key __current goals
+17.379970 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.380101 - ****** Starting Intend Phase ******
+
+17.380240 - Memory access at key __goals
+17.380324 - Memory access at key __current goals
+17.380394 - Memory access at key __current goals
+17.380476 - No goals selected.
+
+17.380579 - ****** Starting Plan Phase ******
+
+17.380688 - Memory access at key __world states
+17.380756 - Memory access at key __current goals
+17.381686 - Memory access at key __goals
+17.381964 - Old plan retrieved. Checking validity... valid.
+
+17.382184 - checking to see if all goals are achieved... yes
+
+17.382361 - ****** Starting Act Phase ******
+
+17.382535 - Memory access at key __world states
+17.382982 - Memory access at key __current goals
+17.383187 - Memory access at key __goals
+17.385525 - Selected action survey(remus, ga1) from plan:
+
+17.385697 - survey(remus, ga1)]0m
+
+17.385785 - Memory access at key __actions
+17.385861 - Memory access at key __actions
+17.385944 - Memory access at key __actions
+17.386316 - Starting cycle 18
+
+17.386500 - ****** Starting Simulate Phase ******
+
+17.386759 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.386957 - ****** Starting Perceive Phase ******
+
+17.387165 - Memory access at key __world states
+17.397547 - states not received
+
+17.397921 - Memory access at key __world states
+17.398015 - World observed.
+
+17.398934 - ****** Starting Interpret Phase ******
+
+17.399061 - Memory access at key __goals
+17.399144 - Memory access at key __world states
+17.399469 - ****** Starting Eval Phase ******
+
+17.399676 - Memory access at key __world states
+17.399753 - Memory access at key __current goals
+17.400647 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.400766 - ****** Starting Intend Phase ******
+
+17.400900 - Memory access at key __goals
+17.400982 - Memory access at key __current goals
+17.401119 - Memory access at key __current goals
+17.401213 - No goals selected.
+
+17.401319 - ****** Starting Plan Phase ******
+
+17.401429 - Memory access at key __world states
+17.401498 - Memory access at key __current goals
+17.402845 - Memory access at key __goals
+17.403236 - Old plan retrieved. Checking validity... valid.
+
+17.403531 - checking to see if all goals are achieved... yes
+
+17.403705 - ****** Starting Act Phase ******
+
+17.403831 - Memory access at key __world states
+17.403910 - Memory access at key __current goals
+17.403983 - Memory access at key __goals
+17.405359 - Selected action survey(remus, ga1) from plan:
+
+17.405728 - survey(remus, ga1)]0m
+
+17.405875 - Memory access at key __actions
+17.406008 - Memory access at key __actions
+17.406140 - Memory access at key __actions
+17.406442 - Starting cycle 19
+
+17.406590 - ****** Starting Simulate Phase ******
+
+17.406741 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.406862 - ****** Starting Perceive Phase ******
+
+17.406992 - Memory access at key __world states
+17.424794 - Mine Report not received
+
+17.425253 - at_location(remus,transit)
+
+17.425467 - Memory access at key __world states
+17.425566 - Memory access at key __world states
+17.425749 - World observed.
+
+17.426947 - ****** Starting Interpret Phase ******
+
+17.427323 - Memory access at key __goals
+17.427612 - Memory access at key __world states
+17.428225 - ****** Starting Eval Phase ******
+
+17.428440 - Memory access at key __world states
+17.428543 - Memory access at key __current goals
+17.429861 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.430051 - ****** Starting Intend Phase ******
+
+17.430236 - Memory access at key __goals
+17.430343 - Memory access at key __current goals
+17.430435 - Memory access at key __current goals
+17.430578 - No goals selected.
+
+17.430710 - ****** Starting Plan Phase ******
+
+17.430846 - Memory access at key __world states
+17.430947 - Memory access at key __current goals
+17.432009 - Memory access at key __goals
+17.432312 - Old plan retrieved. Checking validity... valid.
+
+17.432616 - checking to see if all goals are achieved... yes
+
+17.432997 - ****** Starting Act Phase ******
+
+17.433376 - Memory access at key __world states
+17.433565 - Memory access at key __current goals
+17.433720 - Memory access at key __goals
+17.435595 - Selected action survey(remus, ga1) from plan:
+
+17.435824 - survey(remus, ga1)]0m
+
+17.435966 - Memory access at key __actions
+17.436113 - Memory access at key __actions
+17.436269 - Memory access at key __actions
+17.436499 - Starting cycle 20
+
+17.436634 - ****** Starting Simulate Phase ******
+
+17.436852 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.436991 - ****** Starting Perceive Phase ******
+
+17.437219 - Memory access at key __world states
+17.447607 - states not received
+
+17.448054 - Memory access at key __world states
+17.448160 - World observed.
+
+17.449504 - ****** Starting Interpret Phase ******
+
+17.449694 - Memory access at key __goals
+17.449809 - Memory access at key __world states
+17.450104 - ****** Starting Eval Phase ******
+
+17.450252 - Memory access at key __world states
+17.450342 - Memory access at key __current goals
+17.451657 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.451879 - ****** Starting Intend Phase ******
+
+17.452128 - Memory access at key __goals
+17.452259 - Memory access at key __current goals
+17.452371 - Memory access at key __current goals
+17.452504 - No goals selected.
+
+17.452677 - ****** Starting Plan Phase ******
+
+17.452850 - Memory access at key __world states
+17.452959 - Memory access at key __current goals
+17.454485 - Memory access at key __goals
+17.454926 - Old plan retrieved. Checking validity... valid.
+
+17.455365 - checking to see if all goals are achieved... yes
+
+17.455589 - ****** Starting Act Phase ******
+
+17.455757 - Memory access at key __world states
+17.455848 - Memory access at key __current goals
+17.455930 - Memory access at key __goals
+17.457465 - Selected action survey(remus, ga1) from plan:
+
+17.457648 - survey(remus, ga1)]0m
+
+17.457740 - Memory access at key __actions
+17.457819 - Memory access at key __actions
+17.457898 - Memory access at key __actions
+17.458126 - Starting cycle 21
+
+17.458274 - ****** Starting Simulate Phase ******
+
+17.458430 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.458565 - ****** Starting Perceive Phase ******
+
+17.458704 - Memory access at key __world states
+17.474954 - Mine Report not received
+
+17.475350 - at_location(remus,transit)
+
+17.475543 - Memory access at key __world states
+17.475633 - Memory access at key __world states
+17.475729 - World observed.
+
+17.478056 - ****** Starting Interpret Phase ******
+
+17.478702 - Memory access at key __goals
+17.478862 - Memory access at key __world states
+17.479228 - ****** Starting Eval Phase ******
+
+17.479416 - Memory access at key __world states
+17.479520 - Memory access at key __current goals
+17.480916 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.481164 - ****** Starting Intend Phase ******
+
+17.481383 - Memory access at key __goals
+17.481513 - Memory access at key __current goals
+17.481593 - Memory access at key __current goals
+17.481692 - No goals selected.
+
+17.481860 - ****** Starting Plan Phase ******
+
+17.481999 - Memory access at key __world states
+17.482099 - Memory access at key __current goals
+17.484286 - Memory access at key __goals
+17.484938 - Old plan retrieved. Checking validity... valid.
+
+17.485283 - checking to see if all goals are achieved... yes
+
+17.485451 - ****** Starting Act Phase ******
+
+17.485593 - Memory access at key __world states
+17.485672 - Memory access at key __current goals
+17.485782 - Memory access at key __goals
+17.487335 - Selected action survey(remus, ga1) from plan:
+
+17.487493 - survey(remus, ga1)]0m
+
+17.487588 - Memory access at key __actions
+17.487704 - Memory access at key __actions
+17.487801 - Memory access at key __actions
+17.488019 - Starting cycle 22
+
+17.488143 - ****** Starting Simulate Phase ******
+
+17.488431 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.488689 - ****** Starting Perceive Phase ******
+
+17.488931 - Memory access at key __world states
+17.499347 - states not received
+
+17.499755 - Memory access at key __world states
+17.499878 - World observed.
+
+17.500883 - ****** Starting Interpret Phase ******
+
+17.501023 - Memory access at key __goals
+17.501152 - Memory access at key __world states
+17.501430 - ****** Starting Eval Phase ******
+
+17.501559 - Memory access at key __world states
+17.501636 - Memory access at key __current goals
+17.502607 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.502766 - ****** Starting Intend Phase ******
+
+17.502926 - Memory access at key __goals
+17.503017 - Memory access at key __current goals
+17.503093 - Memory access at key __current goals
+17.503186 - No goals selected.
+
+17.503313 - ****** Starting Plan Phase ******
+
+17.503438 - Memory access at key __world states
+17.503514 - Memory access at key __current goals
+17.504590 - Memory access at key __goals
+17.505017 - Old plan retrieved. Checking validity... valid.
+
+17.505476 - checking to see if all goals are achieved... yes
+
+17.505685 - ****** Starting Act Phase ******
+
+17.505822 - Memory access at key __world states
+17.505925 - Memory access at key __current goals
+17.506003 - Memory access at key __goals
+17.507351 - Selected action survey(remus, ga1) from plan:
+
+17.507496 - survey(remus, ga1)]0m
+
+17.507590 - Memory access at key __actions
+17.507669 - Memory access at key __actions
+17.507752 - Memory access at key __actions
+17.507970 - Starting cycle 23
+
+17.508096 - ****** Starting Simulate Phase ******
+
+17.508253 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.508441 - ****** Starting Perceive Phase ******
+
+17.508682 - Memory access at key __world states
+17.524993 - Mine Report not received
+
+17.525364 - at_location(remus,transit)
+
+17.525526 - Memory access at key __world states
+17.525615 - Memory access at key __world states
+17.525706 - World observed.
+
+17.527122 - ****** Starting Interpret Phase ******
+
+17.528625 - Memory access at key __goals
+17.528851 - Memory access at key __world states
+17.529748 - ****** Starting Eval Phase ******
+
+17.530448 - Memory access at key __world states
+17.530620 - Memory access at key __current goals
+17.532842 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.533128 - ****** Starting Intend Phase ******
+
+17.533439 - Memory access at key __goals
+17.533658 - Memory access at key __current goals
+17.533802 - Memory access at key __current goals
+17.533971 - No goals selected.
+
+17.534186 - ****** Starting Plan Phase ******
+
+17.534394 - Memory access at key __world states
+17.534525 - Memory access at key __current goals
+17.536637 - Memory access at key __goals
+17.537167 - Old plan retrieved. Checking validity... valid.
+
+17.537955 - checking to see if all goals are achieved... yes
+
+17.538310 - ****** Starting Act Phase ******
+
+17.538528 - Memory access at key __world states
+17.538659 - Memory access at key __current goals
+17.538787 - Memory access at key __goals
+17.541055 - Selected action survey(remus, ga1) from plan:
+
+17.541263 - survey(remus, ga1)]0m
+
+17.541424 - Memory access at key __actions
+17.541609 - Memory access at key __actions
+17.541839 - Memory access at key __actions
+17.542522 - Starting cycle 24
+
+17.542740 - ****** Starting Simulate Phase ******
+
+17.543038 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.543296 - ****** Starting Perceive Phase ******
+
+17.543548 - Memory access at key __world states
+17.553950 - states not received
+
+17.554355 - Memory access at key __world states
+17.554465 - World observed.
+
+17.556825 - ****** Starting Interpret Phase ******
+
+17.557015 - Memory access at key __goals
+17.557143 - Memory access at key __world states
+17.557439 - ****** Starting Eval Phase ******
+
+17.557592 - Memory access at key __world states
+17.558013 - Memory access at key __current goals
+17.559593 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.559921 - ****** Starting Intend Phase ******
+
+17.560130 - Memory access at key __goals
+17.560229 - Memory access at key __current goals
+17.560306 - Memory access at key __current goals
+17.560405 - No goals selected.
+
+17.560542 - ****** Starting Plan Phase ******
+
+17.560697 - Memory access at key __world states
+17.560776 - Memory access at key __current goals
+17.561815 - Memory access at key __goals
+17.562089 - Old plan retrieved. Checking validity... valid.
+
+17.562325 - checking to see if all goals are achieved... yes
+
+17.562465 - ****** Starting Act Phase ******
+
+17.562597 - Memory access at key __world states
+17.562677 - Memory access at key __current goals
+17.562755 - Memory access at key __goals
+17.563969 - Selected action survey(remus, ga1) from plan:
+
+17.564100 - survey(remus, ga1)]0m
+
+17.564194 - Memory access at key __actions
+17.564391 - Memory access at key __actions
+17.564470 - Memory access at key __actions
+17.564684 - Starting cycle 25
+
+17.564872 - ****** Starting Simulate Phase ******
+
+17.565048 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.565202 - ****** Starting Perceive Phase ******
+
+17.565345 - Memory access at key __world states
+17.575698 - Mine Report not received
+
+17.576033 - at_location(remus,transit)
+
+17.576185 - Memory access at key __world states
+17.576275 - Memory access at key __world states
+17.576363 - World observed.
+
+17.578746 - ****** Starting Interpret Phase ******
+
+17.579062 - Memory access at key __goals
+17.579228 - Memory access at key __world states
+17.579758 - ****** Starting Eval Phase ******
+
+17.579968 - Memory access at key __world states
+17.580094 - Memory access at key __current goals
+17.582054 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.582347 - ****** Starting Intend Phase ******
+
+17.582625 - Memory access at key __goals
+17.582784 - Memory access at key __current goals
+17.582911 - Memory access at key __current goals
+17.583066 - No goals selected.
+
+17.583279 - ****** Starting Plan Phase ******
+
+17.583481 - Memory access at key __world states
+17.583607 - Memory access at key __current goals
+17.586159 - Memory access at key __goals
+17.586887 - Old plan retrieved. Checking validity... valid.
+
+17.587309 - checking to see if all goals are achieved... yes
+
+17.587553 - ****** Starting Act Phase ******
+
+17.587756 - Memory access at key __world states
+17.587878 - Memory access at key __current goals
+17.587997 - Memory access at key __goals
+17.590451 - Selected action survey(remus, ga1) from plan:
+
+17.590696 - survey(remus, ga1)]0m
+
+17.590841 - Memory access at key __actions
+17.590968 - Memory access at key __actions
+17.591099 - Memory access at key __actions
+17.591420 - Starting cycle 26
+
+17.591625 - ****** Starting Simulate Phase ******
+
+17.591908 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.592121 - ****** Starting Perceive Phase ******
+
+17.592336 - Memory access at key __world states
+17.602650 - states not received
+
+17.603064 - Memory access at key __world states
+17.603186 - World observed.
+
+17.604277 - ****** Starting Interpret Phase ******
+
+17.604469 - Memory access at key __goals
+17.604580 - Memory access at key __world states
+17.604862 - ****** Starting Eval Phase ******
+
+17.604985 - Memory access at key __world states
+17.605085 - Memory access at key __current goals
+17.606071 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.606207 - ****** Starting Intend Phase ******
+
+17.606357 - Memory access at key __goals
+17.606446 - Memory access at key __current goals
+17.606521 - Memory access at key __current goals
+17.606708 - No goals selected.
+
+17.606822 - ****** Starting Plan Phase ******
+
+17.606947 - Memory access at key __world states
+17.607022 - Memory access at key __current goals
+17.607917 - Memory access at key __goals
+17.608224 - Old plan retrieved. Checking validity... valid.
+
+17.608452 - checking to see if all goals are achieved... yes
+
+17.608583 - ****** Starting Act Phase ******
+
+17.608728 - Memory access at key __world states
+17.608921 - Memory access at key __current goals
+17.609071 - Memory access at key __goals
+17.610388 - Selected action survey(remus, ga1) from plan:
+
+17.610512 - survey(remus, ga1)]0m
+
+17.610598 - Memory access at key __actions
+17.610675 - Memory access at key __actions
+17.610749 - Memory access at key __actions
+17.610934 - Starting cycle 27
+
+17.611051 - ****** Starting Simulate Phase ******
+
+17.611269 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.611442 - ****** Starting Perceive Phase ******
+
+17.611575 - Memory access at key __world states
+17.625277 - Mine Report not received
+
+17.625655 - at_location(remus,transit)
+
+17.625823 - Memory access at key __world states
+17.625905 - Memory access at key __world states
+17.625991 - World observed.
+
+17.627491 - ****** Starting Interpret Phase ******
+
+17.627958 - Memory access at key __goals
+17.628453 - Memory access at key __world states
+17.629020 - ****** Starting Eval Phase ******
+
+17.629295 - Memory access at key __world states
+17.629425 - Memory access at key __current goals
+17.631441 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.631672 - ****** Starting Intend Phase ******
+
+17.631916 - Memory access at key __goals
+17.632055 - Memory access at key __current goals
+17.632176 - Memory access at key __current goals
+17.632322 - No goals selected.
+
+17.632505 - ****** Starting Plan Phase ******
+
+17.632705 - Memory access at key __world states
+17.632828 - Memory access at key __current goals
+17.634541 - Memory access at key __goals
+17.635117 - Old plan retrieved. Checking validity... valid.
+
+17.636194 - checking to see if all goals are achieved... yes
+
+17.636470 - ****** Starting Act Phase ******
+
+17.636676 - Memory access at key __world states
+17.636801 - Memory access at key __current goals
+17.636924 - Memory access at key __goals
+17.639372 - Selected action survey(remus, ga1) from plan:
+
+17.639727 - survey(remus, ga1)]0m
+
+17.639934 - Memory access at key __actions
+17.640064 - Memory access at key __actions
+17.640189 - Memory access at key __actions
+17.640514 - Starting cycle 28
+
+17.640712 - ****** Starting Simulate Phase ******
+
+17.640979 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.641216 - ****** Starting Perceive Phase ******
+
+17.641428 - Memory access at key __world states
+17.651767 - states not received
+
+17.652472 - Memory access at key __world states
+17.652627 - World observed.
+
+17.654269 - ****** Starting Interpret Phase ******
+
+17.654538 - Memory access at key __goals
+17.654672 - Memory access at key __world states
+17.655098 - ****** Starting Eval Phase ******
+
+17.655281 - Memory access at key __world states
+17.655376 - Memory access at key __current goals
+17.656521 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.656691 - ****** Starting Intend Phase ******
+
+17.656848 - Memory access at key __goals
+17.656938 - Memory access at key __current goals
+17.657013 - Memory access at key __current goals
+17.657155 - No goals selected.
+
+17.657271 - ****** Starting Plan Phase ******
+
+17.657389 - Memory access at key __world states
+17.657463 - Memory access at key __current goals
+17.658323 - Memory access at key __goals
+17.658549 - Old plan retrieved. Checking validity... valid.
+
+17.658769 - checking to see if all goals are achieved... yes
+
+17.658937 - ****** Starting Act Phase ******
+
+17.659061 - Memory access at key __world states
+17.659186 - Memory access at key __current goals
+17.659302 - Memory access at key __goals
+17.660748 - Selected action survey(remus, ga1) from plan:
+
+17.660894 - survey(remus, ga1)]0m
+
+17.660985 - Memory access at key __actions
+17.661075 - Memory access at key __actions
+17.661152 - Memory access at key __actions
+17.661346 - Starting cycle 29
+
+17.661468 - ****** Starting Simulate Phase ******
+
+17.661655 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.661787 - ****** Starting Perceive Phase ******
+
+17.661922 - Memory access at key __world states
+17.675362 - Mine Report not received
+
+17.675682 - at_location(remus,transit)
+
+17.675823 - Memory access at key __world states
+17.675901 - Memory access at key __world states
+17.675983 - World observed.
+
+17.676936 - ****** Starting Interpret Phase ******
+
+17.677130 - Memory access at key __goals
+17.677240 - Memory access at key __world states
+17.677728 - ****** Starting Eval Phase ******
+
+17.677972 - Memory access at key __world states
+17.678099 - Memory access at key __current goals
+17.679403 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.679601 - ****** Starting Intend Phase ******
+
+17.679777 - Memory access at key __goals
+17.679876 - Memory access at key __current goals
+17.679960 - Memory access at key __current goals
+17.680290 - No goals selected.
+
+17.681132 - ****** Starting Plan Phase ******
+
+17.681373 - Memory access at key __world states
+17.681548 - Memory access at key __current goals
+17.683201 - Memory access at key __goals
+17.683593 - Old plan retrieved. Checking validity... valid.
+
+17.683861 - checking to see if all goals are achieved... yes
+
+17.684046 - ****** Starting Act Phase ******
+
+17.684219 - Memory access at key __world states
+17.684344 - Memory access at key __current goals
+17.684448 - Memory access at key __goals
+17.686812 - Selected action survey(remus, ga1) from plan:
+
+17.687053 - survey(remus, ga1)]0m
+
+17.687193 - Memory access at key __actions
+17.687303 - Memory access at key __actions
+17.687418 - Memory access at key __actions
+17.687721 - Starting cycle 30
+
+17.687910 - ****** Starting Simulate Phase ******
+
+17.688248 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.688497 - ****** Starting Perceive Phase ******
+
+17.688728 - Memory access at key __world states
+17.699135 - states not received
+
+17.699562 - Memory access at key __world states
+17.699670 - World observed.
+
+17.700807 - ****** Starting Interpret Phase ******
+
+17.701016 - Memory access at key __goals
+17.701168 - Memory access at key __world states
+17.701536 - ****** Starting Eval Phase ******
+
+17.701753 - Memory access at key __world states
+17.701873 - Memory access at key __current goals
+17.703432 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.703658 - ****** Starting Intend Phase ******
+
+17.703853 - Memory access at key __goals
+17.703973 - Memory access at key __current goals
+17.704054 - Memory access at key __current goals
+17.704150 - No goals selected.
+
+17.704273 - ****** Starting Plan Phase ******
+
+17.704422 - Memory access at key __world states
+17.704502 - Memory access at key __current goals
+17.705643 - Memory access at key __goals
+17.705902 - Old plan retrieved. Checking validity... valid.
+
+17.706166 - checking to see if all goals are achieved... yes
+
+17.706342 - ****** Starting Act Phase ******
+
+17.706506 - Memory access at key __world states
+17.706588 - Memory access at key __current goals
+17.706679 - Memory access at key __goals
+17.707867 - Selected action survey(remus, ga1) from plan:
+
+17.707982 - survey(remus, ga1)]0m
+
+17.708076 - Memory access at key __actions
+17.708179 - Memory access at key __actions
+17.708259 - Memory access at key __actions
+17.708449 - Starting cycle 31
+
+17.708598 - ****** Starting Simulate Phase ******
+
+17.708756 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.708916 - ****** Starting Perceive Phase ******
+
+17.709098 - Memory access at key __world states
+17.726924 - Mine Report not received
+
+17.727383 - at_location(remus,transit)
+
+17.727603 - Memory access at key __world states
+17.727737 - Memory access at key __world states
+17.727982 - World observed.
+
+17.730285 - ****** Starting Interpret Phase ******
+
+17.730565 - Memory access at key __goals
+17.730708 - Memory access at key __world states
+17.731171 - ****** Starting Eval Phase ******
+
+17.731391 - Memory access at key __world states
+17.731591 - Memory access at key __current goals
+17.733692 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.733953 - ****** Starting Intend Phase ******
+
+17.734246 - Memory access at key __goals
+17.734396 - Memory access at key __current goals
+17.734522 - Memory access at key __current goals
+17.734670 - No goals selected.
+
+17.734883 - ****** Starting Plan Phase ******
+
+17.735084 - Memory access at key __world states
+17.735207 - Memory access at key __current goals
+17.737493 - Memory access at key __goals
+17.737971 - Old plan retrieved. Checking validity... valid.
+
+17.738383 - checking to see if all goals are achieved... yes
+
+17.738686 - ****** Starting Act Phase ******
+
+17.738891 - Memory access at key __world states
+17.739041 - Memory access at key __current goals
+17.739165 - Memory access at key __goals
+17.742383 - Selected action survey(remus, ga1) from plan:
+
+17.742702 - survey(remus, ga1)]0m
+
+17.742893 - Memory access at key __actions
+17.743118 - Memory access at key __actions
+17.743241 - Memory access at key __actions
+17.743573 - Starting cycle 32
+
+17.743712 - ****** Starting Simulate Phase ******
+
+17.743894 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.744051 - ****** Starting Perceive Phase ******
+
+17.744277 - Memory access at key __world states
+17.754652 - states not received
+
+17.755044 - Memory access at key __world states
+17.755152 - World observed.
+
+17.756251 - ****** Starting Interpret Phase ******
+
+17.756417 - Memory access at key __goals
+17.756617 - Memory access at key __world states
+17.756892 - ****** Starting Eval Phase ******
+
+17.757029 - Memory access at key __world states
+17.757142 - Memory access at key __current goals
+17.758112 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.758256 - ****** Starting Intend Phase ******
+
+17.758413 - Memory access at key __goals
+17.758503 - Memory access at key __current goals
+17.758579 - Memory access at key __current goals
+17.758673 - No goals selected.
+
+17.758803 - ****** Starting Plan Phase ******
+
+17.758926 - Memory access at key __world states
+17.759004 - Memory access at key __current goals
+17.759900 - Memory access at key __goals
+17.760162 - Old plan retrieved. Checking validity... valid.
+
+17.760412 - checking to see if all goals are achieved... yes
+
+17.760567 - ****** Starting Act Phase ******
+
+17.760698 - Memory access at key __world states
+17.760773 - Memory access at key __current goals
+17.760848 - Memory access at key __goals
+17.762176 - Selected action survey(remus, ga1) from plan:
+
+17.762316 - survey(remus, ga1)]0m
+
+17.762404 - Memory access at key __actions
+17.762482 - Memory access at key __actions
+17.762559 - Memory access at key __actions
+17.762755 - Starting cycle 33
+
+17.762886 - ****** Starting Simulate Phase ******
+
+17.763038 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.763191 - ****** Starting Perceive Phase ******
+
+17.763325 - Memory access at key __world states
+17.775569 - Mine Report not received
+
+17.775923 - at_location(remus,transit)
+
+17.776075 - Memory access at key __world states
+17.776160 - Memory access at key __world states
+17.776255 - World observed.
+
+17.777478 - ****** Starting Interpret Phase ******
+
+17.777688 - Memory access at key __goals
+17.777837 - Memory access at key __world states
+17.778430 - ****** Starting Eval Phase ******
+
+17.778684 - Memory access at key __world states
+17.778785 - Memory access at key __current goals
+17.779951 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.780144 - ****** Starting Intend Phase ******
+
+17.780309 - Memory access at key __goals
+17.780403 - Memory access at key __current goals
+17.780481 - Memory access at key __current goals
+17.780587 - No goals selected.
+
+17.780710 - ****** Starting Plan Phase ******
+
+17.780832 - Memory access at key __world states
+17.780909 - Memory access at key __current goals
+17.784353 - Memory access at key __goals
+17.785163 - Old plan retrieved. Checking validity... valid.
+
+17.785471 - checking to see if all goals are achieved... yes
+
+17.785627 - ****** Starting Act Phase ******
+
+17.785837 - Memory access at key __world states
+17.785919 - Memory access at key __current goals
+17.786002 - Memory access at key __goals
+17.787340 - Selected action survey(remus, ga1) from plan:
+
+17.787526 - survey(remus, ga1)]0m
+
+17.787646 - Memory access at key __actions
+17.787728 - Memory access at key __actions
+17.787811 - Memory access at key __actions
+17.788017 - Starting cycle 34
+
+17.788183 - ****** Starting Simulate Phase ******
+
+17.788422 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.788590 - ****** Starting Perceive Phase ******
+
+17.788731 - Memory access at key __world states
+17.799082 - states not received
+
+17.799477 - Memory access at key __world states
+17.799583 - World observed.
+
+17.800737 - ****** Starting Interpret Phase ******
+
+17.800933 - Memory access at key __goals
+17.801085 - Memory access at key __world states
+17.801564 - ****** Starting Eval Phase ******
+
+17.801957 - Memory access at key __world states
+17.802162 - Memory access at key __current goals
+17.804334 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.804642 - ****** Starting Intend Phase ******
+
+17.804870 - Memory access at key __goals
+17.804969 - Memory access at key __current goals
+17.805081 - Memory access at key __current goals
+17.805200 - No goals selected.
+
+17.805340 - ****** Starting Plan Phase ******
+
+17.805529 - Memory access at key __world states
+17.805660 - Memory access at key __current goals
+17.806747 - Memory access at key __goals
+17.807122 - Old plan retrieved. Checking validity... valid.
+
+17.807367 - checking to see if all goals are achieved... yes
+
+17.807511 - ****** Starting Act Phase ******
+
+17.807638 - Memory access at key __world states
+17.807717 - Memory access at key __current goals
+17.807794 - Memory access at key __goals
+17.808947 - Selected action survey(remus, ga1) from plan:
+
+17.809102 - survey(remus, ga1)]0m
+
+17.809195 - Memory access at key __actions
+17.809274 - Memory access at key __actions
+17.809352 - Memory access at key __actions
+17.809539 - Starting cycle 35
+
+17.809696 - ****** Starting Simulate Phase ******
+
+17.809976 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.810119 - ****** Starting Perceive Phase ******
+
+17.810262 - Memory access at key __world states
+17.825801 - Mine Report not received
+
+17.826301 - at_location(remus,transit)
+
+17.826548 - Memory access at key __world states
+17.826670 - Memory access at key __world states
+17.826793 - World observed.
+
+17.828837 - ****** Starting Interpret Phase ******
+
+17.829144 - Memory access at key __goals
+17.829448 - Memory access at key __world states
+17.829875 - ****** Starting Eval Phase ******
+
+17.830042 - Memory access at key __world states
+17.830163 - Memory access at key __current goals
+17.831278 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.831513 - ****** Starting Intend Phase ******
+
+17.831758 - Memory access at key __goals
+17.831892 - Memory access at key __current goals
+17.832010 - Memory access at key __current goals
+17.832315 - No goals selected.
+
+17.832616 - ****** Starting Plan Phase ******
+
+17.832860 - Memory access at key __world states
+17.833010 - Memory access at key __current goals
+17.835013 - Memory access at key __goals
+17.835595 - Old plan retrieved. Checking validity... valid.
+
+17.835961 - checking to see if all goals are achieved... yes
+
+17.836141 - ****** Starting Act Phase ******
+
+17.836283 - Memory access at key __world states
+17.836376 - Memory access at key __current goals
+17.836456 - Memory access at key __goals
+17.837899 - Selected action survey(remus, ga1) from plan:
+
+17.838035 - survey(remus, ga1)]0m
+
+17.838128 - Memory access at key __actions
+17.838220 - Memory access at key __actions
+17.838305 - Memory access at key __actions
+17.838528 - Starting cycle 36
+
+17.838666 - ****** Starting Simulate Phase ******
+
+17.838840 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.838964 - ****** Starting Perceive Phase ******
+
+17.839102 - Memory access at key __world states
+17.849447 - states not received
+
+17.849942 - Memory access at key __world states
+17.850080 - World observed.
+
+17.851177 - ****** Starting Interpret Phase ******
+
+17.851443 - Memory access at key __goals
+17.851615 - Memory access at key __world states
+17.851992 - ****** Starting Eval Phase ******
+
+17.852231 - Memory access at key __world states
+17.852436 - Memory access at key __current goals
+17.853917 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.854139 - ****** Starting Intend Phase ******
+
+17.854400 - Memory access at key __goals
+17.854514 - Memory access at key __current goals
+17.854627 - Memory access at key __current goals
+17.854727 - No goals selected.
+
+17.854927 - ****** Starting Plan Phase ******
+
+17.855118 - Memory access at key __world states
+17.855230 - Memory access at key __current goals
+17.856404 - Memory access at key __goals
+17.856714 - Old plan retrieved. Checking validity... valid.
+
+17.857009 - checking to see if all goals are achieved... yes
+
+17.857215 - ****** Starting Act Phase ******
+
+17.857395 - Memory access at key __world states
+17.857481 - Memory access at key __current goals
+17.857565 - Memory access at key __goals
+17.858801 - Selected action survey(remus, ga1) from plan:
+
+17.858921 - survey(remus, ga1)]0m
+
+17.859034 - Memory access at key __actions
+17.859132 - Memory access at key __actions
+17.859216 - Memory access at key __actions
+17.859429 - Starting cycle 37
+
+17.859599 - ****** Starting Simulate Phase ******
+
+17.859765 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.859970 - ****** Starting Perceive Phase ******
+
+17.860205 - Memory access at key __world states
+17.875935 - Mine Report not received
+
+17.876349 - at_location(remus,transit)
+
+17.876535 - Memory access at key __world states
+17.876639 - Memory access at key __world states
+17.876739 - World observed.
+
+17.878247 - ****** Starting Interpret Phase ******
+
+17.878653 - Memory access at key __goals
+17.878832 - Memory access at key __world states
+17.879203 - ****** Starting Eval Phase ******
+
+17.879494 - Memory access at key __world states
+17.879619 - Memory access at key __current goals
+17.880878 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.881072 - ****** Starting Intend Phase ******
+
+17.881263 - Memory access at key __goals
+17.881363 - Memory access at key __current goals
+17.881443 - Memory access at key __current goals
+17.881552 - No goals selected.
+
+17.881745 - ****** Starting Plan Phase ******
+
+17.881951 - Memory access at key __world states
+17.882079 - Memory access at key __current goals
+17.883215 - Memory access at key __goals
+17.883804 - Old plan retrieved. Checking validity... valid.
+
+17.884289 - checking to see if all goals are achieved... yes
+
+17.884521 - ****** Starting Act Phase ******
+
+17.884697 - Memory access at key __world states
+17.884779 - Memory access at key __current goals
+17.884862 - Memory access at key __goals
+17.886530 - Selected action survey(remus, ga1) from plan:
+
+17.886687 - survey(remus, ga1)]0m
+
+17.886784 - Memory access at key __actions
+17.886868 - Memory access at key __actions
+17.886947 - Memory access at key __actions
+17.887216 - Starting cycle 38
+
+17.887360 - ****** Starting Simulate Phase ******
+
+17.887541 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.887703 - ****** Starting Perceive Phase ******
+
+17.887921 - Memory access at key __world states
+17.898277 - states not received
+
+17.898695 - Memory access at key __world states
+17.898807 - World observed.
+
+17.900069 - ****** Starting Interpret Phase ******
+
+17.900253 - Memory access at key __goals
+17.900345 - Memory access at key __world states
+17.900618 - ****** Starting Eval Phase ******
+
+17.900740 - Memory access at key __world states
+17.900815 - Memory access at key __current goals
+17.901918 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.902123 - ****** Starting Intend Phase ******
+
+17.902327 - Memory access at key __goals
+17.902443 - Memory access at key __current goals
+17.902530 - Memory access at key __current goals
+17.902670 - No goals selected.
+
+17.902834 - ****** Starting Plan Phase ******
+
+17.903021 - Memory access at key __world states
+17.903139 - Memory access at key __current goals
+17.904401 - Memory access at key __goals
+17.904716 - Old plan retrieved. Checking validity... valid.
+
+17.905172 - checking to see if all goals are achieved... yes
+
+17.905402 - ****** Starting Act Phase ******
+
+17.905541 - Memory access at key __world states
+17.905653 - Memory access at key __current goals
+17.905733 - Memory access at key __goals
+17.906938 - Selected action survey(remus, ga1) from plan:
+
+17.907071 - survey(remus, ga1)]0m
+
+17.907190 - Memory access at key __actions
+17.907268 - Memory access at key __actions
+17.907356 - Memory access at key __actions
+17.907560 - Starting cycle 39
+
+17.907691 - ****** Starting Simulate Phase ******
+
+17.907867 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.908026 - ****** Starting Perceive Phase ******
+
+17.908186 - Memory access at key __world states
+17.927000 - Mine Report not received
+
+17.927582 - at_location(remus,transit)
+
+17.927797 - Memory access at key __world states
+17.927901 - Memory access at key __world states
+17.928056 - World observed.
+
+17.930188 - ****** Starting Interpret Phase ******
+
+17.930410 - Memory access at key __goals
+17.930590 - Memory access at key __world states
+17.930942 - ****** Starting Eval Phase ******
+
+17.931095 - Memory access at key __world states
+17.931197 - Memory access at key __current goals
+17.932492 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.932748 - ****** Starting Intend Phase ******
+
+17.932966 - Memory access at key __goals
+17.933113 - Memory access at key __current goals
+17.933197 - Memory access at key __current goals
+17.933306 - No goals selected.
+
+17.933517 - ****** Starting Plan Phase ******
+
+17.933760 - Memory access at key __world states
+17.933902 - Memory access at key __current goals
+17.935639 - Memory access at key __goals
+17.936092 - Old plan retrieved. Checking validity... valid.
+
+17.936356 - checking to see if all goals are achieved... yes
+
+17.936524 - ****** Starting Act Phase ******
+
+17.936661 - Memory access at key __world states
+17.936838 - Memory access at key __current goals
+17.936921 - Memory access at key __goals
+17.938713 - Selected action survey(remus, ga1) from plan:
+
+17.938911 - survey(remus, ga1)]0m
+
+17.939018 - Memory access at key __actions
+17.939124 - Memory access at key __actions
+17.939205 - Memory access at key __actions
+17.939514 - Starting cycle 40
+
+17.939757 - ****** Starting Simulate Phase ******
+
+17.939946 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.940110 - ****** Starting Perceive Phase ******
+
+17.940284 - Memory access at key __world states
+17.950738 - states not received
+
+17.951168 - Memory access at key __world states
+17.951319 - World observed.
+
+17.952775 - ****** Starting Interpret Phase ******
+
+17.952951 - Memory access at key __goals
+17.953076 - Memory access at key __world states
+17.953809 - ****** Starting Eval Phase ******
+
+17.954040 - Memory access at key __world states
+17.954165 - Memory access at key __current goals
+17.955865 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.956087 - ****** Starting Intend Phase ******
+
+17.956292 - Memory access at key __goals
+17.956390 - Memory access at key __current goals
+17.956471 - Memory access at key __current goals
+17.956567 - No goals selected.
+
+17.956720 - ****** Starting Plan Phase ******
+
+17.956857 - Memory access at key __world states
+17.956958 - Memory access at key __current goals
+17.957977 - Memory access at key __goals
+17.958300 - Old plan retrieved. Checking validity... valid.
+
+17.958606 - checking to see if all goals are achieved... yes
+
+17.958783 - ****** Starting Act Phase ******
+
+17.958935 - Memory access at key __world states
+17.959040 - Memory access at key __current goals
+17.959121 - Memory access at key __goals
+17.960516 - Selected action survey(remus, ga1) from plan:
+
+17.960670 - survey(remus, ga1)]0m
+
+17.960810 - Memory access at key __actions
+17.960910 - Memory access at key __actions
+17.961009 - Memory access at key __actions
+17.961327 - Starting cycle 41
+
+17.961475 - ****** Starting Simulate Phase ******
+
+17.961675 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.961853 - ****** Starting Perceive Phase ******
+
+17.962034 - Memory access at key __world states
+17.976045 - Mine Report not received
+
+17.976463 - at_location(remus,transit)
+
+17.976655 - Memory access at key __world states
+17.976752 - Memory access at key __world states
+17.976852 - World observed.
+
+17.978799 - ****** Starting Interpret Phase ******
+
+17.979326 - Memory access at key __goals
+17.979497 - Memory access at key __world states
+17.980055 - ****** Starting Eval Phase ******
+
+17.980297 - Memory access at key __world states
+17.980451 - Memory access at key __current goals
+17.982441 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+17.982708 - ****** Starting Intend Phase ******
+
+17.982984 - Memory access at key __goals
+17.983136 - Memory access at key __current goals
+17.984347 - Memory access at key __current goals
+17.984714 - No goals selected.
+
+17.985716 - ****** Starting Plan Phase ******
+
+17.986027 - Memory access at key __world states
+17.986163 - Memory access at key __current goals
+17.988605 - Memory access at key __goals
+17.989137 - Old plan retrieved. Checking validity... valid.
+
+17.989571 - checking to see if all goals are achieved... yes
+
+17.989816 - ****** Starting Act Phase ******
+
+17.990061 - Memory access at key __world states
+17.990204 - Memory access at key __current goals
+17.990337 - Memory access at key __goals
+17.992636 - Selected action survey(remus, ga1) from plan:
+
+17.992826 - survey(remus, ga1)]0m
+
+17.992984 - Memory access at key __actions
+17.993140 - Memory access at key __actions
+17.993261 - Memory access at key __actions
+17.993558 - Starting cycle 42
+
+17.993756 - ****** Starting Simulate Phase ******
+
+17.994043 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.994279 - ****** Starting Perceive Phase ******
+
+17.994518 - Memory access at key __world states
+18.004983 - states not received
+
+18.005657 - Memory access at key __world states
+18.005785 - World observed.
+
+18.006914 - ****** Starting Interpret Phase ******
+
+18.007086 - Memory access at key __goals
+18.007203 - Memory access at key __world states
+18.007596 - ****** Starting Eval Phase ******
+
+18.007749 - Memory access at key __world states
+18.007855 - Memory access at key __current goals
+18.008882 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.009069 - ****** Starting Intend Phase ******
+
+18.009268 - Memory access at key __goals
+18.009370 - Memory access at key __current goals
+18.009451 - Memory access at key __current goals
+18.009547 - No goals selected.
+
+18.009700 - ****** Starting Plan Phase ******
+
+18.009851 - Memory access at key __world states
+18.009952 - Memory access at key __current goals
+18.010897 - Memory access at key __goals
+18.011224 - Old plan retrieved. Checking validity... valid.
+
+18.011517 - checking to see if all goals are achieved... yes
+
+18.011710 - ****** Starting Act Phase ******
+
+18.011862 - Memory access at key __world states
+18.011970 - Memory access at key __current goals
+18.012054 - Memory access at key __goals
+18.013482 - Selected action survey(remus, ga1) from plan:
+
+18.013734 - survey(remus, ga1)]0m
+
+18.013881 - Memory access at key __actions
+18.014012 - Memory access at key __actions
+18.014141 - Memory access at key __actions
+18.014483 - Starting cycle 43
+
+18.014747 - ****** Starting Simulate Phase ******
+
+18.015016 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.015251 - ****** Starting Perceive Phase ******
+
+18.015547 - Memory access at key __world states
+18.026203 - Mine Report not received
+
+18.026538 - at_location(remus,transit)
+
+18.026699 - Memory access at key __world states
+18.026785 - Memory access at key __world states
+18.026874 - World observed.
+
+18.032262 - ****** Starting Interpret Phase ******
+
+18.032551 - Memory access at key __goals
+18.032699 - Memory access at key __world states
+18.033211 - ****** Starting Eval Phase ******
+
+18.033447 - Memory access at key __world states
+18.033576 - Memory access at key __current goals
+18.035793 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.036406 - ****** Starting Intend Phase ******
+
+18.036764 - Memory access at key __goals
+18.036930 - Memory access at key __current goals
+18.037088 - Memory access at key __current goals
+18.037264 - No goals selected.
+
+18.037479 - ****** Starting Plan Phase ******
+
+18.037682 - Memory access at key __world states
+18.037805 - Memory access at key __current goals
+18.039592 - Memory access at key __goals
+18.040011 - Old plan retrieved. Checking validity... valid.
+
+18.040419 - checking to see if all goals are achieved... yes
+
+18.040697 - ****** Starting Act Phase ******
+
+18.040903 - Memory access at key __world states
+18.041044 - Memory access at key __current goals
+18.041179 - Memory access at key __goals
+18.067435 - Selected action survey(remus, ga1) from plan:
+
+18.067609 - survey(remus, ga1)]0m
+
+18.067697 - Memory access at key __actions
+18.067774 - Memory access at key __actions
+18.067846 - Memory access at key __actions
+18.068043 - Starting cycle 44
+
+18.068161 - ****** Starting Simulate Phase ******
+
+18.068326 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.068452 - ****** Starting Perceive Phase ******
+
+18.068583 - Memory access at key __world states
+18.079093 - Mine Report not received
+
+18.079942 - at_location(remus,transit)
+
+18.080191 - Memory access at key __world states
+18.080320 - Memory access at key __world states
+18.080454 - World observed.
+
+18.082336 - ****** Starting Interpret Phase ******
+
+18.082579 - Memory access at key __goals
+18.082730 - Memory access at key __world states
+18.087196 - ****** Starting Eval Phase ******
+
+18.087486 - Memory access at key __world states
+18.087613 - Memory access at key __current goals
+18.089465 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.089691 - ****** Starting Intend Phase ******
+
+18.089931 - Memory access at key __goals
+18.090063 - Memory access at key __current goals
+18.090176 - Memory access at key __current goals
+18.090312 - No goals selected.
+
+18.090489 - ****** Starting Plan Phase ******
+
+18.090670 - Memory access at key __world states
+18.090781 - Memory access at key __current goals
+18.092439 - Memory access at key __goals
+18.092733 - Old plan retrieved. Checking validity... valid.
+
+18.092956 - checking to see if all goals are achieved... yes
+
+18.093106 - ****** Starting Act Phase ******
+
+18.093224 - Memory access at key __world states
+18.093295 - Memory access at key __current goals
+18.093366 - Memory access at key __goals
+18.094576 - Selected action survey(remus, ga1) from plan:
+
+18.094720 - survey(remus, ga1)]0m
+
+18.094803 - Memory access at key __actions
+18.094876 - Memory access at key __actions
+18.094947 - Memory access at key __actions
+18.095130 - Starting cycle 45
+
+18.095250 - ****** Starting Simulate Phase ******
+
+18.095407 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.095529 - ****** Starting Perceive Phase ******
+
+18.095656 - Memory access at key __world states
+18.105983 - states not received
+
+18.106890 - Memory access at key __world states
+18.107148 - World observed.
+
+18.108220 - ****** Starting Interpret Phase ******
+
+18.108382 - Memory access at key __goals
+18.108465 - Memory access at key __world states
+18.108806 - ****** Starting Eval Phase ******
+
+18.108921 - Memory access at key __world states
+18.108992 - Memory access at key __current goals
+18.109957 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.110086 - ****** Starting Intend Phase ******
+
+18.110224 - Memory access at key __goals
+18.110307 - Memory access at key __current goals
+18.110376 - Memory access at key __current goals
+18.110459 - No goals selected.
+
+18.110562 - ****** Starting Plan Phase ******
+
+18.110670 - Memory access at key __world states
+18.110738 - Memory access at key __current goals
+18.111554 - Memory access at key __goals
+18.111884 - Old plan retrieved. Checking validity... valid.
+
+18.112152 - checking to see if all goals are achieved... yes
+
+18.112323 - ****** Starting Act Phase ******
+
+18.112457 - Memory access at key __world states
+18.112543 - Memory access at key __current goals
+18.112615 - Memory access at key __goals
+18.113744 - Selected action survey(remus, ga1) from plan:
+
+18.113930 - survey(remus, ga1)]0m
+
+18.114056 - Memory access at key __actions
+18.114163 - Memory access at key __actions
+18.114237 - Memory access at key __actions
+18.114435 - Starting cycle 46
+
+18.114577 - ****** Starting Simulate Phase ******
+
+18.114757 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.114897 - ****** Starting Perceive Phase ******
+
+18.115048 - Memory access at key __world states
+18.126499 - Mine Report not received
+
+18.126942 - at_location(remus,transit)
+
+18.127086 - Memory access at key __world states
+18.127166 - Memory access at key __world states
+18.127249 - World observed.
+
+18.128829 - ****** Starting Interpret Phase ******
+
+18.129504 - Memory access at key __goals
+18.129750 - Memory access at key __world states
+18.130350 - ****** Starting Eval Phase ******
+
+18.130595 - Memory access at key __world states
+18.130717 - Memory access at key __current goals
+18.132482 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.132701 - ****** Starting Intend Phase ******
+
+18.132938 - Memory access at key __goals
+18.133106 - Memory access at key __current goals
+18.133225 - Memory access at key __current goals
+18.133375 - No goals selected.
+
+18.133555 - ****** Starting Plan Phase ******
+
+18.133741 - Memory access at key __world states
+18.133865 - Memory access at key __current goals
+18.135427 - Memory access at key __goals
+18.135810 - Old plan retrieved. Checking validity... valid.
+
+18.136792 - checking to see if all goals are achieved... yes
+
+18.137188 - ****** Starting Act Phase ******
+
+18.137427 - Memory access at key __world states
+18.137557 - Memory access at key __current goals
+18.137824 - Memory access at key __goals
+18.140706 - Selected action survey(remus, ga1) from plan:
+
+18.140944 - survey(remus, ga1)]0m
+
+18.141106 - Memory access at key __actions
+18.141227 - Memory access at key __actions
+18.141342 - Memory access at key __actions
+18.141679 - Starting cycle 47
+
+18.141870 - ****** Starting Simulate Phase ******
+
+18.142137 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.142343 - ****** Starting Perceive Phase ******
+
+18.142548 - Memory access at key __world states
+18.152942 - states not received
+
+18.153351 - Memory access at key __world states
+18.153449 - World observed.
+
+18.154383 - ****** Starting Interpret Phase ******
+
+18.154518 - Memory access at key __goals
+18.154605 - Memory access at key __world states
+18.154896 - ****** Starting Eval Phase ******
+
+18.155013 - Memory access at key __world states
+18.155086 - Memory access at key __current goals
+18.156052 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.156191 - ****** Starting Intend Phase ******
+
+18.156335 - Memory access at key __goals
+18.156420 - Memory access at key __current goals
+18.156500 - Memory access at key __current goals
+18.156641 - No goals selected.
+
+18.156854 - ****** Starting Plan Phase ******
+
+18.156972 - Memory access at key __world states
+18.157058 - Memory access at key __current goals
+18.158025 - Memory access at key __goals
+18.158254 - Old plan retrieved. Checking validity... valid.
+
+18.158471 - checking to see if all goals are achieved... yes
+
+18.158600 - ****** Starting Act Phase ******
+
+18.158715 - Memory access at key __world states
+18.158788 - Memory access at key __current goals
+18.158862 - Memory access at key __goals
+18.159916 - Selected action survey(remus, ga1) from plan:
+
+18.160020 - survey(remus, ga1)]0m
+
+18.160102 - Memory access at key __actions
+18.160175 - Memory access at key __actions
+18.160248 - Memory access at key __actions
+18.160423 - Starting cycle 48
+
+18.160544 - ****** Starting Simulate Phase ******
+
+18.160723 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.160848 - ****** Starting Perceive Phase ******
+
+18.160973 - Memory access at key __world states
+18.176634 - Mine Report not received
+
+18.177250 - at_location(remus,transit)
+
+18.177444 - Memory access at key __world states
+18.177544 - Memory access at key __world states
+18.177638 - World observed.
+
+18.179666 - ****** Starting Interpret Phase ******
+
+18.179938 - Memory access at key __goals
+18.180082 - Memory access at key __world states
+18.180570 - ****** Starting Eval Phase ******
+
+18.180766 - Memory access at key __world states
+18.180883 - Memory access at key __current goals
+18.182900 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.183171 - ****** Starting Intend Phase ******
+
+18.183421 - Memory access at key __goals
+18.183560 - Memory access at key __current goals
+18.183679 - Memory access at key __current goals
+18.183821 - No goals selected.
+
+18.184009 - ****** Starting Plan Phase ******
+
+18.184199 - Memory access at key __world states
+18.184317 - Memory access at key __current goals
+18.186033 - Memory access at key __goals
+18.187174 - Old plan retrieved. Checking validity... valid.
+
+18.187666 - checking to see if all goals are achieved... yes
+
+18.187914 - ****** Starting Act Phase ******
+
+18.188195 - Memory access at key __world states
+18.188319 - Memory access at key __current goals
+18.188449 - Memory access at key __goals
+18.190523 - Selected action survey(remus, ga1) from plan:
+
+18.190711 - survey(remus, ga1)]0m
+
+18.190844 - Memory access at key __actions
+18.190962 - Memory access at key __actions
+18.191113 - Memory access at key __actions
+18.191454 - Starting cycle 49
+
+18.191643 - ****** Starting Simulate Phase ******
+
+18.191906 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.192111 - ****** Starting Perceive Phase ******
+
+18.192313 - Memory access at key __world states
+18.202734 - states not received
+
+18.203129 - Memory access at key __world states
+18.203227 - World observed.
+
+18.204272 - ****** Starting Interpret Phase ******
+
+18.204403 - Memory access at key __goals
+18.204488 - Memory access at key __world states
+18.204742 - ****** Starting Eval Phase ******
+
+18.204858 - Memory access at key __world states
+18.204930 - Memory access at key __current goals
+18.206040 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.206188 - ****** Starting Intend Phase ******
+
+18.206335 - Memory access at key __goals
+18.206424 - Memory access at key __current goals
+18.206497 - Memory access at key __current goals
+18.206582 - No goals selected.
+
+18.206691 - ****** Starting Plan Phase ******
+
+18.206811 - Memory access at key __world states
+18.206883 - Memory access at key __current goals
+18.207991 - Memory access at key __goals
+18.208246 - Old plan retrieved. Checking validity... valid.
+
+18.208464 - checking to see if all goals are achieved... yes
+
+18.208593 - ****** Starting Act Phase ******
+
+18.208709 - Memory access at key __world states
+18.208781 - Memory access at key __current goals
+18.208854 - Memory access at key __goals
+18.210076 - Selected action survey(remus, ga1) from plan:
+
+18.210188 - survey(remus, ga1)]0m
+
+18.210273 - Memory access at key __actions
+18.210347 - Memory access at key __actions
+18.210420 - Memory access at key __actions
+18.210597 - Starting cycle 50
+
+18.210766 - ****** Starting Simulate Phase ******
+
+18.210911 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.211036 - ****** Starting Perceive Phase ******
+
+18.211163 - Memory access at key __world states
+18.226779 - Mine Report not received
+
+18.227127 - at_location(remus,transit)
+
+18.227285 - Memory access at key __world states
+18.227393 - Memory access at key __world states
+18.227624 - World observed.
+
+18.230239 - ****** Starting Interpret Phase ******
+
+18.230606 - Memory access at key __goals
+18.230747 - Memory access at key __world states
+18.231243 - ****** Starting Eval Phase ******
+
+18.231430 - Memory access at key __world states
+18.231548 - Memory access at key __current goals
+18.233666 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.233926 - ****** Starting Intend Phase ******
+
+18.234170 - Memory access at key __goals
+18.234298 - Memory access at key __current goals
+18.234401 - Memory access at key __current goals
+18.234532 - No goals selected.
+
+18.234716 - ****** Starting Plan Phase ******
+
+18.235107 - Memory access at key __world states
+18.235337 - Memory access at key __current goals
+18.236855 - Memory access at key __goals
+18.237234 - Old plan retrieved. Checking validity... valid.
+
+18.237602 - checking to see if all goals are achieved... yes
+
+18.237920 - ****** Starting Act Phase ******
+
+18.238135 - Memory access at key __world states
+18.238271 - Memory access at key __current goals
+18.238349 - Memory access at key __goals
+18.239796 - Selected action survey(remus, ga1) from plan:
+
+18.239974 - survey(remus, ga1)]0m
+
+18.240097 - Memory access at key __actions
+18.240210 - Memory access at key __actions
+18.240286 - Memory access at key __actions
+18.240488 - Starting cycle 51
+
+18.240670 - ****** Starting Simulate Phase ******
+
+18.240926 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.241127 - ****** Starting Perceive Phase ******
+
+18.241318 - Memory access at key __world states
+18.251685 - states not received
+
+18.252104 - Memory access at key __world states
+18.252209 - World observed.
+
+18.253229 - ****** Starting Interpret Phase ******
+
+18.253385 - Memory access at key __goals
+18.253492 - Memory access at key __world states
+18.253757 - ****** Starting Eval Phase ******
+
+18.253895 - Memory access at key __world states
+18.253988 - Memory access at key __current goals
+18.254931 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.255074 - ****** Starting Intend Phase ******
+
+18.255221 - Memory access at key __goals
+18.255307 - Memory access at key __current goals
+18.255380 - Memory access at key __current goals
+18.255467 - No goals selected.
+
+18.255577 - ****** Starting Plan Phase ******
+
+18.255690 - Memory access at key __world states
+18.255765 - Memory access at key __current goals
+18.256699 - Memory access at key __goals
+18.256923 - Old plan retrieved. Checking validity... valid.
+
+18.257223 - checking to see if all goals are achieved... yes
+
+18.257365 - ****** Starting Act Phase ******
+
+18.257489 - Memory access at key __world states
+18.257599 - Memory access at key __current goals
+18.257710 - Memory access at key __goals
+18.259615 - Selected action survey(remus, ga1) from plan:
+
+18.259783 - survey(remus, ga1)]0m
+
+18.259874 - Memory access at key __actions
+18.259950 - Memory access at key __actions
+18.260024 - Memory access at key __actions
+18.260228 - Starting cycle 52
+
+18.260364 - ****** Starting Simulate Phase ******
+
+18.260514 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.260642 - ****** Starting Perceive Phase ******
+
+18.260789 - Memory access at key __world states
+18.276831 - Mine Report not received
+
+18.277261 - at_location(remus,transit)
+
+18.277431 - Memory access at key __world states
+18.277543 - Memory access at key __world states
+18.277685 - World observed.
+
+18.279197 - ****** Starting Interpret Phase ******
+
+18.279694 - Memory access at key __goals
+18.279892 - Memory access at key __world states
+18.280399 - ****** Starting Eval Phase ******
+
+18.280777 - Memory access at key __world states
+18.280880 - Memory access at key __current goals
+18.282606 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.282836 - ****** Starting Intend Phase ******
+
+18.283039 - Memory access at key __goals
+18.283162 - Memory access at key __current goals
+18.283253 - Memory access at key __current goals
+18.283349 - No goals selected.
+
+18.283516 - ****** Starting Plan Phase ******
+
+18.283678 - Memory access at key __world states
+18.283771 - Memory access at key __current goals
+18.284991 - Memory access at key __goals
+18.285865 - Old plan retrieved. Checking validity... valid.
+
+18.286216 - checking to see if all goals are achieved... yes
+
+18.286420 - ****** Starting Act Phase ******
+
+18.286578 - Memory access at key __world states
+18.286673 - Memory access at key __current goals
+18.286750 - Memory access at key __goals
+18.288647 - Selected action survey(remus, ga1) from plan:
+
+18.288862 - survey(remus, ga1)]0m
+
+18.288997 - Memory access at key __actions
+18.289138 - Memory access at key __actions
+18.289219 - Memory access at key __actions
+18.289469 - Starting cycle 53
+
+18.289728 - ****** Starting Simulate Phase ******
+
+18.290057 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.290237 - ****** Starting Perceive Phase ******
+
+18.290428 - Memory access at key __world states
+18.300717 - states not received
+
+18.301332 - Memory access at key __world states
+18.301501 - World observed.
+
+18.304247 - ****** Starting Interpret Phase ******
+
+18.304461 - Memory access at key __goals
+18.304551 - Memory access at key __world states
+18.304816 - ****** Starting Eval Phase ******
+
+18.304958 - Memory access at key __world states
+18.305059 - Memory access at key __current goals
+18.306516 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.306720 - ****** Starting Intend Phase ******
+
+18.306924 - Memory access at key __goals
+18.307020 - Memory access at key __current goals
+18.307099 - Memory access at key __current goals
+18.307197 - No goals selected.
+
+18.307367 - ****** Starting Plan Phase ******
+
+18.307539 - Memory access at key __world states
+18.307647 - Memory access at key __current goals
+18.308546 - Memory access at key __goals
+18.308983 - Old plan retrieved. Checking validity... valid.
+
+18.309310 - checking to see if all goals are achieved... yes
+
+18.309489 - ****** Starting Act Phase ******
+
+18.309625 - Memory access at key __world states
+18.309726 - Memory access at key __current goals
+18.309804 - Memory access at key __goals
+18.311152 - Selected action survey(remus, ga1) from plan:
+
+18.311291 - survey(remus, ga1)]0m
+
+18.311381 - Memory access at key __actions
+18.311461 - Memory access at key __actions
+18.311538 - Memory access at key __actions
+18.311771 - Starting cycle 54
+
+18.311927 - ****** Starting Simulate Phase ******
+
+18.312119 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.312277 - ****** Starting Perceive Phase ******
+
+18.312484 - Memory access at key __world states
+18.327015 - Mine Report not received
+
+18.327383 - at_location(remus,transit)
+
+18.327534 - Memory access at key __world states
+18.327618 - Memory access at key __world states
+18.327706 - World observed.
+
+18.328817 - ****** Starting Interpret Phase ******
+
+18.329855 - Memory access at key __goals
+18.330116 - Memory access at key __world states
+18.330492 - ****** Starting Eval Phase ******
+
+18.330704 - Memory access at key __world states
+18.330786 - Memory access at key __current goals
+18.332005 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.332305 - ****** Starting Intend Phase ******
+
+18.332556 - Memory access at key __goals
+18.332697 - Memory access at key __current goals
+18.332816 - Memory access at key __current goals
+18.332962 - No goals selected.
+
+18.333171 - ****** Starting Plan Phase ******
+
+18.333364 - Memory access at key __world states
+18.333481 - Memory access at key __current goals
+18.335786 - Memory access at key __goals
+18.336238 - Old plan retrieved. Checking validity... valid.
+
+18.336608 - checking to see if all goals are achieved... yes
+
+18.336829 - ****** Starting Act Phase ******
+
+18.336962 - Memory access at key __world states
+18.337068 - Memory access at key __current goals
+18.337150 - Memory access at key __goals
+18.338884 - Selected action survey(remus, ga1) from plan:
+
+18.339082 - survey(remus, ga1)]0m
+
+18.339218 - Memory access at key __actions
+18.339348 - Memory access at key __actions
+18.339481 - Memory access at key __actions
+18.339853 - Starting cycle 55
+
+18.340144 - ****** Starting Simulate Phase ******
+
+18.340483 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.340739 - ****** Starting Perceive Phase ******
+
+18.340948 - Memory access at key __world states
+18.351439 - states not received
+
+18.351943 - Memory access at key __world states
+18.352111 - World observed.
+
+18.353255 - ****** Starting Interpret Phase ******
+
+18.353479 - Memory access at key __goals
+18.353627 - Memory access at key __world states
+18.353937 - ****** Starting Eval Phase ******
+
+18.354062 - Memory access at key __world states
+18.354138 - Memory access at key __current goals
+18.355238 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.355381 - ****** Starting Intend Phase ******
+
+18.355538 - Memory access at key __goals
+18.355631 - Memory access at key __current goals
+18.355707 - Memory access at key __current goals
+18.355801 - No goals selected.
+
+18.355919 - ****** Starting Plan Phase ******
+
+18.356048 - Memory access at key __world states
+18.356123 - Memory access at key __current goals
+18.357000 - Memory access at key __goals
+18.357241 - Old plan retrieved. Checking validity... valid.
+
+18.357477 - checking to see if all goals are achieved... yes
+
+18.357611 - ****** Starting Act Phase ******
+
+18.357734 - Memory access at key __world states
+18.357821 - Memory access at key __current goals
+18.357897 - Memory access at key __goals
+18.359009 - Selected action survey(remus, ga1) from plan:
+
+18.359117 - survey(remus, ga1)]0m
+
+18.359205 - Memory access at key __actions
+18.359317 - Memory access at key __actions
+18.359434 - Memory access at key __actions
+18.359653 - Starting cycle 56
+
+18.359775 - ****** Starting Simulate Phase ******
+
+18.359925 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.360067 - ****** Starting Perceive Phase ******
+
+18.360199 - Memory access at key __world states
+18.377113 - Mine Report not received
+
+18.377567 - at_location(remus,transit)
+
+18.377742 - Memory access at key __world states
+18.377838 - Memory access at key __world states
+18.377941 - World observed.
+
+18.380426 - ****** Starting Interpret Phase ******
+
+18.380730 - Memory access at key __goals
+18.380860 - Memory access at key __world states
+18.381536 - ****** Starting Eval Phase ******
+
+18.381782 - Memory access at key __world states
+18.381902 - Memory access at key __current goals
+18.383594 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.383945 - ****** Starting Intend Phase ******
+
+18.384231 - Memory access at key __goals
+18.384337 - Memory access at key __current goals
+18.384456 - Memory access at key __current goals
+18.384559 - No goals selected.
+
+18.384731 - ****** Starting Plan Phase ******
+
+18.384889 - Memory access at key __world states
+18.384996 - Memory access at key __current goals
+18.386093 - Memory access at key __goals
+18.386407 - Old plan retrieved. Checking validity... valid.
+
+18.386707 - checking to see if all goals are achieved... yes
+
+18.386912 - ****** Starting Act Phase ******
+
+18.387060 - Memory access at key __world states
+18.387162 - Memory access at key __current goals
+18.387241 - Memory access at key __goals
+18.389000 - Selected action survey(remus, ga1) from plan:
+
+18.389197 - survey(remus, ga1)]0m
+
+18.389295 - Memory access at key __actions
+18.389480 - Memory access at key __actions
+18.389561 - Memory access at key __actions
+18.389821 - Starting cycle 57
+
+18.389962 - ****** Starting Simulate Phase ******
+
+18.390156 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.390394 - ****** Starting Perceive Phase ******
+
+18.390641 - Memory access at key __world states
+18.401073 - states not received
+
+18.401609 - Memory access at key __world states
+18.401739 - World observed.
+
+18.402788 - ****** Starting Interpret Phase ******
+
+18.402939 - Memory access at key __goals
+18.403030 - Memory access at key __world states
+18.403306 - ****** Starting Eval Phase ******
+
+18.403435 - Memory access at key __world states
+18.403513 - Memory access at key __current goals
+18.404484 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.404631 - ****** Starting Intend Phase ******
+
+18.404790 - Memory access at key __goals
+18.404881 - Memory access at key __current goals
+18.404957 - Memory access at key __current goals
+18.405077 - No goals selected.
+
+18.405220 - ****** Starting Plan Phase ******
+
+18.405346 - Memory access at key __world states
+18.405422 - Memory access at key __current goals
+18.406445 - Memory access at key __goals
+18.406717 - Old plan retrieved. Checking validity... valid.
+
+18.406961 - checking to see if all goals are achieved... yes
+
+18.407108 - ****** Starting Act Phase ******
+
+18.407235 - Memory access at key __world states
+18.407313 - Memory access at key __current goals
+18.407389 - Memory access at key __goals
+18.408748 - Selected action survey(remus, ga1) from plan:
+
+18.408894 - survey(remus, ga1)]0m
+
+18.408990 - Memory access at key __actions
+18.409084 - Memory access at key __actions
+18.409161 - Memory access at key __actions
+18.409366 - Starting cycle 58
+
+18.409516 - ****** Starting Simulate Phase ******
+
+18.409673 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.409828 - ****** Starting Perceive Phase ******
+
+18.409964 - Memory access at key __world states
+18.427414 - Mine Report not received
+
+18.427810 - at_location(remus,transit)
+
+18.428004 - Memory access at key __world states
+18.428095 - Memory access at key __world states
+18.428184 - World observed.
+
+18.429881 - ****** Starting Interpret Phase ******
+
+18.430375 - Memory access at key __goals
+18.430612 - Memory access at key __world states
+18.431214 - ****** Starting Eval Phase ******
+
+18.431409 - Memory access at key __world states
+18.431509 - Memory access at key __current goals
+18.432658 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.432853 - ****** Starting Intend Phase ******
+
+18.433068 - Memory access at key __goals
+18.433188 - Memory access at key __current goals
+18.433275 - Memory access at key __current goals
+18.433373 - No goals selected.
+
+18.433541 - ****** Starting Plan Phase ******
+
+18.433688 - Memory access at key __world states
+18.433785 - Memory access at key __current goals
+18.434884 - Memory access at key __goals
+18.435355 - Old plan retrieved. Checking validity... valid.
+
+18.435898 - checking to see if all goals are achieved... yes
+
+18.436153 - ****** Starting Act Phase ******
+
+18.436307 - Memory access at key __world states
+18.436408 - Memory access at key __current goals
+18.436488 - Memory access at key __goals
+18.437782 - Selected action survey(remus, ga1) from plan:
+
+18.437940 - survey(remus, ga1)]0m
+
+18.438053 - Memory access at key __actions
+18.438151 - Memory access at key __actions
+18.438234 - Memory access at key __actions
+18.438449 - Starting cycle 59
+
+18.438630 - ****** Starting Simulate Phase ******
+
+18.438952 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.439129 - ****** Starting Perceive Phase ******
+
+18.439303 - Memory access at key __world states
+18.449596 - states not received
+
+18.450008 - Memory access at key __world states
+18.450124 - World observed.
+
+18.451604 - ****** Starting Interpret Phase ******
+
+18.451881 - Memory access at key __goals
+18.451984 - Memory access at key __world states
+18.452295 - ****** Starting Eval Phase ******
+
+18.452427 - Memory access at key __world states
+18.452506 - Memory access at key __current goals
+18.453598 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.453744 - ****** Starting Intend Phase ******
+
+18.453908 - Memory access at key __goals
+18.454008 - Memory access at key __current goals
+18.454086 - Memory access at key __current goals
+18.454183 - No goals selected.
+
+18.454322 - ****** Starting Plan Phase ******
+
+18.454449 - Memory access at key __world states
+18.454537 - Memory access at key __current goals
+18.455495 - Memory access at key __goals
+18.455754 - Old plan retrieved. Checking validity... valid.
+
+18.456000 - checking to see if all goals are achieved... yes
+
+18.456159 - ****** Starting Act Phase ******
+
+18.456289 - Memory access at key __world states
+18.456369 - Memory access at key __current goals
+18.456448 - Memory access at key __goals
+18.457702 - Selected action survey(remus, ga1) from plan:
+
+18.457831 - survey(remus, ga1)]0m
+
+18.457926 - Memory access at key __actions
+18.458008 - Memory access at key __actions
+18.458086 - Memory access at key __actions
+18.458276 - Starting cycle 60
+
+18.458407 - ****** Starting Simulate Phase ******
+
+18.458570 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.458721 - ****** Starting Perceive Phase ******
+
+18.458870 - Memory access at key __world states
+18.477491 - Mine Report not received
+
+18.477876 - at_location(remus,transit)
+
+18.478044 - Memory access at key __world states
+18.478140 - Memory access at key __world states
+18.478240 - World observed.
+
+18.479790 - ****** Starting Interpret Phase ******
+
+18.480192 - Memory access at key __goals
+18.480375 - Memory access at key __world states
+18.480698 - ****** Starting Eval Phase ******
+
+18.480839 - Memory access at key __world states
+18.480924 - Memory access at key __current goals
+18.484011 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.484292 - ****** Starting Intend Phase ******
+
+18.484558 - Memory access at key __goals
+18.484706 - Memory access at key __current goals
+18.484948 - Memory access at key __current goals
+18.485399 - No goals selected.
+
+18.485776 - ****** Starting Plan Phase ******
+
+18.486012 - Memory access at key __world states
+18.486127 - Memory access at key __current goals
+18.487314 - Memory access at key __goals
+18.487633 - Old plan retrieved. Checking validity... valid.
+
+18.487918 - checking to see if all goals are achieved... yes
+
+18.488113 - ****** Starting Act Phase ******
+
+18.488269 - Memory access at key __world states
+18.488367 - Memory access at key __current goals
+18.488448 - Memory access at key __goals
+18.489845 - Selected action survey(remus, ga1) from plan:
+
+18.490022 - survey(remus, ga1)]0m
+
+18.490139 - Memory access at key __actions
+18.490239 - Memory access at key __actions
+18.490319 - Memory access at key __actions
+18.490548 - Starting cycle 61
+
+18.490729 - ****** Starting Simulate Phase ******
+
+18.490982 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.491197 - ****** Starting Perceive Phase ******
+
+18.491369 - Memory access at key __world states
+18.501794 - states not received
+
+18.502614 - Memory access at key __world states
+18.502828 - World observed.
+
+18.504252 - ****** Starting Interpret Phase ******
+
+18.504506 - Memory access at key __goals
+18.504666 - Memory access at key __world states
+18.505027 - ****** Starting Eval Phase ******
+
+18.505244 - Memory access at key __world states
+18.505329 - Memory access at key __current goals
+18.506424 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.506618 - ****** Starting Intend Phase ******
+
+18.506784 - Memory access at key __goals
+18.506903 - Memory access at key __current goals
+18.506985 - Memory access at key __current goals
+18.507085 - No goals selected.
+
+18.507226 - ****** Starting Plan Phase ******
+
+18.507380 - Memory access at key __world states
+18.507462 - Memory access at key __current goals
+18.508572 - Memory access at key __goals
+18.508869 - Old plan retrieved. Checking validity... valid.
+
+18.509156 - checking to see if all goals are achieved... yes
+
+18.509307 - ****** Starting Act Phase ******
+
+18.509437 - Memory access at key __world states
+18.509520 - Memory access at key __current goals
+18.509601 - Memory access at key __goals
+18.510908 - Selected action survey(remus, ga1) from plan:
+
+18.511027 - survey(remus, ga1)]0m
+
+18.511119 - Memory access at key __actions
+18.511201 - Memory access at key __actions
+18.511282 - Memory access at key __actions
+18.511510 - Starting cycle 62
+
+18.511667 - ****** Starting Simulate Phase ******
+
+18.511927 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.512240 - ****** Starting Perceive Phase ******
+
+18.512456 - Memory access at key __world states
+18.527605 - Mine Report not received
+
+18.528029 - at_location(remus,transit)
+
+18.528209 - Memory access at key __world states
+18.528314 - Memory access at key __world states
+18.528433 - World observed.
+
+18.530303 - ****** Starting Interpret Phase ******
+
+18.530820 - Memory access at key __goals
+18.530956 - Memory access at key __world states
+18.531322 - ****** Starting Eval Phase ******
+
+18.531551 - Memory access at key __world states
+18.531658 - Memory access at key __current goals
+18.533017 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.533257 - ****** Starting Intend Phase ******
+
+18.533653 - Memory access at key __goals
+18.533822 - Memory access at key __current goals
+18.533949 - Memory access at key __current goals
+18.534086 - No goals selected.
+
+18.534281 - ****** Starting Plan Phase ******
+
+18.534487 - Memory access at key __world states
+18.534614 - Memory access at key __current goals
+18.538487 - Memory access at key __goals
+18.539022 - Old plan retrieved. Checking validity... valid.
+
+18.539303 - checking to see if all goals are achieved... yes
+
+18.539460 - ****** Starting Act Phase ******
+
+18.539596 - Memory access at key __world states
+18.539679 - Memory access at key __current goals
+18.539759 - Memory access at key __goals
+18.541066 - Selected action survey(remus, ga1) from plan:
+
+18.541198 - survey(remus, ga1)]0m
+
+18.541292 - Memory access at key __actions
+18.541417 - Memory access at key __actions
+18.541507 - Memory access at key __actions
+18.541735 - Starting cycle 63
+
+18.541877 - ****** Starting Simulate Phase ******
+
+18.542098 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+18.542300 - ****** Starting Perceive Phase ******
+
+18.542544 - Memory access at key __world states
+18.552943 - states not received
+
+18.553385 - Memory access at key __world states
+18.553493 - World observed.
+
+18.554533 - ****** Starting Interpret Phase ******
+
+18.554727 - Memory access at key __goals
+18.554848 - Memory access at key __world states
+18.555152 - ****** Starting Eval Phase ******
+
+18.555294 - Memory access at key __world states
+18.555376 - Memory access at key __current goals
+18.556535 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.556761 - ****** Starting Intend Phase ******
+
+18.556991 - Memory access at key __goals
+18.557140 - Memory access at key __current goals
+18.557229 - Memory access at key __current goals
+18.557328 - No goals selected.
+
+18.557452 - ****** Starting Plan Phase ******
+
+18.557579 - Memory access at key __world states
+18.557660 - Memory access at key __current goals
+18.558610 - Memory access at key __goals
+18.558866 - Old plan retrieved. Checking validity... valid.
+
+18.559118 - checking to see if all goals are achieved... yes
+
+18.559262 - ****** Starting Act Phase ******
+
+18.559390 - Memory access at key __world states
+18.559472 - Memory access at key __current goals
+18.559553 - Memory access at key __goals
+18.560742 - Selected action survey(remus, ga1) from plan:
+
+18.560857 - survey(remus, ga1)]0m
+
+18.560948 - Memory access at key __actions
+18.561040 - Memory access at key __actions
+18.561130 - Memory access at key __actions
+18.561346 - Starting cycle 64
+
+18.561490 - ****** Starting Simulate Phase ******
+
+18.561679 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.561899 - ****** Starting Perceive Phase ******
+
+18.562116 - Memory access at key __world states
+18.567799 - HAZARD(mine6)
+hazard_at_location(mine6,transit)
+at_location(remus,transit)
+
+18.568260 - Memory access at key __world states
+18.568362 - Memory access at key __world states
+18.568460 - World observed.
+
+18.569832 - ****** Starting Interpret Phase ******
+
+18.570000 - Memory access at key __goals
+18.570096 - Memory access at key __world states
+18.570405 - Memory access at key __goals
+18.570578 - ****** Starting Eval Phase ******
+
+18.570707 - Memory access at key __world states
+18.570787 - Memory access at key __current goals
+18.571858 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+18.572009 - ****** Starting Intend Phase ******
+
+18.572171 - Memory access at key __goals
+18.572266 - Memory access at key __current goals
+18.572347 - Memory access at key __current goals
+18.572432 - Memory access at key __current goals
+18.572588 - Selecting goal(s): Goal(mine6, transit, predicate: hazard_checked)
+
+18.572818 - ****** Starting Plan Phase ******
+
+18.573080 - Memory access at key __world states
+18.573168 - Memory access at key __current goals
+18.574145 - Memory access at key __goals
+18.574283 - Planning...
+
+18.574422 - Memory access at key __PlanningCount
+18.574504 - Memory access at key __PlanningCount
+18.574605 - ('achieve_goals', [<midca.goals.Goal instance at 0x7f7ca2e16e18>])
+
+19.658300 - enter('check', 'mine6', 'transit')
+
+28.811661 - enterPlanning failed for  Goal(mine6, transit, predicate: hazard_checked)  
+
+28.812128 - ****** Starting Act Phase ******
+
+28.812405 - Memory access at key __world states
+28.812617 - Memory access at key __current goals
+28.812791 - Memory access at key __goals
+28.812977 - No valid plan found that achieves any current goals.
+
+28.815487 - MIDCA will not select an action this cycle.
+
+28.815770 - Memory access at key __actions
+28.815951 - Memory access at key __goals
+28.816235 - Starting cycle 65
+
+28.816548 - ****** Starting Simulate Phase ******
+
+28.817173 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_at_location(mine6, transit)
+]
+
+28.817989 - ****** Starting Perceive Phase ******
+
+28.818360 - Memory access at key __world states
+28.828772 - Mine Report not received
+
+28.829801 - at_location(remus,qroute)
+at_location(remus,ga1)
+
+28.830162 - Memory access at key __world states
+28.830569 - Memory access at key __world states
+28.830782 - World observed.
+
+28.833207 - ****** Starting Interpret Phase ******
+
+28.833530 - Memory access at key __goals
+28.833674 - Memory access at key __world states
+28.834205 - Memory access at key __goals
+28.834486 - ****** Starting Eval Phase ******
+
+28.834702 - Memory access at key __world states
+28.834898 - Memory access at key __current goals
+28.836623 - Not all goals achieved; Goal(mine6, transit, predicate: hazard_checked) is not true.
+
+28.836994 - ****** Starting Intend Phase ******
+
+28.837422 - Memory access at key __goals
+28.837638 - Memory access at key __current goals
+28.837815 - Memory access at key __current goals
+28.837987 - Memory access at key __current goals
+28.838248 - Selecting goal(s): Goal(mine6, transit, predicate: hazard_checked)
+
+28.838825 - ****** Starting Plan Phase ******
+
+28.839192 - Memory access at key __world states
+28.839354 - Memory access at key __current goals
+28.841501 - Memory access at key __goals
+28.841750 - Planning...
+
+28.842047 - Memory access at key __PlanningCount
+28.842181 - Memory access at key __PlanningCount
+28.842370 - ('achieve_goals', [<midca.goals.Goal instance at 0x7f7ca2dc11b8>])
+

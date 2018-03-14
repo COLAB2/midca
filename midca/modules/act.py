@@ -2,6 +2,7 @@ from midca.modules._plan.asynch import asynch
 from midca import base
 import copy
 import zmq
+import time
 
 
 class AsynchronousAct(base.BaseModule):
@@ -327,48 +328,166 @@ class NBeaconsSimpleAct(base.BaseModule):
 
             if trace: trace.add_data("ACTION", None)
 
+
 class Moosact(base.BaseModule):
 
     def init(self, world, mem):
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
+	self.publisher_mine = context.socket(zmq.PUB)
         self.publisher.bind("tcp://127.0.0.1:5560")
+	self.publisher_mine.bind("tcp://127.0.0.1:5565")
         self.mem = mem
         self.world = world
 
 
-    def run(self, cycle, verbose = 2):
-        try:
+    #returns the plan that achieves the most current goals, based on simulation.
+    def get_best_plan(self, world, goals, verbose):
+        plan = None
+        goalsAchieved = set()
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        for nextPlan in goalGraph.allMatchingPlans(goals):
+            achieved = world.goals_achieved(nextPlan, goals)
+            if len(achieved) > len(goalsAchieved):
+                goalsAchieved = achieved
+                plan = nextPlan
+            if len(achieved) == len(goals):
+                break
+            elif verbose >= 2:
+                print "Retrieved plan does not achieve all goals. Trying to retrieve a different plan..."
+                if verbose >= 3:
+                    print "  Retrieved Plan:"
+                    for a in nextPlan:
+                        print "  "+str(a)
+                    print "Goals achieved:", [str(goal) for goal in achieved]
+        if plan == None and verbose >= 1:
+            print "No valid plan found that achieves any current goals."
+        elif len(goalsAchieved) < len(goals) and verbose >= 1:
+            print "Best plan does not achieve all goals."
+            if verbose >= 2:
+                print "Plan:", str(plan)
+                print "Goals achieved:", [str(goal) for goal in goalsAchieved]
+        return plan
+
+
+
+    def execute_action(self,verbose):
+ 	try:
             #get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
         except TypeError, IndexError:
             if verbose >= 1:
                 print "Simulator: no actions selected yet by MIDCA."
-            return
-        if actions:
+            return False 
+
+	if actions:
             for action in actions:
                 if self.world.midca_action_applicable(action):
-                    if verbose >= 2:
-                        print "simulating MIDCA action:", action
 
-                    if (action.op == "survey"):
-                        argnames = [str(arg) for arg in action.args]
-                        if ("ga1" in argnames):
-                            self.publisher.send_multipart(
-                                [b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER"])
-                            self.world.apply_midca_action(action)
+			if self.mem.get(self.mem.MOOS_FEEDBACK):
+				if self.world.midca_action_applicable(self.mem.get(self.mem.MOOS_FEEDBACK)) \
+						and self.mem.get(self.mem.MOOS_FEEDBACK) == action:
+					return False
+				else:
+					self.mem.set(self.mem.MOOS_FEEDBACK, None)
+			
+			if (action.op == "ignore"):
+				self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.0"])
+				self.world.apply_midca_action(action)
+				time.sleep(2)
+				return True
 
-                        if ("ga2" in argnames):
-                            self.publisher.send_multipart([b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER"])
-                            self.world.apply_midca_action(action)
 
-                        if ("home" in argnames):
-                            self.publisher.send_multipart([b"M", b"point = 0,0"])
-                            self.world.apply_midca_action(action)
+			if (action.op == "remove"):
+				self.publisher_mine.send_multipart(
+                                		[b"M", b"x=-100,y=-100,width=8,primary_color=green,type=triangle,label=14"])
+				self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.0"])
+				time.sleep(2)
+				self.world.apply_midca_action(action)
+				return True
+
+                    	if (action.op == "survey"):
+                        	argnames = [str(arg) for arg in action.args]
+                        	if ("ga1" in argnames):
+                            		self.publisher.send_multipart(
+                                		[b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2.0 "])
+
+					self.mem.set(self.mem.MOOS_FEEDBACK , action)
+					return False
+
+                        	if ("ga2" in argnames):
+                            		self.publisher.send_multipart([b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2.0  "])
+			    		self.mem.set(self.mem.MOOS_FEEDBACK , action)
+					return False
+
+                        	if ("home" in argnames):
+                            		self.publisher.send_multipart([b"M", b"point = 0,0 # speed= 2.0 "])
+			    		self.mem.set(self.mem.MOOS_FEEDBACK , action)
+					return False
 
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+		    return True
+
+	return False
+
+    def run(self, cycle, verbose = 2):
+	self.verbose = verbose
+        max_plan_print_size = 5
+        world = self.mem.get(self.mem.STATES)[-1]
+	try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except :
+            goals = []
+	
+	plan = self.get_best_plan(world, goals, verbose)
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+            trace.add_data("PLAN", copy.deepcopy(plan))
+
+        if plan != None:
+            action = plan.get_next_step()
+            if not action:
+                if verbose >= 1:
+                    print "Plan to achieve goals has already been completed. Taking no action."
+                self.mem.add(self.mem.ACTIONS, [])
+            else:
+                if verbose == 1:
+                    print "Action selected:", action
+                elif verbose >= 2:
+                    if len(plan) > max_plan_print_size:
+                        # print just the next 3 actions of the plan
+                        print "Selected action", action, "from plan:\n"
+                        if verbose >= 3:
+                            for a in plan:
+                                print "  "+str(a)
+                    else:
+                        # print the whole plan
+                        print "Selected action", action, "from plan:\n", plan
+                self.mem.add(self.mem.ACTIONS, [action])
+                actions = self.mem.get(self.mem.ACTIONS)
+                if len(actions) > 400:
+                    actions = actions[200:] # trim off old stale actions
+                    self.mem.set(self.mem.ACTIONS, actions)
+                    #print "Trimmed off 200 old stale actions to save space"
+		if self.execute_action(verbose):
+                	plan.advance()
+
+                if trace: trace.add_data("ACTION", action)
         else:
-            if verbose >= 2:
-                print "No actions selected this cycle by MIDCA."
+            if verbose >= 1:
+                print "MIDCA will not select an action this cycle."
+            self.mem.add(self.mem.ACTIONS, [])
+            if goals:
+                for g in goals:
+                    self.mem.get(self.mem.GOAL_GRAPH).remove(g)
+
+            if trace: trace.add_data("ACTION", None)
+
+

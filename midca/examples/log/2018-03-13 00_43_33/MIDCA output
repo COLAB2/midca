@@ -1,0 +1,73 @@
+.000431 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001908 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.002272 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002410 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002536 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002817 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002940 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003661 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.003976 - Goal Graph initialized.
+
+.004089 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.004202 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.496757 - Starting cycle 0
+
+.497240 - ****** Starting Simulate Phase ******
+
+.497511 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+.921648 - ****** Starting Perceive Phase ******
+
+.923584 - World observed.
+
+1.372384 - ****** Starting Interpret Phase ******
+
+1.373635 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.109470 - Goal added.
+
+20.109639 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.695083 - ****** Starting Eval Phase ******
+
+20.696389 - No current goals. Skipping eval
+
+21.387625 - ****** Starting Intend Phase ******
+
+21.388712 - Selecting goal(s): Goal(remus, ga2, predicate: at_location)
+
+22.184454 - ****** Starting Plan Phase ******
+
+22.186936 - Planning...
+
+22.187972 - Planning complete.
+
+22.188215 - Plan: 
+
+22.188458 -   survey(remus, ga2)
+
+22.609110 - ****** Starting Act Phase ******
+
+22.611115 - Selected action survey(remus, ga2) from plan:
+
+22.611312 - survey(remus, ga2)]0m
+
+22.612133 - simulating MIDCA action: survey(remus, ga2)
+

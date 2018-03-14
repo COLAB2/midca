@@ -163,10 +163,20 @@ class MoosObserver(base.BaseModule):
         self.world = world
         context = zmq.Context()
         self.subscriber = context.socket(zmq.SUB)
+        self.subscriber_mine = context.socket(zmq.SUB)
+
         self.subscriber.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, '')
+
         self.subscriber.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
+
         self.subscriber.setsockopt(zmq.CONFLATE, 1)
+	self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
+
         self.subscriber.connect("tcp://127.0.0.1:5563")
+
+	self.subscriber_mine.connect("tcp://127.0.0.1:5564")
 
 
     # perfect observation
@@ -185,7 +195,11 @@ class MoosObserver(base.BaseModule):
         x = -1
         y = -1
         speed = -1
+	mine_x = -1
+	mine_y = -1
+	mine_label = -1
         states = ""
+
 
         '''
         The following code gets the current X,Y,Speed and updates the location of uuv.
@@ -195,42 +209,60 @@ class MoosObserver(base.BaseModule):
 
         try:
             current_position = self.subscriber.recv()
+
+	    # for mine
+	    try:
+	    	mine_report = self.subscriber_mine.recv()
+	    	mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
+	    	mine_x = float(mine_x.split("=")[1])
+            	mine_y = float(mine_y.split("=")[1])
+            	mine_label = mine_label.split("=")[1]
+
+		# for mine at qroute or not
+            	if mine_y >=-98 and mine_y<=-48:
+			states+= "HAZARD(mine" + mine_label + ")\n" 
+                	states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+	    	else:
+			states+= "HAZARD(mine" + mine_label + ")\n" 
+			states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+	    except:
+		print ("Mine Report not received")
+		pass
+
+	    
             x,y,speed = current_position.split(",")
             x = float(x.split(":")[1])
             y = float(y.split(":")[1])
             speed = float(speed.split(":")[1])
 
+
+
             if y >=-98 and y<=-48:
                 states+="at_location(remus,qroute)\n"
             else:
-                for atom in self.world.atoms:
-                    if atom.predicate.name == "at_location" \
-                            and atom.args[0].name == "remus"\
-                            and atom.args[1].name == "qroute":
-                        self.world.atoms.remove(atom)
-                        break
+		states+="at_location(remus,transit)\n"
+
 
             if x>=-2 and x<=40 and y>=-96 and y<=-63:
                 states+="at_location(remus,ga1)"
-            else:
-                for atom in self.world.atoms:
-                    if atom.predicate.name == "at_location" \
-                            and atom.args[0].name == "remus"\
-                            and atom.args[1].name == "ga1":
-                        self.world.atoms.remove(atom)
-                        break
+   
 
             if x>=120 and x<=175 and y>=-96 and y<=-63:
                 states+="at_location(remus,ga2)"
-            else:
-                for atom in self.world.atoms:
-                    if atom.predicate.name == "at_location" \
-                            and atom.args[0].name == "remus"\
-                            and atom.args[1].name == "ga2":
-                        self.world.atoms.remove(atom)
-                        break
+
+            if x==0 and y==0:
+                states+="at_location(remus,home)"
+
         except:
+	    print ("states not received")
             pass
+
+	# remove all states related to at_location
+	atoms = copy.deepcopy(self.world.atoms)
+        for atom in atoms:
+                 	if atom.predicate.name == "at_location":
+                        	self.world.atoms.remove(atom)
+
         # this is to update the world into memory
         if not states == "":
             if verbose >= 1:

@@ -1,8 +1,11 @@
 type(UUV)
 type(SEA_ROUTE)
+type(HAZARD)
 
 
 predicate(at_location,[uuv,location], [UUV,SEA_ROUTE])
+predicate(hazard_at_location, [mine,location], [HAZARD,SEA_ROUTE])
+predicate(hazard_checked, [mine,location], [HAZARD,SEA_ROUTE])
 predicate(enabled,[uuv],[UUV])
 
 operator(survey, 
@@ -11,3 +14,14 @@ preconditions = [condition(enabled, [uuv])],
 results = [
 	condition(at_location, [uuv, location])])
 
+operator(ignore, 
+args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)], 
+preconditions = [condition(at_location, [uuv, location])], 
+results = [condition(hazard_checked, [mine, location]),
+	   condition(hazard_at_location, [mine, location], negate = True)])
+
+operator(remove, 
+args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)], 
+preconditions = [condition(at_location, [uuv, location])], 
+results = [condition(hazard_checked, [mine, location]),
+	   condition(hazard_at_location, [mine, location], negate = True)])

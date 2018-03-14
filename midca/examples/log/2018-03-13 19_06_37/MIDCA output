@@ -1,0 +1,6209 @@
+.000525 - Goal Graph initialized.
+
+.000681 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001381 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001515 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001643 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001797 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002013 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002365 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.002547 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.002630 - Starting cycle 0
+
+.002743 - ****** Starting Simulate Phase ******
+
+.002897 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.003046 - ****** Starting Perceive Phase ******
+
+.023574 - Mine Report not received
+
+.023938 - at_location(remus,transit)
+at_location(remus,home)
+
+.024290 - World observed.
+
+.025202 - ****** Starting Interpret Phase ******
+
+.025443 - Please input a goal if desired. Otherwise, press enter to continue
+
+7.509952 - Goal added.
+
+7.510361 - Please input a goal if desired. Otherwise, press enter to continue
+
+8.461052 - ****** Starting Eval Phase ******
+
+8.464440 - No current goals. Skipping eval
+
+8.464836 - ****** Starting Intend Phase ******
+
+8.465787 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+8.466097 - ****** Starting Plan Phase ******
+
+8.470006 - Planning...
+
+8.470990 - Planning complete.
+
+8.471225 - Plan: 
+
+8.471470 -   survey(remus, ga1)
+
+8.472015 - ****** Starting Act Phase ******
+
+8.475516 - Selected action survey(remus, ga1) from plan:
+
+8.475783 - survey(remus, ga1)]0m
+
+8.476615 - Starting cycle 1
+
+8.476799 - ****** Starting Simulate Phase ******
+
+8.477112 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.477315 - ****** Starting Perceive Phase ******
+
+8.488221 - Mine Report not received
+
+8.488678 - ['survey']
+
+8.489571 - at_location(remus,transit)
+at_location(remus,home)
+
+8.490332 - World observed.
+
+8.492195 - ****** Starting Interpret Phase ******
+
+8.492675 - ****** Starting Eval Phase ******
+
+8.494553 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.494783 - ****** Starting Intend Phase ******
+
+8.495487 - No goals selected.
+
+8.495667 - ****** Starting Plan Phase ******
+
+8.497996 - Old plan retrieved. Checking validity... valid.
+
+8.498480 - checking to see if all goals are achieved... yes
+
+8.498697 - ****** Starting Act Phase ******
+
+8.501374 - Selected action survey(remus, ga1) from plan:
+
+8.501632 - survey(remus, ga1)]0m
+
+8.502732 - Starting cycle 2
+
+8.503010 - ****** Starting Simulate Phase ******
+
+8.503476 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.503777 - ****** Starting Perceive Phase ******
+
+8.514780 - Mine Report not received
+
+8.515140 - ['survey']
+
+8.516339 - at_location(remus,transit)
+at_location(remus,home)
+
+8.517045 - World observed.
+
+8.519382 - ****** Starting Interpret Phase ******
+
+8.519998 - ****** Starting Eval Phase ******
+
+8.522746 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.523102 - ****** Starting Intend Phase ******
+
+8.524016 - No goals selected.
+
+8.524330 - ****** Starting Plan Phase ******
+
+8.527006 - Old plan retrieved. Checking validity... valid.
+
+8.527326 - checking to see if all goals are achieved... yes
+
+8.527555 - ****** Starting Act Phase ******
+
+8.529951 - Selected action survey(remus, ga1) from plan:
+
+8.530121 - survey(remus, ga1)]0m
+
+8.530873 - Starting cycle 3
+
+8.531028 - ****** Starting Simulate Phase ******
+
+8.531339 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.531569 - ****** Starting Perceive Phase ******
+
+8.544623 - Mine Report not received
+
+8.544885 - ['survey']
+
+8.545467 - at_location(remus,transit)
+at_location(remus,home)
+
+8.545912 - World observed.
+
+8.547175 - ****** Starting Interpret Phase ******
+
+8.547610 - ****** Starting Eval Phase ******
+
+8.549108 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.549373 - ****** Starting Intend Phase ******
+
+8.549961 - No goals selected.
+
+8.550204 - ****** Starting Plan Phase ******
+
+8.552082 - Old plan retrieved. Checking validity... valid.
+
+8.552421 - checking to see if all goals are achieved... yes
+
+8.552633 - ****** Starting Act Phase ******
+
+8.555202 - Selected action survey(remus, ga1) from plan:
+
+8.555407 - survey(remus, ga1)]0m
+
+8.556039 - Starting cycle 4
+
+8.556191 - ****** Starting Simulate Phase ******
+
+8.556452 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.556629 - ****** Starting Perceive Phase ******
+
+8.567385 - states not received
+
+8.568039 - World observed.
+
+8.569206 - ****** Starting Interpret Phase ******
+
+8.569736 - ****** Starting Eval Phase ******
+
+8.571802 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.572131 - ****** Starting Intend Phase ******
+
+8.572738 - No goals selected.
+
+8.572936 - ****** Starting Plan Phase ******
+
+8.575240 - Old plan retrieved. Checking validity... valid.
+
+8.575582 - checking to see if all goals are achieved... yes
+
+8.575798 - ****** Starting Act Phase ******
+
+8.577845 - Selected action survey(remus, ga1) from plan:
+
+8.578034 - survey(remus, ga1)]0m
+
+8.578837 - Starting cycle 5
+
+8.578985 - ****** Starting Simulate Phase ******
+
+8.579190 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.579394 - ****** Starting Perceive Phase ******
+
+8.594806 - Mine Report not received
+
+8.595186 - at_location(remus,transit)
+
+8.595584 - World observed.
+
+8.596653 - ****** Starting Interpret Phase ******
+
+8.596980 - ****** Starting Eval Phase ******
+
+8.598759 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.598977 - ****** Starting Intend Phase ******
+
+8.599524 - No goals selected.
+
+8.599724 - ****** Starting Plan Phase ******
+
+8.601328 - Old plan retrieved. Checking validity... valid.
+
+8.601604 - checking to see if all goals are achieved... yes
+
+8.601782 - ****** Starting Act Phase ******
+
+8.604409 - Selected action survey(remus, ga1) from plan:
+
+8.604598 - survey(remus, ga1)]0m
+
+8.605267 - Starting cycle 6
+
+8.605468 - ****** Starting Simulate Phase ******
+
+8.605675 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.606100 - ****** Starting Perceive Phase ******
+
+8.616968 - states not received
+
+8.617982 - World observed.
+
+8.622195 - ****** Starting Interpret Phase ******
+
+8.622550 - ****** Starting Eval Phase ******
+
+8.623748 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.623887 - ****** Starting Intend Phase ******
+
+8.624326 - No goals selected.
+
+8.624453 - ****** Starting Plan Phase ******
+
+8.625818 - Old plan retrieved. Checking validity... valid.
+
+8.626066 - checking to see if all goals are achieved... yes
+
+8.626322 - ****** Starting Act Phase ******
+
+8.627963 - Selected action survey(remus, ga1) from plan:
+
+8.628086 - survey(remus, ga1)]0m
+
+8.628606 - Starting cycle 7
+
+8.628872 - ****** Starting Simulate Phase ******
+
+8.629079 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.629230 - ****** Starting Perceive Phase ******
+
+8.645259 - Mine Report not received
+
+8.645705 - at_location(remus,transit)
+
+8.646176 - World observed.
+
+8.647336 - ****** Starting Interpret Phase ******
+
+8.647730 - ****** Starting Eval Phase ******
+
+8.648953 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.649112 - ****** Starting Intend Phase ******
+
+8.649556 - No goals selected.
+
+8.649697 - ****** Starting Plan Phase ******
+
+8.651286 - Old plan retrieved. Checking validity... valid.
+
+8.651553 - checking to see if all goals are achieved... yes
+
+8.651725 - ****** Starting Act Phase ******
+
+8.653559 - Selected action survey(remus, ga1) from plan:
+
+8.653713 - survey(remus, ga1)]0m
+
+8.654371 - Starting cycle 8
+
+8.654522 - ****** Starting Simulate Phase ******
+
+8.654716 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.654873 - ****** Starting Perceive Phase ******
+
+8.665402 - states not received
+
+8.665918 - World observed.
+
+8.666907 - ****** Starting Interpret Phase ******
+
+8.667209 - ****** Starting Eval Phase ******
+
+8.668707 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.668920 - ****** Starting Intend Phase ******
+
+8.669405 - No goals selected.
+
+8.669532 - ****** Starting Plan Phase ******
+
+8.671211 - Old plan retrieved. Checking validity... valid.
+
+8.671471 - checking to see if all goals are achieved... yes
+
+8.671623 - ****** Starting Act Phase ******
+
+8.673091 - Selected action survey(remus, ga1) from plan:
+
+8.673207 - survey(remus, ga1)]0m
+
+8.673683 - Starting cycle 9
+
+8.673804 - ****** Starting Simulate Phase ******
+
+8.673961 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.674097 - ****** Starting Perceive Phase ******
+
+8.684635 - states not received
+
+8.685234 - World observed.
+
+8.686412 - ****** Starting Interpret Phase ******
+
+8.686907 - ****** Starting Eval Phase ******
+
+8.688297 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.688583 - ****** Starting Intend Phase ******
+
+8.689117 - No goals selected.
+
+8.689323 - ****** Starting Plan Phase ******
+
+8.690735 - Old plan retrieved. Checking validity... valid.
+
+8.691149 - checking to see if all goals are achieved... yes
+
+8.691431 - ****** Starting Act Phase ******
+
+8.692937 - Selected action survey(remus, ga1) from plan:
+
+8.693071 - survey(remus, ga1)]0m
+
+8.693591 - Starting cycle 10
+
+8.693739 - ****** Starting Simulate Phase ******
+
+8.693957 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.694140 - ****** Starting Perceive Phase ******
+
+8.704737 - Mine Report not received
+
+8.705154 - at_location(remus,transit)
+
+8.705643 - World observed.
+
+8.707269 - ****** Starting Interpret Phase ******
+
+8.707779 - ****** Starting Eval Phase ******
+
+8.710824 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.711132 - ****** Starting Intend Phase ******
+
+8.711840 - No goals selected.
+
+8.712041 - ****** Starting Plan Phase ******
+
+8.714465 - Old plan retrieved. Checking validity... valid.
+
+8.714875 - checking to see if all goals are achieved... yes
+
+8.715086 - ****** Starting Act Phase ******
+
+8.718006 - Selected action survey(remus, ga1) from plan:
+
+8.718290 - survey(remus, ga1)]0m
+
+8.719157 - Starting cycle 11
+
+8.719345 - ****** Starting Simulate Phase ******
+
+8.719641 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.719863 - ****** Starting Perceive Phase ******
+
+8.730571 - states not received
+
+8.731099 - World observed.
+
+8.732330 - ****** Starting Interpret Phase ******
+
+8.732672 - ****** Starting Eval Phase ******
+
+8.734304 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.734578 - ****** Starting Intend Phase ******
+
+8.735194 - No goals selected.
+
+8.735337 - ****** Starting Plan Phase ******
+
+8.737276 - Old plan retrieved. Checking validity... valid.
+
+8.737769 - checking to see if all goals are achieved... yes
+
+8.738024 - ****** Starting Act Phase ******
+
+8.739903 - Selected action survey(remus, ga1) from plan:
+
+8.740046 - survey(remus, ga1)]0m
+
+8.740606 - Starting cycle 12
+
+8.740751 - ****** Starting Simulate Phase ******
+
+8.740952 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.741099 - ****** Starting Perceive Phase ******
+
+8.751671 - Mine Report not received
+
+8.752151 - at_location(remus,transit)
+
+8.752521 - World observed.
+
+8.753611 - ****** Starting Interpret Phase ******
+
+8.753911 - ****** Starting Eval Phase ******
+
+8.755266 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.755435 - ****** Starting Intend Phase ******
+
+8.755907 - No goals selected.
+
+8.756056 - ****** Starting Plan Phase ******
+
+8.758680 - Old plan retrieved. Checking validity... valid.
+
+8.759136 - checking to see if all goals are achieved... yes
+
+8.759382 - ****** Starting Act Phase ******
+
+8.762402 - Selected action survey(remus, ga1) from plan:
+
+8.762630 - survey(remus, ga1)]0m
+
+8.763441 - Starting cycle 13
+
+8.763640 - ****** Starting Simulate Phase ******
+
+8.763942 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.764162 - ****** Starting Perceive Phase ******
+
+8.774901 - states not received
+
+8.775352 - World observed.
+
+8.776204 - ****** Starting Interpret Phase ******
+
+8.776467 - ****** Starting Eval Phase ******
+
+8.777491 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.777613 - ****** Starting Intend Phase ******
+
+8.777998 - No goals selected.
+
+8.778105 - ****** Starting Plan Phase ******
+
+8.779421 - Old plan retrieved. Checking validity... valid.
+
+8.779724 - checking to see if all goals are achieved... yes
+
+8.779863 - ****** Starting Act Phase ******
+
+8.781183 - Selected action survey(remus, ga1) from plan:
+
+8.781286 - survey(remus, ga1)]0m
+
+8.781718 - Starting cycle 14
+
+8.781833 - ****** Starting Simulate Phase ******
+
+8.781978 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.782194 - ****** Starting Perceive Phase ******
+
+8.795374 - Mine Report not received
+
+8.795721 - at_location(remus,transit)
+
+8.796116 - World observed.
+
+8.797605 - ****** Starting Interpret Phase ******
+
+8.798024 - ****** Starting Eval Phase ******
+
+8.799818 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.800063 - ****** Starting Intend Phase ******
+
+8.800552 - No goals selected.
+
+8.800734 - ****** Starting Plan Phase ******
+
+8.802233 - Old plan retrieved. Checking validity... valid.
+
+8.802673 - checking to see if all goals are achieved... yes
+
+8.802899 - ****** Starting Act Phase ******
+
+8.804450 - Selected action survey(remus, ga1) from plan:
+
+8.804605 - survey(remus, ga1)]0m
+
+8.805161 - Starting cycle 15
+
+8.805324 - ****** Starting Simulate Phase ******
+
+8.805581 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.805754 - ****** Starting Perceive Phase ******
+
+8.816292 - states not received
+
+8.816794 - World observed.
+
+8.817929 - ****** Starting Interpret Phase ******
+
+8.818299 - ****** Starting Eval Phase ******
+
+8.819449 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.819632 - ****** Starting Intend Phase ******
+
+8.820064 - No goals selected.
+
+8.820221 - ****** Starting Plan Phase ******
+
+8.821462 - Old plan retrieved. Checking validity... valid.
+
+8.821720 - checking to see if all goals are achieved... yes
+
+8.821887 - ****** Starting Act Phase ******
+
+8.823434 - Selected action survey(remus, ga1) from plan:
+
+8.823576 - survey(remus, ga1)]0m
+
+8.824107 - Starting cycle 16
+
+8.824246 - ****** Starting Simulate Phase ******
+
+8.824425 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.824580 - ****** Starting Perceive Phase ******
+
+8.835171 - states not received
+
+8.835855 - World observed.
+
+8.839213 - ****** Starting Interpret Phase ******
+
+8.839529 - ****** Starting Eval Phase ******
+
+8.840599 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.840727 - ****** Starting Intend Phase ******
+
+8.841107 - No goals selected.
+
+8.841217 - ****** Starting Plan Phase ******
+
+8.842394 - Old plan retrieved. Checking validity... valid.
+
+8.842607 - checking to see if all goals are achieved... yes
+
+8.842731 - ****** Starting Act Phase ******
+
+8.844329 - Selected action survey(remus, ga1) from plan:
+
+8.844439 - survey(remus, ga1)]0m
+
+8.844880 - Starting cycle 17
+
+8.844992 - ****** Starting Simulate Phase ******
+
+8.845137 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.845263 - ****** Starting Perceive Phase ******
+
+8.855741 - Mine Report not received
+
+8.856178 - at_location(remus,transit)
+
+8.858296 - World observed.
+
+8.860869 - ****** Starting Interpret Phase ******
+
+8.861398 - ****** Starting Eval Phase ******
+
+8.862859 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.863247 - ****** Starting Intend Phase ******
+
+8.863785 - No goals selected.
+
+8.864006 - ****** Starting Plan Phase ******
+
+8.866235 - Old plan retrieved. Checking validity... valid.
+
+8.866467 - checking to see if all goals are achieved... yes
+
+8.866614 - ****** Starting Act Phase ******
+
+8.868174 - Selected action survey(remus, ga1) from plan:
+
+8.868319 - survey(remus, ga1)]0m
+
+8.868791 - Starting cycle 18
+
+8.868910 - ****** Starting Simulate Phase ******
+
+8.869084 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.869208 - ****** Starting Perceive Phase ******
+
+8.879735 - states not received
+
+8.880307 - World observed.
+
+8.881143 - ****** Starting Interpret Phase ******
+
+8.881383 - ****** Starting Eval Phase ******
+
+8.882439 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.882581 - ****** Starting Intend Phase ******
+
+8.882991 - No goals selected.
+
+8.883105 - ****** Starting Plan Phase ******
+
+8.885396 - Old plan retrieved. Checking validity... valid.
+
+8.885841 - checking to see if all goals are achieved... yes
+
+8.886013 - ****** Starting Act Phase ******
+
+8.888134 - Selected action survey(remus, ga1) from plan:
+
+8.888397 - survey(remus, ga1)]0m
+
+8.888893 - Starting cycle 19
+
+8.889008 - ****** Starting Simulate Phase ******
+
+8.889151 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.889313 - ****** Starting Perceive Phase ******
+
+8.899788 - Mine Report not received
+
+8.900137 - at_location(remus,transit)
+
+8.900471 - World observed.
+
+8.901502 - ****** Starting Interpret Phase ******
+
+8.901812 - ****** Starting Eval Phase ******
+
+8.903124 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.903323 - ****** Starting Intend Phase ******
+
+8.903840 - No goals selected.
+
+8.904054 - ****** Starting Plan Phase ******
+
+8.905475 - Old plan retrieved. Checking validity... valid.
+
+8.905745 - checking to see if all goals are achieved... yes
+
+8.905911 - ****** Starting Act Phase ******
+
+8.908523 - Selected action survey(remus, ga1) from plan:
+
+8.908736 - survey(remus, ga1)]0m
+
+8.909315 - Starting cycle 20
+
+8.909497 - ****** Starting Simulate Phase ******
+
+8.909710 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.909894 - ****** Starting Perceive Phase ******
+
+8.920467 - states not received
+
+8.921103 - World observed.
+
+8.922215 - ****** Starting Interpret Phase ******
+
+8.922530 - ****** Starting Eval Phase ******
+
+8.923805 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.924050 - ****** Starting Intend Phase ******
+
+8.924597 - No goals selected.
+
+8.924739 - ****** Starting Plan Phase ******
+
+8.925947 - Old plan retrieved. Checking validity... valid.
+
+8.926220 - checking to see if all goals are achieved... yes
+
+8.926383 - ****** Starting Act Phase ******
+
+8.927705 - Selected action survey(remus, ga1) from plan:
+
+8.927826 - survey(remus, ga1)]0m
+
+8.928291 - Starting cycle 21
+
+8.928429 - ****** Starting Simulate Phase ******
+
+8.928607 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.928757 - ****** Starting Perceive Phase ******
+
+8.945657 - Mine Report not received
+
+8.946041 - at_location(remus,transit)
+
+8.946727 - World observed.
+
+8.948805 - ****** Starting Interpret Phase ******
+
+8.949201 - ****** Starting Eval Phase ******
+
+8.950350 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.950484 - ****** Starting Intend Phase ******
+
+8.950914 - No goals selected.
+
+8.951026 - ****** Starting Plan Phase ******
+
+8.952289 - Old plan retrieved. Checking validity... valid.
+
+8.952512 - checking to see if all goals are achieved... yes
+
+8.952642 - ****** Starting Act Phase ******
+
+8.954072 - Selected action survey(remus, ga1) from plan:
+
+8.954199 - survey(remus, ga1)]0m
+
+8.954734 - Starting cycle 22
+
+8.954859 - ****** Starting Simulate Phase ******
+
+8.955039 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+8.955175 - ****** Starting Perceive Phase ******
+
+8.967163 - states not received
+
+8.968060 - World observed.
+
+8.969479 - ****** Starting Interpret Phase ******
+
+8.969841 - ****** Starting Eval Phase ******
+
+8.970954 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.971080 - ****** Starting Intend Phase ******
+
+8.971471 - No goals selected.
+
+8.971580 - ****** Starting Plan Phase ******
+
+8.972772 - Old plan retrieved. Checking validity... valid.
+
+8.972986 - checking to see if all goals are achieved... yes
+
+8.973108 - ****** Starting Act Phase ******
+
+8.974567 - Selected action survey(remus, ga1) from plan:
+
+8.974725 - survey(remus, ga1)]0m
+
+8.975221 - Starting cycle 23
+
+8.975329 - ****** Starting Simulate Phase ******
+
+8.975486 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.975615 - ****** Starting Perceive Phase ******
+
+8.995682 - Mine Report not received
+
+8.996122 - at_location(remus,transit)
+
+8.996500 - World observed.
+
+8.997532 - ****** Starting Interpret Phase ******
+
+8.997884 - ****** Starting Eval Phase ******
+
+8.999143 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+8.999299 - ****** Starting Intend Phase ******
+
+8.999782 - No goals selected.
+
+8.999939 - ****** Starting Plan Phase ******
+
+9.001460 - Old plan retrieved. Checking validity... valid.
+
+9.001719 - checking to see if all goals are achieved... yes
+
+9.001887 - ****** Starting Act Phase ******
+
+9.003536 - Selected action survey(remus, ga1) from plan:
+
+9.003687 - survey(remus, ga1)]0m
+
+9.004252 - Starting cycle 24
+
+9.004402 - ****** Starting Simulate Phase ******
+
+9.004633 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.004792 - ****** Starting Perceive Phase ******
+
+9.015589 - states not received
+
+9.016613 - World observed.
+
+9.018475 - ****** Starting Interpret Phase ******
+
+9.018951 - ****** Starting Eval Phase ******
+
+9.020764 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.020929 - ****** Starting Intend Phase ******
+
+9.021343 - No goals selected.
+
+9.021458 - ****** Starting Plan Phase ******
+
+9.023002 - Old plan retrieved. Checking validity... valid.
+
+9.023233 - checking to see if all goals are achieved... yes
+
+9.023372 - ****** Starting Act Phase ******
+
+9.024835 - Selected action survey(remus, ga1) from plan:
+
+9.024943 - survey(remus, ga1)]0m
+
+9.025605 - Starting cycle 25
+
+9.025726 - ****** Starting Simulate Phase ******
+
+9.025907 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.026041 - ****** Starting Perceive Phase ******
+
+9.045758 - Mine Report not received
+
+9.046199 - at_location(remus,transit)
+
+9.046588 - World observed.
+
+9.047622 - ****** Starting Interpret Phase ******
+
+9.047941 - ****** Starting Eval Phase ******
+
+9.049287 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.049472 - ****** Starting Intend Phase ******
+
+9.049939 - No goals selected.
+
+9.050104 - ****** Starting Plan Phase ******
+
+9.051695 - Old plan retrieved. Checking validity... valid.
+
+9.051977 - checking to see if all goals are achieved... yes
+
+9.052168 - ****** Starting Act Phase ******
+
+9.053669 - Selected action survey(remus, ga1) from plan:
+
+9.053806 - survey(remus, ga1)]0m
+
+9.054347 - Starting cycle 26
+
+9.054495 - ****** Starting Simulate Phase ******
+
+9.054714 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.054873 - ****** Starting Perceive Phase ******
+
+9.065403 - states not received
+
+9.066081 - World observed.
+
+9.070199 - ****** Starting Interpret Phase ******
+
+9.070947 - ****** Starting Eval Phase ******
+
+9.072277 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.072462 - ****** Starting Intend Phase ******
+
+9.072904 - No goals selected.
+
+9.073060 - ****** Starting Plan Phase ******
+
+9.074426 - Old plan retrieved. Checking validity... valid.
+
+9.074659 - checking to see if all goals are achieved... yes
+
+9.074794 - ****** Starting Act Phase ******
+
+9.076491 - Selected action survey(remus, ga1) from plan:
+
+9.076665 - survey(remus, ga1)]0m
+
+9.077151 - Starting cycle 27
+
+9.077267 - ****** Starting Simulate Phase ******
+
+9.077451 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.077634 - ****** Starting Perceive Phase ******
+
+9.096046 - Mine Report not received
+
+9.096550 - at_location(remus,transit)
+
+9.096938 - World observed.
+
+9.098175 - ****** Starting Interpret Phase ******
+
+9.098578 - ****** Starting Eval Phase ******
+
+9.100745 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.101049 - ****** Starting Intend Phase ******
+
+9.101580 - No goals selected.
+
+9.101720 - ****** Starting Plan Phase ******
+
+9.103308 - Old plan retrieved. Checking validity... valid.
+
+9.103599 - checking to see if all goals are achieved... yes
+
+9.103769 - ****** Starting Act Phase ******
+
+9.105574 - Selected action survey(remus, ga1) from plan:
+
+9.105723 - survey(remus, ga1)]0m
+
+9.106550 - Starting cycle 28
+
+9.106724 - ****** Starting Simulate Phase ******
+
+9.106937 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.107159 - ****** Starting Perceive Phase ******
+
+9.117707 - states not received
+
+9.118354 - World observed.
+
+9.119743 - ****** Starting Interpret Phase ******
+
+9.120230 - ****** Starting Eval Phase ******
+
+9.122022 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.122294 - ****** Starting Intend Phase ******
+
+9.122827 - No goals selected.
+
+9.123001 - ****** Starting Plan Phase ******
+
+9.124589 - Old plan retrieved. Checking validity... valid.
+
+9.124895 - checking to see if all goals are achieved... yes
+
+9.125086 - ****** Starting Act Phase ******
+
+9.126989 - Selected action survey(remus, ga1) from plan:
+
+9.127187 - survey(remus, ga1)]0m
+
+9.127761 - Starting cycle 29
+
+9.127928 - ****** Starting Simulate Phase ******
+
+9.128145 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.128336 - ****** Starting Perceive Phase ******
+
+9.146265 - Mine Report not received
+
+9.146693 - at_location(remus,transit)
+
+9.147276 - World observed.
+
+9.148347 - ****** Starting Interpret Phase ******
+
+9.148706 - ****** Starting Eval Phase ******
+
+9.150044 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.150258 - ****** Starting Intend Phase ******
+
+9.150752 - No goals selected.
+
+9.150882 - ****** Starting Plan Phase ******
+
+9.152444 - Old plan retrieved. Checking validity... valid.
+
+9.152699 - checking to see if all goals are achieved... yes
+
+9.152854 - ****** Starting Act Phase ******
+
+9.154489 - Selected action survey(remus, ga1) from plan:
+
+9.154621 - survey(remus, ga1)]0m
+
+9.155151 - Starting cycle 30
+
+9.155276 - ****** Starting Simulate Phase ******
+
+9.155467 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.155644 - ****** Starting Perceive Phase ******
+
+9.166589 - states not received
+
+9.167386 - World observed.
+
+9.168702 - ****** Starting Interpret Phase ******
+
+9.169026 - ****** Starting Eval Phase ******
+
+9.170507 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.170687 - ****** Starting Intend Phase ******
+
+9.171158 - No goals selected.
+
+9.171356 - ****** Starting Plan Phase ******
+
+9.173641 - Old plan retrieved. Checking validity... valid.
+
+9.173911 - checking to see if all goals are achieved... yes
+
+9.174061 - ****** Starting Act Phase ******
+
+9.175634 - Selected action survey(remus, ga1) from plan:
+
+9.175752 - survey(remus, ga1)]0m
+
+9.176267 - Starting cycle 31
+
+9.176394 - ****** Starting Simulate Phase ******
+
+9.176559 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.176697 - ****** Starting Perceive Phase ******
+
+9.196378 - Mine Report not received
+
+9.196806 - at_location(remus,transit)
+
+9.197208 - World observed.
+
+9.198794 - ****** Starting Interpret Phase ******
+
+9.199165 - ****** Starting Eval Phase ******
+
+9.200753 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.200973 - ****** Starting Intend Phase ******
+
+9.201471 - No goals selected.
+
+9.201636 - ****** Starting Plan Phase ******
+
+9.203171 - Old plan retrieved. Checking validity... valid.
+
+9.203419 - checking to see if all goals are achieved... yes
+
+9.203569 - ****** Starting Act Phase ******
+
+9.205173 - Selected action survey(remus, ga1) from plan:
+
+9.205307 - survey(remus, ga1)]0m
+
+9.205835 - Starting cycle 32
+
+9.205973 - ****** Starting Simulate Phase ******
+
+9.206191 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.206361 - ****** Starting Perceive Phase ******
+
+9.216926 - states not received
+
+9.217544 - World observed.
+
+9.219053 - ****** Starting Interpret Phase ******
+
+9.219391 - ****** Starting Eval Phase ******
+
+9.220864 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.221027 - ****** Starting Intend Phase ******
+
+9.221602 - No goals selected.
+
+9.221828 - ****** Starting Plan Phase ******
+
+9.224093 - Old plan retrieved. Checking validity... valid.
+
+9.224426 - checking to see if all goals are achieved... yes
+
+9.224648 - ****** Starting Act Phase ******
+
+9.226360 - Selected action survey(remus, ga1) from plan:
+
+9.226515 - survey(remus, ga1)]0m
+
+9.227049 - Starting cycle 33
+
+9.227176 - ****** Starting Simulate Phase ******
+
+9.227361 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.227505 - ****** Starting Perceive Phase ******
+
+9.246622 - Mine Report not received
+
+9.247065 - at_location(remus,transit)
+
+9.247476 - World observed.
+
+9.249006 - ****** Starting Interpret Phase ******
+
+9.249379 - ****** Starting Eval Phase ******
+
+9.250827 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.250984 - ****** Starting Intend Phase ******
+
+9.251439 - No goals selected.
+
+9.251815 - ****** Starting Plan Phase ******
+
+9.254439 - Old plan retrieved. Checking validity... valid.
+
+9.254789 - checking to see if all goals are achieved... yes
+
+9.255006 - ****** Starting Act Phase ******
+
+9.257215 - Selected action survey(remus, ga1) from plan:
+
+9.257393 - survey(remus, ga1)]0m
+
+9.258553 - Starting cycle 34
+
+9.259140 - ****** Starting Simulate Phase ******
+
+9.259542 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.259793 - ****** Starting Perceive Phase ******
+
+9.272085 - states not received
+
+9.272745 - World observed.
+
+9.273879 - ****** Starting Interpret Phase ******
+
+9.274281 - ****** Starting Eval Phase ******
+
+9.275538 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.275724 - ****** Starting Intend Phase ******
+
+9.276222 - No goals selected.
+
+9.276398 - ****** Starting Plan Phase ******
+
+9.277854 - Old plan retrieved. Checking validity... valid.
+
+9.278244 - checking to see if all goals are achieved... yes
+
+9.278499 - ****** Starting Act Phase ******
+
+9.280388 - Selected action survey(remus, ga1) from plan:
+
+9.280552 - survey(remus, ga1)]0m
+
+9.281175 - Starting cycle 35
+
+9.281370 - ****** Starting Simulate Phase ******
+
+9.281880 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.282288 - ****** Starting Perceive Phase ******
+
+9.296726 - Mine Report not received
+
+9.297124 - at_location(remus,transit)
+
+9.297529 - World observed.
+
+9.298914 - ****** Starting Interpret Phase ******
+
+9.299317 - ****** Starting Eval Phase ******
+
+9.300893 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.301148 - ****** Starting Intend Phase ******
+
+9.301761 - No goals selected.
+
+9.301984 - ****** Starting Plan Phase ******
+
+9.303987 - Old plan retrieved. Checking validity... valid.
+
+9.304354 - checking to see if all goals are achieved... yes
+
+9.304581 - ****** Starting Act Phase ******
+
+9.306399 - Selected action survey(remus, ga1) from plan:
+
+9.306582 - survey(remus, ga1)]0m
+
+9.307355 - Starting cycle 36
+
+9.307577 - ****** Starting Simulate Phase ******
+
+9.307841 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.308034 - ****** Starting Perceive Phase ******
+
+9.318645 - states not received
+
+9.319450 - World observed.
+
+9.320953 - ****** Starting Interpret Phase ******
+
+9.321415 - ****** Starting Eval Phase ******
+
+9.324545 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.324761 - ****** Starting Intend Phase ******
+
+9.325237 - No goals selected.
+
+9.325364 - ****** Starting Plan Phase ******
+
+9.326831 - Old plan retrieved. Checking validity... valid.
+
+9.327110 - checking to see if all goals are achieved... yes
+
+9.327282 - ****** Starting Act Phase ******
+
+9.329212 - Selected action survey(remus, ga1) from plan:
+
+9.329439 - survey(remus, ga1)]0m
+
+9.330009 - Starting cycle 37
+
+9.330202 - ****** Starting Simulate Phase ******
+
+9.330396 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.330586 - ****** Starting Perceive Phase ******
+
+9.346651 - Mine Report not received
+
+9.347145 - at_location(remus,transit)
+
+9.347567 - World observed.
+
+9.348666 - ****** Starting Interpret Phase ******
+
+9.349139 - ****** Starting Eval Phase ******
+
+9.351112 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.351340 - ****** Starting Intend Phase ******
+
+9.351868 - No goals selected.
+
+9.352024 - ****** Starting Plan Phase ******
+
+9.353590 - Old plan retrieved. Checking validity... valid.
+
+9.353862 - checking to see if all goals are achieved... yes
+
+9.354040 - ****** Starting Act Phase ******
+
+9.355791 - Selected action survey(remus, ga1) from plan:
+
+9.355926 - survey(remus, ga1)]0m
+
+9.356470 - Starting cycle 38
+
+9.356617 - ****** Starting Simulate Phase ******
+
+9.356850 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.357055 - ****** Starting Perceive Phase ******
+
+9.367749 - states not received
+
+9.368506 - World observed.
+
+9.370630 - ****** Starting Interpret Phase ******
+
+9.371165 - ****** Starting Eval Phase ******
+
+9.372701 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.372891 - ****** Starting Intend Phase ******
+
+9.373802 - No goals selected.
+
+9.373998 - ****** Starting Plan Phase ******
+
+9.375900 - Old plan retrieved. Checking validity... valid.
+
+9.376208 - checking to see if all goals are achieved... yes
+
+9.376394 - ****** Starting Act Phase ******
+
+9.378231 - Selected action survey(remus, ga1) from plan:
+
+9.378414 - survey(remus, ga1)]0m
+
+9.378920 - Starting cycle 39
+
+9.379045 - ****** Starting Simulate Phase ******
+
+9.379206 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.379343 - ****** Starting Perceive Phase ******
+
+9.396840 - Mine Report not received
+
+9.397206 - at_location(remus,transit)
+
+9.397596 - World observed.
+
+9.398662 - ****** Starting Interpret Phase ******
+
+9.398940 - ****** Starting Eval Phase ******
+
+9.400386 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.400550 - ****** Starting Intend Phase ******
+
+9.401019 - No goals selected.
+
+9.401143 - ****** Starting Plan Phase ******
+
+9.402543 - Old plan retrieved. Checking validity... valid.
+
+9.402834 - checking to see if all goals are achieved... yes
+
+9.402977 - ****** Starting Act Phase ******
+
+9.405467 - Selected action survey(remus, ga1) from plan:
+
+9.405647 - survey(remus, ga1)]0m
+
+9.406195 - Starting cycle 40
+
+9.406361 - ****** Starting Simulate Phase ******
+
+9.406552 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.406694 - ****** Starting Perceive Phase ******
+
+9.417201 - states not received
+
+9.417759 - World observed.
+
+9.418768 - ****** Starting Interpret Phase ******
+
+9.419071 - ****** Starting Eval Phase ******
+
+9.420814 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.421019 - ****** Starting Intend Phase ******
+
+9.421593 - No goals selected.
+
+9.421839 - ****** Starting Plan Phase ******
+
+9.423326 - Old plan retrieved. Checking validity... valid.
+
+9.423573 - checking to see if all goals are achieved... yes
+
+9.423716 - ****** Starting Act Phase ******
+
+9.425464 - Selected action survey(remus, ga1) from plan:
+
+9.425592 - survey(remus, ga1)]0m
+
+9.426104 - Starting cycle 41
+
+9.426296 - ****** Starting Simulate Phase ******
+
+9.426454 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.426591 - ****** Starting Perceive Phase ******
+
+9.447011 - Mine Report not received
+
+9.447408 - at_location(remus,transit)
+
+9.447782 - World observed.
+
+9.448877 - ****** Starting Interpret Phase ******
+
+9.449227 - ****** Starting Eval Phase ******
+
+9.450748 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.451130 - ****** Starting Intend Phase ******
+
+9.451606 - No goals selected.
+
+9.451728 - ****** Starting Plan Phase ******
+
+9.453281 - Old plan retrieved. Checking validity... valid.
+
+9.453542 - checking to see if all goals are achieved... yes
+
+9.453681 - ****** Starting Act Phase ******
+
+9.455334 - Selected action survey(remus, ga1) from plan:
+
+9.455456 - survey(remus, ga1)]0m
+
+9.455946 - Starting cycle 42
+
+9.456093 - ****** Starting Simulate Phase ******
+
+9.456302 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.456447 - ****** Starting Perceive Phase ******
+
+9.467074 - states not received
+
+9.467814 - World observed.
+
+9.468771 - ****** Starting Interpret Phase ******
+
+9.469058 - ****** Starting Eval Phase ******
+
+9.470374 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.470565 - ****** Starting Intend Phase ******
+
+9.471290 - No goals selected.
+
+9.471437 - ****** Starting Plan Phase ******
+
+9.472917 - Old plan retrieved. Checking validity... valid.
+
+9.473150 - checking to see if all goals are achieved... yes
+
+9.473292 - ****** Starting Act Phase ******
+
+9.474751 - Selected action survey(remus, ga1) from plan:
+
+9.474863 - survey(remus, ga1)]0m
+
+9.475344 - Starting cycle 43
+
+9.475463 - ****** Starting Simulate Phase ******
+
+9.475629 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.475765 - ****** Starting Perceive Phase ******
+
+9.486340 - states not received
+
+9.486785 - World observed.
+
+9.487739 - ****** Starting Interpret Phase ******
+
+9.488189 - ****** Starting Eval Phase ******
+
+9.489508 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.489664 - ****** Starting Intend Phase ******
+
+9.490089 - No goals selected.
+
+9.490213 - ****** Starting Plan Phase ******
+
+9.491730 - Old plan retrieved. Checking validity... valid.
+
+9.491981 - checking to see if all goals are achieved... yes
+
+9.492390 - ****** Starting Act Phase ******
+
+9.493905 - Selected action survey(remus, ga1) from plan:
+
+9.494056 - survey(remus, ga1)]0m
+
+9.494578 - Starting cycle 44
+
+9.494744 - ****** Starting Simulate Phase ******
+
+9.494989 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.495229 - ****** Starting Perceive Phase ******
+
+9.506360 - Mine Report not received
+
+9.506700 - at_location(remus,transit)
+
+9.507012 - World observed.
+
+9.508216 - ****** Starting Interpret Phase ******
+
+9.508633 - ****** Starting Eval Phase ******
+
+9.510280 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.510516 - ****** Starting Intend Phase ******
+
+9.510959 - No goals selected.
+
+9.511091 - ****** Starting Plan Phase ******
+
+9.512788 - Old plan retrieved. Checking validity... valid.
+
+9.513162 - checking to see if all goals are achieved... yes
+
+9.513541 - ****** Starting Act Phase ******
+
+9.516492 - Selected action survey(remus, ga1) from plan:
+
+9.516719 - survey(remus, ga1)]0m
+
+9.517656 - Starting cycle 45
+
+9.517904 - ****** Starting Simulate Phase ******
+
+9.518223 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.518396 - ****** Starting Perceive Phase ******
+
+9.528989 - states not received
+
+9.529518 - World observed.
+
+9.530742 - ****** Starting Interpret Phase ******
+
+9.531105 - ****** Starting Eval Phase ******
+
+9.532667 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.533018 - ****** Starting Intend Phase ******
+
+9.533678 - No goals selected.
+
+9.533831 - ****** Starting Plan Phase ******
+
+9.535233 - Old plan retrieved. Checking validity... valid.
+
+9.535503 - checking to see if all goals are achieved... yes
+
+9.535662 - ****** Starting Act Phase ******
+
+9.537401 - Selected action survey(remus, ga1) from plan:
+
+9.537554 - survey(remus, ga1)]0m
+
+9.538341 - Starting cycle 46
+
+9.538583 - ****** Starting Simulate Phase ******
+
+9.538834 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.538995 - ****** Starting Perceive Phase ******
+
+9.549621 - Mine Report not received
+
+9.549921 - at_location(remus,transit)
+
+9.550260 - World observed.
+
+9.551125 - ****** Starting Interpret Phase ******
+
+9.551371 - ****** Starting Eval Phase ******
+
+9.552574 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.552721 - ****** Starting Intend Phase ******
+
+9.553108 - No goals selected.
+
+9.553218 - ****** Starting Plan Phase ******
+
+9.555783 - Old plan retrieved. Checking validity... valid.
+
+9.556090 - checking to see if all goals are achieved... yes
+
+9.556236 - ****** Starting Act Phase ******
+
+9.558952 - Selected action survey(remus, ga1) from plan:
+
+9.559463 - survey(remus, ga1)]0m
+
+9.560465 - Starting cycle 47
+
+9.560659 - ****** Starting Simulate Phase ******
+
+9.560942 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.561141 - ****** Starting Perceive Phase ******
+
+9.571849 - states not received
+
+9.572343 - World observed.
+
+9.573310 - ****** Starting Interpret Phase ******
+
+9.573568 - ****** Starting Eval Phase ******
+
+9.574682 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.574805 - ****** Starting Intend Phase ******
+
+9.575187 - No goals selected.
+
+9.575295 - ****** Starting Plan Phase ******
+
+9.602034 - Old plan retrieved. Checking validity... valid.
+
+9.602311 - checking to see if all goals are achieved... yes
+
+9.602493 - ****** Starting Act Phase ******
+
+9.603993 - Selected action survey(remus, ga1) from plan:
+
+9.604122 - survey(remus, ga1)]0m
+
+9.604593 - Starting cycle 48
+
+9.604726 - ****** Starting Simulate Phase ******
+
+9.604904 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.605059 - ****** Starting Perceive Phase ******
+
+9.615588 - Mine Report not received
+
+9.615943 - at_location(remus,transit)
+
+9.616270 - World observed.
+
+9.617377 - ****** Starting Interpret Phase ******
+
+9.617772 - ****** Starting Eval Phase ******
+
+9.619960 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.620210 - ****** Starting Intend Phase ******
+
+9.620851 - No goals selected.
+
+9.621033 - ****** Starting Plan Phase ******
+
+9.622752 - Old plan retrieved. Checking validity... valid.
+
+9.623088 - checking to see if all goals are achieved... yes
+
+9.623249 - ****** Starting Act Phase ******
+
+9.624599 - Selected action survey(remus, ga1) from plan:
+
+9.624700 - survey(remus, ga1)]0m
+
+9.625135 - Starting cycle 49
+
+9.625243 - ****** Starting Simulate Phase ******
+
+9.625415 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.625553 - ****** Starting Perceive Phase ******
+
+9.636101 - states not received
+
+9.636696 - World observed.
+
+9.637864 - ****** Starting Interpret Phase ******
+
+9.638181 - ****** Starting Eval Phase ******
+
+9.639827 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.640178 - ****** Starting Intend Phase ******
+
+9.640657 - No goals selected.
+
+9.640826 - ****** Starting Plan Phase ******
+
+9.642264 - Old plan retrieved. Checking validity... valid.
+
+9.642511 - checking to see if all goals are achieved... yes
+
+9.642709 - ****** Starting Act Phase ******
+
+9.644396 - Selected action survey(remus, ga1) from plan:
+
+9.644544 - survey(remus, ga1)]0m
+
+9.645119 - Starting cycle 50
+
+9.645262 - ****** Starting Simulate Phase ******
+
+9.645444 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.645595 - ****** Starting Perceive Phase ******
+
+9.656182 - Mine Report not received
+
+9.656657 - at_location(remus,transit)
+
+9.656978 - World observed.
+
+9.657970 - ****** Starting Interpret Phase ******
+
+9.658279 - ****** Starting Eval Phase ******
+
+9.660557 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.660774 - ****** Starting Intend Phase ******
+
+9.661182 - No goals selected.
+
+9.661296 - ****** Starting Plan Phase ******
+
+9.663075 - Old plan retrieved. Checking validity... valid.
+
+9.663318 - checking to see if all goals are achieved... yes
+
+9.663488 - ****** Starting Act Phase ******
+
+9.665466 - Selected action survey(remus, ga1) from plan:
+
+9.665915 - survey(remus, ga1)]0m
+
+9.666939 - Starting cycle 51
+
+9.667124 - ****** Starting Simulate Phase ******
+
+9.667315 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.667459 - ****** Starting Perceive Phase ******
+
+9.678015 - states not received
+
+9.678535 - World observed.
+
+9.680377 - ****** Starting Interpret Phase ******
+
+9.680994 - ****** Starting Eval Phase ******
+
+9.682614 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.682859 - ****** Starting Intend Phase ******
+
+9.683396 - No goals selected.
+
+9.683587 - ****** Starting Plan Phase ******
+
+9.685414 - Old plan retrieved. Checking validity... valid.
+
+9.685703 - checking to see if all goals are achieved... yes
+
+9.685892 - ****** Starting Act Phase ******
+
+9.687732 - Selected action survey(remus, ga1) from plan:
+
+9.687934 - survey(remus, ga1)]0m
+
+9.688547 - Starting cycle 52
+
+9.688699 - ****** Starting Simulate Phase ******
+
+9.688969 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.689159 - ****** Starting Perceive Phase ******
+
+9.699832 - Mine Report not received
+
+9.700162 - at_location(remus,transit)
+
+9.700473 - World observed.
+
+9.701376 - ****** Starting Interpret Phase ******
+
+9.701633 - ****** Starting Eval Phase ******
+
+9.702804 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.702944 - ****** Starting Intend Phase ******
+
+9.703343 - No goals selected.
+
+9.703455 - ****** Starting Plan Phase ******
+
+9.704826 - Old plan retrieved. Checking validity... valid.
+
+9.705052 - checking to see if all goals are achieved... yes
+
+9.705184 - ****** Starting Act Phase ******
+
+9.706729 - Selected action survey(remus, ga1) from plan:
+
+9.706847 - survey(remus, ga1)]0m
+
+9.707307 - Starting cycle 53
+
+9.707425 - ****** Starting Simulate Phase ******
+
+9.707598 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.707729 - ****** Starting Perceive Phase ******
+
+9.718304 - states not received
+
+9.719026 - World observed.
+
+9.720591 - ****** Starting Interpret Phase ******
+
+9.721003 - ****** Starting Eval Phase ******
+
+9.722874 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.723076 - ****** Starting Intend Phase ******
+
+9.723532 - No goals selected.
+
+9.723671 - ****** Starting Plan Phase ******
+
+9.725580 - Old plan retrieved. Checking validity... valid.
+
+9.725859 - checking to see if all goals are achieved... yes
+
+9.726034 - ****** Starting Act Phase ******
+
+9.727624 - Selected action survey(remus, ga1) from plan:
+
+9.727731 - survey(remus, ga1)]0m
+
+9.728178 - Starting cycle 54
+
+9.728293 - ****** Starting Simulate Phase ******
+
+9.728439 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.728568 - ****** Starting Perceive Phase ******
+
+9.747518 - Mine Report not received
+
+9.747885 - at_location(remus,transit)
+
+9.748311 - World observed.
+
+9.749299 - ****** Starting Interpret Phase ******
+
+9.749599 - ****** Starting Eval Phase ******
+
+9.751079 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.751271 - ****** Starting Intend Phase ******
+
+9.751742 - No goals selected.
+
+9.751886 - ****** Starting Plan Phase ******
+
+9.753377 - Old plan retrieved. Checking validity... valid.
+
+9.753656 - checking to see if all goals are achieved... yes
+
+9.753819 - ****** Starting Act Phase ******
+
+9.755518 - Selected action survey(remus, ga1) from plan:
+
+9.755678 - survey(remus, ga1)]0m
+
+9.756206 - Starting cycle 55
+
+9.756356 - ****** Starting Simulate Phase ******
+
+9.756578 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.756754 - ****** Starting Perceive Phase ******
+
+9.767291 - states not received
+
+9.768029 - World observed.
+
+9.769813 - ****** Starting Interpret Phase ******
+
+9.770271 - ****** Starting Eval Phase ******
+
+9.772253 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.772551 - ****** Starting Intend Phase ******
+
+9.773354 - No goals selected.
+
+9.773550 - ****** Starting Plan Phase ******
+
+9.775434 - Old plan retrieved. Checking validity... valid.
+
+9.775676 - checking to see if all goals are achieved... yes
+
+9.775817 - ****** Starting Act Phase ******
+
+9.777310 - Selected action survey(remus, ga1) from plan:
+
+9.777419 - survey(remus, ga1)]0m
+
+9.777876 - Starting cycle 56
+
+9.778003 - ****** Starting Simulate Phase ******
+
+9.778202 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.778346 - ****** Starting Perceive Phase ******
+
+9.797698 - Mine Report not received
+
+9.798221 - at_location(remus,transit)
+
+9.798756 - World observed.
+
+9.800726 - ****** Starting Interpret Phase ******
+
+9.801194 - ****** Starting Eval Phase ******
+
+9.803285 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.803519 - ****** Starting Intend Phase ******
+
+9.804331 - No goals selected.
+
+9.804483 - ****** Starting Plan Phase ******
+
+9.806484 - Old plan retrieved. Checking validity... valid.
+
+9.806751 - checking to see if all goals are achieved... yes
+
+9.806911 - ****** Starting Act Phase ******
+
+9.808687 - Selected action survey(remus, ga1) from plan:
+
+9.808840 - survey(remus, ga1)]0m
+
+9.809766 - Starting cycle 57
+
+9.810167 - ****** Starting Simulate Phase ******
+
+9.810910 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.811155 - ****** Starting Perceive Phase ******
+
+9.821860 - states not received
+
+9.822513 - World observed.
+
+9.823588 - ****** Starting Interpret Phase ******
+
+9.823878 - ****** Starting Eval Phase ******
+
+9.825017 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.825148 - ****** Starting Intend Phase ******
+
+9.825593 - No goals selected.
+
+9.825750 - ****** Starting Plan Phase ******
+
+9.827298 - Old plan retrieved. Checking validity... valid.
+
+9.827586 - checking to see if all goals are achieved... yes
+
+9.827759 - ****** Starting Act Phase ******
+
+9.831133 - Selected action survey(remus, ga1) from plan:
+
+9.831413 - survey(remus, ga1)]0m
+
+9.832035 - Starting cycle 58
+
+9.832165 - ****** Starting Simulate Phase ******
+
+9.832331 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.832467 - ****** Starting Perceive Phase ******
+
+9.847780 - Mine Report not received
+
+9.848207 - at_location(remus,transit)
+
+9.848555 - World observed.
+
+9.849529 - ****** Starting Interpret Phase ******
+
+9.849820 - ****** Starting Eval Phase ******
+
+9.851199 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.851377 - ****** Starting Intend Phase ******
+
+9.851847 - No goals selected.
+
+9.851991 - ****** Starting Plan Phase ******
+
+9.853477 - Old plan retrieved. Checking validity... valid.
+
+9.853725 - checking to see if all goals are achieved... yes
+
+9.853863 - ****** Starting Act Phase ******
+
+9.855395 - Selected action survey(remus, ga1) from plan:
+
+9.855511 - survey(remus, ga1)]0m
+
+9.856038 - Starting cycle 59
+
+9.856230 - ****** Starting Simulate Phase ******
+
+9.856474 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.856623 - ****** Starting Perceive Phase ******
+
+9.867349 - states not received
+
+9.868048 - World observed.
+
+9.869006 - ****** Starting Interpret Phase ******
+
+9.869297 - ****** Starting Eval Phase ******
+
+9.870627 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.870779 - ****** Starting Intend Phase ******
+
+9.871236 - No goals selected.
+
+9.871356 - ****** Starting Plan Phase ******
+
+9.873405 - Old plan retrieved. Checking validity... valid.
+
+9.873822 - checking to see if all goals are achieved... yes
+
+9.874023 - ****** Starting Act Phase ******
+
+9.875693 - Selected action survey(remus, ga1) from plan:
+
+9.875812 - survey(remus, ga1)]0m
+
+9.876422 - Starting cycle 60
+
+9.876595 - ****** Starting Simulate Phase ******
+
+9.876793 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.876956 - ****** Starting Perceive Phase ******
+
+9.887627 - states not received
+
+9.888128 - World observed.
+
+9.889099 - ****** Starting Interpret Phase ******
+
+9.889374 - ****** Starting Eval Phase ******
+
+9.891172 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.891351 - ****** Starting Intend Phase ******
+
+9.891846 - No goals selected.
+
+9.891966 - ****** Starting Plan Phase ******
+
+9.894992 - Old plan retrieved. Checking validity... valid.
+
+9.895391 - checking to see if all goals are achieved... yes
+
+9.895622 - ****** Starting Act Phase ******
+
+9.898106 - Selected action survey(remus, ga1) from plan:
+
+9.898432 - survey(remus, ga1)]0m
+
+9.899062 - Starting cycle 61
+
+9.899185 - ****** Starting Simulate Phase ******
+
+9.899347 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.899490 - ****** Starting Perceive Phase ******
+
+9.910312 - Mine Report not received
+
+9.911275 - at_location(remus,transit)
+
+9.911692 - World observed.
+
+9.913379 - ****** Starting Interpret Phase ******
+
+9.913712 - ****** Starting Eval Phase ******
+
+9.916525 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.916850 - ****** Starting Intend Phase ******
+
+9.918344 - No goals selected.
+
+9.918550 - ****** Starting Plan Phase ******
+
+9.921060 - Old plan retrieved. Checking validity... valid.
+
+9.921554 - checking to see if all goals are achieved... yes
+
+9.921792 - ****** Starting Act Phase ******
+
+9.925146 - Selected action survey(remus, ga1) from plan:
+
+9.925391 - survey(remus, ga1)]0m
+
+9.925962 - Starting cycle 62
+
+9.926101 - ****** Starting Simulate Phase ******
+
+9.926345 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.926515 - ****** Starting Perceive Phase ******
+
+9.937092 - states not received
+
+9.937920 - World observed.
+
+9.939115 - ****** Starting Interpret Phase ******
+
+9.939473 - ****** Starting Eval Phase ******
+
+9.940772 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.940969 - ****** Starting Intend Phase ******
+
+9.941482 - No goals selected.
+
+9.941638 - ****** Starting Plan Phase ******
+
+9.943100 - Old plan retrieved. Checking validity... valid.
+
+9.943363 - checking to see if all goals are achieved... yes
+
+9.943516 - ****** Starting Act Phase ******
+
+9.945053 - Selected action survey(remus, ga1) from plan:
+
+9.945194 - survey(remus, ga1)]0m
+
+9.945714 - Starting cycle 63
+
+9.945847 - ****** Starting Simulate Phase ******
+
+9.946009 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.946172 - ****** Starting Perceive Phase ******
+
+9.956818 - Mine Report not received
+
+9.957185 - at_location(remus,transit)
+
+9.957634 - World observed.
+
+9.958760 - ****** Starting Interpret Phase ******
+
+9.959103 - ****** Starting Eval Phase ******
+
+9.961195 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.961433 - ****** Starting Intend Phase ******
+
+9.961894 - No goals selected.
+
+9.962043 - ****** Starting Plan Phase ******
+
+9.963954 - Old plan retrieved. Checking validity... valid.
+
+9.964215 - checking to see if all goals are achieved... yes
+
+9.964372 - ****** Starting Act Phase ******
+
+9.966343 - Selected action survey(remus, ga1) from plan:
+
+9.966534 - survey(remus, ga1)]0m
+
+9.967058 - Starting cycle 64
+
+9.967194 - ****** Starting Simulate Phase ******
+
+9.967569 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.967929 - ****** Starting Perceive Phase ******
+
+9.978812 - states not received
+
+9.979539 - World observed.
+
+9.980718 - ****** Starting Interpret Phase ******
+
+9.981023 - ****** Starting Eval Phase ******
+
+9.982243 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.982389 - ****** Starting Intend Phase ******
+
+9.982831 - No goals selected.
+
+9.982941 - ****** Starting Plan Phase ******
+
+9.984720 - Old plan retrieved. Checking validity... valid.
+
+9.985119 - checking to see if all goals are achieved... yes
+
+9.985354 - ****** Starting Act Phase ******
+
+9.987237 - Selected action survey(remus, ga1) from plan:
+
+9.987410 - survey(remus, ga1)]0m
+
+9.988303 - Starting cycle 65
+
+9.988473 - ****** Starting Simulate Phase ******
+
+9.988689 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+9.988837 - ****** Starting Perceive Phase ******
+
+9.989384 - hazard_at_location(mine,transit)
+at_location(remus,transit)
+
+9.989753 - World observed.
+
+9.990924 - ****** Starting Interpret Phase ******
+
+9.991266 - ****** Starting Eval Phase ******
+
+9.992695 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+9.992886 - ****** Starting Intend Phase ******
+
+9.993456 - No goals selected.
+
+9.993620 - ****** Starting Plan Phase ******
+
+9.995318 - Old plan retrieved. Checking validity... valid.
+
+9.995594 - checking to see if all goals are achieved... yes
+
+9.995775 - ****** Starting Act Phase ******
+
+9.997446 - Selected action survey(remus, ga1) from plan:
+
+9.997618 - survey(remus, ga1)]0m
+
+9.998286 - Starting cycle 66
+
+9.998442 - ****** Starting Simulate Phase ******
+
+9.998717 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+9.998885 - ****** Starting Perceive Phase ******
+
+10.009402 - states not received
+
+10.010609 - World observed.
+
+10.012452 - ****** Starting Interpret Phase ******
+
+10.013382 - ****** Starting Eval Phase ******
+
+10.016319 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.016595 - ****** Starting Intend Phase ******
+
+10.017265 - No goals selected.
+
+10.017435 - ****** Starting Plan Phase ******
+
+10.019965 - Old plan retrieved. Checking validity... valid.
+
+10.020373 - checking to see if all goals are achieved... yes
+
+10.020587 - ****** Starting Act Phase ******
+
+10.022806 - Selected action survey(remus, ga1) from plan:
+
+10.022947 - survey(remus, ga1)]0m
+
+10.023424 - Starting cycle 67
+
+10.023541 - ****** Starting Simulate Phase ******
+
+10.023716 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.023849 - ****** Starting Perceive Phase ******
+
+10.034393 - states not received
+
+10.035106 - World observed.
+
+10.036207 - ****** Starting Interpret Phase ******
+
+10.036562 - ****** Starting Eval Phase ******
+
+10.037726 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.037923 - ****** Starting Intend Phase ******
+
+10.038468 - No goals selected.
+
+10.038619 - ****** Starting Plan Phase ******
+
+10.040059 - Old plan retrieved. Checking validity... valid.
+
+10.040324 - checking to see if all goals are achieved... yes
+
+10.040498 - ****** Starting Act Phase ******
+
+10.042082 - Selected action survey(remus, ga1) from plan:
+
+10.042287 - survey(remus, ga1)]0m
+
+10.042842 - Starting cycle 68
+
+10.043000 - ****** Starting Simulate Phase ******
+
+10.043253 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.043441 - ****** Starting Perceive Phase ******
+
+10.054112 - Mine Report not received
+
+10.054709 - at_location(remus,transit)
+
+10.056485 - World observed.
+
+10.057595 - ****** Starting Interpret Phase ******
+
+10.057992 - ****** Starting Eval Phase ******
+
+10.059682 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.059894 - ****** Starting Intend Phase ******
+
+10.060807 - No goals selected.
+
+10.061018 - ****** Starting Plan Phase ******
+
+10.063485 - Old plan retrieved. Checking validity... valid.
+
+10.063780 - checking to see if all goals are achieved... yes
+
+10.063964 - ****** Starting Act Phase ******
+
+10.065778 - Selected action survey(remus, ga1) from plan:
+
+10.065978 - survey(remus, ga1)]0m
+
+10.066569 - Starting cycle 69
+
+10.066744 - ****** Starting Simulate Phase ******
+
+10.067144 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.067675 - ****** Starting Perceive Phase ******
+
+10.078797 - states not received
+
+10.079582 - World observed.
+
+10.080884 - ****** Starting Interpret Phase ******
+
+10.081252 - ****** Starting Eval Phase ******
+
+10.082553 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.082725 - ****** Starting Intend Phase ******
+
+10.083158 - No goals selected.
+
+10.083324 - ****** Starting Plan Phase ******
+
+10.084752 - Old plan retrieved. Checking validity... valid.
+
+10.085033 - checking to see if all goals are achieved... yes
+
+10.085198 - ****** Starting Act Phase ******
+
+10.086763 - Selected action survey(remus, ga1) from plan:
+
+10.086901 - survey(remus, ga1)]0m
+
+10.087415 - Starting cycle 70
+
+10.087554 - ****** Starting Simulate Phase ******
+
+10.087775 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.087935 - ****** Starting Perceive Phase ******
+
+10.098585 - Mine Report not received
+
+10.099107 - at_location(remus,transit)
+
+10.099439 - World observed.
+
+10.100328 - ****** Starting Interpret Phase ******
+
+10.100589 - ****** Starting Eval Phase ******
+
+10.101871 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.101996 - ****** Starting Intend Phase ******
+
+10.102489 - No goals selected.
+
+10.102609 - ****** Starting Plan Phase ******
+
+10.103912 - Old plan retrieved. Checking validity... valid.
+
+10.104146 - checking to see if all goals are achieved... yes
+
+10.104288 - ****** Starting Act Phase ******
+
+10.106831 - Selected action survey(remus, ga1) from plan:
+
+10.107023 - survey(remus, ga1)]0m
+
+10.107536 - Starting cycle 71
+
+10.107661 - ****** Starting Simulate Phase ******
+
+10.107871 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.108026 - ****** Starting Perceive Phase ******
+
+10.118543 - states not received
+
+10.119379 - World observed.
+
+10.120723 - ****** Starting Interpret Phase ******
+
+10.121140 - ****** Starting Eval Phase ******
+
+10.122694 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.122944 - ****** Starting Intend Phase ******
+
+10.123430 - No goals selected.
+
+10.123592 - ****** Starting Plan Phase ******
+
+10.125232 - Old plan retrieved. Checking validity... valid.
+
+10.125598 - checking to see if all goals are achieved... yes
+
+10.125806 - ****** Starting Act Phase ******
+
+10.127317 - Selected action survey(remus, ga1) from plan:
+
+10.127449 - survey(remus, ga1)]0m
+
+10.127966 - Starting cycle 72
+
+10.128115 - ****** Starting Simulate Phase ******
+
+10.128341 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.128524 - ****** Starting Perceive Phase ******
+
+10.148503 - Mine Report not received
+
+10.148986 - at_location(remus,transit)
+
+10.149354 - World observed.
+
+10.150493 - ****** Starting Interpret Phase ******
+
+10.150862 - ****** Starting Eval Phase ******
+
+10.152132 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.152292 - ****** Starting Intend Phase ******
+
+10.152734 - No goals selected.
+
+10.152888 - ****** Starting Plan Phase ******
+
+10.154273 - Old plan retrieved. Checking validity... valid.
+
+10.154561 - checking to see if all goals are achieved... yes
+
+10.154731 - ****** Starting Act Phase ******
+
+10.156249 - Selected action survey(remus, ga1) from plan:
+
+10.156379 - survey(remus, ga1)]0m
+
+10.156886 - Starting cycle 73
+
+10.157033 - ****** Starting Simulate Phase ******
+
+10.157275 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.157447 - ****** Starting Perceive Phase ******
+
+10.168006 - states not received
+
+10.168699 - World observed.
+
+10.169816 - ****** Starting Interpret Phase ******
+
+10.170339 - ****** Starting Eval Phase ******
+
+10.172051 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.172236 - ****** Starting Intend Phase ******
+
+10.172650 - No goals selected.
+
+10.172805 - ****** Starting Plan Phase ******
+
+10.174895 - Old plan retrieved. Checking validity... valid.
+
+10.175175 - checking to see if all goals are achieved... yes
+
+10.175319 - ****** Starting Act Phase ******
+
+10.176768 - Selected action survey(remus, ga1) from plan:
+
+10.176883 - survey(remus, ga1)]0m
+
+10.177328 - Starting cycle 74
+
+10.177443 - ****** Starting Simulate Phase ******
+
+10.177666 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.177852 - ****** Starting Perceive Phase ******
+
+10.198634 - Mine Report not received
+
+10.199494 - at_location(remus,transit)
+
+10.199901 - World observed.
+
+10.201178 - ****** Starting Interpret Phase ******
+
+10.201490 - ****** Starting Eval Phase ******
+
+10.202852 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.203003 - ****** Starting Intend Phase ******
+
+10.203467 - No goals selected.
+
+10.203592 - ****** Starting Plan Phase ******
+
+10.205046 - Old plan retrieved. Checking validity... valid.
+
+10.205333 - checking to see if all goals are achieved... yes
+
+10.205473 - ****** Starting Act Phase ******
+
+10.207176 - Selected action survey(remus, ga1) from plan:
+
+10.207294 - survey(remus, ga1)]0m
+
+10.207816 - Starting cycle 75
+
+10.207935 - ****** Starting Simulate Phase ******
+
+10.208151 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.208289 - ****** Starting Perceive Phase ******
+
+10.218845 - states not received
+
+10.219457 - World observed.
+
+10.220457 - ****** Starting Interpret Phase ******
+
+10.220907 - ****** Starting Eval Phase ******
+
+10.222368 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.222569 - ****** Starting Intend Phase ******
+
+10.223255 - No goals selected.
+
+10.223467 - ****** Starting Plan Phase ******
+
+10.225270 - Old plan retrieved. Checking validity... valid.
+
+10.225618 - checking to see if all goals are achieved... yes
+
+10.225845 - ****** Starting Act Phase ******
+
+10.227853 - Selected action survey(remus, ga1) from plan:
+
+10.228048 - survey(remus, ga1)]0m
+
+10.229157 - Starting cycle 76
+
+10.229372 - ****** Starting Simulate Phase ******
+
+10.229676 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.229930 - ****** Starting Perceive Phase ******
+
+10.248689 - Mine Report not received
+
+10.249154 - at_location(remus,transit)
+
+10.249522 - World observed.
+
+10.250578 - ****** Starting Interpret Phase ******
+
+10.250912 - ****** Starting Eval Phase ******
+
+10.252538 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.252721 - ****** Starting Intend Phase ******
+
+10.253187 - No goals selected.
+
+10.253332 - ****** Starting Plan Phase ******
+
+10.254851 - Old plan retrieved. Checking validity... valid.
+
+10.255133 - checking to see if all goals are achieved... yes
+
+10.255285 - ****** Starting Act Phase ******
+
+10.256847 - Selected action survey(remus, ga1) from plan:
+
+10.256966 - survey(remus, ga1)]0m
+
+10.257468 - Starting cycle 77
+
+10.257597 - ****** Starting Simulate Phase ******
+
+10.257826 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.258000 - ****** Starting Perceive Phase ******
+
+10.268611 - states not received
+
+10.269254 - World observed.
+
+10.270546 - ****** Starting Interpret Phase ******
+
+10.271071 - ****** Starting Eval Phase ******
+
+10.272833 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.273068 - ****** Starting Intend Phase ******
+
+10.273584 - No goals selected.
+
+10.273762 - ****** Starting Plan Phase ******
+
+10.275483 - Old plan retrieved. Checking validity... valid.
+
+10.275766 - checking to see if all goals are achieved... yes
+
+10.275957 - ****** Starting Act Phase ******
+
+10.277448 - Selected action survey(remus, ga1) from plan:
+
+10.277588 - survey(remus, ga1)]0m
+
+10.278119 - Starting cycle 78
+
+10.278326 - ****** Starting Simulate Phase ******
+
+10.278559 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.278730 - ****** Starting Perceive Phase ******
+
+10.298775 - Mine Report not received
+
+10.299214 - at_location(remus,transit)
+
+10.299549 - World observed.
+
+10.301808 - ****** Starting Interpret Phase ******
+
+10.302289 - ****** Starting Eval Phase ******
+
+10.303696 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.303838 - ****** Starting Intend Phase ******
+
+10.304267 - No goals selected.
+
+10.304383 - ****** Starting Plan Phase ******
+
+10.305683 - Old plan retrieved. Checking validity... valid.
+
+10.305927 - checking to see if all goals are achieved... yes
+
+10.306061 - ****** Starting Act Phase ******
+
+10.307682 - Selected action survey(remus, ga1) from plan:
+
+10.307809 - survey(remus, ga1)]0m
+
+10.308313 - Starting cycle 79
+
+10.308437 - ****** Starting Simulate Phase ******
+
+10.308647 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.308786 - ****** Starting Perceive Phase ******
+
+10.319281 - states not received
+
+10.319824 - World observed.
+
+10.321079 - ****** Starting Interpret Phase ******
+
+10.321484 - ****** Starting Eval Phase ******
+
+10.323308 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.323595 - ****** Starting Intend Phase ******
+
+10.324383 - No goals selected.
+
+10.324508 - ****** Starting Plan Phase ******
+
+10.326031 - Old plan retrieved. Checking validity... valid.
+
+10.326382 - checking to see if all goals are achieved... yes
+
+10.326557 - ****** Starting Act Phase ******
+
+10.328106 - Selected action survey(remus, ga1) from plan:
+
+10.328241 - survey(remus, ga1)]0m
+
+10.328703 - Starting cycle 80
+
+10.328828 - ****** Starting Simulate Phase ******
+
+10.329017 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.329161 - ****** Starting Perceive Phase ******
+
+10.349030 - Mine Report not received
+
+10.349570 - at_location(remus,transit)
+
+10.350038 - World observed.
+
+10.351981 - ****** Starting Interpret Phase ******
+
+10.352556 - ****** Starting Eval Phase ******
+
+10.354659 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.354889 - ****** Starting Intend Phase ******
+
+10.355463 - No goals selected.
+
+10.355639 - ****** Starting Plan Phase ******
+
+10.357383 - Old plan retrieved. Checking validity... valid.
+
+10.357719 - checking to see if all goals are achieved... yes
+
+10.357914 - ****** Starting Act Phase ******
+
+10.360247 - Selected action survey(remus, ga1) from plan:
+
+10.360452 - survey(remus, ga1)]0m
+
+10.361518 - Starting cycle 81
+
+10.361807 - ****** Starting Simulate Phase ******
+
+10.362171 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.363235 - ****** Starting Perceive Phase ******
+
+10.374066 - states not received
+
+10.374789 - World observed.
+
+10.375779 - ****** Starting Interpret Phase ******
+
+10.376088 - ****** Starting Eval Phase ******
+
+10.377329 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.377515 - ****** Starting Intend Phase ******
+
+10.377952 - No goals selected.
+
+10.378123 - ****** Starting Plan Phase ******
+
+10.379875 - Old plan retrieved. Checking validity... valid.
+
+10.380134 - checking to see if all goals are achieved... yes
+
+10.380281 - ****** Starting Act Phase ******
+
+10.382415 - Selected action survey(remus, ga1) from plan:
+
+10.382584 - survey(remus, ga1)]0m
+
+10.383122 - Starting cycle 82
+
+10.383308 - ****** Starting Simulate Phase ******
+
+10.383699 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.383855 - ****** Starting Perceive Phase ******
+
+10.399038 - Mine Report not received
+
+10.399508 - at_location(remus,transit)
+
+10.399858 - World observed.
+
+10.400864 - ****** Starting Interpret Phase ******
+
+10.401164 - ****** Starting Eval Phase ******
+
+10.402449 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.402619 - ****** Starting Intend Phase ******
+
+10.403085 - No goals selected.
+
+10.403236 - ****** Starting Plan Phase ******
+
+10.404984 - Old plan retrieved. Checking validity... valid.
+
+10.405221 - checking to see if all goals are achieved... yes
+
+10.405362 - ****** Starting Act Phase ******
+
+10.406880 - Selected action survey(remus, ga1) from plan:
+
+10.406994 - survey(remus, ga1)]0m
+
+10.407598 - Starting cycle 83
+
+10.407716 - ****** Starting Simulate Phase ******
+
+10.407925 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.408067 - ****** Starting Perceive Phase ******
+
+10.418582 - states not received
+
+10.419442 - World observed.
+
+10.420506 - ****** Starting Interpret Phase ******
+
+10.420852 - ****** Starting Eval Phase ******
+
+10.422906 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.423134 - ****** Starting Intend Phase ******
+
+10.423772 - No goals selected.
+
+10.423959 - ****** Starting Plan Phase ******
+
+10.425556 - Old plan retrieved. Checking validity... valid.
+
+10.425856 - checking to see if all goals are achieved... yes
+
+10.426064 - ****** Starting Act Phase ******
+
+10.427676 - Selected action survey(remus, ga1) from plan:
+
+10.427848 - survey(remus, ga1)]0m
+
+10.428533 - Starting cycle 84
+
+10.428681 - ****** Starting Simulate Phase ******
+
+10.428972 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.429128 - ****** Starting Perceive Phase ******
+
+10.449329 - Mine Report not received
+
+10.449750 - at_location(remus,transit)
+
+10.450064 - World observed.
+
+10.451140 - ****** Starting Interpret Phase ******
+
+10.451401 - ****** Starting Eval Phase ******
+
+10.452471 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.452611 - ****** Starting Intend Phase ******
+
+10.452992 - No goals selected.
+
+10.453102 - ****** Starting Plan Phase ******
+
+10.454533 - Old plan retrieved. Checking validity... valid.
+
+10.454792 - checking to see if all goals are achieved... yes
+
+10.454934 - ****** Starting Act Phase ******
+
+10.456417 - Selected action survey(remus, ga1) from plan:
+
+10.456526 - survey(remus, ga1)]0m
+
+10.456986 - Starting cycle 85
+
+10.457105 - ****** Starting Simulate Phase ******
+
+10.457305 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.457441 - ****** Starting Perceive Phase ******
+
+10.468101 - states not received
+
+10.468756 - World observed.
+
+10.469672 - ****** Starting Interpret Phase ******
+
+10.469949 - ****** Starting Eval Phase ******
+
+10.471078 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.471225 - ****** Starting Intend Phase ******
+
+10.471634 - No goals selected.
+
+10.471745 - ****** Starting Plan Phase ******
+
+10.473937 - Old plan retrieved. Checking validity... valid.
+
+10.474388 - checking to see if all goals are achieved... yes
+
+10.474708 - ****** Starting Act Phase ******
+
+10.476663 - Selected action survey(remus, ga1) from plan:
+
+10.476828 - survey(remus, ga1)]0m
+
+10.477347 - Starting cycle 86
+
+10.477472 - ****** Starting Simulate Phase ******
+
+10.477653 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.477850 - ****** Starting Perceive Phase ******
+
+10.488570 - states not received
+
+10.489172 - World observed.
+
+10.490058 - ****** Starting Interpret Phase ******
+
+10.490470 - ****** Starting Eval Phase ******
+
+10.491581 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.491708 - ****** Starting Intend Phase ******
+
+10.492143 - No goals selected.
+
+10.492267 - ****** Starting Plan Phase ******
+
+10.494055 - Old plan retrieved. Checking validity... valid.
+
+10.494310 - checking to see if all goals are achieved... yes
+
+10.494483 - ****** Starting Act Phase ******
+
+10.496060 - Selected action survey(remus, ga1) from plan:
+
+10.496179 - survey(remus, ga1)]0m
+
+10.496651 - Starting cycle 87
+
+10.496809 - ****** Starting Simulate Phase ******
+
+10.496990 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.497122 - ****** Starting Perceive Phase ******
+
+10.507699 - Mine Report not received
+
+10.508111 - at_location(remus,transit)
+
+10.508440 - World observed.
+
+10.509354 - ****** Starting Interpret Phase ******
+
+10.509621 - ****** Starting Eval Phase ******
+
+10.511857 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.512489 - ****** Starting Intend Phase ******
+
+10.513238 - No goals selected.
+
+10.513410 - ****** Starting Plan Phase ******
+
+10.515583 - Old plan retrieved. Checking validity... valid.
+
+10.515823 - checking to see if all goals are achieved... yes
+
+10.515966 - ****** Starting Act Phase ******
+
+10.517763 - Selected action survey(remus, ga1) from plan:
+
+10.518253 - survey(remus, ga1)]0m
+
+10.519196 - Starting cycle 88
+
+10.519388 - ****** Starting Simulate Phase ******
+
+10.519726 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.519947 - ****** Starting Perceive Phase ******
+
+10.530622 - states not received
+
+10.531282 - World observed.
+
+10.535678 - ****** Starting Interpret Phase ******
+
+10.536096 - ****** Starting Eval Phase ******
+
+10.537456 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.537640 - ****** Starting Intend Phase ******
+
+10.538148 - No goals selected.
+
+10.538341 - ****** Starting Plan Phase ******
+
+10.539915 - Old plan retrieved. Checking validity... valid.
+
+10.540268 - checking to see if all goals are achieved... yes
+
+10.540497 - ****** Starting Act Phase ******
+
+10.542279 - Selected action survey(remus, ga1) from plan:
+
+10.542435 - survey(remus, ga1)]0m
+
+10.543048 - Starting cycle 89
+
+10.543201 - ****** Starting Simulate Phase ******
+
+10.543476 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.543648 - ****** Starting Perceive Phase ******
+
+10.554319 - Mine Report not received
+
+10.554757 - at_location(remus,transit)
+
+10.555096 - World observed.
+
+10.556348 - ****** Starting Interpret Phase ******
+
+10.556745 - ****** Starting Eval Phase ******
+
+10.557939 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.558087 - ****** Starting Intend Phase ******
+
+10.558535 - No goals selected.
+
+10.558690 - ****** Starting Plan Phase ******
+
+10.560078 - Old plan retrieved. Checking validity... valid.
+
+10.560350 - checking to see if all goals are achieved... yes
+
+10.560511 - ****** Starting Act Phase ******
+
+10.563772 - Selected action survey(remus, ga1) from plan:
+
+10.564132 - survey(remus, ga1)]0m
+
+10.564981 - Starting cycle 90
+
+10.565159 - ****** Starting Simulate Phase ******
+
+10.565462 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.565669 - ****** Starting Perceive Phase ******
+
+10.576402 - states not received
+
+10.577027 - World observed.
+
+10.577975 - ****** Starting Interpret Phase ******
+
+10.578425 - ****** Starting Eval Phase ******
+
+10.580242 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.580442 - ****** Starting Intend Phase ******
+
+10.580923 - No goals selected.
+
+10.581076 - ****** Starting Plan Phase ******
+
+10.582410 - Old plan retrieved. Checking validity... valid.
+
+10.582648 - checking to see if all goals are achieved... yes
+
+10.582789 - ****** Starting Act Phase ******
+
+10.584186 - Selected action survey(remus, ga1) from plan:
+
+10.584317 - survey(remus, ga1)]0m
+
+10.584761 - Starting cycle 91
+
+10.584873 - ****** Starting Simulate Phase ******
+
+10.585044 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.585176 - ****** Starting Perceive Phase ******
+
+10.599859 - Mine Report not received
+
+10.600361 - at_location(remus,transit)
+
+10.600739 - World observed.
+
+10.601843 - ****** Starting Interpret Phase ******
+
+10.602202 - ****** Starting Eval Phase ******
+
+10.603476 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.603656 - ****** Starting Intend Phase ******
+
+10.604090 - No goals selected.
+
+10.604211 - ****** Starting Plan Phase ******
+
+10.605556 - Old plan retrieved. Checking validity... valid.
+
+10.605851 - checking to see if all goals are achieved... yes
+
+10.606007 - ****** Starting Act Phase ******
+
+10.607874 - Selected action survey(remus, ga1) from plan:
+
+10.607995 - survey(remus, ga1)]0m
+
+10.608497 - Starting cycle 92
+
+10.608625 - ****** Starting Simulate Phase ******
+
+10.608842 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.608984 - ****** Starting Perceive Phase ******
+
+10.619510 - states not received
+
+10.620145 - World observed.
+
+10.621133 - ****** Starting Interpret Phase ******
+
+10.621406 - ****** Starting Eval Phase ******
+
+10.622810 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.623010 - ****** Starting Intend Phase ******
+
+10.623433 - No goals selected.
+
+10.623546 - ****** Starting Plan Phase ******
+
+10.625145 - Old plan retrieved. Checking validity... valid.
+
+10.625383 - checking to see if all goals are achieved... yes
+
+10.625520 - ****** Starting Act Phase ******
+
+10.628167 - Selected action survey(remus, ga1) from plan:
+
+10.628539 - survey(remus, ga1)]0m
+
+10.629138 - Starting cycle 93
+
+10.629252 - ****** Starting Simulate Phase ******
+
+10.629433 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.629556 - ****** Starting Perceive Phase ******
+
+10.649624 - Mine Report not received
+
+10.650014 - at_location(remus,transit)
+
+10.650354 - World observed.
+
+10.651224 - ****** Starting Interpret Phase ******
+
+10.651459 - ****** Starting Eval Phase ******
+
+10.652643 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.652777 - ****** Starting Intend Phase ******
+
+10.653151 - No goals selected.
+
+10.653278 - ****** Starting Plan Phase ******
+
+10.654554 - Old plan retrieved. Checking validity... valid.
+
+10.654792 - checking to see if all goals are achieved... yes
+
+10.654927 - ****** Starting Act Phase ******
+
+10.656364 - Selected action survey(remus, ga1) from plan:
+
+10.656536 - survey(remus, ga1)]0m
+
+10.657620 - Starting cycle 94
+
+10.657908 - ****** Starting Simulate Phase ******
+
+10.658470 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.658831 - ****** Starting Perceive Phase ******
+
+10.669473 - states not received
+
+10.670273 - World observed.
+
+10.671644 - ****** Starting Interpret Phase ******
+
+10.671928 - ****** Starting Eval Phase ******
+
+10.673337 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.673524 - ****** Starting Intend Phase ******
+
+10.673916 - No goals selected.
+
+10.674021 - ****** Starting Plan Phase ******
+
+10.675218 - Old plan retrieved. Checking validity... valid.
+
+10.675518 - checking to see if all goals are achieved... yes
+
+10.675698 - ****** Starting Act Phase ******
+
+10.677584 - Selected action survey(remus, ga1) from plan:
+
+10.677725 - survey(remus, ga1)]0m
+
+10.678194 - Starting cycle 95
+
+10.678343 - ****** Starting Simulate Phase ******
+
+10.678525 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.678701 - ****** Starting Perceive Phase ******
+
+10.689311 - states not received
+
+10.690057 - World observed.
+
+10.691324 - ****** Starting Interpret Phase ******
+
+10.691618 - ****** Starting Eval Phase ******
+
+10.693056 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.693287 - ****** Starting Intend Phase ******
+
+10.693893 - No goals selected.
+
+10.694067 - ****** Starting Plan Phase ******
+
+10.695852 - Old plan retrieved. Checking validity... valid.
+
+10.696084 - checking to see if all goals are achieved... yes
+
+10.696235 - ****** Starting Act Phase ******
+
+10.697593 - Selected action survey(remus, ga1) from plan:
+
+10.697731 - survey(remus, ga1)]0m
+
+10.698312 - Starting cycle 96
+
+10.698457 - ****** Starting Simulate Phase ******
+
+10.698665 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.698824 - ****** Starting Perceive Phase ******
+
+10.709269 - Mine Report not received
+
+10.709644 - at_location(remus,transit)
+
+10.709939 - World observed.
+
+10.710809 - ****** Starting Interpret Phase ******
+
+10.711050 - ****** Starting Eval Phase ******
+
+10.712627 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.713092 - ****** Starting Intend Phase ******
+
+10.713546 - No goals selected.
+
+10.713828 - ****** Starting Plan Phase ******
+
+10.715387 - Old plan retrieved. Checking validity... valid.
+
+10.715657 - checking to see if all goals are achieved... yes
+
+10.715828 - ****** Starting Act Phase ******
+
+10.717914 - Selected action survey(remus, ga1) from plan:
+
+10.718121 - survey(remus, ga1)]0m
+
+10.718835 - Starting cycle 97
+
+10.719057 - ****** Starting Simulate Phase ******
+
+10.719401 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.719622 - ****** Starting Perceive Phase ******
+
+10.730268 - states not received
+
+10.730829 - World observed.
+
+10.731718 - ****** Starting Interpret Phase ******
+
+10.732003 - ****** Starting Eval Phase ******
+
+10.733087 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.733238 - ****** Starting Intend Phase ******
+
+10.733652 - No goals selected.
+
+10.733794 - ****** Starting Plan Phase ******
+
+10.735168 - Old plan retrieved. Checking validity... valid.
+
+10.735511 - checking to see if all goals are achieved... yes
+
+10.735722 - ****** Starting Act Phase ******
+
+10.737094 - Selected action survey(remus, ga1) from plan:
+
+10.737233 - survey(remus, ga1)]0m
+
+10.737707 - Starting cycle 98
+
+10.737838 - ****** Starting Simulate Phase ******
+
+10.738045 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.738203 - ****** Starting Perceive Phase ******
+
+10.749879 - Mine Report not received
+
+10.750475 - at_location(remus,transit)
+
+10.750880 - World observed.
+
+10.751884 - ****** Starting Interpret Phase ******
+
+10.752213 - ****** Starting Eval Phase ******
+
+10.754860 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.755083 - ****** Starting Intend Phase ******
+
+10.755549 - No goals selected.
+
+10.755711 - ****** Starting Plan Phase ******
+
+10.757111 - Old plan retrieved. Checking validity... valid.
+
+10.757381 - checking to see if all goals are achieved... yes
+
+10.757520 - ****** Starting Act Phase ******
+
+10.759004 - Selected action survey(remus, ga1) from plan:
+
+10.759118 - survey(remus, ga1)]0m
+
+10.759861 - Starting cycle 99
+
+10.760000 - ****** Starting Simulate Phase ******
+
+10.760218 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.760356 - ****** Starting Perceive Phase ******
+
+10.770818 - states not received
+
+10.771424 - World observed.
+
+10.772611 - ****** Starting Interpret Phase ******
+
+10.773013 - ****** Starting Eval Phase ******
+
+10.774429 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.774605 - ****** Starting Intend Phase ******
+
+10.775015 - No goals selected.
+
+10.775122 - ****** Starting Plan Phase ******
+
+10.776519 - Old plan retrieved. Checking validity... valid.
+
+10.776809 - checking to see if all goals are achieved... yes
+
+10.777011 - ****** Starting Act Phase ******
+
+10.778633 - Selected action survey(remus, ga1) from plan:
+
+10.778760 - survey(remus, ga1)]0m
+
+10.779324 - Starting cycle 100
+
+10.779499 - ****** Starting Simulate Phase ******
+
+10.779768 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.780055 - ****** Starting Perceive Phase ******
+
+10.800067 - Mine Report not received
+
+10.801098 - at_location(remus,transit)
+
+10.801477 - World observed.
+
+10.802550 - ****** Starting Interpret Phase ******
+
+10.802884 - ****** Starting Eval Phase ******
+
+10.804311 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.804502 - ****** Starting Intend Phase ******
+
+10.804965 - No goals selected.
+
+10.805135 - ****** Starting Plan Phase ******
+
+10.806770 - Old plan retrieved. Checking validity... valid.
+
+10.807042 - checking to see if all goals are achieved... yes
+
+10.807220 - ****** Starting Act Phase ******
+
+10.808640 - Selected action survey(remus, ga1) from plan:
+
+10.808780 - survey(remus, ga1)]0m
+
+10.809469 - Starting cycle 101
+
+10.809631 - ****** Starting Simulate Phase ******
+
+10.809902 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.810109 - ****** Starting Perceive Phase ******
+
+10.820906 - states not received
+
+10.821457 - World observed.
+
+10.822622 - ****** Starting Interpret Phase ******
+
+10.822945 - ****** Starting Eval Phase ******
+
+10.824231 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.824477 - ****** Starting Intend Phase ******
+
+10.824956 - No goals selected.
+
+10.825117 - ****** Starting Plan Phase ******
+
+10.826633 - Old plan retrieved. Checking validity... valid.
+
+10.826898 - checking to see if all goals are achieved... yes
+
+10.827075 - ****** Starting Act Phase ******
+
+10.828686 - Selected action survey(remus, ga1) from plan:
+
+10.828839 - survey(remus, ga1)]0m
+
+10.829333 - Starting cycle 102
+
+10.829466 - ****** Starting Simulate Phase ******
+
+10.829670 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.829838 - ****** Starting Perceive Phase ******
+
+10.850160 - Mine Report not received
+
+10.850797 - at_location(remus,transit)
+
+10.851264 - World observed.
+
+10.852532 - ****** Starting Interpret Phase ******
+
+10.852902 - ****** Starting Eval Phase ******
+
+10.854247 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.854441 - ****** Starting Intend Phase ******
+
+10.854951 - No goals selected.
+
+10.855138 - ****** Starting Plan Phase ******
+
+10.856718 - Old plan retrieved. Checking validity... valid.
+
+10.857063 - checking to see if all goals are achieved... yes
+
+10.857257 - ****** Starting Act Phase ******
+
+10.858849 - Selected action survey(remus, ga1) from plan:
+
+10.859002 - survey(remus, ga1)]0m
+
+10.859562 - Starting cycle 103
+
+10.859729 - ****** Starting Simulate Phase ******
+
+10.860010 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.860190 - ****** Starting Perceive Phase ******
+
+10.870973 - states not received
+
+10.873077 - World observed.
+
+10.874880 - ****** Starting Interpret Phase ******
+
+10.875392 - ****** Starting Eval Phase ******
+
+10.877225 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.877439 - ****** Starting Intend Phase ******
+
+10.877966 - No goals selected.
+
+10.878158 - ****** Starting Plan Phase ******
+
+10.879500 - Old plan retrieved. Checking validity... valid.
+
+10.879758 - checking to see if all goals are achieved... yes
+
+10.879936 - ****** Starting Act Phase ******
+
+10.881419 - Selected action survey(remus, ga1) from plan:
+
+10.881571 - survey(remus, ga1)]0m
+
+10.882063 - Starting cycle 104
+
+10.882254 - ****** Starting Simulate Phase ******
+
+10.882523 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.882694 - ****** Starting Perceive Phase ******
+
+10.900273 - Mine Report not received
+
+10.900727 - at_location(remus,transit)
+
+10.901123 - World observed.
+
+10.903298 - ****** Starting Interpret Phase ******
+
+10.903678 - ****** Starting Eval Phase ******
+
+10.904969 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.905125 - ****** Starting Intend Phase ******
+
+10.905599 - No goals selected.
+
+10.905768 - ****** Starting Plan Phase ******
+
+10.907313 - Old plan retrieved. Checking validity... valid.
+
+10.907616 - checking to see if all goals are achieved... yes
+
+10.907803 - ****** Starting Act Phase ******
+
+10.910047 - Selected action survey(remus, ga1) from plan:
+
+10.910278 - survey(remus, ga1)]0m
+
+10.911025 - Starting cycle 105
+
+10.911225 - ****** Starting Simulate Phase ******
+
+10.911609 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.912891 - ****** Starting Perceive Phase ******
+
+10.923988 - states not received
+
+10.924797 - World observed.
+
+10.926062 - ****** Starting Interpret Phase ******
+
+10.926702 - ****** Starting Eval Phase ******
+
+10.928086 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.928249 - ****** Starting Intend Phase ******
+
+10.928655 - No goals selected.
+
+10.928767 - ****** Starting Plan Phase ******
+
+10.929968 - Old plan retrieved. Checking validity... valid.
+
+10.930245 - checking to see if all goals are achieved... yes
+
+10.930421 - ****** Starting Act Phase ******
+
+10.932437 - Selected action survey(remus, ga1) from plan:
+
+10.932678 - survey(remus, ga1)]0m
+
+10.933262 - Starting cycle 106
+
+10.933429 - ****** Starting Simulate Phase ******
+
+10.933614 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.933744 - ****** Starting Perceive Phase ******
+
+10.950472 - Mine Report not received
+
+10.950911 - at_location(remus,transit)
+
+10.951237 - World observed.
+
+10.952556 - ****** Starting Interpret Phase ******
+
+10.952863 - ****** Starting Eval Phase ******
+
+10.954089 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.954259 - ****** Starting Intend Phase ******
+
+10.954690 - No goals selected.
+
+10.954806 - ****** Starting Plan Phase ******
+
+10.956273 - Old plan retrieved. Checking validity... valid.
+
+10.956512 - checking to see if all goals are achieved... yes
+
+10.956656 - ****** Starting Act Phase ******
+
+10.958115 - Selected action survey(remus, ga1) from plan:
+
+10.958241 - survey(remus, ga1)]0m
+
+10.958720 - Starting cycle 107
+
+10.958845 - ****** Starting Simulate Phase ******
+
+10.959053 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+10.959190 - ****** Starting Perceive Phase ******
+
+10.969771 - states not received
+
+10.970922 - World observed.
+
+10.972952 - ****** Starting Interpret Phase ******
+
+10.973397 - ****** Starting Eval Phase ******
+
+10.975463 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+10.975646 - ****** Starting Intend Phase ******
+
+10.976065 - No goals selected.
+
+10.976169 - ****** Starting Plan Phase ******
+
+10.977881 - Old plan retrieved. Checking validity... valid.
+
+10.978212 - checking to see if all goals are achieved... yes
+
+10.978362 - ****** Starting Act Phase ******
+
+10.979741 - Selected action survey(remus, ga1) from plan:
+
+10.979844 - survey(remus, ga1)]0m
+
+10.980279 - Starting cycle 108
+
+10.980387 - ****** Starting Simulate Phase ******
+
+10.980553 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+10.980676 - ****** Starting Perceive Phase ******
+
+11.000724 - Mine Report not received
+
+11.001141 - at_location(remus,transit)
+
+11.001488 - World observed.
+
+11.002838 - ****** Starting Interpret Phase ******
+
+11.003211 - ****** Starting Eval Phase ******
+
+11.004519 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.004680 - ****** Starting Intend Phase ******
+
+11.005132 - No goals selected.
+
+11.005268 - ****** Starting Plan Phase ******
+
+11.006753 - Old plan retrieved. Checking validity... valid.
+
+11.007019 - checking to see if all goals are achieved... yes
+
+11.007180 - ****** Starting Act Phase ******
+
+11.008752 - Selected action survey(remus, ga1) from plan:
+
+11.008895 - survey(remus, ga1)]0m
+
+11.009427 - Starting cycle 109
+
+11.009563 - ****** Starting Simulate Phase ******
+
+11.009798 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit) and at_location(remus, transit)
+]
+
+11.010026 - ****** Starting Perceive Phase ******
+
+11.020646 - states not received
+
+11.021566 - World observed.
+
+11.024021 - ****** Starting Interpret Phase ******
+
+11.024652 - ****** Starting Eval Phase ******
+
+11.026358 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.026686 - ****** Starting Intend Phase ******
+
+11.027188 - No goals selected.
+
+11.027314 - ****** Starting Plan Phase ******
+
+11.028660 - Old plan retrieved. Checking validity... valid.
+
+11.028907 - checking to see if all goals are achieved... yes
+
+11.029055 - ****** Starting Act Phase ******
+
+11.030465 - Selected action survey(remus, ga1) from plan:
+
+11.030578 - survey(remus, ga1)]0m
+
+11.031035 - Starting cycle 110
+
+11.031156 - ****** Starting Simulate Phase ******
+
+11.031338 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.031487 - ****** Starting Perceive Phase ******
+
+11.050752 - Mine Report not received
+
+11.051208 - at_location(remus,qroute)
+
+11.051577 - World observed.
+
+11.056665 - ****** Starting Interpret Phase ******
+
+11.057088 - ****** Starting Eval Phase ******
+
+11.058817 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.059020 - ****** Starting Intend Phase ******
+
+11.059502 - No goals selected.
+
+11.059651 - ****** Starting Plan Phase ******
+
+11.061430 - Old plan retrieved. Checking validity... valid.
+
+11.061733 - checking to see if all goals are achieved... yes
+
+11.061911 - ****** Starting Act Phase ******
+
+11.065391 - Selected action survey(remus, ga1) from plan:
+
+11.065644 - survey(remus, ga1)]0m
+
+11.066565 - Starting cycle 111
+
+11.066786 - ****** Starting Simulate Phase ******
+
+11.067248 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.067488 - ****** Starting Perceive Phase ******
+
+11.078290 - states not received
+
+11.078887 - World observed.
+
+11.080092 - ****** Starting Interpret Phase ******
+
+11.080374 - ****** Starting Eval Phase ******
+
+11.081635 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.081777 - ****** Starting Intend Phase ******
+
+11.082287 - No goals selected.
+
+11.082482 - ****** Starting Plan Phase ******
+
+11.084734 - Old plan retrieved. Checking validity... valid.
+
+11.085042 - checking to see if all goals are achieved... yes
+
+11.085242 - ****** Starting Act Phase ******
+
+11.086887 - Selected action survey(remus, ga1) from plan:
+
+11.087036 - survey(remus, ga1)]0m
+
+11.087575 - Starting cycle 112
+
+11.087730 - ****** Starting Simulate Phase ******
+
+11.087966 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.088176 - ****** Starting Perceive Phase ******
+
+11.100926 - Mine Report not received
+
+11.101397 - at_location(remus,qroute)
+
+11.101766 - World observed.
+
+11.103052 - ****** Starting Interpret Phase ******
+
+11.103408 - ****** Starting Eval Phase ******
+
+11.104927 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.105151 - ****** Starting Intend Phase ******
+
+11.105646 - No goals selected.
+
+11.105810 - ****** Starting Plan Phase ******
+
+11.107238 - Old plan retrieved. Checking validity... valid.
+
+11.107528 - checking to see if all goals are achieved... yes
+
+11.107712 - ****** Starting Act Phase ******
+
+11.109265 - Selected action survey(remus, ga1) from plan:
+
+11.109403 - survey(remus, ga1)]0m
+
+11.109942 - Starting cycle 113
+
+11.110093 - ****** Starting Simulate Phase ******
+
+11.110420 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.110574 - ****** Starting Perceive Phase ******
+
+11.121481 - states not received
+
+11.122431 - World observed.
+
+11.124560 - ****** Starting Interpret Phase ******
+
+11.125045 - ****** Starting Eval Phase ******
+
+11.127429 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.127663 - ****** Starting Intend Phase ******
+
+11.128122 - No goals selected.
+
+11.128237 - ****** Starting Plan Phase ******
+
+11.129750 - Old plan retrieved. Checking validity... valid.
+
+11.130004 - checking to see if all goals are achieved... yes
+
+11.130174 - ****** Starting Act Phase ******
+
+11.131736 - Selected action survey(remus, ga1) from plan:
+
+11.131852 - survey(remus, ga1)]0m
+
+11.132353 - Starting cycle 114
+
+11.132484 - ****** Starting Simulate Phase ******
+
+11.132711 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.132855 - ****** Starting Perceive Phase ******
+
+11.151052 - Mine Report not received
+
+11.151519 - at_location(remus,qroute)
+
+11.151875 - World observed.
+
+11.153053 - ****** Starting Interpret Phase ******
+
+11.153361 - ****** Starting Eval Phase ******
+
+11.155008 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.155482 - ****** Starting Intend Phase ******
+
+11.155989 - No goals selected.
+
+11.156151 - ****** Starting Plan Phase ******
+
+11.157587 - Old plan retrieved. Checking validity... valid.
+
+11.157879 - checking to see if all goals are achieved... yes
+
+11.158062 - ****** Starting Act Phase ******
+
+11.159706 - Selected action survey(remus, ga1) from plan:
+
+11.159902 - survey(remus, ga1)]0m
+
+11.160452 - Starting cycle 115
+
+11.160587 - ****** Starting Simulate Phase ******
+
+11.160847 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.161025 - ****** Starting Perceive Phase ******
+
+11.171743 - states not received
+
+11.172627 - World observed.
+
+11.174325 - ****** Starting Interpret Phase ******
+
+11.175316 - ****** Starting Eval Phase ******
+
+11.177306 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.177626 - ****** Starting Intend Phase ******
+
+11.178259 - No goals selected.
+
+11.178453 - ****** Starting Plan Phase ******
+
+11.180037 - Old plan retrieved. Checking validity... valid.
+
+11.180366 - checking to see if all goals are achieved... yes
+
+11.180558 - ****** Starting Act Phase ******
+
+11.182321 - Selected action survey(remus, ga1) from plan:
+
+11.182490 - survey(remus, ga1)]0m
+
+11.183060 - Starting cycle 116
+
+11.183219 - ****** Starting Simulate Phase ******
+
+11.183496 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.183668 - ****** Starting Perceive Phase ******
+
+11.201140 - Mine Report not received
+
+11.201615 - at_location(remus,qroute)
+
+11.201984 - World observed.
+
+11.203414 - ****** Starting Interpret Phase ******
+
+11.203845 - ****** Starting Eval Phase ******
+
+11.207178 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.207424 - ****** Starting Intend Phase ******
+
+11.207913 - No goals selected.
+
+11.208073 - ****** Starting Plan Phase ******
+
+11.209633 - Old plan retrieved. Checking validity... valid.
+
+11.209931 - checking to see if all goals are achieved... yes
+
+11.210120 - ****** Starting Act Phase ******
+
+11.211682 - Selected action survey(remus, ga1) from plan:
+
+11.211819 - survey(remus, ga1)]0m
+
+11.212336 - Starting cycle 117
+
+11.212488 - ****** Starting Simulate Phase ******
+
+11.212744 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.212897 - ****** Starting Perceive Phase ******
+
+11.223545 - states not received
+
+11.224404 - World observed.
+
+11.226228 - ****** Starting Interpret Phase ******
+
+11.226589 - ****** Starting Eval Phase ******
+
+11.227860 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.228024 - ****** Starting Intend Phase ******
+
+11.228468 - No goals selected.
+
+11.228618 - ****** Starting Plan Phase ******
+
+11.229940 - Old plan retrieved. Checking validity... valid.
+
+11.230242 - checking to see if all goals are achieved... yes
+
+11.230421 - ****** Starting Act Phase ******
+
+11.231845 - Selected action survey(remus, ga1) from plan:
+
+11.231970 - survey(remus, ga1)]0m
+
+11.232474 - Starting cycle 118
+
+11.232626 - ****** Starting Simulate Phase ******
+
+11.232842 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.232980 - ****** Starting Perceive Phase ******
+
+11.251176 - Mine Report not received
+
+11.251641 - at_location(remus,qroute)
+
+11.251991 - World observed.
+
+11.253296 - ****** Starting Interpret Phase ******
+
+11.253629 - ****** Starting Eval Phase ******
+
+11.255009 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.255190 - ****** Starting Intend Phase ******
+
+11.255674 - No goals selected.
+
+11.255846 - ****** Starting Plan Phase ******
+
+11.257431 - Old plan retrieved. Checking validity... valid.
+
+11.257716 - checking to see if all goals are achieved... yes
+
+11.257885 - ****** Starting Act Phase ******
+
+11.259399 - Selected action survey(remus, ga1) from plan:
+
+11.259541 - survey(remus, ga1)]0m
+
+11.260072 - Starting cycle 119
+
+11.260257 - ****** Starting Simulate Phase ******
+
+11.260524 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.260675 - ****** Starting Perceive Phase ******
+
+11.271937 - states not received
+
+11.272911 - World observed.
+
+11.274871 - ****** Starting Interpret Phase ******
+
+11.275323 - ****** Starting Eval Phase ******
+
+11.277534 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.277779 - ****** Starting Intend Phase ******
+
+11.278368 - No goals selected.
+
+11.278487 - ****** Starting Plan Phase ******
+
+11.279755 - Old plan retrieved. Checking validity... valid.
+
+11.280004 - checking to see if all goals are achieved... yes
+
+11.280135 - ****** Starting Act Phase ******
+
+11.281800 - Selected action survey(remus, ga1) from plan:
+
+11.281927 - survey(remus, ga1)]0m
+
+11.282445 - Starting cycle 120
+
+11.282582 - ****** Starting Simulate Phase ******
+
+11.282758 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.282892 - ****** Starting Perceive Phase ******
+
+11.301281 - Mine Report not received
+
+11.301723 - at_location(remus,qroute)
+
+11.302065 - World observed.
+
+11.303224 - ****** Starting Interpret Phase ******
+
+11.303539 - ****** Starting Eval Phase ******
+
+11.305154 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.305361 - ****** Starting Intend Phase ******
+
+11.305840 - No goals selected.
+
+11.305992 - ****** Starting Plan Phase ******
+
+11.307619 - Old plan retrieved. Checking validity... valid.
+
+11.307896 - checking to see if all goals are achieved... yes
+
+11.308081 - ****** Starting Act Phase ******
+
+11.309703 - Selected action survey(remus, ga1) from plan:
+
+11.309873 - survey(remus, ga1)]0m
+
+11.310407 - Starting cycle 121
+
+11.310553 - ****** Starting Simulate Phase ******
+
+11.310791 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.310952 - ****** Starting Perceive Phase ******
+
+11.321494 - states not received
+
+11.322257 - World observed.
+
+11.323967 - ****** Starting Interpret Phase ******
+
+11.324446 - ****** Starting Eval Phase ******
+
+11.325809 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.325969 - ****** Starting Intend Phase ******
+
+11.326464 - No goals selected.
+
+11.326844 - ****** Starting Plan Phase ******
+
+11.329083 - Old plan retrieved. Checking validity... valid.
+
+11.329377 - checking to see if all goals are achieved... yes
+
+11.329560 - ****** Starting Act Phase ******
+
+11.331073 - Selected action survey(remus, ga1) from plan:
+
+11.331246 - survey(remus, ga1)]0m
+
+11.331730 - Starting cycle 122
+
+11.331861 - ****** Starting Simulate Phase ******
+
+11.332082 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.332222 - ****** Starting Perceive Phase ******
+
+11.351452 - Mine Report not received
+
+11.351944 - at_location(remus,qroute)
+
+11.352323 - World observed.
+
+11.356188 - ****** Starting Interpret Phase ******
+
+11.356587 - ****** Starting Eval Phase ******
+
+11.358272 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.358506 - ****** Starting Intend Phase ******
+
+11.359294 - No goals selected.
+
+11.359473 - ****** Starting Plan Phase ******
+
+11.361142 - Old plan retrieved. Checking validity... valid.
+
+11.361422 - checking to see if all goals are achieved... yes
+
+11.361648 - ****** Starting Act Phase ******
+
+11.363586 - Selected action survey(remus, ga1) from plan:
+
+11.364077 - survey(remus, ga1)]0m
+
+11.364994 - Starting cycle 123
+
+11.365134 - ****** Starting Simulate Phase ******
+
+11.365388 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.365561 - ****** Starting Perceive Phase ******
+
+11.376137 - states not received
+
+11.377146 - World observed.
+
+11.378933 - ****** Starting Interpret Phase ******
+
+11.379306 - ****** Starting Eval Phase ******
+
+11.380535 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.380696 - ****** Starting Intend Phase ******
+
+11.381171 - No goals selected.
+
+11.381335 - ****** Starting Plan Phase ******
+
+11.382832 - Old plan retrieved. Checking validity... valid.
+
+11.383113 - checking to see if all goals are achieved... yes
+
+11.383291 - ****** Starting Act Phase ******
+
+11.384764 - Selected action survey(remus, ga1) from plan:
+
+11.384899 - survey(remus, ga1)]0m
+
+11.385407 - Starting cycle 124
+
+11.385555 - ****** Starting Simulate Phase ******
+
+11.385782 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.385951 - ****** Starting Perceive Phase ******
+
+11.401597 - Mine Report not received
+
+11.402069 - at_location(remus,qroute)
+
+11.402516 - World observed.
+
+11.404011 - ****** Starting Interpret Phase ******
+
+11.404411 - ****** Starting Eval Phase ******
+
+11.405845 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.406027 - ****** Starting Intend Phase ******
+
+11.406701 - No goals selected.
+
+11.406890 - ****** Starting Plan Phase ******
+
+11.408669 - Old plan retrieved. Checking validity... valid.
+
+11.408976 - checking to see if all goals are achieved... yes
+
+11.409177 - ****** Starting Act Phase ******
+
+11.411153 - Selected action survey(remus, ga1) from plan:
+
+11.411333 - survey(remus, ga1)]0m
+
+11.411921 - Starting cycle 125
+
+11.412115 - ****** Starting Simulate Phase ******
+
+11.412441 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.412628 - ****** Starting Perceive Phase ******
+
+11.423531 - states not received
+
+11.424438 - World observed.
+
+11.426479 - ****** Starting Interpret Phase ******
+
+11.426810 - ****** Starting Eval Phase ******
+
+11.428155 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.428391 - ****** Starting Intend Phase ******
+
+11.428847 - No goals selected.
+
+11.428965 - ****** Starting Plan Phase ******
+
+11.430281 - Old plan retrieved. Checking validity... valid.
+
+11.430520 - checking to see if all goals are achieved... yes
+
+11.430658 - ****** Starting Act Phase ******
+
+11.432066 - Selected action survey(remus, ga1) from plan:
+
+11.432176 - survey(remus, ga1)]0m
+
+11.432652 - Starting cycle 126
+
+11.432789 - ****** Starting Simulate Phase ******
+
+11.432970 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.433107 - ****** Starting Perceive Phase ******
+
+11.451848 - Mine Report not received
+
+11.452370 - at_location(remus,qroute)
+
+11.452773 - World observed.
+
+11.454289 - ****** Starting Interpret Phase ******
+
+11.454675 - ****** Starting Eval Phase ******
+
+11.456037 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.456241 - ****** Starting Intend Phase ******
+
+11.456766 - No goals selected.
+
+11.456939 - ****** Starting Plan Phase ******
+
+11.458817 - Old plan retrieved. Checking validity... valid.
+
+11.459178 - checking to see if all goals are achieved... yes
+
+11.459394 - ****** Starting Act Phase ******
+
+11.461146 - Selected action survey(remus, ga1) from plan:
+
+11.461295 - survey(remus, ga1)]0m
+
+11.461888 - Starting cycle 127
+
+11.462057 - ****** Starting Simulate Phase ******
+
+11.462379 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.462563 - ****** Starting Perceive Phase ******
+
+11.473200 - states not received
+
+11.474222 - World observed.
+
+11.475892 - ****** Starting Interpret Phase ******
+
+11.476209 - ****** Starting Eval Phase ******
+
+11.477751 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.477968 - ****** Starting Intend Phase ******
+
+11.478523 - No goals selected.
+
+11.478657 - ****** Starting Plan Phase ******
+
+11.480477 - Old plan retrieved. Checking validity... valid.
+
+11.480725 - checking to see if all goals are achieved... yes
+
+11.480924 - ****** Starting Act Phase ******
+
+11.482894 - Selected action survey(remus, ga1) from plan:
+
+11.483087 - survey(remus, ga1)]0m
+
+11.483669 - Starting cycle 128
+
+11.483815 - ****** Starting Simulate Phase ******
+
+11.484061 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.484246 - ****** Starting Perceive Phase ******
+
+11.501762 - Mine Report not received
+
+11.502437 - at_location(remus,qroute)
+
+11.502953 - World observed.
+
+11.504462 - ****** Starting Interpret Phase ******
+
+11.504851 - ****** Starting Eval Phase ******
+
+11.506288 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.506476 - ****** Starting Intend Phase ******
+
+11.506985 - No goals selected.
+
+11.507118 - ****** Starting Plan Phase ******
+
+11.508615 - Old plan retrieved. Checking validity... valid.
+
+11.508901 - checking to see if all goals are achieved... yes
+
+11.509055 - ****** Starting Act Phase ******
+
+11.511826 - Selected action survey(remus, ga1) from plan:
+
+11.512117 - survey(remus, ga1)]0m
+
+11.512934 - Starting cycle 129
+
+11.513153 - ****** Starting Simulate Phase ******
+
+11.513522 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.513750 - ****** Starting Perceive Phase ******
+
+11.524394 - states not received
+
+11.525369 - World observed.
+
+11.527592 - ****** Starting Interpret Phase ******
+
+11.528156 - ****** Starting Eval Phase ******
+
+11.530545 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.530843 - ****** Starting Intend Phase ******
+
+11.531571 - No goals selected.
+
+11.531727 - ****** Starting Plan Phase ******
+
+11.533308 - Old plan retrieved. Checking validity... valid.
+
+11.533621 - checking to see if all goals are achieved... yes
+
+11.533798 - ****** Starting Act Phase ******
+
+11.535342 - Selected action survey(remus, ga1) from plan:
+
+11.535454 - survey(remus, ga1)]0m
+
+11.535925 - Starting cycle 130
+
+11.536039 - ****** Starting Simulate Phase ******
+
+11.536223 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.536380 - ****** Starting Perceive Phase ******
+
+11.552038 - Mine Report not received
+
+11.552529 - at_location(remus,qroute)
+
+11.552935 - World observed.
+
+11.554549 - ****** Starting Interpret Phase ******
+
+11.554936 - ****** Starting Eval Phase ******
+
+11.556692 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.556914 - ****** Starting Intend Phase ******
+
+11.557389 - No goals selected.
+
+11.557549 - ****** Starting Plan Phase ******
+
+11.559272 - Old plan retrieved. Checking validity... valid.
+
+11.559584 - checking to see if all goals are achieved... yes
+
+11.559779 - ****** Starting Act Phase ******
+
+11.561803 - Selected action survey(remus, ga1) from plan:
+
+11.561964 - survey(remus, ga1)]0m
+
+11.562664 - Starting cycle 131
+
+11.562828 - ****** Starting Simulate Phase ******
+
+11.563104 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.563323 - ****** Starting Perceive Phase ******
+
+11.574097 - states not received
+
+11.575488 - World observed.
+
+11.577540 - ****** Starting Interpret Phase ******
+
+11.578071 - ****** Starting Eval Phase ******
+
+11.579774 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.580003 - ****** Starting Intend Phase ******
+
+11.580603 - No goals selected.
+
+11.580727 - ****** Starting Plan Phase ******
+
+11.582225 - Old plan retrieved. Checking validity... valid.
+
+11.582516 - checking to see if all goals are achieved... yes
+
+11.582694 - ****** Starting Act Phase ******
+
+11.584242 - Selected action survey(remus, ga1) from plan:
+
+11.584380 - survey(remus, ga1)]0m
+
+11.584948 - Starting cycle 132
+
+11.585096 - ****** Starting Simulate Phase ******
+
+11.585317 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.585479 - ****** Starting Perceive Phase ******
+
+11.602009 - Mine Report not received
+
+11.602860 - at_location(remus,qroute)
+
+11.603387 - World observed.
+
+11.604737 - ****** Starting Interpret Phase ******
+
+11.605083 - ****** Starting Eval Phase ******
+
+11.606414 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.606584 - ****** Starting Intend Phase ******
+
+11.607030 - No goals selected.
+
+11.607153 - ****** Starting Plan Phase ******
+
+11.608825 - Old plan retrieved. Checking validity... valid.
+
+11.609201 - checking to see if all goals are achieved... yes
+
+11.609374 - ****** Starting Act Phase ******
+
+11.611298 - Selected action survey(remus, ga1) from plan:
+
+11.611619 - survey(remus, ga1)]0m
+
+11.612319 - Starting cycle 133
+
+11.612498 - ****** Starting Simulate Phase ******
+
+11.612764 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.612957 - ****** Starting Perceive Phase ******
+
+11.623597 - states not received
+
+11.624403 - World observed.
+
+11.626074 - ****** Starting Interpret Phase ******
+
+11.626507 - ****** Starting Eval Phase ******
+
+11.628021 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.628212 - ****** Starting Intend Phase ******
+
+11.628673 - No goals selected.
+
+11.628823 - ****** Starting Plan Phase ******
+
+11.630121 - Old plan retrieved. Checking validity... valid.
+
+11.630399 - checking to see if all goals are achieved... yes
+
+11.630536 - ****** Starting Act Phase ******
+
+11.632173 - Selected action survey(remus, ga1) from plan:
+
+11.632301 - survey(remus, ga1)]0m
+
+11.633066 - Starting cycle 134
+
+11.633205 - ****** Starting Simulate Phase ******
+
+11.633390 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.633551 - ****** Starting Perceive Phase ******
+
+11.652299 - Mine Report not received
+
+11.652991 - at_location(remus,qroute)
+
+11.653567 - World observed.
+
+11.657212 - ****** Starting Interpret Phase ******
+
+11.657644 - ****** Starting Eval Phase ******
+
+11.659314 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.659515 - ****** Starting Intend Phase ******
+
+11.660067 - No goals selected.
+
+11.660238 - ****** Starting Plan Phase ******
+
+11.662154 - Old plan retrieved. Checking validity... valid.
+
+11.662477 - checking to see if all goals are achieved... yes
+
+11.662662 - ****** Starting Act Phase ******
+
+11.666112 - Selected action survey(remus, ga1) from plan:
+
+11.666484 - survey(remus, ga1)]0m
+
+11.667128 - Starting cycle 135
+
+11.667264 - ****** Starting Simulate Phase ******
+
+11.667485 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.667636 - ****** Starting Perceive Phase ******
+
+11.678230 - states not received
+
+11.678999 - World observed.
+
+11.680149 - ****** Starting Interpret Phase ******
+
+11.680445 - ****** Starting Eval Phase ******
+
+11.681709 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.681957 - ****** Starting Intend Phase ******
+
+11.682448 - No goals selected.
+
+11.682593 - ****** Starting Plan Phase ******
+
+11.683921 - Old plan retrieved. Checking validity... valid.
+
+11.684170 - checking to see if all goals are achieved... yes
+
+11.684323 - ****** Starting Act Phase ******
+
+11.685814 - Selected action survey(remus, ga1) from plan:
+
+11.685936 - survey(remus, ga1)]0m
+
+11.686533 - Starting cycle 136
+
+11.686664 - ****** Starting Simulate Phase ******
+
+11.686851 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.686984 - ****** Starting Perceive Phase ******
+
+11.702393 - Mine Report not received
+
+11.702853 - at_location(remus,qroute)
+
+11.703579 - World observed.
+
+11.705122 - ****** Starting Interpret Phase ******
+
+11.705451 - ****** Starting Eval Phase ******
+
+11.706844 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.707022 - ****** Starting Intend Phase ******
+
+11.707499 - No goals selected.
+
+11.707735 - ****** Starting Plan Phase ******
+
+11.709298 - Old plan retrieved. Checking validity... valid.
+
+11.709605 - checking to see if all goals are achieved... yes
+
+11.709789 - ****** Starting Act Phase ******
+
+11.711517 - Selected action survey(remus, ga1) from plan:
+
+11.711674 - survey(remus, ga1)]0m
+
+11.712471 - Starting cycle 137
+
+11.712633 - ****** Starting Simulate Phase ******
+
+11.712912 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.713088 - ****** Starting Perceive Phase ******
+
+11.723770 - states not received
+
+11.724898 - World observed.
+
+11.727084 - ****** Starting Interpret Phase ******
+
+11.727606 - ****** Starting Eval Phase ******
+
+11.729392 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.729559 - ****** Starting Intend Phase ******
+
+11.730054 - No goals selected.
+
+11.730234 - ****** Starting Plan Phase ******
+
+11.731806 - Old plan retrieved. Checking validity... valid.
+
+11.732065 - checking to see if all goals are achieved... yes
+
+11.732213 - ****** Starting Act Phase ******
+
+11.733827 - Selected action survey(remus, ga1) from plan:
+
+11.733947 - survey(remus, ga1)]0m
+
+11.734490 - Starting cycle 138
+
+11.734640 - ****** Starting Simulate Phase ******
+
+11.734886 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.735076 - ****** Starting Perceive Phase ******
+
+11.752604 - Mine Report not received
+
+11.753265 - at_location(remus,qroute)
+
+11.753792 - World observed.
+
+11.756472 - ****** Starting Interpret Phase ******
+
+11.756958 - ****** Starting Eval Phase ******
+
+11.758464 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.758641 - ****** Starting Intend Phase ******
+
+11.759142 - No goals selected.
+
+11.759309 - ****** Starting Plan Phase ******
+
+11.760799 - Old plan retrieved. Checking validity... valid.
+
+11.761148 - checking to see if all goals are achieved... yes
+
+11.761331 - ****** Starting Act Phase ******
+
+11.763305 - Selected action survey(remus, ga1) from plan:
+
+11.763494 - survey(remus, ga1)]0m
+
+11.764188 - Starting cycle 139
+
+11.764480 - ****** Starting Simulate Phase ******
+
+11.765172 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.765725 - ****** Starting Perceive Phase ******
+
+11.776357 - states not received
+
+11.777011 - World observed.
+
+11.778492 - ****** Starting Interpret Phase ******
+
+11.778890 - ****** Starting Eval Phase ******
+
+11.780188 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.780351 - ****** Starting Intend Phase ******
+
+11.780795 - No goals selected.
+
+11.780917 - ****** Starting Plan Phase ******
+
+11.782315 - Old plan retrieved. Checking validity... valid.
+
+11.782580 - checking to see if all goals are achieved... yes
+
+11.782738 - ****** Starting Act Phase ******
+
+11.785042 - Selected action survey(remus, ga1) from plan:
+
+11.785257 - survey(remus, ga1)]0m
+
+11.785931 - Starting cycle 140
+
+11.786089 - ****** Starting Simulate Phase ******
+
+11.786482 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.786683 - ****** Starting Perceive Phase ******
+
+11.802529 - Mine Report not received
+
+11.803203 - at_location(remus,qroute)
+
+11.803891 - World observed.
+
+11.805201 - ****** Starting Interpret Phase ******
+
+11.805537 - ****** Starting Eval Phase ******
+
+11.807226 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.807406 - ****** Starting Intend Phase ******
+
+11.808019 - No goals selected.
+
+11.808153 - ****** Starting Plan Phase ******
+
+11.809644 - Old plan retrieved. Checking validity... valid.
+
+11.809949 - checking to see if all goals are achieved... yes
+
+11.810117 - ****** Starting Act Phase ******
+
+11.811896 - Selected action survey(remus, ga1) from plan:
+
+11.812051 - survey(remus, ga1)]0m
+
+11.812637 - Starting cycle 141
+
+11.812780 - ****** Starting Simulate Phase ******
+
+11.812987 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.813162 - ****** Starting Perceive Phase ******
+
+11.824999 - states not received
+
+11.825919 - World observed.
+
+11.828148 - ****** Starting Interpret Phase ******
+
+11.828704 - ****** Starting Eval Phase ******
+
+11.830932 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+11.831141 - ****** Starting Intend Phase ******
+
+11.831741 - No goals selected.
+
+11.831890 - ****** Starting Plan Phase ******
+
+11.833588 - Old plan retrieved. Checking validity... valid.
+
+11.834151 - checking to see if all goals are achieved... yes
+
+11.834358 - ****** Starting Act Phase ******
+
+11.836045 - Selected action survey(remus, ga1) from plan:
+
+11.836178 - survey(remus, ga1)]0m
+
+11.836647 - Starting cycle 142
+
+11.836766 - ****** Starting Simulate Phase ******
+
+11.836966 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.837122 - ****** Starting Perceive Phase ******
+
+11.852701 - Mine Report not received
+
+11.853246 - at_location(remus,qroute)
+at_location(remus,ga1)
+
+11.853706 - World observed.
+
+11.855249 - ****** Starting Interpret Phase ******
+
+11.855689 - ****** Starting Eval Phase ******
+
+11.857451 - All current goals achieved. Removing them from goal graph
+
+11.857919 - removing 1 plans that no longer apply.
+
+11.858236 - ****** Starting Intend Phase ******
+
+11.858492 - No Goals in Goal graph. Intend will do nothing.
+
+11.858601 - ****** Starting Plan Phase ******
+
+11.859612 - No goals received by planner. Skipping planning.
+
+11.859735 - ****** Starting Act Phase ******
+
+11.860152 - No valid plan found that achieves any current goals.
+
+11.860939 - MIDCA will not select an action this cycle.
+
+11.861125 - Starting cycle 143
+
+11.861236 - ****** Starting Simulate Phase ******
+
+11.861464 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : enabled(remus) and at_location(remus, qroute) and at_location(remus, ga1)
+transit (SEA_ROUTE) : hazard_at_location(mine, transit)
+]
+
+11.861592 - ****** Starting Perceive Phase ******
+
+11.872062 - states not received
+
+11.872672 - World observed.
+
+11.873739 - ****** Starting Interpret Phase ******
+
+11.874107 - Please input a goal if desired. Otherwise, press enter to continue
+

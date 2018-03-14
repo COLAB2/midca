@@ -1,0 +1,91 @@
+.000296 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.000998 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001120 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001218 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001313 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001617 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.001732 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002110 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.002298 - Goal Graph initialized.
+
+.002407 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002504 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+1.506319 - Starting cycle 0
+
+1.506750 - ****** Starting Simulate Phase ******
+
+1.507004 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+3.055888 - ****** Starting Perceive Phase ******
+
+3.057922 - World observed.
+
+5.516649 - ****** Starting Interpret Phase ******
+
+5.517247 - Please input a goal if desired. Otherwise, press enter to continue
+
+14.778043 - Goal added.
+
+14.778344 - Please input a goal if desired. Otherwise, press enter to continue
+
+15.698459 - ****** Starting Eval Phase ******
+
+15.699544 - No current goals. Skipping eval
+
+16.035542 - ****** Starting Intend Phase ******
+
+16.036102 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+16.645236 - ****** Starting Plan Phase ******
+
+16.646756 - Planning...
+
+16.647344 - Planning complete.
+
+16.647481 - Plan: 
+
+16.647628 -   survey(remus, ga1)
+
+17.649761 - ****** Starting Act Phase ******
+
+17.652355 - Selected action survey(remus, ga1) from plan:
+
+17.652562 - survey(remus, ga1)]0m
+
+17.653372 - simulating MIDCA action: survey(remus, ga1)
+
+25.123491 - Starting cycle 1
+
+25.123952 - ****** Starting Simulate Phase ******
+
+25.124341 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga1) and enabled(remus)
+]
+
+25.847250 - ****** Starting Perceive Phase ******
+
+25.848108 - MINE:x=19,y=-28,label=6
+
+25.848583 - World observed.
+

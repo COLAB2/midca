@@ -1,0 +1,49 @@
+.000688 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001714 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001995 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002335 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002594 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002814 - Memory access at key __PlanningCount
+.002987 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003244 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003768 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.003937 - Memory access at key __goals
+.004092 - Goal Graph initialized.
+
+.004289 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.004536 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+1.548420 - Starting cycle 0
+
+1.548998 - ****** Starting Simulate Phase ******
+
+1.549506 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+7.104709 - ****** Starting Perceive Phase ******
+
+7.105511 - Memory access at key __world states
+7.107270 - Memory access at key __world states
+7.107793 - World observed.
+
+7.759500 - ****** Starting Interpret Phase ******
+
+7.760146 - Memory access at key __goals
+7.760459 - Please input a goal if desired. Otherwise, press enter to continue
+

@@ -79,6 +79,9 @@ class Memory:
     	EXPECTED_COST= "__expected cost"
     	ACTUAL_COST= "__actual cost"
 
+	# MOOS
+	MOOS_FEEDBACK = "__feedback"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)

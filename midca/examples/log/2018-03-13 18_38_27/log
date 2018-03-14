@@ -1,0 +1,99 @@
+.000437 - Memory access at key __goals
+.000600 - Goal Graph initialized.
+
+.000763 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001522 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001679 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001837 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001977 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002076 - Memory access at key __PlanningCount
+.002157 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002776 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.002926 - Memory access at key __goals
+.003022 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.699702 - Starting cycle 0
+
+.700065 - ****** Starting Simulate Phase ******
+
+.700381 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+1.415708 - ****** Starting Perceive Phase ******
+
+1.416091 - Memory access at key __world states
+1.426418 - Mine Report not received
+
+1.426631 - None
+
+1.427018 - at_location(remus,transit)
+at_location(remus,home)
+
+1.427290 - Memory access at key __world states
+1.427441 - Memory access at key __world states
+1.427594 - World observed.
+
+2.496550 - ****** Starting Interpret Phase ******
+
+2.497373 - Memory access at key __goals
+2.497708 - Please input a goal if desired. Otherwise, press enter to continue
+
+9.511321 - Memory access at key __world states
+9.511628 - Memory access at key __goals
+9.511928 - Goal added.
+
+9.512128 - Please input a goal if desired. Otherwise, press enter to continue
+
+13.225254 - ****** Starting Eval Phase ******
+
+13.225800 - Memory access at key __world states
+13.229038 - No current goals. Skipping eval
+
+13.827956 - ****** Starting Intend Phase ******
+
+13.828519 - Memory access at key __goals
+13.828760 - Memory access at key __current goals
+13.829080 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+15.101977 - ****** Starting Plan Phase ******
+
+15.102368 - Memory access at key __world states
+15.102546 - Memory access at key __current goals
+15.104330 - Memory access at key __goals
+15.104560 - Planning...
+
+15.104899 - Memory access at key __PlanningCount
+15.105094 - Memory access at key __PlanningCount
+15.105563 - Planning complete.
+
+15.105755 - Plan: 
+
+15.105943 -   survey(remus, ga1)
+
+15.106117 - Memory access at key __goals
+15.793866 - ****** Starting Act Phase ******
+
+15.794292 - Memory access at key __world states
+15.794426 - Memory access at key __current goals
+15.794550 - Memory access at key __goals
+15.796617 - Selected action survey(remus, ga1) from plan:
+
+15.796917 - survey(remus, ga1)]0m
+
+15.797225 - Memory access at key __actions
+15.797486 - Memory access at key __actions

@@ -1,0 +1,105 @@
+.000311 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001070 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001198 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001310 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001418 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001632 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.001735 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002051 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.002235 - Goal Graph initialized.
+
+.002397 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002497 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.908096 - Starting cycle 0
+
+.908537 - ****** Starting Simulate Phase ******
+
+.909194 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+1.183967 - ****** Starting Perceive Phase ******
+
+1.185873 - World observed.
+
+1.685138 - ****** Starting Interpret Phase ******
+
+1.686106 - Please input a goal if desired. Otherwise, press enter to continue
+
+12.609366 - Goal added.
+
+12.609521 - Please input a goal if desired. Otherwise, press enter to continue
+
+13.339937 - ****** Starting Eval Phase ******
+
+13.341359 - No current goals. Skipping eval
+
+13.607649 - ****** Starting Intend Phase ******
+
+13.608866 - Selecting goal(s): Goal(remus, ga2, predicate: at_location)
+
+13.871192 - ****** Starting Plan Phase ******
+
+13.872914 - Planning...
+
+13.873661 - Planning complete.
+
+13.873875 - Plan: 
+
+13.874094 -   survey(remus, ga2)
+
+14.536724 - ****** Starting Act Phase ******
+
+14.538877 - Selected action survey(remus, ga2) from plan:
+
+14.539087 - survey(remus, ga2)]0m
+
+14.539930 - simulating MIDCA action: survey(remus, ga2)
+
+15.133343 - Starting cycle 1
+
+15.133819 - ****** Starting Simulate Phase ******
+
+15.134238 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE) : at_location(remus, ga2)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga2) and enabled(remus)
+]
+
+15.620430 - ****** Starting Perceive Phase ******
+
+15.622591 - World observed.
+
+16.268262 - ****** Starting Interpret Phase ******
+
+16.817255 - ****** Starting Eval Phase ******
+
+16.818889 - All current goals achieved. Removing them from goal graph
+
+16.819364 - removing 1 plans that no longer apply.
+
+4:55.463745 - ****** Starting Intend Phase ******
+
+4:55.464994 - No Goals in Goal graph. Intend will do nothing.
+
+4:55.753485 - ****** Starting Plan Phase ******
+
+4:55.755947 - No goals received by planner. Skipping planning.
+

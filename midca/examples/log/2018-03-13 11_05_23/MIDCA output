@@ -1,0 +1,114 @@
+.000633 - Goal Graph initialized.
+
+.000998 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.002095 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.002313 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002476 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002628 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002939 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003075 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003732 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.004019 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+1.046489 - Starting cycle 0
+
+1.046913 - ****** Starting Simulate Phase ******
+
+1.047290 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+1.502618 - ****** Starting Perceive Phase ******
+
+1.505846 - Mine Report not received
+
+1.506228 - at_location(remus,transit)
+at_location(remus,home)
+
+1.507207 - World observed.
+
+2.741670 - ****** Starting Interpret Phase ******
+
+2.742290 - Please input a goal if desired. Otherwise, press enter to continue
+
+19.912382 - Goal added.
+
+19.912570 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.387038 - ****** Starting Eval Phase ******
+
+20.389336 - No current goals. Skipping eval
+
+20.607634 - ****** Starting Intend Phase ******
+
+20.608665 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+20.864797 - ****** Starting Plan Phase ******
+
+20.867660 - Planning...
+
+20.868483 - Planning complete.
+
+20.868646 - Plan: 
+
+20.868815 -   survey(remus, ga1)
+
+21.115954 - ****** Starting Act Phase ******
+
+21.121543 - Selected action survey(remus, ga1) from plan:
+
+21.122003 - survey(remus, ga1)]0m
+
+21.123411 - simulating MIDCA action: survey(remus, ga1)
+
+21.123691 - ['survey']
+
+21.775707 - Starting cycle 1
+
+21.777026 - ****** Starting Simulate Phase ******
+
+21.778029 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+21.995666 - ****** Starting Perceive Phase ******
+
+21.998650 - Mine Report not received
+
+21.999202 - ['survey']
+
+21.999609 - states not received
+
+21.999954 - World observed.
+
+23.084266 - ****** Starting Interpret Phase ******
+
+35.247528 - ****** Starting Eval Phase ******
+
+35.250997 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+36.296492 - ****** Starting Intend Phase ******
+
+36.298242 - No goals selected.
+

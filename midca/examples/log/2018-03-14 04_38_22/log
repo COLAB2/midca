@@ -1,0 +1,213 @@
+.000237 - Memory access at key __goals
+.000379 - Goal Graph initialized.
+
+.000505 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001209 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001359 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001517 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001659 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001759 - Memory access at key __PlanningCount
+.001839 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002595 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.002733 - Memory access at key __goals
+.002828 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.002915 - Starting cycle 0
+
+.003028 - ****** Starting Simulate Phase ******
+
+.003226 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.003389 - ****** Starting Perceive Phase ******
+
+.003550 - Memory access at key __world states
+.004763 - states not received
+
+.005072 - Memory access at key __world states
+.005170 - World observed.
+
+.006132 - ****** Starting Interpret Phase ******
+
+.006306 - Memory access at key __goals
+.006411 - Please input a goal if desired. Otherwise, press enter to continue
+
+32.322655 - Memory access at key __world states
+32.323579 - ****** Starting Eval Phase ******
+
+32.323840 - Memory access at key __world states
+32.325412 - No current goals. Skipping eval
+
+32.325684 - ****** Starting Intend Phase ******
+
+32.325953 - Memory access at key __goals
+32.326113 - No Goals in Goal graph. Intend will do nothing.
+
+32.326373 - ****** Starting Plan Phase ******
+
+32.326579 - Memory access at key __world states
+32.327873 - No goals received by planner. Skipping planning.
+
+32.328129 - ****** Starting Act Phase ******
+
+32.328339 - Memory access at key __world states
+32.328489 - Memory access at key __goals
+32.328630 - No valid plan found that achieves any current goals.
+
+32.330015 - MIDCA will not select an action this cycle.
+
+32.330276 - Memory access at key __actions
+32.330574 - Starting cycle 1
+
+32.330809 - ****** Starting Simulate Phase ******
+
+32.331290 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+32.331663 - ****** Starting Perceive Phase ******
+
+32.331920 - Memory access at key __world states
+32.333386 - Mine Report not received
+
+32.333751 - at_location(remus,transit)
+at_location(remus,home)
+
+32.333970 - Memory access at key __world states
+32.334090 - Memory access at key __world states
+32.334217 - World observed.
+
+32.335807 - ****** Starting Interpret Phase ******
+
+32.336044 - Memory access at key __goals
+32.336170 - Please input a goal if desired. Otherwise, press enter to continue
+
+32.949947 - Memory access at key __world states
+32.950708 - ****** Starting Eval Phase ******
+
+32.950945 - Memory access at key __world states
+32.952489 - No current goals. Skipping eval
+
+32.952748 - ****** Starting Intend Phase ******
+
+32.953015 - Memory access at key __goals
+32.953172 - No Goals in Goal graph. Intend will do nothing.
+
+32.953395 - ****** Starting Plan Phase ******
+
+32.953591 - Memory access at key __world states
+32.955116 - No goals received by planner. Skipping planning.
+
+32.955408 - ****** Starting Act Phase ******
+
+32.955618 - Memory access at key __world states
+32.955915 - Memory access at key __goals
+32.956064 - No valid plan found that achieves any current goals.
+
+32.957747 - MIDCA will not select an action this cycle.
+
+32.958175 - Memory access at key __actions
+32.958518 - Starting cycle 2
+
+32.958815 - ****** Starting Simulate Phase ******
+
+32.959311 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+32.959583 - ****** Starting Perceive Phase ******
+
+32.959901 - Memory access at key __world states
+32.961362 - Mine Report not received
+
+32.964105 - at_location(remus,transit)
+at_location(remus,home)
+
+32.964427 - Memory access at key __world states
+32.964781 - Memory access at key __world states
+32.964919 - World observed.
+
+32.967456 - ****** Starting Interpret Phase ******
+
+32.967819 - Memory access at key __goals
+32.968031 - Please input a goal if desired. Otherwise, press enter to continue
+
+33.415226 - Memory access at key __world states
+33.416287 - ****** Starting Eval Phase ******
+
+33.416648 - Memory access at key __world states
+33.419107 - No current goals. Skipping eval
+
+33.419720 - ****** Starting Intend Phase ******
+
+33.420188 - Memory access at key __goals
+33.420399 - No Goals in Goal graph. Intend will do nothing.
+
+33.420690 - ****** Starting Plan Phase ******
+
+33.420943 - Memory access at key __world states
+33.422865 - No goals received by planner. Skipping planning.
+
+33.423239 - ****** Starting Act Phase ******
+
+33.423503 - Memory access at key __world states
+33.423745 - Memory access at key __goals
+33.423974 - No valid plan found that achieves any current goals.
+
+33.427568 - MIDCA will not select an action this cycle.
+
+33.427885 - Memory access at key __actions
+33.428276 - Starting cycle 3
+
+33.428822 - ****** Starting Simulate Phase ******
+
+33.430053 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+33.430468 - ****** Starting Perceive Phase ******
+
+33.430724 - Memory access at key __world states
+33.432117 - Mine Report not received
+
+33.432709 - at_location(remus,transit)
+at_location(remus,home)
+
+33.432983 - Memory access at key __world states
+33.433106 - Memory access at key __world states
+33.433265 - World observed.
+
+33.435436 - ****** Starting Interpret Phase ******
+
+33.435633 - Memory access at key __goals
+33.435729 - Please input a goal if desired. Otherwise, press enter to continue
+

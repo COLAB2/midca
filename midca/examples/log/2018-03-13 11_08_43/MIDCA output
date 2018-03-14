@@ -1,0 +1,112 @@
+.000793 - Goal Graph initialized.
+
+.001025 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001989 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.002182 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002346 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002513 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002800 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002950 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003724 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.004061 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+4.035283 - Starting cycle 0
+
+4.035645 - ****** Starting Simulate Phase ******
+
+4.035946 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+4.296268 - ****** Starting Perceive Phase ******
+
+4.307036 - Mine Report not received
+
+4.307291 - here
+
+4.307482 - here
+
+4.307669 - here
+
+4.307932 - at_location(remus,transit)
+at_location(remus,home)
+
+4.308781 - World observed.
+
+4.753379 - ****** Starting Interpret Phase ******
+
+4.754008 - Please input a goal if desired. Otherwise, press enter to continue
+
+14.249053 - Goal added.
+
+14.249249 - Please input a goal if desired. Otherwise, press enter to continue
+
+14.864340 - ****** Starting Eval Phase ******
+
+14.865986 - No current goals. Skipping eval
+
+15.359402 - ****** Starting Intend Phase ******
+
+15.360178 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+15.992182 - ****** Starting Plan Phase ******
+
+15.994534 - Planning...
+
+15.994915 - Planning complete.
+
+15.995025 - Plan: 
+
+15.995144 -   survey(remus, ga1)
+
+16.576258 - ****** Starting Act Phase ******
+
+16.579668 - Selected action survey(remus, ga1) from plan:
+
+16.580164 - survey(remus, ga1)]0m
+
+16.580954 - simulating MIDCA action: survey(remus, ga1)
+
+16.581140 - ['survey']
+
+17.182818 - Starting cycle 1
+
+17.183163 - ****** Starting Simulate Phase ******
+
+17.183579 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+17.676343 - ****** Starting Perceive Phase ******
+
+17.686930 - Mine Report not received
+
+17.687109 - here
+
+17.687262 - here
+
+17.687393 - states not received
+
+17.687594 - World observed.
+

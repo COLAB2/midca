@@ -1,0 +1,55 @@
+.000379 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001313 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001487 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001631 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001772 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001914 - Memory access at key __PlanningCount
+.002056 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002196 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003669 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.003909 - Memory access at key __goals
+.004036 - Goal Graph initialized.
+
+.004161 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.004289 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.424234 - Starting cycle 0
+
+.424771 - ****** Starting Simulate Phase ******
+
+.425177 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+.694508 - ****** Starting Perceive Phase ******
+
+.694929 - Memory access at key __world states
+.696337 - Memory access at key __world states
+.696645 - World observed.
+
+1.007708 - ****** Starting Interpret Phase ******
+
+1.008225 - Memory access at key __goals
+1.008596 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.205945 - Memory access at key __world states
+20.206418 - Goal(remus, qroute, negate=true, predicate: at_location) is not a valid goal
+Possible predicates: ['enabled', 'at_location'] 
+Possible arguments ['home', 'qroute', 'remus', 'ga1', 'ga2']
+
+20.206624 - Please input a goal if desired. Otherwise, press enter to continue
+

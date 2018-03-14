@@ -1,0 +1,39 @@
+type(root)
+type(SHIP,root)
+type(QROUTE,root)
+type(A,QROUTE)
+type(B,QROUTE)
+type(mine,QROUTE)
+
+
+predicate(at-location, [area], [QROUTE])
+
+
+
+operator(take_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_received, [per, dsh], negate = True)], 
+results = [
+	condition(order_received, [per, dsh]),
+	condition(order_pending, [per, dsh])])
+
+operator(prepare_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_pending, [per, dsh])], 
+results = [
+	condition(order_pending, [per, dsh], negate= True),
+	condition(order_prepared, [per, dsh])])
+
+operator(serve_order, 
+args = [(per, PERSON), (dsh, DISH)], 
+preconditions = [
+	condition(order_prepared, [per, dsh])], 
+results = [
+	condition(order_serve, [per, dsh]),
+	condition(order_prepared, [per, dsh], negate = True),
+	condition(order_received, [per, dsh], negate = True)])
+
+
+

@@ -1,0 +1,62 @@
+.001527 - Memory access at key __PlanningCount
+.002152 - Memory access at key __goals
+.908096 - Starting cycle 0
+
+.908537 - ****** Starting Simulate Phase ******
+
+1.183967 - ****** Starting Perceive Phase ******
+
+1.184352 - Memory access at key __world states
+1.185690 - Memory access at key __world states
+1.685138 - ****** Starting Interpret Phase ******
+
+1.685815 - Memory access at key __goals
+12.608693 - Memory access at key __world states
+12.608978 - Memory access at key __goals
+13.339937 - ****** Starting Eval Phase ******
+
+13.340362 - Memory access at key __world states
+13.607649 - ****** Starting Intend Phase ******
+
+13.608262 - Memory access at key __goals
+13.608530 - Memory access at key __current goals
+13.871192 - ****** Starting Plan Phase ******
+
+13.871600 - Memory access at key __world states
+13.871779 - Memory access at key __current goals
+13.872716 - Memory access at key __goals
+13.873226 - Memory access at key __PlanningCount
+13.873379 - Memory access at key __PlanningCount
+13.874284 - Memory access at key __goals
+14.536724 - ****** Starting Act Phase ******
+
+14.537114 - Memory access at key __world states
+14.537288 - Memory access at key __current goals
+14.537426 - Memory access at key __goals
+14.539270 - Memory access at key __actions
+14.539437 - Memory access at key __actions
+14.539626 - Memory access at key __actions
+15.133343 - Starting cycle 1
+
+15.133819 - ****** Starting Simulate Phase ******
+
+15.620430 - ****** Starting Perceive Phase ******
+
+15.620926 - Memory access at key __world states
+15.622289 - Memory access at key __world states
+16.268262 - ****** Starting Interpret Phase ******
+
+16.268720 - Memory access at key __goals
+16.817255 - ****** Starting Eval Phase ******
+
+16.817712 - Memory access at key __world states
+16.817907 - Memory access at key __current goals
+16.819084 - Memory access at key __goals
+16.819515 - Memory access at key __current goals
+4:55.463745 - ****** Starting Intend Phase ******
+
+4:55.464632 - Memory access at key __goals
+4:55.753485 - ****** Starting Plan Phase ******
+
+4:55.753949 - Memory access at key __world states
+4:55.754129 - Memory access at key __current goals

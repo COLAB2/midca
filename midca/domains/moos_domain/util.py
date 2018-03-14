@@ -4,6 +4,15 @@ A collection of functions that are domain specific, which different MIDCA compon
 import os,copy
 from midca.modules._plan import pyhop
 
+def preferApprehend(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'hazard_checked' and goal2['predicate'] != 'hazard_checked':
+        return -1
+    elif goal1['predicate'] != 'hazard_checked' and goal2['predicate'] == 'hazard_checked':
+        return 1
+
+    return 0
 
 def display(world):
     print(world)

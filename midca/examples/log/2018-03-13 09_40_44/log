@@ -1,0 +1,136 @@
+.000540 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001440 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001588 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001715 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001840 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001947 - Memory access at key __PlanningCount
+.002114 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002266 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002589 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.002684 - Memory access at key __goals
+.002767 - Goal Graph initialized.
+
+.002853 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002969 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.573470 - Starting cycle 0
+
+.573985 - ****** Starting Simulate Phase ******
+
+.574510 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.907429 - ****** Starting Perceive Phase ******
+
+.907858 - Memory access at key __world states
+.909344 - at_location(remus,transit)
+at_location(remus,home)
+
+.909688 - Memory access at key __world states
+.909849 - Memory access at key __world states
+.910031 - World observed.
+
+2.318978 - ****** Starting Interpret Phase ******
+
+2.319352 - Memory access at key __goals
+2.319528 - Please input a goal if desired. Otherwise, press enter to continue
+
+10.550957 - Memory access at key __world states
+10.551220 - Memory access at key __goals
+10.551444 - Goal added.
+
+10.551600 - Please input a goal if desired. Otherwise, press enter to continue
+
+11.279840 - ****** Starting Eval Phase ******
+
+11.280343 - Memory access at key __world states
+11.282645 - No current goals. Skipping eval
+
+11.570012 - ****** Starting Intend Phase ******
+
+11.570581 - Memory access at key __goals
+11.570780 - Memory access at key __current goals
+11.571064 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+16.650404 - ****** Starting Plan Phase ******
+
+16.650875 - Memory access at key __world states
+16.651054 - Memory access at key __current goals
+16.653384 - Memory access at key __goals
+16.653651 - Planning...
+
+16.653943 - Memory access at key __PlanningCount
+16.654109 - Memory access at key __PlanningCount
+16.654397 - Planning complete.
+
+16.654594 - Plan: 
+
+16.654811 -   survey(remus, ga1)
+
+16.655119 - Memory access at key __goals
+21.877200 - ****** Starting Act Phase ******
+
+21.877568 - Memory access at key __world states
+21.877739 - Memory access at key __current goals
+21.877887 - Memory access at key __goals
+21.880153 - Selected action survey(remus, ga1) from plan:
+
+21.880415 - survey(remus, ga1)]0m
+
+21.880604 - Memory access at key __actions
+21.880754 - Memory access at key __actions
+21.880992 - Memory access at key __actions
+21.881383 - simulating MIDCA action: survey(remus, ga1)
+
+24.793226 - Starting cycle 1
+
+24.793770 - ****** Starting Simulate Phase ******
+
+24.794516 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+mine (HAZARD)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and at_location(remus, ga1) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+25.275876 - ****** Starting Perceive Phase ******
+
+25.276454 - Memory access at key __world states
+25.276797 - states not received
+
+25.276996 - hazard_at_location(mine,transit)
+
+25.277244 - Memory access at key __world states
+25.277381 - Memory access at key __world states
+25.277528 - World observed.
+
+32.685800 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine (HAZARD) : hazard_at_location(mine, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and at_location(remus, ga1) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_at_location(mine, transit)
+]
+

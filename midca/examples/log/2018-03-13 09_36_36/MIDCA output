@@ -1,0 +1,54 @@
+.000413 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001232 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001541 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001669 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001827 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002273 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002456 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002839 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.003061 - Goal Graph initialized.
+
+.003140 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003238 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.646303 - Starting cycle 0
+
+.646815 - ****** Starting Simulate Phase ******
+
+.647297 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+1.642465 - ****** Starting Perceive Phase ******
+
+1.644437 - 0.0 0.0 -1 -1
+
+1.644782 - at_location(remus,transit)
+at_location(remus,home)
+
+1.645490 - World observed.
+
+24.243544 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+

@@ -1,0 +1,486 @@
+.000372 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001290 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001476 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.001610 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.001737 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.001868 - Memory access at key __PlanningCount
+.002004 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.002132 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002525 - [cognitive] Initializing Act module 2 Moosact...done.
+
+.002690 - Memory access at key __goals
+.002804 - Goal Graph initialized.
+
+.002911 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003040 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.526280 - Starting cycle 0
+
+.526711 - ****** Starting Simulate Phase ******
+
+.527319 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+]
+
+.999981 - ****** Starting Perceive Phase ******
+
+1.000543 - Memory access at key __world states
+1.002772 - Memory access at key __world states
+1.003071 - World observed.
+
+1.511445 - ****** Starting Interpret Phase ******
+
+1.512269 - Memory access at key __goals
+1.512436 - Please input a goal if desired. Otherwise, press enter to continue
+
+11.232600 - Memory access at key __world states
+11.232776 - Memory access at key __goals
+11.232916 - Goal added.
+
+11.233007 - Please input a goal if desired. Otherwise, press enter to continue
+
+11.857644 - ****** Starting Eval Phase ******
+
+11.859608 - Memory access at key __world states
+11.860703 - No current goals. Skipping eval
+
+12.162772 - ****** Starting Intend Phase ******
+
+12.163366 - Memory access at key __goals
+12.163663 - Memory access at key __current goals
+12.164061 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+12.554795 - ****** Starting Plan Phase ******
+
+12.555194 - Memory access at key __world states
+12.555362 - Memory access at key __current goals
+12.556362 - Memory access at key __goals
+12.556577 - Planning...
+
+12.556838 - Memory access at key __PlanningCount
+12.556994 - Memory access at key __PlanningCount
+12.557281 - Planning complete.
+
+12.557471 - Plan: 
+
+12.557686 -   survey(remus, ga1)
+
+12.557881 - Memory access at key __goals
+13.381214 - ****** Starting Act Phase ******
+
+13.381741 - Memory access at key __world states
+13.381978 - Memory access at key __current goals
+13.382210 - Memory access at key __goals
+13.384745 - Selected action survey(remus, ga1) from plan:
+
+13.385110 - survey(remus, ga1)]0m
+
+13.385363 - Memory access at key __actions
+13.385657 - Memory access at key __actions
+13.386021 - Memory access at key __actions
+13.386458 - simulating MIDCA action: survey(remus, ga1)
+
+24.697279 - Starting cycle 1
+
+24.697697 - ****** Starting Simulate Phase ******
+
+24.698133 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga1) and enabled(remus)
+]
+
+25.372150 - ****** Starting Perceive Phase ******
+
+25.372485 - Memory access at key __world states
+25.373780 - Memory access at key __world states
+25.373918 - World observed.
+
+1:22.709073 - ****** Starting Interpret Phase ******
+
+1:22.709541 - Memory access at key __goals
+1:23.017212 - ****** Starting Eval Phase ******
+
+1:23.017580 - Memory access at key __world states
+1:23.017755 - Memory access at key __current goals
+1:23.018789 - All current goals achieved. Removing them from goal graph
+
+1:23.018976 - Memory access at key __goals
+1:23.019285 - removing 1 plans that no longer apply.
+
+1:23.019453 - Memory access at key __current goals
+1:23.281745 - ****** Starting Intend Phase ******
+
+1:23.282033 - Memory access at key __goals
+1:23.282139 - No Goals in Goal graph. Intend will do nothing.
+
+1:23.622743 - ****** Starting Plan Phase ******
+
+1:23.623099 - Memory access at key __world states
+1:23.623252 - Memory access at key __current goals
+1:23.624268 - No goals received by planner. Skipping planning.
+
+1:24.013623 - ****** Starting Act Phase ******
+
+1:24.014032 - Memory access at key __world states
+1:24.014231 - Memory access at key __current goals
+1:24.014470 - Memory access at key __goals
+1:24.014716 - No valid plan found that achieves any current goals.
+
+1:24.015461 - MIDCA will not select an action this cycle.
+
+1:24.015597 - Memory access at key __actions
+1:24.015745 - Memory access at key __actions
+1:24.015863 - No actions selected this cycle by MIDCA.
+
+1:24.445656 - Starting cycle 2
+
+1:24.446009 - ****** Starting Simulate Phase ******
+
+1:24.446325 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga1) and enabled(remus)
+]
+
+1:24.946341 - ****** Starting Perceive Phase ******
+
+1:24.946705 - Memory access at key __world states
+1:24.948051 - Memory access at key __world states
+1:24.948201 - World observed.
+
+1:31.012872 - ****** Starting Interpret Phase ******
+
+1:31.013222 - Memory access at key __goals
+1:31.013386 - Please input a goal if desired. Otherwise, press enter to continue
+
+1:32.075196 - ****** Starting Eval Phase ******
+
+1:32.075418 - Memory access at key __world states
+1:32.075496 - Memory access at key __current goals
+1:32.076194 - No current goals. Skipping eval
+
+1:32.288784 - ****** Starting Intend Phase ******
+
+1:32.289214 - Memory access at key __goals
+1:32.289376 - No Goals in Goal graph. Intend will do nothing.
+
+1:32.468332 - ****** Starting Plan Phase ******
+
+1:32.468736 - Memory access at key __world states
+1:32.468905 - Memory access at key __current goals
+1:32.469915 - No goals received by planner. Skipping planning.
+
+1:32.644985 - ****** Starting Act Phase ******
+
+1:32.645347 - Memory access at key __world states
+1:32.645518 - Memory access at key __current goals
+1:32.645667 - Memory access at key __goals
+1:32.645841 - No valid plan found that achieves any current goals.
+
+1:32.646824 - MIDCA will not select an action this cycle.
+
+1:32.647002 - Memory access at key __actions
+1:32.647194 - Memory access at key __actions
+1:32.647338 - No actions selected this cycle by MIDCA.
+
+1:33.126538 - Starting cycle 3
+
+1:33.126956 - ****** Starting Simulate Phase ******
+
+1:33.127379 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga1) and enabled(remus)
+]
+
+1:33.640928 - ****** Starting Perceive Phase ******
+
+1:33.641521 - Memory access at key __world states
+1:33.642881 - Memory access at key __world states
+1:33.643155 - World observed.
+
+1:34.132653 - ****** Starting Interpret Phase ******
+
+1:34.132994 - Memory access at key __goals
+1:34.133173 - Please input a goal if desired. Otherwise, press enter to continue
+
+1:42.753057 - Memory access at key __world states
+1:42.753342 - Memory access at key __goals
+1:42.753612 - Goal added.
+
+1:42.753875 - Please input a goal if desired. Otherwise, press enter to continue
+
+1:43.758305 - ****** Starting Eval Phase ******
+
+1:43.758755 - Memory access at key __world states
+1:43.758910 - Memory access at key __current goals
+1:43.759907 - No current goals. Skipping eval
+
+1:44.131776 - ****** Starting Intend Phase ******
+
+1:44.132248 - Memory access at key __goals
+1:44.132465 - Memory access at key __current goals
+1:44.132632 - Memory access at key __current goals
+1:44.132892 - Selecting goal(s): Goal(remus, ga2, predicate: at_location)
+
+1:44.692792 - ****** Starting Plan Phase ******
+
+1:44.693141 - Memory access at key __world states
+1:44.693280 - Memory access at key __current goals
+1:44.694168 - Memory access at key __goals
+1:44.694351 - Planning...
+
+1:44.694705 - Memory access at key __PlanningCount
+1:44.694896 - Memory access at key __PlanningCount
+1:44.695150 - Planning complete.
+
+1:44.695308 - Plan: 
+
+1:44.695470 -   survey(remus, ga2)
+
+1:44.695613 - Memory access at key __goals
+1:45.401335 - ****** Starting Act Phase ******
+
+1:45.401576 - Memory access at key __world states
+1:45.401668 - Memory access at key __current goals
+1:45.401771 - Memory access at key __goals
+1:45.402884 - Selected action survey(remus, ga2) from plan:
+
+1:45.403047 - survey(remus, ga2)]0m
+
+1:45.403192 - Memory access at key __actions
+1:45.403313 - Memory access at key __actions
+1:45.403481 - Memory access at key __actions
+1:45.403727 - simulating MIDCA action: survey(remus, ga2)
+
+1:47.113143 - Starting cycle 4
+
+1:47.113559 - ****** Starting Simulate Phase ******
+
+1:47.114006 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE) : at_location(remus, ga2)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga2) and at_location(remus, ga1) and enabled(remus)
+]
+
+1:52.748281 - ****** Starting Perceive Phase ******
+
+1:52.749160 - Memory access at key __world states
+1:52.750556 - Memory access at key __world states
+1:52.750873 - World observed.
+
+1:53.005746 - ****** Starting Interpret Phase ******
+
+1:53.006435 - Memory access at key __goals
+1:53.265104 - ****** Starting Eval Phase ******
+
+1:53.265566 - Memory access at key __world states
+1:53.265757 - Memory access at key __current goals
+1:53.267045 - All current goals achieved. Removing them from goal graph
+
+1:53.267337 - Memory access at key __goals
+1:53.267682 - removing 1 plans that no longer apply.
+
+1:53.267855 - Memory access at key __current goals
+1:53.491834 - ****** Starting Intend Phase ******
+
+1:53.492537 - Memory access at key __goals
+1:53.492879 - No Goals in Goal graph. Intend will do nothing.
+
+1:53.993671 - ****** Starting Plan Phase ******
+
+1:53.994077 - Memory access at key __world states
+1:53.994293 - Memory access at key __current goals
+1:53.995491 - No goals received by planner. Skipping planning.
+
+1:54.584600 - ****** Starting Act Phase ******
+
+1:54.585076 - Memory access at key __world states
+1:54.585261 - Memory access at key __current goals
+1:54.585423 - Memory access at key __goals
+1:54.585618 - No valid plan found that achieves any current goals.
+
+1:54.586848 - MIDCA will not select an action this cycle.
+
+1:54.587081 - Memory access at key __actions
+1:54.587323 - Memory access at key __actions
+1:54.587540 - No actions selected this cycle by MIDCA.
+
+1:54.987224 - Starting cycle 5
+
+1:54.987633 - ****** Starting Simulate Phase ******
+
+1:54.988111 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE) : at_location(remus, ga2)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga2) and at_location(remus, ga1) and enabled(remus)
+]
+
+1:57.869460 - ****** Starting Perceive Phase ******
+
+1:57.870108 - Memory access at key __world states
+1:57.871596 - Memory access at key __world states
+1:57.871769 - World observed.
+
+1:58.433460 - ****** Starting Interpret Phase ******
+
+1:58.435436 - Memory access at key __goals
+1:58.435644 - Please input a goal if desired. Otherwise, press enter to continue
+
+2:05.368567 - Memory access at key __world states
+2:05.368745 - Memory access at key __goals
+2:05.368880 - Goal added.
+
+2:05.368968 - Please input a goal if desired. Otherwise, press enter to continue
+
+2:05.873150 - ****** Starting Eval Phase ******
+
+2:05.873582 - Memory access at key __world states
+2:05.873785 - Memory access at key __current goals
+2:05.875684 - No current goals. Skipping eval
+
+2:06.092197 - ****** Starting Intend Phase ******
+
+2:06.092714 - Memory access at key __goals
+2:06.092959 - Memory access at key __current goals
+2:06.093124 - Memory access at key __current goals
+2:06.093358 - Selecting goal(s): Goal(remus, ga2, predicate: at_location)
+
+2:06.295466 - ****** Starting Plan Phase ******
+
+2:06.295758 - Memory access at key __world states
+2:06.295855 - Memory access at key __current goals
+2:06.296500 - Memory access at key __goals
+2:06.296624 - Planning...
+
+2:06.296773 - Memory access at key __PlanningCount
+2:06.296868 - Memory access at key __PlanningCount
+2:06.297036 - Planning complete.
+
+2:06.297150 - Plan: 
+
+2:06.297268 -   survey(remus, ga2)
+
+2:06.297371 - Memory access at key __goals
+2:06.544699 - ****** Starting Act Phase ******
+
+2:06.545176 - Memory access at key __world states
+2:06.545370 - Memory access at key __current goals
+2:06.545575 - Memory access at key __goals
+2:06.547368 - Selected action survey(remus, ga2) from plan:
+
+2:06.547607 - survey(remus, ga2)]0m
+
+2:06.547757 - Memory access at key __actions
+2:06.547889 - Memory access at key __actions
+2:06.548067 - Memory access at key __actions
+2:06.548394 - simulating MIDCA action: survey(remus, ga2)
+
+2:07.843125 - Starting cycle 6
+
+2:07.843526 - ****** Starting Simulate Phase ******
+
+2:07.843966 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE) : at_location(remus, ga2)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga2) and at_location(remus, ga1) and enabled(remus)
+]
+
+2:09.173129 - ****** Starting Perceive Phase ******
+
+2:09.173578 - Memory access at key __world states
+2:09.174984 - Memory access at key __world states
+2:09.175174 - World observed.
+
+2:15.897443 - ****** Starting Interpret Phase ******
+
+2:15.897855 - Memory access at key __goals
+2:16.222053 - ****** Starting Eval Phase ******
+
+2:16.222369 - Memory access at key __world states
+2:16.222528 - Memory access at key __current goals
+2:16.224467 - All current goals achieved. Removing them from goal graph
+
+2:16.224753 - Memory access at key __goals
+2:16.225114 - removing 1 plans that no longer apply.
+
+2:16.225278 - Memory access at key __current goals
+2:17.176783 - ****** Starting Intend Phase ******
+
+2:17.177219 - Memory access at key __goals
+2:17.177387 - No Goals in Goal graph. Intend will do nothing.
+
+2:17.739052 - ****** Starting Plan Phase ******
+
+2:17.739820 - Memory access at key __world states
+2:17.739990 - Memory access at key __current goals
+2:17.740888 - No goals received by planner. Skipping planning.
+
+2:18.300729 - ****** Starting Act Phase ******
+
+2:18.301103 - Memory access at key __world states
+2:18.301257 - Memory access at key __current goals
+2:18.301409 - Memory access at key __goals
+2:18.301592 - No valid plan found that achieves any current goals.
+
+2:18.303228 - MIDCA will not select an action this cycle.
+
+2:18.303538 - Memory access at key __actions
+2:18.303844 - Memory access at key __actions
+2:18.304078 - No actions selected this cycle by MIDCA.
+
+2:19.155474 - Starting cycle 7
+
+2:19.155941 - ****** Starting Simulate Phase ******
+
+2:19.156407 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE) : at_location(remus, ga2)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, ga2) and at_location(remus, ga1) and enabled(remus)
+]
+
+2:20.433948 - ****** Starting Perceive Phase ******
+
+2:20.434373 - Memory access at key __world states
+2:20.435716 - Memory access at key __world states
+2:20.435876 - World observed.
+
+2:21.130869 - ****** Starting Interpret Phase ******
+
+2:21.131348 - Memory access at key __goals
+2:21.131613 - Please input a goal if desired. Otherwise, press enter to continue
+
+2:23.085341 - ****** Starting Eval Phase ******
+
+2:23.086022 - Memory access at key __world states
+2:23.086173 - Memory access at key __current goals
+2:23.087089 - No current goals. Skipping eval
+

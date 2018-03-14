@@ -26,7 +26,7 @@ STATE_FILE = DOMAIN_ROOT + "states/moos_state.sim"
 DISPLAY_FUNC = util.display
 DECLARE_METHODS_FUNC = moos_methods.declare_methods
 DECLARE_OPERATORS_FUNC = moos_operators.declare_ops
-GOAL_GRAPH_CMP_FUNC = None # not used in this example
+GOAL_GRAPH_CMP_FUNC = util.preferApprehend 
 
 # Load Domain Files  
 world = domainread.load_domain(DOMAIN_FILE)
@@ -48,7 +48,6 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     util.pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
 myMidca.append_module("Act", act.Moosact())
 '''
 # Set world viewer to output text
@@ -60,5 +59,6 @@ myMidca.storeHistory = False
 myMidca.mem.logEachAccess = False
 '''
 # Initialize and start running!
+myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 myMidca.run()
