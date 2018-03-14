@@ -1,0 +1,66 @@
+type(resource)
+type(material)
+type(tool)
+type(craftgrid)
+type(mapgrid)
+type(thing)
+
+
+predicate(player-at,[loc], [mapgrid])
+predicate(thing-at-map,[obj,loc], [resource,mapgrid])
+predicate(placed-thing-at-map,[obj,loc], [material,mapgrid])
+predicate(resource-at-craft,[res,loc], [thing,craftgrid])
+predicate(craft-empty, [loc], [craftgrid])
+predicate(connect, [from,to], [mapgrid,mapgrid])
+predicate(current-harvest-location, [loc], [mapgrid])
+predicate(tool-available, [t], [tool])
+predicate(thing-available, [r], [resource])
+predicate(tool-in-hand, [t], [tool])
+
+
+operator(move,
+args = [(from,mapgrid),(to,mapgrid)],
+preconditions = [
+condition(player-at,[from]),
+condition(connect,[from, to])],
+
+results=[
+condition(player-at, [to])])
+
+
+operator (change-harvest-loc,
+args = [(target,mapgrid)],
+preconditions = [
+condition(player-at, [target])],
+results=[
+condition(current-harvest-location, [target])])
+
+operator (harvest,
+
+args = [(target,mapgrid), (t,tool), (obj,resource)],
+preconditions = [
+condition(player-at,[target]),
+condition(tool-available, [t]),
+condition(thing-at-map, [obj, target]),
+condition(current-harvest-location, [target]),
+condition(tool-in-hand, [t])],
+
+results=[
+condition(tool-in-hand, [t])])
+
+
+operator (get-harvest-wood,
+args = [(target,mapgrid), (t,tool), (tree,resource), (wood,resource)],
+
+preconditions = [
+condition(player-at, [target]),
+condition(thing-at-map,[tree, target]),
+condition(tool-in-hand, [t]),
+condition(current-harvest-location, [target])],
+
+results=[
+condition(thing-available, [wood])])
+
+
+
+

@@ -45,13 +45,13 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file = "domain.pddl", midca_file = "a.txt"):
                 objs = ""
                 types = ""
                 pairs = line.split("?")
-                f.write("\n predicate(" + pairs[0] + ",")
+                f.write("\n predicate(" + pairs[0].strip() + ",")
                 for pair in pairs[1:]:
                     obj_type = pair.split("-")
-                    objs = objs + "," + obj_type[0]
-                    types = types + "," + obj_type[1]
+                    objs = objs + "," + obj_type[0].strip()
+                    types = types + "," + obj_type[1].strip()
                     
-                f.write("[" + objs[1:] +"], [" + types[1:] + "])")   
+                f.write("[" + objs[1:].strip() +"], [" + types[1:].strip() + "])")   
     
         if(elm.startswith(":action")):
             f.write("\n operator (")
@@ -65,11 +65,11 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file = "domain.pddl", midca_file = "a.txt"):
                     p = ""
                     for parameter in parameters:
                         obj_type = parameter.split("-")
-                        p = p + ", (" + obj_type[0] + "," + obj_type[1] + " )"
+                        p = p + ", (" + obj_type[0].strip() + "," + obj_type[1].strip() + " )"
                     
                     p = p[1:]
-                    f.write("args = [" + p + "],")
-                    print "args = [" + p + "],"
+                    f.write("args = [" + p.strip() + "],")
+                    print "args = [" + p.strip() + "],"
                     
                 if line.startswith("precondition"):
                     f.write("preconditions = [")
@@ -79,11 +79,11 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file = "domain.pddl", midca_file = "a.txt"):
                         if l == 1:
                             #(player-at ?target)
                             condition = pre.split(" ")
-                            f.write("condition(" + condition[0]) 
+                            f.write("condition(" + condition[0].strip()) 
                             for c in condition[1:]:
-                                precon = precon + ", " + c
+                                precon = precon + ", " + c.strip()
                                 
-                            f.write(" [" + precon[1:] + "]),\n")
+                            f.write(" [" + precon[1:].strip() + "]),\n")
                     f.write("],")
                 if line.startswith("effect"):
                     f.write("results=[")
@@ -93,11 +93,11 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file = "domain.pddl", midca_file = "a.txt"):
                         if l == 1:
                             #(player-at ?target)
                             condition = pre.split(" ")
-                            f.write("condition(" + condition[0]) 
+                            f.write("condition(" + condition[0].strip()+",") 
                             for c in condition[1:]:
-                                precon = precon + ", " + c
+                                precon = precon + ", " + c.strip()
                                 
-                            f.write(" [" + precon[1:] + "]),\n")
+                            f.write(" [" + precon[1:].strip() + "]),\n")
                     f.write("])")
 
        
