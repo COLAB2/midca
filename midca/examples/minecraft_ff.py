@@ -10,6 +10,8 @@ import inspect, os
 
 ### this script is not working for now. 
 
+
+###TODO: convert problem file to problem file for ff metric
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
@@ -27,8 +29,8 @@ DOMAIN_FILE = DOMAIN_ROOT + "domains/domain.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
 
 ### Domain Specific Variables for JSHOP planner
-ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
+ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/sminecraft.pddl"
+ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/s_wood.pddl"
 
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)

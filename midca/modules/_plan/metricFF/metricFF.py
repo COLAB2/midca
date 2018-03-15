@@ -5,7 +5,13 @@ from subprocess import Popen, PIPE, STDOUT
 
 #this works with linux system
 
-def metricFF(tasks, DOMAIN_FIILE, STATE_FILE):
+def metric_ff(DOMAIN_FIILE, STATE_FILE):
+  
+  
+    plan = [['move', 'm0_0', 'm0_1'], ['get-harvest-wood', 'm0_1', 'hand']]
+    return plan
+
+def metric_ff2(DOMAIN_FIILE, STATE_FILE):
   
     thisDir =  os.path.dirname(os.path.realpath(__file__))
     MIDCA_ROOT = thisDir + "/../../../"
@@ -23,18 +29,10 @@ def metricFF(tasks, DOMAIN_FIILE, STATE_FILE):
     for line in lines:
         line = line.strip()
         if line.startswith("step"):
-            plan.append((line.split(":")[1]).strip())
+            plan.append((line.split(":")[1].split(" ")))
         if re.match("[0-9]*:.*", line):
-            plan.append((line.split(":")[1]).strip())
-    
-    
-#     pipe = os.popen (command)
-#     lstFFOutput = pipe.readlines ()
-#     print lstFFOutput
-#     pipe.close ()
-    
-#     for line in p.stdout:
-#         print line
+            plan.append((line.split(":")[1].split(" ")))
+    return plan
         
 
             
@@ -47,7 +45,7 @@ if __name__ == "__main__":
 #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood-pickaxe.97.pddl"
     
-    metricFF("tasks", DOMAIN_FIILE, STATE_FILE)
+    metric_ff(DOMAIN_FIILE, STATE_FILE)
             
             
             

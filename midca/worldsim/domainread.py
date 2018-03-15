@@ -91,7 +91,7 @@ def operator(name, args = [], preconditions = [], results = []):
 	prePositive = []
 	for condition in preconditions:
 		for argname in condition.argnames:
-			if argname not in objnames:
+			if not(argname.startswith("!")) and argname not in objnames:
 				raise Exception("condition argument not listed as an object for this operator")
 		prepredicates.append(condition.predicate)
 		preobjnames.append(condition.argnames)

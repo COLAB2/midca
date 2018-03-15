@@ -84,7 +84,7 @@ def jshop(tasks, DOMAIN_FIILE,STATE_FILE):
 
      
     
-     
+    print midcaplan 
     return midcaplan
 
 def parenthetic_contents(string):

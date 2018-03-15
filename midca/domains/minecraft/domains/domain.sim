@@ -50,16 +50,16 @@ condition(tool-in-hand, [t])])
 
 
 operator (get-harvest-wood,
-args = [(target,mapgrid), (t,tool), (tree,resource), (wood,resource)],
+args = [(target,mapgrid), (t,tool)],
 
 preconditions = [
 condition(player-at, [target]),
-condition(thing-at-map,[tree, target]),
+condition(thing-at-map,[!tree, target]),
 condition(tool-in-hand, [t]),
 condition(current-harvest-location, [target])],
 
 results=[
-condition(thing-available, [wood])])
+condition(thing-available, [!wood])])
 
 
 

@@ -34,7 +34,7 @@
 		:effect
 			(and
 				(player-at ?to)
-				(not (player-at ?from))
+				
 				
 			)
 	)
@@ -56,7 +56,7 @@
 		:effect
 			(and
 				(thing-available wood)
-				(not (thing-at-map tree ?target))
+				
 				
 			)
 	)
