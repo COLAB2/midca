@@ -53,7 +53,7 @@ class MRSimpleControl(base.BaseModule):
                     i = 0
                     for mod in self.mem.myMidca.get_modules(phasei):
                         mod_str = str(mod.__class__.__name__)
-                        print("-*-*- act():  mod = " + mod_str + ", action[1] = " + str(action[1]))
+                        print(("-*-*- act():  mod = " + mod_str + ", action[1] = " + str(action[1])))
                         if mod_str == action[1]:
                             print("-*-*- act(): we got a match!")
                             module_index = i
@@ -66,23 +66,23 @@ class MRSimpleControl(base.BaseModule):
                 # print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
                     mod = self.mem.myMidca.remove_module(phase, module_index)
-                    print
+                    print()
                     "mod is " + str(mod)
                     self.prev_init_args = mod.get_init_args()  # TODO: only works for modules implementing get_init_args
-                    print
+                    print()
                     "got init args: " + str(self.prev_init_args)
-                    is_success = mod_str not in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules(phase))
-                    if is_success: print(
-                        "    Metareasoner removed " + mod_str)  # report any actions metareasoner carried out
+                    is_success = mod_str not in [x.__class__.__name__ for x in self.mem.myMidca.get_modules(phase)]
+                    if is_success: print((
+                        "    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
                     return is_success
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
                 # print("current directory: "+str(os.getcwd()))
                 # print("str(dir(modules)) = "+str(dir(modules)))
                 planningModuleInstance = importlib.import_module("midca.modules.planning")
-                print("loaded planning module, it has following attributes: " + str(dir(planningModuleInstance)))
+                print(("loaded planning module, it has following attributes: " + str(dir(planningModuleInstance))))
                 # get the args used to init the old module and use them to init this one
-                print
+                print()
                 "init args is " + str(self.prev_init_args)
 
                 # **** BEGIN: MAGIC! Transform the args *****
@@ -99,7 +99,7 @@ class MRSimpleControl(base.BaseModule):
                 pyHopPlannerInstance = planningModuleInstance.PyHopPlanner(*corrected_args)
                 self.mem.myMidca.runtime_append_module("Plan",
                                                        pyHopPlannerInstance)  # TODO: hardcoded knowledge of Plan phase
-                is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
+                is_success = "PyHopPlanner" in [x.__class__.__name__ for x in self.mem.myMidca.get_modules("Plan")]
                 if is_success: print(
                     "    Metareasoner added PyHopPlanner")  # report any actions metareasoner carried out
                 return is_success
@@ -107,8 +107,8 @@ class MRSimpleControl(base.BaseModule):
                 # print("current directory: "+str(os.getcwd()))
                 # print("str(dir(modules)) = "+str(dir(modules)))
                 planningModuleInstance = importlib.import_module("midca.modules.planning")
-                print("loaded asynchronous planning module, it has following attributes: " + str(
-                    dir(planningModuleInstance)))
+                print(("loaded asynchronous planning module, it has following attributes: " + str(
+                    dir(planningModuleInstance))))
                 # get the args used to init the old module and use them to init this one
                 # print "init args is "+str(self.prev_init_args)
                 ###### HACK: hardcoded for now as a demo, this is because the initial broken
@@ -131,8 +131,7 @@ class MRSimpleControl(base.BaseModule):
                 pyHopPlannerInstance = planningModuleInstance.AsynchPyhopPlanner(*corrected_args)
                 self.mem.myMidca.runtime_append_module("Plan",
                                                        pyHopPlannerInstance)  # TODO: hardcoded knowledge of Plan phase
-                is_success = "AsynchPyhopPlanner" in map(lambda x: x.__class__.__name__,
-                                                         self.mem.myMidca.get_modules("Plan"))
+                is_success = "AsynchPyhopPlanner" in [x.__class__.__name__ for x in self.mem.myMidca.get_modules("Plan")]
                 if is_success: print(
                     "    Metareasoner added AsynchPyhopPlanner")  # report any actions metareasoner carried out
                 return is_success
@@ -145,14 +144,14 @@ class MRSimpleControl(base.BaseModule):
             # specific to mortar and blocks world, not general
             # get the highest blocks
             goal_atoms = action[1]
-            goal_args = map(lambda x: x.get_args(), goal_atoms)
+            goal_args = [x.get_args() for x in goal_atoms]
 
             # figure out how much mortar we have using the world state
             num_available_mortar = 0
             for atom in map(str, self.mem.get("__world states")[-1].get_atoms()):
                 if 'available(' in atom:
                     num_available_mortar += 1
-                    if verbose >= 3: print("found available mortar: " + str(atom))
+                    if verbose >= 3: print(("found available mortar: " + str(atom)))
 
             # transform 'stable-on' to 'on' predicates ensuring there is enough mortar for each
             bottom_blks = []
@@ -192,13 +191,13 @@ class MRSimpleControl(base.BaseModule):
                 # now display success statement
                 print("Removed from the goal graph the previous goal:")
                 for g in goal_atoms:
-                    print("    " + str(g))
+                    print(("    " + str(g)))
 
             # now display transformed goal
             if verbose >= 2:
                 print("Goal has been transformed to:")
                 for g in transformed_goals:
-                    print("    " + str(g))
+                    print(("    " + str(g)))
 
             # now insert the new goal
             for g in transformed_goals:
@@ -275,9 +274,9 @@ class MRSimpleControl1(base.BaseModule):
                 # print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
                     self.mem.myMidca.remove_module(phase, module_index)
-                    is_success = mod_str not in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules(phase))
-                    if is_success: print(
-                        "    Metareasoner removed " + mod_str)  # report any actions metareasoner carried out
+                    is_success = mod_str not in [x.__class__.__name__ for x in self.mem.myMidca.get_modules(phase)]
+                    if is_success: print((
+                        "    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
                     return is_success
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
@@ -287,7 +286,7 @@ class MRSimpleControl1(base.BaseModule):
                 pyHopPlannerInstance = planningModuleInstance.planning.PyHopPlanner(True)
                 self.mem.myMidca.runtime_append_module("Plan",
                                                        pyHopPlannerInstance)  # TODO: hardcoded knowledge of Plan phase
-                is_success = "PyHopPlanner" in map(lambda x: x.__class__.__name__, self.mem.myMidca.get_modules("Plan"))
+                is_success = "PyHopPlanner" in [x.__class__.__name__ for x in self.mem.myMidca.get_modules("Plan")]
                 if is_success: print(
                     "    Metareasoner added PyHopPlanner")  # report any actions metareasoner carried out
                 return is_success
@@ -302,7 +301,7 @@ class MRSimpleControl1(base.BaseModule):
             # goal_check is the copy of goal graph intended to check the goalgraph goals and delete the goals in the goal graph
             goal_check = copy.deepcopy(action[1])
             goal_atoms = action[1]
-            goal_args = map(lambda x: x.get_args(), goal_atoms)
+            goal_args = [x.get_args() for x in goal_atoms]
             mem = self.mem
             # get the world
             world = self.mem.myMidca.midca.world
@@ -323,13 +322,13 @@ class MRSimpleControl1(base.BaseModule):
                 # now display success statement
                 print("Removed from the goal graph the previous goal:")
                 for g in goal_check:
-                    print("    " + str(g))
+                    print(("    " + str(g)))
 
             # now display transformed goal
             if verbose >= 2:
                 print("Goal has been transformed to:")
                 for g in transformed_goals:
-                    print("    " + str(g))
+                    print(("    " + str(g)))
 
             # now insert the new goal
             for g in transformed_goals:

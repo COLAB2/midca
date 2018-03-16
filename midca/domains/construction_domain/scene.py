@@ -9,7 +9,7 @@ class Scene:
         self.blocks = blocks
 
     def draw(self):
-        print
+        print()
         self.layers_to_s(self._makelayers())
 
     def __str__(self):

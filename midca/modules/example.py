@@ -8,13 +8,13 @@ class Example(base.BaseModule):
         states = self.mem.get(self.mem.STATES)
         try:
             state = states[-1]
-        except AttributeError, IndexError:
+        except AttributeError as IndexError:
             # no state recorded
             state = None
         if verbose > 1:
-            print
+            print()
             "State at cycle", cycle, ":"
-            print
+            print()
             str(state)
         # save new knowledge to memory by key
         # key must not conflict with any key used in this or other module

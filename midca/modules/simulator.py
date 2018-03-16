@@ -14,25 +14,25 @@ class MidcaActionSimulator:
         try:
             # get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
-        except TypeError, IndexError:
+        except TypeError as IndexError:
             if verbose >= 1:
-                print
+                print()
                 "Simulator: no actions selected yet by MIDCA."
             return
         if actions:
             for action in actions:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
-                        print
+                        print()
                         "simulating MIDCA action:", action
                     self.world.apply_midca_action(action)
                 else:
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA-selected action", action, "illegal in current world state. Skipping"
         else:
             if verbose >= 2:
-                print
+                print()
                 "No actions selected this cycle by MIDCA."
 
 
@@ -60,7 +60,7 @@ class WorldChanger:
 
     def parseGoal(self, txt):
         if not txt.endswith(")"):
-            print
+            print()
             "Error reading input. Atom must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
             return None
         try:
@@ -69,7 +69,7 @@ class WorldChanger:
             goal = goals.Goal(*args, predicate=predicateName)
             return goal
         except Exception:
-            print
+            print()
             "Error reading input. Atom must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
             return None
 
@@ -77,7 +77,7 @@ class WorldChanger:
         if verbose == 0:
             return
         while True:
-            val = raw_input(
+            val = input(
                 "If you wish to change the state, please input the desired atom to flip. Otherwise, press enter to continue\n")
             if not val:
                 return "continue"
@@ -89,14 +89,14 @@ class WorldChanger:
                     atom = self.world.midcaGoalAsAtom(goal)
                     if self.world.atom_true(atom):
                         self.world.remove_atom(atom)
-                        print
+                        print()
                         "Atom", atom, "was true and is now false"
                     else:
                         self.world.add_atom(atom)
-                        print
+                        print()
                         "Atom", atom, "was false and is now true"
                 except ValueError:
-                    print
+                    print()
                     "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
 
 
@@ -136,15 +136,15 @@ class ArsonSimulator:
                 try:
                     self.world.apply_named_action("lightonfire", [arsonist, block])
                     if verbose >= 2:
-                        print
+                        print()
                         "Simulating action: lightonfire(" + str(arsonist) + ", " + str(block) + ")"
                 except Exception:
                     if verbose >= 1:
-                        print
+                        print()
                         "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
             except IndexError:
                 if verbose >= 1:
-                    print
+                    print()
                     "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
 
 
@@ -172,7 +172,7 @@ class FireReset:
             return
         self.numTowers = score.towers
         if verbose >= 2:
-            print
+            print()
             "Since a tower was just completed, putting out all fires."
         self.put_out_fires()
 
@@ -215,10 +215,10 @@ class NBeaconsSimulator:
 
         # for each beacon, run the fail rate
         for b_id in activated_b_ids:
-            if random.choice(range(100)) < self.beacon_fail_rate:
+            if random.choice(list(range(100))) < self.beacon_fail_rate:
                 self.world.apply_named_action("deactivatebeacon", [b_id])
                 if self.verbose >= 1:
-                    print
+                    print()
                     "Simulating action: deactivatebeacon(" + str(b_id) + ")"
 
 
@@ -260,18 +260,18 @@ class NBeaconsActionSimulator:
         else:
             prev_action_dest = str(action.args[-1])
 
-        if self.verbose >= 1: print
+        if self.verbose >= 1: print()
         "prev_action_dest is now " + prev_action_dest
 
         next_action_source = prev_action_dest
         next_action_dest = ''
 
         for atom in self.world.get_atoms(filters=["adjacent-" + dir, next_action_source]):
-            if self.verbose >= 1: print
+            if self.verbose >= 1: print()
             "processing atom " + str(atom)
             if atom.args[0].name == next_action_source:
                 next_action_dest = atom.args[1].name
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "next action dest = " + str(next_action_dest)
                 new_action_args = ['Curiosity', next_action_source, next_action_dest]
                 subsequent_action = ['move' + dir] + new_action_args
@@ -307,12 +307,12 @@ class NBeaconsActionSimulator:
             #    print "  "+str(qs_atoms)
             # print "is_atom_true(quicksand, "+str([str(agent_tile)]) +") = "+str(self.world.is_true('quicksand',[str(agent_tile)]))
             if self.world.is_true('quicksand', [str(agent_tile)]):
-                if self.verbose >= 1: print
-                "free related atoms = " + str(map(str, self.world.get_atoms(filters=['free'])))
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
+                "free related atoms = " + str(list(map(str, self.world.get_atoms(filters=['free']))))
+                if self.verbose >= 1: print()
                 'self.world.is_true(free,Curiosity): ' + str(self.world.is_true('free', 'Curiosity'))
                 if self.world.is_true('free', ['Curiosity']):
-                    if self.verbose >= 1: print
+                    if self.verbose >= 1: print()
                     "Agent is free, moving away from quicksand"
                     # remove free
 
@@ -320,7 +320,7 @@ class NBeaconsActionSimulator:
                     # actually perform move action, assuming applicable
                     if self.world.midca_action_applicable(action):
                         if self.verbose >= 2:
-                            print
+                            print()
                             "simulating MIDCA action:", action
                         self.world.apply_midca_action(action)
                         if self.filehandle: self.filehandle.write("simulating MIDCA action:" + str(action) + "\n")
@@ -329,11 +329,11 @@ class NBeaconsActionSimulator:
                         if self.filehandle: self.filehandle.write(
                             "It seems that even though the agent is free, action " + str(
                                 action) + " is not applicable" + "\n")
-                        print
+                        print()
                         "It seems that even though the agent is free, action " + str(action) + " is not applicable"
                         return False
                 else:  # agent not free
-                    if self.verbose >= 1: print
+                    if self.verbose >= 1: print()
                     "Agent is not free, failing to attempt to move from quicksand"
                     if self.filehandle: self.filehandle.write(
                         "Agent is not free, failing to attempt to move from quicksand" + "\n")
@@ -344,18 +344,18 @@ class NBeaconsActionSimulator:
                     #    self.world.add_fact('stuck',['Curiosity'])
 
             else:  # no quicksand, just perform move like normal
-                if self.verbose >= 2: print
+                if self.verbose >= 2: print()
                 "action is " + str(action)
 
                 if self.world.midca_action_applicable(action):
                     if self.verbose >= 2:
-                        print
+                        print()
                         "simulating MIDCA action:", action
 
                     # if move action, check to see which tiles the agent would pass in what order
                     # and check to see if those had quicksand
                     agent_stuck_inbetween = False
-                    if self.verbose >= 1: print
+                    if self.verbose >= 1: print()
                     "len(action.args) = " + str(len(action.args))
                     if 'move' in str(action) and len(action.args) > 3:
                         # print "here"
@@ -374,7 +374,7 @@ class NBeaconsActionSimulator:
                                 self.world.add_fact('stuck', ['Curiosity'])
                                 self.world.add_fact('agent-at', ['Curiosity', str(tile)])
                                 agent_stuck_inbetween = True
-                                print
+                                print()
                                 "Agent got stuck inbetween at loc " + str(tile)
                                 if self.filehandle: self.filehandle.write(
                                     "Agent got stuck inbetween at loc " + str(tile) + "\n")
@@ -384,7 +384,7 @@ class NBeaconsActionSimulator:
                         if self.filehandle: self.filehandle.write("simulating MIDCA action:" + str(action) + "\n")
                         return True
                 else:
-                    if self.verbose >= 1: print
+                    if self.verbose >= 1: print()
                     "action " + str(action) + " is not applicable"
                     if self.filehandle: self.filehandle.write("action " + str(action) + " is not applicable" + "\n")
                     return False
@@ -393,13 +393,13 @@ class NBeaconsActionSimulator:
         else:  # an action other than move, no need to check if it will work
             if self.world.midca_action_applicable(action):
                 if self.verbose >= 2:
-                    print
+                    print()
                     "simulating MIDCA action:", action
                 self.world.apply_midca_action(action)
                 if self.filehandle: self.filehandle.write("simulating MIDCA action:" + str(action) + "\n")
                 return True
             else:
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "action " + str(action) + " is not applicable"
                 if self.filehandle: self.filehandle.write("action " + str(action) + " is not applicable" + "\n")
         if self.filehandle: self.filehandle.write("did not execute action" + str(action) + " \n")
@@ -419,12 +419,12 @@ class NBeaconsActionSimulator:
             stuck_atoms = self.world.get_atoms(filters=['stuck'])
             if len(stuck_atoms) == 0:
                 self.world.add_fact('stuck', ['Curiosity'])
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "inserted stuck atom"
                 if self.filehandle: self.filehandle.write("inserted stuck atom" + "\n")
             if self.world.is_true('free', ['Curiosity']):
                 self.world.remove_fact('free', ['Curiosity'])
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "removed free atom"
                 if self.filehandle: self.filehandle.write("removed free atom" + "\n")
             agent_stuck_in_mud = True
@@ -434,25 +434,25 @@ class NBeaconsActionSimulator:
     def sim_action_push(self):
         agent_at_atom = self.world.get_atoms(filters=['agent-at', 'Curiosity'])[0]
         # get agent's start loc
-        if self.verbose >= 1: print
+        if self.verbose >= 1: print()
         "agent-at-atom = " + str(agent_at_atom)
         start = str(agent_at_atom[1])
         # get adjacent east atom
         adj_atoms_east_to_agent = self.world.get_atoms(filters=['adjacent-east', start])
         adj_atom_east = None
         for a in adj_atoms_east_to_agent:
-            if self.verbose >= 1: print
+            if self.verbose >= 1: print()
             "looking at a = " + str(a)
             if str(a.args[0]) == start:
                 adj_atom_east = a
-        if self.verbose >= 1: print
+        if self.verbose >= 1: print()
         "adj_east_to_agent = " + str(adj_atom_east)
         # get new location
         dest = str(adj_atom_east.args[1])
         # now 'perform move'
         self.world.add_fact('agent-at', ['Curiosity', dest])
         self.world.remove_fact('agent-at', ['Curiosity', start])
-        if self.verbose >= 1: print
+        if self.verbose >= 1: print()
         "Simulated a wind push from " + str(start) + " to " + str(dest)
         if self.filehandle: self.filehandle.write(
             "Simulated a wind push from " + str(start) + " to " + str(dest) + "\n")
@@ -479,7 +479,7 @@ class NBeaconsActionSimulator:
         for wind_sched_item in self.wind_schedule:
             if wind_sched_item[0] == cycle:
                 self.wind_strength = wind_sched_item[1]
-                print
+                print()
                 "Just changed wind strength to " + str(self.wind_strength)
                 if self.filehandle: self.filehandle.write(
                     "Just changed wind strength to " + str(self.wind_strength) + "\n")
@@ -489,9 +489,9 @@ class NBeaconsActionSimulator:
             # get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
             first_action = actions[0]
-        except TypeError, IndexError:
+        except TypeError as IndexError:
             if verbose >= 1:
-                print
+                print()
                 "Simulator: no actions selected yet by MIDCA."
             if self.filehandle: self.filehandle.write("Simulator: no actions selected yet by MIDCA.\n")
             if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world, rtn_str=True) + "\n")
@@ -508,15 +508,15 @@ class NBeaconsActionSimulator:
         # add subsequent actions depending on wind strength
         if self.wind and self.wind_dir in str(first_action):
             # check to see how far this move is
-            start_x, start_y = map(int, str(first_action.args[1])[2:].split(
-                'y'))  # hacky - relies on tiles represented as 'Tx2y3'
-            end_x, end_y = map(int, str(first_action.args[-1])[2:].split('y'))  # same kind of hackyness
+            start_x, start_y = list(map(int, str(first_action.args[1])[2:].split(
+                'y')))  # hacky - relies on tiles represented as 'Tx2y3'
+            end_x, end_y = list(map(int, str(first_action.args[-1])[2:].split('y')))  # same kind of hackyness
             move_dist = (abs(end_x - start_x) + abs(end_y - start_y))
-            if self.verbose >= 1: print
+            if self.verbose >= 1: print()
             "move_dist is " + str(move_dist)
 
             pushes_needed = self.wind_strength + 1 - move_dist
-            if self.verbose >= 1: print
+            if self.verbose >= 1: print()
             "  -->> pushes needed is " + str(pushes_needed)
             if self.filehandle: self.filehandle.write("  -->> pushes needed is " + str(pushes_needed) + "\n")
 
@@ -546,12 +546,12 @@ class NBeaconsActionSimulator:
                 # self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
                 self.sim_action_push()
                 pushes_needed -= 1
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "Wind has blown the agent in the " + str(self.wind_dir) + " direction"
                 if self.filehandle: self.filehandle.write(
                     "Wind has blown the agent in the " + str(self.wind_dir) + " direction\n")
             except:
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 "Error executing sim push action : " + str(sys.exc_info()[0])
                 if self.filehandle: self.filehandle.write(
                     "Error executing sim push action : " + str(sys.exc_info()[0]) + "\n")

@@ -22,7 +22,7 @@ def asqiiDisplay(world):
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    print
+    print()
     str(scene.Scene(blocks))
 
 
@@ -73,7 +73,7 @@ class ArsonCogSciDemo():
             # get tower score
             towersCompleted = midca.mem.get(evaluate.SCORE).getTowersCompleted()
             towersScore = midca.mem.get(evaluate.SCORE).getTowersScore()
-            print
+            print()
             str(midca.mem.get(evaluate.SCORE))
             file.write(
                 str(run_id) + "," + str(arsonchance) + "," + str(usingTFTree) + "," + str(usingSimMA) + "," + str(
@@ -103,7 +103,7 @@ class ArsonCogSciDemo():
         # since we are varying using 3 parameters (arson chance, using tf trees, using MA)
         # we have three nested loops, creating individual midca runs for each unique paramterization
 
-        print
+        print()
         "Initializing each unique MIDCA run..."
         # time.sleep(0.5)
         # 1. vary by arson chance
@@ -121,7 +121,7 @@ class ArsonCogSciDemo():
                     ex.appendRun(midcaInst)
 
             curr_arson_chance -= ARSON_CHANCE_DECREMENT
-        print
+        print()
         "Running each MIDCA instance..."
         # time.sleep(0.5)
         ex.run()
@@ -204,7 +204,7 @@ class MIDCAInstance():
         myMidca.initGoalGraph(cmpFunc=preferApprehend)
         ## DO NOT DO THIS: experiment.py will do this automatically: myMidca.init()
 
-        print
+        print()
         "Created MIDCA " + str(id(myMidca)) + " w/ arsonchance=" + str(
             self.arsonChanceArg) + ", usingTFTreeFire=" + str(self.usingTFTreeFire) + ",usingSimMA=" + str(
             self.usingSimulatedMA)

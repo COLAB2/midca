@@ -41,7 +41,7 @@ class ROSObserver:
             self.mem.add(self.mem.FEEDBACK, d)
         self.mem.unlock(self.mem.STATE)
         if verbose > 1:
-            print
+            print()
             "World observed:", len(detectionEvents), "new detection event(s),", len(
                 utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
 
@@ -68,7 +68,7 @@ class PerfectObserver:
             raise Exception("World obervation failed.")
         self.mem.add(self.mem.STATES, world)
         if verbose >= 1:
-            print
+            print()
             "World observed."
 
 
@@ -180,7 +180,7 @@ class MAReporter:
         try:
             world = self.mem.get(self.mem.STATES)[-1]
             lastWorld = self.mem.get(self.mem.STATES)[-2]
-        except TypeError, IndexError:
+        except TypeError as IndexError:
             pass  # leave as None
         if not world:
             return  # no report if not world observed
@@ -188,7 +188,7 @@ class MAReporter:
         report.finalState = world
         try:
             actions = self.mem.get(self.memKeys.MEM_ACTIONS)[-1]
-        except TypeError, IndexError:
+        except TypeError as IndexError:
             actions = []
         blocksPutOut = []
         for action in actions:

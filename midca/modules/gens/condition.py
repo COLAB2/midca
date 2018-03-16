@@ -1,4 +1,4 @@
-import cl
+from . import cl
 
 
 class preconditions:

@@ -8,7 +8,7 @@ def b(name):
 
 def get_block_list(world):
     blocks = {}
-    for obj in world.objects.values():
+    for obj in list(world.objects.values()):
         if obj.type.name != "BLOCK":
             continue
         block = None
@@ -42,6 +42,6 @@ def get_block_list(world):
             blocks[atom.args[0].name].clear = True
         elif atom.predicate == world.predicates["onfire"]:
             blocks[atom.args[0].name].onfire = True
-        elif "hasmortar" in world.predicates.keys() and atom.predicate == world.predicates["hasmortar"]:
+        elif "hasmortar" in list(world.predicates.keys()) and atom.predicate == world.predicates["hasmortar"]:
             blocks[atom.args[0].name].hasmortar = True
-    return sorted(blocks.values(), key=lambda x: x.id)
+    return sorted(list(blocks.values()), key=lambda x: x.id)

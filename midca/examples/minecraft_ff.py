@@ -18,11 +18,11 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-print
+print()
 thisDir
 
 MIDCA_ROOT = thisDir + "/../"
-print
+print()
 MIDCA_ROOT
 
 ### Domain Specific Variables

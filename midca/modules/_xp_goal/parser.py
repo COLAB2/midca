@@ -1,8 +1,8 @@
 import sys
 # import pydot
 import random
-from frame import Frame
-from frame import Role
+from .frame import Frame
+from .frame import Role
 
 
 # given input, creates an xpnet XP
@@ -96,35 +96,35 @@ class Parser:
                         if not frames[framename] in frames[curframe].roles[roletype].facetrelation:
                             frames[curframe].roles[roletype].facetrelation.append(framename)
                 else:
-                    print
+                    print()
                     "Unrecognized facet type!"
-                    print
+                    print()
                     "    " + facettype
                     sys.exit(1)
         return frames
 
     def displayframesascii(self, frames):
-        print
+        print()
         "All frame names:"
-        for k in frames.keys():
-            print
+        for k in list(frames.keys()):
+            print()
             "    " + k
 
-        for k in frames.keys():
-            print
+        for k in list(frames.keys()):
+            print()
             "For frame: " + k
-            for j in frames[k].roles.keys():
-                print
+            for j in list(frames[k].roles.keys()):
+                print()
                 "    " + j + ":    "
-                print
+                print()
                 "        facetvalues:"
                 for i in frames[k].roles[j].facetvalue:
-                    print
+                    print()
                     "            " + i.name
-                print
+                print()
                 "        facetrelations:"
                 for i in frames[k].roles[j].facetrelation:
-                    print
+                    print()
                     "            " + i.name
 
     # Make simple undirected graph, no labels on edges, save in file frame_graph_simple.png

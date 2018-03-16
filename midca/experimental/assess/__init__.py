@@ -1,1 +1,1 @@
-import assess
+from . import assess

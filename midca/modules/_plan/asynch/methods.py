@@ -97,24 +97,24 @@ def is_done(b1, state, goal):
     # print("block: " + b1)
     if b1 == 'table': return True
     if b1 in goal_pos_dic:
-        print(goal_pos_dic[b1])
+        print((goal_pos_dic[b1]))
     else:
         print("no!")
     if b1 in goal_pos_dic and str(goal_pos_dic[b1]) != str(get_last_position(state, b1)):
         print("return false")
         return False
     if get_last_position(state, b1) == 'table': return True
-    if get_last_position(state, b1) in goal_pos_dic.values() and (
+    if get_last_position(state, b1) in list(goal_pos_dic.values()) and (
             b1 not in goal_pos_dic or goal_pos_dic[b1] != get_last_position(state, b1)):
         return False
-    raw_input('Enter ...')
+    input('Enter ...')
     return is_done(get_last_position(state, b1), state, goal)
 
 
 def status(b1, state, goal):
-    print("status" + b1)
+    print(("status" + b1))
     if b1 in goal_pos_dic:
-        print(goal_pos_dic[b1])
+        print((goal_pos_dic[b1]))
     print("***********")
     if is_done(b1, state, goal):
         print("done")
@@ -151,8 +151,8 @@ def moveb_m(state, goal):
     """
 
     for b1 in all_blocks(state):
-        print("___block: " + b1)
-        raw_input('Enter ...')
+        print(("___block: " + b1))
+        input('Enter ...')
         s = status(b1, state, goal)
         if s == 'move-to-table':
             print("___move one")

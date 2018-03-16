@@ -5,13 +5,13 @@ from midca.experimental.baxter import moveit_test, baxter
 
 
 def print_func(s):
-    print
+    print()
     s
 
 
 def baxter_midca():
     world = "Baxter World"
-    print
+    print()
     'I am here'
     myMidca = base.PhaseManager(world, display=print_func)
     for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:

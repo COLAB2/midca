@@ -53,7 +53,7 @@ def clear_block(state, depth, task):
     i = 0
     b1 = task[1]
     task_name = task[0]
-    m = filter(lambda x: x.name.__name__ == "clear_block" and x.block == b1, modified_pyhop.generated_monitors)
+    m = [x for x in modified_pyhop.generated_monitors if x.name.__name__ == "clear_block" and x.block == b1]
     if m:
         m[0].add_task(task_name)
         # print "monitor is already running for " + b1
@@ -80,9 +80,9 @@ def clear_block_stack(state, depth, task):
     b = task[1]
     # stack b on c; c should be clear
     task_name = task[0]
-    print
+    print()
     c
-    m = filter(lambda x: x.name.__name__ == "clear_block" and x.block == c, modified_pyhop.generated_monitors)
+    m = [x for x in modified_pyhop.generated_monitors if x.name.__name__ == "clear_block" and x.block == c]
     if m:
         m[0].add_task(task_name)
         # print "monitor is already running for " + c
@@ -138,7 +138,7 @@ def pos_of_block(state, depth, task):
     i = 0
     b = task[1]
     task_name = task[0]
-    m = filter(lambda x: x.name.__name__ == "pos_of_block" and x.block == b, modified_pyhop.generated_monitors)
+    m = [x for x in modified_pyhop.generated_monitors if x.name.__name__ == "pos_of_block" and x.block == b]
     if m:
         m[0].add_task(task_name)
         # print "monitor is already running for " + b

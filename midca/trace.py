@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import copy
 import shlex, subprocess  # used for generating a pdf of the trace
 from collections import OrderedDict
@@ -32,13 +32,13 @@ class CogTrace:
             for j in range(i):
                 self.all_modules.popitem(last=False)
 
-        trace_cycle_keys = self.trace.keys()
+        trace_cycle_keys = list(self.trace.keys())
         if len(trace_cycle_keys) > MAX_TRACE_SIZE:
             min_key = min(trace_cycle_keys)
             del self.trace[min_key]
 
-        if cycle in self.trace.keys():
-            if len(self.trace[cycle]) > 0 and module in self.trace[cycle].keys():
+        if cycle in list(self.trace.keys()):
+            if len(self.trace[cycle]) > 0 and module in list(self.trace[cycle].keys()):
                 # print("Changing data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
                 self.trace[cycle][module] = []
             else:
@@ -91,7 +91,7 @@ class CogTrace:
         '''
         try:
             if len(self.all_modules) > n:
-                return self.all_modules.items()[-(n + 1)]
+                return list(self.all_modules.items())[-(n + 1)]
 
         except:
             print("problem in get_n_prev_phase")
@@ -125,8 +125,8 @@ class CogTrace:
         return result_str
 
     def printtrace(self):
-        for cycle in self.trace.keys():
-            for phase in self.trace[cycle].keys():
+        for cycle in list(self.trace.keys()):
+            for phase in list(self.trace[cycle].keys()):
                 print("---------------------------------------------\n[cycle " + str(cycle) + "][module " + str(
                     phase) + "]\n---------------------------------------------\n\n")
                 for datum in self.trace[cycle][phase]:
@@ -165,8 +165,8 @@ class CogTrace:
         dotfilestr = "digraph\n{\n"
         graphstr = ""  # for making dependency graph
         prev_node_id = ""  # for making dependency graph
-        for cycle in self.trace.keys():
-            for phase in self.trace[cycle].keys():
+        for cycle in list(self.trace.keys()):
+            for phase in list(self.trace[cycle].keys()):
                 curr_node_id = " C_" + str(cycle) + "_P_" + str(phase)
 
                 # generate the string for this node

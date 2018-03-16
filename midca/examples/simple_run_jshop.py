@@ -22,11 +22,11 @@ Simulation of tower construction
 
 # TODO: make the JSHOP.py to read the path.
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-print
+print()
 thisDir
 
 MIDCA_ROOT = thisDir + "/../"
-print
+print()
 MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"

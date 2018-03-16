@@ -94,9 +94,9 @@ class Experiment():
         # Uses multiprocessing to give each run its own python process
         pool = Pool(processes=1)
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
-        print("self.run[0]=" + str(map(str, self.runs[0])))
+        print(("self.run[0]=" + str(list(map(str, self.runs[0])))))
         results = pool.map(singlerun, self.runs, chunksize=1)
-        print("Experiment finished. We've obtained " + str(len(results)) + " data points")
+        print(("Experiment finished. We've obtained " + str(len(results)) + " data points"))
         return results
 
 #         

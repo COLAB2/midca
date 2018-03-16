@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-from WindowPair import WindowPair
+from .WindowPair import WindowPair
 
 #
 # Simple code for testing the WindowPair module, and showing how it is used

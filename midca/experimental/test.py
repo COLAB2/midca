@@ -11,7 +11,7 @@ class Event:
 
     def __init__(self, eventType=EVENT, **kwargs):
         self.eventType = eventType
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             setattr(self, key, val)
         self.dir = list(kwargs.keys())
         self.dir.append('eventType')
@@ -69,24 +69,24 @@ class ProcessEnd(Event):
 
 
 e = Event(memType=1)
-print
+print()
 dir(e)
-print
+print()
 e
 
 mem = MemEvent("Goals")
-print
+print()
 dir(mem)
-print
+print()
 mem
 
 log = LogEvent("Logging")
-print
+print()
 dir(log)
-print
+print()
 log
 
 start = ProcessStart("p1")
 end = ProcessEnd("p1")
-print
+print()
 start, end

@@ -118,7 +118,7 @@ class ChangeFinder:
         for wp in self.windowPairs:
             maxDistances[id(wp)] = []
 
-        print
+        print()
         'Computing alpha values: ' + str(len(data)) + ' data items, ' + \
         'p = ' + str(p) + ', n = ' + str(n)
 
@@ -126,7 +126,7 @@ class ChangeFinder:
         for i in range(n):
 
             if (i % int(n / 10) == 0):
-                print
+                print()
                 '% done: ' + str(i * 100 / n)
 
             for wp in self.windowPairs:
@@ -147,7 +147,7 @@ class ChangeFinder:
         for wp in self.windowPairs:
             maxDistances[id(wp)].sort()
             wp.alpha = maxDistances[id(wp)][int(n * (1 - p))]
-            print
+            print()
             'Window pair #' + str(i) + ': alpha = ' + str(wp.alpha)
 
         self.clear()

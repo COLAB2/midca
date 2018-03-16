@@ -100,7 +100,7 @@ Pyhop provides the following classes and functions:
 # of how to use Pyhop. To run it, launch python and type 'import examples'.
 
 
-from __future__ import print_function
+
 import copy, sys, pprint
 
 
@@ -126,7 +126,7 @@ class Goal():
 def print_state(state, indent=4):
     """Print each variable in state, indented by indent spaces."""
     if state != False:
-        for (name, val) in vars(state).items():
+        for (name, val) in list(vars(state).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(state.__name__ + '.' + name)
@@ -138,7 +138,7 @@ def print_state(state, indent=4):
 def print_goal(goal, indent=4):
     """Print each variable in goal, indented by indent spaces."""
     if goal != False:
-        for (name, val) in vars(goal).items():
+        for (name, val) in list(vars(goal).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(goal.__name__ + '.' + name)

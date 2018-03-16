@@ -11,7 +11,7 @@ def asqiiDisplay(world):
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    print(str(scene.Scene(blocks)))
+    print((str(scene.Scene(blocks))))
 
 
 def preferApprehend(goal1, goal2):
@@ -96,11 +96,11 @@ def pyhop_state_from_world(world, name="state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
-        if block not in s.hasmortar.keys():
+        if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
 
     for mblock in mortarblocks:
-        if mblock not in s.mortaravailable.keys():
+        if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
 
     return s

@@ -62,7 +62,7 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file="domain.pddl", midca_file="a.txt"):
             for line in lines[2:]:
                 if line.startswith("parameters"):
                     parameters = outermost_parentheses(line).split("?")[1:]
-                    print
+                    print()
                     parameters
                     p = ""
                     for parameter in parameters:
@@ -71,7 +71,7 @@ def PDDL_to_MIDCA_DOMAIN(pddl_file="domain.pddl", midca_file="a.txt"):
 
                     p = p[1:]
                     f.write("args = [" + p.strip() + "],")
-                    print
+                    print()
                     "args = [" + p.strip() + "],"
 
                 if line.startswith("precondition"):

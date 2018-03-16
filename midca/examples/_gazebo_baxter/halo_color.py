@@ -58,7 +58,7 @@ class HaloLed():
         """
         try:
             self.pub[color].publish(Float32(intensity))
-        except Exception, e:
+        except Exception as e:
             rospy.logwarn("%s", str(e))
 
     #####

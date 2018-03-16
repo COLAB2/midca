@@ -39,29 +39,29 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
     kin = baxter_kinematics(limb)
     curPosition = kin.forward_position_kinematics(startAngles)
     if verbose:
-        print
+        print()
         "Starting IK engine - starting pose:", curPosition
-    curAngles = {name: angleRanges[name].midpoint() for name in startAngles.keys()}
-    print
+    curAngles = {name: angleRanges[name].midpoint() for name in list(startAngles.keys())}
+    print()
     curAngles
     curPosition = kin.forward_position_kinematics(curAngles)
     n = 0
-    movesUp = {name: 0 for name in curAngles.keys()}
-    movesDown = {name: 0 for name in curAngles.keys()}
+    movesUp = {name: 0 for name in list(curAngles.keys())}
+    movesDown = {name: 0 for name in list(curAngles.keys())}
     while distance(curPosition, target) > threshold:
         n += 1
         if n > 10000:
             if verbose:
-                print
+                print()
                 "Reached 10000 steps. Position:", curPosition
-                print
+                print()
                 "up:", movesUp
-                print
+                print()
                 "down", movesDown
             return None
         d = distance(curPosition, target)
         deltaD = []
-        for name in curAngles.keys():
+        for name in list(curAngles.keys()):
             # calculate distance from target if joint is rotated "up" or "down" by delta radians. Ignore results which exceed min/max joint angles, or which are farther than current distance.
             curAngles[name] += delta
             if curAngles[name] in angleRanges[name]:
@@ -80,7 +80,7 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
                 deltaD.append((dDown - d, name, False))
         if not deltaD:
             if verbose:
-                print
+                print()
                 "No useful moves found at position:", curPosition
             return None
         deltaD.sort(key=lambda x: x[0])
@@ -91,7 +91,7 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
             curAngles[deltaD[0][1]] -= delta
             movesDown[deltaD[0][1]] += 1
         curPosition = kin.forward_position_kinematics(curAngles)
-    print
+    print()
     "found solution in", n, "steps."
     return curAngles
 
@@ -121,31 +121,31 @@ def getSolutionAStar(target, startAngles, threshold=0.01, delta=0.01, verbose=Tr
     visited = set()
     curPosition = kin.forward_position_kinematics(startAngles)
     if verbose:
-        print
+        print()
         "Starting IK engine - starting pose:", curPosition
-    curAngles = {name: angleRanges[name].midpoint() for name in startAngles.keys()}
+    curAngles = {name: angleRanges[name].midpoint() for name in list(startAngles.keys())}
     curPosition = kin.forward_position_kinematics(curAngles)
     heappush(stateQ, (distance(curPosition, target), dict(curAngles)))
     visited.add(Hashable(curAngles))
     n = 0
-    movesUp = {name: 0 for name in curAngles.keys()}
-    movesDown = {name: 0 for name in curAngles.keys()}
+    movesUp = {name: 0 for name in list(curAngles.keys())}
+    movesDown = {name: 0 for name in list(curAngles.keys())}
     while stateQ:
         n += 1
         d, curAngles = heappop(stateQ)
         if d < threshold:
-            print
+            print()
             "found solution in", n, "steps."
             return curAngles
         if n > 10000:
             if verbose:
-                print
+                print()
                 "Reached 10000 steps. Position:", kin.forward_position_kinematics(curAngles)
-                print
+                print()
                 "Angles"
             return None
         deltaD = []
-        for name in curAngles.keys():
+        for name in list(curAngles.keys()):
             # calculate distance from target if joint is rotated "up" or "down" by delta radians. Ignore results which exceed min/max joint angles
             curAngles[name] += delta
             if Hashable(curAngles) not in visited and curAngles[name] in angleRanges[name]:
@@ -159,7 +159,7 @@ def getSolutionAStar(target, startAngles, threshold=0.01, delta=0.01, verbose=Tr
                 heappush(stateQ, (dDown, dict(curAngles)))
             curAngles[name] += delta
     if verbose:
-        print
+        print()
         "No useful moves found at step", n
     return None
 
@@ -168,23 +168,23 @@ def test():
     # sol = getSolutionAStar([0.55, -0.4, -0.6], {'right_s0': 0, 'right_s1': 0, 'right_e0': 0, 'right_e1': 0, 'right_w0': 0, 'right_w1': 0, 'right_w2': 0}, threshold = 0.1)
     # print sol
     rospy.init_node('baxter_kinematics')
-    import baxter
+    from . import baxter
     baxter.enable_robot(nodeEnabled=True)
     sol = getSolution([0.5, 0, -0.2],
                       {'right_s0': 0, 'right_s1': 0, 'right_e0': 0, 'right_e1': 0, 'right_w0': 0, 'right_w1': 0,
                        'right_w2': 0}, 'right', threshold=0.01)
-    print
+    print()
     sol
     rospy.init_node('baxter_kinematics')
     kin = baxter_kinematics('right')
     pos = kin.forward_position_kinematics(sol, var=True)
-    print
+    print()
     pos
     right = baxter_interface.Limb('right')
     right.move_to_joint_positions(sol)
-    print
+    print()
     right.endpoint_pose()['position']
-    print
+    print()
     right.joint_angles()
 
 

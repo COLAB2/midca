@@ -7,7 +7,7 @@ from midca.metamodules import monitor, control, interpret, metaintend, plan
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
-    print
+    print()
     str(scene.Scene(blocks))
 
 

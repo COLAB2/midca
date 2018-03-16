@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("../../")
 from utils import adistadapt
-from gngassess import *
+from .gngassess import *
 
 '''
 experimental MIDCA module that categorizes the type of an anomaly detected using the A-Distance. This is still in the early stages of development, though the module should run correctly so long as an A-Distance module is also incorporated into MIDCA.
@@ -120,7 +120,7 @@ class PredicateChangeAssessor:
     # add in positives decreasing, negatives decreasing
     def characterize_change(self, pred, valence, baseline):
         change = valence.compare(baseline)
-        print
+        print()
         change[pred][0], change[pred][1]
         if change[pred][0] >= abs(change[pred][1]):
             return self.POS_INC  # number of predicate instances is increasing
@@ -134,7 +134,7 @@ class PredicateChangeAssessor:
     def run(self, cycle, verbose=2):
         if not self.mem.get(ANOMALY_STATE_KEY) or not self.mem.get(ANOMALY_STATE_KEY)[-1]:
             if verbose >= 3:
-                print
+                print()
                 "No valence analysis performed."
             return
         if not self.baseline:
@@ -144,5 +144,5 @@ class PredicateChangeAssessor:
         valence = self.characterize_change(self.mem.get(ANOMALY_STATE_KEY)[-1], self.window_valence(), self.baseline)
         self.mem._update(VALENCE_KEY, valence)
         if verbose >= 1:
-            print
+            print()
             "anomaly valence: ", valence

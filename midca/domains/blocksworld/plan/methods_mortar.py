@@ -21,7 +21,7 @@ def is_done(b1, state, goal):
     if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
         return False
     if state.pos[b1] == 'table': return True
-    if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
+    if state.pos[b1] in list(goal.pos.values()) and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
         return False
     return is_done(state.pos[b1], state, goal)
 
@@ -35,7 +35,7 @@ def status(b1, state, goal):
         return 'move-to-table'
     elif is_done(goal.pos[b1], state, goal) and state.clear[goal.pos[b1]]:
         btmblk = goal.pos[b1]
-        if btmblk in goal.hasmortar.keys() and goal.hasmortar[btmblk]:
+        if btmblk in list(goal.hasmortar.keys()) and goal.hasmortar[btmblk]:
             ''' This check adds a status so we move blocks with mortar different then without mortar '''
             return 'move-to-block-with-mortar'
         else:
@@ -45,7 +45,7 @@ def status(b1, state, goal):
 
 
 def all_blocks(state):
-    return state.clear.keys()
+    return list(state.clear.keys())
 
 
 """
@@ -174,7 +174,7 @@ def put_m_mortar(state, b1, b2):
     b2 is b1's destination: either the table or another block.
     """
 
-    available_mortar = [k for k, v in state.mortaravailable.items() if v]
+    available_mortar = [k for k, v in list(state.mortaravailable.items()) if v]
     mortar_block = False
     if len(available_mortar) > 0:
         mortar_block = available_mortar[0]

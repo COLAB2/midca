@@ -82,7 +82,7 @@ class ADistTrace:
                     valstr = self.val_to_str(val[0], val[1])
                 s += "\t|\t" + valstr
             if i == startnum:
-                print
+                print()
                 "\n...\n..."
                 i = len(self.values) - endnum
             i += 1
@@ -226,10 +226,10 @@ class ADistanceAnomalyNoter:
         currworld = copy.deepcopy(world)  # for trace
         self.mem.add(ANOMALY_STATE_KEY, self.anomalous())
         if verbose >= 1 and self.anomalous():
-            print
+            print()
             "Anomaly detected."
         elif verbose >= 2 and not self.anomalous():
-            print
+            print()
             "No anomaly detected."
 
         trace = self.mem.trace
@@ -267,11 +267,11 @@ class StateDiscrepancyDetector:
         last_actions = None
         try:
             last_actions = self.mem.get(self.mem.ACTIONS)[-1]
-            if self.verbose >= 2: print("last_actions are " + str(map(str, last_actions)))
+            if self.verbose >= 2: print(("last_actions are " + str(list(map(str, last_actions)))))
             # for now assume just one action
             if len(last_actions) != 1:
-                if self.verbose >= 1: print(
-                    "Agent has " + str(len(last_actions)) + " previous actions, will not proceed")
+                if self.verbose >= 1: print((
+                    "Agent has " + str(len(last_actions)) + " previous actions, will not proceed"))
                 if trace:
                     trace.add_data("DISCREPANCY", None)
                     trace.add_data("EXPECTED", None)
@@ -279,7 +279,7 @@ class StateDiscrepancyDetector:
                 return
         except:
             if self.verbose >= 1:
-                print
+                print()
                 "No actions executed, skipping State Discrepancy Detection"
 
             return
@@ -291,9 +291,9 @@ class StateDiscrepancyDetector:
             copy_world.apply_midca_action(last_action)
 
         except:
-            print
+            print()
             "Exception trying action " + str(last_action) + " is " + str(sys.exc_info()[0])
-            print
+            print()
             "Previous action " + str(
                 last_action) + " not applicable, agent did not execute an action during last act phase"
         world_diff = self.world.diff(copy_world)
@@ -307,7 +307,7 @@ class StateDiscrepancyDetector:
         i = 0
         for exp_atom in expected:
             if 'activated' in str(exp_atom):
-                if self.verbose >= 1: print
+                if self.verbose >= 1: print()
                 '  ignoring activated atoms in discrepancies'
             else:
                 expected_no_activate.append(exp_atom)
@@ -317,9 +317,9 @@ class StateDiscrepancyDetector:
 
         # print("World diff returned : "+str(world_diff))
         if len(expected) > 0 or len(actual) > 0:
-            if self.verbose >= 1: print("Expected " + str(map(str, expected)) + " but got " + str(map(str, actual)))
+            if self.verbose >= 1: print(("Expected " + str(list(map(str, expected))) + " but got " + str(list(map(str, actual)))))
         else:
-            if self.verbose >= 1: print
+            if self.verbose >= 1: print()
             "No Discrepancy Detected"
         is_discrepancy = not (len(expected) == 0 and len(actual) == 0)
 
@@ -330,8 +330,8 @@ class StateDiscrepancyDetector:
 
         if trace:
             trace.add_data("DISCREPANCY", is_discrepancy)
-            trace.add_data("EXPECTED", str(map(str, expected)))
-            trace.add_data("ACTUAL", str(map(str, actual)))
+            trace.add_data("EXPECTED", str(list(map(str, expected))))
+            trace.add_data("ACTUAL", str(list(map(str, actual))))
 
         return
 

@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from pocketsphinx import LiveSpeech, get_model_path
 import time
 import rospy

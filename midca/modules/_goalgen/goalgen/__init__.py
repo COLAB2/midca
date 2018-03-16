@@ -1,1 +1,1 @@
-import gengoal, goal, goalorg
+from . import gengoal, goal, goalorg

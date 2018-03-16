@@ -11,7 +11,7 @@ import inspect, os
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
-    print
+    print()
     str(scene.Scene(blocks))
 
 

@@ -63,5 +63,5 @@ myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
 q = Point(x=0.6754473650020971, y=0.3487005600746112, z=-0.14113003072395247)
 myMidca.mem.set(myMidca.mem.PUTTING_POINT, q)
 
-raw_input('Enter ...')
+input('Enter ...')
 rosMidca.run_midca()

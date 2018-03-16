@@ -38,7 +38,7 @@ def initial_setup_baxter():
 
     """
 
-    print
+    print()
     'Initializing node...'
     rospy.init_node('baxter_or')
     baxter.enable()
@@ -47,7 +47,7 @@ def initial_setup_baxter():
 
 def move_left_arm_to(point):
     origin = baxter.getLeftArmPosition()
-    print
+    print()
     'origin =', origin
     #     if origin[2] < Z + 0.2:
     #         dest1 = origin[:]
@@ -61,10 +61,10 @@ def move_left_arm_to(point):
     #         print 'dest2 =', dest2
     #         baxter.moveLeftArm(dest2, baxter.getLeftArmOrientation())
     #         print 'done dest2'
-    print
+    print()
     'point =', point
     baxter.moveLeftArm(point, baxter.getLeftArmOrientation())
-    print
+    print()
     'done point'
 
 
@@ -79,7 +79,7 @@ def test():
 
     """
     # The following line is just for test.
-    raw_input('Enter to capture image.')
+    input('Enter to capture image.')
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
     # while n_clicks <= tot_clicks-1:
@@ -100,7 +100,7 @@ def test():
 def on_mouse_click(event, x, y, flag, param):
     global n_clicks, points
     if event == cv2.EVENT_LBUTTONDOWN:
-        print
+        print()
         'Point %s captured: (%s,%s)' % (n_clicks + 1, x, y)
         points.append([x, y])
         n_clicks += 1
@@ -117,7 +117,7 @@ def get_img_reference_points():
 
     """
     # The following line is just for test.
-    raw_input('Enter to capture image.')
+    input('Enter to capture image.')
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
     while n_clicks <= tot_clicks - 1:
@@ -168,20 +168,20 @@ def getObjectPosition():
     bpoints2 = []
 
     if (len(contours) > 0):
-        print
+        print()
         len(contours)
     else:
-        print
+        print()
         len(contours)
 
     if (len(contours) > 0):
-        print
+        print()
         len(contours)
         #      
 
         cnt = contours[0]
         M = cv2.moments(cnt)
-        print
+        print()
         M
 
         x, y, w, h = cv2.boundingRect(cnt)
@@ -247,7 +247,7 @@ def getObjectPosition():
 
 
 def getObjectPositionTest():
-    raw_input('Enter to capture image.')
+    input('Enter to capture image.')
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
 
@@ -275,10 +275,10 @@ def getObjectPositionTest():
     image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     if (len(contours) > 0):
-        print
+        print()
         len(contours)
     else:
-        print
+        print()
         len(contours)
 
 
@@ -324,7 +324,7 @@ def get_floor_reference_points():
     # Z = (p1[2] + p2[2] + p3[2] + p4[2]) / 4
     # Z = -0.19733055364191465
     Z = (-0.09213761966304572 - 0.08460401925336455 - 0.07989979719202103 - 0.08507849515304883) / 4
-    print
+    print()
     Z
     # Point 1 = [0.5014114237373656, 0.2738107544597765, -0.09213761966304572]
     # Move the LEFT arm to point 2 and press enter.
@@ -365,7 +365,7 @@ def sendPoint(point):
     if not rospy.is_shutdown():
         time.sleep(2)
         p = points[0]
-        print("Sending point command:", p)
+        print(("Sending point command:", p))
         pub.publish(PointStamped(point=p))
 
 
@@ -373,7 +373,7 @@ def main():
     initial_setup_baxter()
     calibrate_homography()
     position = getObjectPosition()
-    print
+    print()
     position
     # baxter.closeLeftGripper()
     # sendPoint(position)

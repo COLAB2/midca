@@ -3,7 +3,7 @@ from midca.experimental.baxter import baxter_module, baxter
 
 
 def print_func(s):
-    print
+    print()
     s
 
 

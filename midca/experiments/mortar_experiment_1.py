@@ -71,7 +71,7 @@ def runexperiment():
         curr_mortar_count += MORTAR_QUANTITY_INCREMENT
 
     # Uses multiprocessing to give each run its own python process
-    print("-- Starting experiment using " + str(NUM_PROCESSES) + " processes...")
+    print(("-- Starting experiment using " + str(NUM_PROCESSES) + " processes..."))
     t0 = time.time()
     # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
     # **** (each MIDCA must use its own python process)
@@ -79,13 +79,13 @@ def runexperiment():
     results = pool.map(singlerun, runs, chunksize=1)
     t1 = time.time()
     timestr = '%.2f' % (t1 - t0)
-    print("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points")
+    print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
     print("-- Writing data to file...")
     f = open(DATA_FILENAME, 'w')
     f.write(DATA_FILE_HEADER_STR)
     for r in results:
         f.write(r)
-    print("-- Data written to file " + str(DATA_FILENAME))
+    print(("-- Data written to file " + str(DATA_FILENAME)))
     print("-- Experiment complete!")
 
 
@@ -201,7 +201,7 @@ def graph(prev_file):
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-(prev_file + 1)]
-    print("-- About to graph data from " + str(datafile))
+    print(("-- About to graph data from " + str(datafile)))
     header = True
     mortar_ys = []
     cycles_xs = []
@@ -249,7 +249,7 @@ def graph_slices_hardcoded():
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile_goal_trans = DATADIR + files[-(prev_file_goal_trans + 1)]
     datafile_no_goal_trans = DATADIR + files[-(prev_file_no_goal_trans + 1)]
-    print("-- About to read in goal transform data from " + str(datafile_goal_trans))
+    print(("-- About to read in goal transform data from " + str(datafile_goal_trans)))
     header = True
     gt_mortar_ys = []
     gt_cycles_xs = []
@@ -268,8 +268,8 @@ def graph_slices_hardcoded():
                 score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
                 gt_score_zs.append(score)
                 gt_cycles_xs.append(num_cycles)
-        print("There were " + str(count) + " data points collected that will be used for this graph")
-    print("-- About to read in non-goal transform data from " + str(datafile_goal_trans))
+        print(("There were " + str(count) + " data points collected that will be used for this graph"))
+    print(("-- About to read in non-goal transform data from " + str(datafile_goal_trans)))
 
     no_gt_mortar_ys = []
     no_gt_cycles_xs = []

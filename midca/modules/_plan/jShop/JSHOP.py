@@ -22,7 +22,7 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
                STATE_FILE, '1'], stdout=PIPE, stderr=STDOUT)
 
     for line in p.stdout:
-        print
+        print()
         line
         if (line.startswith(" ( (!")):
             plan = line
@@ -51,7 +51,7 @@ def parse(str):
     for elm in elements:
         if (elm[0] == '!' and '(' not in elm):
             elm = elm[1:]
-            print
+            print()
             elm
             action_list = elm.strip().split(' ')
             plan.append(action_list)

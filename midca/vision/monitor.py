@@ -4,7 +4,7 @@ from _dbus_bindings import String
 import math
 
 cap = cv2.VideoCapture(0)
-from baxter import *
+from .baxter import *
 import time
 
 baxter = Baxter()
@@ -120,13 +120,13 @@ def publish(msg, topic):
     pub = rospy.Publisher(topic, String, queue_size=10)
 
     if not rospy.is_shutdown():
-        print("Sending point command:", "monitor fires")
+        print(("Sending point command:", "monitor fires"))
         pub.publish(msg)
         time.sleep(2)
 
 
 def monitor_clear_block(block_name='green block', topic='clear_block'):
-    print
+    print()
     'monitoring...'
 
     # rospy.init_node('clear_block_monitor', anonymous=True)
@@ -159,16 +159,16 @@ def monitor_clear_block(block_name='green block', topic='clear_block'):
             pos_red = 'table'
             clear_green = 'clear'
             clear_red = 'clear'
-            for obj in color_location.keys():
+            for obj in list(color_location.keys()):
                 if obj != block_name:
                     if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 10:
                         if color_location[block_name][1] > color_location[obj][1]:
-                            print
+                            print()
                             block_name + " is not clear"
                             publish(block_name + ' is not clear', topic)
                             return
                         else:
-                            print
+                            print()
                             block_name + "is clear"
 
 

@@ -4,8 +4,8 @@
 import sys
 import random
 import copy
-from Interval import Interval
-import ChangeFinder
+from .Interval import Interval
+from . import ChangeFinder
 
 
 #
@@ -133,7 +133,7 @@ class ADistance:
     # the associated ChangeFinder is cleared
     #
     def clear(self):
-        for intervals in self.intervalDict.itervalues():
+        for intervals in self.intervalDict.values():
             for interval in intervals:
                 interval.clear()
 
@@ -181,8 +181,8 @@ class ADistance:
     def uniformSample(self, n):
 
         sample = []
-        low = sys.maxint
-        high = -sys.maxint
+        low = sys.maxsize
+        high = -sys.maxsize
 
         # Compute bounds on enclosing interval
         for interval in self.intervals:

@@ -13,8 +13,8 @@ import time
 import cv2
 import numpy as np
 
-from homography import *
-from baxter import *
+from .homography import *
+from .baxter import *
 from geometry_msgs.msg import Point, PointStamped
 from _dbus_bindings import String
 from sys import argv
@@ -50,7 +50,7 @@ def initial_setup_baxter():
 def on_mouse_click(event, x, y, flag, param):
     global n_clicks, points
     if event == cv2.EVENT_LBUTTONDOWN:
-        print
+        print()
         'Point %s captured: (%s,%s)' % (n_clicks + 1, x, y)
         points.append([x, y])
         n_clicks += 1
@@ -67,7 +67,7 @@ def get_img_reference_points():
 
     """
     # The following line is just for test.
-    raw_input('Enter to capture image.')
+    input('Enter to capture image.')
     image = baxter.getImageFromRightHandCamera()
     cvimage = baxter.getLastCvImage()
     while n_clicks <= tot_clicks - 1:
@@ -106,7 +106,7 @@ def get_floor_reference_points():
     # Z = (-0.04311285564353425  -0.04512672573083166 -0.04080078888404003 -0.046071914959185875)/4
     # Z= -0.04721129960500225
     Z = -0.15113003072395247
-    print
+    print()
     Z
     # [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
     # Point 1 = [0.5264201148167275, 0.40034933311487086, -0.027560670871152958]
@@ -157,9 +157,9 @@ def calibrate_homography():
     global H, Hinv
     floor_points = get_floor_reference_points()
     img_points = get_img_reference_points()
-    print
+    print()
     img_points
-    print
+    print()
     floor_points
     H = homography_floor_to_img(img_points, floor_points)
     return H

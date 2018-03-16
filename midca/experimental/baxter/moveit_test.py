@@ -25,7 +25,7 @@ class BaxterWave:
                                        "move_group.launch"])
         time.sleep(15)
 
-        raw_input("press enter")
+        input("press enter")
 
         try:
             # left = MoveGroupCommander("left_arm")

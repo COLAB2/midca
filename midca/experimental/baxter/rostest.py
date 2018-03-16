@@ -18,7 +18,7 @@ cmd.stdin.flush()  # Must include this to ensure data is passed to child process
 ready = poll.poll(500)
 if ready:
     result = cmd.stdout.readline()
-    print
+    print()
     result
 time.sleep(2)
 # Write the second command
@@ -28,5 +28,5 @@ cmd.stdin.flush()  # Must include this to ensure data is passed to child process
 ready = poll.poll(500)
 if ready:
     result = cmd.stdout.readline()
-    print
+    print()
     result

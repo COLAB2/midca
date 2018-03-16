@@ -3,7 +3,7 @@ import numpy as np
 from _dbus_bindings import String
 
 cap = cv2.VideoCapture(0)
-from baxter import *
+from .baxter import *
 import time
 
 baxter = Baxter()
@@ -13,7 +13,7 @@ import sys
 import argparse
 
 import rospy
-from homography import *
+from .homography import *
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
 
@@ -141,7 +141,7 @@ def publish(color_location):
         msg = msg + ";" + color + ":" + str(point[0]) + "," + str(point[1]) + "," + str(point[2])
 
     if not rospy.is_shutdown():
-        print("Sending point command:", msg[1:])
+        print(("Sending point command:", msg[1:]))
         pub.publish(msg[1:])
         time.sleep(1)
 
@@ -155,7 +155,7 @@ def main():
     # dark red:
     # RGB: 87 0 0
     # [  0 255  87]
-    print
+    print()
     'Initializing node...'
 
     rospy.init_node('rsdk_xdisplay_image', anonymous=True)

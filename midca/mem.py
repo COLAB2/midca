@@ -137,7 +137,7 @@ class Memory:
             self.logAccess(structname)
 
     def update(self, args):
-        for structname, val in args.items():
+        for structname, val in list(args.items()):
             self._update(structname, val)
 
     def update_all(self, structname, val):
@@ -145,7 +145,7 @@ class Memory:
             if structname not in self.locks:
                 self.locks[structname] = threading.Lock()
         with self.locks[structname]:
-            if structname in self.knowledge and (not isinstance(self.knowledge[structname], basestring)):
+            if structname in self.knowledge and (not isinstance(self.knowledge[structname], str)):
                 struct = self.knowledge[structname]
                 if hasattr(struct, "__getitem__") or hasattr(struct, "__iter__"):
                     for item in struct:

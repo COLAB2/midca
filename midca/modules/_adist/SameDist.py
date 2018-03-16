@@ -94,7 +94,7 @@ def sameDist(n1, m1, s1, n2, m2, s2):
     p1 = sameMean(m1, s1, m2, s2)
     p2 = sameVariance(n1, s1, n2, s2)
 
-    print
+    print()
     str(p1) + ' ' + str(p2)
 
     # I make an error in rejecting the null hypothesis about the distribution

@@ -122,7 +122,7 @@ def asynch_plan(mem, midcaPlan):
                                    RAISE_TOPIC, cmdID))
         else:
             if verbose >= 1:
-                print
+                print()
                 "MIDCA action", midcaAction, "does not correspond to an asynch",
                 "action. MIDCA will skip this action"
     return AsynchPlan(actions, goals)
@@ -200,7 +200,7 @@ class AsynchAction:
             self.executeFunc(self.mem, self.midcaAction, self.status)
         except:
             if verbose >= 2:
-                print
+                print()
                 "Error executing action", self, ":\n", traceback.format_exc(),
                 "\n\nAction assumed to be failed"
             self.status = FAILED
@@ -213,17 +213,17 @@ class AsynchAction:
         try:
             complete = self.isComplete(self.mem, self.midcaAction, self.status)
             if verbose >= 2 and not complete:
-                print
+                print()
                 "Action", self, "not complete."
             if verbose >= 1 and complete:
-                print
+                print()
                 "Action", self, "complete."
             if complete:
                 self.status = COMPLETE
             return complete
         except:
             if verbose >= 1:
-                print
+                print()
                 "Error checking completion status for action", self, " - Assuming \
                  failure:\n", traceback.format_exc()
             self.status = FAILED
@@ -235,7 +235,7 @@ class AsynchAction:
         sent = rosrun.send_msg(topic, rosrun.dict_as_msg)
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Unable to send msg; ", d, "on topic", topic, " Action", self,
                 "assumed failed."
             self.status = FAILED
@@ -272,7 +272,7 @@ def check_2height_stack(mem, objectOrID):
     print("it is in check 3 height ")
     print(objectOrID)
     print("---------------------------------")
-    print(get_last_position(mem, objectOrID))
+    print((get_last_position(mem, objectOrID)))
     world = mem.get(mem.STATE)
     allobject = world.all_objects()
     for each in allobject:
@@ -384,7 +384,7 @@ class AwaitCurrentLocation(AsynchAction):
         t = midcatime.now()
         if t - self.startTime > self.maxDuration:
             if verbose >= 1:
-                print
+                print()
                 "max midcatime exceeded for action:", self, "- changing status to failed."
             self.status = FAILED
             return False
@@ -420,13 +420,13 @@ class DoPoint(AsynchAction):
         t = midcatime.now()
         if not lastLocReport:
             if verbose >= 1:
-                print
+                print()
                 "No object location found, so action:", self, "will fail."
             self.status = FAILED
             return
         if t - lastLocReport[1] > self.maxAllowedLag:
             if verbose >= 1:
-                print
+                print()
                 "Last object location report is too old -",
                 str((t - lastLocReport[1]).total_seconds()), "seconds - so action:", self,
                 "will fail."
@@ -434,14 +434,14 @@ class DoPoint(AsynchAction):
             return
         self.msgDict = {'x': lastLocReport[0].x, 'y': lastLocReport[0].y,
                         'z': lastLocReport[0].z, 'midcatime': self.startTime, 'cmd_id': self.msgID}
-        print
+        print()
         "trying to send"
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
                 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
                 #                 "assumed failed."
-                print
+                print()
                 "fail!!!!!"
             self.status = FAILED
 
@@ -462,7 +462,7 @@ class DoPoint(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -498,12 +498,12 @@ class DoReach(AsynchAction):
             check3stack = check_2height_stack(self.mem, check2stack)
             if check3stack:
                 lastLocReport = get_last_location(self.mem, check3stack)
-        print
+        print()
         lastLocReport
         t = midcatime.now()
         if not lastLocReport:
             if verbose >= 1:
-                print
+                print()
                 "No object location found, so action:", self, "will fail."
             self.status = FAILED
             return
@@ -551,18 +551,18 @@ class DoReach(AsynchAction):
         self.msgDict = {'x': x, 'y': y,
                         'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 
-        print
+        print()
         self.msgDict
 
-        print
+        print()
         "trying to send"
-        print
+        print()
         self.topic
 
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -585,7 +585,7 @@ class DoReach(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -623,7 +623,7 @@ class DoUnstack(AsynchAction):
             check3stack = check_2height_stack(self.mem, check2stack)
             if check3stack:
                 lastLocReport = get_last_location(self.mem, check3stack)
-        print
+        print()
         lastLocReport
         '''
         if pos_of_block == 'table':
@@ -634,7 +634,7 @@ class DoUnstack(AsynchAction):
         t = midcatime.now()
         if not lastLocReport:
             if verbose >= 1:
-                print
+                print()
                 "No object location found, so action:", self, "will fail."
             self.status = FAILED
             return
@@ -679,18 +679,18 @@ class DoUnstack(AsynchAction):
         self.msgDict = {'x': x, 'y': y,
                         'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 
-        print
+        print()
         self.msgDict
 
-        print
+        print()
         "trying to send"
-        print
+        print()
         self.topic
 
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -713,7 +713,7 @@ class DoUnstack(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -753,13 +753,13 @@ class DoStack(AsynchAction):
         t = midcatime.now()
         if not lastLocReport:
             if verbose >= 1:
-                print
+                print()
                 "No object location found, so action:", self, "will fail."
             self.status = FAILED
             return
         if t - lastLocReport[1] > self.maxAllowedLag:
             if verbose >= 1:
-                print
+                print()
                 "Last object location report is too old -",
                 str((t - lastLocReport[1]).total_seconds()), "seconds - so action:", self,
                 "will fail."
@@ -801,18 +801,18 @@ class DoStack(AsynchAction):
         self.msgDict = {'x': x, 'y': y,
                         'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 
-        print
+        print()
         self.msgDict
 
-        print
+        print()
         "trying to send"
-        print
+        print()
         self.topic
 
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -835,7 +835,7 @@ class DoStack(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -920,7 +920,7 @@ class DoPut(AsynchAction):
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -943,7 +943,7 @@ class DoPut(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -983,7 +983,7 @@ class DoRaise(AsynchAction):
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -1006,7 +1006,7 @@ class DoRaise(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -1039,7 +1039,7 @@ class DoGrab(AsynchAction):
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -1062,7 +1062,7 @@ class DoGrab(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False
@@ -1095,7 +1095,7 @@ class DoRelease(AsynchAction):
         sent = rosrun.send_msg(self.topic, rosrun.dict_as_msg(self.msgDict))
         if not sent:
             if verbose >= 1:
-                print
+                print()
                 "Fail"
             #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,
             #                 "assumed failed."
@@ -1118,7 +1118,7 @@ class DoRelease(AsynchAction):
                 elif item[FEEDBACK_KEY] == FAILED:
                     self.status = FAILED
                     if verbose >= 1:
-                        print
+                        print()
                         "MIDCA received feedback that action", self, "has failed"
                     return False
         return False

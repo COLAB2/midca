@@ -42,7 +42,7 @@ def achieve_goals_m(state, goals):
     if goals:
         goal = goals[0]
         object = goal["directObject"]
-        print(object + " is " + get_last_clear_status(state, object))
+        print((object + " is " + get_last_clear_status(state, object)))
         if goal["objective"] == "show-loc":
             return [("point_at", goal["directObject"]), ("achieve_goals", goals[1:])]
         if goal["objective"] == "holding":

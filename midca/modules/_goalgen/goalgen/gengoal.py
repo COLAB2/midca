@@ -7,8 +7,8 @@ from Tree_Fire.Tree import Tree as TreeFire
 from Tree_3_Scen.Tree import Tree as TreeStack
 from goals import Goal
 from domains.blocksworld import blockstate
-from XP_Goal.parser import *
-from XP_Goal.traverser import *
+from .XP_Goal.parser import *
+from .XP_Goal.traverser import *
 from datetime import datetime
 
 readSize = 100000
@@ -79,7 +79,7 @@ class MAGoalGen:
         if self.readSocket:
             data = self.readSocket.recv(size)
             if verbose >= 2:
-                print
+                print()
                 "This was given by Meta-AQUA: ", data
 
             pos1 = data.find("(BURNING (DOMAIN (VALUE ")
@@ -87,7 +87,7 @@ class MAGoalGen:
             if pos1 != -1:
                 blockname = data[pos1 + 24:pos1 + 26]
                 if verbose >= 2:
-                    print
+                    print()
                     "The block to extinguish is: " + blockname
                 block = None
                 for b in blockset:
@@ -98,12 +98,12 @@ class MAGoalGen:
                 if block:
                     return Goal(Goal.GOAL_NO_FIRE, [block])
                 else:
-                    print
+                    print()
                     "No such block!!!"
             elif pos2 != -1:
                 return Goal(Goal.GOAL_APPREHEND, ["Gui Montag"])
         else:
-            print
+            print()
             "No socket open to read Meta-AQUA data from."
 
 
@@ -180,7 +180,7 @@ class XPGoalGen:
         s = self.mem.get(self.memKeys.SOCKET_R)
 
         if verbose >= 2:
-            print
+            print()
             "In gengoal_fire.py"
 
         if s:
@@ -192,7 +192,7 @@ class XPGoalGen:
 
             if text != "None\n":
                 if verbose >= 2:
-                    print
+                    print()
                     "HERE IS TEXT: " + text
 
                 # parse text
@@ -212,7 +212,7 @@ class XPGoalGen:
                 if operator == "apprehend":
                     return Goal(Goal.GOAL_APPREHEND, ["Gui Montag"])
                 else:
-                    print
+                    print()
                     "Unrecognized operator(!): " + str(operator) + ", now producing standard extinguish goal."
                     for block in blockset:
                         if block.onfire:

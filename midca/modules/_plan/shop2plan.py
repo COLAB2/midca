@@ -54,7 +54,7 @@ def parse_shop2_plan(filename):
     text = open(filename).read()
     if "--plan :" in text:
         if "(" not in text:
-            print
+            print()
             text
             return []
         planstart = text.index("(", text.index("--plan :"))
@@ -84,7 +84,7 @@ class Shop2Planner:
         goals = self.mem.get(midca_inst.MEM_CUR_GOAL)
         if not goals:
             if verbose >= 2:
-                print
+                print()
                 "No goal received by planner. Skipping planning."
             return
 
@@ -98,13 +98,13 @@ class Shop2Planner:
                 break
         if allNone:
             if verbose >= 2:
-                print
+                print()
                 "No goal received by planner. Skipping planning."
             return
 
         # shop2
         if verbose >= 2:
-            print
+            print()
             "Planning...",
         shop2str = shop2_str(blockset, goals)
         infile = open(SHOP2_IN_F, "w")
@@ -113,26 +113,26 @@ class Shop2Planner:
         runlisp.run_shop2(SHOP2_DOMAIN_F, SHOP2_IN_F, SHOP2_OUT_F)
         plan = parse_shop2_plan(SHOP2_OUT_F)
         if verbose >= 2:
-            print
+            print()
             "done. cleaning up files...",
         os.remove(SHOP2_IN_F)
         os.remove(SHOP2_IN_F[:-4] + "fasl")
         # os.remove(SHOP2_OUT_F)
         if verbose >= 2:
-            print
+            print()
             "done."
         # change from
 
         if verbose >= 1:
-            print
+            print()
             "Planning complete."
         if verbose >= 2:
-            print
+            print()
             "Plan: ",
             for step in plan:
-                print
+                print()
                 str(step),
-            print
+            print()
         # save plan
         self.mem.add(midca_inst.MEM_PLANS, plan)
         self.mem.set(self.mem.CURR_PLAN, plan)

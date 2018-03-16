@@ -1,4 +1,4 @@
-from goalgen import *
+from .goalgen import *
 
 
 class NewGuide:
@@ -43,34 +43,34 @@ class NewGuide:
         if self.tfBase:
             newgoals = self.get_goals(world, verbose, self.tfGen)
             if verbose >= 2:
-                print
+                print()
                 "TF tree stacking goal generator activated. Goals:"
                 for goal in newgoals:
-                    print
+                    print()
                     "\t", goal, "  ",
-                print
+                print()
             if newgoals:
                 self.mem._update(self.memKeys.MEM_GOALS, newgoals)
         else:
             newgoals = self.get_goals(world, verbose, self.predefGen)
             if verbose >= 2:
-                print
+                print()
                 "Loading from predefined goals. Goals:"
                 for goal in newgoals:
-                    print
+                    print()
                     "\t", goal, "  ",
-                print
+                print()
             if newgoals:
                 self.mem._update(self.memKeys.MEM_GOALS, newgoals)
         if self.tfFire:
             newgoals = self.get_goals(world, verbose, self.fireGen)
             if verbose >= 2:
-                print
+                print()
                 "TF tree fire goal generator activated. Goals:"
                 for goal in newgoals:
-                    print
+                    print()
                     "\t", goal, "  ",
-                print
+                print()
             if newgoals:
                 self.mem._update(self.memKeys.MEM_GOALS, newgoals)
         if self.catchArsonist:
@@ -79,14 +79,14 @@ class NewGuide:
                 self.prioritize(newgoals)
             if verbose >= 2:
                 if not self.useMA:
-                    print
+                    print()
                     "Simulated ",
-                print
+                print()
                 "GDA K-track goal generation activated. Goals:"
                 for goal in newgoals:
-                    print
+                    print()
                     "\t", goal, "  ",
-                print
+                print()
             if newgoals:
                 self.mem._update(self.memKeys.MEM_GOALS, newgoals)
         self.step += 1

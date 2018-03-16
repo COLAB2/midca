@@ -36,7 +36,7 @@ def next_id():
 
 def dict_as_msg(d):
     s = ""
-    for key, value in d.items():
+    for key, value in list(d.items()):
         s += str(key) + ": " + str(value) + " | "
     if s:
         s = s[:-3]  # remove last ' | '
@@ -105,7 +105,7 @@ class RosMidca:
         also be possible to have one handler implement both behaviors, but this might not
         be desirable.
         '''
-        print
+        print()
         "trying to send message on topic", topic
         sent = False
         for handler in self.outgoingMsgHandlers:
@@ -214,8 +214,8 @@ class ObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.memKey, world_repr.DetectionEvent(id=color_location[0],
                                                                 loc=p))
 
-        if color_location_dic and ('red block' in color_location_dic.keys()) and (
-                'green block' in color_location_dic.keys()):
+        if color_location_dic and ('red block' in list(color_location_dic.keys())) and (
+                'green block' in list(color_location_dic.keys())):
             pos_green = 'table'
             pos_red = 'table'
             clear_green = 'clear'
@@ -234,7 +234,7 @@ class ObjectsLocationHandler(IncomingMsgHandler):
                              world_repr.pos_block(id="green block", position=pos_green, isclear=clear_green))
 
         elif len(color_location) == 1:
-            color_block = color_location_dic.keys()[0]
+            color_block = list(color_location_dic.keys())[0]
             pos = 'table'
             clear = 'clear'
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id=color_block, position=pos, isclear=clear))
@@ -300,8 +300,8 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
         This is the three stacking condition , the idea is checking the distance between the coordinates of the three blocks
         '''
 
-        if color_location_dic and ('red block' in color_location_dic.keys()) and (
-                'green block' in color_location_dic.keys()) and ('blue block' in color_location_dic.keys()):
+        if color_location_dic and ('red block' in list(color_location_dic.keys())) and (
+                'green block' in list(color_location_dic.keys())) and ('blue block' in list(color_location_dic.keys())):
 
             pos_green = 'table'
             pos_red = 'table'
@@ -476,8 +476,8 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             '''
             This is the two stacking condition , the idea is checking the distance between the coordinates of two  blocks
             '''
-        elif color_location_dic and ('red block' in color_location_dic.keys()) and (
-                'green block' in color_location_dic.keys()):
+        elif color_location_dic and ('red block' in list(color_location_dic.keys())) and (
+                'green block' in list(color_location_dic.keys())):
             pos_green = 'table'
             pos_red = 'table'
             clear_green = 'clear'
@@ -524,8 +524,8 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.mem.ROS_OBJS_STATE,
                          world_repr.pos_block(id="green block", position=pos_green, isclear=clear_green))
 
-        elif color_location_dic and ('red block' in color_location_dic.keys()) and (
-                'blue block' in color_location_dic.keys()):
+        elif color_location_dic and ('red block' in list(color_location_dic.keys())) and (
+                'blue block' in list(color_location_dic.keys())):
             pos_blue = 'table'
             pos_red = 'table'
             clear_blue = 'clear'
@@ -575,8 +575,8 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.mem.ROS_OBJS_STATE,
                          world_repr.pos_block(id="blue block", position=pos_blue, isclear=clear_blue))
 
-        elif color_location_dic and ('green block' in color_location_dic.keys()) and (
-                'blue block' in color_location_dic.keys()):
+        elif color_location_dic and ('green block' in list(color_location_dic.keys())) and (
+                'blue block' in list(color_location_dic.keys())):
             pos_blue = 'table'
             pos_green = 'table'
             clear_blue = 'clear'
@@ -629,7 +629,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
 
 
         elif len(color_location) == 1:
-            color_block = color_location_dic.keys()[0]
+            color_block = list(color_location_dic.keys())[0]
             pos = 'table'
             clear = 'clear'
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id=color_block, position=pos, isclear=clear))
@@ -723,7 +723,7 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
         # check if there is something in the baxter's hand
         found = 0
         if self.left._state.position < 70:
-            print(self.left._state.position)
+            print((self.left._state.position))
             if self.mem.get(self.history):
                 for each_history in self.mem.get(self.history):
                     objects = each_history
@@ -774,7 +774,7 @@ class UtteranceHandler(IncomingMsgHandler):
             self.memKey = self.mem.ROS_WORDS_HEARD
 
     def store_utterance(self, utterance):
-        print
+        print()
         "storing utterance:", utterance
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
@@ -808,7 +808,7 @@ class FeedbackHandler(IncomingMsgHandler):
         try:
             self.mem.add(self.memKey, s)
         except:
-            print
+            print()
             "Error reading feedback: ", s, " - format should be key: value | key : \
              value..."
 
