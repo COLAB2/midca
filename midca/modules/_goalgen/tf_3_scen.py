@@ -3,6 +3,7 @@ import random
 from midca.domains.blocksworld.block import Block
 from midca.goals import Goal
 
+
 class InternalNode:
     def __init__(self, parent=None, childyes=None, childno=None):
         self.parent = parent
@@ -11,6 +12,7 @@ class InternalNode:
 
     def ground(self, blockset, groundings):
         pass
+
 
 #    clear(-A),on(A,-B),table(B) ?              <---- this is node 1
 #    +--yes: triangle(A) ?                      <---- this is node 2
@@ -46,9 +48,10 @@ class InternalNode1(InternalNode):
                 if not (B.type == Block.TABLE and A.on == B):
                     continue
                 else:
-                    return {'A':A, 'B':B}
+                    return {'A': A, 'B': B}
 
         return {}
+
 
 #    clear(-A),on(A,-B),table(B) ?              <---- this is node 1
 #    +--yes: triangle(A) ?                      <---- this is node 2
@@ -86,9 +89,11 @@ class InternalNode2(InternalNode):
 
         return {}
 
+
 '''
 LEAF NODES
 '''
+
 
 class Leaf:
     def __init__(self):
@@ -97,12 +102,12 @@ class Leaf:
     def evaluate(self, blockset):
         pass
 
+
 class Leaf1(Leaf):
 
     # Returns True if the given blockset satisfies the rule associated with scenario 1
     # goal(A,B) :- on(A,C), on(B,D), on(C,B), square(D).
     def evaluate(self, blockset):
-
 
         # iterate me, over all groundings of variables, if one is found, break, if not, rule not satisfied
         for a in range(len(blockset)):
@@ -115,8 +120,9 @@ class Leaf1(Leaf):
                         squareD = blockset[d].type == Block.SQUARE
 
                         if onAC and onBD and onCB and squareD:
-                            return Goal(blockset[a].id,blockset[b].id, predicate = "on")
+                            return Goal(blockset[a].id, blockset[b].id, predicate="on")
         return None
+
 
 class Leaf2(Leaf):
 
@@ -134,8 +140,9 @@ class Leaf2(Leaf):
                         AnotD = blockset[a] != blockset[d]
 
                         if onAC and onBD and onDC and AnotD:
-                            return Goal(blockset[a].id, blockset[b].id, predicate = "on")
+                            return Goal(blockset[a].id, blockset[b].id, predicate="on")
         return None
+
 
 class Leaf3(Leaf):
 
@@ -151,8 +158,9 @@ class Leaf3(Leaf):
                 triangleA = blockset[a].type == Block.TRIANGLE
 
                 if clearB and squareB and triangleA:
-                    return Goal(blockset[a].id, blockset[b].id, predicate = "on")
+                    return Goal(blockset[a].id, blockset[b].id, predicate="on")
         return None
+
 
 class Tree():
     def __init__(self):

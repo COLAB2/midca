@@ -1,5 +1,6 @@
 from midca import base
 
+
 class MRSimpleEval(base.BaseModule):
 
     def run(self, cycle, verbose):

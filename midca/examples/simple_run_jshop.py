@@ -10,27 +10,24 @@ import inspect, os
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods, operators
 
-
 '''
 Simulation of tower construction 
 '''
 
-
-###-Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE. 
+###-Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE.
 
 ###-util.jshop_state_from_world transfers the state file in MIDCA to state file for JSHOP. You can find the 
 ###generated file in domains/jshop_domains. Another util function put the goal in the state file too.
 
- 
 
-
-
-#TODO: make the JSHOP.py to read the path. 
+# TODO: make the JSHOP.py to read the path.
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-print thisDir
+print
+thisDir
 
 MIDCA_ROOT = thisDir + "/../"
-print MIDCA_ROOT
+print
+MIDCA_ROOT
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
@@ -46,18 +43,18 @@ GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
-#creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
-#add phases by name
+# creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
+# add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 
-#add the modules which instantiate basic blocksworld operation
+# add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
+# myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
@@ -67,16 +64,14 @@ myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
                                                     ))
 myMidca.append_module("Act", act.SimpleAct())
 
-
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+myMidca.insert_module('Eval', evaluate.Scorer(), 1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
-
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
+myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 myMidca.run()
 

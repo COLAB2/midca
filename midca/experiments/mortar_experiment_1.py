@@ -15,7 +15,7 @@ import inspect
 import time
 from multiprocessing import Pool
 import sys
-import ctypes # for popups
+import ctypes  # for popups
 
 DATADIR = "experiments/mortar-experiment-1-data/"
 NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
@@ -28,17 +28,20 @@ CYCLES_INCREMENT = 10
 
 MORTAR_QUANTITY_START = 0
 MORTAR_QUANTITY_END = 10
-MORTAR_QUANTITY_INCREMENT = 1 # this should ideally be a function
+MORTAR_QUANTITY_INCREMENT = 1  # this should ideally be a function
 
-NUM_PROCESSES = 8 # Number of individual python processes to use
+NUM_PROCESSES = 8  # Number of individual python processes to use
+
 
 def singlerun_output_str(run_id, curr_midca, curr_mortar_count, num_cycles):
     towersCompleted = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersCompleted()
     towersScore = curr_midca.mem.get(evaluate.MORTARSCORE).getTowersScore()
     numMortars = curr_mortar_count
-    result = str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "," + str(num_cycles) + "\n"
+    result = str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "," + str(
+        num_cycles) + "\n"
     return result
-    
+
+
 def singlerun(args):
     run_id = args[0]
     curr_mortar_count = args[1]
@@ -48,56 +51,60 @@ def singlerun(args):
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)
-    
-    # prepare data for writing output string
-    result_str = singlerun_output_str(run_id,curr_midca,curr_mortar_count, num_cycles)
-    return result_str 
 
-def runexperiment():  
+    # prepare data for writing output string
+    result_str = singlerun_output_str(run_id, curr_midca, curr_mortar_count, num_cycles)
+    return result_str
+
+
+def runexperiment():
     runs = []
     curr_mortar_count = MORTAR_QUANTITY_START
     run_id = 0
     while curr_mortar_count <= MORTAR_QUANTITY_END:
         curr_cycles_count = CYCLES_START
         while curr_cycles_count <= CYCLES_END:
-            curr_args = [run_id,curr_mortar_count, curr_cycles_count]
+            curr_args = [run_id, curr_mortar_count, curr_cycles_count]
             runs.append(curr_args)
-            run_id+=1
-            curr_cycles_count+= CYCLES_INCREMENT
+            run_id += 1
+            curr_cycles_count += CYCLES_INCREMENT
         curr_mortar_count += MORTAR_QUANTITY_INCREMENT
-            
+
     # Uses multiprocessing to give each run its own python process
-    print("-- Starting experiment using "+str(NUM_PROCESSES)+" processes...")
+    print("-- Starting experiment using " + str(NUM_PROCESSES) + " processes...")
     t0 = time.time()
     # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
     # **** (each MIDCA must use its own python process)
     pool = Pool(processes=NUM_PROCESSES, maxtasksperchild=1)
     results = pool.map(singlerun, runs, chunksize=1)
     t1 = time.time()
-    timestr = '%.2f' % (t1-t0)
-    print("-- Experiment finished! Took "+timestr+"s, generated "+str(len(results))+" data points")
+    timestr = '%.2f' % (t1 - t0)
+    print("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points")
     print("-- Writing data to file...")
     f = open(DATA_FILENAME, 'w')
     f.write(DATA_FILE_HEADER_STR)
     for r in results:
         f.write(r)
-    print("-- Data written to file "+str(DATA_FILENAME))
+    print("-- Data written to file " + str(DATA_FILENAME))
     print("-- Experiment complete!")
+
 
 def asqiiDisplay(world):
     '''
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    #print str(scene.Scene(blocks))
+    # print str(scene.Scene(blocks))
+
 
 class MIDCAInstance():
     '''
     This class creates a specific instance of MIDCA given certain parameters.
     '''
+
     def __init__(self, currMortarCount):
         self.currMortarCount = currMortarCount
-        self.initialized = False # to initialize, call createMIDCAObj()
+        self.initialized = False  # to initialize, call createMIDCAObj()
         self.myMidca = None
         self.world = None
 
@@ -114,18 +121,18 @@ class MIDCAInstance():
 
         # load domain file like normal
         self.world = domainread.load_domain(domainFile)
-        
+
         # for state file, need to add number of mortar blocks to begin with
-        state_str = open(stateFile).read() # first read file
+        state_str = open(stateFile).read()  # first read file
         # now add new mortar blocks
         for i in range(self.currMortarCount):
-            state_str+="MORTARBLOCK(M"+str(i)+")\n"
-            state_str+="available(M"+str(i)+")\n"
+            state_str += "MORTARBLOCK(M" + str(i) + ")\n"
+            state_str += "available(M" + str(i) + ")\n"
         # now load the state    
         stateread.apply_state_str(self.world, state_str)
         # creates a PhaseManager object, which wraps a MIDCA object
-        myMidca = base.PhaseManager(self.world, display=asqiiDisplay,verbose=0)
-        #asqiiDisplay(world)
+        myMidca = base.PhaseManager(self.world, display=asqiiDisplay, verbose=0)
+        # asqiiDisplay(world)
         # add phases by name
         for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
             myMidca.append_phase(phase)
@@ -141,11 +148,12 @@ class MIDCAInstance():
         myMidca.append_module("Plan", planning.PyHopPlanner(extinguish, mortar))
         myMidca.append_module("Act", act.SimpleAct())
 
-        #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=self.arsonChanceArg, arsonStart=10), 1)
-        #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
+        # myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=self.arsonChanceArg, arsonStart=10), 1)
+        # myMidca.insert_module('Simulate', simulator.FireReset(), 0)
         myMidca.insert_module('Interpret', guide.TFStack(), 1)
 
-        myMidca.insert_module('Eval', evaluate.MortarScorer(), 1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+        myMidca.insert_module('Eval', evaluate.MortarScorer(),
+                              1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
         # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
         myMidca.storeHistory = False
         myMidca.initGoalGraph()
@@ -156,19 +164,20 @@ class MIDCAInstance():
 
     def run_cycles(self, num):
         for cycle in range(num):
-            self.myMidca.one_cycle(verbose = 0, pause = 0)
-            
+            self.myMidca.one_cycle(verbose=0, pause=0)
+
     def getMIDCAObj(self):
         return self.myMidca
 
     def __str__(self):
         if self.myMidca:
-            s = "MIDCAInstance [id]="+str(id(self.myMidca))
-            s += "\n[currMortarCount]="+str(self.currMortarCount)
-            s += "\n[Score]="+str(self.myMidca.mem.get(evaluate.MORTARSCORE))
+            s = "MIDCAInstance [id]=" + str(id(self.myMidca))
+            s += "\n[currMortarCount]=" + str(self.currMortarCount)
+            s += "\n[Score]=" + str(self.myMidca.mem.get(evaluate.MORTARSCORE))
             return s
         else:
             return 'not-initialized'
+
 
 ###########
 ## Graph ##
@@ -178,8 +187,9 @@ def get_max_score_for_cycles(cycle):
     '''
     Used to convert score into percent. These hardcoded scores are the max scores for the corresponding cycles.
     '''
-    max_scores = {10:6,20:10,30:20,40:26,50:30,60:40,70:46,80:50,90:60,100:66}
+    max_scores = {10: 6, 20: 10, 30: 20, 40: 26, 50: 30, 60: 40, 70: 46, 80: 50, 90: 60, 100: 66}
     return max_scores[cycle]
+
 
 def graph(prev_file):
     '''
@@ -190,37 +200,38 @@ def graph(prev_file):
     from matplotlib import cm
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
-    datafile = DATADIR + files[-(prev_file+1)]
-    print("-- About to graph data from "+str(datafile))
+    datafile = DATADIR + files[-(prev_file + 1)]
+    print("-- About to graph data from " + str(datafile))
     header = True
     mortar_ys = []
     cycles_xs = []
     score_zs = []
-    
-    with open(datafile,'r') as f:
+
+    with open(datafile, 'r') as f:
         for line in f.readlines():
-            if header: 
+            if header:
                 header = False
             else:
                 row = line.strip().split(',')
                 mortar_ys.append(int(row[1]))
                 num_cycles = int(row[4])
                 score = int(row[3])
-                score = (score*1.0) / get_max_score_for_cycles(num_cycles)
+                score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
                 score_zs.append(score)
                 cycles_xs.append(num_cycles)
-                
+
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
-    ax.set_zlim(bottom=0.0,top=1.0)
-    ax.set_xlim(max(cycles_xs),0)
-    ax.set_ylim(max(mortar_ys),0)
+    ax.plot_trisurf(cycles_xs, mortar_ys, score_zs, cmap=cm.coolwarm)
+    ax.set_zlim(bottom=0.0, top=1.0)
+    ax.set_xlim(max(cycles_xs), 0)
+    ax.set_ylim(max(mortar_ys), 0)
     ax.legend()
     ax.set_xlabel("Goals")
     ax.set_ylabel("Resources")
     ax.set_zlabel("Score")
     plt.show()
+
 
 def graph_slices_hardcoded():
     '''
@@ -230,59 +241,59 @@ def graph_slices_hardcoded():
     # they correspond to the data files sorted by most recent first
     prev_file_goal_trans = 6
     prev_file_no_goal_trans = 5
-    
+
     from mpl_toolkits.mplot3d import Axes3D
     import matplotlib.pyplot as plt
     from matplotlib import cm
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
-    datafile_goal_trans = DATADIR + files[-(prev_file_goal_trans+1)]
-    datafile_no_goal_trans = DATADIR + files[-(prev_file_no_goal_trans+1)]
-    print("-- About to read in goal transform data from "+str(datafile_goal_trans))
+    datafile_goal_trans = DATADIR + files[-(prev_file_goal_trans + 1)]
+    datafile_no_goal_trans = DATADIR + files[-(prev_file_no_goal_trans + 1)]
+    print("-- About to read in goal transform data from " + str(datafile_goal_trans))
     header = True
     gt_mortar_ys = []
     gt_cycles_xs = []
     gt_score_zs = []
     count = 0
-    with open(datafile_goal_trans,'r') as f:
+    with open(datafile_goal_trans, 'r') as f:
         for line in f.readlines():
-            if header: 
+            if header:
                 header = False
             else:
-                count+=1
+                count += 1
                 row = line.strip().split(',')
                 gt_mortar_ys.append(int(row[1]))
                 num_cycles = int(row[4])
                 score = int(row[3])
-                score = (score*1.0) / get_max_score_for_cycles(num_cycles)
+                score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
                 gt_score_zs.append(score)
                 gt_cycles_xs.append(num_cycles)
-        print("There were "+str(count)+" data points collected that will be used for this graph")
-    print("-- About to read in non-goal transform data from "+str(datafile_goal_trans))
-    
+        print("There were " + str(count) + " data points collected that will be used for this graph")
+    print("-- About to read in non-goal transform data from " + str(datafile_goal_trans))
+
     no_gt_mortar_ys = []
     no_gt_cycles_xs = []
     no_gt_score_zs = []
     header = True
-    with open(datafile_no_goal_trans,'r') as f:
+    with open(datafile_no_goal_trans, 'r') as f:
         for line in f.readlines():
-            if header: 
+            if header:
                 header = False
             else:
                 row = line.strip().split(',')
                 no_gt_mortar_ys.append(int(row[1]))
                 num_cycles = int(row[4])
                 score = int(row[3])
-                score = (score*1.0) / get_max_score_for_cycles(num_cycles)
+                score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
                 no_gt_score_zs.append(score)
                 no_gt_cycles_xs.append(num_cycles)
-    
+
     # hold mortar at 15
     mortar_hold = 5
-    
+
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_cycles = [] 
+    gt_cycles = []
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -294,7 +305,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_cycles = []
-    
+
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -302,20 +313,20 @@ def graph_slices_hardcoded():
         if curr_mortar == mortar_hold:
             no_gt_score.append(curr_score)
             no_gt_cycles.append(curr_cycles)
-    
+
     # now graph slice where x-axis is number of goals
-    
-    plt.plot(gt_cycles,gt_score,label='Goal Trans', linewidth=3)
-    plt.plot(no_gt_cycles,no_gt_score,'--',label='No Goal Trans',linewidth=3)
-    #ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
-    #ax.set_zlim(bottom=0.0,top=1.0)
-    #ax.set_xlim(max(cycles_xs),0)
-    #ax.set_ylim(max(mortar_ys),0)
+
+    plt.plot(gt_cycles, gt_score, label='Goal Trans', linewidth=3)
+    plt.plot(no_gt_cycles, no_gt_score, '--', label='No Goal Trans', linewidth=3)
+    # ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
+    # ax.set_zlim(bottom=0.0,top=1.0)
+    # ax.set_xlim(max(cycles_xs),0)
+    # ax.set_ylim(max(mortar_ys),0)
     plt.legend()
     plt.xlabel("Goals in Mortar Towers to Build")
     plt.ylabel("Score")
     plt.rcParams.update({'font.size': 16})
-    #fig.set_zlabel("Score")
+    # fig.set_zlabel("Score")
     plt.show()
 
     # now do the exact same thing, except hold goals at 
@@ -323,7 +334,7 @@ def graph_slices_hardcoded():
 
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_mortar = [] 
+    gt_mortar = []
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -335,7 +346,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_mortar = []
-    
+
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -343,19 +354,19 @@ def graph_slices_hardcoded():
         if curr_cycles == cycles_hold:
             no_gt_score.append(curr_score)
             no_gt_mortar.append(curr_mortar)
-    
+
     # now graph slice where x-axis is number of goals
-    
-    plt.plot(gt_mortar,gt_score,label='Goal Trans', linewidth=3)
-    plt.plot(no_gt_mortar,no_gt_score,'--',label='No Goal Trans',linewidth=3)
-    #ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
-    #ax.set_zlim(bottom=0.0,top=1.0)
-    #ax.set_xlim(max(cycles_xs),0)
-    #ax.set_ylim(max(mortar_ys),0)
+
+    plt.plot(gt_mortar, gt_score, label='Goal Trans', linewidth=3)
+    plt.plot(no_gt_mortar, no_gt_score, '--', label='No Goal Trans', linewidth=3)
+    # ax.plot_trisurf(cycles_xs, mortar_ys,score_zs,cmap=cm.coolwarm)
+    # ax.set_zlim(bottom=0.0,top=1.0)
+    # ax.set_xlim(max(cycles_xs),0)
+    # ax.set_ylim(max(mortar_ys),0)
     plt.legend(loc=4)
     plt.xlabel("Resources in Number of Mortar")
     plt.ylabel("Score")
-    #fig.set_zlabel("Score")
+    # fig.set_zlabel("Score")
     plt.rcParams.update({'font.size': 16})
     plt.show()
 
@@ -369,6 +380,5 @@ if __name__ == "__main__":
             graph(0)
     elif len(sys.argv) > 1 and sys.argv[1] == 'graphslices':
         graph_slices_hardcoded()
-    else:   
+    else:
         runexperiment()
-          

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from midca.worldsim import domainread, stateread
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
-from midca.metamodules import monitor, control, interpret, metaintend,  plan
+from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca import base
 
 import inspect, os
@@ -9,7 +9,6 @@ import inspect, os
 # domain specific imports
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods_mortar, operators_mortar
-
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
@@ -30,29 +29,29 @@ DECLARE_OPERATORS_FUNC = operators_mortar.declare_ops
 GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 
 MORTAR_COUNT = 5
-extinguish=False
-mortar=True
+extinguish = False
+mortar = True
 
 world = domainread.load_domain(DOMAIN_FILE)
 # for state file, need to add number of mortar blocks to begin with
-state_str = open(STATE_FILE).read() # first read file
+state_str = open(STATE_FILE).read()  # first read file
 # now add new mortar blocks
 for i in range(MORTAR_COUNT):
-    state_str+="MORTARBLOCK(M"+str(i)+")\n"
-    state_str+="available(M"+str(i)+")\n"
+    state_str += "MORTARBLOCK(M" + str(i) + ")\n"
+    state_str += "available(M" + str(i) + ")\n"
 # now load the state    
 stateread.apply_state_str(world, state_str)
 
 stateread.apply_state_file(world, STATE_FILE)
-    #creates a PhaseManager object, which wraps a MIDCA object
+# creates a PhaseManager object, which wraps a MIDCA object
 
-myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
 
-#add phases by name
+# add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 
-#add the modules which instantiate basic blocksworld operation
+# add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
@@ -67,14 +66,15 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.mortar_pyhop_state_from
                                                     extinguish,
                                                     mortar))
 myMidca.append_module("Act", act.SimpleAct())
-#myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
-#myMidca.insert_module('Simulate', simulator.FireReset(), 0)
+# myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
+# myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen(), 1)
-#myMidca.insert_module('Interpret', guide.TFFire(), 2)
+# myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+myMidca.insert_module('Eval', evaluate.MortarScorer(),
+                      1)  # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.initGoalGraph()
 myMidca.init()

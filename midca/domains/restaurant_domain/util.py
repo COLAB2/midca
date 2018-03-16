@@ -1,12 +1,13 @@
 '''
 A collection of functions that are domain specific, which different MIDCA components use
 '''
-import os,copy
+import os, copy
 from midca.modules._plan import pyhop
 
 
 def shopping_display(world):
     print(world)
+
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -21,6 +22,7 @@ def preferApprehend(goal1, goal2):
         return 1
     return 0
 
+
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -31,9 +33,7 @@ def preferFire(goal1, goal2):
     return 0
 
 
-
-
-def pyhop_state_from_world_restaurant(world, name = "state"):
+def pyhop_state_from_world_restaurant(world, name="state"):
     s = pyhop.State(name)
     # these are the states for the domain
     s.order_received = {}
@@ -62,5 +62,5 @@ def pyhop_tasks_from_goals_restaurant(goals, pyhopState):
     ordergoals = pyhop.Goal("goals")
     ordergoals = copy.deepcopy(goals)
     if ordergoals:
-        alltasks.append(("achieve_goals", ordergoals))	
+        alltasks.append(("achieve_goals", ordergoals))
     return alltasks

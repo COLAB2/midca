@@ -8,9 +8,11 @@ from midca.domains.blocksworld.plan import methods_broken, operators
 from midca import base
 import inspect, os
 
+
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
-    print str(scene.Scene(blocks))
+    print
+    str(scene.Scene(blocks))
 
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -28,7 +30,7 @@ GOAL_GRAPH_CMP_FUNC = util.preferFire
 
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
-myMidca = base.PhaseManager(world, verbose=1, display = asqiiDisplay, metaEnabled=True)
+myMidca = base.PhaseManager(world, verbose=1, display=asqiiDisplay, metaEnabled=True)
 
 # add cognitive layer phases
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -50,7 +52,7 @@ myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(util.pyhop_state
 myMidca.append_module("Act", act.SimpleAct())
 
 # add meta layer phases
-#for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+# for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
 for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
     myMidca.append_meta_phase(phase)
 
@@ -62,11 +64,12 @@ myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
 myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
 myMidca.append_meta_module("Control", control.MRSimpleControl())
 
-#myMidca.mem.enableTracing(myMidca.trace)
+# myMidca.mem.enableTracing(myMidca.trace)
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
-#myMidca.insert_module('Interpret', guide.TFStack(), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=0.3, arsonStart=2), 1)
+# myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
+
 
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -77,9 +80,10 @@ def preferFire(goal1, goal2):
         return 1
     return 0
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = preferFire)
+myMidca.initGoalGraph(cmpFunc=preferFire)
 myMidca.init()
 myMidca.run()
 

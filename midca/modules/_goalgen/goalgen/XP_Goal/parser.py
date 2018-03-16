@@ -1,8 +1,9 @@
 import sys
-#import pydot
+# import pydot
 import random
 from frame import Frame
 from frame import Role
+
 
 # given input, creates an xpnet XP
 class Parser:
@@ -11,7 +12,7 @@ class Parser:
 
     # make graph of interconnected frames
     def makeframegraph(self, text):
-        frames = {} # key is frame name
+        frames = {}  # key is frame name
         lines = text.split("\n")
 
         # make frames
@@ -48,16 +49,16 @@ class Parser:
                     facetvalues = [words[8][:-1]]
                 else:
                     for w in words[8:]:
-                        w = w.replace("(","")
-                        w = w.replace(").","")
+                        w = w.replace("(", "")
+                        w = w.replace(").", "")
                         facetvalues.append(w)
                 if words[-1][-2:] != ").":
                     i = 1
                     while len(lines) > 38 and lines[l_index + i][0:38] == "                                      ":
                         addwords = lines[l_index + i].split()
                         for w in addwords:
-                            w = w.replace("(","")
-                            w = w.replace(").","")
+                            w = w.replace("(", "")
+                            w = w.replace(").", "")
                             facetvalues.append(w)
                         i += 1
 
@@ -72,26 +73,36 @@ class Parser:
                         if not frames[framename] in frames[curframe].roles[roletype].facetrelation:
                             frames[curframe].roles[roletype].facetrelation.append(frames[framename])
                 else:
-                    print "Unrecognized facet type!"
-                    print "    " + facettype
+                    print
+                    "Unrecognized facet type!"
+                    print
+                    "    " + facettype
                     sys.exit(1)
         return frames
 
     def displayframesascii(self, frames):
-        print "All frame names:"
+        print
+        "All frame names:"
         for k in frames.keys():
-            print "    " + k
+            print
+            "    " + k
 
         for k in frames.keys():
-            print "For frame: " + k
+            print
+            "For frame: " + k
             for j in frames[k].roles.keys():
-                print "    " + j + ":    "
-                print "        facetvalues:"
+                print
+                "    " + j + ":    "
+                print
+                "        facetvalues:"
                 for i in frames[k].roles[j].facetvalue:
-                    print "            " + i.name
-                print "        facetrelations:"
+                    print
+                    "            " + i.name
+                print
+                "        facetrelations:"
                 for i in frames[k].roles[j].facetrelation:
-                    print "            " + i.name
+                    print
+                    "            " + i.name
 
     # Make simple undirected graph, no labels on edges, save in file frame_graph_simple.png
 #    def displayframesgraphsimple(self, frames, filename='frame_graph_simple.png'):
@@ -137,7 +148,7 @@ class Parser:
 #            color += hex(random.randint(40,200))[2:]
 #        return "#" + color
 #
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    # get text
 #    f = open("../output.txt", "r")
 #    text = f.read()

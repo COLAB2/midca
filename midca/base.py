@@ -8,6 +8,7 @@ import threading
 
 MAX_MODULES_PER_PHASE = 100
 
+
 class Phase:
 
     def __init__(self, name):
@@ -22,12 +23,13 @@ class Phase:
     def __hash__(self):
         return hash(self.name)
 
+
 class BaseModule:
 
-    def init(self, mem, world = None):
+    def init(self, mem, world=None):
         self.mem = mem
 
-    def run(self, cycle, verbose = 2):
+    def run(self, cycle, verbose=2):
         '''
         This method will be called once per cycle and defines the
         behavior of a module.
@@ -50,10 +52,11 @@ class BaseModule:
             print("Trying call BaseModule.log(), but Logging is not \
             enabled! To enable call midca.mem.enableLogging(logger)")
 
+
 class MIDCA:
 
-    def __init__(self, world = None, logenabled = True, logOutput = True,
-                     logMemory = True, metaEnabled = False, phaseManager = None, verbose = 2):
+    def __init__(self, world=None, logenabled=True, logOutput=True,
+                 logMemory=True, metaEnabled=False, phaseManager=None, verbose=2):
         self.world = world
         self.mem = Memory()
         self.phases = []
@@ -66,7 +69,7 @@ class MIDCA:
         self.metaPhaseNum = 1
         self.logger = logging.Logger(verbose=verbose)
         self.metaEnabled = metaEnabled
-        self.mem.enableTrace() # enable always for printtrace command
+        self.mem.enableTrace()  # enable always for printtrace command
         if metaEnabled:
             if not phaseManager:
                 raise Exception("MetaEnabled but phaseManager pointer not given")
@@ -83,7 +86,7 @@ class MIDCA:
                 self.mem.enableLogging(self.logger)
                 self.mem.logEachAccess = logMemory
 
-    def phase_by_name(self, name, meta = False):
+    def phase_by_name(self, name, meta=False):
         phases = self.phases
         if meta:
             phases = self.metaPhases
@@ -93,10 +96,10 @@ class MIDCA:
                 return phase
         return None
 
-    def insert_phase(self, phase, phaseOrIndex, meta = False):
+    def insert_phase(self, phase, phaseOrIndex, meta=False):
         phases = self.phases
         modules = self.modules
-        if meta: # switch if inserting a meta phase
+        if meta:  # switch if inserting a meta phase
             phases = self.metaPhases
             modules = self.metaModules
 
@@ -133,7 +136,7 @@ class MIDCA:
             del self.modules[phase]
         except ValueError:
             raise ValueError("Phase " + str(phaseOrName) + " is not a phase.")
-        #if there is a KeyError, something has gone very wrong.
+        # if there is a KeyError, something has gone very wrong.
 
     def append_module(self, phase, module, meta=False):
         self.insert_module(phase, module, MAX_MODULES_PER_PHASE, meta)
@@ -141,7 +144,7 @@ class MIDCA:
     def runtime_append_module(self, phase, module):
         self.runtime_insert_module(phase, module, MAX_MODULES_PER_PHASE)
 
-    #note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
+    # note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
     def insert_module(self, phase, module, i, meta=False):
         phases = self.phases
         modules = self.modules
@@ -151,11 +154,13 @@ class MIDCA:
         if isinstance(phase, str):
             phase = self.phase_by_name(phase, meta)
         if phase not in phases:
-            raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
+            raise KeyError(
+                "phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
         if not hasattr(module, "run"):
             raise AttributeError("All modules must a 'run' function")
         if len(modules[phase]) == MAX_MODULES_PER_PHASE:
-            raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
+            raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(
+                phase) + ". Cannot add another.")
         modules[phase].insert(i, module)
 
     # just like insert_module but also calls module.init()
@@ -163,14 +168,16 @@ class MIDCA:
         if isinstance(phase, str):
             phase = self.phase_by_name(phase)
         if phase not in self.phases:
-            raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
+            raise KeyError(
+                "phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
         if not hasattr(module, "run"):
             raise AttributeError("All modules must a 'run' function")
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
-            raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
+            raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(
+                phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        
-        try: # TODO: hacky fix for having modules with two kinds of init functions (one with verbose and one without)
+
+        try:  # TODO: hacky fix for having modules with two kinds of init functions (one with verbose and one without)
             # some modules use verbose to get the new verbose value
             # and others don't 
             module.init(mem=self.mem, world=self.world, verbose=self.verbose)
@@ -181,13 +188,14 @@ class MIDCA:
         if isinstance(phase, str):
             phase = self.phase_by_name(phase)
         if phase not in self.modules:
-            raise KeyError("phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
+            raise KeyError(
+                "phase " + str(phase) + " not in phase list. Call insert_phase() or append_phase() to add it.")
         modules = self.modules[phase]
         if i < 0 or i >= len(modules):
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
             return modules.pop(i)
-                
+
     def clearPhase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -211,7 +219,7 @@ class MIDCA:
         if self.metaEnabled:
             self.init_metacognitive_layer(verbose=self.verbose)
 
-    def init_cognitive_layer(self, verbose = 2):
+    def init_cognitive_layer(self, verbose=2):
         for phase in self.phases:
             modules = self.modules[phase]
             i = 0
@@ -219,20 +227,22 @@ class MIDCA:
                 i += 1
                 try:
                     if verbose >= 2:
-                        print("[cognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ "...",end="")
-                    module.init(world = self.world,
-                                mem = self.mem)
+                        print("[cognitive] Initializing " + phase.name + " module " + str(i) + " " + str(
+                            module.__class__.__name__) + "...", end="")
+                    module.init(world=self.world,
+                                mem=self.mem)
                     if verbose >= 2: print("done.")
 
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
-                        print("\n[cognitive] Phase " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ " has no init function or had an error. Skipping init.")
+                        print("\n[cognitive] Phase " + phase.name + " module " + str(i) + " " + str(
+                            module.__class__.__name__) + " has no init function or had an error. Skipping init.")
 
-        self.initGoalGraph(overwrite = False)
+        self.initGoalGraph(overwrite=False)
         self.initialized = True
 
-    def init_metacognitive_layer(self, verbose = 2):
+    def init_metacognitive_layer(self, verbose=2):
         for phase in self.metaPhases:
             modules = self.metaModules[phase]
             i = 0
@@ -240,34 +250,36 @@ class MIDCA:
                 i += 1
                 try:
                     if verbose >= 2:
-                        print("[metacognitive] Initializing " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+"...",end="")
-                    module.init(world = self.world,
-                                mem = self.mem)
+                        print("[metacognitive] Initializing " + phase.name + " module " + str(i) + " " + str(
+                            module.__class__.__name__) + "...", end="")
+                    module.init(world=self.world,
+                                mem=self.mem)
                     if verbose >= 2: print("done.")
 
                 except Exception as e:
                     print(e)
                     if verbose >= 2:
-                        print("\n[metacognitive] Phase " + phase.name + " module " + str(i) + " "+str(module.__class__.__name__)+ "has no init function or had an error. Skipping init.")
+                        print("\n[metacognitive] Phase " + phase.name + " module " + str(i) + " " + str(
+                            module.__class__.__name__) + "has no init function or had an error. Skipping init.")
 
-        self.initGoalGraph(overwrite = False)
+        self.initGoalGraph(overwrite=False)
         self.initialized = True
 
-    def initGoalGraph(self, cmpFunc = None, overwrite = True):
+    def initGoalGraph(self, cmpFunc=None, overwrite=True):
         if overwrite or not self.mem.get(self.mem.GOAL_GRAPH):
             self.mem.set(self.mem.GOAL_GRAPH, goals.GoalGraph(cmpFunc))
-            if self.verbose > 0: print("Goal Graph initialized.",)
+            if self.verbose > 0: print("Goal Graph initialized.", )
             if cmpFunc:
                 if self.verbose > 0: print()
             else:
                 if self.verbose > 0:
                     print("To use goal ordering, call initGoalGraph manually with a custom goal comparator")
 
-    def next_phase(self, verbose = 2, meta = False):
+    def next_phase(self, verbose=2, meta=False):
         phaseNum = self.phaseNum
         phases = self.phases
         modules = self.modules
-        if meta: # switch if meta
+        if meta:  # switch if meta
             phaseNum = self.metaPhaseNum
             phases = self.metaPhases
             modules = self.metaModules
@@ -278,14 +290,14 @@ class MIDCA:
             if self.logger.working: self.logger.logEvent(logging.CycleStartEvent((phaseNum - 1) / len(phases)))
         if verbose >= 2:
             if meta:
-                print("    ***[meta] Starting ", phases[self.phasei].name, "Phase ***\n", file = sys.stderr)
+                print("    ***[meta] Starting ", phases[self.phasei].name, "Phase ***\n", file=sys.stderr)
             else:
-                print("****** Starting", phases[self.phasei].name, "Phase ******\n", file = sys.stderr)
+                print("****** Starting", phases[self.phasei].name, "Phase ******\n", file=sys.stderr)
             if self.logger.working: self.logger.logEvent(logging.PhaseStartEvent(phases[self.phasei].name))
         i = 0
         while i < len(modules[phases[self.phasei]]):
             module = modules[phases[self.phasei]][i]
-            if self.logger.working: print("") #self.logger.logEvent(logging.ModuleStartEvent(module))
+            if self.logger.working: print("")  # self.logger.logEvent(logging.ModuleStartEvent(module))
             try:
                 retVal = module.run((phaseNum - 1) / len(phases), verbose)
                 i += 1
@@ -309,8 +321,8 @@ class MIDCA:
             if self.logger.working: self.logger.logEvent(logging.CycleEndEvent((phaseNum - 1) / len(phases)))
 
         # record phase and run metareasoner
-        #self.mem.set("phase", self.phases[self.phasei].name)
-        #metareasoner.MetaReasoner(self.trace, self.mem).run()
+        # self.mem.set("phase", self.phases[self.phasei].name)
+        # metareasoner.MetaReasoner(self.trace, self.mem).run()
 
         return retVal
 
@@ -331,12 +343,13 @@ class MIDCA:
         newCopy.phaseNum = self.phaseNum
         return newCopy
 
+
 class PhaseManager:
 
-    def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
+    def __init__(self, world=None, verbose=2, display=None, storeHistory=False, metaEnabled=False):
         # phasemanager is passed in as a self pointer for metacognitive modification
         self.verbose = verbose
-        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=False)
+        self.midca = MIDCA(world=world, verbose=verbose, metaEnabled=metaEnabled, phaseManager=self, logenabled=False)
         self.metaEnabled = metaEnabled
         self.mem = self.midca.mem
         self.storeHistory = storeHistory
@@ -349,6 +362,7 @@ class PhaseManager:
     '''
     convenience functions which wrap MIDCA functions
     '''
+
     def phase_by_name(self, name):
         return self.midca.phase_by_name(name)
 
@@ -359,7 +373,7 @@ class PhaseManager:
         self.midca.append_phase(phase)
 
     def append_meta_phase(self, phase):
-        print("appending phase: "+str(phase))
+        print("appending phase: " + str(phase))
         self.midca.append_phase(phase, meta=True)
 
     def get_phases(self):
@@ -392,27 +406,28 @@ class PhaseManager:
     def init(self):
         self.midca.init()
 
-    def initGoalGraph(self, cmpFunc = None):
+    def initGoalGraph(self, cmpFunc=None):
         self.midca.initGoalGraph(cmpFunc)
+
     '''
     functions for advancing through phases and complete cycles.
     '''
 
-    def next_phase(self, verbose = 2):
+    def next_phase(self, verbose=2):
         if self.storeHistory:
             self.history.append(self.midca.copy())
         val = self.midca.next_phase(verbose)
         return val
 
-    def next_meta_phase(self, verbose = 2):
+    def next_meta_phase(self, verbose=2):
         # TODO - determine how to store history here
-        #if self.storeHistory:
+        # if self.storeHistory:
         #    self.history.append(self.midca.copy())
-        if self.storeHistory and verbose >= 3: print("Warning: History not being stored during meta phase") #TODO
+        if self.storeHistory and verbose >= 3: print("Warning: History not being stored during meta phase")  # TODO
         val = self.midca.next_phase(self.meta_verbose, meta=True)
         return val
 
-    def one_cycle_with_meta_intrlvd(self, verbose = 1, pause = 0.5, noInterface=True):
+    def one_cycle_with_meta_intrlvd(self, verbose=1, pause=0.5, noInterface=True):
         '''
         Runs one cycle of cognition with one cycle of metacognition being run after each
         module of each phase.
@@ -433,12 +448,12 @@ class PhaseManager:
                     time.sleep(pause - (t2 - t1).total_seconds())
             except AttributeError:
                 if not self.twoSevenWarning:
-                    print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
+                    print(
+                        '\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
                     self.twoSevenWarning = True
                 time.sleep(pause)
 
-    
-    def one_cycle(self, verbose = 1, pause = 0.5, meta=False, noInterface=True):
+    def one_cycle(self, verbose=1, pause=0.5, meta=False, noInterface=True):
         '''
         Runs one cycle of midca. If meta == True, it will run one cycle of metacognition, otherwise
         it will run one cycle of cognition. If you want to run one cycle of cognition, with metacognition 
@@ -454,24 +469,25 @@ class PhaseManager:
             else:
                 self.next_phase(verbose)
             t2 = datetime.datetime.today()
-#             try:
-#                 if (t2 - t1).total_seconds() < pause:
-#                     time.sleep(pause - (t2 - t1).total_seconds())
-#             except AttributeError:
-#                 if not self.twoSevenWarning:
-#                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
-#                     self.twoSevenWarning = True
-#                 time.sleep(pause)
 
-    def several_cycles(self, num, verbose = 1, pause = 0.01, meta=False, noInterface=True):
+    #             try:
+    #                 if (t2 - t1).total_seconds() < pause:
+    #                     time.sleep(pause - (t2 - t1).total_seconds())
+    #             except AttributeError:
+    #                 if not self.twoSevenWarning:
+    #                     print('\033[93m' + "Use python 2.7 or higher to get accurate pauses between steps. Continuing with approximate pauses." + '\033[0m')
+    #                     self.twoSevenWarning = True
+    #                 time.sleep(pause)
+
+    def several_cycles(self, num, verbose=1, pause=0.01, meta=False, noInterface=True):
         for i in range(num):
             self.one_cycle(verbose, pause, meta, noInterface)
 
-    def several_cycles_no_interface(self, num, verbose=1, pause = 0.01, meta=False):
+    def several_cycles_no_interface(self, num, verbose=1, pause=0.01, meta=False):
         for i in range(num):
             self.one_cycle_no_interface(verbose, pause, meta)
 
-    #MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.midca.world.
+    # MIDCA will call this function after the first phase. The function should take one input, which will be whatever is stored in self.midca.world.
     def set_display_function(self, function):
         self.display = function
 
@@ -482,37 +498,38 @@ class PhaseManager:
     def applyStateChange(self, stateStr):
         stateread.apply_state_str(self.midca.world, stateStr)
 
-    #function which runs MIDCA with a text UI
-    def run(self,usingInterface=True):
+    # function which runs MIDCA with a text UI
+    def run(self, usingInterface=True):
         if not self.midca.initialized:
             raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
-        print("\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.")
+        print(
+            "\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.")
         while 1:
             if usingInterface:
-                print("Next MIDCA command:  ", file = sys.stderr, end = "")
+                print("Next MIDCA command:  ", file=sys.stderr, end="")
                 val = raw_input()
                 print
                 if val == "q":
                     break
                 elif val == "skip":
                     if self.metaEnabled:
-                        self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose,pause=0)
+                        self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose, pause=0)
                     else:
-                        self.one_cycle(verbose = 0, pause = 0)
+                        self.one_cycle(verbose=0, pause=0)
                     print("cycle finished")
                 elif val.startswith("skip"):
-                                    #disable output and run multiple cycles
+                    # disable output and run multiple cycles
                     try:
                         num = int(val[4:].strip())
                         for i in range(num):
                             if self.metaEnabled:
-                                self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose,pause=0)
+                                self.one_cycle_with_meta_intrlvd(verbose=self.meta_verbose, pause=0)
                             else:
-                                self.one_cycle(verbose = 0, pause = 0)
+                                self.one_cycle(verbose=0, pause=0)
                             # TODO - use several_cycles() instead?
-                            #print("  Score is "+str(self.mem.get("Score")))
-                            #print("  cycle "+str(i))
-                            #self.display(self.midca.world)
+                            # print("  Score is "+str(self.mem.get("Score")))
+                            # print("  cycle "+str(i))
+                            # self.display(self.midca.world)
                         print(str(num) + " cycles finished.")
                     except ValueError:
                         print("Usage: 'skip n', where n is an integer")
@@ -524,9 +541,10 @@ class PhaseManager:
                             print(e)
                             print("Error displaying world")
                     else:
-                        print("No display function set. See PhaseManager.set_display_function()"    )
+                        print("No display function set. See PhaseManager.set_display_function()")
                 elif val == "log":
-                    print("Input the text to add to MIDCA's log file. Leave empty and press enter to cancel\n", file = sys.stderr)
+                    print("Input the text to add to MIDCA's log file. Leave empty and press enter to cancel\n",
+                          file=sys.stderr)
                     txt = raw_input()
                     if txt:
                         self.logger.log(txt)
@@ -561,14 +579,14 @@ class PhaseManager:
                         for key in self.mem.knowledge.keys():
                             if str(key) == txt:
                                 keyfound = True
-                                print("    ["+str(key)+"] = "+str(self.mem.get(key))+"\n")
+                                print("    [" + str(key) + "] = " + str(self.mem.get(key)) + "\n")
                         if not keyfound:
-                            print("  Error: Key "+txt+" not found in MIDCA's memory")
-                            print("  [Available Keys] "+str(self.mem.knowledge.keys()))
+                            print("  Error: Key " + txt + " not found in MIDCA's memory")
+                            print("  [Available Keys] " + str(self.mem.knowledge.keys()))
                     else:
                         print("  Current memory is: \n")
                         for key in self.mem.knowledge.keys():
-                            print("    ["+key+"] = "+str(self.mem.get(key)))
+                            print("    [" + key + "] = " + str(self.mem.get(key)))
                         print("")
                 elif val == "worldstate":
                     print(str(self.mem.get("__world states")[-1]))
@@ -576,13 +594,14 @@ class PhaseManager:
                     print(str(self.midca.world))
                     print('----- and now: self.midca.world.atoms ----')
                     for atom in self.midca.world.atoms:
-                        print("  "+str(atom))
+                        print("  " + str(atom))
                     print('----- and now: self.mem.get("__world states")[-1].atoms ----')
                     for atom in self.mem.get("__world states")[-1].atoms:
-                        print("  "+str(atom))
-                        
+                        print("  " + str(atom))
+
                 elif val == "change":
-                    print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
+                    print(
+                        "Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:
                         input = raw_input("Next change:  ")
                         if not input:
@@ -613,31 +632,31 @@ class PhaseManager:
                             except Exception as e:
                                 print(e)
                 elif val == "?" or val == "help":
-                    print("interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n log -> log some text \n ? or help -> show this list of commands \n")
+                    print(
+                        "interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n log -> log some text \n ? or help -> show this list of commands \n")
                 elif val:
                     print("command not understood")
                 else:
                     val = self.next_phase()
                     if self.mem.metaEnabled:
-                        metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
+                        metaval = self.one_cycle(verbose=2, pause=0.01, meta=True)
                     if val == "continue":
                         self.next_phase()
                     elif val == "q":
                         break
                     if self.mem.metaEnabled:
                         if metaval == "continue":
-                            self.next_meta_phase() # TODO - not sure when this gets called
-            else: # not using interface - TODO # duplicate code, clean this code up
+                            self.next_meta_phase()  # TODO - not sure when this gets called
+            else:  # not using interface - TODO # duplicate code, clean this code up
                 val = self.next_phase()
                 if self.mem.metaEnabled:
-                    metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
+                    metaval = self.one_cycle(verbose=2, pause=0.01, meta=True)
                 if val == "continue":
                     self.next_phase()
                 elif val == "q":
                     break
                 if self.mem.metaEnabled:
                     if metaval == "continue":
-                        self.next_meta_phase() # TODO - not sure when this gets called
-
+                        self.next_meta_phase()  # TODO - not sure when this gets called
 
         print("MIDCA is quitting.")

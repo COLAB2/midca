@@ -4,6 +4,7 @@ Sample pyhop methods file. This is used to generate plans in the chicken domain.
 
 from midca.modules._plan import pyhop
 
+
 def goals_valid(state, goals):
     '''
     checks to make sure no chicken is expected to be on both sides
@@ -16,26 +17,27 @@ def goals_valid(state, goals):
             predicate = goal["predicate"]
             negate = 'negate' in goal and goal['negate']
         except KeyError:
-            #invalid goal
+            # invalid goal
             return False
         if predicate == "onleft" and negate or predicate == "onright" and not negate:
             side = "right"
         elif predicate == "onright" and negate or predicate == "onleft" and not negate:
             side = "left"
         else:
-            #invalid goal
+            # invalid goal
             return False
         if side == "left":
             if chicken in right:
-                #chicken supposed to be on both sides
+                # chicken supposed to be on both sides
                 return False
             left.add(chicken)
         else:
             if chicken in left:
-                #chicken supposed to be on both sides
+                # chicken supposed to be on both sides
                 return False
             right.add(chicken)
     return True
+
 
 def achieve_goals_m(state, goals):
     '''
@@ -47,6 +49,7 @@ def achieve_goals_m(state, goals):
         return False
     return [("achieve_chicken_goals", goals)]
 
+
 def achieve_chicken_goals_m(state, goals):
     '''
     pursues goals in order.
@@ -55,6 +58,7 @@ def achieve_chicken_goals_m(state, goals):
         return [("achieve_goal", goals[0]), ("achieve_chicken_goals", goals[1:])]
     else:
         return []
+
 
 def achieve_goal_m(state, goal):
     '''
@@ -75,8 +79,8 @@ def achieve_goal_m(state, goal):
     else:
         return []
 
+
 def declare_methods():
     pyhop.declare_methods("achieve_goals", achieve_goals_m)
     pyhop.declare_methods("achieve_chicken_goals", achieve_chicken_goals_m)
     pyhop.declare_methods("achieve_goal", achieve_goal_m)
-    

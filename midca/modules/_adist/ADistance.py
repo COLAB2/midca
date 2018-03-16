@@ -17,29 +17,27 @@ import ChangeFinder
 #
 class ADistance:
 
-
     #
     # Create a new ADistance object
     #
     def __init__(self):
-        self.intervals = []     # Intervals on the real line to monitor
-        self.cf = None          # ChangeFinder object that uses this object
+        self.intervals = []  # Intervals on the real line to monitor
+        self.cf = None  # ChangeFinder object that uses this object
         self.intervalDict = {}  # Map from windows to lists of intervals
-        self.relativized = True # Compute relativized discrepancy
-
+        self.relativized = True  # Compute relativized discrepancy
 
     #
     # Create a string representation of an ADistance object
     #
     def __repr__(self):
-        
+
         s = ''
 
         if (self.cf == None):
             s = 'Intervals:\n'
             for interval in self.intervals:
                 s = s + str(interval) + '\n'
-        
+
         else:
             i = 1
             for wp in self.cf.getWindowPairs():
@@ -53,9 +51,7 @@ class ADistance:
 
         return s
 
-
     __str__ = __repr__
-
 
     #
     # Add an interval to the ADistance object
@@ -64,7 +60,6 @@ class ADistance:
     #
     def add(self, interval):
         self.intervals.append(interval)
-
 
     #
     # Given a window of data and a proportion p in (0, 1), add intervals 
@@ -88,7 +83,6 @@ class ADistance:
             self.add(Interval(low, high))
             index = index + offset
 
-
     #
     # Initialize an ADistance object.  
     #
@@ -104,7 +98,6 @@ class ADistance:
                 copy.deepcopy(self.intervals);
             self.intervalDict[id(wp.getWindow(1))] = \
                 copy.deepcopy(self.intervals);
-
 
     #
     # This method is called for the ADistance object every time a new data
@@ -135,7 +128,6 @@ class ADistance:
                 interval.add(window.getLastIn())
                 interval.remove(window.getLastOut())
 
-
     #
     # This method should be called for the ADistance object every time
     # the associated ChangeFinder is cleared
@@ -144,7 +136,6 @@ class ADistance:
         for intervals in self.intervalDict.itervalues():
             for interval in intervals:
                 interval.clear()
-
 
     #
     # Compute the A-distance between two windows in a pair
@@ -175,12 +166,11 @@ class ADistance:
                 val = abs(p1 - p2)
                 if self.relativized:
                     val = val / pow(min((p1 + p2) / 2, 1 - (p1 + p2) / 2), 0.5)
-            
+
             vals.append(val)
-            
+
         # Return largest distance
         return max(vals)
-
 
     #
     # Draw a uniform sample from the smallest closed intervals that span
@@ -189,7 +179,7 @@ class ADistance:
     #   n - The size of the sample
     #
     def uniformSample(self, n):
-        
+
         sample = []
         low = sys.maxint
         high = -sys.maxint

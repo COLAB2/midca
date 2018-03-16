@@ -21,21 +21,20 @@ DECLARE_METHODS_FUNC = methods_extinguish.declare_methods
 DECLARE_OPERATORS_FUNC = operators_extinguish.declare_ops
 GOAL_GRAPH_CMP_FUNC = util.preferFire
 
-
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
-    #creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
-    #add phases by name
+# creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
+# add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 
-    #add the modules which instantiate basic blocksworld operation
+    # add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
+# myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
@@ -45,15 +44,13 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
 
 myMidca.append_module("Act", act.SimpleAct())
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
+myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=0.3, arsonStart=2), 1)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
-
-
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
+myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 myMidca.run()
 

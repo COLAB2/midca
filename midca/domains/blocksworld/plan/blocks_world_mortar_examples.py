@@ -12,16 +12,17 @@ from pyhop import *
 import time
 
 import operators_mortar
+
 print('')
 operators_mortar.declare_ops()
 print_operators()
 
 import methods_mortar
+
 print('')
 methods_mortar.declare_methods()
-#methods_broken.declare_methods()
+# methods_broken.declare_methods()
 print_methods()
-
 
 #############     beginning of tests     ################
 
@@ -39,9 +40,9 @@ A state is a collection of all of the state variables and their values. Every st
 """
 
 state1 = State('state1')
-state1.pos={'a':'b', 'b':'table', 'c':'table','d':'table','e':'table'}
-state1.clear={'c':True, 'b':False,'a':True,'d':True,'e':True}
-state1.holding=False
+state1.pos = {'a': 'b', 'b': 'table', 'c': 'table', 'd': 'table', 'e': 'table'}
+state1.clear = {'c': True, 'b': False, 'a': True, 'd': True, 'e': True}
+state1.holding = False
 
 # make sure no blocks have mortar on them; start with initial quantity
 # of mortar
@@ -49,32 +50,32 @@ state1.hasmortar = {}
 for blockid in state1.pos.keys():
     state1.hasmortar[blockid] = False
 
-state1.mortaravailable = {} # key is id, value is Available/Used
+state1.mortaravailable = {}  # key is id, value is Available/Used
 num_mortar = 5
 for i in range(num_mortar):
-    key = 'M'+str(i)
+    key = 'M' + str(i)
     state1.mortaravailable[key] = True
 
 print_state(state1)
 print('')
 
 print('- these should fail:')
-pyhop(state1,[('pickup','a')], verbose=1)
-pyhop(state1,[('pickup','b')], verbose=1)
+pyhop(state1, [('pickup', 'a')], verbose=1)
+pyhop(state1, [('pickup', 'b')], verbose=1)
 print('- these should succeed:')
-pyhop(state1,[('pickup','c')], verbose=1)
-pyhop(state1,[('unstack','a','b')], verbose=1)
-pyhop(state1,[('get','a')], verbose=1)
+pyhop(state1, [('pickup', 'c')], verbose=1)
+pyhop(state1, [('unstack', 'a', 'b')], verbose=1)
+pyhop(state1, [('get', 'a')], verbose=1)
 print('- this should fail:')
-pyhop(state1,[('get','b')], verbose=1)
+pyhop(state1, [('get', 'b')], verbose=1)
 print('- this should succeed:')
-pyhop(state1,[('get','c')], verbose=1)
+pyhop(state1, [('get', 'c')], verbose=1)
 
 print(' - testing stack mortared')
 print_state(state1)
 goal1a = Goal('goal1a')
-goal1a.pos={'c':'b', 'b':'a', 'a':'e', 'e':'d', 'd':'table'}
-pyhop(state1,[('move_blocks', goal1a)],verbose=1)
+goal1a.pos = {'c': 'b', 'b': 'a', 'a': 'e', 'e': 'd', 'd': 'table'}
+pyhop(state1, [('move_blocks', goal1a)], verbose=1)
 
 print(' - testing unstack mortared')
 state2 = State('state2')
@@ -83,12 +84,12 @@ state2.fire = {'D_': False, 'B_': False, 'C_': False, 'A_': False}
 state2.clear = {'D_': True, 'B_': False, 'C_': False, 'A_': False}
 state2.pos = {'D_': 'C_', 'B_': 'A_', 'C_': 'B_', 'A_': 'table'}
 state2.free = {'Gui Montag': True}
-state2.mortaravailable = {'M5': False, 'M4': False, 'M1': True, 'M3': True, 'M2': True, 'M6':True, 'M7':True}
+state2.mortaravailable = {'M5': False, 'M4': False, 'M1': True, 'M3': True, 'M2': True, 'M6': True, 'M7': True}
 state2.holding = False
 print_state(state2)
 goal2 = Goal('goal2')
-goal2.pos={'D_':'B_'}
-pyhop(state2,[('move_blocks', goal2)],verbose=4)
+goal2.pos = {'D_': 'B_'}
+pyhop(state2, [('move_blocks', goal2)], verbose=4)
 
 # 
 # print("""

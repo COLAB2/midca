@@ -1,6 +1,3 @@
-
-
-
 import random
 
 
@@ -12,7 +9,6 @@ import random
 #
 class ChangeFinder:
 
-
     #
     # Create a new ChangeFinder object
     #
@@ -23,7 +19,6 @@ class ChangeFinder:
         self.distanceObj = distanceObj
         self.windowPairs = []
 
-
     #
     # Create a string representation of a ChangeFinder object
     #
@@ -33,9 +28,7 @@ class ChangeFinder:
             s = s + str(wp) + '\n'
         return s
 
-
     __str__ = __repr__
-
 
     #
     # Add a window pair to be monitored 
@@ -45,13 +38,11 @@ class ChangeFinder:
     def addWindowPair(self, wp):
         self.windowPairs.append(wp)
 
-
     #
     # Return the window pairs
     #
     def getWindowPairs(self):
         return self.windowPairs
-
 
     #
     # Process the next data item from the stream
@@ -63,7 +54,6 @@ class ChangeFinder:
             wp.add(item)
         self.distanceObj.update(item)
 
-
     #
     # Reset the state of the ChangeFinder to that before it processed any data
     #
@@ -71,16 +61,15 @@ class ChangeFinder:
         self.distanceObj.clear()
         for wp in self.windowPairs:
             wp.clear()
-        
 
     # 
     # Return a list of the current distances for all window pairs
     #
     def getDistances(self):
         distances = []
-        
+
         for wp in self.windowPairs:
-            
+
             if wp.isFull():
                 distances.append(self.distanceObj.distance(wp))
             else:
@@ -88,16 +77,15 @@ class ChangeFinder:
 
         return distances
 
-
     #
     # Return true if a distribution change is detected across any of the
     # window pairs
     #
     def detectChange(self):
         change = 0
-        
+
         for wp in self.windowPairs:
-            
+
             # Ensure that both windows are full before testing
             if wp.isFull():
                 dist = self.distanceObj.distance(wp)
@@ -108,7 +96,6 @@ class ChangeFinder:
             self.clear()
 
         return change
-
 
     #
     # Use a randomization test to compute alpha values for the window pairs.
@@ -131,14 +118,16 @@ class ChangeFinder:
         for wp in self.windowPairs:
             maxDistances[id(wp)] = []
 
-        print 'Computing alpha values: ' + str(len(data)) + ' data items, ' + \
-              'p = ' + str(p) + ', n = ' + str(n)
+        print
+        'Computing alpha values: ' + str(len(data)) + ' data items, ' + \
+        'p = ' + str(p) + ', n = ' + str(n)
 
         # Iterate the desired number of times
         for i in range(n):
 
             if (i % int(n / 10) == 0):
-                print '% done: ' + str(i * 100 / n)
+                print
+                '% done: ' + str(i * 100 / n)
 
             for wp in self.windowPairs:
                 distances[id(wp)] = []
@@ -158,6 +147,7 @@ class ChangeFinder:
         for wp in self.windowPairs:
             maxDistances[id(wp)].sort()
             wp.alpha = maxDistances[id(wp)][int(n * (1 - p))]
-            print 'Window pair #' + str(i) + ': alpha = ' + str(wp.alpha)
+            print
+            'Window pair #' + str(i) + ': alpha = ' + str(wp.alpha)
 
         self.clear()

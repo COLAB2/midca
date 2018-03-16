@@ -101,61 +101,70 @@ Pyhop provides the following classes and functions:
 
 
 from __future__ import print_function
-import copy,sys, pprint
+import copy, sys, pprint
 from threading import Thread
 import time
 
 try:
-   from midca.examples._gazebo_baxter import halo_color
+    from midca.examples._gazebo_baxter import halo_color
 except ImportError:
-   pass
+    pass
+
 
 ############################################################
 # States and goals
 
 class State():
     """A state is just a collection of variable bindings."""
-    def __init__(self,name):
+
+    def __init__(self, name):
         self.__name__ = name
+
 
 class Goal():
     """A goal is just a collection of variable bindings."""
-    def __init__(self,name):
+
+    def __init__(self, name):
         self.__name__ = name
 
 
 ### print_state and print_goal are identical except for the name
 
-def print_state(state,indent=4):
+def print_state(state, indent=4):
     """Print each variable in state, indented by indent spaces."""
     if state != False:
-        for (name,val) in vars(state).items():
+        for (name, val) in vars(state).items():
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(state.__name__ + '.' + name)
                 print(' =', val)
-    else: print('False')
+    else:
+        print('False')
 
-def print_goal(goal,indent=4):
+
+def print_goal(goal, indent=4):
     """Print each variable in goal, indented by indent spaces."""
     if goal != False:
-        for (name,val) in vars(goal).items():
+        for (name, val) in vars(goal).items():
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(goal.__name__ + '.' + name)
                 print(' =', val)
-    else: print('False')
+    else:
+        print('False')
+
 
 ############################################################
 # Helper functions that may be useful in domain models
 
-def forall(seq,cond):
+def forall(seq, cond):
     """True if cond(x) holds for all x in seq, otherwise False."""
     for x in seq:
         if not cond(x): return False
     return True
 
-def find_if(cond,seq):
+
+def find_if(cond, seq):
     """
     Return the first x in seq such that cond(x) holds, if there is one.
     Otherwise return None.
@@ -163,6 +172,7 @@ def find_if(cond,seq):
     for x in seq:
         if cond(x): return x
     return None
+
 
 ############################################################
 # Commands to tell Pyhop what the operators and methods are
@@ -173,31 +183,36 @@ monitors_l = {}
 generated_monitors = []
 wait_time = None
 
+
 def declare_operators(*op_list):
     """
     Call this after defining the operators, to tell Pyhop what they are. 
     op_list must be a list of functions, not strings.
     """
-    operators.update({op.__name__:op for op in op_list})
+    operators.update({op.__name__: op for op in op_list})
     return operators
 
-def declare_methods(task_name,*method_list):
+
+def declare_methods(task_name, *method_list):
     """
     Call this once for each task, to tell Pyhop what the methods are.
     task_name must be a string.
     method_list must be a list of functions, not strings.
     """
-    methods.update({task_name:list(method_list)})
+    methods.update({task_name: list(method_list)})
     return methods[task_name]
 
-def declare_monitors(task_name,*monitor_list):
+
+def declare_monitors(task_name, *monitor_list):
     """
     Call this once for each task, to tell Pyhop what the methods are.
     task_name must be a string.
     method_list must be a list of functions, not strings.
     """
-    monitors_l.update({task_name:list(monitor_list)})
+    monitors_l.update({task_name: list(monitor_list)})
     return monitors_l[task_name]
+
+
 ############################################################
 # Commands to find out what the operators and methods are
 
@@ -205,57 +220,61 @@ def print_operators(olist=operators):
     """Print out the names of the operators"""
     print('OPERATORS:', ', '.join(olist))
 
+
 def print_methods(mlist=methods):
     """Print out a table of what the methods are for each task"""
-    print('{:<14}{}'.format('TASK:','METHODS:'))
+    print('{:<14}{}'.format('TASK:', 'METHODS:'))
     for task in mlist:
         print('{:<14}'.format(task) + ', '.join([f.__name__ for f in mlist[task]]))
 
 
 def check_monitors():
-    #fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
-#     print("****The monitors are running:******") 
-#     print("***********")
-#     for m in monitors_l:
-#         print(monitors_l[m])
-#     print("**********") 
+    # fired_monitors = filter(lambda x: x.is_fired == True, monitors.values())
+    #     print("****The monitors are running:******")
+    #     print("***********")
+    #     for m in monitors_l:
+    #         print(monitors_l[m])
+    #     print("**********")
     for m in generated_monitors:
-        #print("m = " + m.name.__name__)
+        # print("m = " + m.name.__name__)
         if m.is_fired == True:
-            #m.is_fired = False
-            #m.is_activated = False
-            #generated_monitors.remove(m)
+            # m.is_fired = False
+            # m.is_activated = False
+            # generated_monitors.remove(m)
             return m
     return None
+
 
 ############################################################
 # The actual planner
 
-def pyhop(state,tasks,verbose=0):
+def pyhop(state, tasks, verbose=0):
     """
     Try to find a plan that accomplishes tasks in state. 
     If successful, return the plan. Otherwise return False.
     """
-    if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
+    if verbose > 0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__, tasks))
     print("call seek_plan")
 
-    result = seek_plan(state,tasks,[],0,verbose)
-    if verbose>0: print('** result =',result,'\n')
+    result = seek_plan(state, tasks, [], 0, verbose)
+    if verbose > 0: print('** result =', result, '\n')
     return result
 
+
 fired_monitor = None
-def seek_plan(state,tasks,plan,depth,verbose=0):
+
+
+def seek_plan(state, tasks, plan, depth, verbose=0):
     global fired_monitor
     global wait_time
-    
-    
-#    print('depth {} tasks {}'.format(depth,tasks))
+
+    #    print('depth {} tasks {}'.format(depth,tasks))
 
     raw_input("enter...")
-#     for task in tasks:
-#         for elm in task:
-#             print(elm + " ")
-#     print("#######################")        
+    #     for task in tasks:
+    #         for elm in task:
+    #             print(elm + " ")
+    #     print("#######################")
     """
     Workhorse for pyhop. state and tasks are as in pyhop.
     - plan is the current partial plan.
@@ -263,93 +282,90 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - verbose is whether to print debugging messages
     """
     if depth == 1 and not wait_time:
-	time.sleep(0)
-	wait_time = 1
-	try:
-		hallo = halo_color.HaloLed()
-		# set hallo to red as a sign for monitors
-		hallo.setRed()
-		    
-	finally:
-		    print("robot stuff")  
+        time.sleep(0)
+        wait_time = 1
+        try:
+            hallo = halo_color.HaloLed()
+            # set hallo to red as a sign for monitors
+            hallo.setRed()
 
+        finally:
+            print("robot stuff")
 
-
-    if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
+    if verbose > 1: print('depth {} tasks {}'.format(depth, tasks))
     if tasks == []:
-        if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
+        if verbose > 2: print('depth {} returns plan {}'.format(depth, plan))
         return plan
-    
+
     task1 = tasks[0]
     fired_monitor = check_monitors()
     if fired_monitor:
         print("monitor fired at depth " + str(depth))
         if fired_monitor.depth < depth:
-            print("The clear-block monitor is fired for block " + fired_monitor.block+
+            print("The clear-block monitor is fired for block " + fired_monitor.block +
                   ", need to backtrack to level " + str(fired_monitor.depth))
             return False
         else:
             fired_monitor.is_fired = False
     else:
         if task1[0] in operators:
-            if verbose>2: print('depth {} action {}'.format(depth,task1))
+            if verbose > 2: print('depth {} action {}'.format(depth, task1))
             operator = operators[task1[0]]
-            newstate = operator(copy.deepcopy(state),*task1[1:])
-            if verbose>2:
+            newstate = operator(copy.deepcopy(state), *task1[1:])
+            if verbose > 2:
                 print('depth {} new state:'.format(depth))
                 print_state(newstate)
             if newstate:
                 if task1[0] in monitors_l:
-                        monitor_list = monitors_l[task1[0]]
-                        
-                        
-                        for monitor in monitor_list:
-                            Thread(target=monitor, args=[state, depth, task1]).start()
-                            #print(monitor)
-      
-                solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
+                    monitor_list = monitors_l[task1[0]]
+
+                    for monitor in monitor_list:
+                        Thread(target=monitor, args=[state, depth, task1]).start()
+                        # print(monitor)
+
+                solution = seek_plan(newstate, tasks[1:], plan + [task1], depth + 1, verbose)
                 print("Solution in operators")
                 print(solution)
                 if solution != False:
                     return solution
         if task1[0] in methods:
-            if verbose>2: print('depth {} method instance {}'.format(depth,task1))
+            if verbose > 2: print('depth {} method instance {}'.format(depth, task1))
             relevant = methods[task1[0]]
             for method in relevant:
-                subtasks = method(state,*task1[1:])
+                subtasks = method(state, *task1[1:])
                 # Can't just say "if subtasks:", because that's wrong if subtasks == []
-                if verbose>2:
-                    print('depth {} new tasks: {}'.format(depth,subtasks))
+                if verbose > 2:
+                    print('depth {} new tasks: {}'.format(depth, subtasks))
                 if subtasks != False:
-                    #add monitors here for the methods
+                    # add monitors here for the methods
                     print("next subtask: " + task1[0])
                     if task1[0] in monitors_l:
                         monitor_list = monitors_l[task1[0]]
                         print("monitor is generated for " + task1[0] + " at depth " + str(depth))
-                        
+
                         for monitor in monitor_list:
-                            #print(task1[1])
+                            # print(task1[1])
                             Thread(target=monitor, args=[state, depth, task1]).start()
-                    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1, verbose)
+                    solution = seek_plan(state, subtasks + tasks[1:], plan, depth + 1, verbose)
                     print("-----------------")
                     print(solution)
-                    
+
                     if solution == False:
                         if fired_monitor and fired_monitor.depth > depth:
                             print("fired-monitor")
                             print(plan)
                             fired_monitor.is_fired = False
-                            #generated_monitors.remove(fired_monitor)
-                            #replan
+                            # generated_monitors.remove(fired_monitor)
+                            # replan
                             del plan[:]
-                            solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
-                            
-                            
+                            solution = seek_plan(state, tasks[2:], plan, depth + 1, verbose)
+
+
                         else:
                             print("'" + task1[0] + "' was failed, it will choose another method--")
-                            #RemoveMonitors(task1[0])
-                        
+                            # RemoveMonitors(task1[0])
+
                     if solution != False:
                         return solution
-        if verbose>2: print('depth {} returns failure'.format(depth))
+        if verbose > 2: print('depth {} returns failure'.format(depth))
         return False

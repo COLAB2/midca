@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
 
-
 import random
 import math
-
 
 
 #
@@ -14,24 +12,23 @@ import math
 #   http://www.johndcook.com/python_phi.html
 #
 def gaussianCDFStandard(x):
-    a1 =  0.254829592
+    a1 = 0.254829592
     a2 = -0.284496736
-    a3 =  1.421413741
+    a3 = 1.421413741
     a4 = -1.453152027
-    a5 =  1.061405429
-    p  =  0.3275911
+    a5 = 1.061405429
+    p = 0.3275911
 
     sign = 1
     if x < 0:
         sign = -1
 
-    x = abs(x)/math.sqrt(2.0)
+    x = abs(x) / math.sqrt(2.0)
 
-    t = 1.0/(1.0 + p*x)
-    y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*math.exp(-x*x)
+    t = 1.0 / (1.0 + p * x)
+    y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * math.exp(-x * x)
 
-    return 0.5*(1.0 + sign*y)
-
+    return 0.5 * (1.0 + sign * y)
 
 
 #
@@ -40,7 +37,6 @@ def gaussianCDFStandard(x):
 #
 def gaussianCDF(x, m, s):
     return gaussianCDFStandard((x - m) / s)
-
 
 
 #
@@ -54,10 +50,9 @@ def sameMean(m1, s1, m2, s2):
     m = m1 - m2
     v = s1 * s1 + s2 * s2
 
-    p = gaussianCDF(0, m, v**0.5)
+    p = gaussianCDF(0, m, v ** 0.5)
     p = min(p, 1 - p)
     return 2 * p
-    
 
 
 #
@@ -70,10 +65,9 @@ def sameMean(m1, s1, m2, s2):
 #   http://en.wikipedia.org/wiki/Bartlett's_test
 #
 def sameVariance(n1, s1, n2, s2):
-
-    n = n1 + n2    # Total number of samples
-    v1 = s1 * s1   # Variance of first sample
-    v2 = s2 * s2   # Variance of second sample
+    n = n1 + n2  # Total number of samples
+    v1 = s1 * s1  # Variance of first sample
+    v2 = s2 * s2  # Variance of second sample
 
     # Pooled variance
     v = ((n1 - 1) * v1 + (n2 - 1) * v2) / (n - 2)
@@ -87,8 +81,7 @@ def sameVariance(n1, s1, n2, s2):
     # 
     #   http://onlinestatbook.com/chapter14/distribution.html
     #
-    return 1 - gaussianCDFStandard(x2**0.5)
-
+    return 1 - gaussianCDFStandard(x2 ** 0.5)
 
 
 #
@@ -101,7 +94,8 @@ def sameDist(n1, m1, s1, n2, m2, s2):
     p1 = sameMean(m1, s1, m2, s2)
     p2 = sameVariance(n1, s1, n2, s2)
 
-    print str(p1) + ' ' + str(p2)
+    print
+    str(p1) + ' ' + str(p2)
 
     # I make an error in rejecting the null hypothesis about the distribution
     # if I make a Type I error for the means (let that event be A) and a 
@@ -109,5 +103,3 @@ def sameDist(n1, m1, s1, n2, m2, s2):
     # probability of a Type I error is p(A and B) which, because A and B are
     # independent due to Cochran's theorem, is p(A) * p(B).
     return p1 * p2
-
-

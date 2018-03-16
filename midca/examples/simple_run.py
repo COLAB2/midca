@@ -19,16 +19,15 @@ MIDCA_ROOT = thisDir + "/../"
 DECLARE_METHODS_FUNC = methods.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
 argsPyHopPlanner = [util.pyhop_state_from_world,
-					util.pyhop_tasks_from_goals,
-					DECLARE_METHODS_FUNC,
-					DECLARE_OPERATORS_FUNC]
+                    util.pyhop_tasks_from_goals,
+                    DECLARE_METHODS_FUNC,
+                    DECLARE_OPERATORS_FUNC]
 
-
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + 
-									"domains/blocksworld/domains/arsonist.sim", 
-									stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim", 
-									argsPyHopPlanner=argsPyHopPlanner)
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
+myMidca = predicateworld.UserGoalsMidca(domainFile=MIDCA_ROOT +
+                                                   "domains/blocksworld/domains/arsonist.sim",
+                                        stateFile=MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim",
+                                        argsPyHopPlanner=argsPyHopPlanner)
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.init()
 myMidca.run()
@@ -39,4 +38,3 @@ myMidca.run()
 for i in range(20):
 	print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
 '''
-

@@ -4,6 +4,7 @@ Sample pyhop operators file. This is used to generate plans in the chicken domai
 
 from midca.modules._plan import pyhop
 
+
 def crossright(state, chicken):
     if state.is_true("onleft", [chicken]):
         state.remove_fact("onleft", [chicken])
@@ -11,6 +12,7 @@ def crossright(state, chicken):
         return state
     else:
         return False
+
 
 def crossleft(state, chicken):
     if state.is_true("onright", [chicken]):
@@ -20,5 +22,6 @@ def crossleft(state, chicken):
     else:
         return False
 
+
 def declare_ops():
-	pyhop.declare_operators(crossright, crossleft)
+    pyhop.declare_operators(crossright, crossleft)

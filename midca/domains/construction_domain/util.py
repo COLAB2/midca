@@ -1,9 +1,10 @@
 '''
 A collection of functions that are domain specific, which different MIDCA components use
 '''
-import os,copy
+import os, copy
 from midca.domains.blocksworld import scene, blockstate
 from midca.modules._plan import pyhop
+
 
 def asqiiDisplay(world):
     '''
@@ -11,6 +12,7 @@ def asqiiDisplay(world):
     '''
     blocks = blockstate.get_block_list(world)
     print(str(scene.Scene(blocks)))
+
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -25,6 +27,7 @@ def preferApprehend(goal1, goal2):
         return 1
     return 0
 
+
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -34,8 +37,8 @@ def preferFire(goal1, goal2):
         return 1
     return 0
 
-    
-def pyhop_state_from_world(world, name = "state"):
+
+def pyhop_state_from_world(world, name="state"):
     s = pyhop.State(name)
     s.pos = {}
     s.clear = {}
@@ -44,7 +47,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.hasmortar = {} # keys are 
+    s.hasmortar = {}  # keys are 
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
@@ -72,7 +75,7 @@ def pyhop_state_from_world(world, name = "state"):
         elif atom.predicate.name == "stable-on":
             s.pos[atom.args[0].name] = atom.args[1].name
             s.clear[atom.args[1].name] = False
-            #s.hasmortar[atom.args[1].name] = True # redundant
+            # s.hasmortar[atom.args[1].name] = True # redundant
         elif atom.predicate.name == "on-table":
             s.pos[atom.args[0].name] = "table"
         elif atom.predicate.name == "onfire":
@@ -84,8 +87,8 @@ def pyhop_state_from_world(world, name = "state"):
         elif atom.predicate.name == "hasmortar":
             s.hasmortar[atom.args[0].name] = atom.args[1].name
         elif atom.predicate.name == "in_store":
-            s.pos[atom.args[0].name]= "store"
-	
+            s.pos[atom.args[0].name] = "store"
+
     for block in blocks:
         if block not in s.clear:
             s.clear[block] = False
@@ -95,7 +98,7 @@ def pyhop_state_from_world(world, name = "state"):
             s.pos[block] = "in-arm"
         if block not in s.hasmortar.keys():
             s.hasmortar[block] = False
-    
+
     for mblock in mortarblocks:
         if mblock not in s.mortaravailable.keys():
             s.mortaravailable[mblock] = False
@@ -103,7 +106,7 @@ def pyhop_state_from_world(world, name = "state"):
     return s
 
 
-#note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
+# note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
 # pyhopState doesn't need to be used, but pyhop_tasks_from_goals() will be passed two arguments and needs
 # to have it as an arg
 def pyhop_tasks_from_goals(goals, pyhopState):
@@ -112,7 +115,7 @@ def pyhop_tasks_from_goals(goals, pyhopState):
     blkgoals.pos = {}
     blkgoals.hasmortar = {}
     for goal in goals:
-        #extract predicate
+        # extract predicate
         if 'predicate' in goal.kwargs:
             predicate = str(goal.kwargs['predicate'])
         elif 'Predicate' in goal.kwargs:
@@ -128,7 +131,7 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             blkgoals.pos[args[0]] = args[1]
         elif predicate == "stable-on":
             blkgoals.pos[args[0]] = args[1]
-            blkgoals.hasmortar[args[1]] = True  
+            blkgoals.hasmortar[args[1]] = True
         elif predicate == 'on-table':
             blkgoals.pos[args[0]] = 'table'
         elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:
@@ -142,8 +145,7 @@ def pyhop_tasks_from_goals(goals, pyhopState):
     return alltasks
 
 
-
-def pyhop_state_from_world_restaurant(world, name = "state"):
+def pyhop_state_from_world_restaurant(world, name="state"):
     s = pyhop.State(name)
     # these are the states for the domain
     s.order_received = {}

@@ -3,7 +3,7 @@ import midca
 from midca.examples import predicateworld
 from midca.worldsim import domainread, stateread
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
-from midca.metamodules import monitor, control, interpret, metaintend,  plan
+from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca.modules.gens import goaltransform
 from midca import base
 
@@ -11,7 +11,7 @@ from midca import base
 from midca.domains.restaurant_domain import util
 from midca.domains.restaurant_domain.plan import restaurant_methods, restaurant_operators
 
-import inspect, os,copy
+import inspect, os, copy
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
@@ -36,34 +36,34 @@ GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 world = domainread.load_domain(DOMAIN_FILE)
 
 # for state file, need to add number of mortar blocks to begin with
-state_str = open(STATE_FILE).read() # first read file
+state_str = open(STATE_FILE).read()  # first read file
 
 # now load the state    
 stateread.apply_state_str(world, state_str)
 stateread.apply_state_file(world, STATE_FILE)
 
 print(world)
-#creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4, metaEnabled=True)
+# creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4, metaEnabled=True)
 
 initial_world = copy.deepcopy(world)
-#add phases by name
+# add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-myMidca.append_module("Interpret", guide.SimpleMortarGoalGen_Restaurant(STATE_FILE,state_str,Money))
+myMidca.append_module("Interpret", guide.SimpleMortarGoalGen_Restaurant(STATE_FILE, state_str, Money))
 myMidca.append_module("Eval", evaluate.SimpleEval_Restaurant())
 myMidca.append_module("Intend", intend.SimpleIntend_Restaurant())
 myMidca.append_module("Plan", planning.PyHopPlanner_temporary(util.pyhop_state_from_world_restaurant,
-                                                    util.pyhop_tasks_from_goals_restaurant,
-                                                    DECLARE_METHODS_FUNC,
-                                                    DECLARE_OPERATORS_FUNC))
+                                                              util.pyhop_tasks_from_goals_restaurant,
+                                                              DECLARE_METHODS_FUNC,
+                                                              DECLARE_OPERATORS_FUNC))
 myMidca.append_module("Act", act.SimpleAct_temporary())
 
-#tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
+# tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.initGoalGraph()
 myMidca.init()

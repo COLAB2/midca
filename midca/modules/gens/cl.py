@@ -1,102 +1,96 @@
 import copy
 import inspect, os
 
+
 class Tree:
-        def __init__(self):
-                self.rootnode = ""
-                self.allnodes = list()
-                self.checked = list()
+    def __init__(self):
+        self.rootnode = ""
+        self.allnodes = list()
+        self.checked = list()
 
-        def printall(self,space,printed,root):
+    def printall(self, space, printed, root):
 
-			if (len(root.parents) == 0) and (not( len(printed) == 0)):
-				return 0
+        if (len(root.parents) == 0) and (not (len(printed) == 0)):
+            return 0
 
-			if not root.predicate in printed:
-				printed.append(root.predicate)
-				print(space + root.predicate)
-				space =  space[0:4] + space
-			else:
-				space = space[0:-4]
+        if not root.predicate in printed:
+            printed.append(root.predicate)
+            print(space + root.predicate)
+            space = space[0:4] + space
+        else:
+            space = space[0:-4]
 
+        if len(root.children) == 0:
+            self.printall(space, printed, root.parents.pop())
+        else:
+            for s in root.children:
+                self.printall(space, printed, s)
 
-			if len(root.children) == 0:
-				self.printall(space, printed,root.parents.pop())
-			else:
-				for s in root.children:
-					self.printall(space, printed,s)
-
-			
-        
-        def printtree(self):
-                root = copy.deepcopy(Tree.rootnode)
-                printed = list()
-                space = "  "
-                print("--------- Class Hierarchy Predicate Tree ----------")
-                self.printall(space,printed,root)
-                print("")
-                print("--------- Class Hierarchy Predicate Tree Ends ----------")
-                print("")
+    def printtree(self):
+        root = copy.deepcopy(Tree.rootnode)
+        printed = list()
+        space = "  "
+        print("--------- Class Hierarchy Predicate Tree ----------")
+        self.printall(space, printed, root)
+        print("")
+        print("--------- Class Hierarchy Predicate Tree Ends ----------")
+        print("")
 
 
 class ObjectTree:
-        rootnode = ""
-        allnodes = list()
-	checked = []
+    rootnode = ""
+    allnodes = list()
+    checked = []
 
-        def printall(self,space,printed,root):
+    def printall(self, space, printed, root):
 
-			if (len(root.parents) == 0) and (not( len(printed) == 0)):
-				return 0
+        if (len(root.parents) == 0) and (not (len(printed) == 0)):
+            return 0
 
-			if not root.predicate in printed:
-				printed.append(root.predicate)
-				print(space + root.predicate)
-				space =  space[0:4] + space
-			else:
-				space = space[0:-4]
+        if not root.predicate in printed:
+            printed.append(root.predicate)
+            print(space + root.predicate)
+            space = space[0:4] + space
+        else:
+            space = space[0:-4]
 
+        if len(root.children) == 0:
+            self.printall(space, printed, root.parents.pop())
+        else:
+            for s in root.children:
+                self.printall(space, printed, s)
 
-			if len(root.children) == 0:
-				self.printall(space, printed,root.parents.pop())
-			else:
-				for s in root.children:
-					self.printall(space, printed,s)
+    def printtree(self):
+        root = copy.deepcopy(ObjectTree.rootnode)
+        printed = list()
+        space = "  "
+        print("--------- Class Hierarchy Object Tree ----------")
+        self.printall(space, printed, root)
+        print("")
+        print("--------- Class Hierarchy Object Tree Ends ----------")
+        print("")
 
-			
-        
-        def printtree(self):
-                root = copy.deepcopy(ObjectTree.rootnode)
-                printed = list()
-                space = "  "
-                print("--------- Class Hierarchy Object Tree ----------")
-                self.printall(space,printed,root)
-                print("")
-                print("--------- Class Hierarchy Object Tree Ends ----------")
-                print("")
 
 class Node:
-        def __init__(self):
-                self.predicate = ""
-                self.parents = list()
-                self.children = list()
+    def __init__(self):
+        self.predicate = ""
+        self.parents = list()
+        self.children = list()
 
-        def insert(self,predicate):
-                self.predicate = predicate
-                return self
-                       
-                                       
-        def insertbranch(self,s):
-                self.parents.append(s)
-                s.children.append(self)
-                for a in range(0,len(Tree.allnodes)):
-                        if Tree.allnodes[a].predicate is s.predicate:
-                                Tree.allnodes[a] = s
-#                Tree.allnodes.append(self)                               
-                return self
+    def insert(self, predicate):
+        self.predicate = predicate
+        return self
 
-        
-                        
+    def insertbranch(self, s):
+        self.parents.append(s)
+        s.children.append(self)
+        for a in range(0, len(Tree.allnodes)):
+            if Tree.allnodes[a].predicate is s.predicate:
+                Tree.allnodes[a] = s
+        #                Tree.allnodes.append(self)                               
+        return self
+
+
 '''
 def implement(tree):
         tree = Tree()
@@ -197,44 +191,48 @@ def insertion(content):
 			Tree.allnodes.append(newnode)
 #			tree.printtree()
 '''
+
+
 def check_in_all_tree_nodes(predicate):
-#	print(predicate)
-	for a in range(0,len(Tree.allnodes)):
-#		print(Tree.allnodes[a].predicate)
-		if Tree.allnodes[a].predicate == predicate:
-			#print(Tree.allnodes[a].predicate)	
-			return Tree.allnodes[a]
+    #	print(predicate)
+    for a in range(0, len(Tree.allnodes)):
+        #		print(Tree.allnodes[a].predicate)
+        if Tree.allnodes[a].predicate == predicate:
+            # print(Tree.allnodes[a].predicate)	
+            return Tree.allnodes[a]
+
 
 def check_in_all_object_nodes(predicate):
-#	print(predicate)
-	for a in range(0,len(ObjectTree.allnodes)):
-#		print(Tree.allnodes[a].predicate)
-		if ObjectTree.allnodes[a].predicate == predicate:
-			#print(Tree.allnodes[a].predicate)	
-			return ObjectTree.allnodes[a]	
+    #	print(predicate)
+    for a in range(0, len(ObjectTree.allnodes)):
+        #		print(Tree.allnodes[a].predicate)
+        if ObjectTree.allnodes[a].predicate == predicate:
+            # print(Tree.allnodes[a].predicate)	
+            return ObjectTree.allnodes[a]
 
 
-			 
 def objectinsert(content):
-		temp_string = content
-		objecttree = ObjectTree()
-		print(temp_string)
-		newnode = Node()
-		newnode = newnode.insert(temp_string[len(temp_string)-1])
-		
-		if not(ObjectTree.rootnode):
-                 	 ObjectTree.rootnode= newnode
-                 	 ObjectTree.allnodes.append(newnode)
-		
-		for i in range(0,len(temp_string)-1):
-			#print(temp_string[len(temp_string)-1])
-			newnode = Node()
-			newnode = newnode.insert(temp_string[i])
-			newnode.insertbranch(check_in_all_object_nodes(temp_string[len(temp_string)-1]))
-			ObjectTree.allnodes.append(newnode)
-			#objecttree.printtree()		
-	
-	
+    temp_string = content
+    objecttree = ObjectTree()
+    print(temp_string)
+    newnode = Node()
+    newnode = newnode.insert(temp_string[len(temp_string) - 1])
+
+    if not (ObjectTree.rootnode):
+        ObjectTree.rootnode = newnode
+        ObjectTree.allnodes.append(newnode)
+
+    for i in range(0, len(temp_string) - 1):
+        # print(temp_string[len(temp_string)-1])
+        newnode = Node()
+        newnode = newnode.insert(temp_string[i])
+        newnode.insertbranch(check_in_all_object_nodes(temp_string[len(temp_string) - 1]))
+        ObjectTree.allnodes.append(newnode)
+
+
+# objecttree.printtree()		
+
+
 '''
 def objectinsertion(content):
 	count = 0
@@ -276,37 +274,30 @@ def objectinsertion(content):
 #			objecttree.printtree()
 '''
 
-def implement(fname,tree,objecttree):
-	#fname = MIDCA_ROOT + "/worldsim/tree/class.tree"
-	content_class_heirarchy = []
-	content_object_heirarchy = []
-	with open(fname) as f:
-    		content = f.readlines()
-#		if("\n" in content[0]):
-#			print(content[0].replace("\n",""))
-		for i in range(0,len(content)):
-			if "ptype" in content[i]:
-				content_class_heirarchy.append(content[i])
-			elif "type" in content[i]:
-				content_object_heirarchy.append(content[i])
-		#print(content_class_heirarchy[0:])
-		#print(content_class_heirarchy)
-		#print(content_object_heirarchy)
-		insert(content_class_heirarchy[0:])
-		#tree.printtree()
-		objectinsert(content_object_heirarchy[0:])
-		#objecttree.printtree()
-    		
+
+def implement(fname, tree, objecttree):
+    # fname = MIDCA_ROOT + "/worldsim/tree/class.tree"
+    content_class_heirarchy = []
+    content_object_heirarchy = []
+    with open(fname) as f:
+        content = f.readlines()
+        #		if("\n" in content[0]):
+        #			print(content[0].replace("\n",""))
+        for i in range(0, len(content)):
+            if "ptype" in content[i]:
+                content_class_heirarchy.append(content[i])
+            elif "type" in content[i]:
+                content_object_heirarchy.append(content[i])
+        # print(content_class_heirarchy[0:])
+        # print(content_class_heirarchy)
+        # print(content_object_heirarchy)
+        insert(content_class_heirarchy[0:])
+        # tree.printtree()
+        objectinsert(content_object_heirarchy[0:])
+
+
+# objecttree.printtree()
+
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-

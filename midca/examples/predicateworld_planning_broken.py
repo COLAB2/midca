@@ -2,16 +2,19 @@ from midca import base
 from midca.worldsim import domainread, stateread, worldsim
 from midca.domains.blocksworld import blockstate, scene
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act, planningbroken
-from midca.metamodules import monitor, control, interpret, metaintend,  plan
+from midca.metamodules import monitor, control, interpret, metaintend, plan
+
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
-    print str(scene.Scene(blocks))
+    print
+    str(scene.Scene(blocks))
 
-def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
+
+def UserGoalsMidca(domainFile, stateFile, goalsFile=None, extinguish=False):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
-    myMidca = base.PhaseManager(world, verbose=1, display = asqiiDisplay, metaEnabled=True)
+    myMidca = base.PhaseManager(world, verbose=1, display=asqiiDisplay, metaEnabled=True)
 
     # add cognitive layer phases
     for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -29,7 +32,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Act", act.SimpleAct())
 
     # add meta layer phases
-    #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
+    # for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
     for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
         myMidca.append_meta_phase(phase)
 
@@ -43,10 +46,11 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
 
     return myMidca
 
-def guiMidca(domainFile, stateFile, goalsFile = None):
+
+def guiMidca(domainFile, stateFile, goalsFile=None):
     world = domainread.load_domain(domainFile)
     stateread.apply_state_file(world, stateFile)
-    myMidca = base.PhaseManager(world, display = asqiiDisplay)
+    myMidca = base.PhaseManager(world, display=asqiiDisplay)
     for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
         myMidca.append_phase(phase)
 
@@ -59,4 +63,3 @@ def guiMidca(domainFile, stateFile, goalsFile = None):
     myMidca.append_module("Plan", planning.PyHopPlanner())
     myMidca.append_module("Act", act.SimpleAct())
     return myMidca
-

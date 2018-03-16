@@ -8,7 +8,6 @@
 #
 class Interval:
 
-
     #
     # Create a new Interval object
     #
@@ -20,7 +19,6 @@ class Interval:
         self.high = high
         self.count = 0
 
-
     #
     # Create a string representation of an Interval object
     #
@@ -29,9 +27,7 @@ class Interval:
         s = s + ' n = ' + str(self.count)
         return s
 
-
     __str__ = __repr__
-
 
     #
     # Determine if a data item falls inside the interval and, if so,
@@ -43,7 +39,6 @@ class Interval:
         if item != None and item >= self.low and item <= self.high:
             self.count = self.count + 1
 
-
     #
     # Determine if a data item falls inside the interval and, if so,
     # decrement the interval's counter
@@ -54,14 +49,12 @@ class Interval:
         if item != None and item >= self.low and item <= self.high:
             self.count = self.count - 1
 
-
     # 
     # Reset the count of the number of items that fell into the interval
     # to zero
     #
     def clear(self):
         self.count = 0
-
 
     # 
     # Return the current count of data items that fell inside the interval

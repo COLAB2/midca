@@ -3,68 +3,67 @@ from midca import rosrun, midcatime, base
 import copy
 import os
 import socket
+
 try:
-	# baxter robot requirements
-	from midca.examples import ObjectDetector
-	from bzrlib.config import LocationStore
+    # baxter robot requirements
+    from midca.examples import ObjectDetector
+    from bzrlib.config import LocationStore
 except:
-	pass
+    pass
+
 
 class ROSObserver:
-    
+
     def init(self, world, mem):
         self.mem = mem
         self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 
-    def store_history(self,world,history,blocks):
-	'''
-	store the history of last 5 state changes
-	'''
-	if blocks:
-		a = {}
-		for each in blocks:
-			positions= world.all_pos(each)
-			a[each] = positions.pop().position
+    def store_history(self, world, history, blocks):
+        '''
+        store the history of last 5 state changes
+        '''
+        if blocks:
+            a = {}
+            for each in blocks:
+                positions = world.all_pos(each)
+                a[each] = positions.pop().position
 
-		if a:
-			history = history.append(a)
+            if a:
+                history = history.append(a)
 
-		if not history:
-			history = []
+            if not history:
+                history = []
 
-		if len(history) > 5:
-			history = history[:5]
+            if len(history) > 5:
+                history = history[:5]
 
-		history.reverse()
-		return history
-	return None
-	
+            history.reverse()
+            return history
+        return None
 
-    
+    def check_with_history(self, world, history, detectionEvents):
+        '''
+        store the past 5 change in events for the robot to remember things
+        '''
+        blocks = set()
+        for each in detectionEvents:
+            blocks.add(each.id)
+        if not history:
+            history = []
+            self.store_history(world, history, blocks)
+        else:
+            if not len(blocks) == len(history[len(history) - 1]):
+                history = self.store_history(world, history, blocks)
+        return history
 
-    def check_with_history(self,world,history,detectionEvents):
-	'''
-	store the past 5 change in events for the robot to remember things
-	'''
-	blocks = set()
-	for each in detectionEvents:
-		blocks.add(each.id)
-	if not history:
-		history = []
-		self.store_history(world,history,blocks)
-	else:
-		if not len(blocks) == len(history[len(history) -1]):
-			history = self.store_history(world,history,blocks)
-	return history
-    
-    def run(self, cycle, verbose = 2):
-        #self.ObserveWorld() 
+    def run(self, cycle, verbose=2):
+        # self.ObserveWorld()
         detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
         detecttionBlockState = self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
         utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
         feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
         world = self.mem.get_and_lock(self.mem.STATE)
-	history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
+        history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
 
         if not detectionEvents:
             detectionEvents = []
@@ -88,23 +87,22 @@ class ROSObserver:
             d['received_at'] = float(midcatime.now())
             self.mem.add(self.mem.FEEDBACK, d)
 
-	# if there are any change in events remember
-	history = self.check_with_history(world,history,detecttionBlockState)
-	self.mem.unlock(self.mem.STATE_HISTORY)
-	if history:
-		if len(history) > 5:
-			history = history[:5]
-		self.mem.set(self.mem.STATE_HISTORY , history)		
+        # if there are any change in events remember
+        history = self.check_with_history(world, history, detecttionBlockState)
+        self.mem.unlock(self.mem.STATE_HISTORY)
+        if history:
+            if len(history) > 5:
+                history = history[:5]
+            self.mem.set(self.mem.STATE_HISTORY, history)
         self.mem.unlock(self.mem.STATE)
 
-
         if verbose > 1:
-            print "World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
-            
-    
+            print
+            "World observed:", len(detectionEvents), "new detection event(s),", len(
+                utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
+
 
 class PerfectObserver(base.BaseModule):
-
     '''
     MIDCA Module which copies a complete world state. It is designed to interact with the
     built-in MIDCA world simulator. To extend this to work with other representations,
@@ -118,36 +116,37 @@ class PerfectObserver(base.BaseModule):
             raise ValueError("world is None!")
         self.world = world
 
-    #perfect observation
+    # perfect observation
     def observe(self):
         return self.world.copy()
 
-    def run(self, cycle, verbose = 2):
+    def run(self, cycle, verbose=2):
         world = self.observe()
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
-        
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
         if len(states) > 400:
-            #print "trimmed off 200 old stale states"
+            # print "trimmed off 200 old stale states"
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
-            print "World observed."
-        
+            print
+            "World observed."
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
-            trace.add_data("WORLD",copy.deepcopy(world))
+            trace.add_data("WORLD", copy.deepcopy(world))
+
 
 class PerfectObserverWithThief(base.BaseModule):
-
     '''
     MIDCA Module which copies a complete world state. It is designed to interact with the
     built-in MIDCA world simulator. To extend this to work with other representations,
@@ -161,65 +160,64 @@ class PerfectObserverWithThief(base.BaseModule):
             raise ValueError("world is None!")
         self.world = world
 
-    #perfect observation
+    # perfect observation
     def observe(self):
         return self.world.copy()
-	
-    def run(self, cycle, verbose = 2):
+
+    def run(self, cycle, verbose=2):
         world = self.observe()
         thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
-        theft_items=[]
-        
-#         with open(thief_file) as f:
-# 	    	lines = f.readlines()
-# 	    	for line in lines:
-# 	    		theft_items.append(line.split(" "))
-# 	    	
+        theft_items = []
+
+        #         with open(thief_file) as f:
+        # 	    	lines = f.readlines()
+        # 	    	for line in lines:
+        # 	    		theft_items.append(line.split(" "))
+        #
         if not world:
             raise Exception("World observation failed.")
-        
-#         self.mem.add(self.mem.STATES, world)
-        
+
+        #         self.mem.add(self.mem.STATES, world)
+
         for item in theft_items:
-        	
-			for atom in world.atoms:
-				if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
-					world.atoms.remove(atom)   
-					print("removed:" + atom.args[0].name)
-					break
-         			
-        self.mem.add(self.mem.STATES, world) 
-        
+
+            for atom in world.atoms:
+                if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
+                    world.atoms.remove(atom)
+                    print("removed:" + atom.args[0].name)
+                    break
+
+        self.mem.add(self.mem.STATES, world)
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
         if len(states) > 400:
-            #print "trimmed off 200 old stale states"
+            # print "trimmed off 200 old stale states"
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
-            print "World observed."
-        
+            print
+            "World observed."
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
-            trace.add_data("WORLD",copy.deepcopy(world))
-        
-        
+            trace.add_data("WORLD", copy.deepcopy(world))
+
 
 class MAReport:
-
     namecounts = {"report": 0}
 
     def __init__(self):
         self.actions = []
         self.finalstate = None
 
-    def str_dict(self, item, numtabs = 1, skipfirsttab = True):
+    def str_dict(self, item, numtabs=1, skipfirsttab=True):
         if isinstance(item, dict):
             s = ""
             first = True
@@ -249,7 +247,7 @@ class MAReport:
         valuepairs["object"] = {"value": str(action[1]).replace(" ", "_")}
         if action[0] in ("stack", "unstack"):
             valuepairs["recipient"] = {"value": str(action[2]).replace(" ", "_")}
-        return s + self.str_dict(valuepairs, skipfirsttab = False) + ")"
+        return s + self.str_dict(valuepairs, skipfirsttab=False) + ")"
 
     def atom_pairs(self, atom):
         valuepairs = {}
@@ -269,11 +267,10 @@ class MAReport:
             else:
                 self.namecounts[atom.predicate.name] = 1
             valuepairs[atom.predicate.name + "." + str(self.namecounts[atom.predicate.name])] = self.atom_pairs(atom)
-        return s + self.str_dict(valuepairs, skipfirsttab = False) + ")"
-
+        return s + self.str_dict(valuepairs, skipfirsttab=False) + ")"
 
     def __str__(self):
-        #if not self.actions:
+        # if not self.actions:
         #    return "incomplete"
         # if there is no state do not send report to meta aqua
         if not self.finalstate:
@@ -289,6 +286,7 @@ class MAReport:
                 s += "\n\"\")\n"
             return s + "))"
 
+
 '''
 ma = MAReport()
 import domainread, stateread
@@ -300,8 +298,8 @@ ma.actions.append(["catchfire", "block1"])
 print ma
 '''
 
-class MAReporter(base.BaseModule):
 
+class MAReporter(base.BaseModule):
     '''
     MIDCA module that sends a report on the world and actions to the
     Meta-AQUA story understanding system. This requires Meta-AQUA to be
@@ -317,22 +315,21 @@ class MAReporter(base.BaseModule):
         res = []
         for objectname in world.objects:
             if world.is_true("onfire", [objectname]) and \
-            world.objects[objectname].type.name == "BLOCK" and \
-            objectname != "table":
+                    world.objects[objectname].type.name == "BLOCK" and \
+                    objectname != "table":
                 res.append(objectname)
         return res
-    
 
-    def run(self, cycle, verbose = 2):
+    def run(self, cycle, verbose=2):
         world = None
         lastWorld = None
         try:
             world = self.mem.get(self.mem.STATES)[-1]
             lastWorld = self.mem.get(self.mem.STATES)[-2]
-        except (TypeError,IndexError):
+        except (TypeError, IndexError):
             pass
         if not world:
-            return #no report if not world observed
+            return  # no report if not world observed
         report = MAReport()
         report.finalstate = world
         try:
@@ -351,14 +348,16 @@ class MAReporter(base.BaseModule):
             for block in burning:
                 if block not in lastBurning or block in blocksPutOut:
                     report.actions.append(["burns", block])
-        #report is finished, send to Meta-AQUA
-		#report contains actions and state, 
-		#for every action there will be the state attached to it
+        # report is finished, send to Meta-AQUA
+        # report contains actions and state,
+        # for every action there will be the state attached to it
         if verbose >= 1:
-            print "Sending report to Meta-AQUA",
+            print
+            "Sending report to Meta-AQUA",
             if verbose >= 2:
-                print ":\n", report
-        if not str(report ) == "incomplete":
+                print
+                ":\n", report
+        if not str(report) == "incomplete":
             self.writeS.send(str(report))
 
     def __del__(self):

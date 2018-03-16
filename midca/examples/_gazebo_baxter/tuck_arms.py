@@ -56,44 +56,44 @@ class Tuck(object):
         self._arms = {
             'left': baxter_interface.Limb('left'),
             'right': baxter_interface.Limb('right'),
-            }
+        }
         self._tuck = tuck_cmd
         self._tuck_rate = rospy.Rate(20.0)  # Hz
         self._tuck_threshold = 0.2  # radians
         self._peak_angle = -1.6  # radians
         self._arm_state = {
-                           'tuck': {'left': 'none', 'right': 'none'},
-                           'collide': {'left': False, 'right': False},
-                           'flipped': {'left': False, 'right': False}
-                          }
+            'tuck': {'left': 'none', 'right': 'none'},
+            'collide': {'left': False, 'right': False},
+            'flipped': {'left': False, 'right': False}
+        }
         self._joint_moves = {
             'tuck': {
-                     'left':  [-1.0, -2.07,  3.0, 2.55,  0.0, 0.01,  0.0],
-                     'right':  [1.0, -2.07, -3.0, 2.55, -0.0, 0.01,  0.0]
-                     },
+                'left': [-1.0, -2.07, 3.0, 2.55, 0.0, 0.01, 0.0],
+                'right': [1.0, -2.07, -3.0, 2.55, -0.0, 0.01, 0.0]
+            },
             'untuck': {
-                       'left':  [-0.08, -1.0, -1.19, 1.94,  0.67, 1.03, -0.50],
-                       'right':  [0.08, -1.0,  1.19, 1.94, -0.67, 1.03,  0.50]
-                       }
+                'left': [-0.08, -1.0, -1.19, 1.94, 0.67, 1.03, -0.50],
+                'right': [0.08, -1.0, 1.19, 1.94, -0.67, 1.03, 0.50]
             }
+        }
         self._collide_lsub = rospy.Subscriber(
-                             'robot/limb/left/collision_avoidance_state',
-                             CollisionAvoidanceState,
-                             self._update_collision, 'left')
+            'robot/limb/left/collision_avoidance_state',
+            CollisionAvoidanceState,
+            self._update_collision, 'left')
         self._collide_rsub = rospy.Subscriber(
-                             'robot/limb/right/collision_avoidance_state',
-                             CollisionAvoidanceState,
-                             self._update_collision, 'right')
+            'robot/limb/right/collision_avoidance_state',
+            CollisionAvoidanceState,
+            self._update_collision, 'right')
         self._disable_pub = {
             'left': rospy.Publisher(
-                 'robot/limb/left/suppress_collision_avoidance',
-                 Empty, queue_size=10),
+                'robot/limb/left/suppress_collision_avoidance',
+                Empty, queue_size=10),
             'right': rospy.Publisher(
-                 'robot/limb/right/suppress_collision_avoidance',
-                 Empty, queue_size=10)
+                'robot/limb/right/suppress_collision_avoidance',
+                Empty, queue_size=10)
         }
         self._rs = baxter_interface.RobotEnable(CHECK_VERSION)
-        self._enable_pub = rospy.Publisher('robot/set_super_enable', 
+        self._enable_pub = rospy.Publisher('robot/set_super_enable',
                                            Bool, queue_size=10)
 
     def _update_collision(self, data, limb):
@@ -126,7 +126,7 @@ class Tuck(object):
 
             # Check if shoulder is flipped over peak
             self._arm_state['flipped'][limb] = (
-                self._arms[limb].joint_angle(limb + '_s1') <= self._peak_angle)
+                    self._arms[limb].joint_angle(limb + '_s1') <= self._peak_angle)
 
     def _prepare_to_tuck(self):
         # If arms are in "tucked" state, disable collision avoidance
@@ -134,7 +134,7 @@ class Tuck(object):
         head = baxter_interface.Head()
         start_disabled = not self._rs.state().enabled
         at_goal = lambda: (abs(head.pan()) <=
-                        baxter_interface.settings.HEAD_PAN_ANGLE_TOLERANCE)
+                           baxter_interface.settings.HEAD_PAN_ANGLE_TOLERANCE)
 
         rospy.loginfo("Moving head to neutral position")
         while not at_goal() and not rospy.is_shutdown():
@@ -164,8 +164,8 @@ class Tuck(object):
                     self._disable_pub[limb].publish(Empty())
                 if limb in tuck:
                     self._arms[limb].set_joint_positions(dict(zip(
-                                      self._arms[limb].joint_names(),
-                                      self._joint_moves[tuck[limb]][limb])))
+                        self._arms[limb].joint_names(),
+                        self._joint_moves[tuck[limb]][limb])))
             self._check_arm_state()
             self._tuck_rate.sleep()
 
@@ -248,9 +248,9 @@ def main():
     parser = argparse.ArgumentParser()
     tuck_group = parser.add_mutually_exclusive_group(required=True)
     tuck_group.add_argument("-t", "--tuck", dest="tuck",
-        action='store_true', default=False, help="tuck arms")
+                            action='store_true', default=False, help="tuck arms")
     tuck_group.add_argument("-u", "--untuck", dest="untuck",
-        action='store_true', default=False, help="untuck arms")
+                            action='store_true', default=False, help="untuck arms")
     args = parser.parse_args(rospy.myargv()[1:])
     tuck = args.tuck
 
@@ -262,6 +262,7 @@ def main():
     tucker.supervised_tuck()
     rospy.loginfo("Finished tuck")
     rospy.sleep(1)
+
 
 if __name__ == "__main__":
     main()
