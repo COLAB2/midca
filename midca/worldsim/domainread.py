@@ -1,4 +1,4 @@
-import worldsim
+import midca.worldsim.worldsim as worldsim
 
 types = {"obj": worldsim.Type("obj", [])}
 objects = {}
