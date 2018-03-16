@@ -7,6 +7,7 @@ import midca.worldsim.domainread as domain_read
 def _apply_state(world, lines):
     lineNum = 1
     for line in lines:
+        line = line.strip()
         if "#" in line:
             line = line[:line.index("#")]  # comments
         if "(" in line:
