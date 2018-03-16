@@ -1,4 +1,5 @@
 *.py[cod]
+*.class
 
 # C extensions
 *.so
@@ -43,3 +44,4 @@ examples/log/**
 .project
 .pydevproject
 .idea/*
+
