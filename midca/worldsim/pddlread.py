@@ -18,17 +18,19 @@ from  pddlpy import DomainProblem
 import inspect, os
 
 
-objects = {}
-predicates = {}
+objects = []
+predicates = []
 atoms = []
-operators = {}
-
+operators = []
+cltree = {"rootnode": "", "allnodes": [], "checked": []}
+obtree = {"rootnode": "", "allnodes": [], "checked": []}
 
 def load_domain(domain_file, problem_file):
     domprob = pddlpy.DomainProblem(domain_file, problem_file)
-    operators = list(domprob.operators())
-
-    for op in operators:
+    pddl_operators = list(domprob.operators())
+    print(pddl_operators)
+    for op in pddl_operators:
+        print("start...")
         #'move'
         name = op
         prepredicates = []
@@ -91,11 +93,13 @@ def load_domain(domain_file, problem_file):
     # operators = dic {'stack':worldsim.operator}
 
         operators.append(worldsim.Operator(op, objnames, prepredicates, preobjnames, postpredicates, postobjnames))
+        print("end")
 
-        return operators
-    #
-    # world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
-    # return world
+    predicates = prepredicates + postpredicates
+
+    world = worldsim.World(operators, predicates, atoms)
+
+    return world
 
 def readpddlfiles(domainfile, problemfile):
     domprob = DomainProblem(domainfile, problemfile)
@@ -143,4 +147,4 @@ if __name__ == "__main__":
     ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/sminecraft.pddl"
     ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/s_wood.pddl"
 
-    print(load_domain(ff_DOMAIN_FILE,ff_STATE_FILE))
+    load_domain(ff_DOMAIN_FILE,ff_STATE_FILE)

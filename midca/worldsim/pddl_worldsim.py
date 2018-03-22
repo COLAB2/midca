@@ -139,23 +139,17 @@ class Operator:
         self.preconditions = {}
         self.precondorder = []
         self.prePos = []
-        print("name" + name)
-        print("prepredicates: ")
-        print(prepredicates[0])
+
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
             names = preobjnames[pred]
-            print("names ")
-            print( names)
 
             for arg in range(len(names)):
                 args.append(Obj(names[arg]))
-            print("args:")
-            print(args)
+
             cond = Condition(prepredicates[pred].instantiate(args))
-            print("cond")
-            print(cond)
+
             self.precondorder.append(cond)
             self.preconditions[cond] = names
         self.results = {}
