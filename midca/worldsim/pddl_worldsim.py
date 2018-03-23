@@ -12,7 +12,11 @@ class Obj:
     def __str__(self):
         return self.name
 
+class Type:
 
+    def __init__(self, name, parents=[]):
+        self.parents = parents
+        self.name = name
 
 class Atom:
 
@@ -147,7 +151,12 @@ class Operator:
 
             for arg in range(len(names)):
                 args.append(Obj(names[arg]))
-
+            print("pred")
+            print(prepredicates[pred])
+            print("args")
+            print(args)
+            print("argnames")
+            print(prepredicates[pred].argnames)
             cond = Condition(prepredicates[pred].instantiate(args))
 
             self.precondorder.append(cond)
@@ -417,6 +426,23 @@ class World:
             self.objects[object.name] = object
         self.atoms = set(atoms)
 
+    def __init__(self, operators, predicates, atoms, objects, cltree=[], obtree=[]):
+        self.operators = {}
+
+        self.cltree = cltree
+        self.obtree = obtree
+        for operator in operators:
+            self.operators[operator.name] = operator
+        self.predicates = {}
+        for predicate in predicates:
+            self.predicates[predicate.name] = predicate
+        self.objects = {}
+        for atom in atoms:
+            for arg in atom.args:
+                self.objects[arg.name] = arg
+        for object in objects:
+            self.objects[object.name] = object
+        self.atoms = set(atoms)
     def get_atoms(self, filters=[]):
         '''
         Will return atoms if the filter (string) is within any pred or arg names
@@ -483,8 +509,8 @@ class World:
         if not type(self.atoms) is set:
             self.atoms = set(self.atoms)
 
-        return World(list(self.operators.values()), list(self.predicates.values()), self.atoms.copy(), self.types.copy(),
-                     list(self.objects.values()))
+
+        return World(list(self.operators.values()), list(self.predicates.values()), self.atoms.copy(), list(self.objects.values()))
 
     def is_true(self, predname, argnames=[]):
         for atom in self.atoms:
