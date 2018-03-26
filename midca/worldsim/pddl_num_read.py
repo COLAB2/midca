@@ -26,7 +26,7 @@ cltree = {"rootnode": "", "allnodes": [], "checked": []}
 obtree = {"rootnode": "", "allnodes": [], "checked": []}
 
 
-def readpddlfiles(domainfile, problemfile):
+def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
     print()
     print("DOMAIN PROBLEM")
@@ -113,27 +113,39 @@ def readpddlfiles(domainfile, problemfile):
         #     # postobjnames.append(eff_args_names)
         #     # postobjtypes.append(eff_args_types)
 
-        operators[a.name] = worldsim.Operator(a.name, list(actions_args.values()), prepredicates, preobjnames, preobjtypes, [],
-                                             postpredicates, postobjnames, postobjtypes, [])
+        operators.update({a.name :worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames, preobjtypes, [],
+                                             postpredicates, postobjnames, postobjtypes, [])})
 
-        print("Objects:")
-        objects = parseObjects(prob.objects)
-        probinitialState = prob.initialstate
-        for a in probinitialState:
-            if type(a) is FExpression:
-                print(a.op)
-                for sub in a.subexps:
-                    if type(sub) is FHead:
-                        print(sub.name)
-                        print(parseTypedArgList_names(sub.args))
-                    else:
-                        print(sub.val)
+    print("Objects:")
+    objects = parseObjects(prob.objects)
 
-            else:
-                print(a.op)
-                for sub in a.subformulas:
+    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
+
+    return world
+
+    # probinitialState = getInitialState(prob.initialstate)
+
+
+def getInitialState(probinitialState):
+
+    for a in probinitialState:
+        if type(a) is FExpression:
+            print("feexpression")
+            print(a.op)
+            for sub in a.subexps:
+                if type(sub) is FHead:
                     print(sub.name)
                     print(parseTypedArgList_names(sub.args))
+                else:
+                    print(sub.val)
+
+        else:
+            print("formula")
+            print(a.op)
+            for sub in a.subformulas:
+                print(sub)
+                print(sub.name)
+                print(parseTypedArgList_names(sub.args))
         # goal = prob.goal
         # print(goal)
 
@@ -177,7 +189,7 @@ if __name__ == "__main__":
     MIDCA_ROOT = thisDir + "/../"
 
     ### Domain Specific Variables for JSHOP planner
-    ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-    ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
+    ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/sminecraft.pddl"
+    ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/s_wood.pddl"
 
-    readpddlfiles(ff_DOMAIN_FILE, ff_STATE_FILE)
+    load_domain(ff_DOMAIN_FILE, ff_STATE_FILE)

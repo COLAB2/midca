@@ -18,16 +18,14 @@ class AsynchronousAct(base.BaseModule):
             goals = []
         if not goals:
             if verbose >= 2:
-                print()
-                "No Active goals. Act phase will do nothing"
+                print("No Active goals. Act phase will do nothing")
             return
 
         try:
             plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
         except:
             if verbose >= 1:
-                print()
-                "Error loading plan. Skipping act phase."
+                print("Error loading plan. Skipping act phase.")
             return
 
         if not plan:
@@ -65,9 +63,8 @@ class AsynchronousAct(base.BaseModule):
                     action.execute()
             except AttributeError:
                 if verbose >= 1:
-                    print()
-                    "Action", action, "Does not seem to have a valid execute() ",
-                    "method. Therefore MIDCA cannot execute it"
+                    print("Action", action, "Does not seem to have a valid execute() ",
+                    "method. Therefore MIDCA cannot execute it")
                     action.status = asynch.FAILED
             if action.status == asynch.COMPLETE:
                 i += 1

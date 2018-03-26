@@ -1,5 +1,9 @@
 import midca.worldsim.worldsim as plan
 import midca.worldsim.domainread as domain_read
+
+from pythonpddl import pddl
+from pythonpddl.pddl import FExpression, FHead, ConstantNumber
+
 #from midca import worldsim as plan domainread as domain_read
 
 
@@ -56,6 +60,59 @@ def _apply_state(world, lines):
             raise Exception("Line " + str(lineNum) + ": invalid command - " + line)
         lineNum += 1
 
+def _apply_state_pddl(world, domainfile, problemfile):
+    (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
+    lineNum = 1
+    for a in prob.initialstate:
+        """ FExpression: represents a functional / numeric expression"""
+        if type(a) is FExpression:
+            """FHead: represents a functional symbol and terms, e.g.,  (f a b c) (name, args)"""
+            if type(a) is FExpression:
+                print(a.op)
+                for sub in a.subexps:
+                    if type(sub) is FHead:
+                        print(sub.name)
+                        print(parseTypedArgList_names(sub.args))
+                    else:
+                        print(sub.val)
+            else:
+                '''Formula: represented a goal description (atom / negated atom / and / or)'''
+                '''subformulas is a predicate'''
+                for sub in a.subformulas:
+                    print(sub.name)
+                    print(parseTypedArgList_names(sub.args))
+                    call = sub.name
+                    argnames = parseTypedArgList_names(sub.args)
+                    negate = False
+                    # if call.startswith("!"):
+                    #     negate = True
+                    #     call = call[1:]
+                    # else:
+                    #     negate = False
+                    if call in world.predicates:
+                        args = []
+                        for name in argnames:
+                            if not name:
+                                continue
+                            if name not in world.objects:
+                                raise Exception("Line " + str(lineNum) + ": Object - " + name + " DNE ")
+                            args.append(world.objects[name])
+                        atom = world.predicates[call].instantiate(args)
+
+                        if negate:
+                            world.remove_atom(atom)
+                        else:
+                            world.add_atom(atom)
+
+
+
+
+
+def parseTypedArgList_names(argList):
+    parsed = []
+    for arg in argList.args:
+        parsed.append(str(arg.arg_name))
+    return parsed
 
 def apply_state_str(world, s):
     lines = s.split("\n")

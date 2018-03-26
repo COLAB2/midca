@@ -55,7 +55,7 @@
 			)
 		:effect
 			(and
-				(>(thing-available wood) 0)
+				(thing-available wood)
 				
 				
 			)
