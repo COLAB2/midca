@@ -129,8 +129,7 @@ block_name = "red block"
 
 
 def monitor_clear_block(block_n='red block', topic='clear_block'):
-    print()
-    'call monitor'
+    print('call monitor')
     #     rospy.init_node('clear_block_monitoring_____...')
     block_name = block_n
     handler.subscriber = rospy.Subscriber("obj_pos", String, m_callback)
@@ -162,8 +161,7 @@ def m_callback(data):
 
 
 def monitor_clear_block2(block_name='red block', topic='clear_block'):
-    print()
-    'monitoring clear...'
+    print('monitoring clear...')
 
     # rospy.init_node('clear_block_monitor', anonymous=True)
     baxter.enable()

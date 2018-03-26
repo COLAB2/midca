@@ -120,8 +120,7 @@ class PredicateChangeAssessor:
     # add in positives decreasing, negatives decreasing
     def characterize_change(self, pred, valence, baseline):
         change = valence.compare(baseline)
-        print()
-        change[pred][0], change[pred][1]
+        print(change[pred][0], change[pred][1])
         if change[pred][0] >= abs(change[pred][1]):
             return self.POS_INC  # number of predicate instances is increasing
         elif change[pred][2] >= abs(change[pred][1]):
@@ -134,8 +133,7 @@ class PredicateChangeAssessor:
     def run(self, cycle, verbose=2):
         if not self.mem.get(ANOMALY_STATE_KEY) or not self.mem.get(ANOMALY_STATE_KEY)[-1]:
             if verbose >= 3:
-                print()
-                "No valence analysis performed."
+                print("No valence analysis performed.")
             return
         if not self.baseline:
             self.build_baseline()
@@ -144,5 +142,4 @@ class PredicateChangeAssessor:
         valence = self.characterize_change(self.mem.get(ANOMALY_STATE_KEY)[-1], self.window_valence(), self.baseline)
         self.mem._update(VALENCE_KEY, valence)
         if verbose >= 1:
-            print()
-            "anomaly valence: ", valence
+            print("anomaly valence: ", valence)

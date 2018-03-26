@@ -202,8 +202,7 @@ class GNG:
         # add node - old method
         if self.addmode != "new":
             if len(self.nodes) < self.maximumNodes and self.numUpdates % self.newNodeInterval == 0:
-                print()
-                "adding"
+                print("adding")
                 self.add_node()
         else:
             # add node - new method

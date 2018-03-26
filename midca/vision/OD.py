@@ -152,8 +152,7 @@ def main():
     # dark red:
     # RGB: 87 0 0
     # [  0 255  87]
-    print()
-    'Initializing node...'
+    print('Initializing node...')
 
     rospy.init_node('rsdk_xdisplay_image', anonymous=True)
     baxter.enable()

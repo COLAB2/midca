@@ -39,11 +39,10 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
     kin = baxter_kinematics(limb)
     curPosition = kin.forward_position_kinematics(startAngles)
     if verbose:
-        print()
-        "Starting IK engine - starting pose:", curPosition
+        print("Starting IK engine - starting pose:", curPosition)
     curAngles = {name: angleRanges[name].midpoint() for name in list(startAngles.keys())}
-    print()
-    curAngles
+    print(curAngles)
+
     curPosition = kin.forward_position_kinematics(curAngles)
     n = 0
     movesUp = {name: 0 for name in list(curAngles.keys())}
@@ -52,12 +51,10 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
         n += 1
         if n > 10000:
             if verbose:
-                print()
-                "Reached 10000 steps. Position:", curPosition
-                print()
-                "up:", movesUp
-                print()
-                "down", movesDown
+                print( "Reached 10000 steps. Position:", curPosition)
+                print("up:", movesUp)
+                print("down", movesDown)
+
             return None
         d = distance(curPosition, target)
         deltaD = []
@@ -80,8 +77,7 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
                 deltaD.append((dDown - d, name, False))
         if not deltaD:
             if verbose:
-                print()
-                "No useful moves found at position:", curPosition
+                print("No useful moves found at position:", curPosition)
             return None
         deltaD.sort(key=lambda x: x[0])
         if deltaD[0][2]:
@@ -91,8 +87,7 @@ def getSolution(target, startAngles, limb, threshold=0.01, delta=0.005, verbose=
             curAngles[deltaD[0][1]] -= delta
             movesDown[deltaD[0][1]] += 1
         curPosition = kin.forward_position_kinematics(curAngles)
-    print()
-    "found solution in", n, "steps."
+    print("found solution in", n, "steps.")
     return curAngles
 
 
@@ -121,8 +116,7 @@ def getSolutionAStar(target, startAngles, threshold=0.01, delta=0.01, verbose=Tr
     visited = set()
     curPosition = kin.forward_position_kinematics(startAngles)
     if verbose:
-        print()
-        "Starting IK engine - starting pose:", curPosition
+        print("Starting IK engine - starting pose:", curPosition)
     curAngles = {name: angleRanges[name].midpoint() for name in list(startAngles.keys())}
     curPosition = kin.forward_position_kinematics(curAngles)
     heappush(stateQ, (distance(curPosition, target), dict(curAngles)))
@@ -134,13 +128,11 @@ def getSolutionAStar(target, startAngles, threshold=0.01, delta=0.01, verbose=Tr
         n += 1
         d, curAngles = heappop(stateQ)
         if d < threshold:
-            print()
-            "found solution in", n, "steps."
+            print("found solution in", n, "steps.")
             return curAngles
         if n > 10000:
             if verbose:
-                print()
-                "Reached 10000 steps. Position:", kin.forward_position_kinematics(curAngles)
+                print("Reached 10000 steps. Position:", kin.forward_position_kinematics(curAngles))
                 print()
                 "Angles"
             return None

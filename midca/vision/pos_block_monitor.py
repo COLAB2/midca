@@ -126,8 +126,7 @@ def publish(msg, topic):
 
 
 def monitor_pos_block(block_name='green block', pos='table'):
-    print()
-    'monitoring pos'
+    print('monitoring pos')
 
     # rospy.init_node('clear_block_monitor', anonymous=True)
     baxter.enable()

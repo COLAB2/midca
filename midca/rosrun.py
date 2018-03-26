@@ -105,8 +105,7 @@ class RosMidca:
         also be possible to have one handler implement both behaviors, but this might not
         be desirable.
         '''
-        print()
-        "trying to send message on topic", topic
+        print("trying to send message on topic", topic)
         sent = False
         for handler in self.outgoingMsgHandlers:
             if handler.topic == topic:
@@ -774,8 +773,7 @@ class UtteranceHandler(IncomingMsgHandler):
             self.memKey = self.mem.ROS_WORDS_HEARD
 
     def store_utterance(self, utterance):
-        print()
-        "storing utterance:", utterance
+        print("storing utterance:", utterance)
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
         self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
@@ -808,9 +806,8 @@ class FeedbackHandler(IncomingMsgHandler):
         try:
             self.mem.add(self.memKey, s)
         except:
-            print()
-            "Error reading feedback: ", s, " - format should be key: value | key : \
-             value..."
+            print("Error reading feedback: ", s, " - format should be key: value | key : \
+             value...")
 
 
 class OutgoingMsgHandler(object):

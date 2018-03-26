@@ -16,16 +16,16 @@ class SimpleIntend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print()
-                "Goal graph not initialized. Intend will do nothing."
+                print(
+                "Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
 
         if not goals:
             if verbose >= 1:
-                print()
-                "No Goals in Goal graph. Intend will do nothing."
+                print(
+                "No Goals in Goal graph. Intend will do nothing.")
             return
 
         # take the first goal
@@ -48,15 +48,15 @@ class SimpleIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print()
-                "No goals selected."
+                print(
+                "No goals selected.")
         else:
             if verbose >= 2:
-                print()
-                "Selecting goal(s):",
+                print(
+                "Selecting goal(s):",)
                 for goal in goals:
-                    print()
-                    goal,
+                    print(goal ,)
+
                 print()
 
 

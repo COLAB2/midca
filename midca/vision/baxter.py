@@ -153,23 +153,18 @@ class Baxter:
     def moveLeftArm(self, point, orientation):
         angles = self.inverseKinematics('left', point, orientation)
         if not angles:
-            print()
-            'none'
+            print('none')
             return None
         else:
-            print()
-            angles
+            print(angles)
 
-        print()
-        'I am here!!!!!'
-        print()
-        angles
+        print('I am here!!!!!')
+        print(angles)
 
         self.leftArm.move_to_joint_positions(angles)  # 15 secs timeout default.
 
     def enable(self):
-        print()
-        "start"
+        print("start")
         self.robotEnable = baxter_interface.RobotEnable()
         self.robotEnable.enable()
         self.leftArm = baxter_interface.Limb('left')

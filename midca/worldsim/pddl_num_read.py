@@ -48,7 +48,7 @@ def load_domain(domainfile, problemfile):
     for a in dom.predicates:
         print(a.name)
         argnames = parseTypedArgList_names(a.args)
-        argtypes = parseTypedArgList_types(a.args)
+        argtypes = parseTypedArgList_types(a.args, types)
 
         predicates.update({a.name: worldsim.Predicate(a.name, argnames, argtypes)})
 
@@ -71,7 +71,7 @@ def load_domain(domainfile, problemfile):
             # a.args is typedArgList
             pre_args_name = parseTypedArgList_names(pre.args)
 
-            pre_args_type = parseTypedArgList_types(pre.args)
+            pre_args_type = parseTypedArgList_types(pre.args, actions_args)
 
             prepredicates.append(worldsim.Predicate(pre.name, pre_args_name, pre_args_type))
 
@@ -85,7 +85,7 @@ def load_domain(domainfile, problemfile):
         #     # a.args is typedArgList
         #     print(pre)
         #     # pre_args_name = parseTypedArgList_names(pre.args)
-        #     # pre_args_type = parseTypedArgList_types(pre.args)
+        #     # pre_args_type = parseTypedArgList_types(pre.args, actions_args)
         #     # prepredicates.append(worldsim.Predicate(pre.name, pre_args_name))
         #     # preobjnames.append(pre_args_name)
         #     # preobjtypes.append(pre_args_type)
@@ -93,7 +93,7 @@ def load_domain(domainfile, problemfile):
         for eff in a.get_eff(True):
             # a.args is typedArgList
             eff_args_names = parseTypedArgList_names(eff.args)
-            eff_args_types = parseTypedArgList_types(eff.args)
+            eff_args_types = parseTypedArgList_types(eff.args, actions_args)
 
             postpredicates.append(worldsim.Predicate(eff.name, eff_args_names, eff_args_types))
 
@@ -104,7 +104,7 @@ def load_domain(domainfile, problemfile):
         #     # a.args is typedArgList
         #     print(eff)
         #     # eff_args_names = parseTypedArgList_names(eff.args)
-        #     # eff_args_types = parseTypedArgList_types(eff.args)
+        #     # eff_args_types = parseTypedArgList_types(eff.args, actions_args)
         #     # postpredicates.append(worldsim.Predicate(eff.name, eff_args_names))
         #     # postobjnames.append(eff_args_names)
         #     # postobjtypes.append(eff_args_types)
@@ -148,7 +148,7 @@ def getInitialState(probinitialState):
 def parseObjects(objects):
     worldsimObjects = {}
     for arg in objects.args:
-        worldsimObjects.update({arg.arg_name: worldsim.Obj(arg.arg_name, worldsim.Type(arg.arg_type))})
+        worldsimObjects.update({arg.arg_name: worldsim.Obj(arg.arg_name, types[arg.arg_type])})
 
     return worldsimObjects
 
@@ -175,12 +175,14 @@ def parseTypedArgList_names(argList):
         parsed.append(str(arg.arg_name))
     return parsed
 
-def parseTypedArgList_types(argList):
+def parseTypedArgList_types(argList, action_types):
     ptypes = []
     for arg in argList.args:
-        if arg.arg_type in types.keys():
-            ptypes.append(types[arg.arg_type])
+        if arg.arg_name in action_types.keys():
+            print(arg.arg_name)
+            ptypes.append(action_types[arg.arg_name])
         else:
+
             ptypes.append(types["constant"])
 
     return ptypes

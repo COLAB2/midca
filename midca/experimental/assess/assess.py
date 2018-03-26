@@ -44,8 +44,7 @@ class Assessor:
         if self.valenceAssess:
             self.valenceAssess.run(cycle, verbose)
             if self.mem.get(ANOMALY_STATE_KEY) and self.mem.get(ANOMALY_STATE_KEY)[-1]:
-                print()
-                "M-A frame:"
+                print("M-A frame:")
                 print()
                 self.lisp_anom_str()
                 self.MAAnomCount += 1

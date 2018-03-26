@@ -35,8 +35,7 @@ class AsynchronousAct(base.BaseModule):
             return
         i = 0
         if plan.finished():
-            print()
-            "Plan", plan, "has already been completed"
+            print("Plan", plan, "has already been completed")
             return
         # ideally MIDCA should check for other valid plans, but for now it doesn't.
 
@@ -47,19 +46,16 @@ class AsynchronousAct(base.BaseModule):
                     completed = action.check_complete()
                     if completed:
                         if verbose >= 2:
-                            print()
-                            "Action", action, "completed"
+                            print("Action", action, "completed")
             except AttributeError:
                 if verbose >= 1:
-                    print()
-                    "Action", action, "Does not seem to have a valid check_complete() ",
-                    "method. Therefore MIDCA cannot execute it."
+                    print("Action", action, "Does not seem to have a valid check_complete() ",
+                    "method. Therefore MIDCA cannot execute it.")
                     action.status = asynch.FAILED
             try:
                 if action.status == asynch.NOT_STARTED:
                     if verbose >= 2:
-                        print()
-                        "Beginning action execution for", action
+                        print("Beginning action execution for", action)
                     action.execute()
             except AttributeError:
                 if verbose >= 1:
@@ -93,27 +89,20 @@ class SimpleAct(base.BaseModule):
             if len(achieved) == len(goals):
                 break
             elif verbose >= 2:
-                print()
-                "Retrieved plan does not achieve all goals. Trying to retrieve a different plan..."
+                print("Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
                 if verbose >= 3:
-                    print()
-                    "  Retrieved Plan:"
+                    print("  Retrieved Plan:")
                     for a in nextPlan:
-                        print()
-                        "  " + str(a)
-                    print()
-                    "Goals achieved:", [str(goal) for goal in achieved]
+                        print("  " + str(a))
+                    print("Goals achieved:", [str(goal) for goal in achieved])
         if plan == None and verbose >= 1:
-            print()
-            "No valid plan found that achieves any current goals."
+            print("No valid plan found that achieves any current goals.")
         elif len(goalsAchieved) < len(goals) and verbose >= 1:
-            print()
-            "Best plan does not achieve all goals."
+            print("Best plan does not achieve all goals.")
             if verbose >= 2:
-                print()
-                "Plan:", str(plan)
-                print()
-                "Goals achieved:", [str(goal) for goal in goalsAchieved]
+                print("Plan:", str(plan))
+                print(
+                "Goals achieved:", [str(goal) for goal in goalsAchieved])
         return plan
 
     def run(self, cycle, verbose=2):
@@ -136,26 +125,26 @@ class SimpleAct(base.BaseModule):
             action = plan.get_next_step()
             if not action:
                 if verbose >= 1:
-                    print()
-                    "Plan to achieve goals has already been completed. Taking no action."
+                    print(
+                    "Plan to achieve goals has already been completed. Taking no action.")
                 self.mem.add(self.mem.ACTIONS, [])
             else:
                 if verbose == 1:
-                    print()
-                    "Action selected:", action
+                    print(
+                    "Action selected:", action)
                 elif verbose >= 2:
                     if len(plan) > max_plan_print_size:
                         # print just the next 3 actions of the plan
-                        print()
-                        "Selected action", action, "from plan:\n"
+                        print(
+                        "Selected action", action, "from plan:\n")
                         if verbose >= 3:
                             for a in plan:
-                                print()
-                                "  " + str(a)
+                                print(
+                                "  " + str(a))
                     else:
                         # print the whole plan
-                        print()
-                        "Selected action", action, "from plan:\n", plan
+                        print(
+                        "Selected action", action, "from plan:\n", plan)
                 self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
@@ -167,8 +156,8 @@ class SimpleAct(base.BaseModule):
                 if trace: trace.add_data("ACTION", action)
         else:
             if verbose >= 1:
-                print()
-                "MIDCA will not select an action this cycle."
+                print(
+                "MIDCA will not select an action this cycle.")
             self.mem.add(self.mem.ACTIONS, [])
             if goals:
                 for g in goals:
@@ -197,27 +186,27 @@ class SimpleAct_temporary(base.BaseModule):
             if len(achieved) == len(goals):
                 break
             elif verbose >= 2:
-                print()
-                "Retrieved plan does not achieve all goals. Trying to retrieve a different plan..."
+                print(
+                "Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
                 if verbose >= 3:
-                    print()
-                    "  Retrieved Plan:"
+                    print(
+                    "  Retrieved Plan:")
                     for a in nextPlan:
-                        print()
-                        "  " + str(a)
-                    print()
-                    "Goals achieved:", [str(goal) for goal in achieved]
+                        print(
+                        "  " + str(a))
+                    print(
+                    "Goals achieved:", [str(goal) for goal in achieved])
         if plan == None and verbose >= 1:
-            print()
-            "No valid plan found that achieves any current goals."
+            print(
+            "No valid plan found that achieves any current goals.")
         elif len(goalsAchieved) < len(goals) and verbose >= 1:
-            print()
-            "Best plan does not achieve all goals."
+            print(
+            "Best plan does not achieve all goals.")
             if verbose >= 2:
-                print()
-                "Plan:", str(plan)
-                print()
-                "Goals achieved:", [str(goal) for goal in goalsAchieved]
+                print(
+                "Plan:", str(plan))
+                print(
+                "Goals achieved:", [str(goal) for goal in goalsAchieved])
         return plan
 
     def run(self, cycle, verbose=2):
@@ -240,26 +229,26 @@ class SimpleAct_temporary(base.BaseModule):
             action = plan.get_next_step()
             if not action:
                 if verbose >= 1:
-                    print()
-                    "Plan to achieve goals has already been completed. Taking no action."
+                    print(
+                    "Plan to achieve goals has already been completed. Taking no action.")
                 self.mem.add(self.mem.ACTIONS, [])
             else:
                 if verbose == 1:
-                    print()
-                    "Action selected:", action
+                    print(
+                    "Action selected:", action)
                 elif verbose >= 2:
                     if len(plan) > max_plan_print_size:
                         # print just the next 3 actions of the plan
-                        print()
-                        "Selected action", action, "from plan:\n"
+                        print(
+                        "Selected action", action, "from plan:\n")
                         if verbose >= 3:
                             for a in plan:
-                                print()
-                                "  " + str(a)
+                                print(
+                                "  " + str(a))
                     else:
                         # print the whole plan
-                        print()
-                        "Selected action", action, "from plan:\n", plan
+                        print(
+                        "Selected action", action, "from plan:\n", plan)
                 self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
@@ -271,8 +260,8 @@ class SimpleAct_temporary(base.BaseModule):
                 if trace: trace.add_data("ACTION", action)
         else:
             if verbose >= 1:
-                print()
-                "MIDCA will not select an action this cycle."
+                print(
+                "MIDCA will not select an action this cycle.")
             self.mem.add(self.mem.ACTIONS, [])
             if goals:
                 for g in goals:
@@ -294,15 +283,15 @@ class NBeaconsSimpleAct(base.BaseModule):
             if p.finished():
                 goalGraph.removePlan(p)
                 if self.verbose >= 1:
-                    print()
-                    "Just removed finished plan "
+                    print(
+                    "Just removed finished plan ")
                     for ps in p:
-                        print()
-                        "  " + str(ps)
+                        print(
+                        "  " + str(ps))
             else:
                 return p
-        if self.verbose >= 1: print()
-        "Could not find an unfinished plan in get_first_plan() for goals " + str(goals)
+        if self.verbose >= 1: print(
+        "Could not find an unfinished plan in get_first_plan() for goals " + str(goals))
         return None
 
     def run(self, cycle, verbose=2):
@@ -326,37 +315,37 @@ class NBeaconsSimpleAct(base.BaseModule):
             action = plan.get_next_step()
             if not action:
                 if verbose >= 1:
-                    print()
-                    "Plan to achieve goals has already been completed. Taking no action."
+                    print(
+                    "Plan to achieve goals has already been completed. Taking no action.")
                 self.mem.add(self.mem.ACTIONS, [])
             else:
                 if verbose == 1:
-                    print()
-                    "Action selected:", action
+                    print(
+                    "Action selected:", action)
                 elif verbose >= 2:
                     if len(plan) > max_plan_print_size:
                         # print just the next 3 actions of the plan
-                        print()
-                        "Selected action", action, "from plan:\n"
+                        print(
+                        "Selected action", action, "from plan:\n")
                         if verbose >= 3:
                             for a in plan:
                                 if action == a:
-                                    print()
-                                    "   *" + str(a)
+                                    print(
+                                    "   *" + str(a))
                                 else:
-                                    print()
-                                    "  " + str(a)
+                                    print(
+                                    "  " + str(a))
                     else:
                         # print the whole plan
-                        print()
-                        "Selected action", action, "from plan:\n"
+                        print(
+                        "Selected action", action, "from plan:\n")
                         for a in plan:
                             if action == a:
-                                print()
-                                "   *" + str(a)
+                                print(
+                                "   *" + str(a))
                             else:
-                                print()
-                                "  " + str(a)
+                                print(
+                                "  " + str(a))
 
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
@@ -364,8 +353,8 @@ class NBeaconsSimpleAct(base.BaseModule):
                 if trace: trace.add_data("ACTION", action)
         else:
             if verbose >= 1:
-                print()
-                "MIDCA will not select an action this cycle."
+                print(
+                "MIDCA will not select an action this cycle.")
             self.mem.add(self.mem.ACTIONS, [])
 
             if trace: trace.add_data("ACTION", None)
