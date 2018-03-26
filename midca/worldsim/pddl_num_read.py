@@ -35,8 +35,10 @@ def load_domain(domainfile, problemfile):
     print('types: ')
     for arg in dom.types.args:  # TypedArg
         print(str(arg.arg_name) + " " + str(arg.arg_type))
-        types.update({arg.arg_name: worldsim.Type(arg.arg_name)})
+        types.update({arg.arg_type: worldsim.Type(arg.arg_type)})
 
+    types.update({"constant": worldsim.Type("constant")})
+    types.update({"numbers": worldsim.Type("numbers")})
     ###Predicates##########
     print('predicates: ')
     for a in dom.predicates:
@@ -65,18 +67,15 @@ def load_domain(domainfile, problemfile):
             # a.args is typedArgList
             pre_args_name = parseTypedArgList_names(pre.args)
 
-            pre_args_type = []
-            constantType = worldsim.Type("constant")
-            for p in pre_args_name:
-                if p in actions_args.keys():
-                    pre_args_type.append(actions_args[p])
-                else:
-                    pre_args_type.append(constantType)
+            pre_args_type = parseTypedArgList_types(pre.args)
 
             prepredicates.append(worldsim.Predicate(pre.name, pre_args_name, pre_args_type))
 
             preobjnames.append(pre_args_name)
             preobjtypes.append(pre_args_type)
+            # for p in range(0 , len(pre_args_type)):
+            #     print(pre_args_name[p])
+            #     print(pre_args_type[p].__str__())
 
         # for pre in a.get_pre(False):
         #     # a.args is typedArgList
@@ -90,14 +89,7 @@ def load_domain(domainfile, problemfile):
         for eff in a.get_eff(True):
             # a.args is typedArgList
             eff_args_names = parseTypedArgList_names(eff.args)
-            eff_args_types = []
-            constantType = worldsim.Type("constant")
-            for p in eff_args_names:
-                if p in actions_args.keys():
-                    eff_args_types.append(actions_args[p])
-                else:
-                    eff_args_types.append(constantType)
-
+            eff_args_types = parseTypedArgList_types(eff.args)
 
             postpredicates.append(worldsim.Predicate(eff.name, eff_args_names, eff_args_types))
 
@@ -167,7 +159,10 @@ def pasrsPredicate(dompredicates):
 def parseTypedArgList(argList):
     parsed = {}
     for arg in argList.args:
-        parsed.update({arg.arg_name: worldsim.Type(arg.arg_type)})
+        if arg.arg_type in types:
+            parsed.update({arg.arg_name: worldsim.Type(arg.arg_type)})
+        else:
+            parsed.update({arg.arg_name: worldsim.Type("constant")})
     return parsed
 
 def parseTypedArgList_names(argList):
@@ -177,11 +172,14 @@ def parseTypedArgList_names(argList):
     return parsed
 
 def parseTypedArgList_types(argList):
-    parsed = []
+    ptypes = []
     for arg in argList.args:
-        parsed.append(worldsim.Type(arg.arg_type))
+        if arg.arg_type in types.keys():
+            ptypes.append(types[arg.arg_type])
+        else:
+            ptypes.append(types["constant"])
 
-    return parsed
+    return ptypes
 
 if __name__ == "__main__":
     thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

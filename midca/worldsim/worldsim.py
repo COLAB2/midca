@@ -161,7 +161,8 @@ class Condition:
             i = 0
             for arg in args:
                 if not arg.is_a(self.argtypes[i]):
-                    raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
+                # if not arg.type == self.argtypes[i]:
+                    raise Exception("Trying to instantiate " + str(len(arg.type.parents)) + " as a " + str(len(self.argtypes[i].parents)))
                 i += 1
         return self.atom.predicate.instantiate(args)
 
