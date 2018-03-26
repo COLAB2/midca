@@ -35,10 +35,14 @@ def load_domain(domainfile, problemfile):
     print('types: ')
     for arg in dom.types.args:  # TypedArg
         print(str(arg.arg_name) + " " + str(arg.arg_type))
-        types.update({arg.arg_type: worldsim.Type(arg.arg_type)})
+        types.update({arg.arg_name: worldsim.Type(arg.arg_name)})
 
     types.update({"constant": worldsim.Type("constant")})
     types.update({"numbers": worldsim.Type("numbers")})
+
+    for t in types:
+        print(t.__str__())
+
     ###Predicates##########
     print('predicates: ')
     for a in dom.predicates:
