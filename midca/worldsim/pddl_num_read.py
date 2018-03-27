@@ -94,8 +94,9 @@ def load_domain(domainfile, problemfile):
             # a.args is typedArgList
             eff_args_names = parseTypedArgList_names(eff.args)
             eff_args_types = parseTypedArgList_types(eff.args, actions_args)
-
-            postpredicates.append(worldsim.Predicate(eff.name, eff_args_names, eff_args_types))
+            FF = worldsim.Predicate(eff.name, eff_args_names, eff_args_types)
+            postpredicates.append(FF)
+            print(FF.__str__())
 
             postobjnames.append(eff_args_names)
             postobjtypes.append(eff_args_types)

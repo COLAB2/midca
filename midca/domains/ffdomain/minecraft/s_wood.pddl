@@ -37,7 +37,7 @@
 		(connect m0_1 m1_1) 
 
 		(thing-at-map tree m0_1) 
-		(thing-at-map tree m2_2) 
+		
 		
 	)
 

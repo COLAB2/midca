@@ -643,8 +643,12 @@ class World:
     def get_types(self):
         return self.types
 
-    def is_applicable(self, action):
+    def is_applicable(self, action, verbose=2):
         for i in range(len(action.preconds)):
+            if verbose >=2:
+                print(self.atom_true(action.preconds[i]))
+                print(action.preconds[i])
+                print(action.prePos[i])
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
                 return False
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
@@ -652,13 +656,17 @@ class World:
         return True
 
     # convenience method for operating with MIDCA
-    def midca_action_applicable(self, midcaAction):
+    def midca_action_applicable(self, midcaAction, verbose=2):
         try:
             operator = self.operators[midcaAction.op]
             args = [self.objects[arg] for arg in midcaAction.args]
         except KeyError:
             return False
+        if verbose >=2:
+            print("instantiate: ")
         action = operator.instantiate(args)
+        if verbose >= 2:
+            print("chek for applicable")
         return self.is_applicable(action)
 
     def apply(self, simAction):
@@ -745,11 +753,14 @@ class World:
             testWorld.apply_midca_action(action)
         return True
 
-    def goals_achieved(self, plan, goalSet):
+    def goals_achieved(self, plan, goalSet, verbose=2):
         testWorld = self.copy()
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
+                if verbose >= 2:
+                    print("not testWorld.midca_action_applicable " + action.__str__())
+
                 break
             testWorld.apply_midca_action(action)
         for goal in goalSet:

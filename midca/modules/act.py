@@ -82,7 +82,7 @@ class SimpleAct(base.BaseModule):
         goalsAchieved = set()
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         for nextPlan in goalGraph.allMatchingPlans(goals):
-            achieved = world.goals_achieved(nextPlan, goals)
+            achieved = world.goals_achieved(nextPlan, verbose)
             if len(achieved) > len(goalsAchieved):
                 goalsAchieved = achieved
                 plan = nextPlan
@@ -186,16 +186,12 @@ class SimpleAct_temporary(base.BaseModule):
             if len(achieved) == len(goals):
                 break
             elif verbose >= 2:
-                print(
-                "Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
-                if verbose >= 3:
-                    print(
-                    "  Retrieved Plan:")
+                print("Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
+                if verbose >= 2:
+                    print("  Retrieved Plan:")
                     for a in nextPlan:
-                        print(
-                        "  " + str(a))
-                    print(
-                    "Goals achieved:", [str(goal) for goal in achieved])
+                        print("  " + str(a))
+                    print("Goals achieved:", [str(goal) for goal in achieved])
         if plan == None and verbose >= 1:
             print(
             "No valid plan found that achieves any current goals.")
