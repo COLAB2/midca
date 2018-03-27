@@ -33,7 +33,7 @@ DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/sminecraft.pddl"
 STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/s_wood.pddl"
 
 world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE)
-stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
+# stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
 # creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display='', verbose=4)
 # add phases by name

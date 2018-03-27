@@ -1,8 +1,7 @@
 import midca.worldsim.worldsim as plan
 import midca.worldsim.domainread as domain_read
 
-from pythonpddl import pddl
-from pythonpddl.pddl import FExpression, FHead, ConstantNumber
+
 
 #from midca import worldsim as plan domainread as domain_read
 
@@ -59,51 +58,6 @@ def _apply_state(world, lines):
         elif line.strip() != "":
             raise Exception("Line " + str(lineNum) + ": invalid command - " + line)
         lineNum += 1
-
-def _apply_state_pddl(world, domainfile, problemfile):
-    (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
-    lineNum = 1
-    print("here....................................")
-    for a in prob.initialstate:
-        """ FExpression: represents a functional / numeric expression"""
-        '''Formula: represented a goal description (atom / negated atom / and / or)'''
-        '''subformulas is a predicate'''
-        if type(a) is FExpression:
-            print("feexpression")
-            print(a.op)
-            for sub in a.subexps:
-                """FHead: represents a functional symbol and terms, e.g.,  (f a b c) (name, args)"""
-                if type(sub) is FHead:
-
-                    print(sub.name)
-                    print(parseTypedArgList_names(sub.args))
-                else:
-                    print(sub.val)
-        else:
-            for sub in a.subformulas:
-                call = sub.name
-                argnames = parseTypedArgList_names(sub.args)
-                negate = False
-                if call in world.predicates:
-                    args = []
-                    for name in argnames:
-                        if not name:
-                            continue
-                        if name not in world.objects:
-                            raise Exception("Line " + str(lineNum) + ": Object - " + name + " DNE ")
-                        args.append(world.objects[name])
-
-                    print(call)
-                    print(args)
-                    atom = world.predicates[call].instantiate(args)
-
-                    if negate:
-                        world.remove_atom(atom)
-                    else:
-                        world.add_atom(atom)
-                        print(atom.__str__())
-
-
 
 
 

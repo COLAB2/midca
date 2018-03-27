@@ -117,10 +117,53 @@ def load_domain(domainfile, problemfile):
     objects = parseObjects(prob.objects)
 
     world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
+    _apply_state_pddl(world, prob)
 
     return world
 
     # probinitialState = getInitialState(prob.initialstate)
+
+
+def _apply_state_pddl(world, prob):
+    print("here....................................")
+    for a in prob.initialstate:
+        """ FExpression: represents a functional / numeric expression"""
+        '''Formula: represented a goal description (atom / negated atom / and / or)'''
+        '''subformulas is a predicate'''
+        if type(a) is FExpression:
+            print("feexpression")
+            print(a.op)
+            for sub in a.subexps:
+                """FHead: represents a functional symbol and terms, e.g.,  (f a b c) (name, args)"""
+                if type(sub) is FHead:
+
+                    print(sub.name)
+                    print(parseTypedArgList_names(sub.args))
+                else:
+                    print(sub.val)
+        else:
+            for sub in a.subformulas:
+                call = sub.name
+                argnames = parseTypedArgList_names(sub.args)
+                negate = False
+                if call in world.predicates:
+                    args = []
+                    for name in argnames:
+                        if not name:
+                            continue
+                        if name not in world.objects:
+                            raise Exception(": Object - " + name + " DNE ")
+                        args.append(world.objects[name])
+
+                    print(call)
+                    print(args)
+                    atom = world.predicates[call].instantiate(args)
+
+                    if negate:
+                        world.remove_atom(atom)
+                    else:
+                        world.add_atom(atom)
+                        print(atom.__str__())
 
 
 def getInitialState(probinitialState):
