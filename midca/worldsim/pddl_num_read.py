@@ -63,9 +63,11 @@ def load_domain(domainfile, problemfile):
         postobjnames = []
         preobjtypes = []
         postobjtypes = []
-
+        prepos = []
+        postpos = []
         for pre in a.get_pre(True):
             # a.args is typedArgList
+            prepos.append(True)
             pre_args_name = parseTypedArgList_names(pre.args)
 
             pre_args_type = parseTypedArgList_types(pre.args, actions_args)
@@ -88,6 +90,7 @@ def load_domain(domainfile, problemfile):
         #     # preobjtypes.append(pre_args_type)
 
         for eff in a.get_eff(True):
+            postpos.append(True)
             # a.args is typedArgList
             eff_args_names = parseTypedArgList_names(eff.args)
             eff_args_types = parseTypedArgList_types(eff.args, actions_args)
@@ -106,8 +109,8 @@ def load_domain(domainfile, problemfile):
         #     # postobjnames.append(eff_args_names)
         #     # postobjtypes.append(eff_args_types)
 
-        operators.update({a.name :worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames, preobjtypes, [],
-                                             postpredicates, postobjnames, postobjtypes, [])})
+        operators.update({a.name :worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames, preobjtypes, prepos,
+                                             postpredicates, postobjnames, postobjtypes, postpos)})
 
     print("Objects:")
     objects = parseObjects(prob.objects)
@@ -193,7 +196,7 @@ def parseTypedArgList(argList):
         if arg.arg_type in types:
             parsed.update({arg.arg_name: types[arg.arg_type]})
         else:
-            parsed.update({arg.arg_name: types["constant"]})
+            parsed.update({arg.arg_name: types["resource"]})
     return parsed
 
 def parseTypedArgList_names(argList):
@@ -206,7 +209,7 @@ def predicate(name, argnames, argList):
     argtypes = []
     for arg in argList.args:
         if arg.arg_type not in types:
-            argtypes.append(types["constant"])
+            argtypes.append(types["resource"])
         else:
              argtypes.append(types[arg.arg_type])
 
@@ -221,7 +224,7 @@ def parseTypedArgList_types_predicate(argList):
             ptypes.append(types[arg.arg_type])
         else:
 
-            ptypes.append(types["constant"])
+            ptypes.append(types["resource"])
 
     return ptypes
 
@@ -232,7 +235,7 @@ def parseTypedArgList_types(argList, action_types):
             ptypes.append(action_types[arg.arg_name])
         else:
 
-            ptypes.append(types["constant"])
+            ptypes.append(types["resource"])
 
     return ptypes
 

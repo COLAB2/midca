@@ -54,11 +54,9 @@
 				
 			)
 		:effect
-			(and
-				(thing-available wood)
-				
-				
-			)
+			
+			(thing-available wood)
+			
 	)
 
 

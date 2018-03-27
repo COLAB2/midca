@@ -6,13 +6,12 @@
 		g11 g12 g13 g21 g22 g23 g31 g32 g33 - craftgrid
 		m0_0 m0_1 m0_2 m0_3 m0_4 m1_0 m1_1 m1_2 m1_3 m1_4 m2_0 m2_1  - mapgrid
 		
-		tree - resource
-
-	
+		tree
 		wood
 		bed
-		
-			- material
+			- resource
+
+	
 
 		hand
 		wood-pickaxe
