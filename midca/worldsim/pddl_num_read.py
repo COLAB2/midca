@@ -33,31 +33,28 @@ def load_domain(domainfile, problemfile):
     # print("objects")
     ###############types#########################
     print('types: ')
-    for arg in dom.types.args:  # TypedArg
-        print(str(arg.arg_name) + " " + str(arg.arg_type))
-        types.update({arg.arg_name: worldsim.Type(arg.arg_name)})
 
-    types.update({"constant": worldsim.Type("constant")})
-    types.update({"numbers": worldsim.Type("numbers")})
+    for arg in dom.types.args:
+        type(arg.arg_name)
+
+    type("constant")
 
     for t in types:
-        print(t.__str__())
+        print(t.__repr__())
 
     ###Predicates##########
     print('predicates: ')
     for a in dom.predicates:
-        print(a.name)
         argnames = parseTypedArgList_names(a.args)
-        argtypes = parseTypedArgList_types(a.args, types)
+        predicate(a.name, argnames, a.args)
 
-        predicates.update({a.name: worldsim.Predicate(a.name, argnames, argtypes)})
 
     ######### OPERATORS ####################
 
     print('actions:')
 
     for a in dom.actions:
-        print(a.name)
+
         actions_args = parseTypedArgList(a.parameters)
 
         prepredicates = []
@@ -145,6 +142,36 @@ def getInitialState(probinitialState):
         # goal = prob.goal
         # print(goal)
 
+
+
+
+
+
+def instance(name, typename):
+    if typename not in types:
+        raise Exception("object type DNE.")
+    objects[name] = types[typename].instantiate(name)
+
+def type(name, parentnames=["obj"]):
+    temp = [name]
+    if not parentnames == ["obj"]:
+        temp.append(parentnames)
+    if isinstance(parentnames, str):
+        parentnames = [parentnames]
+    parents = []
+    for parent in parentnames:
+        if parent not in types:
+            raise Exception("parent type DNE.")
+        parents.append(types[parent])
+    types[name] = worldsim.Type(name, parents)
+    otree = worldsim.ObjectTree(obtree['rootnode'],
+                                obtree['allnodes'],
+                                obtree['checked'],
+                                temp)
+    obtree['rootnode'] = otree.rootnode
+    obtree['allnodes'] = otree.allnodes
+    obtree['checked'] = otree.checked
+
 def parseObjects(objects):
     worldsimObjects = {}
     for arg in objects.args:
@@ -164,9 +191,9 @@ def parseTypedArgList(argList):
     parsed = {}
     for arg in argList.args:
         if arg.arg_type in types:
-            parsed.update({arg.arg_name: worldsim.Type(arg.arg_type)})
+            parsed.update({arg.arg_name: types[arg.arg_type]})
         else:
-            parsed.update({arg.arg_name: worldsim.Type("constant")})
+            parsed.update({arg.arg_name: types["constant"]})
     return parsed
 
 def parseTypedArgList_names(argList):
@@ -175,11 +202,33 @@ def parseTypedArgList_names(argList):
         parsed.append(str(arg.arg_name))
     return parsed
 
+def predicate(name, argnames, argList):
+    argtypes = []
+    for arg in argList.args:
+        if arg.arg_type not in types:
+            argtypes.append(types["constant"])
+        else:
+             argtypes.append(types[arg.arg_type])
+
+    predicates[name] = worldsim.Predicate(name, argnames, argtypes)
+    for t in predicates[name].argtypes:
+        print(t.__str__())
+
+def parseTypedArgList_types_predicate(argList):
+    ptypes = []
+    for arg in argList.args:
+        if arg.arg_type in types.keys():
+            ptypes.append(types[arg.arg_type])
+        else:
+
+            ptypes.append(types["constant"])
+
+    return ptypes
+
 def parseTypedArgList_types(argList, action_types):
     ptypes = []
     for arg in argList.args:
         if arg.arg_name in action_types.keys():
-            print(arg.arg_name)
             ptypes.append(action_types[arg.arg_name])
         else:
 
