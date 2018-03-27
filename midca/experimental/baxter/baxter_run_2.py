@@ -5,8 +5,8 @@ from midca.experimental.baxter import moveit_test, baxter
 
 
 def print_func(s):
-    print()
-    s
+    print(
+    s)
 
 
 def baxter_midca():

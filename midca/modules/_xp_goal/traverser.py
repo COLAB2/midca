@@ -88,9 +88,9 @@ if __name__ == "__main__":
     t = Traverser(frames, noem)
     (frame, operator, effect) = t.traverse()
 
-    print()
-    "Frame: " + frame.name
-    print()
-    "Operator: " + operator
-    print()
-    "Effect: " + str(effect)
+    print(
+    "Frame: " + frame.name)
+    print(
+    "Operator: " + operator)
+    print(
+    "Effect: " + str(effect))

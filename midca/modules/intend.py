@@ -72,8 +72,8 @@ class WarehouseIntend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print()
-                "Goal graph not initialized. Intend will do nothing."
+                print(
+                "Goal graph not initialized. Intend will do nothing.")
             return
         goals = goalGraph.getUnrestrictedGoals()
         goals_selected = []
@@ -108,15 +108,13 @@ class WarehouseIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print()
-                "No goals selected."
+                print(
+                "No goals selected.")
         else:
             if verbose >= 2:
-                print()
-                "Selecting goal(s):",
+                print("Selecting goal(s):",)
                 for goal in goals_selected:
-                    print()
-                    goal,
+                    print(goal,)
                 print()
 
 
@@ -634,8 +632,7 @@ class SimpleIntend_Restaurant(base.BaseModule):
         goals = None
         if not goalGraph:
             if verbose >= 1:
-                print()
-                "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
 
         # if there is no money remaining then intend does nothing
@@ -645,8 +642,7 @@ class SimpleIntend_Restaurant(base.BaseModule):
                 self.mem.set(self.mem.MONEY, 0)
                 self.actual_score = 0
                 self.actual_cost = 0
-                print()
-                "Money Insufficient. Intend will do nothing."
+                print("Money Insufficient. Intend will do nothing.")
                 return
 
             # for selection_method we need to check whether the remaining goals can be done with time
@@ -697,15 +693,12 @@ class SimpleIntend_Restaurant(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print()
-                "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print()
-                "Selecting goal(s):",
+                print("Selecting goal(s):",)
                 for goal in goals:
-                    print()
-                    goal,
+                    print(goal,)
                 print()
 
 
@@ -795,8 +788,7 @@ class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
         if not goalGraph or not goals:
             if verbose >= 1:
-                print()
-                "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
                 if not self.mem.get(self.mem.TIME_CONSTRUCTION):
                     self.goals_goalgraph[:] = []
                     self.building_list[:] = []
@@ -845,15 +837,12 @@ class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print()
-                "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print()
-                "Selecting goal(s):",
+                print("Selecting goal(s):",)
                 for goal in goals:
-                    print()
-                    goal,
+                    print(goal,)
                 print()
 
 
@@ -952,14 +941,12 @@ class SimpleIntend_construction(base.BaseModule):
 
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             if verbose >= 1:
-                print()
-                "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
                 return
 
         if not goalGraph:
             if verbose >= 1:
-                print()
-                "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
 
         # to check whether the goals are acheived or not.
@@ -1358,14 +1345,12 @@ class SimpleIntend_construction(base.BaseModule):
 
         if not self.selected_goals:
             if verbose >= 2:
-                print()
-                "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
                 print(("Time is " + str(self.T)))
                 print("")
-                print()
-                "Selecting Tower(s):",
+                print("Selecting Tower(s):",)
                 # print("")
 
                 for i in range(0, len(self.selected_buildings)):

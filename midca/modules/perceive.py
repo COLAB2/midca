@@ -97,9 +97,9 @@ class ROSObserver:
         self.mem.unlock(self.mem.STATE)
 
         if verbose > 1:
-            print()
+            print(
             "World observed:", len(detectionEvents), "new detection event(s),", len(
-                utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
+                utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)")
 
 
 class PerfectObserver(base.BaseModule):
@@ -137,8 +137,7 @@ class PerfectObserver(base.BaseModule):
         # End Memory Usage Optimization
 
         if verbose >= 1:
-            print()
-            "World observed."
+            print("World observed.")
 
         trace = self.mem.trace
         if trace:
@@ -201,8 +200,7 @@ class PerfectObserverWithThief(base.BaseModule):
         # End Memory Usage Optimization
 
         if verbose >= 1:
-            print()
-            "World observed."
+            print("World observed.")
 
         trace = self.mem.trace
         if trace:
@@ -352,11 +350,9 @@ class MAReporter(base.BaseModule):
         # report contains actions and state,
         # for every action there will be the state attached to it
         if verbose >= 1:
-            print()
-            "Sending report to Meta-AQUA",
+            print("Sending report to Meta-AQUA",)
             if verbose >= 2:
-                print()
-                ":\n", report
+                print(":\n", report)
         if not str(report) == "incomplete":
             self.writeS.send(str(report))
 

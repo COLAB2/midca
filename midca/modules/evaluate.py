@@ -16,16 +16,13 @@ class EvalPointingFromFeedback(base.BaseModule):
             goals = []
         if not goals:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print("No current goals. Skipping eval")
         else:
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             plan = goalGraph.getMatchingPlan(goals)
             if not plan:
                 if verbose >= 2:
-                    print()
-                    "No plan found that achieves all current goals. ",
-                    "Skipping eval based on plan completion"
+                    print("No plan found that achieves all current goals. ","Skipping eval based on plan completion")
             else:
                 if plan.finished():
                     try:
@@ -37,23 +34,23 @@ class EvalPointingFromFeedback(base.BaseModule):
                     finally:
                         print("robot stuff")
                     if verbose >= 1:
-                        print()
-                        "Plan:", plan, "complete. Removing its goals"
+                        print("Plan:", plan, "complete. Removing its goals")
+
                     for goal in plan.goals:
                         goalGraph.remove(goal)
                     numPlans = len(goalGraph.plans)
                     goalGraph.removeOldPlans()
                     newNumPlans = len(goalGraph.plans)
                     if numPlans != newNumPlans and verbose >= 1:
-                        print()
+                        print(
                         "removing", numPlans - newNumPlans,
-                        "plans that no longer apply."
+                        "plans that no longer apply.")
                     del goals[-1]
                     self.mem.set(self.mem.CURRENT_GOALS, goals)
                 else:
                     if verbose >= 2:
-                        print()
-                        "Plan:", plan, "not complete"
+                        print(
+                        "Plan:", plan, "not complete")
 
 
 class SimpleEval(base.BaseModule):
@@ -80,17 +77,15 @@ class SimpleEval(base.BaseModule):
                         achieved = not achieved
                     if not achieved:
                         if verbose >= 2:
-                            print()
-                            "Not all goals achieved;", goal, "is not true."
+                            print(
+                            "Not all goals achieved;", goal, "is not true.")
                         return
                 except ValueError:
                     if verbose >= 1:
-                        print()
-                        "Could not test goal", goal, ". It does not seem to be a valid world state"
+                        print("Could not test goal", goal, ". It does not seem to be a valid world state")
                     return
             if verbose >= 1:
-                print()
-                "All current goals achieved. Removing them from goal graph"
+                print("All current goals achieved. Removing them from goal graph")
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
                 goalGraph.remove(goal)
@@ -100,15 +95,15 @@ class SimpleEval(base.BaseModule):
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                print()
-                "removing", numPlans - newNumPlans, "plans that no longer apply."
+                print(
+                "removing", numPlans - newNumPlans, "plans that no longer apply.")
                 goals_changed = True
             del goals[-1]
             self.mem.set(self.mem.CURRENT_GOALS, goals)
         else:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print(
+                "No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
 
@@ -136,8 +131,7 @@ class SimpleEval2(base.BaseModule):
                     if 'negate' in goal and goal['negate']:
                         achieved = not achieved
                     if achieved:
-                        print()
-                        "achieved"
+                        print("achieved")
                         score = self.mem.get(self.mem.DELIVERED)
                         lastGoals = self.mem.get(LAST_SCORED_GOAL)
                         if not lastGoals:
@@ -148,21 +142,17 @@ class SimpleEval2(base.BaseModule):
                             self.mem.add(LAST_SCORED_GOAL, goal)
                             self.mem.set(self.mem.DELIVERED, score + 1)
 
-                        print()
-                        str(self.mem.get(self.mem.DELIVERED))
+                        print(str(self.mem.get(self.mem.DELIVERED)))
                     if not achieved:
                         if verbose >= 2:
-                            print()
-                            "Not all goals achieved;", goal, "is not true."
+                            print("Not all goals achieved;", goal, "is not true.")
                         return
                 except ValueError:
                     if verbose >= 1:
-                        print()
-                        "Could not test goal", goal, ". It does not seem to be a valid world state"
+                        print("Could not test goal", goal, ". It does not seem to be a valid world state")
                     return
             if verbose >= 1:
-                print()
-                "All current goals achieved. Removing them from goal graph"
+                print("All current goals achieved. Removing them from goal graph")
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
                 goalGraph.remove(goal)
@@ -172,15 +162,13 @@ class SimpleEval2(base.BaseModule):
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                print()
-                "removing", numPlans - newNumPlans, "plans that no longer apply."
+                print("removing", numPlans - newNumPlans, "plans that no longer apply.")
                 goals_changed = True
             del goals[-1]
             self.mem.set(self.mem.CURRENT_GOALS, goals)
         else:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print("No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
 
@@ -245,17 +233,14 @@ class SimpleEval_Restaurant(base.BaseModule):
                         achieved = not achieved
                     if not achieved:
                         if verbose >= 2:
-                            print()
-                            "Not all goals achieved;", goal, "is not true."
+                            print("Not all goals achieved;", goal, "is not true.")
                         return
                 except ValueError:
                     if verbose >= 1:
-                        print()
-                        "Could not test goal", goal, ". It does not seem to be a valid world state"
+                        print("Could not test goal", goal, ". It does not seem to be a valid world state")
                     return
             if verbose >= 1:
-                print()
-                "All current goals achieved. Removing them from goal graph"
+                print("All current goals achieved. Removing them from goal graph")
                 self.mem.set(self.mem.CURRENT_GOALS, None)
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
@@ -266,13 +251,11 @@ class SimpleEval_Restaurant(base.BaseModule):
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                print()
-                "removing", numPlans - newNumPlans, "plans that no longer apply."
+                print("removing", numPlans - newNumPlans, "plans that no longer apply.")
                 goals_changed = True
         else:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print("No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
 
@@ -334,27 +317,23 @@ class SimpleEval_construction(base.BaseModule):
                         achieved = not achieved
                     if not achieved:
                         if verbose >= 2:
-                            print()
-                            "Not all goals achieved;", goal, "is not true."
+                            print("Not all goals achieved;", goal, "is not true.")
                         return
                 except ValueError:
                     if verbose >= 1:
-                        print()
-                        "Could not test goal", goal, ". It does not seem to be a valid world state"
+                        print("Could not test goal", goal, ". It does not seem to be a valid world state")
                     return
 
             if self.skip == False:
                 if verbose >= 1:
-                    print()
-                    "Skipping one phase"
+                    print("Skipping one phase")
                 self.skip = True
                 return
             if self.skip == True:
                 del self.skip
 
             if verbose >= 1:
-                print()
-                "All current goals achieved. Removing them from goal graph"
+                print("All current goals achieved. Removing them from goal graph")
                 self.mem.set(self.mem.CURRENT_GOALS, None)
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
@@ -365,13 +344,11 @@ class SimpleEval_construction(base.BaseModule):
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                print()
-                "removing", numPlans - newNumPlans, "plans that no longer apply."
+                print( "removing", numPlans - newNumPlans, "plans that no longer apply.")
                 goals_changed = True
         else:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print("No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
 
@@ -453,8 +430,7 @@ class Scorer:
         try:
             achieved = self.world.atom_true(self.world.midcaGoalAsAtom(currentGoal))
         except Exception:
-            print()
-            "unable to check goal", currentGoal, ". skipping scoring"
+            print("unable to check goal", currentGoal, ". skipping scoring")
         if 'negate' in currentGoal and currentGoal['negate']:
             achieved = not achieved
         if not achieved:
@@ -465,9 +441,8 @@ class Scorer:
         score = self.get_tower_score(currentGoal)
         self.mem.get(SCORE).update(score)
         if verbose >= 2:
-            print()
-            "Tower", self.mem.get(SCORE).towers, "completed.", score, "added to score, which is now", self.mem.get(
-                SCORE).score
+            print("Tower", self.mem.get(SCORE).towers, "completed.", score, "added to score, which is now", self.mem.get(
+                SCORE).score)
 
 
 MORTARSCORE = "MortarScore"
@@ -598,8 +573,7 @@ class MortarScorer:
         try:
             achieved = self.world.atom_true(self.world.midcaGoalAsAtom(currentGoal))
         except Exception:
-            print()
-            "unable to check goal", currentGoal, ". skipping scoring"
+            print("unable to check goal", currentGoal, ". skipping scoring")
         # if 'negate' in currentGoal and currentGoal['negate']: # TODO add this back in, removed bceause don't want to think about negative goals
         #    achieved = not achieved
         if not achieved:
@@ -610,10 +584,10 @@ class MortarScorer:
         score, mortarblocks, regularblocks = self.get_tower_score(currentGoal)
         self.mem.get(MORTARSCORE).update(score, mortarblocks, regularblocks)
         if verbose >= 2:
-            print()
+            print(
             "Tower", self.mem.get(
                 MORTARSCORE).towers, "completed.", score, "added to score, which is now", self.mem.get(
-                MORTARSCORE).score
+                MORTARSCORE).score)
 
 
 NORMAL_BLOCK_VAL = 1.0
@@ -645,8 +619,8 @@ class Evaluator:
 
     def put_out_fires(self, verbose=2):
         if verbose >= 2:
-            print()
-            "putting out fires"
+            print(
+            "putting out fires")
         self.actualWorld.atoms = [atom for atom in self.actualWorld.atoms if atom.predicate.name != "onfire"]
         world = self.mem.get(self.memKeys.MEM_STATES)[-1]
         world.atoms = [atom for atom in world.atoms if atom.predicate.name != "onfire"]
@@ -683,41 +657,41 @@ class Evaluator:
                 if not accomplished:
                     s += "not "
                 s += "been accomplished."
-                print()
-                s
+                print(
+                s)
         else:
             if verbose >= 2:
-                print()
-                "No current goal. Skipping Eval."
+                print(
+                "No current goal. Skipping Eval.")
         if world.is_true("on", ["D_", "C_"]):
             if verbose >= 2:
-                print()
-                "Tall Tower completed"
+                print(
+                "Tall Tower completed")
             self.towersFinished += 1
             self.score += (4 - self.num_fires(world)) * NORMAL_BLOCK_VAL + self.num_fires(world) * ON_FIRE_BLOCK_VAL
             if self.restartFires:
                 self.put_out_fires(verbose)
         elif world.is_true("on", ["D_", "B_"]):
             if verbose >= 2:
-                print()
-                "Short Tower completed"
+                print(
+                "Short Tower completed")
             self.towersFinished += 1
             self.score += (3 - self.num_fires_small(world)) * NORMAL_BLOCK_VAL + self.num_fires_small(
                 world) * ON_FIRE_BLOCK_VAL
             if self.restartFires:
                 self.put_out_fires(verbose)
         if verbose >= 2:
-            print()
-            "Total towers built:", self.towersFinished
-            print()
-            "Total fire turns:", self.fireturns
-            print()
-            "Total score:", self.score
+            print(
+            "Total towers built:", self.towersFinished)
+            print(
+            "Total fire turns:", self.fireturns)
+            print(
+            "Total score:", self.score)
         self.mem._update(self.memKeys.MEM_GOAL_COMPLETED, accomplished)
         if accomplished and currentPlan:
             if verbose >= 2:
-                print()
-                "Goal completed for current plan. Removing all intended goals and pending plans for this goal."
+                print(
+                "Goal completed for current plan. Removing all intended goals and pending plans for this goal.")
             self.mem._update(self.memKeys.MEM_OLD_PLANS, currentPlan)
             self.mem.set(self.memKeys.MEM_CURRENT_PLAN, None)
             self.mem.get(self.memKeys.MEM_PLANS).remove_goals(currentgoals)
@@ -764,8 +738,8 @@ class NBeaconsDataRecorder:
             all_achieved = True
             at_least_one_achieved = False
             for goal in currentGoal:
-                print()
-                "checking goal " + str(goal)
+                print(
+                "checking goal " + str(goal))
                 achieved = self.world.atom_true(self.world.midcaGoalAsAtom(goal))
                 if not achieved:
                     all_achieved = False
@@ -773,8 +747,8 @@ class NBeaconsDataRecorder:
                 else:
                     at_least_one_achieved = True
         except Exception:
-            print()
-            "unable to check goal", currentGoal, ". skipping scoring"
+            print(
+            "unable to check goal", currentGoal, ". skipping scoring")
 
         if at_least_one_achieved and all_achieved:
             print(("All goals " + str(list(map(str, currentGoal))) + " were achieved"))
@@ -812,18 +786,18 @@ class NBeaconsDataRecorder:
                         achieved = not achieved
                     if not achieved:
                         if verbose >= 2:
-                            print()
-                            "Not all goals achieved;", goal, "is not true."
+                            print(
+                            "Not all goals achieved;", goal, "is not true.")
                         return
                 except ValueError:
                     all_goals_achieved = False
                     if verbose >= 1:
-                        print()
-                        "Could not test goal", goal, ". It does not seem to be a valid world state"
+                        print(
+                        "Could not test goal", goal, ". It does not seem to be a valid world state")
                     return
             if verbose >= 1:
-                print()
-                "All current goals achieved. Removing them from goal graph"
+                print(
+                "All current goals achieved. Removing them from goal graph")
 
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             if all_goals_achieved:
@@ -839,9 +813,10 @@ class NBeaconsDataRecorder:
                         # store goal achieved and actions executed
                         goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
                         actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED)
-                        if self.verbose >= 1: print()
-                        " just added goals actions pair: " + str(
-                            (goals_achieved, str(goal.args[0]), actions_executed_thus_far))
+                        if self.verbose >= 1:
+                            print(" just added goals actions pair: " +
+                                  str((goals_achieved, str(goal.args[0]), actions_executed_thus_far)))
+
                         self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs + [
                             (goals_achieved, str(goal.args[0]), actions_executed_thus_far)])
 
@@ -852,15 +827,14 @@ class NBeaconsDataRecorder:
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
-                if self.verbose >= 1: print()
-                "removing", numPlans - newNumPlans, "plans that no longer apply."
+                if self.verbose >= 1:
+                    print("removing", numPlans - newNumPlans, "plans that no longer apply.")
                 goals_changed = True
             del goals[-1]
             self.mem.set(self.mem.CURRENT_GOALS, goals)
         else:
             if verbose >= 2:
-                print()
-                "No current goals. Skipping eval"
+                print("No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
 
@@ -888,12 +862,10 @@ class NBeaconsDataRecorder:
                 if not accomplished:
                     s += "not "
                 s += "been accomplished."
-                print()
-                s
+                print(s)
         else:
             if verbose >= 2:
-                print()
-                "No current goal. Skipping Eval."
+                print("No current goal. Skipping Eval.")
         #         if world.is_true("on", ["D_", "C_"]):
         #             if verbose >= 2:
         #                 print "Tall Tower completed"
@@ -916,8 +888,7 @@ class NBeaconsDataRecorder:
         if accomplished and currentPlan:
             self.mem.set(self.mem.GOALS_ACHIEVED, 1 + self.mem.get(self.mem.GOALS_ACHIEVED))
             if verbose >= 2:
-                print()
-                "Goal completed for current plan. Removing all intended goals and pending plans for this goal."
+                print("Goal completed for current plan. Removing all intended goals and pending plans for this goal.")
             # self.mem._update(self.memKeys.MEM_OLD_PLANS, currentPlan)
             self.mem.set(self.mem.CURR_PLAN, None)
             self.mem.get(self.mem.MEM_PLANS).remove_goals(currentgoals)

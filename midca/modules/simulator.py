@@ -16,24 +16,20 @@ class MidcaActionSimulator:
             actions = self.mem.get(self.mem.ACTIONS)[-1]
         except TypeError as IndexError:
             if verbose >= 1:
-                print()
-                "Simulator: no actions selected yet by MIDCA."
+                print("Simulator: no actions selected yet by MIDCA.")
             return
         if actions:
             for action in actions:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
-                        print()
-                        "simulating MIDCA action:", action
+                        print("simulating MIDCA action:", action)
                     self.world.apply_midca_action(action)
                 else:
                     if verbose >= 1:
-                        print()
-                        "MIDCA-selected action", action, "illegal in current world state. Skipping"
+                        print("MIDCA-selected action", action, "illegal in current world state. Skipping")
         else:
             if verbose >= 2:
-                print()
-                "No actions selected this cycle by MIDCA."
+                print("No actions selected this cycle by MIDCA.")
 
 
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]

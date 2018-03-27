@@ -30,8 +30,8 @@ class AsynchronousAct(base.BaseModule):
 
         if not plan:
             if verbose > 2:
-                print()
-                "No current plan. Skipping Act phase"
+                print(
+                "No current plan. Skipping Act phase")
             return
         i = 0
         if plan.finished():
