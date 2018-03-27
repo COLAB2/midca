@@ -144,8 +144,8 @@ class Plan:
                 if os.name == 'nt':  # we're on windows, don't use color codes
                     s += '[' + str(self.actions[i]) + ']'
                 else:
-                    s += '\033[94m' + str(self.actions[i]) + '\033]0m'
-
+                    #s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+                    s += '[' + str(self.actions[i]) + ']'
             else:
                 s += str(self.actions[i])
             s += " "
@@ -158,7 +158,8 @@ class Plan:
                 if os.name == 'nt':  # we're on windows, don't use color codes
                     s += '[' + str(self.actions[i]) + ']'
                 else:
-                    s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+                    #s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+                    s += '[' + str(self.actions[i]) + ']'
             else:
                 s += str(self.actions[i])
             s += " "

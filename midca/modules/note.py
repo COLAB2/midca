@@ -56,7 +56,8 @@ class ADistTrace:
 
     def val_to_str(self, val, threshold):
         if val > threshold:
-            return '\033[94m' + str(round(val, 2)) + '\033[0m'
+            #return '\033[94m' + str(round(val, 2)) + '\033[0m'
+            return str(round(val, 2))
         else:
             return str(round(val, 2))
 

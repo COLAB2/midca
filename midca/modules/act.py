@@ -132,21 +132,19 @@ class SimpleAct(base.BaseModule):
                 self.mem.add(self.mem.ACTIONS, [])
             else:
                 if verbose == 1:
-                    print(
-                    "Action selected:", action)
+                    print("Action selected:", action)
                 elif verbose >= 2:
                     if len(plan) > max_plan_print_size:
                         # print just the next 3 actions of the plan
-                        print(
-                        "Selected action", action, "from plan:\n")
+                        print("The Selected action", action, "from plan:\n")
                         if verbose >= 3:
                             for a in plan:
-                                print(
-                                "  " + str(a))
+                                print("  " + str(a))
                     else:
                         # print the whole plan
-                        print(
-                        "Selected action", action, "from plan:\n", plan)
+                        print("Selected action", action, "from plan:\n", plan)
+
+                print("added to the memory now..")
                 self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
@@ -189,22 +187,18 @@ class SimpleAct_temporary(base.BaseModule):
                 break
             elif verbose >= 2:
                 print("Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
-                if verbose >= 2:
+                if verbose >= 3:
                     print("  Retrieved Plan:")
                     for a in nextPlan:
                         print("  " + str(a))
                     print("Goals achieved:", [str(goal) for goal in achieved])
         if plan == None and verbose >= 1:
-            print(
-            "No valid plan found that achieves any current goals.")
+            print( "No valid plan found that achieves any current goals.")
         elif len(goalsAchieved) < len(goals) and verbose >= 1:
-            print(
-            "Best plan does not achieve all goals.")
+            print("Best plan does not achieve all goals.")
             if verbose >= 2:
-                print(
-                "Plan:", str(plan))
-                print(
-                "Goals achieved:", [str(goal) for goal in goalsAchieved])
+                print("Plan:", str(plan))
+                print("Goals achieved:", [str(goal) for goal in goalsAchieved])
         return plan
 
     def run(self, cycle, verbose=2):
