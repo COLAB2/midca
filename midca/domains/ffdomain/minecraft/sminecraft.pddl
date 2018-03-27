@@ -15,7 +15,7 @@
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
 		(craft-empty  ?loc - craftgrid)
 		(connect  ?from - mapgrid  ?to - mapgrid)
-		(thing-available  ?obj - thing)
+		(thing-available  ?obj - resource)
 		(tool-in-hand ?tool - tool)
 		
 	)

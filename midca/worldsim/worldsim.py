@@ -198,6 +198,7 @@ class Operator:
         self.preconditions = {}
         self.precondorder = []
         self.prePos = prePositive
+        self.types = preobjtypes + postobjtypes
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
@@ -236,19 +237,36 @@ class Operator:
         objdict = {}
         for i in range(len(args)):
             objdict[self.objnames[i]] = args[i]
+
+
         preconditions = []
         for condition in self.precondorder:
             names = self.preconditions[condition]
             args = []
+            #TODO: Zohreh it is hard coded here for constant objects. should be modified.
             for name in names:
-                args.append(objdict[name])
+                if name in objdict.keys():
+                    args.append(objdict[name])
+                else:
+                    for t in self.types:
+                        resourceType = [x for x in t if x.name == "resource"]
+                    args.append(Obj(name, resourceType[0]))
+
             preconditions.append(condition.instantiate(args))
         results = []
         for condition in self.resultorder:
             names = self.results[condition]
             args = []
             for name in names:
-                args.append(objdict[name])
+                if name in objdict.keys():
+                    args.append(objdict[name])
+                else:
+                    for t in self.types:
+                        resourceType = [x for x in t if x.name == "resource"]
+                    args.append(Obj(name, resourceType[0]))
+
+
+
             results.append(condition.instantiate(args))
         result_action = Action(self, preconditions, self.prePos, results, self.postPos)
         result_action.set_args(args)
@@ -643,12 +661,8 @@ class World:
     def get_types(self):
         return self.types
 
-    def is_applicable(self, action, verbose=2):
+    def is_applicable(self, action):
         for i in range(len(action.preconds)):
-            if verbose >=2:
-                print(self.atom_true(action.preconds[i]))
-                print(action.preconds[i])
-                print(action.prePos[i])
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
                 return False
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
@@ -656,17 +670,15 @@ class World:
         return True
 
     # convenience method for operating with MIDCA
-    def midca_action_applicable(self, midcaAction, verbose=2):
+    def midca_action_applicable(self, midcaAction):
         try:
             operator = self.operators[midcaAction.op]
             args = [self.objects[arg] for arg in midcaAction.args]
         except KeyError:
             return False
-        if verbose >=2:
-            print("instantiate: ")
+
         action = operator.instantiate(args)
-        if verbose >= 2:
-            print("chek for applicable")
+
         return self.is_applicable(action)
 
     def apply(self, simAction):
@@ -753,16 +765,16 @@ class World:
             testWorld.apply_midca_action(action)
         return True
 
-    def goals_achieved(self, plan, goalSet, verbose=2):
+    def goals_achieved(self, plan, goalSet):
         testWorld = self.copy()
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
-                if verbose >= 2:
-                    print("not testWorld.midca_action_applicable " + action.__str__())
-
                 break
             testWorld.apply_midca_action(action)
+
+        print("goalSet")
+        print(goalSet)
         for goal in goalSet:
             achieved = testWorld.atom_true(self.midcaGoalAsAtom(goal))
             if 'negate' in goal and goal['negate']:

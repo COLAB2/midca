@@ -342,12 +342,13 @@ class MetricFFPlanner(base.BaseModule):
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+
         except AttributeError:
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print()
-                "Old plan retrieved. Checking validity...",
+                print(
+                "Old plan retrieved. Checking validity...",)
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
@@ -360,8 +361,8 @@ class MetricFFPlanner(base.BaseModule):
                 "valid."
             if valid:
                 if verbose >= 2:
-                    print()
-                    "checking to see if all goals are achieved...",
+                    print(
+                    "checking to see if all goals are achieved...",)
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
