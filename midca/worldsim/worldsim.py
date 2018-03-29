@@ -220,7 +220,7 @@ class Condition:
 class Operator:
 
     def __init__(self, name, objnames, prepredicates, preobjnames, preobjtypes, prePositive, postpredicates,
-                 postobjnames, postobjtypes, postPositive):
+                 postobjnames, postobjtypes, postPositive, prefuns=[], postfunc=[]):
         self.name = name
         self.objnames = objnames
         self.preconditions = {}

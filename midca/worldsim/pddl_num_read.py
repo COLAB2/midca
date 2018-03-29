@@ -222,15 +222,15 @@ def load_domain(domainfile, problemfile):
         #
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                 preobjtypes, prepos,
-                                                postpredicates, postobjnames, postobjtypes, postpos)})
+                                                postpredicates, postobjnames, postobjtypes, postpos, prepredicatesfunc, postpredicatesfunc)})
 
     print("Objects:")
-    # objects = parseObjects(prob.objects)
-    #
-    # world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
-    # _apply_state_pddl(world, prob)
+    objects = parseObjects(prob.objects)
 
-    # return world
+    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
+    _apply_state_pddl(world, prob)
+
+    return world
 
     # probinitialState = getInitialState(prob.initialstate)
 
