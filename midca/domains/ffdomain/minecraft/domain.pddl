@@ -88,7 +88,7 @@
 		:parameters (?tool - tool)
 		:precondition
 			(and
-				(not (= (tool-in-hand) (tool-id ?tool)))
+				(not (= (tool-in-hand) 1))
 				(> (thing-available ?tool) 0)
 				(not (crafting))
 			)

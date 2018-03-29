@@ -16,6 +16,34 @@ class Obj:
     def __str__(self):
         return self.name
 
+class Function:
+    def __init__(self, name, argnames, argtypes):
+        self.name = name
+        self.argnames = argnames
+        self.argtypes = argtypes
+
+    def __str__(self):
+        return "(" + self.name + " " + self.argnames.__str__() + ")"
+class Precicate_function:
+    def __init__(self, op, args):
+
+        self.op = op
+        self.args = args
+
+    def __str__(self):
+        return "(" + self.op + " " + self.args.__str__() + ") "
+
+
+
+class Constant:
+    def __init__(self, val):
+        self.val = val
+
+    def __str__(self):
+        return str(self.val)
+
+    def __eq__(self, other):
+        return isinstance(other, Constant) and self.val == other.val
 
 class Type:
 

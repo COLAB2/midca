@@ -34,7 +34,7 @@
 		:effect
 			(and
 				(player-at ?to)
-				
+				(not (player-at ?from))
 				
 			)
 	)
