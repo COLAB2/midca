@@ -21,12 +21,15 @@ def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     # these are the states for the domain
     s.enabled = []
+    s.checked_hazards = []
     s.survey = {}
 
     for atom in world.atoms:
 	# get the orders into the s.order_received dictionary
         if atom.predicate.name == "enabled":
             s.enabled.append(atom.args[0].name)
+        if atom.predicate.name == "hazard_checked":
+            s.checked_hazards.append(atom.args[0].name)
     return s
 
 

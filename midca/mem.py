@@ -81,7 +81,7 @@ class Memory:
 
 	# MOOS
 	MOOS_FEEDBACK = "__feedback"
-
+	MOOS_SUSPENDED_ACTION = "__previous action"
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)

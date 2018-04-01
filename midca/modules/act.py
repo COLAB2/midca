@@ -334,9 +334,9 @@ class Moosact(base.BaseModule):
     def init(self, world, mem):
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
-	self.publisher_mine = context.socket(zmq.PUB)
+        self.publisher_mine = context.socket(zmq.PUB)
         self.publisher.bind("tcp://127.0.0.1:5560")
-	self.publisher_mine.bind("tcp://127.0.0.1:5565")
+        self.publisher_mine.bind("tcp://127.0.0.1:5565")
         self.mem = mem
         self.world = world
 
@@ -372,78 +372,102 @@ class Moosact(base.BaseModule):
 
 
     def execute_action(self,verbose):
- 	try:
+        try:
             #get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
         except TypeError, IndexError:
             if verbose >= 1:
                 print "Simulator: no actions selected yet by MIDCA."
-            return False 
+            return False
 
-	if actions:
+
+        if actions:
             for action in actions:
                 if self.world.midca_action_applicable(action):
 
-			if self.mem.get(self.mem.MOOS_FEEDBACK):
-				if self.world.midca_action_applicable(self.mem.get(self.mem.MOOS_FEEDBACK)) \
+                    if self.mem.get(self.mem.MOOS_FEEDBACK):
+                        if self.world.midca_action_applicable(self.mem.get(self.mem.MOOS_FEEDBACK)) \
 						and self.mem.get(self.mem.MOOS_FEEDBACK) == action:
-					return False
-				else:
-					self.mem.set(self.mem.MOOS_FEEDBACK, None)
-			
-			if (action.op == "ignore"):
-				self.publisher.send_multipart(
-                                		[b"M", b"speed = 0.0"])
-				self.world.apply_midca_action(action)
-				time.sleep(2)
-				return True
+                            return False
 
+                        else:
+                            self.mem.set(self.mem.MOOS_FEEDBACK, None)
 
-			if (action.op == "remove"):
-				self.publisher_mine.send_multipart(
-                                		[b"M", b"x=-100,y=-100,width=8,primary_color=green,type=triangle,label=14"])
-				self.publisher.send_multipart(
-                                		[b"M", b"speed = 0.0"])
-				time.sleep(2)
-				self.world.apply_midca_action(action)
-				return True
+                    if (action.op == "ignore"):
+                        label = int(action.args[0].replace("mine", ""))
+                        self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.3"])
+                        self.world.apply_midca_action(action)
+                        time.sleep(1)
+                        return True
 
-                    	if (action.op == "survey"):
-                        	argnames = [str(arg) for arg in action.args]
-                        	if ("ga1" in argnames):
-                            		self.publisher.send_multipart(
-                                		[b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2.0 "])
+                    if (action.op == "remove"):
+                        label= int(action.args[0].replace("mine",""))
+                        self.publisher_mine.send_multipart(
+                                		[b"M", b"x=0,y=0,width=0, label="+str(label)])
+                        self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.3"])
+                        time.sleep(1)
+                        self.world.apply_midca_action(action)
+                        self.mem.set(self.mem.MOOS_FEEDBACK, None)
+                        return True
 
-					self.mem.set(self.mem.MOOS_FEEDBACK , action)
-					return False
+                    if (action.op == "survey"):
+                        argnames = [str(arg) for arg in action.args]
 
-                        	if ("ga2" in argnames):
-                            		self.publisher.send_multipart([b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2.0  "])
-			    		self.mem.set(self.mem.MOOS_FEEDBACK , action)
-					return False
+                        if ("ga1" in argnames):
+                            message = [b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2"]
+                            suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+                            if (suspended_action) \
+                                and (suspended_action == message):
+                                self.publisher.send_multipart([b"M", b"speed = 2"])
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                return False
 
-                        	if ("home" in argnames):
-                            		self.publisher.send_multipart([b"M", b"point = 0,0 # speed= 2.0 "])
-			    		self.mem.set(self.mem.MOOS_FEEDBACK , action)
-					return False
+                            else:
+                                self.publisher.send_multipart(message)
+                                self.mem.set(self.mem.MOOS_FEEDBACK , action)
+                                self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
+                                return False
+
+                        if ("ga2" in argnames):
+                            message = [b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2"]
+                            suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+                            if (suspended_action) \
+                                    and (suspended_action == message):
+                                self.publisher.send_multipart([b"M", b"speed = 2"])
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                return False
+
+                            else:
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
+                                self.publisher.send_multipart(message)
+                                return False
+
+                        if ("home" in argnames):
+                            self.publisher.send_multipart([b"M", b"point = 0,0 # speed= 2"])
+                            self.mem.set(self.mem.MOOS_FEEDBACK , action)
+                            return False
 
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"
-		    return True
+                    return True
 
-	return False
+        return False
 
     def run(self, cycle, verbose = 2):
-	self.verbose = verbose
+        self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except :
             goals = []
-	
-	plan = self.get_best_plan(world, goals, verbose)
+
+        plan = self.get_best_plan(world, goals, verbose)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
@@ -477,7 +501,7 @@ class Moosact(base.BaseModule):
                     self.mem.set(self.mem.ACTIONS, actions)
                     #print "Trimmed off 200 old stale actions to save space"
 		if self.execute_action(verbose):
-                	plan.advance()
+                    plan.advance()
 
                 if trace: trace.add_data("ACTION", action)
         else:

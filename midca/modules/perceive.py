@@ -190,14 +190,15 @@ class MoosObserver(base.BaseModule):
         world = self.observe()
         if not world:
             raise Exception("World observation failed.")
+
         self.mem.add(self.mem.STATES, world)
 
         x = -1
         y = -1
         speed = -1
-	mine_x = -1
-	mine_y = -1
-	mine_label = -1
+        mine_x = -1
+        mine_y = -1
+        mine_label = -1
         states = ""
 
 
@@ -209,25 +210,32 @@ class MoosObserver(base.BaseModule):
 
         try:
             current_position = self.subscriber.recv()
+        # for mine
+            try:
+                mine_report = self.subscriber_mine.recv()
+                mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
+                mine_x = float(mine_x.split("=")[1])
+                mine_y = float(mine_y.split("=")[1])
+                mine_label = mine_label.split("=")[1]
 
-	    # for mine
-	    try:
-	    	mine_report = self.subscriber_mine.recv()
-	    	mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
-	    	mine_x = float(mine_x.split("=")[1])
-            	mine_y = float(mine_y.split("=")[1])
-            	mine_label = mine_label.split("=")[1]
+                mines_checked = []
+                for atom in self.world.atoms:
+                    if atom.predicate.name == "hazard_checked":
+                        mines_checked.append(atom.args[0].name)
 
-		# for mine at qroute or not
-            	if mine_y >=-98 and mine_y<=-48:
-			states+= "HAZARD(mine" + mine_label + ")\n" 
-                	states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
-	    	else:
-			states+= "HAZARD(mine" + mine_label + ")\n" 
-			states+="hazard_at_location(mine" + mine_label + ",transit)\n"
-	    except:
-		print ("Mine Report not received")
-		pass
+                if "mine"+mine_label in mines_checked:
+                    raise Exception("Mine previously checked.")
+
+                # for mine at qroute or not
+                if mine_y >=-98 and mine_y<=-48:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+                else:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+            except:
+                print ("Mine Report not received")
+                pass
 
 	    
             x,y,speed = current_position.split(",")
@@ -240,28 +248,28 @@ class MoosObserver(base.BaseModule):
             if y >=-98 and y<=-48:
                 states+="at_location(remus,qroute)\n"
             else:
-		states+="at_location(remus,transit)\n"
+                states+="at_location(remus,transit)\n"
 
 
-            if x>=-2 and x<=40 and y>=-96 and y<=-63:
-                states+="at_location(remus,ga1)"
+            if (x>=-3 and x<=44) and (y>=-102 and y<=-56) and (speed == 0.0):
+                    states+="at_location(remus,ga1)"
    
 
-            if x>=120 and x<=175 and y>=-96 and y<=-63:
-                states+="at_location(remus,ga2)"
+            if (x>=124 and x<=175) and (y>=-102 and y<=-56) and (speed == 0.0):
+                    states+="at_location(remus,ga2)"
 
             if x==0 and y==0:
                 states+="at_location(remus,home)"
 
         except:
-	    print ("states not received")
+            print ("states not received")
             pass
 
-	# remove all states related to at_location
-	atoms = copy.deepcopy(self.world.atoms)
+        # remove all states related to at_location
+        atoms = copy.deepcopy(self.world.atoms)
         for atom in atoms:
-                 	if atom.predicate.name == "at_location":
-                        	self.world.atoms.remove(atom)
+            if atom.predicate.name == "at_location":
+                self.world.atoms.remove(atom)
 
         # this is to update the world into memory
         if not states == "":
