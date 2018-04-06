@@ -20,6 +20,7 @@ from pythonpddl.pddl import FExpression, FHead, ConstantNumber, Formula, Predica
 import inspect, os
 
 types = {"obj": worldsim.Type("obj", [])}
+# types = {"thing": worldsim.Type("thing", [])}
 objects = {}
 predicates = {}
 atoms = []
@@ -39,12 +40,17 @@ def load_domain(domainfile, problemfile):
     print('types: ')
 
     for arg in dom.types.args:
-        wtype(arg.arg_name)
+        if arg.arg_type:
+            if arg.arg_type not in types:
+                wtype(arg.arg_type)
+            wtype(arg.arg_name, arg.arg_type)
+        else:
+            wtype(arg.arg_name)
 
-        wtype("constant")
 
     for t in types:
-        print(t.__repr__())
+        for p in types[t].parents:
+            print(p.__repr__())
 
     ###Predicates##########
     print('predicates: ')
@@ -99,7 +105,7 @@ def load_domain(domainfile, problemfile):
                         print(sub.name)
 
                         argnames = parseTypedArgList_names(sub.args)
-                        argtypes = parseTypedArgList_types(sub.args,actions_args)
+                        argtypes = parseTypedArgList_types(sub.args, actions_args)
                         preobjnames.append(argnames)
                         preobjtypes.append(argtypes)
 
@@ -221,13 +227,16 @@ def load_domain(domainfile, problemfile):
                 postobjtypes.append(eff_args_type)
         #
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
-                                                preobjtypes, prepos,
-                                                postpredicates, postobjnames, postobjtypes, postpos, prepredicatesfunc, postpredicatesfunc)})
+                                                    preobjtypes, prepos,
+                                                    postpredicates, postobjnames, postobjtypes, postpos,
+                                                    prepredicatesfunc, postpredicatesfunc)})
 
     print("Objects:")
     objects = parseObjects(prob.objects)
 
-    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
+    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),list(functions.values()),
+                           cltree, obtree)
+    print(world.functions)
     _apply_state_pddl(world, prob)
 
     return world
@@ -242,10 +251,10 @@ def parsePredicate(pre, actions_args):
 
 
 def parseFormula(a, actions_args):
-    print("formula::::::::")
-    print(a.asPDDL())
+    # print("formula::::::::")
+    # print(a.asPDDL())
     for sub in a.subformulas:
-        print(a.op)
+        # print(a.op)
         if type(sub) is Predicate:  # when it is a negate predicate#
             name, argnames, argtypes = parsePredicate(sub, actions_args)
 
@@ -254,22 +263,45 @@ def parseFormula(a, actions_args):
 
 
 def _apply_state_pddl(world, prob):
-    print("here....................................")
+    # print("here....................................")
+
     for a in prob.initialstate:
         """ FExpression: represents a functional / numeric expression"""
         '''Formula: represented a goal description (atom / negated atom / and / or)'''
         '''subformulas is a predicate'''
         if type(a) is FExpression:
-            print("feexpression")
-            print(a.op)
+            # print("feexpression")
+            # print(a.op)
+            func = None
+            val = None
+            func_args = []
+
             for sub in a.subexps:
                 """FHead: represents a functional symbol and terms, e.g.,  (f a b c) (name, args)"""
-                if type(sub) is FHead:
 
-                    print(sub.name)
-                    print(parseTypedArgList_names(sub.args))
+                if type(sub) is FHead:
+                    # print(sub.name)
+                    func = sub.name
+                    func_args = parseTypedArgList_names(sub.args)
+                    # for f in func_args:
+                    #     print(f)
                 else:
-                    print(sub.val)
+                    # print(sub.val)
+                    val = sub.val
+
+            if a.op == "=":
+                args = []
+                for name in func_args:
+                    if not name:
+                        continue
+                    if name not in world.objects:
+                        raise Exception(": Object - " + name + " DNE ")
+                    args.append(world.objects[name])
+                if not (func in world.functions):
+                    raise Exception(func)
+
+                atom = world.functions[func].instantiate(args, val)
+                world.add_atom(atom)
         else:
             for sub in a.subformulas:
                 call = sub.name
@@ -296,8 +328,8 @@ def _apply_state_pddl(world, prob):
 def getInitialState(probinitialState):
     for a in probinitialState:
         if type(a) is FExpression:
-            print("feexpression")
-            print(a.op)
+            # print("feexpression")
+            # print(a.op)
             for sub in a.subexps:
                 if type(sub) is FHead:
                     print(sub.name)
@@ -415,7 +447,6 @@ def parseTypedArgList_types(argList, action_types):
 
 
 def test(a, actions_args):
-
     for eff in a.get_pre(False):
         func = None
         val = None
@@ -447,6 +478,6 @@ if __name__ == "__main__":
 
     ### Domain Specific Variables for JSHOP planner
     ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-    ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/s_wood.pddl"
+    ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
 
     load_domain(ff_DOMAIN_FILE, ff_STATE_FILE)

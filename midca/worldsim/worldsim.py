@@ -24,6 +24,10 @@ class Function:
 
     def __str__(self):
         return "(" + self.name + " " + self.argnames.__str__() + ")"
+
+    def instantiate(self, args, val):
+        return Atom(self, args, val)
+
 class Precicate_function:
     def __init__(self, op, args):
 
@@ -61,7 +65,7 @@ class Type:
         return ancestors
 
     def is_a_(self, type):
-        return type == self or type in self.ancestors()
+        return type == self or type in self.parents
 
     def instantiate(self, name):
         return Obj(name, self)
@@ -72,22 +76,27 @@ class Type:
 
 class Atom:
 
-    def __init__(self, predicate, args):
+    def __init__(self, predicate, args, val=None):
         if len(predicate.argnames) != len(args):
-            raise Exception("Wrong number of args for " + predicate.name)
+            raise Exception("Wrong number of args for " + predicate.name + " " + str(len(args)))
         i = 0
-
         if predicate.argtypes:
             for arg in args:
                 if not arg.is_a(predicate.argtypes[i]):
                     raise Exception("Instantiating argument " + predicate.argnames[
                         i] + " with " + arg.name + ", which is the wrong type of object")
                 i += 1
-
-        self.predicate = predicate
-        self.args = args
-        self.hash = hash(predicate.name + str(list(map(str, args))))  # little expensive because of map, but only
+        if val == None:
+            self.predicate = predicate
+            self.args = args
+            self.hash = hash(predicate.name + str(list(map(str, args))))  # little expensive because of map, but only
         # happens at initialization
+        else:
+            self.function = predicate
+            self.args = args
+            self.val = val
+            self.hash = hash(predicate.name + str(list(map(str, args))))
+
 
     def __getitem__(self, item):
         if item in self.predicate.argnames:
@@ -189,8 +198,7 @@ class Condition:
             i = 0
             for arg in args:
                 if not arg.is_a(self.argtypes[i]):
-                    raise Exception("Trying to instantiate " + arg.type.__repr__() + " as a " + self.argtypes[i].__repr__())
-                    # raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
+                    raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
                 i += 1
         return self.atom.predicate.instantiate(args)
 
@@ -220,13 +228,16 @@ class Condition:
 class Operator:
 
     def __init__(self, name, objnames, prepredicates, preobjnames, preobjtypes, prePositive, postpredicates,
-                 postobjnames, postobjtypes, postPositive, prefuns=[], postfunc=[]):
+                 postobjnames, postobjtypes, postPositive, prefunc=[], postfunc=[]):
         self.name = name
         self.objnames = objnames
         self.preconditions = {}
         self.precondorder = []
         self.prePos = prePositive
         self.types = preobjtypes + postobjtypes
+        self.prefuns = prefunc
+        self.postfunc = postfunc
+
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
@@ -509,7 +520,7 @@ class Node:
 
 class World:
 
-    def __init__(self, operators, predicates, atoms, types, objects=[], cltree=[], obtree=[]):
+    def __init__(self, operators, predicates, atoms, types, objects=[], functions=[], cltree=[], obtree=[]):
         self.operators = {}
         self.types = types
         self.cltree = cltree
@@ -517,8 +528,11 @@ class World:
         for operator in operators:
             self.operators[operator.name] = operator
         self.predicates = {}
+        self.functions = {}
         for predicate in predicates:
             self.predicates[predicate.name] = predicate
+        for func in functions:
+            self.functions[func.name] = func
         self.objects = {}
         for atom in atoms:
             for arg in atom.args:
@@ -599,7 +613,7 @@ class World:
             self.atoms = set(self.atoms)
 
         return World(list(self.operators.values()), list(self.predicates.values()), self.atoms.copy(), self.types.copy(),
-                     list(self.objects.values()))
+                     list(self.objects.values()),  list(self.functions.values()))
 
     def is_true(self, predname, argnames=[]):
         for atom in self.atoms:
@@ -739,7 +753,10 @@ class World:
     # interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
     def midcaGoalAsAtom(self, goal):
         try:
-            predName = str(goal['predicate'])
+            if 'predicate' in goal.kwargs:
+                predName = str(goal['predicate'])
+            elif 'func' in goal.kwargs:
+                predName = str(goal['func'])
         except KeyError:
             try:
                 predName = str(goal['Predicate'])
@@ -750,9 +767,12 @@ class World:
                     raise ValueError(
                         "Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a predicate name.")
         try:
-            predicate = self.predicates[predName]
+            if 'predicate' in goal.kwargs:
+                predicate = self.predicates[predName]
+            elif 'func' in goal.kwargs:
+                predicate = self.functions[predName]
         except KeyError:
-            raise ValueError("Predicate " + predName + " not in domain.")
+            raise ValueError("Predicate/Function " + predName + " not in domain.")
 
         args = []  # args for new atom
         # check if predicate took first spot in arg list

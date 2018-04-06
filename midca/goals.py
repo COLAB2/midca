@@ -56,6 +56,13 @@ class Goal:
         '''
         return self.kwargs['predicate']
 
+    def get_func(self):
+
+        return self.kwargs['func']
+    def get_val(self):
+
+        return self.kwargs['val']
+
     def __str__(self):
         s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join(
             [str(key) + ": " + str(value) + ", " for key, value in list(self.kwargs.items())])

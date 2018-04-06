@@ -15,28 +15,39 @@ class UserGoalInput(base.BaseModule):
     MIDCA module that allows users to input goals in a predicate representation. These will be stored in MIDCA goals of the form Goal(arg1Name, arg2Name..., argiName, predicate = predName). Note that this class only allows for simple goals with only predicate and argument information. It does not currently check to see whether the type or number of arguments is appropriate.
     '''
 
+
     def parseGoal(self, txt):
-        if not txt.endswith(")"):
+        if not (txt.endswith(")") or txt.startswith(">")):
             print(
-            "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
+            "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), or > (function args) value, where each argument is the name of an object in the world")
             return None
         try:
-            if txt.startswith('!'):
-                negate = True
-                txt = txt[1:]
+            if txt.startswith(">"):
+                opname = txt[:txt.index("(")]
+                func_args = txt[txt.index("(") + 1:txt.index(")")].strip()
+                funcname = func_args.split(" ")[0].strip()
+                args = [arg.strip() for arg in func_args.split(" ")[1:]]
+                val = txt[txt.index(")") + 1:]
+
+                goal = goals.Goal(*args, func=funcname, val=val.strip())
+                return goal
             else:
-                negate = False
-            predicateName = txt[:txt.index("(")]
-            args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
-            # use on-table predicate
-            if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
-                predicateName = 'on-table'
-                args = args[:1]
-            if negate:
-                goal = goals.Goal(*args, predicate=predicateName, negate=True)
-            else:
-                goal = goals.Goal(*args, predicate=predicateName)
-            return goal
+                if txt.startswith('!'):
+                    negate = True
+                    txt = txt[1:]
+                else:
+                    negate = False
+                predicateName = txt[:txt.index("(")]
+                args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+                # use on-table predicate
+                if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
+                    predicateName = 'on-table'
+                    args = args[:1]
+                if negate:
+                    goal = goals.Goal(*args, predicate=predicateName, negate=True)
+                else:
+                    goal = goals.Goal(*args, predicate=predicateName)
+                return goal
         except Exception:
             print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
@@ -47,13 +58,31 @@ class UserGoalInput(base.BaseModule):
     def predicateNames(self, world):
         return list(world.predicates.keys())
 
-    def validGoal(self, goal, world):
+    def functionNames(self, world):
+        if world.functions:
+            return list(world.functions.keys())
+        return []
+
+    def validGoal(self, goal, world, verbose=2):
         try:
             for arg in goal.args:
                 if arg not in self.objectNames(world):
                     return False
-            return goal['predicate'] in self.predicateNames(world)
-        except Exception:
+
+            if 'predicate' in goal.kwargs and goal['predicate'] in self.predicateNames(world):
+                if verbose >= 2:
+                    print(goal['predicate'])
+                return True
+
+            if 'func' in goal.kwargs and goal['func'] in self.functionNames(world):
+                if verbose >= 2:
+                    print(goal['func'])
+                return True
+
+            return False
+
+        except Exception as e:
+            print(str(e))
             return False
 
     def run(self, cycle, verbose=2):
@@ -71,7 +100,7 @@ class UserGoalInput(base.BaseModule):
                 world = self.mem.get(self.mem.STATES)[-1]
                 if not self.validGoal(goal, world):
                     print(str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(
-                        world), "\nPossible arguments", self.objectNames(world))
+                        world), "\npossible function:", self.functionNames(world), "\nPossible arguments", self.objectNames(world))
                 else:
                     self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                     print("Goal added.")

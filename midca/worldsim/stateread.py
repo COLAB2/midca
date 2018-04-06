@@ -5,6 +5,18 @@ import midca.worldsim.domainread as domain_read
 
 #from midca import worldsim as plan domainread as domain_read
 
+def _apply_op(op, val1, val2):
+    if op == "=":
+        return val1 == val2
+    elif op == ">":
+        return val1 > val2
+    elif op == "<":
+        return val1 < val2
+    elif op == "increase":
+        return val1 + val2
+    elif op == "decrease":
+        return val1 - val2
+
 
 # Note: this algorithm does not handle many potential user errors.
 def _apply_state(world, lines):
