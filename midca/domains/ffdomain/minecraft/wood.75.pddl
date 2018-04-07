@@ -84,11 +84,15 @@
 		wood-hoe
 		wood-shovel
 			- tool
+		
+		Steve
+			- player
 
 	)
 
 	(:init
 		(player-at m0_0)
+		(= (player-current-health Steve) 20)
 		(= (current-harvest-duration) 0)
 		(= (current-harvest-location) 0)
 		(= (furnace-fuel) 0)
