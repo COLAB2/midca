@@ -25,15 +25,17 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
     print(type(out))
 
     plan = []
-    lines = str(out).split("\n\n")
+    lines = str(out).split("\n")
     for line in lines:
-        line = line.strip()
+        line = line.strip().lower()
         if line.startswith("step"):
 
-            plan.append((line.split(":")[1].split(" ")))
+            plan.append((line.split(":")[1].strip().split(" ")))
         if re.match("[0-9]*:.*", line):
 
-            plan.append((line.split(":")[1].split(" ")))
+            plan.append((line.split(":")[1].strip().split(" ")))
+
+    print(plan)
     return plan
 
 

@@ -73,6 +73,8 @@ class SimpleEval(base.BaseModule):
             for goal in goals:
                 try:
                     achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'func' in goal.kwargs:
+                        achieved = world.atom_val_true(world.midcaGoalAsAtom(goal))
                     if 'negate' in goal and goal['negate']:
                         achieved = not achieved
                     if not achieved:

@@ -157,7 +157,7 @@ def load_domain(filename):
     f = open(filename)
     exec(preprocess(f.read()))
     f.close()
-    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), cltree, obtree)
+    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()), [], cltree, obtree)
     return world
 
 

@@ -86,13 +86,16 @@ class Atom:
                     raise Exception("Instantiating argument " + predicate.argnames[
                         i] + " with " + arg.name + ", which is the wrong type of object")
                 i += 1
-        if val == None:
+        self.predicate = None
+        self.func = None
+
+        if val is None:
             self.predicate = predicate
             self.args = args
             self.hash = hash(predicate.name + str(list(map(str, args))))  # little expensive because of map, but only
         # happens at initialization
         else:
-            self.function = predicate
+            self.func = predicate
             self.args = args
             self.val = val
             self.hash = hash(predicate.name + str(list(map(str, args))))
@@ -107,7 +110,10 @@ class Atom:
             raise Exception("value must be name or index of argument")
 
     def __str__(self):
-        s = self.predicate.name + "("
+        if self.predicate:
+            s = self.predicate.name + "("
+        else:
+            s = self.func.name + "("
         for arg in self.args:
             s += arg.name + ", "
         if self.args:
@@ -631,6 +637,12 @@ class World:
         # this is very fast, because atom objects have hashes and self.atoms is a set, not a list
         return atom in self.atoms
 
+    def atom_val_true(self, atom, verbose=2):
+        if verbose >= 2 : print(atom)
+        a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
+        #TODO: I only assume greater operator here; it needs to be changes for <, =
+        return int(a.val) > int(atom.val)
+
     def add_atom(self, atom):
         self.atoms.add(atom)
 
@@ -757,6 +769,7 @@ class World:
                 predName = str(goal['predicate'])
             elif 'func' in goal.kwargs:
                 predName = str(goal['func'])
+                val =  str(goal['val'])
         except KeyError:
             try:
                 predName = str(goal['Predicate'])
@@ -801,7 +814,7 @@ class World:
                         goal) + " as a predicate atom, but cannot find a value for argument " + predicate.argnames[i])
         assert len(args) == len(predicate.argnames)  # sanity check
         try:
-            return Atom(predicate, args)
+            return Atom(predicate, args, val)
         except Exception:
             raise ValueError(str(predicate) + str(args) + " does not seem to be a valid state")
 
