@@ -6,6 +6,7 @@ from midca.worldsim import pddl_num_read as pddlread
 import inspect, os
 
 # Domain Specific Imports
+from midca.domains.ffdomain.minecraft import minecraft_util
 # from midca.domains.minecraft import PDDL_util
 
 ### this script is not working for now. 
@@ -48,6 +49,7 @@ myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.MetricFFPlanner(
+    minecraft_util.ff_goals_from_midca_goals,
     DOMAIN_FILE,
     STATE_FILE
 ))

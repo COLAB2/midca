@@ -788,9 +788,10 @@ class World:
         try:
             if 'predicate' in goal.kwargs:
                 predName = str(goal['predicate'])
+                val = None
             elif 'func' in goal.kwargs:
                 predName = str(goal['func'])
-                val =  str(goal['val'])
+                val = str(goal['val'])
         except KeyError:
             try:
                 predName = str(goal['Predicate'])

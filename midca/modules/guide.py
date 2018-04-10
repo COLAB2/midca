@@ -1076,7 +1076,7 @@ class ReactiveSurvive(base.BaseModule):
            # (not (zombie - at zombie m0_1)
             zombie = self.attacking_zombie()[0].name
             loc = self.attacking_zombie()[1].name
-            goal = goals.Goal([zombie, loc], predicate="zombie-at", negate=True)
+            goal = goals.Goal(*[zombie, loc], predicate="zombie-at", negate=True)
             inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
             if verbose >= 2:
                 print("Meta-AQUA simulation goal generated:", goal,)

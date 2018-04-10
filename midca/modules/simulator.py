@@ -111,7 +111,7 @@ class MinecraftEventSimulator:
 
     def run(self, cycle, verbose=2):
 
-        if cycle > self.start:
+        if cycle == self.start:
             try:
                 self.world.apply_event("zombie_damage", ["m1-2"])
                 if verbose >= 2:

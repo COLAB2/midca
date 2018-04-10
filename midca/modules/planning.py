@@ -285,24 +285,19 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
 
 class MetricFFPlanner(base.BaseModule):
     '''
-    MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
-    Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
+    Metric FF planner
     '''
 
-    ff_state_from_world = None
-    ff_tasks_from_goals = None
+    ff_goals_from_midca_goals = None
     domain_file = ""
     state_file = ""
 
     def __init__(self,
-                 #                  ff_state_from_world,
-                 #                  ff_tasks_from_goals,
+                 ff_goals_from_midca_goals,
                  domain_file,
-                 state_file,
-                 extinguishers=False,
-                 mortar=False):
+                 state_file):
 
-        #         self.ff_state_from_world = ff_state_from_world
+        self.ff_goals_from_midca_goals = ff_goals_from_midca_goals
         #         self.ff_tasks_from_goals = ff_tasks_from_goals
         self.domain_file = domain_file
         self.state_file = state_file
@@ -311,7 +306,7 @@ class MetricFFPlanner(base.BaseModule):
             self.working = True
         except:
             print()
-            "Error declaring pyhop methods and operators. This planner will be \
+            "Error declaring ff  operators. This planner will be \
                        disabled"
             traceback.print_exc()
             self.working = False
@@ -347,8 +342,7 @@ class MetricFFPlanner(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print(
-                "Old plan retrieved. Checking validity...",)
+                print("Old plan retrieved. Checking validity...",)
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
@@ -381,16 +375,11 @@ class MetricFFPlanner(base.BaseModule):
         if not midcaPlan:
             # use pyhop to generate new plan
             if verbose >= 2:
-                print(
-                "Planning...")
-            #             try:
-            #             ffState = self.ff_state_from_world(world, self.state_file)
-            #             except Exception:
-            #                 print "Could not generate a valid pyhop state from current world state. Skipping planning"
-            #             try:
-            #             ffTasks = self.ff_tasks_from_goals(goals,ffState, self.state_file)
-            #             except Exception:
-            #                 print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+                print("Planning...")
+            try:
+                ffgoals = self.ff_goals_from_midca_goals(goals, self.state_file)
+            except Exception as e:
+                print(str(e))
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1 + self.mem.get(self.mem.PLANNING_COUNT))
                 ffPlan = metricFF.metric_ff(self.domain_file, self.state_file)
@@ -398,11 +387,9 @@ class MetricFFPlanner(base.BaseModule):
                 ffPlan = None
             if not ffPlan and ffPlan != []:
                 if verbose >= 1:
-                    print(
-                    "Planning failed for ",)
+                    print("Planning failed for ",)
                     for goal in goals:
-                        print(
-                        goal, " ",)
+                        print(goal, " ",)
                     print()
                 if trace: trace.add_data("PLAN", ffPlan)
                 return
