@@ -74,12 +74,11 @@
 	)
 	;;--------------------------------------------------------
 	(:action attack-zombie
-		:parameters (?loc - mapgrid ?target - mapgrid )
+		:parameters (?target - mapgrid )
 		:precondition
 			(and
-				(player-at ?loc)
 				(zombie-at zombie ?target)
-				(connect ?loc ?target)
+				
 				(= (tool-in-hand) (tool-id wood-pickaxe))
 				(> (player-current-health) 10)
 				

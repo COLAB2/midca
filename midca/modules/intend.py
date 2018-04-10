@@ -48,12 +48,10 @@ class SimpleIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print(
-                "No goals selected.")
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print(
-                "Selecting goal(s):",)
+                print("Selecting goal(s):",)
                 for goal in goals:
                     print(goal ,)
 

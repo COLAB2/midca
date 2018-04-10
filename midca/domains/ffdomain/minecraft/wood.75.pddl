@@ -591,9 +591,3 @@
 		(= (tool-current-health wood-shovel) 60)
 		(zombie-at zombie m0_1)
 	)
-
-	 (:goal
-(and
-( > (thing-available wood) 0)
-)
-))

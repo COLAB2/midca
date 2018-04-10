@@ -43,3 +43,14 @@ def ff_goals_from_midca_goals(goals, STATE_FILE):
     f.write(")\n")
     f.write("))")
     f.close()
+
+
+def preferSurvive(goal1, goal2):
+
+    if 'predicate' in goal1:
+        if goal1['predicate'] == 'zombie-at':
+            return -1
+    if 'predicate' in goal2:
+        if goal1['predicate'] == 'zombie-at':
+            return 1
+    return 0

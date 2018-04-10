@@ -19,7 +19,7 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-
+GOAL_GRAPH_CMP_FUNC = minecraft_util.preferSurvive
 
 MIDCA_ROOT = thisDir + "/../"
 
@@ -60,7 +60,7 @@ myMidca.insert_module('Simulate', simulator.MinecraftEventSimulator(zombieStart=
 myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-
+myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 myMidca.run()
 
@@ -71,3 +71,4 @@ for i in range(20):
     print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
 
 '''
+#when the state changes I need to change the domain file for the planner :O

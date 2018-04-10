@@ -28,6 +28,7 @@ def preferApprehend(goal1, goal2):
     return 0
 
 
+
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
