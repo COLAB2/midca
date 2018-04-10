@@ -87,12 +87,15 @@
 		
 		Steve
 			- player
+		
+		zombie
+			-monster
 
 	)
 
 	(:init
 		(player-at m0_0)
-		(= (player-current-health Steve) 20)
+		(= (player-current-health) 20)
 		(= (current-harvest-duration) 0)
 		(= (current-harvest-location) 0)
 		(= (furnace-fuel) 0)
@@ -168,7 +171,7 @@
 		(= (thing-available bucket) 0)
 		(= (thing-available fishingrod) 0)
 		(= (thing-available shears) 0)
-		(= (thing-available wood-pickaxe) 0)
+		(= (thing-available wood-pickaxe) 1)
 		(= (thing-available wood-axe) 0)
 		(= (thing-available wood-hoe) 0)
 		(= (thing-available wood-shovel) 0)
@@ -341,7 +344,7 @@
 		(= (location-id m4_2) 24)
 		(= (location-id m4_3) 25)
 		(= (location-id m4_4) 26)
-		(thing-at-map tree m0_1) 
+	
 		(thing-at-map tree m2_2) 
 		(= (duration-need hand water) 1000000000)
 		(= (duration-need hand chicken) 1)
@@ -503,6 +506,7 @@
 		(= (duration-need wood-pickaxe red-mushroom) 1000000000)
 		(= (duration-need wood-pickaxe skeleton) 1000000000)
 		(= (duration-need wood-pickaxe sugarcane) 1000000000)
+		;(= (duration-need wood-pickaxe zombie) 1000000000)
 		(= (duration-need wood-axe water) 1000000000)
 		(= (duration-need wood-axe chicken) 1000000000)
 		(= (duration-need wood-axe sheep) 1000000000)
@@ -585,11 +589,13 @@
 		(= (tool-current-health wood-axe) 60)
 		(= (tool-current-health wood-hoe) 60)
 		(= (tool-current-health wood-shovel) 60)
+		(zombie-at zombie m0_1)
 	)
 
 	(:goal
 		(and
-			(> (thing-available wood) 0)
+			;(> (thing-available wood) 0)
+			(not (zombie-at zombie m0_1))
 		)
 	)
 )

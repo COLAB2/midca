@@ -288,7 +288,7 @@ class Operator:
         for condition in self.precondorder:
             names = self.preconditions[condition]
             args = []
-            #TODO: Zohreh it is hard coded here for constant objects. should be modified.
+            #TODO: Zohreh; it is hard coded here for constant objects. should be modified.
             for name in names:
                 if name in objdict.keys():
                     args.append(objdict[name])
@@ -755,6 +755,27 @@ class World:
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")
         self.apply(simAction)
+
+    #TODO: I need to modify this for an actual event
+    '''
+    
+    '''
+    def apply_event(self, opName, argNames, verbose=2):
+        try:
+            func = self.functions["player-current-health"]
+            a = next((x for x in self.atoms if x.func == func), None)
+            a.val = a.val - 5
+
+            pred = self.predicates["at-zombie"]
+            #(zombie-at zombie m0_1)
+            newatom = Atom(pred, ["zombie", "m1-2"])
+            self.add_atom(newatom)
+
+            if verbose >= 2:
+                print("player's current health is down to " + str(a.val))
+
+        except Exception as e:
+            print(str(e))
 
     # convenience method for operating with MIDCA
     def apply_midca_action(self, midcaAction):

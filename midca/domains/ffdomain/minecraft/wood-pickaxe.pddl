@@ -85,7 +85,9 @@
 		wood-hoe
 		wood-shovel
 			- tool
-
+		
+		zombie
+			-monster
 	)
 
 	(:init

@@ -1045,6 +1045,46 @@ class TFFire(base.BaseModule):
                     print(". This goal was already in the graph.")
 
 
+class ReactiveSurvive(base.BaseModule):
+    '''
+    MIDCA module that generates a goal
+    '''
+
+    def attacking_zombie(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "zombie-at" and atom.args[0].type.name == "monster":
+                return atom.args
+        return False
+
+    def is_damaged(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        func = world.functions["player-current-health"]
+        a = next((x for x in world.atoms if x.func == func), None)
+        # 15 is a threshold here;
+        if a.val <= 15:
+            return True
+
+        return False
+
+    def run(self, cycle, verbose=2):
+        '''event name should come from an explnation module'''
+        event_name = "zombie-attack"
+        if verbose>=2:
+            print(self)
+        if self.attacking_zombie() and self.is_damaged():
+           # (not (zombie - at zombie m0_1)
+            zombie = self.attacking_zombie()[0].name
+            loc = self.attacking_zombie()[1].name
+            goal = goals.Goal([zombie, loc], predicate="zombie-at", negate=True)
+            inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            if verbose >= 2:
+                print("Meta-AQUA simulation goal generated:", goal,)
+                if inserted:
+                    print()
+                else:
+                    print(". This goal was already in the graph.")
+
 class ReactiveApprehend(base.BaseModule):
     '''
     MIDCA module that generates a goal to apprehend an arsonist if there is one who is free and there is a fire in the current world state. This is designed to simulate the behavior of the Meta-AQUA system.

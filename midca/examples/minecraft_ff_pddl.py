@@ -52,7 +52,10 @@ myMidca.append_module("Plan", planning.MetricFFPlanner(
     STATE_FILE
 ))
 myMidca.append_module("Act", act.SimpleAct())
+myMidca.insert_module('Simulate', simulator.MinecraftEventSimulator(zombieStart=1), 1)
 
+# myMidca.insert_module('Interpret', guide.TFFire(), 2)
+myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 

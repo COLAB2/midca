@@ -95,6 +95,33 @@ class WorldChanger:
                     print()
                     "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
 
+class MinecraftEventSimulator:
+
+    def __init__(self, zombieStart=2):
+
+        self.start = zombieStart
+
+    def getZombieChance(self):
+        return self.chance
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+
+    def run(self, cycle, verbose=2):
+
+        if cycle > self.start:
+            try:
+                self.world.apply_event("zombie_damage", ["m1-2"])
+                if verbose >= 2:
+                    print("zombie (at m1-2) attacks")
+            except Exception:
+                if verbose >= 1:
+                        print("Action invalid")
+
+
+
 
 class ArsonSimulator:
 
@@ -140,8 +167,7 @@ class ArsonSimulator:
                         "Action lightonfire(", str(arsonist), ",", str(block), ") invalid."
             except IndexError:
                 if verbose >= 1:
-                    print()
-                    "All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES)
+                    print("All blocks on fire.", arsonist, random.choice(ARSONIST_VICTORY_ACTIVITIES))
 
 
 SCORE = "Score"

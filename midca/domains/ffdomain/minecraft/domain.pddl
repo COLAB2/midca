@@ -6,10 +6,13 @@
 		tool - thing
 		craftgrid
 		mapgrid
+		player 
+		monster - thing
 	)
 
 	(:predicates
 		(player-at  ?loc - mapgrid)
+		(zombie-at ?zombie -monster ?loc - mapgrid)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
 		(placed-thing-at-map  ?obj - material  ?loc - mapgrid)
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
@@ -28,8 +31,11 @@
 		(tool-in-hand)
 		(tool-max-health ?tool - tool)
 		(tool-current-health ?tool - tool)
+		(player-current-health)
 		(furnace-fuel)
 	)
+	
+	
 
 	;; ----------------------------------------------------
 	(:action place-on-map
@@ -66,7 +72,25 @@
 				(assign (current-harvest-location) 0)
 			)
 	)
-
+	;;--------------------------------------------------------
+	(:action attack-zombie
+		:parameters (?loc - mapgrid ?target - mapgrid )
+		:precondition
+			(and
+				(player-at ?loc)
+				(zombie-at zombie ?target)
+				(connect ?loc ?target)
+				(= (tool-in-hand) (tool-id wood-pickaxe))
+				(> (player-current-health) 10)
+				
+				
+			)
+		:effect
+			(and
+				(not (zombie-at zombie ?target))
+				(decrease (player-current-health) 3)
+			)
+	)
 	;; ---------------------------------------------------
 	(:action change-harvest-loc
 		:parameters (?target - mapgrid)

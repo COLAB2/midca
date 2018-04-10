@@ -11,12 +11,12 @@
       :parameters ( ?loc - mapgrid ?zombie_loc - mapgrid )
       :precondition
           (and
-               (steve_at ?loc)
+               (player_at ?loc)
                (connect ?loc ?zombie_loc))
 
       :effect
           (and
-               (decrease (player-current-health ?tool) 5)
+               (decrease (player-current-health ) 5)
           )
     )
 
@@ -24,12 +24,12 @@
       :parameters ( ?loc - mapgrid ?trap_loc - mapgrid )
       :precondition
           (and
-               (steve_at ?loc)
+               (player_at ?loc)
                (connect ?loc ?trap_loc))
 
       :effect
           (and
-               (decrease (player-current-health ?tool) 5)
+               (decrease (player-current-health ) 5)
           )
     )
 )
