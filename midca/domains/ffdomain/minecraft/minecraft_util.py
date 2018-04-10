@@ -44,7 +44,6 @@ def ff_goals_from_midca_goals(goals, STATE_FILE):
     f.write("))")
     f.close()
 
-
 def preferSurvive(goal1, goal2):
 
     if 'predicate' in goal1:
