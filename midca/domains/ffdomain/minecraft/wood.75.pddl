@@ -598,8 +598,4 @@
 			(not (zombie-at zombie m0_1))
 		)
 	)
-) (:goal
-(and
-( > (thing-available wood) 0)
-)
-))
+) 
