@@ -6,15 +6,26 @@ from midca.worldsim import domainread, stateread
 import inspect, os
 
 # Domain Specific Imports
+# Use other util files for other domains
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods, operators
 
 
 '''
-Simulation of tower construction and arson prevention in blocksworld. Uses
-TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
+Simulation of tower construction 
 '''
 
+
+###-Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE. 
+
+###-util.jshop_state_from_world transfers the state file in MIDCA to state file for JSHOP. You can find the 
+###generated file in domains/jshop_domains. Another util function put the goal in the state file too.
+
+ 
+
+
+
+#TODO: make the JSHOP.py to read the path. 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 print thisDir
 
@@ -24,9 +35,13 @@ print MIDCA_ROOT
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_jshop.sim"
+
+### Domain Specific Variables for JSHOP planner
+JSHOP_DOMAIN_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+JSHOP_STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_5.shp"
+
 DISPLAY_FUNC = util.asqiiDisplay
-DECLARE_METHODS_FUNC = methods.declare_methods
-DECLARE_OPERATORS_FUNC = operators.declare_ops
+
 GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 
 world = domainread.load_domain(DOMAIN_FILE)
@@ -47,6 +62,8 @@ myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
                                                     util.jshop_tasks_from_goals,
+                                                    JSHOP_DOMAIN_FILE,
+                                                    JSHOP_STATE_FILE
                                                     ))
 myMidca.append_module("Act", act.SimpleAct())
 

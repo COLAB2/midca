@@ -130,7 +130,7 @@ class SimpleEval2(base.BaseModule):
                         if not lastGoals:
                             self.mem.set(LAST_SCORED_GOAL, [goal])
                             self.mem.set(self.mem.DELIVERED, 1)
-                            self.generate_thief_file(goal, 5)
+#                             self.generate_thief_file(goal, 5)
                         elif not (goal in lastGoals):
                             self.mem.add(LAST_SCORED_GOAL, goal)
                             self.mem.set(self.mem.DELIVERED, score+1)
@@ -182,14 +182,15 @@ class SimpleEval2(base.BaseModule):
 #         other_w_goals =  filter(lambda g: str(g.args[2]) != current_w, goals.copy())
         randomgoals = random.sample(other_w_goals, stolen_number)
         
-        thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+#         thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+        thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
         
         f = open(thief_file, 'w')
         
         for g in randomgoals:
             f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
-            1
+            
 
 
 class SimpleEval_Restaurant(base.BaseModule):

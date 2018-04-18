@@ -167,15 +167,15 @@ class PerfectObserverWithThief(base.BaseModule):
 	
     def run(self, cycle, verbose = 2):
         world = self.observe()
-        thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
+        thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
         theft_items=[]
         
-        with open(thief_file) as f:
-	    	lines = f.readlines()
-	    	for line in lines:
-	    		theft_items.append(line.split(" "))
-	    	
+#         with open(thief_file) as f:
+# 	    	lines = f.readlines()
+# 	    	for line in lines:
+# 	    		theft_items.append(line.split(" "))
+# 	    	
         if not world:
             raise Exception("World observation failed.")
         

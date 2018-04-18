@@ -24,7 +24,10 @@ argsPyHopPlanner = [util.pyhop_state_from_world,
 					DECLARE_OPERATORS_FUNC]
 
 
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim", argsPyHopPlanner=argsPyHopPlanner)
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + 
+									"domains/blocksworld/domains/arsonist.sim", 
+									stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim", 
+									argsPyHopPlanner=argsPyHopPlanner)
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later. Note: this drastically increases MIDCA's running time.
 myMidca.storeHistory = True
 myMidca.init()
