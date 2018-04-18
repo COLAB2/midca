@@ -3,22 +3,20 @@ import subprocess
 
 from subprocess import Popen, PIPE, STDOUT
 
-def jshop(tasks):
+def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
   
     thisDir =  os.path.dirname(os.path.realpath(__file__))
 #     thisDir = "C:/Users/Zohreh/git/midca/modules/_plan/jShop/"
     MIDCA_ROOT = thisDir + "/../../../"
     
-    DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/logistics/domain_D.shp"
-    #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
-    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/problems.shp"
-    
-    f = open(STATE_FILE, 'r')
-    a = f.read()
-    print a
-#     STATE_FILE = "C:/Users/Zohreh/git/MIDCA/domains/jshop_domains/logistics/problems.shp"
-    
-#     path = "C:/Users/Zohreh/git/midca/modules/_plan/jShop/"
+#     DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+#     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+#     STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_5.shp"
+#     
+#     f = open(STATE_FILE, 'r')
+#     a = f.read()
+#     print a
+#   
     
     p = Popen(['java', '-jar', thisDir+'/jshop.jar', DOMAIN_FIILE,
                STATE_FILE, '1'], stdout=PIPE, stderr=STDOUT)
