@@ -48,9 +48,9 @@ def load_domain(domainfile, problemfile):
             wtype(arg.arg_name)
 
 
-    for t in types:
-        for p in types[t].parents:
-            print(p.__repr__())
+    # for t in types:
+    #     for p in types[t].parents:
+    #         print(p.__repr__())
 
     ###Predicates##########
     print('predicates: ')
@@ -60,14 +60,14 @@ def load_domain(domainfile, problemfile):
 
     print('functions')
     for a in dom.functions:
-        print(a.name)
+        # print(a.name)
         argnames = parseTypedArgList_names(a.args)
         argtypes = parseTypedArgList_types_predicate(a.args)
         functions.update({a.name: worldsim.Function(a.name, argnames, argtypes)})
 
     print('constants')
     for c in dom.constants.args:
-        print(c.val)
+        # print(c.val)
         constants.append(worldsim.Constant(c.val))
     ######### OPERATORS ####################
 
@@ -101,8 +101,8 @@ def load_domain(domainfile, problemfile):
 
                     elif type(sub) is FHead:
                         index = index + 1
-                        print("________")
-                        print(sub.name)
+                        # print("________")
+                        # print(sub.name)
 
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
@@ -113,7 +113,7 @@ def load_domain(domainfile, problemfile):
 
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+                        # print(sub.val)
 
                 prepredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
 
@@ -123,6 +123,11 @@ def load_domain(domainfile, problemfile):
 
                 preobjnames.append(pre_args_name)
                 preobjtypes.append(pre_args_type)
+                if "shelter" in pre_args_name:
+                    print(pre.name)
+                    for t in preobjtypes:
+                        for x in t:
+                            print(x.__str__())
 
         for pre in a.get_pre(False):
             prepos.append(False)
@@ -137,8 +142,8 @@ def load_domain(domainfile, problemfile):
 
                     elif type(sub) is FHead:
 
-                        print("________")
-                        print(sub.name)
+                        # print("________")
+                        # print(sub.name)
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
                         preobjnames.append(argnames)
@@ -147,7 +152,7 @@ def load_domain(domainfile, problemfile):
 
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+                        # print(sub.val)
                 prepredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
@@ -171,8 +176,8 @@ def load_domain(domainfile, problemfile):
 
                     elif type(sub) is FHead:
 
-                        print("________")
-                        print(sub.name)
+                        # print("________")
+                        # print(sub.name)
 
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
@@ -183,7 +188,7 @@ def load_domain(domainfile, problemfile):
 
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+                        # print(sub.val)
 
                 postpredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
 
@@ -208,8 +213,8 @@ def load_domain(domainfile, problemfile):
 
                     elif type(sub) is FHead:
 
-                        print("________")
-                        print(sub.name)
+                        # print("________")
+                        # print(sub.name)
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
                         postobjnames.append(argnames)
@@ -217,7 +222,7 @@ def load_domain(domainfile, problemfile):
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+                        # print(sub.val)
                 postpredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
 
             elif type(eff) is Predicate:
@@ -225,7 +230,7 @@ def load_domain(domainfile, problemfile):
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
-        #
+
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
                                                     postpredicates, postobjnames, postobjtypes, postpos,
@@ -236,7 +241,7 @@ def load_domain(domainfile, problemfile):
 
     world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),list(functions.values()),
                            cltree, obtree)
-    print(world.functions)
+    # print(world.functions)
     _apply_state_pddl(world, prob)
 
     return world
@@ -247,6 +252,8 @@ def load_domain(domainfile, problemfile):
 def parsePredicate(pre, actions_args):
     args_names = parseTypedArgList_names(pre.args)
     args_types = parseTypedArgList_types(pre.args, actions_args)
+    # print(pre.name)
+
     return pre.name, args_names, args_types
 
 
@@ -418,8 +425,8 @@ def predicate(name, argnames, argList):
             argtypes.append(types[arg.arg_type])
 
     predicates[name] = worldsim.Predicate(name, argnames, argtypes)
-    for t in predicates[name].argtypes:
-        print(t.__str__())
+    # for t in predicates[name].argtypes:
+    #     print(t.__str__())
 
 
 def parseTypedArgList_types_predicate(argList):
@@ -440,7 +447,6 @@ def parseTypedArgList_types(argList, action_types):
         if arg.arg_name in action_types.keys():
             ptypes.append(action_types[arg.arg_name])
         else:
-
             ptypes.append(types["resource"])
 
     return ptypes

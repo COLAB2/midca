@@ -6,19 +6,29 @@
 		tool - thing
 		craftgrid
 		mapgrid
+		direction
 		player 
 		monster - thing
+		weapon - thing
+		food - thing
+		potion - thing
 	)
 
 	(:predicates
 		(player-at  ?loc - mapgrid)
-		(zombie-at ?zombie -monster ?loc - mapgrid)
+		(in-shelter)
+		(look-at ?direction - direction)
+		(monster-at ?zombie -monster ?loc - mapgrid)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
+		(thing-at ?obj -resource)
 		(placed-thing-at-map  ?obj - material  ?loc - mapgrid)
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
 		(craft-empty  ?loc - craftgrid)
 		(connect  ?from - mapgrid  ?to - mapgrid)
+		(next-to ?from - direction ?to - direction)
 		(crafting)
+		(survive)
+		(eat ?food - food)
 	)
 	
 	(:functions
@@ -33,11 +43,42 @@
 		(tool-current-health ?tool - tool)
 		(player-current-health)
 		(furnace-fuel)
+		(current-hunger-value)
+		(food-value ?f -food)
 	)
 	
+	(:action restore-health
+		:parameters ()
+		:precondition
+			(and
+				(> (thing-available instant-health-potion) 0)
+				(< (current-health-value) 20)
+			)
+		:effect
+			(and
+				(= (current-health-value) 20)
+				(decrease (thing-available instant-health-potion) 1)
+			)
+	)
+			
 	
+	;;-------------------------------------------------	
+	(:action eat 
+		:parameters (?f - food)
+		:precondition
+			(and
+				(> (thing-available ?f) 0)
+				(< (current-hunger-value) 20)
+			)
+		:effect
+			(and
+				(increase (current-hunger-value) (food-value ?f))
+				(decrease (thing-available ?f) 1)
+			)
+		)
 
 	;; ----------------------------------------------------
+
 	(:action place-on-map
 		:parameters (?res - material  ?target - mapgrid)
 		:precondition
@@ -72,21 +113,61 @@
 				(assign (current-harvest-location) 0)
 			)
 	)
+	;;----------------------------------------
+	
+	;---------------------------------------------------------
+	(:action find-skeleton
+		:parameters (?d - direction ?to - direction )
+		:precondition
+			(and
+
+				(look-at ?d)
+				(next-to ?d ?to)
+			)
+		:effect
+			(and
+				(look-at ?to)
+				(not (look-at ?d))
+				(thing-at-map skeleton m0_1)
+			)
+	)
+	
+			
+	
 	;;--------------------------------------------------------
+	(:action attack-skeleton
+		:parameters (?target - mapgrid)
+		:precondition
+			(and
+				(thing-at-map skeleton ?target)
+				(player-at ?target)
+				
+				(= (tool-in-hand) (tool-id wood-axe))
+				(= (current-harvest-location) (location-id ?target))
+				(= (current-harvest-duration) (duration-need wood-axe skeleton))
+				(not (crafting))
+			)
+		:effect
+			(and
+				(increase (thing-available bone) 1)
+				(not (thing-at-map skeleton ?target))
+				(not (thing-at skeleton))
+				(assign (current-harvest-duration) 0)
+			)
+	)
+	;------------------------------------------------------------
 	(:action attack-zombie
 		:parameters (?target - mapgrid )
 		:precondition
 			(and
-				(zombie-at zombie ?target)
+				(monster-at zombie ?target)
 				
 				(= (tool-in-hand) (tool-id wood-pickaxe))
 				(> (player-current-health) 10)
-				
-				
 			)
 		:effect
 			(and
-				(not (zombie-at zombie ?target))
+				(not (monster-at zombie ?target))
 				(decrease (player-current-health) 3)
 			)
 	)
@@ -121,7 +202,22 @@
 				(assign (tool-in-hand) (tool-id ?tool))
 			)
 	)
-
+	;;-----------------------------------------------
+	
+	(:action move-to-shelter
+		:parameters (?target - mapgrid )
+		:precondition
+			(and
+				(player-at ?target)
+				(thing-at-map shelter ?target)
+				(not (in-shelter))
+				
+			)
+		:effect
+			(and
+				(in-shelter)
+			)
+	)
 	;; ----------------------------------------------------
 	(:action harvest
 		:parameters (?target - mapgrid ?tool - tool ?obj - resource)

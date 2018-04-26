@@ -1036,6 +1036,7 @@ class TFFire(base.BaseModule):
         blocks = blockstate.get_block_list(world)
         goal = self.tree.givegoal(blocks)
         if goal:
+
             inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
             if verbose >= 2:
                 print("TF-Tree goal generated:", goal,)
@@ -1057,6 +1058,60 @@ class ReactiveSurvive(base.BaseModule):
                 return atom.args
         return False
 
+    def skeleton(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+        skeleton = None
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
+                arrow = atom.args
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "skeleton":
+                skeleton = atom.args
+
+        if arrow and skeleton:
+            return skeleton, 1
+        if arrow:
+            return arrow, 0.5
+
+        return False
+
+    def arrow_trap(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+        trap = None
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
+                arrow = atom.args
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow_trap":
+                trap = atom.args
+
+        if arrow and trap:
+            return trap, 1
+        if arrow:
+            return arrow, 0.5
+
+        return False
+
+    def weapon_for_skeleton(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+        trap = None
+        for atom in world.atoms:
+            if atom.func and atom.func.name == "thing-available" and atom.args[0].name == "wood-axe" and atom.val > 0:
+                return atom.args
+        return False
+
+    def nearby_arrow(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
+                return atom.args
+
+
+        return False
+
     def is_damaged(self):
         world = self.mem.get(self.mem.STATES)[-1]
         func = world.functions["player-current-health"]
@@ -1067,23 +1122,107 @@ class ReactiveSurvive(base.BaseModule):
 
         return False
 
+    def survive(self, verbose=2):
+        if self.is_damaged() and self.nearby_arrow():
+            hypotheses = []
+
+            if self.skeleton():
+                s, chance = self.skeleton()
+                if chance == 1:
+                    skeleton = s[0].name
+                    loc = s[1].name
+                    if self.weapon_for_skeleton():
+                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probabilty=1)
+                    else:
+                        goal = goals.Goal(predicate="in-shelter", probabilty=1)
+                    hypotheses.append(goal)
+                    # if verbose >= 2:
+                    #     print("Meta-AQUA simulation goal generated:", goal, )
+
+                if chance == 0.5:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    skeleton = world.objects["skeleton"]
+                    loc = "unknown"
+                    if self.weapon_for_skeleton():
+                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probabilty=0.5)
+                    else:
+                        goal = goals.Goal(predicate="in-shelter", probabilty=0.5)
+
+                    hypotheses.append(goal)
+                    # inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                    # if verbose >= 2:
+                    #     print("Meta-AQUA simulation goal generated:", goal, )
+                        # if inserted:
+                        #     print("It is possible that there was an skeleton around, but it is not observed yet")
+                        #
+                        # else:
+                        #     print(". This goal was already in the graph.")
+
+            if self.arrow_trap():
+                s, chance = self.arrow_trap()
+                if chance == 1:
+                    trap = s[0].name
+                    loc = s[1].name
+                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probabilty=1)
+                    hypotheses.append(goal)
+                    # if verbose >= 2:
+                    #     print("Meta-AQUA simulation goal generated:", goal, )
+
+                if chance == 0.5:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    trap = world.objects["arrow_trap"]
+                    loc = "unknown"
+                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probabilty=0.5)
+                    hypotheses.append(goal)
+                    # if verbose >= 2:
+                    #     print("Meta-AQUA simulation goal generated:", goal, )
+            restore_health_goal = goals.Goal(func="current-hunger-value", val=20)
+            goal = goals.Goal(predicate="survive", subgoals=hypotheses)
+
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            pending_goals = goalGraph.getUnrestrictedGoals()
+
+            existed = False
+            inserted = False
+            inserted1 = False
+
+            for p in pending_goals:
+                if "predicate" in p.kwargs and p["predicate"] == goal["predicate"]:
+                    existed = True
+            if not existed:
+                inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
+                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            if inserted1:
+                print("a goal to restore the health is generated")
+            if inserted:
+                print("It is possible that there was an skeleton around, but it is not observed yet")
+            else:
+                print(". This goal was already in the graph.")
+
+
     def run(self, cycle, verbose=2):
         '''event name should come from an explnation module'''
         event_name = "zombie-attack"
         if verbose>=2:
             print(self)
-        if self.attacking_zombie() and self.is_damaged():
-           # (not (zombie - at zombie m0_1)
-            zombie = self.attacking_zombie()[0].name
-            loc = self.attacking_zombie()[1].name
-            goal = goals.Goal(*[zombie, loc], predicate="zombie-at", negate=True)
-            inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-            if verbose >= 2:
-                print("Meta-AQUA simulation goal generated:", goal,)
-                if inserted:
-                    print()
-                else:
-                    print(". This goal was already in the graph.")
+
+        if self.is_damaged():
+            if self.attacking_zombie():
+               # (not (zombie - at zombie m0_1)
+                zombie = self.attacking_zombie()[0].name
+                loc = self.attacking_zombie()[1].name
+                goal = goals.Goal(*[zombie, loc], predicate="monster-at", negate=True)
+                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                if verbose >= 2:
+                    if inserted:
+                        print("Meta-AQUA simulation goal generated:", goal, )
+                        print()
+                    else:
+                        print(". This goal was already in the graph.")
+        # TODO: this needs to be changed: These information comes from the explanation node
+       # I like to find a better way to implement the goal decomosing to the subgoals
+        self.survive()
+
 
 class ReactiveApprehend(base.BaseModule):
     '''

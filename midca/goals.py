@@ -22,6 +22,8 @@ class Goal:
                 # not an index
                 raise KeyError(str(val) + " is not a valid key or index.")
 
+
+
     def __contains__(self, item):
         try:
             val = self[item]
@@ -62,6 +64,13 @@ class Goal:
     def get_val(self):
 
         return self.kwargs['val']
+
+    def get_subgoal(self):
+
+        return self.kwargs['subgoals']
+
+    def get_probability(self):
+        return self.kwargs['probability']
 
     def __str__(self):
         s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join(

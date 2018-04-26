@@ -120,6 +120,29 @@ class MinecraftEventSimulator:
                 if verbose >= 1:
                         print("Action invalid")
 
+class ArrowSimulator:
+
+    def __init__(self, arrowStart=2):
+
+        self.start = arrowStart
+
+    def getSkeletonChance(self):
+        return self.chance
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+
+    def run(self, cycle, verbose=2):
+
+        if cycle == self.start:
+            try:
+                self.world.apply_event("arrow_damage")
+
+            except Exception:
+                if verbose >= 1:
+                        print("Action invalid")
 
 
 

@@ -276,7 +276,7 @@ class Operator:
             self.resultorder.append(cond)
             self.results[cond] = names
 
-    def instantiate(self, args):
+    def instantiate(self, args, verbose=2):
         if len(args) != len(self.objnames):
             raise Exception("wrong number of arguments")
         objdict = {}
@@ -290,12 +290,18 @@ class Operator:
             args = []
             #TODO: Zohreh; it is hard coded here for constant objects. should be modified.
             for name in names:
+
                 if name in objdict.keys():
                     args.append(objdict[name])
                 else:
+
                     for t in self.types:
-                        resourceType = [x for x in t if x.name == "resource"]
-                    args.append(Obj(name, resourceType[0]))
+                        for x in t:
+                            if x.name == "resource":
+                                resourceType = x
+                    # for t in self.types:
+                    #     resourceType = [x for x in t if x.name.strip() == "resource"]
+                    args.append(Obj(name, resourceType))
 
             preconditions.append(condition.instantiate(args))
         results = []
@@ -760,22 +766,41 @@ class World:
     '''
     
     '''
-    def apply_event(self, opName, argNames, verbose=2):
+    def apply_event(self, opName, argNames=[], verbose=2):
         try:
             func = self.functions["player-current-health"]
             a = next((x for x in self.atoms if x.func == func), None)
             a.val = a.val - 5
 
-            pred = self.predicates["at-zombie"]
-            #(zombie-at zombie m0_1)
-            newatom = Atom(pred, ["zombie", "m1-2"])
-            self.add_atom(newatom)
+            if opName == "zombie_damage":
+                pred = self.predicates["monster-at"]
+                #(zombie-at zombie m0_1)
+                newatom = Atom(pred, ["zombie", "m1_2"])
+                self.add_atom(newatom)
 
-            if verbose >= 2:
-                print("player's current health is down to " + str(a.val))
+                if verbose >= 2:
+                    print("player's current health is down to " + str(a.val))
+
+            if opName == "arrow_damage":
+                pred = self.predicates["thing-at-map"]
+                # (obj-at arrow m0_1)
+                name = "arrow"
+                loc = "m1_2"
+                args = []
+                if (name or loc) not in self.objects:
+                    raise Exception(": Object - " + name + " DNE ")
+                args.append(self.objects[name])
+
+                args.append(self.objects[loc])
+
+                newatom = Atom(pred, args)
+                self.add_atom(newatom)
+
+                print("player's current health is down to " + str(a.val) + " and arrows are nearby")
+                print()
 
         except Exception as e:
-            print(str(e))
+            print("ERROR: " + str(e))
 
     # convenience method for operating with MIDCA
     def apply_midca_action(self, midcaAction):
@@ -811,7 +836,7 @@ class World:
 
         args = []  # args for new atom
         # check if predicate took first spot in arg list
-        if goal.args[0] != "predicate":
+        if goal.args and goal.args[0] != "predicate":
             nextArgI = 0
         else:
             nextArgI = 1
@@ -856,8 +881,6 @@ class World:
                 break
             testWorld.apply_midca_action(action)
 
-        print("goalSet")
-        print(goalSet)
         for goal in goalSet:
             achieved = testWorld.atom_true(self.midcaGoalAsAtom(goal))
             if 'negate' in goal and goal['negate']:

@@ -57,6 +57,77 @@ class SimpleIntend(base.BaseModule):
 
                 print()
 
+class SimpleIntendwithSubgoals(base.BaseModule):
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("GOALGRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print("Goal graph not initialized. Intend will do nothing.")
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getUnrestrictedGoals()
+
+        if not goals:
+            if verbose >= 1:
+                print("No Goals in Goal graph. Intend will do nothing.")
+            return
+
+        # take the first goal
+        goals = goals[0]
+        if verbose >=3:
+            print("goals:")
+            print(goals)
+        # add it to the current goal in memory
+        subgoals = self.getsubgoal(goals)
+
+        subgoal = [subgoals[0]]
+        if verbose >= 3:
+            print("subgoal:")
+            print(subgoal)
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == subgoal:
+                current_goals.append(subgoal)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+            else:
+                subgoal = []
+        else:
+
+            self.mem.set(self.mem.CURRENT_GOALS, [subgoal])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not subgoal:
+            if verbose >= 2:
+                print("No goals selected.")
+        else:
+            if verbose >= 2:
+                print("Selecting goal(s):",)
+                for goal in subgoal:
+                    print(goal ,)
+
+                print()
+
+    def getsubgoal(self, goal):
+        possible_goals = []
+        subgoals = goal.kwargs["subgoals"]
+        for subgoal in subgoals:
+            if subgoal.kwargs["probabilty"] == 1:
+                return [subgoal]
+
+            if subgoal.kwargs["probabilty"] == 0.5:
+                possible_goals.append(subgoal)
+
+        return possible_goals
 
 class WarehouseIntend(base.BaseModule):
 

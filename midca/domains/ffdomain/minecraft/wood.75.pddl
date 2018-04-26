@@ -5,6 +5,9 @@
 	(:objects
 		g11 g12 g13 g21 g22 g23 g31 g32 g33 - craftgrid
 		m0_0 m0_1 m0_2 m0_3 m0_4 m1_0 m1_1 m1_2 m1_3 m1_4 m2_0 m2_1 m2_2 m2_3 m2_4 m3_0 m3_1 m3_2 m3_3 m3_4 m4_0 m4_1 m4_2 m4_3 m4_4 - mapgrid
+		known unknown - mapgrid
+		south north west east - direction
+		
 		water
 		chicken
 		sheep
@@ -25,6 +28,9 @@
 		red-mushroom
 		skeleton
 		sugarcane
+		arrow
+		arrow_trap
+		shelter
 			- resource
 
 		egg
@@ -89,8 +95,15 @@
 			- player
 		
 		zombie
-			-monster
+			- monster
+		
+		apple
+		meat
 
+			- food	
+			
+		instant-health-potion
+			- potion
 	)
 
 	(:init
@@ -175,6 +188,21 @@
 		(= (thing-available wood-axe) 0)
 		(= (thing-available wood-hoe) 0)
 		(= (thing-available wood-shovel) 0)
+		(= (thing-available instant-health-potion) 2)
+		(= (thing-available apple) 1)
+		(= (thing-available meat) 1)
+		(= (food-value apple) 5)
+		(= (food-value meat) 7)
+		
+		
+		(next-to south west)
+		(next-to south east)
+		(next-to north west)
+		(next-to north east)
+		(next-to east north)
+		(next-to east south)
+		(next-to west north)
+		(next-to west south)
 		(connect m0_0 m0_1) 
 		(connect m0_0 m1_0) 
 		(connect m0_0 m1_1) 
@@ -319,6 +347,8 @@
 		(connect m4_4 m3_3) 
 		(connect m4_4 m3_4) 
 		(connect m4_4 m4_3) 
+		(= (location-id unknown) 0)
+		(= (location-id known) 1)
 		(= (location-id m0_0) 2)
 		(= (location-id m0_1) 3)
 		(= (location-id m0_2) 4)
@@ -346,6 +376,7 @@
 		(= (location-id m4_4) 26)
 	
 		(thing-at-map tree m2_2) 
+		(thing-at-map shelter m2_3)
 		(= (duration-need hand water) 1000000000)
 		(= (duration-need hand chicken) 1)
 		(= (duration-need hand sheep) 1000000000)
@@ -589,13 +620,13 @@
 		(= (tool-current-health wood-axe) 60)
 		(= (tool-current-health wood-hoe) 60)
 		(= (tool-current-health wood-shovel) 60)
-		(zombie-at zombie m0_1)
-	)
-
-	(:goal
-		(and
-			;(> (thing-available wood) 0)
-			(not (zombie-at zombie m0_1))
-		)
-	)
-) 
+		(= (current-hunger-value) 20)
+		(monster-at zombie m0_1)
+		(thing-at skeleton)
+		(look-at south)
+	) 
+  (:goal
+(and
+(in-shelter  )
+)
+))

@@ -46,15 +46,15 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 # myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Eval", evaluate.SimpleEvalSubgoals())
+myMidca.append_module("Intend", intend.SimpleIntendwithSubgoals())
 myMidca.append_module("Plan", planning.MetricFFPlanner(
     minecraft_util.ff_goals_from_midca_goals,
     DOMAIN_FILE,
     STATE_FILE
 ))
 myMidca.append_module("Act", act.SimpleAct())
-myMidca.insert_module('Simulate', simulator.MinecraftEventSimulator(zombieStart=1), 1)
+myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
 
 # myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
