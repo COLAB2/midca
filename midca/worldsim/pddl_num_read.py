@@ -141,9 +141,6 @@ def load_domain(domainfile, problemfile):
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-
-                        # print("________")
-                        # print(sub.name)
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
                         preobjnames.append(argnames)

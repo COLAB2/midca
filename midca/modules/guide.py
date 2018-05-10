@@ -1176,7 +1176,7 @@ class ReactiveSurvive(base.BaseModule):
                     hypotheses.append(goal)
                     # if verbose >= 2:
                     #     print("Meta-AQUA simulation goal generated:", goal, )
-            restore_health_goal = goals.Goal(func="current-hunger-value", val=20)
+            restore_health_goal = goals.Goal(func="player-current-health", val=20)
             goal = goals.Goal(predicate="survive", subgoals=hypotheses)
 
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
@@ -1195,7 +1195,7 @@ class ReactiveSurvive(base.BaseModule):
             if inserted1:
                 print("a goal to restore the health is generated")
             if inserted:
-                print("It is possible that there was an skeleton around, but it is not observed yet")
+                print("a goal to survive is generated")
             else:
                 print(". This goal was already in the graph.")
 

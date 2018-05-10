@@ -144,7 +144,6 @@ class SimpleAct(base.BaseModule):
                         # print the whole plan
                         print("Selected action", action, "from plan:\n", plan)
 
-                print("added to the memory now..")
                 self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
@@ -156,8 +155,7 @@ class SimpleAct(base.BaseModule):
                 if trace: trace.add_data("ACTION", action)
         else:
             if verbose >= 1:
-                print(
-                "MIDCA will not select an action this cycle.")
+                print("MIDCA will not select an action this cycle.")
             self.mem.add(self.mem.ACTIONS, [])
             if goals:
                 for g in goals:

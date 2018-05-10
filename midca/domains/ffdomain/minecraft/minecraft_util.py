@@ -41,7 +41,7 @@ def ff_goals_from_midca_goals(goals, STATE_FILE, verbose=2):
         if predicate and not ('negate' in goal.kwargs):
             f.write("(" + predicate + " " + goalargs + ")\n")
         elif func:
-            f.write("( > (" + func + " " +goalargs + ") " + val +")\n")
+            f.write("( = (" + func + " " +goalargs + ") " + val +")\n")
 
 
     f.write(")\n")
@@ -53,17 +53,17 @@ def preferSurvive(goal1, goal2):
         if goal1['predicate'] == 'survive':
             return -1
     if 'predicate' in goal1 and 'func' in goal2:
-        if goal1['predicate'] == 'survive' and goal2['func'] != "current-hunger-value":
+        if goal1['predicate'] == 'survive' and goal2['func'] != "player-current-health":
             return -1
-        if goal1['predicate'] == 'survive' and goal2['func'] == "current-hunger-value":
+        if goal1['predicate'] == 'survive' and goal2['func'] == "player-current-health":
             return 1
     if 'predicate' in goal2 and not ('func' in goal2):
         if goal1['predicate'] == 'survive':
             return 1
     if 'predicate' in goal2 and 'func' in goal2:
-        if goal1['predicate'] == 'survive' and goal2['func'] != "current-hunger-value":
+        if goal1['predicate'] == 'survive' and goal2['func'] != "player-current-health":
             return 1
-        if goal1['predicate'] == 'survive' and goal2['func'] == "current-hunger-value":
+        if goal1['predicate'] == 'survive' and goal2['func'] == "player-current-health":
             return -1
 
     return 0

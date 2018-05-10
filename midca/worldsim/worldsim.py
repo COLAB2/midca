@@ -283,18 +283,15 @@ class Operator:
         for i in range(len(args)):
             objdict[self.objnames[i]] = args[i]
 
-
         preconditions = []
         for condition in self.precondorder:
             names = self.preconditions[condition]
             args = []
             #TODO: Zohreh; it is hard coded here for constant objects. should be modified.
             for name in names:
-
                 if name in objdict.keys():
                     args.append(objdict[name])
                 else:
-
                     for t in self.types:
                         for x in t:
                             if x.name == "resource":
@@ -315,8 +312,6 @@ class Operator:
                     for t in self.types:
                         resourceType = [x for x in t if x.name == "resource"]
                     args.append(Obj(name, resourceType[0]))
-
-
 
             results.append(condition.instantiate(args))
         result_action = Action(self, preconditions, self.prePos, results, self.postPos)
@@ -741,15 +736,20 @@ class World:
 
         return self.is_applicable(action)
 
-    def apply(self, simAction):
+    def apply(self, simAction, verbose=2):
         for i in range(len(simAction.results)):
             if simAction.postPos[i]:
+                if verbose>=1:
+                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                    print(simAction.results[i])
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
 
-    def apply_named_action(self, opName, argNames):
+    def apply_named_action(self, opName, argNames, verbose=2):
+        if verbose>=1:
+            print(opName)
         args = []
         for name in argNames:
             if name not in self.objects:
@@ -758,6 +758,9 @@ class World:
         if opName not in self.operators:
             raise Exception("Operator " + opName + " DNE")
         simAction = self.operators[opName].instantiate(args)
+        if verbose>=2:
+            print(simAction)
+
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")
         self.apply(simAction)

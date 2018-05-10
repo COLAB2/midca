@@ -48,16 +48,16 @@
 	)
 	
 	(:action restore-health
-		:parameters ()
+		:parameters (?p -potion) 
 		:precondition
 			(and
-				(> (thing-available instant-health-potion) 0)
-				(< (current-health-value) 20)
+				(> (thing-available ?p) 0)
+				(< (player-current-health) 20)
 			)
 		:effect
 			(and
-				(= (current-health-value) 20)
-				(decrease (thing-available instant-health-potion) 1)
+				(assign (player-current-health) 20)
+				(decrease (thing-available ?p) 1)
 			)
 	)
 			

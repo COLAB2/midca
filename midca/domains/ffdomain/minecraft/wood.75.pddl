@@ -108,7 +108,7 @@
 
 	(:init
 		(player-at m0_0)
-		(= (player-current-health) 20)
+		(= (player-current-health) 15)
 		(= (current-harvest-duration) 0)
 		(= (current-harvest-location) 0)
 		(= (furnace-fuel) 0)
@@ -620,13 +620,13 @@
 		(= (tool-current-health wood-axe) 60)
 		(= (tool-current-health wood-hoe) 60)
 		(= (tool-current-health wood-shovel) 60)
-		(= (current-hunger-value) 20)
+		(= (current-hunger-value) 15)
 		(monster-at zombie m0_1)
 		(thing-at skeleton)
 		(look-at south)
 	) 
-  (:goal
+ (:goal
 (and
-(in-shelter  )
+( = (player-current-health  ) 20)
 )
 ))
