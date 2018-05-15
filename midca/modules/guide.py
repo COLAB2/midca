@@ -1046,6 +1046,8 @@ class TFFire(base.BaseModule):
                     print(". This goal was already in the graph.")
 
 
+
+
 class ReactiveSurvive(base.BaseModule):
     '''
     MIDCA module that generates a goal
@@ -1132,9 +1134,11 @@ class ReactiveSurvive(base.BaseModule):
                     skeleton = s[0].name
                     loc = s[1].name
                     if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probabilty=1)
+                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probability=1,
+                                          danger="high")
+
                     else:
-                        goal = goals.Goal(predicate="in-shelter", probabilty=1)
+                        goal = goals.Goal(predicate="in-shelter", probability=1, danger="high")
                     hypotheses.append(goal)
                     # if verbose >= 2:
                     #     print("Meta-AQUA simulation goal generated:", goal, )
@@ -1144,26 +1148,20 @@ class ReactiveSurvive(base.BaseModule):
                     skeleton = world.objects["skeleton"]
                     loc = "unknown"
                     if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probabilty=0.5)
+                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probability=0.5,
+                                          danger="high")
                     else:
-                        goal = goals.Goal(predicate="in-shelter", probabilty=0.5)
+                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
 
                     hypotheses.append(goal)
-                    # inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-                    # if verbose >= 2:
-                    #     print("Meta-AQUA simulation goal generated:", goal, )
-                        # if inserted:
-                        #     print("It is possible that there was an skeleton around, but it is not observed yet")
-                        #
-                        # else:
-                        #     print(". This goal was already in the graph.")
+
 
             if self.arrow_trap():
                 s, chance = self.arrow_trap()
                 if chance == 1:
                     trap = s[0].name
                     loc = s[1].name
-                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probabilty=1)
+                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probability=1, danger="low")
                     hypotheses.append(goal)
                     # if verbose >= 2:
                     #     print("Meta-AQUA simulation goal generated:", goal, )
@@ -1172,32 +1170,11 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     trap = world.objects["arrow_trap"]
                     loc = "unknown"
-                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probabilty=0.5)
+                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probability=0.5, danger="low")
                     hypotheses.append(goal)
                     # if verbose >= 2:
                     #     print("Meta-AQUA simulation goal generated:", goal, )
-            restore_health_goal = goals.Goal(func="player-current-health", val=20)
-            goal = goals.Goal(predicate="survive", subgoals=hypotheses)
-
-            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
-            pending_goals = goalGraph.getUnrestrictedGoals()
-
-            existed = False
-            inserted = False
-            inserted1 = False
-
-            for p in pending_goals:
-                if "predicate" in p.kwargs and p["predicate"] == goal["predicate"]:
-                    existed = True
-            if not existed:
-                inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
-                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-            if inserted1:
-                print("a goal to restore the health is generated")
-            if inserted:
-                print("a goal to survive is generated")
-            else:
-                print(". This goal was already in the graph.")
+        return hypotheses
 
 
     def run(self, cycle, verbose=2):
@@ -1221,7 +1198,38 @@ class ReactiveSurvive(base.BaseModule):
                         print(". This goal was already in the graph.")
         # TODO: this needs to be changed: These information comes from the explanation node
        # I like to find a better way to implement the goal decomosing to the subgoals
-        self.survive()
+        hypotheses = self.survive()
+        restore_health_goal = goals.Goal(func="player-current-health", val=20)
+        goal = goals.Goal(predicate="survive", subgoals=hypotheses)
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        pending_goals = goalGraph.getUnrestrictedGoals()
+
+        existed = False
+        inserted = False
+        inserted1 = False
+
+        for p in pending_goals:
+            if "predicate" in p.kwargs and p["predicate"] == goal["predicate"]:
+                existed = True
+        if not existed:
+            inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
+            inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+        if inserted1:
+            print("a goal to restore the health is generated")
+
+        if inserted:
+            print("a goal to survive is generated")
+            subgoals = goal.kwargs["subgoals"]
+            for subgoal in subgoals:
+                args = subgoal.args
+                # later we need to create monitors for antecedents
+                m = Monitor(self.mem, "m" + args[0], args[0], goal)
+                # m.goalmonitor(args[0], args[1], subgoal.kwargs["predicate"])
+                Thread(target=m.goalmonitor, args=[args[0],  args[1], subgoal.kwargs["predicate"]]).start()
+        else:
+            print(". This goal was already in the graph.")
+
 
 
 class ReactiveApprehend(base.BaseModule):

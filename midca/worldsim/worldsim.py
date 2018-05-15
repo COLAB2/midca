@@ -32,11 +32,30 @@ class Precicate_function:
     def __init__(self, op, args):
 
         self.op = op
-        self.args = args
+        self.args = args # it is a list of functions
 
     def __str__(self):
         return "(" + self.op + " " + self.args.__str__() + ") "
 
+    def instantiate(self, op, args):
+
+        return Atom(self, op, args)
+        # func = next((x for x in atoms if x.func and x.func == args[0]), None)
+        #
+        # for arg in args[1:]:
+        #     if arg is function:
+        #         atom_func = next((x for x in atoms if x.func and x.func == arg), None)
+        #         if atom_func:
+        #             val = float(atom_func.val)
+        #     else:
+        #         val = float(arg)
+        #
+        # if op == "increase":
+        #     func.val = func.val + val
+        # elif op == "decrease":
+        #     func.val = func.val - val
+        # elif op == "assign":
+        #     func.val = val
 
 
 class Constant:
@@ -261,6 +280,7 @@ class Operator:
         self.results = {}
         self.resultorder = []
         self.postPos = postPositive
+
         for pred in range(len(postpredicates)):
             args = []
             usednames = []

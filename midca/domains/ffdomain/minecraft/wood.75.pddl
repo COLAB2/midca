@@ -6,7 +6,7 @@
 		g11 g12 g13 g21 g22 g23 g31 g32 g33 - craftgrid
 		m0_0 m0_1 m0_2 m0_3 m0_4 m1_0 m1_1 m1_2 m1_3 m1_4 m2_0 m2_1 m2_2 m2_3 m2_4 m3_0 m3_1 m3_2 m3_3 m3_4 m4_0 m4_1 m4_2 m4_3 m4_4 - mapgrid
 		known unknown - mapgrid
-		south north west east - direction
+		right left back forth - direction
 		
 		water
 		chicken
@@ -112,7 +112,7 @@
 		(= (current-harvest-duration) 0)
 		(= (current-harvest-location) 0)
 		(= (furnace-fuel) 0)
-		(= (tool-in-hand) 0)
+		(= (tool-in-hand) 11)
 		(= (tool-id hand) 0)
 		(= (tool-id furnace) 4)
 		(= (tool-id torch) 5)
@@ -195,14 +195,7 @@
 		(= (food-value meat) 7)
 		
 		
-		(next-to south west)
-		(next-to south east)
-		(next-to north west)
-		(next-to north east)
-		(next-to east north)
-		(next-to east south)
-		(next-to west north)
-		(next-to west south)
+		
 		(connect m0_0 m0_1) 
 		(connect m0_0 m1_0) 
 		(connect m0_0 m1_1) 
@@ -623,10 +616,11 @@
 		(= (current-hunger-value) 15)
 		(monster-at zombie m0_1)
 		(thing-at skeleton)
-		(look-at south)
+		
+		
 	) 
  (:goal
 (and
-( = (player-current-health  ) 20)
+(not (thing-at skeleton))
 )
 ))
