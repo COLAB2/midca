@@ -85,12 +85,12 @@ class WorldChanger:
                     atom = self.world.midcaGoalAsAtom(goal)
                     if self.world.atom_true(atom):
                         self.world.remove_atom(atom)
-                        print()
-                        "Atom", atom, "was true and is now false"
+                        print(
+                        "Atom", atom, "was true and is now false")
                     else:
                         self.world.add_atom(atom)
-                        print()
-                        "Atom", atom, "was false and is now true"
+                        print(
+                        "Atom", atom, "was false and is now true")
                 except ValueError:
                     print()
                     "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
@@ -126,16 +126,11 @@ class ArrowSimulator:
 
         self.start = arrowStart
 
-    def getSkeletonChance(self):
-        return self.chance
-
     def init(self, world, mem):
         self.mem = mem
         self.world = world
 
-
     def run(self, cycle, verbose=2):
-
         if cycle == self.start:
             try:
                 self.world.apply_event("arrow_damage")
@@ -143,6 +138,36 @@ class ArrowSimulator:
             except Exception:
                 if verbose >= 1:
                         print("Action invalid")
+
+class AttackSimulator:
+    def __init__(self, skeletonChance=0.5, skeletonStart=2):
+        self.chance = skeletonChance
+        self.start = skeletonStart
+
+    def getSkeletonChance(self):
+        return self.chance
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def exist_skeleton(self):
+        for atom in self.world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at":
+                if atom.args[0].name == "skeleton":
+                    return atom.args[0].name
+        return False
+
+    def run(self, cycle, verbose=2):
+        skeleton = self.exist_skeleton()
+        if skeleton and cycle == self.start:
+            try:
+                self.world.apply_event("thing-at-map", [skeleton, "m0_1"])
+                if verbose >= 1:
+                    print("Simulating event: skeleton spawn(" + str(skeleton) + ", " + str("m0_1") + ")")
+            except Exception:
+                if verbose >= 1:
+                    print("failed")
 
 
 

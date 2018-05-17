@@ -185,7 +185,7 @@
 		(= (thing-available fishingrod) 0)
 		(= (thing-available shears) 0)
 		(= (thing-available wood-pickaxe) 1)
-		(= (thing-available wood-axe) 0)
+		(= (thing-available wood-axe) 1)
 		(= (thing-available wood-hoe) 0)
 		(= (thing-available wood-shovel) 0)
 		(= (thing-available instant-health-potion) 2)
@@ -616,11 +616,12 @@
 		(= (current-hunger-value) 15)
 		(monster-at zombie m0_1)
 		(thing-at skeleton)
-		
-		
-	) 
- (:goal
+		(thing-at arrow_trap)
+		;(known-loc skeleton)
+		;(thing-at-map skeleton m0_0)
+	)
+       (:goal
 (and
-(not (thing-at skeleton))
+( = (player-current-health  ) 20)
 )
 ))

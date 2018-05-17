@@ -123,10 +123,10 @@ class SimpleIntendwithSubgoals(base.BaseModule):
         possible_goals = []
         subgoals = goal.kwargs["subgoals"]
         for subgoal in subgoals:
-            if subgoal.kwargs["probabilty"] == 1:
+            if subgoal.kwargs["probability"] == 1:
                 return [subgoal]
 
-            if subgoal.kwargs["probabilty"] == 0.5:
+            if subgoal.kwargs["probability"] == 0.5:
                 possible_goals.append(subgoal)
 
         return possible_goals

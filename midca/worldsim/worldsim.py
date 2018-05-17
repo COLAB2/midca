@@ -759,17 +759,14 @@ class World:
     def apply(self, simAction, verbose=2):
         for i in range(len(simAction.results)):
             if simAction.postPos[i]:
-                if verbose>=1:
-                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                    print(simAction.results[i])
+
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
 
     def apply_named_action(self, opName, argNames, verbose=2):
-        if verbose>=1:
-            print(opName)
+
         args = []
         for name in argNames:
             if name not in self.objects:
@@ -778,8 +775,7 @@ class World:
         if opName not in self.operators:
             raise Exception("Operator " + opName + " DNE")
         simAction = self.operators[opName].instantiate(args)
-        if verbose>=2:
-            print(simAction)
+
 
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")
@@ -794,6 +790,17 @@ class World:
             func = self.functions["player-current-health"]
             a = next((x for x in self.atoms if x.func == func), None)
             a.val = a.val - 5
+            print(opName)
+            if opName == "thing-at-map":
+                pred = self.predicates[opName]
+
+                if (argNames[0] or argNames[1]) not in self.objects:
+                    raise Exception(": Object - " + argNames[0] + " DNE ")
+
+                newatom = Atom(pred, [self.objects[argNames[0]], self.objects[argNames[1]]])
+                self.add_atom(newatom)
+                if verbose >= 2:
+                    print(str(argNames[0]) + "is simulated to be spawned at " + str(argNames[1]))
 
             if opName == "zombie_damage":
                 pred = self.predicates["monster-at"]

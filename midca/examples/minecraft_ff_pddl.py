@@ -55,7 +55,7 @@ myMidca.append_module("Plan", planning.MetricFFPlanner(
 ))
 myMidca.append_module("Act", act.SimpleAct())
 myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
-
+myMidca.insert_module('Simulate', simulator.AttackSimulator(skeletonStart=2), 1)
 # myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.

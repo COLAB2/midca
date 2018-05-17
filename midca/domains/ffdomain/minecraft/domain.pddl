@@ -126,9 +126,7 @@
 			)
 		:effect
 			(and
-				
 				(known-loc ?res)
-				
 			)
 	)
 	
@@ -140,20 +138,29 @@
 		:precondition
 			(and
 				(known-loc skeleton)
-				
 				(thing-at skeleton)
-				
 				(= (tool-in-hand) (tool-id ?tool))
-				
-				
 				(not (crafting))
 			)
 		:effect
 			(and
 				(increase (thing-available bone) 1)
-				
 				(not (thing-at skeleton))
-				
+			)
+	)
+	;;--------------------------------------------------------
+	(:action destroy-trap
+		:parameters (?tool - tool )
+		:precondition
+			(and
+				(known-loc arrow_trap)
+				(thing-at arrow_trap)
+				(= (tool-in-hand) (tool-id ?tool))
+				(not (crafting))
+			)
+		:effect
+			(and
+				(not (thing-at arrow_trap))
 			)
 	)
 	;------------------------------------------------------------
