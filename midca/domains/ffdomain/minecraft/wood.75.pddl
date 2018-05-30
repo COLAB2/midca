@@ -620,8 +620,8 @@
 		;(known-loc skeleton)
 		;(thing-at-map skeleton m0_0)
 	)
-       (:goal
+ (:goal
 (and
-( = (player-current-health  ) 20)
+(not(thing-at skeleton))
 )
 ))

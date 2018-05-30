@@ -89,7 +89,10 @@ class SimpleIntendwithSubgoals(base.BaseModule):
         if 'subgoals' in goals.kwargs:
             subgoals = self.getsubgoal(goals)
 
-        subgoal = [subgoals[0]]
+        subgoal = []
+        if subgoals:
+            subgoal = [subgoals[0]]
+
         if verbose >= 3:
             print("subgoal:")
             print(subgoal)

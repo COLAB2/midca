@@ -790,7 +790,7 @@ class World:
             func = self.functions["player-current-health"]
             a = next((x for x in self.atoms if x.func == func), None)
             a.val = a.val - 5
-            print(opName)
+
             if opName == "thing-at-map":
                 pred = self.predicates[opName]
 

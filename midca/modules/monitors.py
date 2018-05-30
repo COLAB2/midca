@@ -83,7 +83,7 @@ class Monitor:
                 else:
                     self.goal.kwargs["probability"] = 1
                     self.mem.set(self.mem.CURRENT_GOALS, [])
-                    print(id.__str__() + " is observed, the current goal is suspended ")
+                    print(id.__str__() + " is observed")
                     break
 
             # if known-skeleton but there is no (thing-at skeleton)
