@@ -17,12 +17,12 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
     cwd = os.getcwd()
     os.chdir(thisDir)
 
-    command = './metric-ff' + ' -o ' + DOMAIN_FIILE + ' -f ' + STATE_FILE
+    command = './ff' + ' -o ' + DOMAIN_FIILE + ' -f ' + STATE_FILE
 
     #     process = subprocess.Popen([command], stdout=subprocess.PIPE)
     p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='utf8')
     out, err = p.communicate()
-    # print(out)
+    print(out)
 
     plan = []
     lines = str(out).split("\n")

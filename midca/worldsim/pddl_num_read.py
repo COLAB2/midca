@@ -1,17 +1,17 @@
 # source: https://github.com/hfoffani/pddl-lib
 # https://github.com/karpase/pythonpddl
-# pddl 2.1
+#
 # I ran this using Python 3.6 and ubuntu
 # this script might not work on windows.
 
 # install pip3
 # python3.6 -m pip install
 
-# install pddlpy
-# pip3 install pddlpy
 
-# I had to delete antlr4-python3-runtime and install it with this command:
+#
 # pip3 install antlr4-python3-runtime
+# clone https://github.com/karpase/pythonpddl
+# follow the steps in the the link above
 
 import midca.worldsim.worldsim as worldsim
 

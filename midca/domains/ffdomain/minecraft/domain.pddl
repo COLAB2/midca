@@ -14,6 +14,8 @@
 		potion - thing
 	)
 
+
+
 	(:predicates
 		(player-at  ?loc - mapgrid)
 		
