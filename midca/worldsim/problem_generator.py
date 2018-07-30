@@ -20,7 +20,9 @@ import inspect, os, random
 SKELETON_CHANCE = 0.8
 ARROW_TRAP_CHANCE = 0.7
 MONSTER_CHANCE = 0.3
-
+SKELETON_LOC = 0
+TRAP_LOC = 0
+MONSTER_LOC = 0
 
 # Random Problem Generator
 def generate_file(file):
@@ -109,17 +111,24 @@ def generate_file(file):
         i, j = randomxy()
         f.write("(thing-at-map tree  m" + str(i) + "_" + str(j) + ")\n")
 
+
     if skeleton_chance():
         sx, sy = randomxy()
+        f.write("(thing-at skeleton")
         f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
+        SKELETON_LOC = sx, sy
 
     if trap_chance():
         sx, sy = randomxy()
+        f.write("(thing-at arrowtrap")
         f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
+        TRAP_LOC = sx, sy
 
     if monster_chance():
         sx, sy = randomxy()
+        f.write("(thing-at monster")
         f.write("(thing-at-loc monster m" + str(sx) + "_" + str(sy) + ")\n")
+        MONSTER_LOC = sx, sy
 
     f.write("(thing-at-map shelter m2_3)\n")
 
@@ -131,6 +140,7 @@ def generate_file(file):
     f.write(")))")
 
     return
+
 
 
 def skeleton_chance():
@@ -168,3 +178,4 @@ if __name__ == "__main__":
 
     # for i in range(1, 10):
     generate_file(ff_STATE_FILE)
+
