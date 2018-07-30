@@ -29,7 +29,7 @@ cltree = {"rootnode": "", "allnodes": [], "checked": []}
 obtree = {"rootnode": "", "allnodes": [], "checked": []}
 functions = {}
 constants = []
-
+hidden = ["thing-at-loc"] #the predicates that are hidden from the agent
 
 def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
@@ -321,11 +321,11 @@ def _apply_state_pddl(world, prob):
                         args.append(world.objects[name])
 
                     atom = world.predicates[call].instantiate(args)
-
-                    if negate:
-                        world.remove_atom(atom)
-                    else:
-                        world.add_atom(atom)
+                    if not (call in hidden):
+                        if negate:
+                            world.remove_atom(atom)
+                        else:
+                            world.add_atom(atom)
                         # print(atom.__str__())
 
 

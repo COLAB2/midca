@@ -18,6 +18,8 @@
    	 weapon - thing
    	 food - thing
    	 potion - thing
+   	 Helmet - Armor
+   	 chestplates - Armor
     )
 
     (:predicates
@@ -29,7 +31,7 @@
    	 (look-at ?direction - direction)
    	 (monster-at ?zombie - monster ?loc - mapgrid)
    	 (thing-at-map  ?obj - resource  ?loc - mapgrid)
-   	 (thing-at ?obj - resource ?loc - mapgrid)
+   	 (thing-at-loc ?obj - resource ?loc - mapgrid)
    	 (known-loc ?obj - resource)
    	 (placed-thing-at-map  ?obj - material  ?loc - mapgrid)
    	 (resource-at-craft  ?res - thing  ?loc - craftgrid)
@@ -41,8 +43,12 @@
    	 (eat ?food - food)
    	 (is-attacked)
    	 (is-trapped)
+   	 (is-dead ?player -player)
+   	 (is-alive ?player -player)
+   	 (head-armed)
+   	 (chest-armed)
     )
-    (:hidden is-trap thing-at is-attacked is-trapped)
+    (:hidden is-trap thing-at-loc is-attacked is-trapped)
 
     (:functions
    	 (self) - player
@@ -81,13 +87,14 @@
     )
     ;;-----------------------------------------------------
 
-    (:event fall-in-trap
+    (:action  event-fall-in-trap
       	:parameters (?loc1 - mapgrid ?loc - mapgrid)
       	:precondition
       	( and
-            	(player-at ?loc1)
+            (player-at ?loc1)
    			 (connect ?loc1 ?loc)
-   			 (is-trap ?loc)
+   			 (thing-at-loc arrow_trap ?loc)
+
    			 (not (is-trapped))
    			 (neq (player-current-health) 0)
       	)
@@ -100,13 +107,13 @@
 	)
     ;;------------------------------------------------------
 
-    (:event skeleton-attacked
+    (:action event-skeleton-attacked
       	:parameters (?loc1 - mapgrid ?loc - mapgrid)
       	:precondition
       	( and
             	(player-at ?loc1)
    			 (connect ?loc1 ?loc)
-   			 (thing-at skeleton ?loc)
+   			 (thing-at-loc skeleton ?loc)
    			 (not (is-attacked))
    			 (neq (player-current-health) 0)
       	)
@@ -118,15 +125,16 @@
       	)
 	)
     ;;----------------------------------------------
-    (:event monster-explosion
+    (:action event-monster-explosion
       	:parameters (?loc1 - mapgrid ?loc - mapgrid)
       	:precondition
       	( and
             	(player-at ?loc1)
    			 (connect ?loc1 ?loc)
-   			 (thing-at monster ?loc)
+   			 (thing-at-loc monster ?loc)
    			 (not (is-attacked))
    			 (neq (player-current-health) 0)
+
       	)
       	:effect
       	(and
@@ -137,7 +145,36 @@
 	)
     ;;----------------------------------------------
 
+    (:action event-die
+      	:parameters (?player -player)
+      	:precondition
+      	( and
+      	(is-alive ?player)
+      	(eq (player-current-health) 0)
+      	)
+      	:effect
+      	(and
+      	(is-dead ?player)
+      	)
+     )
 
+     ;;---------------------------------------------
+
+     (:action event-find
+		:parameters (?res -resource ?loc -mapgrid ?player-loc -mapgrid)
+		:precondition
+			(and
+			    (looking-for ?res)
+				 (connected ?loc ?player-loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+				(know-where ?res ?loc)
+			)
+
+
+	)
 
 
 )

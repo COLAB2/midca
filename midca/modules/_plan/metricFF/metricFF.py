@@ -20,7 +20,7 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
     command = './ff' + ' -o ' + DOMAIN_FIILE + ' -f ' + STATE_FILE
 
     #     process = subprocess.Popen([command], stdout=subprocess.PIPE)
-    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='utf8')
+    p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     out, err = p.communicate()
     print(out)
 
@@ -45,6 +45,6 @@ if __name__ == "__main__":
     print("start....")
     DOMAIN_FIILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
     #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
-    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
+    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 
     metric_ff(DOMAIN_FIILE, STATE_FILE)

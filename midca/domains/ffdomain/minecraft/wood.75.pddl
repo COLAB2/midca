@@ -104,6 +104,12 @@
 			
 		instant-health-potion
 			- potion
+
+		helmet
+		    - helmet
+
+		chestplate
+		    - chestplate
 	)
 
 	(:init
@@ -191,6 +197,8 @@
 		(= (thing-available instant-health-potion) 2)
 		(= (thing-available apple) 1)
 		(= (thing-available meat) 1)
+		(= (thing-available helmet) 1)
+		(= (thing-available chestplate) 1)
 		(= (food-value apple) 5)
 		(= (food-value meat) 7)
 		
