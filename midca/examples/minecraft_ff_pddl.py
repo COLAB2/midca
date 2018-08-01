@@ -31,7 +31,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables for JSHOP planner
 DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
+STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 
 world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE)
 # stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
@@ -43,6 +43,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.MidcaEventSimulator())
 # myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", guide.UserGoalInput())
@@ -54,8 +55,8 @@ myMidca.append_module("Plan", planning.MetricFFPlanner(
     STATE_FILE
 ))
 myMidca.append_module("Act", act.SimpleAct())
-myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
-myMidca.insert_module('Simulate', simulator.AttackSimulator(skeletonStart=2), 1)
+# myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
+# myMidca.insert_module('Simulate', simulator.AttackSimulator(skeletonStart=2), 1)
 # myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.

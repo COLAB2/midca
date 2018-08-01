@@ -32,13 +32,15 @@
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
 		(craft-empty  ?loc - craftgrid)
 		(connect  ?from - mapgrid  ?to - mapgrid)
-
+        (know-where ?res - resource ?loc - mapgrid)
 		(crafting)
 		(survive)
-
+        (attacking)
 		(looking-for ?res - resource)
 		(head-armed)
    	    (chest-armed)
+   	    (is-attacked)
+   	    (is-trapped)
 	)
 	
 	(:functions
@@ -114,10 +116,12 @@
 	;;----------------------------------------
 	
 	;---------------------------------------------------------
-	(:action find
+	(:action find-skeleton
 		:parameters (?res -resource )
 		:precondition
 			(and
+			    (chest-armed)
+				(head-armed)
 				(not (known-loc ?res))
 			)
 		:effect
@@ -126,9 +130,97 @@
 				(looking-for ?res)
 			)
 	)
-	
-			
-	
+
+	;;--------------------------------------------------------
+	;;------------EVENTS--------------------------------------
+	;;--------------------------------------------------------
+    (:action event-find
+		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-for ?res)
+				 (connect ?loc ?player_loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+				(know-where ?res ?loc)
+			)
+
+	)
+    ;;--------------------------------------------------------
+
+	(:action event-fall-in-trap
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc arrowtrap ?loc)
+
+   			 (not (is-trapped))
+   			 (> (player-current-health) 0)
+      	)
+      	:effect
+      	(and
+   			(decrease (player-current-health) 5)
+   			(thing-at-map arrow ?loc1)
+   			(is-trapped)
+      	)
+	)
+    ;;------------------------------------------------------
+
+    (:action event-skeleton-attacked
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid )
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc skeleton ?loc)
+
+      	)
+      	:effect
+      	(and
+   			(decrease (player-current-health) 5)
+   			(thing-at-map arrow ?loc1)
+   			(is-attacked)
+      	)
+	)
+    ;;----------------------------------------------
+    (:action event-monster-explosion
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc monster ?loc)
+   			 (not (is-attacked))
+   			 (> (player-current-health) 0)
+
+      	)
+      	:effect
+      	(and
+   			(decrease (player-current-health) 5)
+   			(thing-at-map monster-remains ?loc1)
+   			(is-attacked)
+      	)
+	)
+    ;;----------------------------------------------
+
+    (:action event-die
+      	:parameters (?player -player)
+      	:precondition
+      	( and
+      	(is-alive ?player)
+      	(= (player-current-health) 0)
+      	)
+      	:effect
+      	(and
+      	(is-dead ?player)
+      	)
+     )
+    ;;---------------------------
+    ;;--------------------------------------------------------
 	;;--------------------------------------------------------
 	(:action attack-skeleton
 		:parameters (?tool - tool )
@@ -136,17 +228,35 @@
 			(and
 				(known-loc skeleton)
 				(thing-at skeleton)
+				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) (tool-id ?tool))
 				(not (crafting))
-				(chest-armed)
-				(head-armed)
+
 			)
 		:effect
 			(and
 				(increase (thing-available bone) 1)
 				(not (thing-at skeleton))
+				(attacking)
 			)
 	)
+	;;----------------------------------
+
+	(:action __attack-skeleton
+		:parameters (?tool - tool ?loc - mapgrid)
+		:precondition
+			(and
+				(known-loc skeleton)
+				(know-where skeleton ?loc)
+				(attacking)
+
+			)
+		:effect
+			(and
+				(not (thing-at-loc skeleton ?loc))
+			)
+	)
+
 	;;--------------------------------------------------------
 	(:action destroy-trap
 		:parameters (?tool - tool )
@@ -316,9 +426,6 @@
 				(assign (current-harvest-duration) 0)
 			)
 	)
-
-
-
 
 
 )

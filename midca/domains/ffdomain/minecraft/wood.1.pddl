@@ -612,9 +612,11 @@ bowl - material)
 (thing-at-map tree  m9_2)
 (thing-at-map tree  m5_3)
 (thing-at-map tree  m7_7)
-(thing-at-loc skeleton  m3_2)
+(thing-at-loc skeleton  m0_1)
+(thing-at skeleton)
 (thing-at-map shelter m2_3)
-)(:goal
+)
+(:goal
 (and
-(= (thing-available wood) 5)
+(not(thing-at skeleton))
 )))

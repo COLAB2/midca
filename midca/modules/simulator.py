@@ -1,6 +1,8 @@
 import sys, random
 from midca import worldsim, goals, base
 from midca.domains.nbeacons import nbeacons_util
+import time
+import itertools
 import copy
 
 
@@ -30,6 +32,156 @@ class MidcaActionSimulator:
         else:
             if verbose >= 2:
                 print("No actions selected this cycle by MIDCA.")
+
+
+class MidcaEventSimulator:
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def run(self, cycle, verbose=2):
+        try:
+            # get all events in this domain
+            events = [x for (k, x) in self.world.operators.items() if x.isevent == True]
+
+        except TypeError as IndexError:
+            if verbose >= 1:
+                print("Simulator: no events.")
+            return
+        if events:
+            for __event in events:
+                inst_operators = self.get_all_instantiations(self.world, __event)
+                for inst_op in inst_operators:
+
+                    new_world = self.world.copy()
+
+                    try:
+                        new_world.apply(inst_op)
+                        if verbose >= 2:
+                            print("simulating MIDCA event:", __event)
+                    except:
+                        print("something went wrong...")
+
+
+                # if self.get_all_instantiations(self.world,__event):
+                #     print("it is applicable")
+
+
+
+                    # self.world.apply_midca_action(__event)
+
+        else:
+            if verbose >= 2:
+                print("No events.")
+
+
+    def get_all_instantiations(self, world, operator):
+        '''
+        Returns all possible operator instantiations
+        Note: If the state is more than 50 or so atoms,
+              this could be a slow and expensive
+              function
+        '''
+
+        # need to preserve order of elements of the following lists
+        arg_names = []
+        arg_types = []
+
+        # initialize with objnames
+        for o in operator.objnames:
+            arg_names.append(o)
+            arg_types.append(None)
+
+        # find the correct types
+        for precond in operator.preconditions:
+            args = list(map(str, precond.atom.args))
+            for i in range(len(args)):
+                if args[i] in arg_names:
+                    arg_names_i = arg_names.index(args[i])
+                    if arg_types[arg_names_i] is None:
+                        arg_types[arg_names_i] = precond.argtypes[i]
+
+        def get_type(t):
+            return world.get_objects_by_type(t)
+
+        # get all objects that match each type
+        possible_bindings = list(map(get_type, arg_types))
+
+        # generate all possible arrangements
+        permutations = itertools.product(*possible_bindings)
+
+        # now run through all possible bindings
+        applicable_permutations = []
+        num_permutations = 0
+        for c in permutations:
+            num_permutations += 1
+            op_inst = operator.instantiate(list(c))
+            op_inst.set_args(list(c))
+            if world.is_applicable(op_inst):
+                applicable_permutations.append(op_inst)
+                break # uncomment this line if you just want to get the first valid instantiation
+
+        return applicable_permutations
+
+
+    def event_applicable(self, world, operator):
+        values = {}
+        a = list(operator.preconditions.keys())
+        # for p in range(len(a)):
+        #     print(a[p])
+        #     print(a[p].atom.predicate.name)
+        var_values_dict = {}
+        for p in operator.preconditions.keys():
+            for arg in p.atom.args:
+                possible_values = (x for x in world.objects if x.type == arg.type)
+                if not arg in var_values_dict:
+                    var_values_dict.update({arg: possible_values})
+
+
+
+
+    #TODO: Zohreh fix this later for the efficiency
+    def seek_var(self, k, preconditions, values):
+
+        if k < len(preconditions):
+            p = preconditions[k]
+            print(p)
+            for atom in self.world.atoms:
+                flag = 0
+                if atom.predicate and atom.predicate.name == p.atom.predicate.name:
+
+                    for i in range(len(p.atom.args)):
+
+                        print(p.atom.args[i])
+                        if p.atom.args[i].name in values.keys() and values[p.atom.args[i].name] == atom.args[i].name:
+                            flag = flag + 1
+                            print("++")
+                            print(atom.args[i].name)
+                            continue
+                         #test next atom
+                        if p.atom.args[i].name in values.keys() and values[p.atom.args[i].name] != atom.args[i].name:
+
+                            break
+
+                        if not p.atom.args[i].name in values.keys():
+                            print("**")
+                            print(p.atom.args[i].name)
+                            flag = flag + 1
+                if(flag > 0):
+                    print(flag)
+                if flag == (len(p.atom.args)):
+                    for i in range(len(p.atom.args)):
+                        if not p.atom.args[i].name in values.keys():
+                            values.update({p.atom.args[i].name: atom.args[i].name})
+
+                    self.seek_var(k+1, preconditions, values)
+
+        else:
+            return
+
+
+
 
 
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]

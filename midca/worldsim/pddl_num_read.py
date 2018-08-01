@@ -29,7 +29,8 @@ cltree = {"rootnode": "", "allnodes": [], "checked": []}
 obtree = {"rootnode": "", "allnodes": [], "checked": []}
 functions = {}
 constants = []
-hidden = ["thing-at-loc"] #the predicates that are hidden from the agent
+# hidden = ["thing-at-loc"] #the predicates that are hidden from the agent
+hidden = []
 
 def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)

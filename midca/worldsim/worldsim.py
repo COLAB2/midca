@@ -262,6 +262,7 @@ class Operator:
         self.types = preobjtypes + postobjtypes
         self.prefuns = prefunc
         self.postfunc = postfunc
+        self.isevent = True if name.startswith("event") else False
 
         for pred in range(len(prepredicates)):
             args = []
@@ -330,13 +331,20 @@ class Operator:
                     args.append(objdict[name])
                 else:
                     for t in self.types:
-                        resourceType = [x for x in t if x.name == "resource"]
-                    args.append(Obj(name, resourceType[0]))
+                        # resourceType = [x for x in t if x.name == "resource"]
+                        resourceType = self.resource_type()
+                    args.append(Obj(name, resourceType))
 
             results.append(condition.instantiate(args))
         result_action = Action(self, preconditions, self.prePos, results, self.postPos)
         result_action.set_args(args)
         return result_action
+
+    def resource_type(self):
+        for t in self.types:
+            for x in t:
+                if x.name == "resource":
+                    return x
 
     def __str__(self):
         s = "Operator - " + self.name + "("
