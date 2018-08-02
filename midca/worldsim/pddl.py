@@ -116,17 +116,24 @@ class Formula:
 
     def get_predicates(self, positive):
         """ returns positive or negative predicates in this goal description"""
+        # if self.op:
+        #     print(self.op)
+        #     print("+++++++++")
         if self.op is None and positive:
             assert len(self.subformulas) == 1
             return [self.subformulas[0]]
         elif self.op == "not" and not positive:
             assert len(self.subformulas) == 1
             return [self.subformulas[0]]
+        elif self.op in [ '>', '<', '=', '>=', '<=', 'increase', 'decrease', 'assign', 'scale-up', 'scale-down'] and positive:
+            return [self]
         elif self.op == "and":
             l = []
             for s in self.subformulas:
                 l = l + s.get_predicates(positive)
             return l
+
+
         elif self.op == "or":
             raise Exception("Don't know how to handle disjunctive condition " + str(self.subformulas))
         return []

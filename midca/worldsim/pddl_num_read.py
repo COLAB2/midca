@@ -15,8 +15,8 @@
 
 import midca.worldsim.worldsim as worldsim
 
-from pythonpddl import pddl
-from pythonpddl.pddl import FExpression, FHead, ConstantNumber, Formula, Predicate
+from midca.worldsim import pddl
+from midca.worldsim.pddl import FExpression, FHead, ConstantNumber, Formula, Predicate
 import inspect, os
 
 types = {"obj": worldsim.Type("obj", [])}
@@ -35,6 +35,12 @@ hidden = []
 def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
     print()
+    for a in dom.actions:
+        for b in [False, True]:
+               print(a.name, "c", b, list(map(lambda x: x.asPDDL(), a.get_pre(b))))
+        for b in [False, True]:
+               print(a.name, "e", b, list(map(lambda x: x.asPDDL(), a.get_eff(b))))
+
     print("DOMAIN PROBLEM")
     # print("objects")
     ###############types#########################
@@ -101,7 +107,7 @@ def load_domain(domainfile, problemfile):
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-                        index = index + 1
+
                         # print("________")
                         # print(sub.name)
 
@@ -116,7 +122,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         # print(sub.val)
 
-                prepredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
+                prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
@@ -151,7 +157,7 @@ def load_domain(domainfile, problemfile):
                     else:
                         args.append(sub.val)
                         # print(sub.val)
-                prepredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
+                prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
@@ -175,7 +181,7 @@ def load_domain(domainfile, problemfile):
                     elif type(sub) is FHead:
 
                         # print("________")
-                        # print(sub.name)
+                        # print(subformulas.name)
 
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
@@ -188,7 +194,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         # print(sub.val)
 
-                postpredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
+                postpredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
 
             elif type(eff) is Predicate:
@@ -221,7 +227,7 @@ def load_domain(domainfile, problemfile):
                     else:
                         args.append(sub.val)
                         # print(sub.val)
-                postpredicatesfunc.append(worldsim.Precicate_function(pre.op, args))
+                postpredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(eff) is Predicate:
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
@@ -275,8 +281,8 @@ def _apply_state_pddl(world, prob):
         '''Formula: represented a goal description (atom / negated atom / and / or)'''
         '''subformulas is a predicate'''
         if type(a) is FExpression:
-            # print("feexpression")
-            # print(a.op)
+            print("feexpression")
+            print(a.op)
             func = None
             val = None
             func_args = []
@@ -288,8 +294,8 @@ def _apply_state_pddl(world, prob):
                     # print(sub.name)
                     func = sub.name
                     func_args = parseTypedArgList_names(sub.args)
-                    # for f in func_args:
-                    #     print(f)
+                    for f in func_args:
+                        print(f)
                 else:
                     # print(sub.val)
                     val = sub.val
@@ -308,8 +314,10 @@ def _apply_state_pddl(world, prob):
                 atom = world.functions[func].instantiate(args, val)
                 world.add_atom(atom)
         else:
+
             for sub in a.subformulas:
                 call = sub.name
+                print(call)
                 argnames = parseTypedArgList_names(sub.args)
                 negate = False
                 if call in world.predicates:
@@ -472,7 +480,7 @@ def test(a, actions_args):
                     val = sub.val
                     print(sub.val)
 
-                worldsim.Precicate_function(eff.name, eff.op, func, val)
+                worldsim.Predicate_function(eff.name, eff.op, func, val)
 
 
 if __name__ == "__main__":

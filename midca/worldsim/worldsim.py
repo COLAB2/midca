@@ -28,7 +28,7 @@ class Function:
     def instantiate(self, args, val):
         return Atom(self, args, val)
 
-class Precicate_function:
+class Predicate_function:
     def __init__(self, op, args):
 
         self.op = op

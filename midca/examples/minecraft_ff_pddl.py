@@ -30,7 +30,7 @@ MIDCA_ROOT = thisDir + "/../"
 # STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
 
 ### Domain Specific Variables for JSHOP planner
-DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/test.pddl"
 STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 
 world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE)
