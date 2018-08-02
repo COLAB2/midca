@@ -97,7 +97,7 @@ class Atom:
 
     def __init__(self, predicate, args, val=None):
         if len(predicate.argnames) != len(args):
-            raise Exception("Wrong number of args for " + predicate.name + " " + str(len(args)))
+            raise Exception("Wrong number of args for " + predicate.name + " " + args.__str__())
         i = 0
         if predicate.argtypes:
             for arg in args:
@@ -263,10 +263,13 @@ class Operator:
         self.prefuns = prefunc
         self.postfunc = postfunc
         self.isevent = True if name.startswith("event") else False
+        for pred in range(len(prepredicates)):
+            print(prepredicates[pred])
 
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
+
             names = preobjnames[pred]
             types = preobjtypes[pred]
             for arg in range(len(names)):
@@ -275,6 +278,7 @@ class Operator:
                 else:
                     args.append(types[arg].instantiate(names[arg]))
                 usednames.append(names[arg])
+
             cond = Condition(prepredicates[pred].instantiate(args), types)
             self.precondorder.append(cond)
             self.preconditions[cond] = names
@@ -282,6 +286,7 @@ class Operator:
         self.resultorder = []
         self.postPos = postPositive
 
+        print(postobjnames)
         for pred in range(len(postpredicates)):
             args = []
             usednames = []
@@ -293,7 +298,9 @@ class Operator:
                 else:
                     args.append(types[arg].instantiate(names[arg]))
                 usednames.append(names[arg])
+
             cond = Condition(postpredicates[pred].instantiate(args), types)
+
             self.resultorder.append(cond)
             self.results[cond] = names
 

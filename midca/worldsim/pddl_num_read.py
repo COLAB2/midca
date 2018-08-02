@@ -95,7 +95,6 @@ def load_domain(domainfile, problemfile):
 
         for pre in a.get_pre(True):
             prepos.append(True)
-
             # a.args is typedArgList
             if type(pre) is Formula:
                 args = []
@@ -103,21 +102,17 @@ def load_domain(domainfile, problemfile):
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
+
                         preobjnames.append(argnames)
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-
-                        # print("________")
-                        # print(sub.name)
-
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        preobjnames.append(argnames)
-                        preobjtypes.append(argtypes)
-
+                        if argnames:
+                            preobjnames.append(argnames)
+                            preobjtypes.append(argtypes)
                         args.append(functions[sub.name])
-
                     else:
                         args.append(sub.val)
                         # print(sub.val)
@@ -144,14 +139,16 @@ def load_domain(domainfile, problemfile):
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
+
                         preobjnames.append(argnames)
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        preobjnames.append(argnames)
-                        preobjtypes.append(argtypes)
+                        if argnames:
+                            preobjnames.append(argnames)
+                            preobjtypes.append(argtypes)
                         args.append(functions[sub.name])
 
                     else:
@@ -171,22 +168,21 @@ def load_domain(domainfile, problemfile):
             postpos.append(True)
             if type(eff) is Formula:
                 args = []
-                for sub in pre.subformulas:
+                for sub in eff.subformulas:
                     if type(sub) is Predicate:  # when it is a negate predicate#
+                        print(sub)
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
+
                         postobjnames.append(argnames)
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-
-                        # print("________")
-                        # print(subformulas.name)
-
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        postobjnames.append(argnames)
-                        postobjtypes.append(argtypes)
+                        if argnames:
+                            postobjnames.append(argnames)
+                            postobjtypes.append(argtypes)
 
                         args.append(functions[sub.name])
 
@@ -194,7 +190,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         # print(sub.val)
 
-                postpredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
+                postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
 
             elif type(eff) is Predicate:
@@ -203,6 +199,8 @@ def load_domain(domainfile, problemfile):
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
+                print(eff_args_name)
+
 
         for eff in a.get_eff(False):
             postpos.append(False)
@@ -216,24 +214,23 @@ def load_domain(domainfile, problemfile):
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-
-                        # print("________")
-                        # print(sub.name)
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        postobjnames.append(argnames)
-                        postobjtypes.append(argtypes)
+                        if argnames:
+                            postobjnames.append(argnames)
+                            postobjtypes.append(argtypes)
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
                         # print(sub.val)
-                postpredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
+                postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
             elif type(eff) is Predicate:
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
+                print(eff_args_name)
 
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
@@ -489,7 +486,7 @@ if __name__ == "__main__":
     MIDCA_ROOT = thisDir + "/../"
 
     ### Domain Specific Variables for JSHOP planner
-    ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+    ff_DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/test.pddl"
     ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
 
     load_domain(ff_DOMAIN_FILE, ff_STATE_FILE)
