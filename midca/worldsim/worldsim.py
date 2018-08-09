@@ -1,6 +1,6 @@
 import copy
 
-
+func_val_dict = {}
 class Obj:
 
     def __init__(self, name, type):
@@ -45,9 +45,7 @@ class Predicate_function:
         return "(" + (self.op if self.op else " ") + " " + self.args.__str__() + ") "
 
     def instantiate(self, args):
-        print(args)
-        print("&&&&&&&&&&&&&&")
-        print(self.args[0])
+
         return self.args[0].instantiate(args)
 
         # return Atom(self.argnames, args)
@@ -194,12 +192,13 @@ class Predicate:
 
 class Action:
 
-    def __init__(self, operator, preconds, prePos, results, postPos):
+    def __init__(self, operator, preconds, prePos, results, postPos, funcRes=[]):
         self.operator = operator
         self.preconds = preconds
         self.prePos = prePos
         self.results = results
         self.postPos = postPos
+        self.funcRes = funcRes
 
     def set_args(self, args):
         '''
@@ -246,6 +245,15 @@ class Condition:
                     raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
                 i += 1
         if self.atom.func:
+            # if self.op == "decrease":
+            #     print(self.atom.func)
+            #     print("******************")
+            #     for j in func_val_dict:
+            #         print(j)
+            #     old_val = func_val_dict[self.atom.func.name]
+            #     new_val = old_val - self.val
+            #     func_val_dict[self.atom.func.name] = new_val
+            #     return self.atom.func.instantiate(args, new_val)
             return self.atom.func.instantiate(args)
 
         if self.atom.predicate:
@@ -353,6 +361,10 @@ class Operator:
                     args.append(types[arg].instantiate(names[arg]))
                 usednames.append(names[arg])
 
+
+            func = postfunc[pred].args[0]
+            # print(func_val_dict[str(func.name)])
+
             cond = Condition(postfunc[pred].instantiate(args), types, postfunc[pred].op, postfunc[pred].args[1])
 
             self.resultorder.append(cond)
@@ -401,6 +413,7 @@ class Operator:
 
             preconditions.append(condition.instantiate(args))
         results = []
+        func_results = []
         for condition in self.resultorder:
             names = self.results[condition]
             args = []
@@ -413,8 +426,12 @@ class Operator:
                         resourceType = self.resource_type()
                     args.append(Obj(name, resourceType))
 
-            results.append(condition.instantiate(args))
-        result_action = Action(self, preconditions, self.prePos, results, self.postPos)
+            if condition.op:
+                func_results.append((condition.instantiate(args), condition.op, condition.val))
+            else:
+                results.append(condition.instantiate(args))
+
+        result_action = Action(self, preconditions, self.prePos, results, self.postPos, func_results)
         result_action.set_args(args)
         return result_action
 
@@ -846,10 +863,23 @@ class World:
         # if verbose >=2:
         #     print("*************")
         #     print(simAction)
+        for (atom, op, val) in simAction.funcRes:
+            print(atom.func)
+            func = next((x for x in self.atoms if x.func and x.func ==atom.func), None)
+            print(func.val)
+
+            print(val)
+            if op == "decrease":
+                func.val = func.val - val
+            elif op == "increase":
+                func.val = func.val + val
+            elif op == "assign":
+                func.val = val
+
+
         for i in range(len(simAction.results)):
 
-            if simAction.postPos[i]:
-                # print(simAction.results[i])
+            if simAction.postPos[i]: ## it is an atom
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))

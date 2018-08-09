@@ -55,9 +55,19 @@ class MidcaEventSimulator:
                 for inst_op in inst_operators:
 
                     new_world = self.world.copy()
-
+                    print(inst_op)
+                    print("****")
                     # try:
                     new_world.apply(inst_op)
+
+                    func = self.world.functions["player-current-health"]
+                    a = next((x for x in self.world.atoms if x.func == func), None)
+                    # 15 is a threshold here;
+                    print("the result:")
+                    print(a.val)
+
+
+
                     if verbose >= 2:
                         print("simulating MIDCA event:", __event)
                     # except:

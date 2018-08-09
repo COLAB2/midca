@@ -106,8 +106,7 @@ def load_domain(domainfile, problemfile):
                 for sub in pre.subformulas:
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
-                        print("predicate")
-                        print(name)
+
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
                         preobjnames.append(argnames)
@@ -319,7 +318,7 @@ def _apply_state_pddl(world, prob):
                     raise Exception(func)
 
                 atom = world.functions[func].instantiate(args, val)
-
+                worldsim.func_val_dict.update({func: val})
                 world.add_atom(atom)
         else:
 
