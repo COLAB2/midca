@@ -35,11 +35,11 @@ hidden = []
 def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
     print()
-    for a in dom.actions:
-        for b in [False, True]:
-               print(a.name, "c", b, list(map(lambda x: x.asPDDL(), a.get_pre(b))))
-        for b in [False, True]:
-               print(a.name, "e", b, list(map(lambda x: x.asPDDL(), a.get_eff(b))))
+    # for a in dom.actions:
+    #     for b in [False, True]:
+    #            print(a.name, "c", b, list(map(lambda x: x.asPDDL(), a.get_pre(b))))
+    #     for b in [False, True]:
+    #            print(a.name, "e", b, list(map(lambda x: x.asPDDL(), a.get_eff(b))))
 
     print("DOMAIN PROBLEM")
     # print("objects")
@@ -92,32 +92,42 @@ def load_domain(domainfile, problemfile):
         postobjtypes = []
         prepos = []
         postpos = []
+        prefunnames = []
+        postfuncnames = []
+        prefuntypes = []
+        postfunctypes = []
 
         for pre in a.get_pre(True):
             prepos.append(True)
             # a.args is typedArgList
             if type(pre) is Formula:
+                print(pre.asPDDL())
                 args = []
                 for sub in pre.subformulas:
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
+                        print("predicate")
+                        print(name)
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
                         preobjnames.append(argnames)
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
+                        print("fhead")
+                        print(sub.asPDDL())
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        if argnames:
-                            preobjnames.append(argnames)
-                            preobjtypes.append(argtypes)
+                        for aaa in argnames:
+                            print(aaa)
+                        prefunnames.append(argnames)
+                        prefuntypes.append(argtypes)
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        # print(sub.val)
-
-                prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
+                        print(sub.val)
+                if args:
+                    prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
@@ -146,15 +156,15 @@ def load_domain(domainfile, problemfile):
                     elif type(sub) is FHead:
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        if argnames:
-                            preobjnames.append(argnames)
-                            preobjtypes.append(argtypes)
+                        prefunnames.append(argnames)
+                        prefuntypes.append(argtypes)
                         args.append(functions[sub.name])
 
                     else:
                         args.append(sub.val)
                         # print(sub.val)
-                prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
+                if args:
+                    prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
@@ -170,7 +180,7 @@ def load_domain(domainfile, problemfile):
                 args = []
                 for sub in eff.subformulas:
                     if type(sub) is Predicate:  # when it is a negate predicate#
-                        print(sub)
+                        # print(sub)
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
@@ -180,9 +190,8 @@ def load_domain(domainfile, problemfile):
                     elif type(sub) is FHead:
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        if argnames:
-                            postobjnames.append(argnames)
-                            postobjtypes.append(argtypes)
+                        postfuncnames.append(argnames)
+                        postfunctypes.append(argtypes)
 
                         args.append(functions[sub.name])
 
@@ -190,7 +199,8 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         # print(sub.val)
 
-                postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
+                if args:
+                    postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
 
             elif type(eff) is Predicate:
@@ -199,7 +209,7 @@ def load_domain(domainfile, problemfile):
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
-                print(eff_args_name)
+                # print(eff_args_name)
 
 
         for eff in a.get_eff(False):
@@ -216,26 +226,26 @@ def load_domain(domainfile, problemfile):
                     elif type(sub) is FHead:
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        if argnames:
-                            postobjnames.append(argnames)
-                            postobjtypes.append(argtypes)
+                        postfuncnames.append(argnames)
+                        postfunctypes.append(argtypes)
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
                         # print(sub.val)
-                postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
+                if args:
+                    postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
             elif type(eff) is Predicate:
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
-                print(eff_args_name)
+                # print(eff_args_name)
 
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
                                                     postpredicates, postobjnames, postobjtypes, postpos,
-                                                    prepredicatesfunc, postpredicatesfunc)})
+                                                    prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc, postfuncnames, postfunctypes)})
 
     print("Objects:")
     objects = parseObjects(prob.objects)
@@ -244,7 +254,7 @@ def load_domain(domainfile, problemfile):
                            cltree, obtree)
     # print(world.functions)
     _apply_state_pddl(world, prob)
-
+    print("****")
     return world
 
     # probinitialState = getInitialState(prob.initialstate)
@@ -278,8 +288,8 @@ def _apply_state_pddl(world, prob):
         '''Formula: represented a goal description (atom / negated atom / and / or)'''
         '''subformulas is a predicate'''
         if type(a) is FExpression:
-            print("feexpression")
-            print(a.op)
+            # print("feexpression")
+            # print(a.op)
             func = None
             val = None
             func_args = []
@@ -291,8 +301,8 @@ def _apply_state_pddl(world, prob):
                     # print(sub.name)
                     func = sub.name
                     func_args = parseTypedArgList_names(sub.args)
-                    for f in func_args:
-                        print(f)
+                    # for f in func_args:
+                    #     print(f)
                 else:
                     # print(sub.val)
                     val = sub.val
@@ -309,12 +319,13 @@ def _apply_state_pddl(world, prob):
                     raise Exception(func)
 
                 atom = world.functions[func].instantiate(args, val)
+
                 world.add_atom(atom)
         else:
 
             for sub in a.subformulas:
                 call = sub.name
-                print(call)
+                # print(call)
                 argnames = parseTypedArgList_names(sub.args)
                 negate = False
                 if call in world.predicates:
@@ -335,27 +346,27 @@ def _apply_state_pddl(world, prob):
                         # print(atom.__str__())
 
 
-def getInitialState(probinitialState):
-    for a in probinitialState:
-        if type(a) is FExpression:
-            # print("feexpression")
-            # print(a.op)
-            for sub in a.subexps:
-                if type(sub) is FHead:
-                    print(sub.name)
-                    print(parseTypedArgList_names(sub.args))
-                else:
-                    print(sub.val)
-
-        else:
-            print("formula")
-            print(a.op)
-            for sub in a.subformulas:
-                print(sub)
-                print(sub.name)
-                print(parseTypedArgList_names(sub.args))
-        # goal = prob.goal
-        # print(goal)
+# def getInitialState(probinitialState):
+#     for a in probinitialState:
+#         if type(a) is FExpression:
+#             # print("feexpression")
+#             # print(a.op)
+#             for sub in a.subexps:
+#                 if type(sub) is FHead:
+#                     print(sub.name)
+#                     print(parseTypedArgList_names(sub.args))
+#                 else:
+#                     print(sub.val)
+#
+#         else:
+#             print("formula")
+#             print(a.op)
+#             for sub in a.subformulas:
+#                 print(sub)
+#                 print(sub.name)
+#                 print(parseTypedArgList_names(sub.args))
+#         # goal = prob.goal
+#         # print(goal)
 
 
 def instance(name, typename):

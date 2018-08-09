@@ -229,7 +229,7 @@
 				(known-loc skeleton)
 				(thing-at skeleton)
 				(= (tool-id ?tool) 10)
-				(= (tool-in-hand) (tool-id ?tool))
+				(= (tool-in-hand) 10)
 				(not (crafting))
 
 			)

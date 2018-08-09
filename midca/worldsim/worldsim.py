@@ -25,26 +25,37 @@ class Function:
     def __str__(self):
         return "(" + self.name + " " + self.argnames.__str__() + ")"
 
-    def instantiate(self, args, val):
-        return Atom(self, args, val)
+    def instantiate(self, args, val=[]):
+        if val:
+            return Atom(self, args, val)
+
+        return Atom(self, args)
+
 
 class Predicate_function:
     def __init__(self, op, args):
-
+        self.name = op
         self.op = op
-        self.args = args # it is a list of functions
+        self.args = args # func val assume there is only one func val
+        self.argnames = args[0].argnames if args else []
+        self.argtypes = args[0].argtypes if args else []
+        self.val = args[1] if args else []
 
     def __str__(self):
-        return "(" + self.op + " " + self.args.__str__() + ") "
+        return "(" + (self.op if self.op else " ") + " " + self.args.__str__() + ") "
 
-    def instantiate(self, op, args):
+    def instantiate(self, args):
+        print(args)
+        print("&&&&&&&&&&&&&&")
+        print(self.args[0])
+        return self.args[0].instantiate(args)
 
-        return Atom(self, op, args)
-        # func = next((x for x in atoms if x.func and x.func == args[0]), None)
+        # return Atom(self.argnames, args)
+        # func = next((x for x in self.atoms if x.func and x.func == args[0]), None)
         #
         # for arg in args[1:]:
         #     if arg is function:
-        #         atom_func = next((x for x in atoms if x.func and x.func == arg), None)
+        #         atom_func = next((x for x in self.atoms if x.func and x.func == arg), None)
         #         if atom_func:
         #             val = float(atom_func.val)
         #     else:
@@ -56,6 +67,12 @@ class Predicate_function:
         #     func.val = func.val - val
         # elif op == "assign":
         #     func.val = val
+        # elif op == ">":
+        #     func.val > val
+        # elif op == "<":
+        #     func.val < val
+        #
+        # return func
 
 
 class Constant:
@@ -108,7 +125,7 @@ class Atom:
         self.predicate = None
         self.func = None
 
-        if val is None:
+        if predicate is Predicate:
             self.predicate = predicate
             self.args = args
             self.hash = hash(predicate.name + str(list(map(str, args))))  # little expensive because of map, but only
@@ -214,9 +231,12 @@ class Action:
 
 class Condition:
 
-    def __init__(self, atom, argtypes):
+    def __init__(self, atom, argtypes, op=None, val=None):
         self.atom = atom
         self.argtypes = argtypes
+        self.op = op
+        self.val = val
+
 
     def instantiate(self, args):
         if self.argtypes:
@@ -225,7 +245,13 @@ class Condition:
                 if not arg.is_a(self.argtypes[i]):
                     raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
                 i += 1
-        return self.atom.predicate.instantiate(args)
+        if self.atom.func:
+            return self.atom.func.instantiate(args)
+
+        if self.atom.predicate:
+            return self.atom.predicate.instantiate(args)
+
+
 
     def fits(self, args):
         if self.argtypes:
@@ -247,24 +273,33 @@ class Condition:
         return True
 
     def __str__(self):
+        if self.op and self.val:
+            return str(self.op) + " " + str(self.atom) + " " + str(self.val)
         return str(self.atom)
 
 
 class Operator:
 
     def __init__(self, name, objnames, prepredicates, preobjnames, preobjtypes, prePositive, postpredicates,
-                 postobjnames, postobjtypes, postPositive, prefunc=[], postfunc=[]):
+                 postobjnames, postobjtypes, postPositive, prefunc=[], prefuncnames = [], prefunctypes=[], postfunc=[],
+                 postfuncnames=[], postfunctypes=[]):
         self.name = name
         self.objnames = objnames
         self.preconditions = {}
         self.precondorder = []
         self.prePos = prePositive
-        self.types = preobjtypes + postobjtypes
-        self.prefuns = prefunc
+        self.types = preobjtypes + postobjtypes + prefunctypes + postfunctypes
+        self.prefunc = prefunc
         self.postfunc = postfunc
+        self.prefuncnames = prefuncnames
+        self.postfuncnames = postfuncnames
         self.isevent = True if name.startswith("event") else False
-        for pred in range(len(prepredicates)):
-            print(prepredicates[pred])
+        self.results = {}
+        self.resultorder = []
+        self.postPos = postPositive
+
+        # for pred in range(len(prepredicates)):
+        #     print(prepredicates[pred])
 
         for pred in range(len(prepredicates)):
             args = []
@@ -280,13 +315,49 @@ class Operator:
                 usednames.append(names[arg])
 
             cond = Condition(prepredicates[pred].instantiate(args), types)
+
             self.precondorder.append(cond)
             self.preconditions[cond] = names
-        self.results = {}
-        self.resultorder = []
-        self.postPos = postPositive
 
-        print(postobjnames)
+        for pred in range(len(prefunc)):
+            args = []
+            usednames = []
+
+
+            names = prefuncnames[pred] if prefuncnames else []
+            types = prefunctypes[pred] if prefuncnames else []
+
+            for arg in range(len(names)):
+                if names[arg] in usednames:
+                    args.append(args[names.index(names[arg])])
+                else:
+                    args.append(types[arg].instantiate(names[arg]))
+                usednames.append(names[arg])
+
+            cond = Condition(prefunc[pred].instantiate(args), types, prefunc[pred].op, prefunc[pred].args[1])
+
+            self.precondorder.append(cond)
+            self.preconditions[cond] = names
+
+        for pred in range(len(postfunc)):
+            args = []
+            usednames = []
+
+            names = postfuncnames[pred] if postfuncnames else []
+            types = postfunctypes[pred] if postfunctypes else []
+
+            for arg in range(len(names)):
+                if names[arg] in usednames:
+                    args.append(args[names.index(names[arg])])
+                else:
+                    args.append(types[arg].instantiate(names[arg]))
+                usednames.append(names[arg])
+
+            cond = Condition(postfunc[pred].instantiate(args), types, postfunc[pred].op, postfunc[pred].args[1])
+
+            self.resultorder.append(cond)
+            self.results[cond] = names
+        # print(postobjnames)
         for pred in range(len(postpredicates)):
             args = []
             usednames = []
@@ -772,9 +843,13 @@ class World:
         return self.is_applicable(action)
 
     def apply(self, simAction, verbose=2):
+        # if verbose >=2:
+        #     print("*************")
+        #     print(simAction)
         for i in range(len(simAction.results)):
-            if simAction.postPos[i]:
 
+            if simAction.postPos[i]:
+                # print(simAction.results[i])
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))

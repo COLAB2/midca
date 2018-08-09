@@ -56,12 +56,12 @@ class MidcaEventSimulator:
 
                     new_world = self.world.copy()
 
-                    try:
-                        new_world.apply(inst_op)
-                        if verbose >= 2:
-                            print("simulating MIDCA event:", __event)
-                    except:
-                        print("something went wrong...")
+                    # try:
+                    new_world.apply(inst_op)
+                    if verbose >= 2:
+                        print("simulating MIDCA event:", __event)
+                    # except:
+                    #     print("something went wrong...")
 
 
                 # if self.get_all_instantiations(self.world,__event):
@@ -118,6 +118,7 @@ class MidcaEventSimulator:
             num_permutations += 1
             op_inst = operator.instantiate(list(c))
             op_inst.set_args(list(c))
+
             if world.is_applicable(op_inst):
                 applicable_permutations.append(op_inst)
                 break # uncomment this line if you just want to get the first valid instantiation
