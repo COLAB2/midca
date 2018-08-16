@@ -1119,7 +1119,8 @@ class ReactiveSurvive(base.BaseModule):
         func = world.functions["player-current-health"]
         a = next((x for x in world.atoms if x.func == func), None)
         # 15 is a threshold here;
-        if a.val < 15:
+
+        if a.val < 16:
             return True
 
         return False
@@ -1127,6 +1128,10 @@ class ReactiveSurvive(base.BaseModule):
     def survive(self, verbose=2):
         hypotheses = []
         monitors = []
+
+        if self.is_damaged():
+            if verbose >=2:
+                print("got attacked")
         if self.is_damaged() and self.nearby_arrow():
 
             if self.skeleton():

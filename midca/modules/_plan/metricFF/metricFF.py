@@ -22,7 +22,7 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
     #     process = subprocess.Popen([command], stdout=subprocess.PIPE)
     p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     out, err = p.communicate()
-    print(out)
+    # print(out)
 
     plan = []
     lines = str(out).split("\n")

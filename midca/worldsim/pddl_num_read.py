@@ -103,7 +103,10 @@ def load_domain(domainfile, problemfile):
             if type(pre) is Formula:
                 print(pre.asPDDL())
                 args = []
+                tempargs = []
+                temptypes = []
                 for sub in pre.subformulas:
+
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
 
@@ -117,15 +120,16 @@ def load_domain(domainfile, problemfile):
                         print(sub.asPDDL())
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        for aaa in argnames:
-                            print(aaa)
-                        prefunnames.append(argnames)
-                        prefuntypes.append(argtypes)
+
+                        tempargs.append(argnames)
+                        temptypes.append(argtypes)
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
                         print(sub.val)
                 if args:
+                    prefunnames.append(tempargs)
+                    prefuntypes.append(temptypes)
                     prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
@@ -144,25 +148,33 @@ def load_domain(domainfile, problemfile):
             prepos.append(False)
             if type(pre) is Formula:
                 args = []
+                tempargs = []
+                temptypes = []
                 for sub in pre.subformulas:
+
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
+
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
                         preobjnames.append(argnames)
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
+                        print("fhead")
+                        print(sub.asPDDL())
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        prefunnames.append(argnames)
-                        prefuntypes.append(argtypes)
-                        args.append(functions[sub.name])
 
+                        tempargs.append(argnames)
+                        temptypes.append(argtypes)
+                        args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        # print(sub.val)
+                        print(sub.val)
                 if args:
+                    prefunnames.append(tempargs)
+                    prefuntypes.append(temptypes)
                     prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
 
             elif type(pre) is Predicate:
@@ -177,28 +189,33 @@ def load_domain(domainfile, problemfile):
             postpos.append(True)
             if type(eff) is Formula:
                 args = []
+                tempargs = []
+                temptypes = []
                 for sub in eff.subformulas:
+
                     if type(sub) is Predicate:  # when it is a negate predicate#
-                        # print(sub)
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
+
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
                         postobjnames.append(argnames)
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
+                        print("fhead")
+                        print(sub.asPDDL())
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        postfuncnames.append(argnames)
-                        postfunctypes.append(argtypes)
 
+                        tempargs.append(argnames)
+                        temptypes.append(argtypes)
                         args.append(functions[sub.name])
-
                     else:
                         args.append(sub.val)
-                        # print(sub.val)
-
+                        print(sub.val)
                 if args:
+                    postfuncnames.append(tempargs)
+                    postfunctypes.append(temptypes)
                     postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
 
@@ -215,23 +232,33 @@ def load_domain(domainfile, problemfile):
             postpos.append(False)
             if type(eff) is Formula:
                 args = []
+                tempargs = []
+                temptypes = []
                 for sub in eff.subformulas:
+
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
+
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
+
                         postobjnames.append(argnames)
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
+                        print("fhead")
+                        print(sub.asPDDL())
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
-                        postfuncnames.append(argnames)
-                        postfunctypes.append(argtypes)
+
+                        tempargs.append(argnames)
+                        temptypes.append(argtypes)
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        # print(sub.val)
+                        print(sub.val)
                 if args:
+                    postfuncnames.append(tempargs)
+                    postfunctypes.append(temptypes)
                     postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
             elif type(eff) is Predicate:

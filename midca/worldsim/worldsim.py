@@ -1,4 +1,5 @@
 import copy
+import numbers
 
 func_val_dict = {}
 class Obj:
@@ -45,8 +46,15 @@ class Predicate_function:
         return "(" + (self.op if self.op else " ") + " " + self.args.__str__() + ") "
 
     def instantiate(self, args):
+        # (= (tool-in-hand) (tool-id ?tool))
+        if isinstance(self.args[1], numbers.Number):
 
-        return self.args[0].instantiate(args)
+            return self.args[0].instantiate(args[0])
+        else:
+
+            return self.args[1].instantiate(args[1])
+
+
 
         # return Atom(self.argnames, args)
         # func = next((x for x in self.atoms if x.func and x.func == args[0]), None)
@@ -296,7 +304,7 @@ class Operator:
         self.preconditions = {}
         self.precondorder = []
         self.prePos = prePositive
-        self.types = preobjtypes + postobjtypes + prefunctypes + postfunctypes
+        self.types = preobjtypes + postobjtypes
         self.prefunc = prefunc
         self.postfunc = postfunc
         self.prefuncnames = prefuncnames
@@ -308,10 +316,18 @@ class Operator:
 
         # for pred in range(len(prepredicates)):
         #     print(prepredicates[pred])
-
+        # for yy in self.types:
+        #     print(yy)
+        # t1 = [item for sublist in prefunctypes for item in sublist]
+        # t2 = [item for sublist in postfunctypes for item in sublist]
+        # self.types = self.types + t1 + t2
+        # print("~~~~~~~~~~~~~~~~~~~~~~~~~`")
+        # for yy in self.types:
+        #     print(yy)
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
+
 
             names = preobjnames[pred]
             types = preobjtypes[pred]
@@ -331,7 +347,6 @@ class Operator:
             args = []
             usednames = []
 
-
             names = prefuncnames[pred] if prefuncnames else []
             types = prefunctypes[pred] if prefuncnames else []
 
@@ -339,10 +354,16 @@ class Operator:
                 if names[arg] in usednames:
                     args.append(args[names.index(names[arg])])
                 else:
-                    args.append(types[arg].instantiate(names[arg]))
+                    temp = []
+                    for aa in range(len(names[arg])):
+                        temp.append(types[arg][aa].instantiate(names[arg][aa]))
+                    args.append(temp)
                 usednames.append(names[arg])
 
-            cond = Condition(prefunc[pred].instantiate(args), types, prefunc[pred].op, prefunc[pred].args[1])
+            # it is two args related to one func
+            atom1 = prefunc[pred].instantiate(args)
+
+            cond = Condition(atom1, types, prefunc[pred].op, prefunc[pred].args[1])
 
             self.precondorder.append(cond)
             self.preconditions[cond] = names
@@ -350,7 +371,8 @@ class Operator:
         for pred in range(len(postfunc)):
             args = []
             usednames = []
-
+            print("pred")
+            print(postfunc[pred])
             names = postfuncnames[pred] if postfuncnames else []
             types = postfunctypes[pred] if postfunctypes else []
 
@@ -358,12 +380,11 @@ class Operator:
                 if names[arg] in usednames:
                     args.append(args[names.index(names[arg])])
                 else:
-                    args.append(types[arg].instantiate(names[arg]))
+                    temp = []
+                    for aa in range(len(names[arg])):
+                        temp.append(types[arg][aa].instantiate(names[arg][aa]))
+                    args.append(temp)
                 usednames.append(names[arg])
-
-
-            func = postfunc[pred].args[0]
-            # print(func_val_dict[str(func.name)])
 
             cond = Condition(postfunc[pred].instantiate(args), types, postfunc[pred].op, postfunc[pred].args[1])
 
@@ -400,12 +421,13 @@ class Operator:
             args = []
             #TODO: Zohreh; it is hard coded here for constant objects. should be modified.
             for name in names:
-                if name in objdict.keys():
+
+                if name and name in objdict.keys():
                     args.append(objdict[name])
-                else:
+                elif name:
                     for t in self.types:
                         for x in t:
-                            if x.name == "resource":
+                            if not(type(x) == list) and x.name == "resource":
                                 resourceType = x
                     # for t in self.types:
                     #     resourceType = [x for x in t if x.name.strip() == "resource"]
@@ -418,9 +440,9 @@ class Operator:
             names = self.results[condition]
             args = []
             for name in names:
-                if name in objdict.keys():
+                if name and name in objdict.keys():
                     args.append(objdict[name])
-                else:
+                elif name:
                     for t in self.types:
                         # resourceType = [x for x in t if x.name == "resource"]
                         resourceType = self.resource_type()
