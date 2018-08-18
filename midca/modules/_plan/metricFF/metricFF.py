@@ -25,9 +25,11 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
     # print(out)
 
     plan = []
-    lines = str(out).split("\n")
+    lines = str(out, 'utf-8').split("\n")
+    # lines = str(out).splitlines()
     for line in lines:
         line = line.strip().lower()
+
         if line.startswith("step"):
 
             plan.append((line.split(":")[1].strip().split(" ")))

@@ -29,7 +29,7 @@ class UserGoalInput(base.BaseModule):
                 args = [arg.strip() for arg in func_args.split(" ")[1:]]
                 val = txt[txt.index(")") + 1:]
 
-                goal = goals.Goal(*args, func=funcname, val=val.strip())
+                goal = goals.Goal(*args, func=funcname, val=val.strip(), op = opname.strip())
                 return goal
             else:
                 if txt.startswith('!'):
@@ -1067,7 +1067,7 @@ class ReactiveSurvive(base.BaseModule):
         for atom in world.atoms:
             if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
                 arrow = atom.args
-            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "skeleton":
+            if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == "skeleton":
                 skeleton = atom.args
 
         if arrow and skeleton:
@@ -1084,7 +1084,7 @@ class ReactiveSurvive(base.BaseModule):
         for atom in world.atoms:
             if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
                 arrow = atom.args
-            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow_trap":
+            if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == "arrow_trap":
                 trap = atom.args
 
         if arrow and trap:
@@ -1132,10 +1132,13 @@ class ReactiveSurvive(base.BaseModule):
         if self.is_damaged():
             if verbose >=2:
                 print("got attacked")
-        if self.is_damaged() and self.nearby_arrow():
+        # if self.is_damaged() and self.nearby_arrow():
+        if self.is_damaged():
 
-            if self.skeleton():
+            if self.skeleton(): #this needs to come from assume-init-value from DH
+                print("damaged and arrow is around")
                 s, chance = self.skeleton()
+                print(chance)
                 if chance == 1:
                     skeleton = s[0].name
                     loc = s[1].name
@@ -1151,8 +1154,8 @@ class ReactiveSurvive(base.BaseModule):
                         Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
-                    # if verbose >= 2:
-                    #     print("Meta-AQUA simulation goal generated:", goal, )
+                    if verbose >= 2:
+                        print("Meta-AQUA simulation goal generated:", goal, )
 
                 if chance == 0.5:
                     world = self.mem.get(self.mem.STATES)[-1]
@@ -1170,7 +1173,8 @@ class ReactiveSurvive(base.BaseModule):
                         Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
-
+                    if verbose >= 2:
+                        print("Meta-AQUA simulation goal generated:", goal, )
 
             if self.arrow_trap():
                 s, chance = self.arrow_trap()
@@ -1181,8 +1185,8 @@ class ReactiveSurvive(base.BaseModule):
                     m = Monitor(self.mem, skeleton, goal)
                     Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
                     hypotheses.append(goal)
-                    # if verbose >= 2:
-                    #     print("Meta-AQUA simulation goal generated:", goal, )
+                    if verbose >= 2:
+                        print("Meta-AQUA simulation goal generated:", goal, )
 
                 if chance == 0.5:
                     world = self.mem.get(self.mem.STATES)[-1]
@@ -1192,8 +1196,8 @@ class ReactiveSurvive(base.BaseModule):
                     m = Monitor(self.mem, skeleton, goal)
                     Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
                     hypotheses.append(goal)
-                    # if verbose >= 2:
-                    #     print("Meta-AQUA simulation goal generated:", goal, )
+                    if verbose >= 2:
+                        print("Meta-AQUA simulation goal generated:", goal, )
         return hypotheses
 
 

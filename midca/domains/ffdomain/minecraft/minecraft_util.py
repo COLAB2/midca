@@ -27,6 +27,7 @@ def ff_goals_from_midca_goals(goals, STATE_FILE, verbose=2):
         elif 'func' in goal.kwargs:
             func = str(goal.kwargs['func'])
             val = str(goal.kwargs['val'])
+            op = str(goal.kwargs['op'])
 
         else:
             raise ValueError("Goal " + str(goal) + " does not translate")
@@ -41,7 +42,7 @@ def ff_goals_from_midca_goals(goals, STATE_FILE, verbose=2):
         if predicate and not ('negate' in goal.kwargs):
             f.write("(" + predicate + " " + goalargs + ")\n")
         elif func:
-            f.write("( = (" + func + " " +goalargs + ") " + val +")\n")
+            f.write("( "+ op +" (" + func + " " +goalargs + ") " + val +")\n")
 
 
     f.write(")\n")
