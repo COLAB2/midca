@@ -619,6 +619,6 @@ bowl - material)
 )
   (:goal
 (and
-( > (thing-available wood) 0)
+(not(thing-at skeleton))
 )
 ))

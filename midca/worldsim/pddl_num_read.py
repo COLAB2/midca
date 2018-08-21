@@ -96,9 +96,10 @@ def load_domain(domainfile, problemfile):
         postfuncnames = []
         prefuntypes = []
         postfunctypes = []
-
+        prefuncpos = []
+        postfuncpos = []
         for pre in a.get_pre(True):
-            prepos.append(True)
+
             # a.args is typedArgList
             if type(pre) is Formula:
                 print(pre.asPDDL())
@@ -108,6 +109,7 @@ def load_domain(domainfile, problemfile):
                 for sub in pre.subformulas:
 
                     if type(sub) is Predicate:  # when it is a negate predicate#
+                        prepos.append(True)
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
 
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
@@ -128,6 +130,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         print(sub.val)
                 if args:
+                    prefuncpos.append(True)
                     prefunnames.append(tempargs)
                     prefuntypes.append(temptypes)
                     prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
@@ -135,7 +138,7 @@ def load_domain(domainfile, problemfile):
             elif type(pre) is Predicate:
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
                 prepredicates.append(worldsim.Predicate(pre.name, pre_args_name, pre_args_type))
-
+                prepos.append(True)
                 preobjnames.append(pre_args_name)
                 preobjtypes.append(pre_args_type)
                 if "shelter" in pre_args_name:
@@ -145,7 +148,7 @@ def load_domain(domainfile, problemfile):
                             print(x.__str__())
 
         for pre in a.get_pre(False):
-            prepos.append(False)
+
             if type(pre) is Formula:
                 args = []
                 tempargs = []
@@ -154,7 +157,7 @@ def load_domain(domainfile, problemfile):
 
                     if type(sub) is Predicate:  # when it is a negate predicate#
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
-
+                        prepos.append(False)
                         prepredicates.append(worldsim.Predicate(name, argnames, argtypes))
 
                         preobjnames.append(argnames)
@@ -173,6 +176,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         print(sub.val)
                 if args:
+                    prefuncpos.append(False)
                     prefunnames.append(tempargs)
                     prefuntypes.append(temptypes)
                     prepredicatesfunc.append(worldsim.Predicate_function(pre.op, args))
@@ -181,12 +185,12 @@ def load_domain(domainfile, problemfile):
                 pre.name, pre_args_name, pre_args_type = parsePredicate(pre, actions_args)
 
                 prepredicates.append(worldsim.Predicate(pre.name, pre_args_name, pre_args_type))
-
+                prepos.append(False)
                 preobjnames.append(pre_args_name)
                 preobjtypes.append(pre_args_type)
 
         for eff in a.get_eff(True):
-            postpos.append(True)
+
             if type(eff) is Formula:
                 args = []
                 tempargs = []
@@ -197,7 +201,7 @@ def load_domain(domainfile, problemfile):
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
 
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
-
+                        postpos.append(True)
                         postobjnames.append(argnames)
                         postobjtypes.append(argtypes)
 
@@ -214,6 +218,7 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         print(sub.val)
                 if args:
+                    postfuncpos.append(True)
                     postfuncnames.append(tempargs)
                     postfunctypes.append(temptypes)
                     postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
@@ -221,6 +226,7 @@ def load_domain(domainfile, problemfile):
 
             elif type(eff) is Predicate:
                 # a.args is typedArgList
+                postpos.append(True)
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
@@ -229,7 +235,7 @@ def load_domain(domainfile, problemfile):
 
 
         for eff in a.get_eff(False):
-            postpos.append(False)
+
             if type(eff) is Formula:
                 args = []
                 tempargs = []
@@ -240,7 +246,7 @@ def load_domain(domainfile, problemfile):
                         name, argnames, argtypes = parsePredicate(sub, actions_args)
 
                         postpredicates.append(worldsim.Predicate(name, argnames, argtypes))
-
+                        postpos.append(False)
                         postobjnames.append(argnames)
                         postobjtypes.append(argtypes)
 
@@ -257,11 +263,13 @@ def load_domain(domainfile, problemfile):
                         args.append(sub.val)
                         print(sub.val)
                 if args:
+                    postfuncpos.append(False)
                     postfuncnames.append(tempargs)
                     postfunctypes.append(temptypes)
                     postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
             elif type(eff) is Predicate:
+                postpos.append(False)
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
@@ -271,7 +279,7 @@ def load_domain(domainfile, problemfile):
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
                                                     postpredicates, postobjnames, postobjtypes, postpos,
-                                                    prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc, postfuncnames, postfunctypes)})
+                                                    prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc, postfuncnames, postfunctypes, prefuncpos, postfuncpos)})
 
     print("Objects:")
     objects = parseObjects(prob.objects)
@@ -280,7 +288,7 @@ def load_domain(domainfile, problemfile):
                            cltree, obtree)
     # print(world.functions)
     _apply_state_pddl(world, prob)
-    print("****")
+
     return world
 
     # probinitialState = getInitialState(prob.initialstate)

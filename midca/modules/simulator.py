@@ -58,7 +58,7 @@ class MidcaEventSimulator:
                     print(inst_op)
                     print("****")
                     # try:
-                    new_world.apply(inst_op)
+                    self.world.apply(inst_op)
 
                     func = self.world.functions["player-current-health"]
                     a = next((x for x in self.world.atoms if x.func == func), None)
@@ -66,6 +66,10 @@ class MidcaEventSimulator:
                     print("the result:")
                     print(a.val)
 
+                    for atom in self.world.atoms:
+                        if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
+                            arrow = atom.args
+                            print("yes")
 
 
                     if verbose >= 2:

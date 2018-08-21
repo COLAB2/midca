@@ -86,7 +86,7 @@
 				(player-at ?target)
 				(not (placed-thing-at-map ?res ?target))
 				(> (thing-available ?res) 0)
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -103,7 +103,7 @@
 			(and 
 				(player-at ?from) 
 				(connect ?from ?to)
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -127,27 +127,28 @@
 		:effect
 			(and
 				(known-loc ?res)
-				(looking-for ?res)
+				;;(looking-for ?res)
 			)
 	)
 
 	;;--------------------------------------------------------
 	;;------------EVENTS--------------------------------------
 	;;--------------------------------------------------------
-    (:action event-find
-		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			    (looking-for ?res)
-				 (connect ?loc ?player_loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-				(know-where ?res ?loc)
-			)
-
-	)
+    ;;(:action event-find
+	;;	:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
+	;;	:precondition
+	;;		(and
+	;;		    (looking-for ?res)
+	;;			 (connect ?loc ?player_loc)
+	;;			 (thing-at-loc ?res ?loc)
+	;;		)
+	;;	:effect
+	;;		(and
+	;;			(know-where ?res ?loc)
+	;;			(thing-at-map ?res ?loc)
+	;;		)
+;;
+;;	)
     ;;--------------------------------------------------------
 
 	(:action event-fall-in-trap
@@ -230,7 +231,7 @@
 				(thing-at skeleton)
 				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) 10)
-				(not (crafting))
+
 
 			)
 		:effect
@@ -265,7 +266,7 @@
 				(known-loc arrowtrap)
 				(thing-at arrowtrap)
 				(= (tool-in-hand) (tool-id ?tool))
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -281,7 +282,7 @@
 			(and
 				(not (= (current-harvest-location) (location-id ?target)))
 				(player-at ?target)
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -297,7 +298,7 @@
 			(and
 				(not (= (tool-in-hand) (tool-id ?tool)))
 				(> (thing-available ?tool) 0)
-				(not (crafting))
+
 			)
 		:effect
 			(and 
@@ -360,7 +361,7 @@
 				(= (current-harvest-location) (location-id ?target))
 				(= (tool-in-hand) (tool-id ?tool))
 				(< (current-harvest-duration) (duration-need ?tool ?obj))
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -377,7 +378,7 @@
 				(> (thing-available ?tool) 0)
 				(= (tool-in-hand) (tool-id ?tool))
 				(= (tool-current-health ?tool) 0)
-				(not (crafting))
+
 			)
 		:effect
 			(and
@@ -417,7 +418,7 @@
 				(= (tool-in-hand) (tool-id ?tool))
 				(= (current-harvest-location) (location-id ?target))
 				(= (current-harvest-duration) (duration-need ?tool tree))
-				(not (crafting))
+
 			)
 		:effect
 			(and

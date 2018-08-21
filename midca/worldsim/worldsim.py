@@ -131,7 +131,7 @@ class Atom:
         self.predicate = None
         self.func = None
 
-        if predicate is Predicate:
+        if type(predicate) is Predicate:
             self.predicate = predicate
             self.args = args
             self.hash = hash(predicate.name + str(list(map(str, args))))  # little expensive because of map, but only
@@ -244,24 +244,25 @@ class Condition:
         self.op = op
         self.val = val
 
-
     def instantiate(self, args):
         if self.argtypes:
             i = 0
+            #TODO: Zohreh-- I need to rewrite this part
             for arg in args:
-                if not arg.is_a(self.argtypes[i]):
-                    raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
+                if type(self.argtypes[i]) is list:
+                    print("it is a list")
+
+                    for at in self.argtypes[i]:
+                        print(at.name)
+                        print("=============")
+                        if not arg.is_a(at):
+                            raise Exception("Trying to instantiate " + arg.name + " as a " + at.name)
+                else:
+                    if not arg.is_a(self.argtypes[i]):
+                        raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
                 i += 1
+        print("it is atom instanstiate")
         if self.atom.func:
-            # if self.op == "decrease":
-            #     print(self.atom.func)
-            #     print("******************")
-            #     for j in func_val_dict:
-            #         print(j)
-            #     old_val = func_val_dict[self.atom.func.name]
-            #     new_val = old_val - self.val
-            #     func_val_dict[self.atom.func.name] = new_val
-            #     return self.atom.func.instantiate(args, new_val)
             return self.atom.func.instantiate(args)
 
         if self.atom.predicate:
@@ -421,32 +422,54 @@ class Operator:
             args = []
             #TODO: Zohreh; it is hard coded here for constant objects. should be modified.
             for name in names:
+                if not(type(name) == list):
+                    if name and name in objdict.keys():
+                        args.append(objdict[name])
+                    elif name:
+                        for t in self.types:
+                            for x in t:
+                                if x.name == "resource":
+                                    resourceType = x
+                        args.append(Obj(name, resourceType))
+                else:
+                    for n in name:
+                        if n in objdict.keys():
+                            args.append(objdict[n])
+                        elif n:
+                            for t in self.types:
+                                for x in t:
+                                    if x.name == "resource":
+                                        resourceType = x
+                            args.append(Obj(n, resourceType))
 
-                if name and name in objdict.keys():
-                    args.append(objdict[name])
-                elif name:
-                    for t in self.types:
-                        for x in t:
-                            if not(type(x) == list) and x.name == "resource":
-                                resourceType = x
-                    # for t in self.types:
-                    #     resourceType = [x for x in t if x.name.strip() == "resource"]
-                    args.append(Obj(name, resourceType))
 
             preconditions.append(condition.instantiate(args))
+
         results = []
         func_results = []
         for condition in self.resultorder:
             names = self.results[condition]
             args = []
             for name in names:
-                if name and name in objdict.keys():
-                    args.append(objdict[name])
-                elif name:
-                    for t in self.types:
-                        # resourceType = [x for x in t if x.name == "resource"]
-                        resourceType = self.resource_type()
-                    args.append(Obj(name, resourceType))
+                if not(type(name) == list):
+                    if name and name in objdict.keys():
+                        args.append(objdict[name])
+                    elif name:
+                        for t in self.types:
+                            for x in t:
+                                if x.name == "resource":
+                                    resourceType = x
+                        args.append(Obj(name, resourceType))
+                else:
+                    for n in name:
+                        if n in objdict.keys():
+                            args.append(objdict[n])
+                        elif n:
+                            for t in self.types:
+                                for x in t:
+                                    if x.name == "resource":
+                                        resourceType = x
+                            args.append(Obj(n, resourceType))
 
             if condition.op:
                 func_results.append((condition.instantiate(args), condition.op, condition.val))
@@ -781,7 +804,15 @@ class World:
 
     def atom_true(self, atom):
         # this is very fast, because atom objects have hashes and self.atoms is a set, not a list
-        return atom in self.atoms
+        #TODO: Zohreh; This line is temporary; fix it later
+        if atom.func:
+            print("this is func")
+            print("^^^^^^")
+            print(atom)
+            return True
+        else:
+            print(atom)
+            return atom in self.atoms
 
     def atom_val_true(self, atom, verbose=2):
         if verbose >= 2 : print(atom)
@@ -864,9 +895,15 @@ class World:
     def is_applicable(self, action):
         for i in range(len(action.preconds)):
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
+                print("prepos is not met")
+                print(action.preconds[i])
                 return False
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
+                print("prepos it not met******")
+                print(action.prePos[i])
+                print(action.preconds[i])
                 return False
+        print("it is applicable")
         return True
 
     # convenience method for operating with MIDCA
@@ -878,19 +915,16 @@ class World:
             return False
 
         action = operator.instantiate(args)
+        print("operator is istantiated")
 
         return self.is_applicable(action)
 
     def apply(self, simAction, verbose=2):
-        # if verbose >=2:
-        #     print("*************")
-        #     print(simAction)
-        for (atom, op, val) in simAction.funcRes:
-            print(atom.func)
-            func = next((x for x in self.atoms if x.func and x.func ==atom.func), None)
-            print(func.val)
 
-            print(val)
+        for (atom, op, val) in simAction.funcRes:
+
+            func = next((x for x in self.atoms if x.func and x.func ==atom.func), None)
+
             if op == "decrease":
                 func.val = func.val - val
             elif op == "increase":
@@ -898,14 +932,21 @@ class World:
             elif op == "assign":
                 func.val = val
 
-
         for i in range(len(simAction.results)):
-
+            print(simAction.results[i])
             if simAction.postPos[i]: ## it is an atom
+                print("is added")
+                atom = simAction.results[i]
+                print(atom.predicate)
+                if atom.func:
+                    print(atom.func)
+                for t in atom.args:
+                    print(t)
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
+                print("isremoved")
 
     def apply_named_action(self, opName, argNames, verbose=2):
 
@@ -978,6 +1019,7 @@ class World:
     def apply_midca_action(self, midcaAction):
         opname = midcaAction.op
         argnames = [str(arg) for arg in midcaAction.args]
+        print("going to apply named action")
         self.apply_named_action(opname, argnames)
 
     # interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
@@ -1050,6 +1092,7 @@ class World:
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
+                print("it is not applicable")
                 break
             testWorld.apply_midca_action(action)
 
