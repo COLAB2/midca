@@ -223,7 +223,6 @@ def load_domain(domainfile, problemfile):
                     postfunctypes.append(temptypes)
                     postpredicatesfunc.append(worldsim.Predicate_function(eff.op, args))
 
-
             elif type(eff) is Predicate:
                 # a.args is typedArgList
                 postpos.append(True)
@@ -233,9 +232,7 @@ def load_domain(domainfile, problemfile):
                 postobjtypes.append(eff_args_type)
                 # print(eff_args_name)
 
-
         for eff in a.get_eff(False):
-
             if type(eff) is Formula:
                 args = []
                 tempargs = []

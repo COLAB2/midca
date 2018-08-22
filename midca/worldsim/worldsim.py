@@ -200,13 +200,17 @@ class Predicate:
 
 class Action:
 
-    def __init__(self, operator, preconds, prePos, results, postPos, funcRes=[]):
+    def __init__(self, operator, preconds, prePos, results, postPos, funcPre=[], funcRes=[], prefuncpos=[], postfuncpos=[]):
         self.operator = operator
         self.preconds = preconds
         self.prePos = prePos
         self.results = results
         self.postPos = postPos
         self.funcRes = funcRes
+        self.funcPre = funcPre
+        self.preFuncPos = prefuncpos
+        self.postFuncPos = postfuncpos
+
 
     def set_args(self, args):
         '''
@@ -247,21 +251,17 @@ class Condition:
     def instantiate(self, args):
         if self.argtypes:
             i = 0
-            #TODO: Zohreh-- I need to rewrite this part
             for arg in args:
                 if type(self.argtypes[i]) is list:
-                    print("it is a list")
 
                     for at in self.argtypes[i]:
-                        print(at.name)
-                        print("=============")
                         if not arg.is_a(at):
                             raise Exception("Trying to instantiate " + arg.name + " as a " + at.name)
                 else:
                     if not arg.is_a(self.argtypes[i]):
                         raise Exception("Trying to instantiate " + arg.name + " as a " + self.argtypes[i].name)
                 i += 1
-        print("it is atom instanstiate")
+
         if self.atom.func:
             return self.atom.func.instantiate(args)
 
@@ -299,7 +299,7 @@ class Operator:
 
     def __init__(self, name, objnames, prepredicates, preobjnames, preobjtypes, prePositive, postpredicates,
                  postobjnames, postobjtypes, postPositive, prefunc=[], prefuncnames = [], prefunctypes=[], postfunc=[],
-                 postfuncnames=[], postfunctypes=[]):
+                 postfuncnames=[], postfunctypes=[], prefuncpos=[], postfuncpos=[]):
         self.name = name
         self.objnames = objnames
         self.preconditions = {}
@@ -314,17 +314,9 @@ class Operator:
         self.results = {}
         self.resultorder = []
         self.postPos = postPositive
+        self.prefuncpos = prefuncpos
+        self.postfunpos = postfuncpos
 
-        # for pred in range(len(prepredicates)):
-        #     print(prepredicates[pred])
-        # for yy in self.types:
-        #     print(yy)
-        # t1 = [item for sublist in prefunctypes for item in sublist]
-        # t2 = [item for sublist in postfunctypes for item in sublist]
-        # self.types = self.types + t1 + t2
-        # print("~~~~~~~~~~~~~~~~~~~~~~~~~`")
-        # for yy in self.types:
-        #     print(yy)
         for pred in range(len(prepredicates)):
             args = []
             usednames = []
@@ -372,8 +364,7 @@ class Operator:
         for pred in range(len(postfunc)):
             args = []
             usednames = []
-            print("pred")
-            print(postfunc[pred])
+
             names = postfuncnames[pred] if postfuncnames else []
             types = postfunctypes[pred] if postfunctypes else []
 
@@ -417,6 +408,7 @@ class Operator:
             objdict[self.objnames[i]] = args[i]
 
         preconditions = []
+        func_preconditions = []
         for condition in self.precondorder:
             names = self.preconditions[condition]
             args = []
@@ -442,8 +434,12 @@ class Operator:
                                         resourceType = x
                             args.append(Obj(n, resourceType))
 
-
-            preconditions.append(condition.instantiate(args))
+            if condition.op:
+                # if type(condition.val) is Function:
+                #     condition.val.instantiate(args)
+                func_preconditions.append((condition.instantiate(args), condition.op, condition.val))
+            else:
+                preconditions.append(condition.instantiate(args))
 
         results = []
         func_results = []
@@ -476,7 +472,7 @@ class Operator:
             else:
                 results.append(condition.instantiate(args))
 
-        result_action = Action(self, preconditions, self.prePos, results, self.postPos, func_results)
+        result_action = Action(self, preconditions, self.prePos, results, self.postPos, func_preconditions, func_results, self.prefuncpos, self.postfunpos)
         result_action.set_args(args)
         return result_action
 
@@ -504,14 +500,17 @@ class Operator:
             s = s[:-3]
         s += "]\nPostconditions: ["
         i = 0
-        for condition in self.results:
-            # print "postcondition is "+str(condition)
-            if not self.postPos[i]:
-                s += "Not "
-            s += str(condition) + " ; "
-            i += 1
-        if self.results:
-            s = s[:-3] + "]"
+        # for condition in self.results:
+        #     print ("postcondition is "+str(condition))
+        #     for j in range(len(self.postPos)):
+        #         print(self.postPos[j])
+        #
+        #     if self.postPos and not self.postPos[i]:
+        #         s += "Not "
+        #     s += str(condition) + " ; "
+        #     i += 1
+        # if self.results:
+        #     s = s[:-3] + "]"
         return s
 
 
@@ -802,15 +801,27 @@ class World:
                         return True
         return False
 
+    def atom_func_true(self, atom, op, val):
+        a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
+        if a:
+            if not isinstance(val, numbers.Number):#it is a function like (tool-id ?tool)
+                func_2 = next((x for x in self.atoms if x.func and x.func == val), None)
+                val = func_2.val
+
+            if op == ">":
+                return int(a.val) > int(val)
+
+            if op == "<":
+                return int(a.val) < int(atom.val)
+
+            if op == "=":
+                return int(a.val) == int(atom.val)
+
+        return False
+
+
     def atom_true(self, atom):
         # this is very fast, because atom objects have hashes and self.atoms is a set, not a list
-        #TODO: Zohreh; This line is temporary; fix it later
-        if atom.func:
-            print("this is func")
-            print("^^^^^^")
-            print(atom)
-            return True
-        else:
             print(atom)
             return atom in self.atoms
 
@@ -895,14 +906,18 @@ class World:
     def is_applicable(self, action):
         for i in range(len(action.preconds)):
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
-                print("prepos is not met")
-                print(action.preconds[i])
                 return False
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
-                print("prepos it not met******")
-                print(action.prePos[i])
-                print(action.preconds[i])
                 return False
+
+        for i in range(len(action.preFuncPos)):
+            (atom, op, val) = action.funcPre[i]
+            if action.preFuncPos[i] and not self.atom_func_true(atom, op, val):
+                return False
+
+            if not action.preFuncPos[i] and self.atom_func_true(atom, op, val):
+                return False
+
         print("it is applicable")
         return True
 
