@@ -14,6 +14,8 @@ class MidcaActionSimulator:
 
     def run(self, cycle, verbose=2):
         try:
+
+
             # get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
         except TypeError as IndexError:
@@ -58,19 +60,16 @@ class MidcaEventSimulator:
                     print(inst_op)
                     print("****")
                     # try:
-                    self.world.apply(inst_op)
+
 
                     func = self.world.functions["player-current-health"]
                     a = next((x for x in self.world.atoms if x.func == func), None)
                     # 15 is a threshold here;
                     print("the result:")
                     print(a.val)
+                    print("tool-in-hand")
 
-                    for atom in self.world.atoms:
-                        if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
-                            arrow = atom.args
-                            print("yes")
-
+                    self.world.apply(inst_op)
 
                     if verbose >= 2:
                         print("simulating MIDCA event:", __event)
@@ -109,7 +108,7 @@ class MidcaEventSimulator:
 
         # find the correct types
         for precond in operator.preconditions:
-            args = list(map(str, precond.atom.args))
+            args = list(map(str, precond.arg1.args))
             for i in range(len(args)):
                 if args[i] in arg_names:
                     arg_names_i = arg_names.index(args[i])

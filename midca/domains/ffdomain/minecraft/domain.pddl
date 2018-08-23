@@ -236,7 +236,7 @@
 			)
 		:effect
 			(and
-				(increase (thing-available bone) 1)
+
 				(not (thing-at skeleton))
 				(attacking)
 			)

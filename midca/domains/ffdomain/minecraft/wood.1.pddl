@@ -616,10 +616,12 @@ bowl - material)
 (thing-at skeleton)
 (thing-at arrowtrap)
 (thing-at-map shelter m2_3)
-)
-
- (:goal
+)   (:goal
 (and
 (not(thing-at skeleton))
+)
+)) (:goal
+(and
+(not(thing-at arrowtrap))
 )
 ))

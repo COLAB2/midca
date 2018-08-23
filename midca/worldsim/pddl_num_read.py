@@ -118,8 +118,7 @@ def load_domain(domainfile, problemfile):
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-                        print("fhead")
-                        print(sub.asPDDL())
+
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
 
@@ -128,7 +127,7 @@ def load_domain(domainfile, problemfile):
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+
                 if args:
                     prefuncpos.append(True)
                     prefunnames.append(tempargs)
@@ -164,8 +163,7 @@ def load_domain(domainfile, problemfile):
                         preobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-                        print("fhead")
-                        print(sub.asPDDL())
+
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
 
@@ -174,7 +172,7 @@ def load_domain(domainfile, problemfile):
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+
                 if args:
                     prefuncpos.append(False)
                     prefunnames.append(tempargs)
@@ -206,8 +204,7 @@ def load_domain(domainfile, problemfile):
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-                        print("fhead")
-                        print(sub.asPDDL())
+
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
 
@@ -216,7 +213,7 @@ def load_domain(domainfile, problemfile):
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+
                 if args:
                     postfuncpos.append(True)
                     postfuncnames.append(tempargs)
@@ -248,8 +245,7 @@ def load_domain(domainfile, problemfile):
                         postobjtypes.append(argtypes)
 
                     elif type(sub) is FHead:
-                        print("fhead")
-                        print(sub.asPDDL())
+
                         argnames = parseTypedArgList_names(sub.args)
                         argtypes = parseTypedArgList_types(sub.args, actions_args)
 
@@ -258,7 +254,7 @@ def load_domain(domainfile, problemfile):
                         args.append(functions[sub.name])
                     else:
                         args.append(sub.val)
-                        print(sub.val)
+
                 if args:
                     postfuncpos.append(False)
                     postfuncnames.append(tempargs)
@@ -286,6 +282,9 @@ def load_domain(domainfile, problemfile):
     # print(world.functions)
     _apply_state_pddl(world, prob)
 
+    for t in worldsim.func_val_dict:
+        print(t)
+    print("++++++++++++++++++++++++++++++++++++++++++")
     return world
 
     # probinitialState = getInitialState(prob.initialstate)
@@ -350,7 +349,7 @@ def _apply_state_pddl(world, prob):
                     raise Exception(func)
 
                 atom = world.functions[func].instantiate(args, val)
-                worldsim.func_val_dict.update({func: val})
+                worldsim.func_val_dict.update({atom: val})
                 world.add_atom(atom)
         else:
 
