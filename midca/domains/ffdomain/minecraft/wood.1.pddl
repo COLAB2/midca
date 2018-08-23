@@ -480,9 +480,9 @@ bowl - material)
 (connect m9_8 m9_7)
 (connect m9_9 m8_9)
 (connect m9_9 m9_8)
- (player-at m0_0)
+(player-at m0_0)
 (= (player-current-health) 20)
- (= (tool-in-hand) 0)
+(= (tool-in-hand) 0)
 (= (tool-id hand) 0)
 (= (tool-id wood-axe) 11)
 (= (tool-id bow) 10)
@@ -617,7 +617,8 @@ bowl - material)
 (thing-at arrowtrap)
 (thing-at-map shelter m2_3)
 )
-    (:goal
+
+ (:goal
 (and
 (not(thing-at skeleton))
 )

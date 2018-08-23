@@ -37,7 +37,7 @@ class Predicate_function:
     def __init__(self, op, args):
         self.name = op
         self.op = op
-        self.args = args # func val assume there is only one func val
+        self.args = args
         self.argnames = args[0].argnames if args else []
         self.argtypes = args[0].argtypes if args else []
         self.val = args[1] if args else []
@@ -47,38 +47,18 @@ class Predicate_function:
 
     def instantiate(self, args):
         # (= (tool-in-hand) (tool-id ?tool))
-        if isinstance(self.args[1], numbers.Number):
+        # if isinstance(self.args[1], numbers.Number):
 
-            return self.args[0].instantiate(args[0])
-        else:
+        return self.args[0].instantiate(args[0])
+        # else:
+        #     print("~~~~~~~~~")
+        #     for ii in args:
+        #         print(ii)
+        #     print("~~~~~~~~~~")
+        #     arg = self.args[1].instantiate(args[1])
+        #     print("arg =" + str(arg))
+        #     return self.args[0].instantiate(args[0])
 
-            return self.args[1].instantiate(args[1])
-
-
-
-        # return Atom(self.argnames, args)
-        # func = next((x for x in self.atoms if x.func and x.func == args[0]), None)
-        #
-        # for arg in args[1:]:
-        #     if arg is function:
-        #         atom_func = next((x for x in self.atoms if x.func and x.func == arg), None)
-        #         if atom_func:
-        #             val = float(atom_func.val)
-        #     else:
-        #         val = float(arg)
-        #
-        # if op == "increase":
-        #     func.val = func.val + val
-        # elif op == "decrease":
-        #     func.val = func.val - val
-        # elif op == "assign":
-        #     func.val = val
-        # elif op == ">":
-        #     func.val > val
-        # elif op == "<":
-        #     func.val < val
-        #
-        # return func
 
 
 class Constant:
@@ -120,6 +100,18 @@ class Atom:
 
     def __init__(self, predicate, args, val=None):
         if len(predicate.argnames) != len(args):
+            print("*********99********")
+            print(len(predicate.argnames))
+            print(len(args))
+            for a in predicate.argnames:
+                print(a)
+                print(type(a))
+            print("^^^^^^^^^^^")
+            for t in args:
+                print(t)
+                print(type(t))
+            print("***************")
+
             raise Exception("Wrong number of args for " + predicate.name + " " + args.__str__())
         i = 0
         if predicate.argtypes:
@@ -263,7 +255,7 @@ class Condition:
                 i += 1
 
         if self.atom.func:
-            return self.atom.func.instantiate(args)
+            return self.atom.func.instantiate(args, self.val)
 
         if self.atom.predicate:
             return self.atom.predicate.instantiate(args)
@@ -435,9 +427,12 @@ class Operator:
                             args.append(Obj(n, resourceType))
 
             if condition.op:
-                # if type(condition.val) is Function:
-                #     condition.val.instantiate(args)
-                func_preconditions.append((condition.instantiate(args), condition.op, condition.val))
+                new_val = condition.val
+                if not isinstance(condition.val, numbers.Number):
+                    new_val = condition.val.instantiate(args)
+                    func_preconditions.append((condition.instantiate([]), condition.op, new_val))
+                else:
+                    func_preconditions.append((condition.instantiate(args), condition.op, new_val))
             else:
                 preconditions.append(condition.instantiate(args))
 
@@ -468,7 +463,13 @@ class Operator:
                             args.append(Obj(n, resourceType))
 
             if condition.op:
-                func_results.append((condition.instantiate(args), condition.op, condition.val))
+                new_val = condition.val
+
+                if not isinstance(condition.val, numbers.Number):
+                    new_val = condition.val.instantiate(args)
+                    func_results.append((condition.instantiate([]), condition.op, new_val))
+                else:
+                    func_results.append((condition.instantiate(args), condition.op, new_val))
             else:
                 results.append(condition.instantiate(args))
 
@@ -490,14 +491,14 @@ class Operator:
             s = s[:-2]
         s += ")\nPreconditions: ["
         i = 0
-        for condition in self.preconditions:
-            # print "precondition is "+str(condition)
-            if not self.prePos[i]:
-                s += "Not "
-            s += str(condition) + " ; "
-            i += 1
-        if self.preconditions:
-            s = s[:-3]
+        # for condition in self.preconditions:
+        #     # print "precondition is "+str(condition)
+        #     if not self.prePos[i]:
+        #         s += "Not "
+        #     s += str(condition) + " ; "
+        #     i += 1
+        # if self.preconditions:
+        #     s = s[:-3]
         s += "]\nPostconditions: ["
         i = 0
         # for condition in self.results:
@@ -802,27 +803,34 @@ class World:
         return False
 
     def atom_func_true(self, atom, op, val):
-        a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
+        a = next((x for x in self.atoms if x.func and x.func == atom.func and x.args == atom.args), None)
         if a:
-            if not isinstance(val, numbers.Number):#it is a function like (tool-id ?tool)
-                func_2 = next((x for x in self.atoms if x.func and x.func == val), None)
-                val = func_2.val
+            if not isinstance(val, numbers.Number):
 
+                print("func_2:")
+                func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
+                print(func_2)
+                val = func_2.val
+                print("val:")
+                print(val)
+
+            print(val)
+            print(a.val)
             if op == ">":
-                return int(a.val) > int(val)
+                return float(a.val) > float(val)
 
             if op == "<":
-                return int(a.val) < int(atom.val)
+                return float(a.val) < float(val)
 
             if op == "=":
-                return int(a.val) == int(atom.val)
+                return float(a.val) == float(val)
 
+        print("return false")
         return False
 
 
     def atom_true(self, atom):
         # this is very fast, because atom objects have hashes and self.atoms is a set, not a list
-            print(atom)
             return atom in self.atoms
 
     def atom_val_true(self, atom, verbose=2):
@@ -910,12 +918,22 @@ class World:
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
                 return False
 
+        #todo: Zohreh; fix the bug later here
         for i in range(len(action.preFuncPos)):
             (atom, op, val) = action.funcPre[i]
-            if action.preFuncPos[i] and not self.atom_func_true(atom, op, val):
-                return False
+            # if action.preFuncPos[i] and not self.atom_func_true(atom, op, val):
+            #     print(action.preFuncPos[i])
+            #     print("not true")
+            #     return False
+            #
+            # if not action.preFuncPos[i] and self.atom_func_true(atom, op, val):
+            #     print(action.preFuncPos[i])
+            #     print("not false")
+            #     return False
+            #
+            if True and not self.atom_func_true(atom, op, val):
 
-            if not action.preFuncPos[i] and self.atom_func_true(atom, op, val):
+                print("not true")
                 return False
 
         print("it is applicable")
@@ -929,23 +947,39 @@ class World:
         except KeyError:
             return False
 
+        print(operator)
+        print("is going to be instantiated")
+        for a in args:
+            print(a)
+        print("args")
         action = operator.instantiate(args)
-        print("operator is istantiated")
 
         return self.is_applicable(action)
 
     def apply(self, simAction, verbose=2):
 
-        for (atom, op, val) in simAction.funcRes:
 
-            func = next((x for x in self.atoms if x.func and x.func ==atom.func), None)
+        for (atom, op, val) in simAction.funcRes:
+            print("atom" + str(atom))
+            print("val" + str(val))
+
+            func = next((x for x in self.atoms if x.func and x.func ==atom.func and x.args == atom.args), None)
+
+            print(func.val)
+            if not isinstance(val, numbers.Number):
+                func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
+
+                val = func_2.val
 
             if op == "decrease":
-                func.val = func.val - val
+                func.val = float(func.val) - float(val)
             elif op == "increase":
-                func.val = func.val + val
+                func.val = float(func.val) + float(val)
             elif op == "assign":
-                func.val = val
+                print("func " + str(func))
+                print("op is assign")
+                print(val)
+                func.val = float(val)
 
         for i in range(len(simAction.results)):
             print(simAction.results[i])
@@ -973,7 +1007,6 @@ class World:
         if opName not in self.operators:
             raise Exception("Operator " + opName + " DNE")
         simAction = self.operators[opName].instantiate(args)
-
 
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")

@@ -243,20 +243,7 @@
 	)
 	;;----------------------------------
 
-	(:action __attack-skeleton
-		:parameters (?tool - tool ?loc - mapgrid)
-		:precondition
-			(and
-				(known-loc skeleton)
-				(know-where skeleton ?loc)
-				(attacking)
 
-			)
-		:effect
-			(and
-				(not (thing-at-loc skeleton ?loc))
-			)
-	)
 
 	;;--------------------------------------------------------
 	(:action destroy-trap
