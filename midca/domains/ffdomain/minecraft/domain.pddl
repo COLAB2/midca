@@ -127,28 +127,28 @@
 		:effect
 			(and
 				(known-loc ?res)
-				;;(looking-for ?res)
+				(looking-for ?res)
 			)
 	)
 
 	;;--------------------------------------------------------
 	;;------------EVENTS--------------------------------------
 	;;--------------------------------------------------------
-    ;;(:action event-find
-	;;	:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
-	;;	:precondition
-	;;		(and
-	;;		    (looking-for ?res)
-	;;			 (connect ?loc ?player_loc)
-	;;			 (thing-at-loc ?res ?loc)
-	;;		)
-	;;	:effect
-	;;		(and
-	;;			(know-where ?res ?loc)
-	;;			(thing-at-map ?res ?loc)
-	;;		)
-;;
-;;	)
+    (:action event-find
+		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-for ?res)
+				 (connect ?loc ?player_loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+				(know-where ?res ?loc)
+				(thing-at-map ?res ?loc)
+			)
+
+	)
     ;;--------------------------------------------------------
 
 	(:action event-fall-in-trap
