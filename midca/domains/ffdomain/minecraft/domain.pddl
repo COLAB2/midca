@@ -343,11 +343,10 @@
 			(and
 				(player-at ?target)
 				(> (thing-available ?tool) 0)
-				(> (tool-current-health ?tool) 0)
 				(thing-at-map ?obj ?target)
 				(= (current-harvest-location) (location-id ?target))
 				(= (tool-in-hand) (tool-id ?tool))
-				(< (current-harvest-duration) (duration-need ?tool ?obj))
+
 
 			)
 		:effect
@@ -404,14 +403,13 @@
 				(thing-at-map tree ?target)
 				(= (tool-in-hand) (tool-id ?tool))
 				(= (current-harvest-location) (location-id ?target))
-				(= (current-harvest-duration) (duration-need ?tool tree))
+
 
 			)
 		:effect
 			(and
 				(increase (thing-available wood) 1)
 				(not (thing-at-map tree ?target))
-				(assign (current-harvest-duration) 0)
 			)
 	)
 

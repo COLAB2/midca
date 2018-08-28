@@ -63,13 +63,6 @@ class MidcaEventSimulator:
                     # try:
 
 
-                    func = self.world.functions["player-current-health"]
-                    a = next((x for x in self.world.atoms if x.func == func), None)
-                    # 15 is a threshold here;
-                    print("the result:")
-                    print(a.val)
-                    print("tool-in-hand")
-
                     self.world.apply(inst_op)
 
                     if verbose >= 2:

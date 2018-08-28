@@ -103,14 +103,7 @@ class Atom:
 
     def __init__(self, predicate, args, val=None):
         if len(predicate.argnames) != len(args):
-            print(predicate.name)
-            print("not the same number")
-            for ii in args:
-                print(ii)
-            print("^^^^^^^^^")
-            for ii in predicate.argnames:
-                print(ii)
-            print("^^^^^^^^^^^")
+
             raise Exception("Wrong number of args for " + predicate.name + " " + args.__str__())
         i = 0
         if predicate.argtypes:
@@ -812,16 +805,14 @@ class World:
         a = next((x for x in self.atoms if x.func and x.func == atom.func and x.args == atom.args), None)
         if a:
             if not isinstance(val, numbers.Number):
-                print("func_2:")
-                func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
-                print(func_2)
-                val = func_2.val
-                print("val:")
-                print(val)
 
-            print(val)
-            print(a.val)
+                func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
+
+                val = func_2.val
+
             new_val = a.val
+
+            print(a.val)
 
             if not a.val:
                 for f in func_val_dict:
@@ -829,10 +820,9 @@ class World:
                         print("found one: " + str(f))
                         if f.args and f.args == atom.args:
                             new_val = func_val_dict[f]
-                            print(new_val)
+
                         if not f.args:
                             new_val = func_val_dict[f]
-                            print(new_val)
 
             if op == ">":
                 return float(new_val) > float(val)
@@ -852,8 +842,12 @@ class World:
 
     def atom_val_true(self, atom, verbose=2):
         if verbose >= 2: print(atom)
-        a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
+        # a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
+        a = self.get_val_func(atom)
         # TODO: I only assume greater operator here; it needs to be changes for <, =
+        if verbose >=2: print(a.val)
+        if a.val is None:
+            a.val = 0
         return int(a.val) > int(atom.val)
 
     def add_atom(self, atom):
@@ -952,7 +946,7 @@ class World:
             #     print("not true")
             #     return False
 
-        print("it is applicable")
+
         return True
 
     # convenience method for operating with MIDCA
@@ -963,22 +957,35 @@ class World:
         except KeyError:
             return False
 
-        print(operator)
-        print("is going to be instantiated")
+        # print(operator)
+        # print("is going to be instantiated")
 
         action = operator.instantiate(args)
 
         return self.is_applicable(action)
 
+    def get_val_func(self, atom):
+        for f in self.atoms:
+            if f.func and f.func.name == atom.func.name:
+                for a in range(len(f.args)):
+                    if str(f.args[a].name).strip() == str(atom.args[a].name).strip():
+                        return f
+
+                if not f.args:
+                   return f
+
+        return None
+
     def apply(self, simAction, verbose=2):
 
         for (atom, val, op) in simAction.funcRes:
-            print("atom" + str(atom))
-            print("val" + str(val))
+            # func = next((x for x in self.atoms if x.func and x.func == atom.func  and x.args == atom.args), None)
+            # print("atom" + str(atom))
+            func = self.get_val_func(atom)
+            #todo: Zohreh -- change this later
+            if func.val is None:
+                func.val = 0
 
-            func = next((x for x in self.atoms if x.func and x.func == atom.func and x.args == atom.args), None)
-
-            print(func.val)
             if not isinstance(val, numbers.Number):
                 func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
 
@@ -986,38 +993,32 @@ class World:
 
             if op == "decrease":
                 func.val = float(func.val) - float(val)
+
             elif op == "increase":
+                print("func" + str(func))
                 func.val = float(func.val) + float(val)
+                print("val" + str(func.val))
+
             elif op == "assign":
-                print("func " + str(func))
-                print("op is assign")
-                print(val)
                 func.val = float(val)
 
-            for f in func_val_dict:
-                if f.func.name == func.func.name:
-                    print("Update the value for " + str(f))
-                    if f.args and f.args == func.args:
-                        func_val_dict[f] = func.val
-                    if not f.args:
-                        func_val_dict[f] = func.val
-
+            # for f in func_val_dict:
+            #     if f.func.name == func.func.name:
+            #         print("Update the value for " + str(f))
+            #         for a in range(len(f.args)):
+            #             if str(f.args[a].name).strip() == str(func.args[a].name).strip():
+            #                 func_val_dict[f] = func.val
+            #         if not f.args:
+            #             func_val_dict[f] = func.val
 
         for i in range(len(simAction.results)):
-            print(simAction.results[i])
+
             if simAction.postPos[i]:  ## it is an atom
-                print("is added")
-                atom = simAction.results[i]
-                print(atom.predicate)
-                if atom.func:
-                    print(atom.func)
-                for t in atom.args:
-                    print(t)
                 self.add_atom(simAction.results[i])
             else:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
-                print("isremoved")
+
 
     def apply_named_action(self, opName, argNames, verbose=2):
 
@@ -1032,6 +1033,7 @@ class World:
 
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")
+        print("self.apply(simAction)")
         self.apply(simAction)
 
     # TODO: I need to modify this for an actual event
@@ -1090,7 +1092,7 @@ class World:
     def apply_midca_action(self, midcaAction):
         opname = midcaAction.op
         argnames = [str(arg) for arg in midcaAction.args]
-        print("going to apply named action")
+
         self.apply_named_action(opname, argnames)
 
     # interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
@@ -1151,7 +1153,7 @@ class World:
             raise ValueError(str(predicate) + str(args) + " does not seem to be a valid state")
 
     def plan_correct(self, plan):
-        testWorld = self.copy()
+        testWorld = copy.deepcopy(self)
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
                 return False
@@ -1159,7 +1161,7 @@ class World:
         return True
 
     def goals_achieved(self, plan, goalSet):
-        testWorld = self.copy()
+        testWorld = copy.deepcopy(self)
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):

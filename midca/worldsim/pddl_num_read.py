@@ -59,6 +59,8 @@ def load_domain(domainfile, problemfile):
     #     for p in types[t].parents:
     #         print(p.__repr__())
 
+    print("Objects:")
+    objects = parseObjects(prob.objects)
     ###Predicates##########
     print('predicates: ')
     for a in dom.predicates:
@@ -274,8 +276,6 @@ def load_domain(domainfile, problemfile):
                                                     postpredicates, postobjnames, postobjtypes, postpos,
                                                     prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc, postfuncnames, postfunctypes, prefuncpos, postfuncpos)})
 
-    print("Objects:")
-    objects = parseObjects(prob.objects)
 
     world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),list(functions.values()),
                            cltree, obtree)
@@ -456,9 +456,16 @@ def parseTypedArgList(argList):
 def parseTypedArgList_names(argList):
     parsed = []
     for arg in argList.args:
+        n = objects
         parsed.append(str(arg.arg_name))
     return parsed
 
+def parseTypedArgList_ground_names(argList):
+    parsed = []
+    for arg in argList.args:
+        n = objects[arg.arg_name]
+        parsed.append(n)
+    return parsed
 
 def predicate(name, argnames, argList):
     argtypes = []
