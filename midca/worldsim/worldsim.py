@@ -990,14 +990,16 @@ class World:
                 func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
 
                 val = func_2.val
+                if val == None:
+                    val = 0
 
             if op == "decrease":
                 func.val = float(func.val) - float(val)
 
             elif op == "increase":
-                print("func" + str(func))
+                # print("func" + str(func))
                 func.val = float(func.val) + float(val)
-                print("val" + str(func.val))
+                # print("val" + str(func.val))
 
             elif op == "assign":
                 func.val = float(val)
@@ -1033,7 +1035,7 @@ class World:
 
         if not self.is_applicable(simAction):
             raise Exception("Preconditions not met.")
-        print("self.apply(simAction)")
+
         self.apply(simAction)
 
     # TODO: I need to modify this for an actual event

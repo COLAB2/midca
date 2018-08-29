@@ -1,13 +1,53 @@
 # This file contains helpful functions for the nbeacons domain
 
 import os
-
+import numbers
 
 '''
  translate MIDCA goal state to problem file in metricFF 
  
 '''
 
+def ff_state_from_midca_world(world, STATE_FILE, name="state"):
+    #     thisDir =  os.path.dirname(os.path.realpath(__file__))
+    #     MIDCA_ROOT = thisDir + "/../"
+    #     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problems.shp"
+
+    f = open(STATE_FILE, 'w')
+    f.write("(define \n")
+    f.write("(problem wood)\n")
+    f.write("(:domain minecraft-beta)\n")
+    f.write("(:objects\n")
+
+    for obj in list(world.objects.keys()):
+        f.write(obj + " - " + world.objects[obj].type.name + "\n")
+    f.write(")\n")
+
+    f.write("(:init\n")
+
+    for atom in world.atoms:
+        if atom.predicate:
+            f.write("(" +  atom.predicate.name + " ")
+
+            for a in atom.args:
+                f.write(a.name + " ")
+
+            f.write(")\n")
+
+        if atom.func:
+            f.write("(= (" +  atom.func.name + " ")
+
+            for a in atom.args:
+                f.write(a.name + " ")
+            f.write(") ")
+            if isinstance(atom.val, numbers.Number):
+                f.write(str(atom.val) + ")\n")
+            else:
+                f.write("0" + ")\n")
+
+
+    f.write(")\n")
+    f.close()
 
 
 

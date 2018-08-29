@@ -51,6 +51,7 @@ myMidca.append_module("Eval", evaluate.SimpleEvalSubgoals())
 myMidca.append_module("Intend", intend.SimpleIntendwithSubgoals())
 myMidca.append_module("Plan", planning.MetricFFPlanner(
     minecraft_util.ff_goals_from_midca_goals,
+    minecraft_util.ff_state_from_midca_world,
     DOMAIN_FILE,
     STATE_FILE
 ))

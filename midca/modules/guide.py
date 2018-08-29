@@ -1143,7 +1143,7 @@ class ReactiveSurvive(base.BaseModule):
         a = next((x for x in world.atoms if x.func == func), None)
         # 15 is a threshold here;
 
-        if a.val < 16:
+        if a.val < 19:
             return True
 
         return False

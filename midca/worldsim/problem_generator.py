@@ -23,6 +23,7 @@ MONSTER_CHANCE = 0.3
 SKELETON_LOC = 0
 TRAP_LOC = 0
 MONSTER_LOC = 0
+n = 10
 
 # Random Problem Generator
 def generate_file(file):
@@ -33,8 +34,8 @@ def generate_file(file):
     f.write("(:domain minecraft-beta)\n")
     f.write("(:objects\n")
 
-    for i in range(10):
-        for j in range(10):
+    for i in range(n):
+        for j in range(n):
             f.write("m" + str(i) + "_" + str(j) + " - mapgrid\n")
 
     f.write("tree - resource\n")
@@ -59,24 +60,55 @@ def generate_file(file):
 
     f.write("(:init\n")
 
-    for i in range(10):
-        for j in range(10):
-            if i + 1 < 10:
+    for i in range(n):
+        for j in range(n):
+            if i + 1 < n:
                 f.write("(connect m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j) + ")\n")
             if i - 1 >= 0:
                 f.write("(connect m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j) + ")\n")
-            if j + 1 < 10:
+            if j + 1 < n:
                 f.write("(connect m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j + 1) + ")\n")
             if j - 1 >= 0:
                 f.write("(connect m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j - 1) + ")\n")
+
+    for i in range(n):
+        for j in range(n):
+            if i + 1 < n and j+1 < n:
+                f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j+1) + ")\n")
+            if i - 1 >= 0 and j+1 < n:
+                f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j+1) + ")\n")
+            if j + 1 < n:
+                f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j + 1) + ")\n")
+
+            if i + 1 < n and j -1 >= 0:
+                f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j -1) + ")\n")
+            if i - 1 >= 0 and j -1 >= 0:
+                f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j -1) + ")\n")
+            if j -1 >= 0:
+                f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j  -1) + ")\n")
+
+            if i + 1 < n and j - 1 >= 0:
+                f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j - 1) + ")\n")
+            if i + 1 < n:
+                f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j) + ")\n")
+            if i + 1 < n and j + 1 < n:
+                f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j + 1) + ")\n")
+
+            if i - 1 >= 0 and j - 1 >= 0:
+                f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j - 1) + ")\n")
+            if i - 1 >= 0:
+                f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j) + ")\n")
+            if i - 1 >= 0 and j + 1 < n:
+                f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j + 1) + ")\n")
+
     f.write(" (player-at m0_0)\n")
 
     f.write("(= (player-current-health) 20)\n")
 
     f.write(" (= (tool-in-hand) 11)\n")
     f.write("(= (tool-id hand) 0)\n")
-    f.write("(= (tool-id wood-axe) 0)\n")
-    f.write("(= (tool-id bow) 0)\n")
+    f.write("(= (tool-id wood-axe) 11)\n")
+    f.write("(= (tool-id bow) 10)\n")
     f.write("(= (current-harvest-duration) 0)\n")
     f.write("(= (current-harvest-location) 0)\n")
 
@@ -102,8 +134,8 @@ def generate_file(file):
     f.write("(= (tool-current-health bow) 1000000000)\n")
 
     k = 1
-    for i in range(10):
-        for j in range(10):
+    for i in range(n):
+        for j in range(n):
             f.write("(= (location-id m" + str(i) + "_" + str(j) + ") " + str(k) + ")\n")
             k = k + 1
 
@@ -114,23 +146,23 @@ def generate_file(file):
 
     if skeleton_chance():
         sx, sy = randomxy()
-        f.write("(thing-at skeleton")
+        f.write("(thing-at skeleton)\n")
         f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
         SKELETON_LOC = sx, sy
 
     if trap_chance():
         sx, sy = randomxy()
-        f.write("(thing-at arrowtrap")
+        f.write("(thing-at arrowtrap)\n")
         f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
         TRAP_LOC = sx, sy
 
     if monster_chance():
         sx, sy = randomxy()
-        f.write("(thing-at monster")
+        f.write("(thing-at monster)\n")
         f.write("(thing-at-loc monster m" + str(sx) + "_" + str(sy) + ")\n")
         MONSTER_LOC = sx, sy
 
-    f.write("(thing-at-map shelter m2_3)\n")
+    f.write("(thing-at-map shelter m2_0)\n")
 
     f.write(")")
 
@@ -162,8 +194,8 @@ def monster_chance():
 
 
 def randomxy():
-    i = random.randint(0,9)
-    j = random.randint(0,9)
+    i = random.randint(0,n-1)
+    j = random.randint(0,n-1)
     return (i, j)
 
 

@@ -22,8 +22,15 @@
 		(player-at  ?loc - mapgrid)
 		
 		(in-shelter)
-
-
+        (trap-destroyed)
+        (searched-left ?obj - resource)
+        (searched-right ?obj - resource)
+        (searched-behind ?obj - resource)
+        (searched-forward ?obj - resource)
+        (looking-right)
+        (looking-left)
+        (looking-forward)
+        (looking-behind)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
 		(thing-at ?obj - resource)
 		(known-loc ?obj - resource)
@@ -32,6 +39,10 @@
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
 		(craft-empty  ?loc - craftgrid)
 		(connect  ?from - mapgrid  ?to - mapgrid)
+		(connect-left  ?from - mapgrid  ?to - mapgrid)
+		(connect-right  ?from - mapgrid  ?to - mapgrid)
+		(connect-behind  ?from - mapgrid  ?to - mapgrid)
+		(connect-forward  ?from - mapgrid  ?to - mapgrid)
         (know-where ?res - resource ?loc - mapgrid)
 		(crafting)
 		(survive)
@@ -42,7 +53,7 @@
    	    (is-attacked)
    	    (is-trapped)
 	)
-	
+
 	(:functions
 		(thing-available  ?obj - thing)
 		(current-harvest-duration)
@@ -58,9 +69,9 @@
 		(current-hunger-value)
 
 	)
-	
+
 	(:action restore-health
-		:parameters (?p -potion) 
+		:parameters (?p -potion)
 		:precondition
 			(and
 				(> (thing-available ?p) 0)
@@ -72,9 +83,9 @@
 				(decrease (thing-available ?p) 1)
 			)
 	)
-			
-	
-	;;-------------------------------------------------	
+
+
+	;;-------------------------------------------------
 
 
 	;; ----------------------------------------------------
@@ -99,9 +110,9 @@
 	;; ----------------------------------------------------
 	(:action move
 		:parameters (?from - mapgrid ?to - mapgrid)
-		:precondition 
-			(and 
-				(player-at ?from) 
+		:precondition
+			(and
+				(player-at ?from)
 				(connect ?from ?to)
 
 			)
@@ -114,9 +125,7 @@
 			)
 	)
 	;;----------------------------------------
-	
-	;---------------------------------------------------------
-	(:action find-skeleton
+	(:action find-forward
 		:parameters (?res -resource )
 		:precondition
 			(and
@@ -126,7 +135,53 @@
 			)
 		:effect
 			(and
+				(searched-forward ?res)
+			    (looking-forward)
+			)
+	)
+	;---------------------------------------------------------
+	(:action find-left
+		:parameters (?res -resource )
+		:precondition
+			(and
+			    (searched-forward ?res)
+				(not (known-loc ?res))
+			)
+		:effect
+			(and
+				(searched-left ?res)
+			    (looking-left)
+			)
+	)
+
+    ;;----------------------------------------
+
+	(:action find-right
+		:parameters (?res -resource )
+		:precondition
+			(and
+			    (not (known-loc ?res))
+			    (searched-left ?res)
+			)
+		:effect
+			(and
+				(searched-right ?res)
+				(looking-right)
+			)
+	)
+	;;----------------------------------------
+
+	(:action find-behind
+		:parameters (?res -resource )
+		:precondition
+			(and
+			   (searched-right ?res)
+				(not (known-loc ?res))
+			)
+		:effect
+			(and
 				(known-loc ?res)
+				(looking-behind)
 				(looking-for ?res)
 			)
 	)
@@ -149,7 +204,82 @@
 			)
 
 	)
+
+
     ;;--------------------------------------------------------
+
+    (:action event-find-left
+		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-left)
+				 (connect-left ?player_loc ?loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+
+				(thing-at-map ?res ?loc)
+			)
+
+	)
+
+
+    ;;--------------------------------------------------------
+(:action event-find-forward
+		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-forward)
+				 (connect-left ?player_loc ?loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+
+				(thing-at-map ?res ?loc)
+			)
+
+	)
+    ;;--------------------------------------------------------
+
+    (:action event-find-right
+		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-right)
+				 (connect-right  ?player_loc ?loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+
+				(thing-at-map ?res ?loc)
+			)
+
+	)
+
+
+    ;;--------------------------------------------------------
+     (:action event-find-behind
+		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
+		:precondition
+			(and
+			    (looking-behind)
+				 (connect-behind ?player_loc ?loc)
+				 (thing-at-loc ?res ?loc)
+			)
+		:effect
+			(and
+
+				(thing-at-map ?res ?loc)
+			)
+
+	)
+
+
+    ;;--------------------------------------------------------
+
 
 	(:action event-fall-in-trap
       	:parameters (?loc1 - mapgrid ?loc - mapgrid)
@@ -159,12 +289,12 @@
    			 (connect ?loc1 ?loc)
    			 (thing-at-loc arrowtrap ?loc)
 
-   			 (not (is-trapped))
+
    			 (> (player-current-health) 0)
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 5)
+   			(decrease (player-current-health) 3)
    			(thing-at-map arrow ?loc1)
    			(is-trapped)
       	)
@@ -182,7 +312,7 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 5)
+   			(decrease (player-current-health) 3)
    			(thing-at-map arrow ?loc1)
    			(is-attacked)
       	)
@@ -208,18 +338,6 @@
 	)
     ;;----------------------------------------------
 
-    (:action event-die
-      	:parameters (?player -player)
-      	:precondition
-      	( and
-      	(is-alive ?player)
-      	(= (player-current-health) 0)
-      	)
-      	:effect
-      	(and
-      	(is-dead ?player)
-      	)
-     )
     ;;---------------------------
     ;;--------------------------------------------------------
 	;;--------------------------------------------------------
@@ -252,15 +370,19 @@
 			(and
 				(known-loc arrowtrap)
 				(thing-at arrowtrap)
-				(= (tool-in-hand) (tool-id ?tool))
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
 
 			)
 		:effect
 			(and
 				(not (thing-at arrowtrap))
+				(trap-destroyed)
 			)
 	)
 	;------------------------------------------------------------
+
+
 
 	;; ---------------------------------------------------
 	(:action change-harvest-loc

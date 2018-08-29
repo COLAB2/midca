@@ -34,17 +34,17 @@ hidden = []
 
 def load_domain(domainfile, problemfile):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
-    print()
+
     # for a in dom.actions:
     #     for b in [False, True]:
     #            print(a.name, "c", b, list(map(lambda x: x.asPDDL(), a.get_pre(b))))
     #     for b in [False, True]:
     #            print(a.name, "e", b, list(map(lambda x: x.asPDDL(), a.get_eff(b))))
 
-    print("DOMAIN PROBLEM")
+    # print("DOMAIN PROBLEM")
     # print("objects")
     ###############types#########################
-    print('types: ')
+    # print('types: ')
 
     for arg in dom.types.args:
         if arg.arg_type:
@@ -59,28 +59,28 @@ def load_domain(domainfile, problemfile):
     #     for p in types[t].parents:
     #         print(p.__repr__())
 
-    print("Objects:")
+    # print("Objects:")
     objects = parseObjects(prob.objects)
     ###Predicates##########
-    print('predicates: ')
+    # print('predicates: ')
     for a in dom.predicates:
         argnames = parseTypedArgList_names(a.args)
         predicate(a.name, argnames, a.args)
 
-    print('functions')
+    # print('functions')
     for a in dom.functions:
         # print(a.name)
         argnames = parseTypedArgList_names(a.args)
         argtypes = parseTypedArgList_types_predicate(a.args)
         functions.update({a.name: worldsim.Function(a.name, argnames, argtypes)})
 
-    print('constants')
+    # print('constants')
     for c in dom.constants.args:
         # print(c.val)
         constants.append(worldsim.Constant(c.val))
     ######### OPERATORS ####################
 
-    print('actions:')
+    # print('actions:')
     for a in dom.actions:
         actions_args = parseTypedArgList(a.parameters)
 
@@ -104,7 +104,7 @@ def load_domain(domainfile, problemfile):
 
             # a.args is typedArgList
             if type(pre) is Formula:
-                print(pre.asPDDL())
+                # print(pre.asPDDL())
                 args = []
                 tempargs = []
                 temptypes = []
@@ -142,11 +142,11 @@ def load_domain(domainfile, problemfile):
                 prepos.append(True)
                 preobjnames.append(pre_args_name)
                 preobjtypes.append(pre_args_type)
-                if "shelter" in pre_args_name:
-                    print(pre.name)
-                    for t in preobjtypes:
-                        for x in t:
-                            print(x.__str__())
+                # if "shelter" in pre_args_name:
+                #     print(pre.name)
+                #     for t in preobjtypes:
+                #         for x in t:
+                #             print(x.__str__())
 
         for pre in a.get_pre(False):
 
@@ -282,9 +282,9 @@ def load_domain(domainfile, problemfile):
     # print(world.functions)
     _apply_state_pddl(world, prob)
 
-    for t in worldsim.func_val_dict:
-        print(t)
-    print("++++++++++++++++++++++++++++++++++++++++++")
+    # for t in worldsim.func_val_dict:
+    #     print(t)
+    # print("++++++++++++++++++++++++++++++++++++++++++")
     return world
 
     # probinitialState = getInitialState(prob.initialstate)

@@ -273,11 +273,12 @@ class MetricFFPlanner(base.BaseModule):
 
     def __init__(self,
                  ff_goals_from_midca_goals,
+                 ff_state_from_midca_state,
                  domain_file,
                  state_file):
 
         self.ff_goals_from_midca_goals = ff_goals_from_midca_goals
-        #         self.ff_tasks_from_goals = ff_tasks_from_goals
+        self.ff_state_from_midca_state = ff_state_from_midca_state
         self.domain_file = domain_file
         self.state_file = state_file
 
@@ -352,7 +353,9 @@ class MetricFFPlanner(base.BaseModule):
             if verbose >= 2:
                 print("Planning...")
             try:
+                self.ff_state_from_midca_state(self.world, self.state_file)
                 ffgoals = self.ff_goals_from_midca_goals(goals, self.state_file)
+
             except Exception as e:
                 print(str(e))
             try:

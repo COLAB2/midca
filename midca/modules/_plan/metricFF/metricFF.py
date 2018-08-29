@@ -37,7 +37,7 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
 
             plan.append((line.split(":")[1].strip().split(" ")))
 
-    # print(plan)
+    print(plan)
     return plan
 
 
