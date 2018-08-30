@@ -201,6 +201,7 @@
 			(and
 				(know-where ?res ?loc)
 				(thing-at-map ?res ?loc)
+
 			)
 
 	)
@@ -212,6 +213,7 @@
 		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
 		:precondition
 			(and
+			 (player-at ?player_loc)
 			    (looking-left)
 				 (connect-left ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
@@ -231,6 +233,7 @@
 		:precondition
 			(and
 			    (looking-forward)
+			    (player-at ?player_loc)
 				 (connect-left ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
 			)
@@ -247,6 +250,7 @@
 		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
 		:precondition
 			(and
+			 (player-at ?player_loc)
 			    (looking-right)
 				 (connect-right  ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
@@ -265,6 +269,7 @@
 		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
 		:precondition
 			(and
+			 (player-at ?player_loc)
 			    (looking-behind)
 				 (connect-behind ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
@@ -360,7 +365,23 @@
 			)
 	)
 	;;----------------------------------
+    (:action destroy-trap-with-loc
+		:parameters (?tool - tool ?loc -mapgrid)
+		:precondition
+			(and
+				(thing-at-map arrowtrap ?loc)
+				(thing-at arrowtrap)
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
 
+			)
+		:effect
+			(and
+			    (not (thing-at arrowtrap))
+				(not (thing-at-map arrowtrap ?loc))
+				(trap-destroyed)
+			)
+	)
 
 
 	;;--------------------------------------------------------
