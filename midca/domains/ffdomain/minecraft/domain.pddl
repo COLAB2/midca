@@ -129,8 +129,8 @@
 		:parameters (?res -resource )
 		:precondition
 			(and
-			    (chest-armed)
-				(head-armed)
+			   ;; (chest-armed)
+			;;	(head-armed)
 				(not (known-loc ?res))
 			)
 		:effect
@@ -222,6 +222,7 @@
 			(and
 
 				(thing-at-map ?res ?loc)
+				(known-loc ?res)
 			)
 
 	)
@@ -241,6 +242,7 @@
 			(and
 
 				(thing-at-map ?res ?loc)
+				(known-loc ?res)
 			)
 
 	)
@@ -259,6 +261,7 @@
 			(and
 
 				(thing-at-map ?res ?loc)
+				(known-loc ?res)
 			)
 
 	)
@@ -278,6 +281,7 @@
 			(and
 
 				(thing-at-map ?res ?loc)
+				(known-loc ?res)
 			)
 
 	)
@@ -377,7 +381,7 @@
 			)
 		:effect
 			(and
-			    (not (thing-at arrowtrap))
+
 				(not (thing-at-map arrowtrap ?loc))
 				(trap-destroyed)
 			)
@@ -403,7 +407,22 @@
 	)
 	;------------------------------------------------------------
 
+    (:action event-destroy-trap
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc arrowtrap ?loc)
+             (trap-destroyed)
 
+
+      	)
+      	:effect
+      	(and
+   			(not (thing-at-loc arrowtrap ?loc))
+      	)
+	)
 
 	;; ---------------------------------------------------
 	(:action change-harvest-loc
