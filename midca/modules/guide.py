@@ -1231,22 +1231,11 @@ class ReactiveSurvive(base.BaseModule):
             print(self)
 
         if self.is_damaged():
-            if self.attacking_zombie():
-               # (not (zombie - at zombie m0_1)
-                zombie = self.attacking_zombie()[0].name
-                loc = self.attacking_zombie()[1].name
-                goal = goals.Goal(*[zombie, loc], predicate="monster-at", negate=True)
-                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-                if verbose >= 2:
-                    if inserted:
-                        print("Meta-AQUA simulation goal generated:", goal, )
-                        print()
-                    else:
-                        print(". This goal was already in the graph.")
+
             # TODO: this needs to be changed: These information comes from the explanation node
             # I like to find a better way to implement the goal decomosing to the subgoals
 
-            restore_health_goal = goals.Goal(func="player-current-health", val=20)
+            restore_health_goal = goals.Goal(op ="=", func="player-current-health", val=20)
             # goal = goals.Goal(predicate="survive", subgoals=[])
 
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
@@ -1264,11 +1253,11 @@ class ReactiveSurvive(base.BaseModule):
                 hypotheses = self.survive()
 
                 goal = goals.Goal(predicate="survive", subgoals=hypotheses)
-                # inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
+                inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
                 inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
-            if inserted1:
-                print("a goal to restore the health is generated")
+            # if inserted1:
+            #     print("a goal to restore the health is generated")
 
             if inserted:
                 print("a goal to survive is generated")

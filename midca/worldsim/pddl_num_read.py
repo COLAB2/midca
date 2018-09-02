@@ -32,9 +32,9 @@ constants = []
 # hidden = ["thing-at-loc"] #the predicates that are hidden from the agent
 hidden = []
 
-def load_domain(domainfile, problemfile):
+def load_domain(domainfile, problemfile, event_file):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
-
+    (event_dom, pp) = pddl.parseDomainAndProblem(event_file, problemfile)
     # for a in dom.actions:
     #     for b in [False, True]:
     #            print(a.name, "c", b, list(map(lambda x: x.asPDDL(), a.get_pre(b))))
@@ -81,6 +81,21 @@ def load_domain(domainfile, problemfile):
     ######### OPERATORS ####################
 
     # print('actions:')
+    parseAction(dom)
+    parseAction(event_dom)
+
+    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),list(functions.values()),
+                           cltree, obtree)
+    # print(world.functions)
+    _apply_state_pddl(world, prob)
+
+    # for t in worldsim.func_val_dict:
+    #     print(t)
+    # print("++++++++++++++++++++++++++++++++++++++++++")
+    return world
+
+    # probinitialState = getInitialState(prob.initialstate)
+def parseAction(dom):
     for a in dom.actions:
         actions_args = parseTypedArgList(a.parameters)
 
@@ -274,21 +289,9 @@ def load_domain(domainfile, problemfile):
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
                                                     postpredicates, postobjnames, postobjtypes, postpos,
-                                                    prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc, postfuncnames, postfunctypes, prefuncpos, postfuncpos)})
-
-
-    world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),list(functions.values()),
-                           cltree, obtree)
-    # print(world.functions)
-    _apply_state_pddl(world, prob)
-
-    # for t in worldsim.func_val_dict:
-    #     print(t)
-    # print("++++++++++++++++++++++++++++++++++++++++++")
-    return world
-
-    # probinitialState = getInitialState(prob.initialstate)
-
+                                                    prepredicatesfunc, prefunnames, prefuntypes, postpredicatesfunc,
+                                                    postfuncnames, postfunctypes, prefuncpos, postfuncpos)})
+    return operators
 
 def parsePredicate(pre, actions_args):
     args_names = parseTypedArgList_names(pre.args)

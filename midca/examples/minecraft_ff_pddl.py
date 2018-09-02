@@ -31,9 +31,10 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables for JSHOP planner
 DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
 STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 
-world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE)
+world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE, EVENT_FILE)
 # stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
 # creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display='', verbose=4)

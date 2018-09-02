@@ -186,166 +186,7 @@
 			)
 	)
 
-	;;--------------------------------------------------------
-	;;------------EVENTS--------------------------------------
-	;;--------------------------------------------------------
-    (:action event-find
-		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			    (looking-for ?res)
-				 (connect ?loc ?player_loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-				(know-where ?res ?loc)
-				(thing-at-map ?res ?loc)
 
-			)
-
-	)
-
-
-    ;;--------------------------------------------------------
-
-    (:action event-find-left
-		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			 (player-at ?player_loc)
-			    (looking-left)
-				 (connect-left ?player_loc ?loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-
-				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-			)
-
-	)
-
-
-    ;;--------------------------------------------------------
-(:action event-find-forward
-		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			    (looking-forward)
-			    (player-at ?player_loc)
-				 (connect-left ?player_loc ?loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-
-				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-			)
-
-	)
-    ;;--------------------------------------------------------
-
-    (:action event-find-right
-		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			 (player-at ?player_loc)
-			    (looking-right)
-				 (connect-right  ?player_loc ?loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-
-				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-			)
-
-	)
-
-
-    ;;--------------------------------------------------------
-     (:action event-find-behind
-		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			 (player-at ?player_loc)
-			    (looking-behind)
-				 (connect-behind ?player_loc ?loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-
-				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-			)
-
-	)
-
-
-    ;;--------------------------------------------------------
-
-
-	(:action event-fall-in-trap
-      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
-      	:precondition
-      	( and
-            (player-at ?loc1)
-   			 (connect ?loc1 ?loc)
-   			 (thing-at-loc arrowtrap ?loc)
-
-
-   			 (> (player-current-health) 0)
-      	)
-      	:effect
-      	(and
-   			(decrease (player-current-health) 3)
-   			(thing-at-map arrow ?loc1)
-   			(is-trapped)
-      	)
-	)
-    ;;------------------------------------------------------
-
-    (:action event-skeleton-attacked
-      	:parameters (?loc1 - mapgrid ?loc - mapgrid )
-      	:precondition
-      	( and
-            (player-at ?loc1)
-   			 (connect ?loc1 ?loc)
-   			 (thing-at-loc skeleton ?loc)
-
-      	)
-      	:effect
-      	(and
-   			(decrease (player-current-health) 3)
-   			(thing-at-map arrow ?loc1)
-   			(is-attacked)
-      	)
-	)
-    ;;----------------------------------------------
-    (:action event-monster-explosion
-      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
-      	:precondition
-      	( and
-            (player-at ?loc1)
-   			 (connect ?loc1 ?loc)
-   			 (thing-at-loc monster ?loc)
-   			 (not (is-attacked))
-   			 (> (player-current-health) 0)
-
-      	)
-      	:effect
-      	(and
-   			(decrease (player-current-health) 5)
-   			(thing-at-map monster-remains ?loc1)
-   			(is-attacked)
-      	)
-	)
-    ;;----------------------------------------------
 
     ;;---------------------------
     ;;--------------------------------------------------------
@@ -368,6 +209,7 @@
 				(attacking)
 			)
 	)
+
 	;;----------------------------------
     (:action destroy-trap-with-loc
 		:parameters (?tool - tool ?loc -mapgrid)
@@ -407,24 +249,7 @@
 	)
 	;------------------------------------------------------------
 
-    (:action event-destroy-trap
-      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
-      	:precondition
-      	( and
-            (player-at ?loc1)
-   			 (connect ?loc1 ?loc)
-   			 (thing-at-loc arrowtrap ?loc)
-             (trap-destroyed)
 
-
-      	)
-      	:effect
-      	(and
-   			(not (thing-at-loc arrowtrap ?loc))
-      	)
-	)
-
-	;; ---------------------------------------------------
 	(:action change-harvest-loc
 		:parameters (?target - mapgrid)
 		:precondition
