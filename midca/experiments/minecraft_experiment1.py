@@ -27,7 +27,7 @@ GOAL_GRAPH_CMP_FUNC = minecraft_util.preferSurvive
 DATADIR = "experiments/mortar-experiment-1-data/"
 # NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
 # DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + NOW_STR + ".csv"
-DATA_FILE_HEADER_STR = "runID,numMortar,towersCompleted,score,numcycles\n"
+DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles\n"
 
 CYCLES_START = 10
 CYCLES_END = 50
@@ -50,9 +50,8 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     midca_cycle = curr_midca.mem.get(curr_midca.mem. MIDCA_CYCLES)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
     print(num_actions)
-    result = str(dead_point)+"," + str(num_actions) + "," +str(run_id) + "," + \
-             str(health) + "," + str(tree) + "," + str(
-        num_cycles) + "\n"
+    result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
+             str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
     return result
 
 def stop_point(curr_midca):
@@ -60,9 +59,10 @@ def stop_point(curr_midca):
     if not alive:
         return True
 
-def singlerun(run_id, statefile):
+def singlerun(args):
 
-
+    run_id = args[0]
+    statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
     num_cycles = 50
@@ -81,34 +81,64 @@ def runexperiment():
 
     MIDCA_ROOT = thisDir + "/../"
 
-    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
+    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
     DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
-    run_id = 10
+
+    run_id = 0
+    for i in range(10):
+        state_file = STATE_FILE + str(i)
+        problem_generator.generate_file(STATE_FILE + str(i))
+        copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+
+        curr_args = [run_id, state_file]
+        runs.append(curr_args)
+        run_id += 1
+
+
+    # Uses multiprocessing to give each run its own python process
+    print(("-- Starting experiment using " + str(NUM_PROCESSES) + " processes..."))
+    t0 = time.time()
+    # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
+    # **** (each MIDCA must use its own python process)
+    pool = Pool(processes=NUM_PROCESSES, maxtasksperchild=1)
+    results = pool.map(singlerun, runs, chunksize=1)
+    t1 = time.time()
+    timestr = '%.2f' % (t1 - t0)
+    print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
+    print("-- Writing data to file...")
+    f = open(DATA_FILENAME, 'w')
+    f.write(DATA_FILE_HEADER_STR)
+    for r in results:
+        f.write(r)
+    print(("-- Data written to file " + str(DATA_FILENAME)))
+    print("-- Experiment complete!")
+
+
     # for i in range(10):
     #     run_id = i
     #     problem_generator.generate_file(STATE_FILE + str(i))
     #     copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
-    results = singlerun(run_id, STATE_FILE)
-
-    # Uses multiprocessing to give each run its own python process
-    print("-- Starting experiment using")
-    t0 = time.time()
-        # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
-        # **** (each MIDCA must use its own python process)
-
-
-    t1 = time.time()
-    timestr = '%.2f' % (t1 - t0)
-
-    print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
-    print("-- Writing data to file...")
-    f = open(DATA_FILENAME, 'w')
-    # f.write(DATA_FILE_HEADER_STR)
-    for r in results:
-        f.write(r)
-        f.write("\n")
-        print(r)
-        print("\n")
+    #     results = singlerun(run_id, STATE_FILE+ str(i))
+    #
+    # # Uses multiprocessing to give each run its own python process
+    #     print("-- Starting experiment using")
+    #     t0 = time.time()
+    #     # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
+    #     # **** (each MIDCA must use its own python process)
+    #
+    #
+    #     t1 = time.time()
+    #     timestr = '%.2f' % (t1 - t0)
+    #
+    # print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
+    # print("-- Writing data to file...")
+    # f = open(DATA_FILENAME, 'w')
+    # # f.write(DATA_FILE_HEADER_STR)
+    # for r in results:
+    #     f.write(r)
+    #     f.write("\n")
+    #     print(r)
+    #     print("\n")
 
     print(results)
 
@@ -139,7 +169,7 @@ class MIDCAInstance():
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
 
         world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE, EVENT_FILE)
-        myMidca = base.PhaseManager(world, display='', verbose=4)
+        myMidca = base.PhaseManager(world, display='', verbose=0)
         # add phases by name
         for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
             myMidca.append_phase(phase)
