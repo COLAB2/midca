@@ -112,6 +112,7 @@ class SimpleEvalSubgoals(base.BaseModule):
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
+        self.score()
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
@@ -174,6 +175,34 @@ class SimpleEvalSubgoals(base.BaseModule):
                 "No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS", goals)
+
+    def score(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        func = world.functions["player-current-health"]
+        a = next((x for x in world.atoms if x.func == func), None)
+        if a.val and a.val < 20:
+            self.mem.set(self.mem.AGENT_HEALTH, a.val)
+        if a.val <= 0:
+            print("THE AGENT DIED")
+            self.mem.set(self.mem.AGENT_ALIEVE, False)
+
+        wood_val = self.get_val_wood()
+        self.mem.set(self.mem.TREE_HARVEST, wood_val)
+        print(wood_val)
+        # 15 is a threshold here;
+        # print("the result:")
+        # print(a.val)
+
+
+
+    def get_val_wood(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for f in world.atoms:
+            if f.func and f.func.name == "thing-available":
+                if len(f.args) > 0 and str(f.args[0].name).strip() == "wood":
+                    return f.val
+
+        return 0
 
 class SimpleEval2(base.BaseModule):
 

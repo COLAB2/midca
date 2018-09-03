@@ -113,6 +113,43 @@ class UserGoalInput(base.BaseModule):
             trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
 
+class SimpleMinecraftGoalGen(base.BaseModule):
+    '''
+    MIDCA module that cycles through goals for the agent to achieve.
+    '''
+
+    curr_goal_index = 0
+
+    curr_goal = goals.Goal(*["wood"], func='thing-available', op=">", val="4")
+
+
+    # starting state: on(D,B), on(B,A), ontable(A) ontable(C)
+    # first goal: on(C,B)
+    # second goal
+
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+
+        # first, check to see if we need a new goal, and only then insert a new one
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            # get the next goal
+            g = self.curr_goal
+            # insert that goal
+
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            # update trace
+            if trace:
+                trace.add_data("NEXT GOAL(s)", g)
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+        else:
+            if trace:
+                trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
+                trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+
 class SimpleMortarGoalGen(base.BaseModule):
     '''
     MIDCA module that cycles through goals for the agent to achieve.

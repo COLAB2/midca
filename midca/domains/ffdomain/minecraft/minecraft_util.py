@@ -107,4 +107,5 @@ def preferSurvive(goal1, goal2):
         if goal1['predicate'] == 'survive' and goal2['func'] == "player-current-healthp":
             return -1
 
+
     return 0

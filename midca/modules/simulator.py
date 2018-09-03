@@ -11,10 +11,13 @@ class MidcaActionSimulator:
     def init(self, world, mem):
         self.mem = mem
         self.world = world
+        self.mem.set(self.mem.MIDCA_CYCLES, 0)
+        self.mem.set(self.mem.ACTIONS_EXECUTED, 0)
+
 
     def run(self, cycle, verbose=2):
         try:
-
+            self.mem.set(self.mem.MIDCA_CYCLES, 1 + self.mem.get(self.mem.MIDCA_CYCLES))
 
             # get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
@@ -27,6 +30,7 @@ class MidcaActionSimulator:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
                         print("simulating MIDCA action:", action)
+                    self.mem.set(self.mem.ACTIONS_EXECUTED, 1 + self.mem.get(self.mem.ACTIONS_EXECUTED))
                     self.world.apply_midca_action(action)
                 else:
                     if verbose >= 1:
@@ -62,6 +66,7 @@ class MidcaEventSimulator:
                     print("****")
                     # try:
 
+
                     self.world.apply(inst_op)
 
                     func = self.world.functions["player-current-health"]
@@ -70,8 +75,9 @@ class MidcaEventSimulator:
                     print("the result:")
                     print(a.val)
 
-                    if (a.val <= 0):
+                    if not self.mem.get(self.mem.AGENT_DEAD_CYCLE) and a.val <= 0:
                         print("THE AGENT DIED")
+                        self.mem.set(self.mem.AGENT_DEAD_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
 
                     if verbose >= 2:
                         print("simulating MIDCA event:", __event)

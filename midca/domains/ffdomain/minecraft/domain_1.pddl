@@ -85,7 +85,7 @@
 			(and
 				(know-where ?res ?loc)
 				(thing-at-map ?res ?loc)
-
+                (not (looking-for ?res))
 			)
 
 	)
@@ -107,6 +107,7 @@
 
 				(thing-at-map ?res ?loc)
 				(known-loc ?res)
+				(not (looking-left))
 			)
 
 	)
@@ -127,6 +128,7 @@
 
 				(thing-at-map ?res ?loc)
 				(known-loc ?res)
+				(not (looking-forward))
 			)
 
 	)
@@ -146,6 +148,7 @@
 
 				(thing-at-map ?res ?loc)
 				(known-loc ?res)
+				(not (looking-right))
 			)
 
 	)
@@ -166,6 +169,7 @@
 
 				(thing-at-map ?res ?loc)
 				(known-loc ?res)
+				(not (looking-behind))
 			)
 
 	)
@@ -187,8 +191,8 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 3)
-   			(thing-at-map arrow ?loc1)
+   			(decrease (player-current-health) 2)
+   			(thing-at-map arrow ?loc)
    			(is-trapped)
       	)
 	)
@@ -205,8 +209,9 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 3)
-   			(thing-at-map arrow ?loc1)
+
+   			(decrease (player-current-health) 2)
+   			(thing-at-map arrow ?loc)
    			(is-attacked)
       	)
 	)
@@ -246,6 +251,9 @@
       	:effect
       	(and
    			(not (thing-at-loc skeleton ?loc))
+   			(not (thing-at-map skeleton ?loc))
+   			(not (thing-at-map arrow ?loc))
+   			(assign (player-current-health) 20)
       	)
 	)
 
@@ -260,10 +268,14 @@
              (trap-destroyed)
 
 
+
       	)
       	:effect
       	(and
    			(not (thing-at-loc arrowtrap ?loc))
+   			(not (thing-at-map arrowtrap ?loc))
+   			(not (thing-at-map arrow ?loc))
+   			 (assign (player-current-health) 20)
       	)
 	)
 

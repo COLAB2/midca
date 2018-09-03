@@ -18,8 +18,8 @@ import midca.worldsim.worldsim as worldsim
 import inspect, os, random
 
 SKELETON_CHANCE = 0.8
-ARROW_TRAP_CHANCE = 0.7
-MONSTER_CHANCE = 0.3
+ARROW_TRAP_CHANCE = 0.8
+# MONSTER_CHANCE = 0.3
 SKELETON_LOC = 0
 TRAP_LOC = 0
 MONSTER_LOC = 0
@@ -46,7 +46,7 @@ def generate_file(file):
     f.write("arrowtrap - resource\n")
     f.write("arrow - resource\n")
     f.write("bone - resource\n")
-    f.write("monster - resource\n")
+    # f.write("monster - resource\n")
     f.write("monster-remains - resource\n")
     f.write("helmet - helmet\n")
     f.write("chestplate - chestplate\n")
@@ -125,7 +125,7 @@ def generate_file(file):
     f.write("(= (duration-need wood-axe skeleton) 1000000000)\n")
     f.write("(= (duration-need bow skeleton) 1000000000)\n")
     f.write("(= (duration-need wood-axe arrowtrap) 1000000000)\n")
-    f.write("(= (duration-need wood-axe monster) 1000000000)\n")
+    # f.write("(= (duration-need wood-axe monster) 1000000000)\n")
     f.write("(= (tool-max-health hand) 1000000000)\n")
     f.write("(= (tool-max-health wood-axe) 1000000000)\n")
     f.write("(= (tool-max-health bow) 1000000000)\n")
@@ -156,11 +156,11 @@ def generate_file(file):
         f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
         TRAP_LOC = sx, sy
 
-    if monster_chance():
-        sx, sy = randomxy()
-        f.write("(thing-at monster)\n")
-        f.write("(thing-at-loc monster m" + str(sx) + "_" + str(sy) + ")\n")
-        MONSTER_LOC = sx, sy
+    # if monster_chance():
+    #     sx, sy = randomxy()
+    #     f.write("(thing-at monster)\n")
+    #     f.write("(thing-at-loc monster m" + str(sx) + "_" + str(sy) + ")\n")
+    #     MONSTER_LOC = sx, sy
 
     f.write("(thing-at-map shelter m2_0)\n")
 
