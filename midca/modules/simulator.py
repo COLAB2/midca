@@ -60,24 +60,24 @@ class MidcaEventSimulator:
             for __event in events:
                 inst_operators = self.get_all_instantiations(self.world, __event)
                 for inst_op in inst_operators:
-
-                    new_world = self.world.copy()
-                    print(inst_op)
-                    print("****")
-                    # try:
-
-
                     self.world.apply(inst_op)
 
                     func = self.world.functions["player-current-health"]
                     a = next((x for x in self.world.atoms if x.func == func), None)
                     # 15 is a threshold here;
-                    print("the result:")
-                    print(a.val)
+                    # print("the result:")
+                    # print(a.val)
+                    # if a.val and a.val < 20:
+                    #     self.mem.set(self.mem.AGENT_HEALTH, a.val)
 
                     if not self.mem.get(self.mem.AGENT_DEAD_CYCLE) and a.val <= 0:
                         print("THE AGENT DIED")
                         self.mem.set(self.mem.AGENT_DEAD_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
+
+                    # func = self.world.functions["thing-available"]
+                    # a = next((x for x in self.world.atoms if x.func == func and x.args and x.args[0] == "wood"), None)
+                    # if a.val and a.val ==5:
+                    #     self.mem.set(self.mem.ACHIEVED_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
 
                     if verbose >= 2:
                         print("simulating MIDCA event:", __event)

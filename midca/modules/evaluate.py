@@ -185,10 +185,14 @@ class SimpleEvalSubgoals(base.BaseModule):
         if a.val <= 0:
             print("THE AGENT DIED")
             self.mem.set(self.mem.AGENT_ALIEVE, False)
-
         wood_val = self.get_val_wood()
-        self.mem.set(self.mem.TREE_HARVEST, wood_val)
-        print(wood_val)
+        if a.val > 0:
+            self.mem.set(self.mem.TREE_HARVEST, wood_val)
+            self.mem.set(self.mem.ACTIONS_EXECUTED_GOAL, self.mem.get(self.mem.ACTIONS_EXECUTED))
+            print(wood_val)
+            
+        if wood_val and wood_val == 5:
+            self.mem.set(self.mem.ACHIEVED_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
         # 15 is a threshold here;
         # print("the result:")
         # print(a.val)

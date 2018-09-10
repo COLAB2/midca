@@ -129,8 +129,8 @@
 		:parameters (?res -resource )
 		:precondition
 			(and
-			   ;; (chest-armed)
-			;;	(head-armed)
+			   (chest-armed)
+		    	(head-armed)
 				(not (known-loc ?res))
 			)
 		:effect
@@ -211,23 +211,23 @@
 	)
 
 	;;----------------------------------
-    (:action destroy-trap-with-loc
-		:parameters (?tool - tool ?loc -mapgrid)
-		:precondition
-			(and
-				(thing-at-map arrowtrap ?loc)
-				(thing-at arrowtrap)
-				(= (tool-id ?tool) 11)
-				(= (tool-in-hand) 11)
-
-			)
-		:effect
-			(and
-
-				(not (thing-at-map arrowtrap ?loc))
-				(trap-destroyed)
-			)
-	)
+  ;;  (:action destroy-trap-with-loc
+;;		:parameters (?tool - tool ?loc -mapgrid)
+;;		:precondition
+;;			(and
+;;				(thing-at-map arrowtrap ?loc)
+;;				(thing-at arrowtrap)
+;;				(= (tool-id ?tool) 11)
+;;				(= (tool-in-hand) 11)
+;;
+;;			)
+;;		:effect
+;;			(and
+;;
+;;				(not (thing-at-map arrowtrap ?loc))
+;;			(trap-destroyed)
+;;			)
+;;	)
 
 
 	;;--------------------------------------------------------

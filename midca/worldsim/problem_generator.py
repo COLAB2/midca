@@ -144,17 +144,17 @@ def generate_file(file):
         f.write("(thing-at-map tree  m" + str(i) + "_" + str(j) + ")\n")
 
 
-    if skeleton_chance():
-        sx, sy = randomxy()
-        f.write("(thing-at skeleton)\n")
-        f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
-        SKELETON_LOC = sx, sy
+    # if skeleton_chance():
+    #     sx, sy = randomxy()
+    f.write("(thing-at skeleton)\n")
+        # f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
+        # SKELETON_LOC = sx, sy
 
-    if trap_chance():
-        sx, sy = randomxy()
-        f.write("(thing-at arrowtrap)\n")
-        f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
-        TRAP_LOC = sx, sy
+    # if trap_chance():
+    sx, sy = randomxy()
+    f.write("(thing-at arrowtrap)\n")
+    f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
+    TRAP_LOC = sx, sy
 
     # if monster_chance():
     #     sx, sy = randomxy()

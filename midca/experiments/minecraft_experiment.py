@@ -47,12 +47,11 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     print(tree)
     dead_point = curr_midca.mem.get(curr_midca.mem.AGENT_DEAD_CYCLE)
     print(dead_point)
-    midca_cycle = curr_midca.mem.get(curr_midca.mem. MIDCA_CYCLES)
+    action_executed_goal = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
     print(num_actions)
-    result = str(dead_point)+"," + str(num_actions) + "," +str(run_id) + "," + \
-             str(health) + "," + str(tree) + "," + str(
-        num_cycles) + "\n"
+    result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
+             str(health) + "," + str(tree) + "," + str(action_executed_goal) + "\n"
     return result
 
 def stop_point(curr_midca):
@@ -84,10 +83,11 @@ def runexperiment():
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
     DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
     run_id = 10
+    i = 111
     # for i in range(10):
     #     run_id = i
-    #     problem_generator.generate_file(STATE_FILE + str(i))
-    #     copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+    # problem_generator.generate_file(STATE_FILE + str(i))
+    copyfile(STATE_FILE , STATE_FILE + str(i) + "_copy")
     results = singlerun(run_id, STATE_FILE)
 
     # Uses multiprocessing to give each run its own python process
@@ -135,7 +135,7 @@ class MIDCAInstance():
         MIDCA_ROOT = thisDir + "/../"
 
         DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
+        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
 
         world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE, EVENT_FILE)
@@ -159,7 +159,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        # myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)

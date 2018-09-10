@@ -83,6 +83,8 @@ class Memory:
     TREE_HARVEST = "__treeHarvest"
     AGENT_HEALTH = "__agenthealth"
     AGENT_DEAD_CYCLE = "__dead"
+    ACHIEVED_CYCLE = "__cycle"
+    ACTIONS_EXECUTED_GOAL = "__aeg"
     def __init__(self, args={}):
         self.knowledge = {}
         self.update(args)

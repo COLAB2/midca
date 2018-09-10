@@ -47,7 +47,7 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     print(tree)
     dead_point = curr_midca.mem.get(curr_midca.mem.AGENT_DEAD_CYCLE)
     print(dead_point)
-    midca_cycle = curr_midca.mem.get(curr_midca.mem. MIDCA_CYCLES)
+    midca_cycle = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
     print(num_actions)
     result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
@@ -269,8 +269,28 @@ def graph(prev_file):
     ax.set_zlabel("Score")
     plt.show()
 
+import numpy as np
+import matplotlib.pyplot as plt
 
+def graph():
 
+    # Fixing random state for reproducibility
+    np.random.seed(19680801)
+
+    mu, sigma = 100, 15
+    x = mu + sigma * np.random.randn(10000)
+
+    # the histogram of the data
+    n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
+
+    plt.xlabel('Smarts')
+    plt.ylabel('Probability')
+    plt.title('Histogram of IQ')
+    plt.text(60, .025, r'$\mu=100,\ \sigma=15$')
+    plt.axis([40, 160, 0, 0.03])
+    plt.grid(True)
+    plt.show()
+    return 0
 
 
 if __name__ == "__main__":
@@ -283,11 +303,13 @@ if __name__ == "__main__":
     # elif len(sys.argv) > 1 and sys.argv[1] == 'graphslices':
     #     graph_slices_hardcoded()
     # else:
-    thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    # thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    #
+    # MIDCA_ROOT = thisDir + "/../"
+    #
+    # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
+    # # problem_generator.generate_file(STATE_FILE)
+    #
+    # runexperiment()
 
-    MIDCA_ROOT = thisDir + "/../"
-
-    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
-    # problem_generator.generate_file(STATE_FILE)
-
-    runexperiment()
+    graph()
