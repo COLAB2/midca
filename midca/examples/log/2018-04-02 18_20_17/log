@@ -1,0 +1,91 @@
+.000783 - Memory access at key __goals
+.000929 - Goal Graph initialized.
+
+.001107 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001683 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001863 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.002057 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002188 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.002312 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002435 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002556 - Memory access at key __PlanningCount
+.002648 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003110 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.003202 - Memory access at key __goals
+.003300 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.618498 - Starting cycle 0
+
+.619053 - ****** Starting Simulate Phase ******
+
+.619525 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+1.187460 - ****** Starting Perceive Phase ******
+
+1.187745 - Memory access at key __world states
+1.189052 - Mine Report not received
+
+1.189465 - at_location(remus,transit)
+at_location(remus,home)
+
+1.189671 - Memory access at key __world states
+1.189778 - Memory access at key __world states
+1.189893 - World observed.
+
+1.191515 - Memory access at key __world states
+1.191658 - Memory access at key __world states
+1.191846 - Sending report to Meta-AQUA :
+
+1.192288 - (report.1
+(	(
+(hazard-detected.1
+	(object  (value remus)))
+"")
+((state
+	(at_location.1  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.2  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+	(
+(hazard-detected.2
+	(object  (value remus)))
+"")
+((state
+	(at_location.3  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.4  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.2  (domain  (value remus))))
+"")
+	(
+(hazard-detected.3
+	(object  (value remus)))
+"")
+((state
+	(at_location.5  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.6  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.3  (domain  (value remus))))
+"")
+))
+

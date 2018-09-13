@@ -82,6 +82,7 @@ class Memory:
 	# MOOS
 	MOOS_FEEDBACK = "__feedback"
 	MOOS_SUSPENDED_ACTION = "__previous action"
+	CURRENT_HAZARD = "__latest mine detected"
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)

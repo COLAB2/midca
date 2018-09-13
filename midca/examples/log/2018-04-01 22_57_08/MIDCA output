@@ -1,0 +1,98 @@
+.001604 - Goal Graph initialized.
+
+.001803 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.002615 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.002798 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.002964 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.003121 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.003273 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.003560 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.004155 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.004459 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.004605 - Starting cycle 0
+
+.004771 - ****** Starting Simulate Phase ******
+
+.005009 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.005222 - ****** Starting Perceive Phase ******
+
+.006810 - states not received
+
+.007390 - World observed.
+
+.009349 - Sending report to Meta-AQUA :
+
+.009500 - (report.1
+())
+
+.009756 - ****** Starting Interpret Phase ******
+
+.010088 - Please input a goal if desired. Otherwise, press enter to continue
+
+45.064495 - ****** Starting Eval Phase ******
+
+45.066086 - No current goals. Skipping eval
+
+45.066310 - ****** Starting Intend Phase ******
+
+45.066776 - No Goals in Goal graph. Intend will do nothing.
+
+45.066943 - ****** Starting Plan Phase ******
+
+45.068384 - No goals received by planner. Skipping planning.
+
+45.068579 - ****** Starting Act Phase ******
+
+45.069033 - No valid plan found that achieves any current goals.
+
+45.070448 - MIDCA will not select an action this cycle.
+
+45.070774 - Starting cycle 1
+
+45.070958 - ****** Starting Simulate Phase ******
+
+45.071277 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+45.071497 - ****** Starting Perceive Phase ******
+
+45.073025 - Mine Report not received
+
+45.073383 - at_location(remus,transit)
+at_location(remus,home)
+
+45.074003 - World observed.
+
+45.076674 - Sending report to Meta-AQUA :
+
+45.076873 - (report.4
+())
+
+45.077180 - ****** Starting Interpret Phase ******
+
+45.077530 - Please input a goal if desired. Otherwise, press enter to continue
+

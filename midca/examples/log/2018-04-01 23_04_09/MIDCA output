@@ -1,0 +1,120 @@
+.003146 - Goal Graph initialized.
+
+.003563 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.004647 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.004980 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.005263 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.005525 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.005783 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.006041 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.006530 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.007350 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.007837 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+20.599102 - Starting cycle 0
+
+20.599601 - ****** Starting Simulate Phase ******
+
+20.600042 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+22.981630 - ****** Starting Perceive Phase ******
+
+22.984077 - Mine Report not received
+
+22.984897 - at_location(remus,transit)
+at_location(remus,home)
+
+22.985632 - World observed.
+
+22.988118 - Sending report to Meta-AQUA :
+
+22.988319 - (report.1
+())
+
+25.608210 - ****** Starting Interpret Phase ******
+
+25.609051 - Please input a goal if desired. Otherwise, press enter to continue
+
+33.399568 - Goal added.
+
+33.399792 - Please input a goal if desired. Otherwise, press enter to continue
+
+39.205759 - Error: no data received from Meta-AQUA before timeout.
+
+39.206138 - ****** Starting Eval Phase ******
+
+39.207762 - No current goals. Skipping eval
+
+39.207970 - ****** Starting Intend Phase ******
+
+39.208494 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+39.345163 - ****** Starting Plan Phase ******
+
+39.347472 - Planning...
+
+39.348260 - Planning complete.
+
+39.348525 - Plan: 
+
+39.348702 -   survey(remus, ga1)
+
+44.791589 - ****** Starting Act Phase ******
+
+44.796373 - Selected action survey(remus, ga1) from plan:
+
+44.796678 - survey(remus, ga1)]0m
+
+45.707069 - Starting cycle 1
+
+45.707430 - ****** Starting Simulate Phase ******
+
+45.707782 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+46.427251 - ****** Starting Perceive Phase ******
+
+46.429473 - Mine Report not received
+
+46.430469 - at_location(remus,transit)
+
+46.431451 - World observed.
+
+46.436027 - Sending report to Meta-AQUA :
+
+46.436419 - (report.4
+(	(
+(survey.1
+	(actor  (value person.0))
+	(object  (value remus)))
+"")
+((state
+	(at_location.1  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+

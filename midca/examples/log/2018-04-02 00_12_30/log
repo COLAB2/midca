@@ -1,0 +1,41 @@
+.005031 - Memory access at key __goals
+.005299 - Goal Graph initialized.
+
+.005498 - [cognitive] Initializing Simulate module 1 FireReset...done.
+
+.005643 - [cognitive] Initializing Simulate module 2 MidcaActionSimulator...done.
+
+.005784 - [cognitive] Initializing Simulate module 3 ArsonSimulator...done.
+
+.005924 - [cognitive] Initializing Simulate module 4 ASCIIWorldViewer...done.
+
+.006075 - [cognitive] Initializing Perceive module 1 PerfectObserver...done.
+
+.006210 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.009501 - Memory access at key A-Distance memory
+.009752 - [cognitive] Initializing Interpret module 1 ADistanceAnomalyNoter...done.
+
+.010083 - [cognitive] Initializing Interpret module 2 TFStack...done.
+
+.010456 - [cognitive] Initializing Interpret module 3 TFFire...done.
+
+.010611 - [cognitive] Initializing Interpret module 4 MAQuery...done.
+
+.010746 - Memory access at key Last Scored Goal
+.010865 - Memory access at key Score
+.010992 - [cognitive] Initializing Eval module 1 Scorer...done.
+
+.011163 - [cognitive] Initializing Eval module 2 SimpleEval...done.
+
+.011312 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.011449 - Memory access at key __PlanningCount
+.011548 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.011822 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.011938 - Memory access at key __goals
+.012063 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+

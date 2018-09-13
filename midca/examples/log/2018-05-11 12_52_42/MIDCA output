@@ -1,0 +1,58 @@
+.203540 - Goal Graph initialized.
+
+.203897 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.205280 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.205576 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.205810 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.206052 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.206286 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.206512 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.206956 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.208558 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.209194 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+40.116972 - Starting cycle 0
+
+40.117488 - ****** Starting Simulate Phase ******
+
+40.118052 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+40.617232 - ****** Starting Perceive Phase ******
+
+40.619089 - Mine Report not received
+
+40.619616 - at_location(remus,transit)
+at_location(remus,home)
+
+40.620269 - World observed.
+
+40.622909 - Sending report to Meta-AQUA :
+
+40.623314 - (report.1
+())
+
+41.116487 - ****** Starting Interpret Phase ******
+
+41.117198 - Please input a goal if desired. Otherwise, press enter to continue
+
+48.972630 - Goal added.
+
+48.972853 - Please input a goal if desired. Otherwise, press enter to continue
+

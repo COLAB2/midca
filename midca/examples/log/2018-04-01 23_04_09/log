@@ -1,0 +1,155 @@
+.002772 - Memory access at key __goals
+.003146 - Goal Graph initialized.
+
+.003563 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.004647 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.004980 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.005263 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.005525 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.005783 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.006041 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.006288 - Memory access at key __PlanningCount
+.006530 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.007350 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.007572 - Memory access at key __goals
+.007837 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+20.599102 - Starting cycle 0
+
+20.599601 - ****** Starting Simulate Phase ******
+
+20.600042 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+22.981630 - ****** Starting Perceive Phase ******
+
+22.982298 - Memory access at key __world states
+22.984077 - Mine Report not received
+
+22.984897 - at_location(remus,transit)
+at_location(remus,home)
+
+22.985257 - Memory access at key __world states
+22.985421 - Memory access at key __world states
+22.985632 - World observed.
+
+22.987657 - Memory access at key __world states
+22.987889 - Memory access at key __world states
+22.988118 - Sending report to Meta-AQUA :
+
+22.988319 - (report.1
+())
+
+25.608210 - ****** Starting Interpret Phase ******
+
+25.608945 - Memory access at key __goals
+25.609051 - Please input a goal if desired. Otherwise, press enter to continue
+
+33.398990 - Memory access at key __world states
+33.399290 - Memory access at key __goals
+33.399568 - Goal added.
+
+33.399792 - Please input a goal if desired. Otherwise, press enter to continue
+
+34.203047 - Memory access at key __world states
+39.205759 - Error: no data received from Meta-AQUA before timeout.
+
+39.206138 - ****** Starting Eval Phase ******
+
+39.206331 - Memory access at key __world states
+39.207762 - No current goals. Skipping eval
+
+39.207970 - ****** Starting Intend Phase ******
+
+39.208190 - Memory access at key __goals
+39.208335 - Memory access at key __current goals
+39.208494 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+39.345163 - ****** Starting Plan Phase ******
+
+39.345556 - Memory access at key __world states
+39.345711 - Memory access at key __current goals
+39.347294 - Memory access at key __goals
+39.347472 - Planning...
+
+39.347762 - Memory access at key __PlanningCount
+39.347894 - Memory access at key __PlanningCount
+39.348260 - Planning complete.
+
+39.348525 - Plan: 
+
+39.348702 -   survey(remus, ga1)
+
+39.348840 - Memory access at key __goals
+44.791589 - ****** Starting Act Phase ******
+
+44.792200 - Memory access at key __world states
+44.792435 - Memory access at key __current goals
+44.792661 - Memory access at key __goals
+44.796373 - Selected action survey(remus, ga1) from plan:
+
+44.796678 - survey(remus, ga1)]0m
+
+44.796897 - Memory access at key __actions
+44.797096 - Memory access at key __actions
+44.797295 - Memory access at key __actions
+44.797860 - Memory access at key __feedback
+44.798056 - Memory access at key __previous action
+45.707069 - Starting cycle 1
+
+45.707430 - ****** Starting Simulate Phase ******
+
+45.707782 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+46.427251 - ****** Starting Perceive Phase ******
+
+46.427923 - Memory access at key __world states
+46.429473 - Mine Report not received
+
+46.430469 - at_location(remus,transit)
+
+46.430905 - Memory access at key __world states
+46.431197 - Memory access at key __world states
+46.431451 - World observed.
+
+46.434893 - Memory access at key __world states
+46.435451 - Memory access at key __world states
+46.435748 - Memory access at key __actions
+46.436027 - Sending report to Meta-AQUA :
+
+46.436419 - (report.4
+(	(
+(survey.1
+	(actor  (value person.0))
+	(object  (value remus)))
+"")
+((state
+	(at_location.1  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+

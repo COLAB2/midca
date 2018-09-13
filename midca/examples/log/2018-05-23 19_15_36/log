@@ -1,0 +1,3458 @@
+.202039 - Memory access at key __goals
+.202598 - Goal Graph initialized.
+
+.202972 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.204483 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.204717 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.204897 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.205355 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.205874 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.206928 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.207180 - Memory access at key __PlanningCount
+.207337 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.208138 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.208337 - Memory access at key __goals
+.208491 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+16.935054 - Starting cycle 0
+
+16.935397 - ****** Starting Simulate Phase ******
+
+16.935683 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+17.368571 - ****** Starting Perceive Phase ******
+
+17.369021 - Memory access at key __world states
+17.370441 - Mine Report not received
+
+17.370882 - at_location(remus,transit)
+at_location(remus,home)
+
+17.371162 - Memory access at key __world states
+17.371301 - Memory access at key __world states
+17.371471 - World observed.
+
+17.373320 - Memory access at key __world states
+17.373691 - Memory access at key __world states
+17.374008 - Sending report to Meta-AQUA :
+
+17.374244 - (report.1
+())
+
+18.148154 - ****** Starting Interpret Phase ******
+
+18.148446 - Memory access at key __goals
+18.148575 - Please input a goal if desired. Otherwise, press enter to continue
+
+26.926971 - Memory access at key __world states
+26.927227 - Memory access at key __goals
+26.927451 - Goal added.
+
+26.927623 - Please input a goal if desired. Otherwise, press enter to continue
+
+27.585795 - Memory access at key __world states
+27.586963 - Meta-Aqua Output : 
+
+27.600273 - (XP-DEFENSIVE-BARK (ACTOR (VALUE DOG.1047)) (OBJECT (VALUE LUGGAGE.1049)) (BARKING (VALUE DOG-BARKS.1048)) (ROLE (VALUE ACTOR.1081)) (THREAT (VALUE STATE.2336))
+                   (THREATENING-ACTION (VALUE MOP.2338)) (EXPLAINS (VALUE ACTOR.1081)) (PRE-XP-NODES (VALUE (DOG.1047 DOG-BARKS.1048 LUGGAGE.1049 ACTOR.1081)))
+                   (INTERNAL-NODES (VALUE (STATE.2336))) (XP-ASSERTED-NODES (VALUE (MOP.2338))) (LINK1 (VALUE RESULTS.2348)) (LINK2 (VALUE ENABLES.2352))
+                   (LINKS (VALUE (RESULTS.2348 ENABLES.2352))) (STATUS (VALUE QUESTION.0)) (MXP (VALUE TRACE-META-XP.3332)) (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame XP-DEFENSIVE-BARK.5977:
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The VALUE facet of the BARKING role is DOG-BARKS.5983.
+The VALUE facet of the ROLE role is ACTOR.5986.
+The VALUE facet of the THREAT role is STATE.6036.
+The VALUE facet of the THREATENING-ACTION role is MOP.6038.
+The VALUE facet of the EXPLAINS role is ACTOR.5986.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5979 DOG-BARKS.5983 LUGGAGE.5981 ACTOR.5986).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6036).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6038).
+The VALUE facet of the LINK1 role is RESULTS.6048.
+The VALUE facet of the LINK2 role is ENABLES.6052.
+The VALUE facet of the LINKS role is (RESULTS.6048 ENABLES.6052).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the ACTOR slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG.5979)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG.5979)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the OBJECT slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LUGGAGE.5981)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LUGGAGE.5981)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the BARKING slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5986:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the DOMAIN slot of frame ACTOR.5986)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.5986)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.5986)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.5986)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame XP-DEFENSIVE-BARK.5977:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.5986)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The VALUE facet of the BARKING role is DOG-BARKS.5983.
+The VALUE facet of the ROLE role is ACTOR.5986.
+The VALUE facet of the THREAT role is STATE.6036.
+The VALUE facet of the THREATENING-ACTION role is MOP.6038.
+The VALUE facet of the EXPLAINS role is ACTOR.5986.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5979 DOG-BARKS.5983 LUGGAGE.5981 ACTOR.5986).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6036).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6038).
+The VALUE facet of the LINK1 role is RESULTS.6048.
+The VALUE facet of the LINK2 role is ENABLES.6052.
+The VALUE facet of the LINKS role is (RESULTS.6048 ENABLES.6052).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.5991:
+ (Which is in the INDICES slot of frame ACTOR.5986)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.5986.
+The VALUE facet of the CO-DOMAIN role is ACTOR.5986.
+The VALUE facet of the RELATION role is ACTOR.5986.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.5986.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.5991)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5986:
+ (Which is in the DOMAIN slot of frame INDEX.5991)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the state frame ACTOR.5986:
+ (Which is in the CO-DOMAIN slot of frame INDEX.5991)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the state frame ACTOR.5986:
+ (Which is in the RELATION slot of frame INDEX.5991)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the state frame ACTOR.5986:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.5991)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INDEX.5991)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.5998:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5981.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the DOMAIN slot of frame OBJECT.5998)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame AT-LOCATION.6002:
+ (Which is in the TO slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5981.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.6005.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.6002)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.6002)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.6002)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame PHYSICAL-LOCATION.6005:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.6002)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame PHYSICAL-LOCATION.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame PHYSICAL-LOCATION.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TO.6007:
+ (Which is in the TO slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is AT-LOCATION.6002.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TO.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the DOMAIN slot of frame TO.6007)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.6002:
+ (Which is in the CO-DOMAIN slot of frame TO.6007)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5981.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.6005.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TO.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.6011:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.6014.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6018.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the ACTOR slot of frame SPEAK.6011)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.6014:
+ (Which is in the ACTOR slot of frame SPEAK.6011)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is SPEAK.6011.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.6011:
+ (Which is in the DOMAIN slot of frame ACTOR.6014)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.6014.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6018.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.6014)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SPEAK.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SPEAK.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame SOUNDS.6018:
+ (Which is in the OBJECT slot of frame SPEAK.6011)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SOUNDS.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SOUNDS.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSTRUMENTAL-SCENE.6020:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is SPEAK.6011.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSTRUMENTAL-SCENE.6020)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the DOMAIN slot of frame INSTRUMENTAL-SCENE.6020)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame SPEAK.6011:
+ (Which is in the CO-DOMAIN slot of frame INSTRUMENTAL-SCENE.6020)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.6014.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6018.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSTRUMENTAL-SCENE.6020)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame KNOWLEDGE-STATE.6024:
+ (Which is in the MAIN-PRECONDITION slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the DOMAIN role is DOG.5979.
+The VALUE facet of the BELIEVED-ITEM role is AT-LOCATION.6027.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the DOMAIN slot of frame KNOWLEDGE-STATE.6024)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.6027:
+ (Which is in the BELIEVED-ITEM slot of frame KNOWLEDGE-STATE.6024)
+
+The VALUE facet of the DOMAIN role is DRUG.6029.
+The VALUE facet of the CO-DOMAIN role is INSIDE-CONTAINER.6031.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6029:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.6027)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DRUG.6029)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DRUG.6029)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSIDE-CONTAINER.6031:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.6027)
+
+The VALUE facet of the DOMAIN role is DRUG.6029.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5981.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6029:
+ (Which is in the DOMAIN slot of frame INSIDE-CONTAINER.6031)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the CO-DOMAIN slot of frame INSIDE-CONTAINER.6031)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSIDE-CONTAINER.6031)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSIDE-CONTAINER.6031)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.6027)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.6027)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame KNOWLEDGE-STATE.6024)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame KNOWLEDGE-STATE.6024)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG-BARKS.5983)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5986:
+ (Which is in the ROLE slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the frame STATE.6036:
+ (Which is in the THREAT slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame STATE.6036)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MOP.6038:
+ (Which is in the THREATENING-ACTION slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6036.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6036:
+ (Which is in the MAIN-RESULT slot of frame MOP.6038)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MOP.6038)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5986:
+ (Which is in the EXPLAINS slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the physical-object frame DOG.5979:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5981:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5986:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the CO-DOMAIN role is DOG.5979.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5977).
+The VALUE facet of the INDICES role is (INDEX.5991).
+
+
+For the frame STATE.6036:
+ (Which is in the INTERNAL-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6038:
+ (Which is in the XP-ASSERTED-NODES slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6036.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.6048:
+ (Which is in the LINK1 slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is MOP.6038.
+The VALUE facet of the CO-DOMAIN role is STATE.6036.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6038:
+ (Which is in the DOMAIN slot of frame RESULTS.6048)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6036.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6036:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.6048)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame RESULTS.6048)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ENABLES.6052:
+ (Which is in the LINK2 slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is STATE.6036.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6036:
+ (Which is in the DOMAIN slot of frame ENABLES.6052)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5983:
+ (Which is in the CO-DOMAIN slot of frame ENABLES.6052)
+
+The VALUE facet of the ACTOR role is DOG.5979.
+The RELATION facet of the ACTOR role is ACTOR.5986.
+The VALUE facet of the OBJECT role is LUGGAGE.5981.
+The RELATION facet of the OBJECT role is OBJECT.5998.
+The VALUE facet of the TO role is AT-LOCATION.6002.
+The RELATION facet of the TO role is TO.6007.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.6011.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6020.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6024.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ENABLES.6052)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame RESULTS.6048:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is MOP.6038.
+The VALUE facet of the CO-DOMAIN role is STATE.6036.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ENABLES.6052:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the DOMAIN role is STATE.6036.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5983.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame XP-DEFENSIVE-BARK.5977)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+27.609414 - Error reading from Meta-AQUA.
+
+28.250391 - ****** Starting Eval Phase ******
+
+28.250669 - Memory access at key __world states
+28.251752 - No current goals. Skipping eval
+
+28.844588 - ****** Starting Intend Phase ******
+
+28.845023 - Memory access at key __goals
+28.845183 - Memory access at key __current goals
+28.845378 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+29.367907 - ****** Starting Plan Phase ******
+
+29.368329 - Memory access at key __world states
+29.368475 - Memory access at key __current goals
+29.369915 - Memory access at key __goals
+29.370090 - Planning...
+
+29.370299 - Memory access at key __PlanningCount
+29.370424 - Memory access at key __PlanningCount
+29.370735 - Planning complete.
+
+29.370972 - Plan: 
+
+29.371161 -   survey(remus, ga1)
+
+29.371305 - Memory access at key __goals
+29.953237 - ****** Starting Act Phase ******
+
+29.953628 - Memory access at key __world states
+29.953773 - Memory access at key __current goals
+29.953896 - Memory access at key __goals
+29.956000 - Selected action survey(remus, ga1) from plan:
+
+29.956220 - survey(remus, ga1)]0m
+
+29.956415 - Memory access at key __actions
+29.956564 - Memory access at key __actions
+29.956717 - Memory access at key __actions
+29.957002 - Memory access at key __feedback
+29.957146 - Memory access at key __previous action
+30.434775 - Starting cycle 1
+
+30.435173 - ****** Starting Simulate Phase ******
+
+30.435572 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+30.842593 - ****** Starting Perceive Phase ******
+
+30.844080 - Memory access at key __world states
+30.845689 - Mine Report not received
+
+30.846572 - at_location(remus,transit)
+
+30.847229 - Memory access at key __world states
+30.847429 - Memory access at key __world states
+30.848992 - World observed.
+
+30.851556 - Memory access at key __world states
+30.851897 - Memory access at key __world states
+30.852151 - Memory access at key __actions
+30.852506 - Sending report to Meta-AQUA :
+
+30.852862 - (report.4
+(	(
+(survey.1
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.1  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+
+31.343241 - ****** Starting Interpret Phase ******
+
+31.343697 - Memory access at key __goals
+31.343887 - Memory access at key __world states
+31.344486 - Meta-Aqua Output : 
+
+31.344741 - None
+
+31.720463 - ****** Starting Eval Phase ******
+
+31.720885 - Memory access at key __world states
+31.721108 - Memory access at key __current goals
+31.723192 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+32.351992 - ****** Starting Intend Phase ******
+
+32.352458 - Memory access at key __goals
+32.352598 - Memory access at key __current goals
+32.352697 - Memory access at key __current goals
+32.352822 - No goals selected.
+
+32.667596 - ****** Starting Plan Phase ******
+
+32.668275 - Memory access at key __world states
+32.668549 - Memory access at key __current goals
+32.670283 - Memory access at key __goals
+32.670663 - Old plan retrieved. Checking validity... valid.
+
+32.670993 - checking to see if all goals are achieved... yes
+
+32.948358 - ****** Starting Act Phase ******
+
+32.948748 - Memory access at key __world states
+32.948909 - Memory access at key __current goals
+32.949043 - Memory access at key __goals
+32.950942 - Selected action survey(remus, ga1) from plan:
+
+32.951182 - survey(remus, ga1)]0m
+
+32.951326 - Memory access at key __actions
+32.951448 - Memory access at key __actions
+32.951567 - Memory access at key __actions
+32.951761 - Memory access at key __feedback
+32.951884 - Memory access at key __feedback
+32.952064 - Memory access at key __feedback
+33.273636 - Starting cycle 2
+
+33.274075 - ****** Starting Simulate Phase ******
+
+33.274609 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+33.538542 - ****** Starting Perceive Phase ******
+
+33.538932 - Memory access at key __world states
+33.539329 - HAZARD(mine6)
+hazard_at_location(mine6,transit)
+at_location(remus,qroute)
+
+33.539561 - Memory access at key __world states
+33.539669 - Memory access at key __world states
+33.539780 - World observed.
+
+33.541127 - Memory access at key __world states
+33.541280 - Memory access at key __world states
+33.541385 - Memory access at key __actions
+33.541532 - Sending report to Meta-AQUA :
+
+33.541923 - (report.7
+(	(
+(survey.4
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.4  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.4  (domain  (value remus)))
+	(hazard_at_location.1  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.1
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.5  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.5  (domain  (value remus)))
+	(hazard_at_location.2  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+34.124917 - ****** Starting Interpret Phase ******
+
+34.125231 - Memory access at key __goals
+34.125364 - Memory access at key __world states
+34.125878 - Memory access at key __goals
+34.359857 - Meta-Aqua Output : 
+
+34.360272 - (MINE-XP (ACTOR (VALUE REMUS.8970)) (OBJECT (VALUE MINE.8972)) (LOCATION (VALUE TRANSIT.8465)) (ANTE (VALUE MINE-LAYER.8976)) (CONSEQ (VALUE HAZARD-DETECTION.8982))
+ (ANTECEDENT (VALUE MINE-LAYER.8976)) (CONSEQUENT (VALUE HAZARD-DETECTION.8982)) (ROLE (VALUE ACTOR.8489)) (EXPLAINS (VALUE ACTOR.8489))
+ (PRE-XP-NODES (VALUE (REMUS.8970 HAZARD-DETECTION.8982 MINE.8972 ACTOR.8489))) (INTERNAL-NODES (VALUE NIL.0)) (XP-ASSERTED-NODES (VALUE (MINE-LAYER.8976)))
+ (LINK1 (VALUE RESULTS.9000)) (LINKS (VALUE (RESULTS.9000))) (STATUS (VALUE QUESTION.0)) (MXP (VALUE TRACE-META-XP.9282)) (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame MINE-XP.9330:
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The VALUE facet of the ANTE role is MINE-LAYER.9338.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.9344.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.9338.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.9344.
+The VALUE facet of the ROLE role is ACTOR.9347.
+The VALUE facet of the EXPLAINS role is ACTOR.9347.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.9332 HAZARD-DETECTION.9344 MINE.9334 ACTOR.9347).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.9338).
+The VALUE facet of the LINK1 role is RESULTS.9377.
+The VALUE facet of the LINKS role is (RESULTS.9377).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame REMUS.9332:
+ (Which is in the ACTOR slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame REMUS.9332)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame REMUS.9332)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the physical-object frame MINE.9334:
+ (Which is in the OBJECT slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame MINE.9334)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MINE.9334)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.9336:
+ (Which is in the LOCATION slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TRANSIT.9336)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TRANSIT.9336)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.9338:
+ (Which is in the ANTE slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.9340.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+
+
+For the physical-object frame ENEMY-PILOT.9340:
+ (Which is in the ACTOR slot of frame MINE-LAYER.9338)
+
+
+
+For the physical-object frame MINE.9334:
+ (Which is in the OBJECT slot of frame MINE-LAYER.9338)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.9336:
+ (Which is in the LOCATION slot of frame MINE-LAYER.9338)
+
+The VALUE facet of the STATUS r
+
+34.360717 - Error reading from Meta-AQUA.
+
+34.462540 - ****** Starting Eval Phase ******
+
+34.462862 - Memory access at key __world states
+34.462982 - Memory access at key __current goals
+34.464854 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+34.958586 - ****** Starting Intend Phase ******
+
+34.959036 - Memory access at key __goals
+34.959239 - Memory access at key __current goals
+34.959385 - Memory access at key __current goals
+34.959542 - Memory access at key __current goals
+34.959756 - Selecting goal(s): Goal(mine6, transit, predicate: hazard_checked)
+
+35.271969 - ****** Starting Plan Phase ******
+
+35.272338 - Memory access at key __world states
+35.272547 - Memory access at key __current goals
+35.274102 - Memory access at key __goals
+35.274296 - Planning...
+
+35.274556 - Memory access at key __PlanningCount
+35.274679 - Memory access at key __PlanningCount
+35.274959 - Planning complete.
+
+35.275144 - Plan: 
+
+35.275326 -   ignore(mine6, transit, remus)
+
+35.275470 - Memory access at key __goals
+35.537071 - ****** Starting Act Phase ******
+
+35.537561 - Memory access at key __world states
+35.537734 - Memory access at key __current goals
+35.537876 - Memory access at key __goals
+35.538308 - Retrieved plan does not achieve all goals. Trying to retrieve a different plan...
+
+35.538517 - No valid plan found that achieves any current goals.
+
+35.540336 - MIDCA will not select an action this cycle.
+
+35.540605 - Memory access at key __actions
+35.540769 - Memory access at key __goals
+35.837990 - Starting cycle 3
+
+35.838456 - ****** Starting Simulate Phase ******
+
+35.839034 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine6, transit)
+]
+
+36.243074 - ****** Starting Perceive Phase ******
+
+36.243501 - Memory access at key __world states
+36.244160 - HAZARD(mine9)
+hazard_at_location(mine9,qroute)
+at_location(remus,qroute)
+
+36.244589 - Memory access at key __world states
+36.244748 - Memory access at key __world states
+36.244916 - World observed.
+
+36.247373 - Memory access at key __world states
+36.247590 - Memory access at key __world states
+36.247735 - Memory access at key __actions
+36.247936 - Sending report to Meta-AQUA :
+
+36.248612 - (report.10
+(	(
+(hazard-detection.4
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.10  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.10  (domain  (value remus)))
+	(hazard_at_location.7  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.8  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(is-a-problem.1
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.11  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.11  (domain  (value remus)))
+	(hazard_at_location.10  (co-domain  (value transit))
+		(domain  (value mine6)))
+	(hazard_at_location.9  (co-domain  (value qroute))
+		(domain  (value mine9))))
+"")
+	(
+(hazard-detection.5
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.12  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.12  (domain  (value remus)))
+	(hazard_at_location.11  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.12  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+36.992884 - ****** Starting Interpret Phase ******
+
+36.993211 - Memory access at key __goals
+36.993331 - Memory access at key __world states
+36.993724 - Memory access at key __goals
+36.994004 - Memory access at key __goals
+36.994309 - Meta-Aqua Output : 
+
+36.994979 - ole is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the CONSEQ slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.9332:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.9347:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.9347)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the DOMAIN slot of frame ACTOR.9347)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.9332:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.9347)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.9347)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame MINE-XP.9330:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.9347)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The VALUE facet of the ANTE role is MINE-LAYER.9338.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.9344.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.9338.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.9344.
+The VALUE facet of the ROLE role is ACTOR.9347.
+The VALUE facet of the EXPLAINS role is ACTOR.9347.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.9332 HAZARD-DETECTION.9344 MINE.9334 ACTOR.9347).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.9338).
+The VALUE facet of the LINK1 role is RESULTS.9377.
+The VALUE facet of the LINKS role is (RESULTS.9377).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.9352:
+ (Which is in the INDICES slot of frame ACTOR.9347)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.9347.
+The VALUE facet of the CO-DOMAIN role is ACTOR.9347.
+The VALUE facet of the RELATION role is ACTOR.9347.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.9347.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.9352)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.9347:
+ (Which is in the DOMAIN slot of frame INDEX.9352)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the state frame ACTOR.9347:
+ (Which is in the CO-DOMAIN slot of frame INDEX.9352)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the state frame ACTOR.9347:
+ (Which is in the RELATION slot of frame INDEX.9352)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the state frame ACTOR.9347:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.9352)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the physical-object frame MINE.9334:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.9359:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is MINE.9334.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.9359)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the DOMAIN slot of frame OBJECT.9359)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.9334:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.9359)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.9359)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.9336:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LOCATION.9364:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is TRANSIT.9336.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LOCATION.9364)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the DOMAIN slot of frame LOCATION.9364)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.9336:
+ (Which is in the CO-DOMAIN slot of frame LOCATION.9364)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LOCATION.9364)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame HAZARD-DETECTION.9344)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.9338:
+ (Which is in the ANTECEDENT slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.9340.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the CONSEQUENT slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.9347:
+ (Which is in the ROLE slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the state frame ACTOR.9347:
+ (Which is in the EXPLAINS slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the physical-object frame REMUS.9332:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.9334:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.9347:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.9344.
+The VALUE facet of the CO-DOMAIN role is REMUS.9332.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.9330).
+The VALUE facet of the INDICES role is (INDEX.9352).
+
+
+For the frame NIL.0:
+ (Which is in the INTERNAL-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.9338:
+ (Which is in the XP-ASSERTED-NODES slot of frame MINE-XP.9330)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.9340.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+
+
+For the state frame RESULTS.9377:
+ (Which is in the LINK1 slot of frame MINE-XP.9330)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.9338.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.9344.
+
+
+For the process frame MINE-LAYER.9338:
+ (Which is in the DOMAIN slot of frame RESULTS.9377)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.9340.
+The VALUE facet of the OBJECT role is MINE.9334.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+
+
+For the process frame HAZARD-DETECTION.9344:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.9377)
+
+The VALUE facet of the ACTOR role is REMUS.9332.
+The RELATION facet of the ACTOR role is ACTOR.9347.
+The VALUE facet of the OBJECT role is MINE.9334.
+The RELATION facet of the OBJECT role is OBJECT.9359.
+The VALUE facet of the LOCATION role is TRANSIT.9336.
+The RELATION facet of the LOCATION role is LOCATION.9364.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.9377:
+ (Which is in the LINKS slot of frame MINE-XP.9330)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.9338.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.9344.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame MINE-XP.9330)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+36.995669 - Error reading from Meta-AQUA.
+
+37.301950 - ****** Starting Eval Phase ******
+
+37.302220 - Memory access at key __world states
+37.302310 - Memory access at key __current goals
+37.303510 - Not all goals achieved; Goal(mine6, transit, predicate: hazard_checked) is not true.
+
+37.577392 - ****** Starting Intend Phase ******
+
+37.578121 - Memory access at key __goals
+37.578525 - Memory access at key __current goals
+37.578684 - Memory access at key __current goals
+37.578770 - Memory access at key __current goals
+37.578923 - Selecting goal(s): Goal(mine9, qroute, predicate: hazard_checked)
+
+37.847691 - ****** Starting Plan Phase ******
+
+37.847966 - Memory access at key __world states
+37.848082 - Memory access at key __current goals
+37.849590 - Memory access at key __goals
+37.849819 - Planning...
+
+37.850111 - Memory access at key __PlanningCount
+37.850458 - Memory access at key __PlanningCount
+37.850791 - Planning complete.
+
+37.850909 - Plan: 
+
+37.851011 -   remove(mine9, qroute, remus)
+
+37.851100 - Memory access at key __goals
+38.153962 - ****** Starting Act Phase ******
+
+38.154333 - Memory access at key __world states
+38.154464 - Memory access at key __current goals
+38.154572 - Memory access at key __goals
+38.156879 - Selected action remove(mine9, qroute, remus) from plan:
+
+38.157149 - remove(mine9, qroute, remus)]0m
+
+38.157289 - Memory access at key __actions
+38.157404 - Memory access at key __actions
+38.157572 - Memory access at key __actions
+38.158014 - Memory access at key __feedback
+38.158245 - Memory access at key __feedback
+38.158505 - Memory access at key __feedback
+38.158662 - Memory access at key __feedback
+39.160493 - Memory access at key __feedback
+39.160909 - Starting cycle 4
+
+39.161446 - ****** Starting Simulate Phase ******
+
+39.162213 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+mine9 (HAZARD) : hazard_checked(mine9, qroute)
+qroute (SEA_ROUTE) : hazard_checked(mine9, qroute) and at_location(remus, qroute)
+remus (UUV) : enabled(remus) and at_location(remus, qroute)
+transit (SEA_ROUTE) : hazard_at_location(mine6, transit)
+]
+
+39.162558 - ****** Starting Perceive Phase ******
+
+39.162862 - Memory access at key __world states
+39.164202 - Mine Report not received
+
+39.165220 - at_location(remus,transit)
+
+39.165515 - Memory access at key __world states
+39.165682 - Memory access at key __world states
+39.165861 - World observed.
+
+39.168167 - Memory access at key __world states
+39.168381 - Memory access at key __world states
+39.168549 - Memory access at key __actions
+39.168783 - Sending report to Meta-AQUA :
+
+39.169373 - (report.13
+(	(
+(remove.1
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.19  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.19  (domain  (value remus)))
+	(hazard_at_location.25  (co-domain  (value transit))
+		(domain  (value mine6)))
+	(hazard_checked.1  (co-domain  (value qroute))
+		(domain  (value mine9))))
+"")
+	(
+(hazard-detection.10
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.20  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.20  (domain  (value remus)))
+	(hazard_at_location.26  (co-domain  (value transit))
+		(domain  (value mine6)))
+	(hazard_checked.2  (co-domain  (value qroute))
+		(domain  (value mine9))))
+"")
+))
+
+40.319222 - ****** Starting Interpret Phase ******
+
+40.319567 - Memory access at key __goals
+40.319712 - Memory access at key __world states
+40.320202 - Memory access at key __goals
+40.320499 - Meta-Aqua Output : 
+
+40.333964 - (MINE-XP (ACTOR (VALUE REMUS.11527)) (OBJECT (VALUE MINE.11529)) (LOCATION (VALUE TRANSIT.9815))
+                                                         (ANTE (VALUE MINE-LAYER.11533)) (CONSEQ (VALUE HAZARD-DETECTION.11539))
+                                                         (ANTECEDENT (VALUE MINE-LAYER.11533)) (CONSEQUENT (VALUE HAZARD-DETECTION.11539)) (ROLE (VALUE ACTOR.9839))
+                                                         (EXPLAINS (VALUE ACTOR.9839))
+                                                         (PRE-XP-NODES (VALUE (REMUS.11527 HAZARD-DETECTION.11539 MINE.11529 ACTOR.9839)))
+                                                         (INTERNAL-NODES (VALUE NIL.0)) (XP-ASSERTED-NODES (VALUE (MINE-LAYER.11533))) (LINK1 (VALUE RESULTS.11557))
+                                                         (LINKS (VALUE (RESULTS.11557))) (STATUS (VALUE QUESTION.0)) (MXP (VALUE TRACE-META-XP.11839))
+                                                         (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame MINE-XP.11887:
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The VALUE facet of the ANTE role is MINE-LAYER.11895.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.11901.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.11895.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.11901.
+The VALUE facet of the ROLE role is ACTOR.11904.
+The VALUE facet of the EXPLAINS role is ACTOR.11904.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.11889 HAZARD-DETECTION.11901 MINE.11891 ACTOR.11904).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.11895).
+The VALUE facet of the LINK1 role is RESULTS.11934.
+The VALUE facet of the LINKS role is (RESULTS.11934).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame REMUS.11889:
+ (Which is in the ACTOR slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame REMUS.11889)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame REMUS.11889)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the physical-object frame MINE.11891:
+ (Which is in the OBJECT slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame MINE.11891)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MINE.11891)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.11893:
+ (Which is in the LOCATION slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TRANSIT.11893)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TRANSIT.11893)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.11895:
+ (Which is in the ANTE slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.11897.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+
+
+For the physical-object frame ENEMY-PILOT.11897:
+ (Which is in the ACTOR slot of frame MINE-LAYER.11895)
+
+
+
+For the physical-object frame MINE.11891:
+ (Which is in the OBJECT slot of frame MINE-LAYER.11895)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.11893:
+ (Which is in the LOCATION slot of frame MINE-LAYER.11895)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the CONSEQ slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.11889:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.11904:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.11904)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the DOMAIN slot of frame ACTOR.11904)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.11889:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.11904)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.11904)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame MINE-XP.11887:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.11904)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The VALUE facet of the ANTE role is MINE-LAYER.11895.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.11901.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.11895.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.11901.
+The VALUE facet of the ROLE role is ACTOR.11904.
+The VALUE facet of the EXPLAINS role is ACTOR.11904.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.11889 HAZARD-DETECTION.11901 MINE.11891 ACTOR.11904).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.11895).
+The VALUE facet of the LINK1 role is RESULTS.11934.
+The VALUE facet of the LINKS role is (RESULTS.11934).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.11909:
+ (Which is in the INDICES slot of frame ACTOR.11904)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.11904.
+The VALUE facet of the CO-DOMAIN role is ACTOR.11904.
+The VALUE facet of the RELATION role is ACTOR.11904.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.11904.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.11909)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.11904:
+ (Which is in the DOMAIN slot of frame INDEX.11909)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the state frame ACTOR.11904:
+ (Which is in the CO-DOMAIN slot of frame INDEX.11909)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the state frame ACTOR.11904:
+ (Which is in the RELATION slot of frame INDEX.11909)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the state frame ACTOR.11904:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.11909)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the physical-object frame MINE.11891:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.11916:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is MINE.11891.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.11916)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the DOMAIN slot of frame OBJECT.11916)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.11891:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.11916)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.11916)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.11893:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LOCATION.11921:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is TRANSIT.11893.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LOCATION.11921)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the DOMAIN slot of frame LOCATION.11921)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.11893:
+ (Which is in the CO-DOMAIN slot of frame LOCATION.11921)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LOCATION.11921)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame HAZARD-DETECTION.11901)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.11895:
+ (Which is in the ANTECEDENT slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.11897.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the CONSEQUENT slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.11904:
+ (Which is in the ROLE slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the state frame ACTOR.11904:
+ (Which is in the EXPLAINS slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the physical-object frame REMUS.11889:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.11891:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.11904:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.11901.
+The VALUE facet of the CO-DOMAIN role is REMUS.11889.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.11887).
+The VALUE facet of the INDICES role is (INDEX.11909).
+
+
+For the frame NIL.0:
+ (Which is in the INTERNAL-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.11895:
+ (Which is in the XP-ASSERTED-NODES slot of frame MINE-XP.11887)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.11897.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+
+
+For the state frame RESULTS.11934:
+ (Which is in the LINK1 slot of frame MINE-XP.11887)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.11895.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.11901.
+
+
+For the process frame MINE-LAYER.11895:
+ (Which is in the DOMAIN slot of frame RESULTS.11934)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.11897.
+The VALUE facet of the OBJECT role is MINE.11891.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+
+
+For the process frame HAZARD-DETECTION.11901:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.11934)
+
+The VALUE facet of the ACTOR role is REMUS.11889.
+The RELATION facet of the ACTOR role is ACTOR.11904.
+The VALUE facet of the OBJECT role is MINE.11891.
+The RELATION facet of the OBJECT role is OBJECT.11916.
+The VALUE facet of the LOCATION role is TRANSIT.11893.
+The RELATION facet of the LOCATION role is LOCATION.11921.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.11934:
+ (Which is in the LINKS slot of frame MINE-XP.11887)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.11895.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.11901.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame MINE-XP.11887)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.(MINE-XP (ACTOR (VALUE REMUS.12922)) (OBJECT (VALUE MINE.12924)) (LOCATION (VALUE TRANSIT.12372))
+                                                         (ANTE (VALUE MINE-LAYER.12928)) (CONSEQ (VALUE HAZARD-DETECTION.12934))
+                                                         (ANTECEDENT (VALUE MINE-LAYER.12928)) (CONSEQUENT (VALUE HAZARD-DETECTION.12934)) (ROLE (VALUE ACTOR.12396))
+                                                         (EXPLAINS (VALUE ACTOR.12396))
+                                                         (PRE-XP-NODES (VALUE (REMUS.12922 HAZARD-DETECTION.12934 MINE.12924 ACTOR.12396)))
+                                                         (INTERNAL-NODES (VALUE NIL.0)) (XP-ASSERTED-NODES (VALUE (MINE-LAYER.12928))) (LINK1 (VALUE RESULTS.12952))
+                                                         (LINKS (VALUE (RESULTS.12952))) (STATUS (VALUE QUESTION.0)) (MXP (VALUE TRACE-META-XP.13234))
+                                                         (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame MINE-XP.13282:
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The VALUE facet of the ANTE role is MINE-LAYER.13290.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.13296.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.13290.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.13296.
+The VALUE facet of the ROLE role is ACTOR.13299.
+The VALUE facet of the EXPLAINS role is ACTOR.13299.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.13284 HAZARD-DETECTION.13296 MINE.13286 ACTOR.13299).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.13290).
+The VALUE facet of the LINK1 role is RESULTS.13329.
+The VALUE facet of the LINKS role is (RESULTS.13329).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame REMUS.13284:
+ (Which is in the ACTOR slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame REMUS.13284)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame REMUS.13284)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the physical-object frame MINE.13286:
+ (Which is in the OBJECT slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame MINE.13286)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MINE.13286)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.13288:
+ (Which is in the LOCATION slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TRANSIT.13288)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TRANSIT.13288)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.13290:
+ (Which is in the ANTE slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.13292.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+
+
+For the physical-object frame ENEMY-PILOT.13292:
+ (Which is in the ACTOR slot of frame MINE-LAYER.13290)
+
+
+
+For the physical-object frame MINE.13286:
+ (Which is in the OBJECT slot of frame MINE-LAYER.13290)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.13288:
+ (Which is in the LOCATION slot of frame MINE-LAYER.13290)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the CONSEQ slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.13284:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.13299:
+ (Which is in the ACTOR slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.13299)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the DOMAIN slot of frame ACTOR.13299)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame REMUS.13284:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.13299)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.13299)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame MINE-XP.13282:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.13299)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The VALUE facet of the ANTE role is MINE-LAYER.13290.
+The VALUE facet of the CONSEQ role is HAZARD-DETECTION.13296.
+The VALUE facet of the ANTECEDENT role is MINE-LAYER.13290.
+The VALUE facet of the CONSEQUENT role is HAZARD-DETECTION.13296.
+The VALUE facet of the ROLE role is ACTOR.13299.
+The VALUE facet of the EXPLAINS role is ACTOR.13299.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.13284 HAZARD-DETECTION.13296 MINE.13286 ACTOR.13299).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (MINE-LAYER.13290).
+The VALUE facet of the LINK1 role is RESULTS.13329.
+The VALUE facet of the LINKS role is (RESULTS.13329).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.13304:
+ (Which is in the INDICES slot of frame ACTOR.13299)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.13299.
+The VALUE facet of the CO-DOMAIN role is ACTOR.13299.
+The VALUE facet of the RELATION role is ACTOR.13299.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.13299.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.13304)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.13299:
+ (Which is in the DOMAIN slot of frame INDEX.13304)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the state frame ACTOR.13299:
+ (Which is in the CO-DOMAIN slot of frame INDEX.13304)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the state frame ACTOR.13299:
+ (Which is in the RELATION slot of frame INDEX.13304)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the state frame ACTOR.13299:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.13304)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the physical-object frame MINE.13286:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.13311:
+ (Which is in the OBJECT slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is MINE.13286.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.13311)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the DOMAIN slot of frame OBJECT.13311)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.13286:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.13311)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.13311)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TRANSIT.13288:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LOCATION.13316:
+ (Which is in the LOCATION slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is TRANSIT.13288.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LOCATION.13316)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the DOMAIN slot of frame LOCATION.13316)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame TRANSIT.13288:
+ (Which is in the CO-DOMAIN slot of frame LOCATION.13316)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LOCATION.13316)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame HAZARD-DETECTION.13296)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.13290:
+ (Which is in the ANTECEDENT slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.13292.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the CONSEQUENT slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.13299:
+ (Which is in the ROLE slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the state frame ACTOR.13299:
+ (Which is in the EXPLAINS slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the physical-object frame REMUS.13284:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame MINE.13286:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.13299:
+ (Which is in the PRE-XP-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is HAZARD-DETECTION.13296.
+The VALUE facet of the CO-DOMAIN role is REMUS.13284.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (MINE-XP.13282).
+The VALUE facet of the INDICES role is (INDEX.13304).
+
+
+For the frame NIL.0:
+ (Which is in the INTERNAL-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MINE-LAYER.13290:
+ (Which is in the XP-ASSERTED-NODES slot of frame MINE-XP.13282)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.13292.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+
+
+For the state frame RESULTS.13329:
+ (Which is in the LINK1 slot of frame MINE-XP.13282)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.13290.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.13296.
+
+
+For the process frame MINE-LAYER.13290:
+ (Which is in the DOMAIN slot of frame RESULTS.13329)
+
+The VALUE facet of the ACTOR role is ENEMY-PILOT.13292.
+The VALUE facet of the OBJECT role is MINE.13286.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+
+
+For the process frame HAZARD-DETECTION.13296:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.13329)
+
+The VALUE facet of the ACTOR role is REMUS.13284.
+The RELATION facet of the ACTOR role is ACTOR.13299.
+The VALUE facet of the OBJECT role is MINE.13286.
+The RELATION facet of the OBJECT role is OBJECT.13311.
+The VALUE facet of the LOCATION role is TRANSIT.13288.
+The RELATION facet of the LOCATION role is LOCATION.13316.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.13329:
+ (Which is in the LINKS slot of frame MINE-XP.13282)
+
+The VALUE facet of the DOMAIN role is MINE-LAYER.13290.
+The VALUE facet of the CO-DOMAIN role is HAZARD-DETECTION.13296.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame MINE-XP.13282)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+40.337503 - Error reading from Meta-AQUA.
+
+40.922608 - ****** Starting Eval Phase ******
+
+40.923305 - Memory access at key __world states
+40.923528 - Memory access at key __current goals
+40.926178 - All current goals achieved. Removing them from goal graph
+
+40.926491 - Memory access at key __goals
+40.926994 - removing 1 plans that no longer apply.
+
+40.927204 - Memory access at key __current goals
+42.488754 - ****** Starting Intend Phase ******
+
+42.489266 - Memory access at key __goals
+42.489434 - Memory access at key __current goals
+42.489580 - Memory access at key __current goals
+42.489785 - Selecting goal(s): Goal(mine6, transit, predicate: hazard_checked)
+
+42.787144 - ****** Starting Plan Phase ******
+
+42.787509 - Memory access at key __world states
+42.787653 - Memory access at key __current goals
+42.789146 - Memory access at key __goals
+42.789550 - Old plan retrieved. Checking validity... valid.
+
+42.789922 - checking to see if all goals are achieved... yes
+
+43.064798 - ****** Starting Act Phase ******
+
+43.065210 - Memory access at key __world states
+43.065401 - Memory access at key __current goals
+43.065551 - Memory access at key __goals
+43.068176 - Selected action ignore(mine6, transit, remus) from plan:
+
+43.068519 - ignore(mine6, transit, remus)]0m
+
+43.068762 - Memory access at key __actions
+43.068936 - Memory access at key __actions
+43.069080 - Memory access at key __actions
+43.069381 - Memory access at key __feedback
+44.071113 - Starting cycle 5
+
+44.071473 - ****** Starting Simulate Phase ******
+
+44.071908 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_checked(mine6, transit)
+mine9 (HAZARD) : hazard_checked(mine9, qroute)
+qroute (SEA_ROUTE) : hazard_checked(mine9, qroute)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_checked(mine6, transit)
+]
+
+44.272609 - ****** Starting Perceive Phase ******
+
+44.272955 - Memory access at key __world states
+44.274253 - Mine Report not received
+
+44.274770 - at_location(remus,transit)
+at_location(remus,ga1)
+
+44.275037 - Memory access at key __world states
+44.275176 - Memory access at key __world states
+44.275371 - World observed.
+
+44.279763 - Memory access at key __world states
+44.279982 - Memory access at key __world states
+44.280130 - Memory access at key __actions
+44.280307 - Sending report to Meta-AQUA :
+
+44.280613 - (report.16
+(	(
+(ignore.1
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.25  (co-domain  (value transit))
+		(domain  (value remus)))
+	(at_location.26  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(enabled.25  (domain  (value remus)))
+	(hazard_checked.7  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_checked.8  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+45.320793 - ****** Starting Interpret Phase ******
+
+45.321191 - Memory access at key __goals
+45.321356 - Memory access at key __world states
+45.322141 - Meta-Aqua Output : 
+
+45.322325 - None
+
+45.618825 - ****** Starting Eval Phase ******
+
+45.619303 - Memory access at key __world states
+45.619514 - Memory access at key __current goals
+45.622010 - All current goals achieved. Removing them from goal graph
+
+45.622294 - Memory access at key __goals
+45.622766 - removing 1 plans that no longer apply.
+
+45.622978 - Memory access at key __current goals
+45.917598 - ****** Starting Intend Phase ******
+
+45.918101 - Memory access at key __goals
+45.918313 - Memory access at key __current goals
+45.918452 - Memory access at key __current goals
+45.918670 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+46.202157 - ****** Starting Plan Phase ******
+
+46.202549 - Memory access at key __world states
+46.202703 - Memory access at key __current goals
+46.204563 - Memory access at key __goals
+46.205007 - Old plan retrieved. Checking validity... valid.
+
+46.205416 - checking to see if all goals are achieved... yes
+
+46.496156 - ****** Starting Act Phase ******
+
+46.496598 - Memory access at key __world states
+46.496716 - Memory access at key __current goals
+46.496803 - Memory access at key __goals
+46.498336 - Selected action survey(remus, ga1) from plan:
+
+46.498598 - survey(remus, ga1)]0m
+
+46.498731 - Memory access at key __actions
+46.498839 - Memory access at key __actions
+46.498934 - Memory access at key __actions
+46.499075 - Memory access at key __feedback
+46.499177 - Memory access at key __previous action
+46.499290 - Memory access at key __feedback
+46.806108 - Starting cycle 6
+
+46.806405 - ****** Starting Simulate Phase ******
+
+46.806770 - [
+ga1 (SEA_ROUTE) : at_location(remus, ga1)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_checked(mine6, transit)
+mine9 (HAZARD) : hazard_checked(mine9, qroute)
+qroute (SEA_ROUTE) : hazard_checked(mine9, qroute)
+remus (UUV) : at_location(remus, transit) and at_location(remus, ga1) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_checked(mine6, transit)
+]
+
+47.636021 - ****** Starting Perceive Phase ******
+
+47.636517 - Memory access at key __world states
+47.637883 - Mine Report not received
+
+47.638636 - at_location(remus,transit)
+
+47.638968 - Memory access at key __world states
+47.639161 - Memory access at key __world states
+47.639539 - World observed.
+
+47.641527 - Memory access at key __world states
+47.641710 - Memory access at key __world states
+47.641836 - Memory access at key __actions
+47.642044 - Sending report to Meta-AQUA :
+
+47.642417 - (report.19
+(	(
+(survey.7
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.31  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.28  (domain  (value remus)))
+	(hazard_checked.13  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_checked.14  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+48.970778 - ****** Starting Interpret Phase ******
+
+48.971220 - Memory access at key __goals
+48.971399 - Memory access at key __world states
+48.971983 - Meta-Aqua Output : 
+
+48.972151 - None
+
+49.259330 - ****** Starting Eval Phase ******
+
+49.259667 - Memory access at key __world states
+49.259809 - Memory access at key __current goals
+49.261915 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+49.505579 - ****** Starting Intend Phase ******
+
+49.506056 - Memory access at key __goals
+49.506281 - Memory access at key __current goals
+49.506429 - Memory access at key __current goals
+49.506606 - No goals selected.
+
+49.755909 - ****** Starting Plan Phase ******
+
+49.756574 - Memory access at key __world states
+49.756748 - Memory access at key __current goals
+49.758438 - Memory access at key __goals
+49.758847 - Old plan retrieved. Checking validity... valid.
+
+49.759221 - checking to see if all goals are achieved... yes
+
+50.040863 - ****** Starting Act Phase ******
+
+50.041344 - Memory access at key __world states
+50.041559 - Memory access at key __current goals
+50.041763 - Memory access at key __goals
+50.045572 - Selected action survey(remus, ga1) from plan:
+
+50.046048 - survey(remus, ga1)]0m
+
+50.046300 - Memory access at key __actions
+50.046509 - Memory access at key __actions
+50.046717 - Memory access at key __actions
+50.047060 - Memory access at key __feedback
+50.047269 - Memory access at key __feedback
+50.047583 - Memory access at key __feedback
+50.329133 - Starting cycle 7
+
+50.329522 - ****** Starting Simulate Phase ******
+
+50.329988 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_checked(mine6, transit)
+mine9 (HAZARD) : hazard_checked(mine9, qroute)
+qroute (SEA_ROUTE) : hazard_checked(mine9, qroute)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_checked(mine6, transit)
+]
+
+50.605287 - ****** Starting Perceive Phase ******
+
+50.605655 - Memory access at key __world states
+50.606280 - HAZARD(mine1)
+hazard_at_location(mine1,qroute)
+at_location(remus,qroute)
+
+50.606577 - Memory access at key __world states
+50.606683 - Memory access at key __world states
+50.606781 - World observed.
+
+50.608062 - Memory access at key __world states
+50.608178 - Memory access at key __world states
+50.608254 - Memory access at key __actions
+50.608401 - Sending report to Meta-AQUA :
+
+50.608833 - (report.22
+(	(
+(survey.10
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.34  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.31  (domain  (value remus)))
+	(hazard_at_location.31  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_checked.19  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_checked.20  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.13
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.35  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.32  (domain  (value remus)))
+	(hazard_at_location.32  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_checked.21  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_checked.22  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(is-a-problem.4
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.36  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.33  (domain  (value remus)))
+	(hazard_at_location.33  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_checked.23  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_checked.24  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+51.286292 - ****** Starting Interpret Phase ******
+
+51.286572 - Memory access at key __goals
+51.286693 - Memory access at key __world states
+51.287122 - Memory access at key __goals
+52.321566 - Meta-Aqua Output : 
+
+52.323144 - (PROBLEM-XP (ACTOR (VALUE REMUS.15436)) (OBJECT (VALUE MINE.15438)) (LOCATION (VALUE QROUTE.15440)) (ANTE (VALUE EXPLOSION-XP.15442))
+ (CONSEQ (VALUE IS-A-PROBLEM.15502)) (ANTECEDENT (VALUE (EXPLOSION-XP.15442))) (CONSEQUENT (VALUE IS-A-PROBLEM.15502)) (ROLE (VALUE ACTOR.14248))
+ (EXPLAINS (VALUE ACTOR.14248)) (PRE-XP-NODES (VALUE (REMUS.15436 IS-A-PROBLEM.15502 QROUTE.15440 ACTOR.14248))) (INTERNAL-NODES (VALUE NIL.0))
+ (XP-ASSERTED-NODES (VALUE (EXPLOSION-XP.15442 MINE.15438))) (LINK1 (VALUE RESULTS.15515)) (LINKS (VALUE (RESULTS.15515))) (STATUS (VALUE QUESTION.0))
+ (MXP (VALUE TRACE-META-XP.15915)) (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame PROBLEM-XP.15963:
+
+The VALUE facet of the ACTOR role is REMUS.15965.
+The VALUE facet of the OBJECT role is MINE.15967.
+The VALUE facet of the LOCATION role is QROUTE.15969.
+The VALUE facet of the ANTE role is EXPLOSION-XP.15971.
+The VALUE facet of the CONSEQ role is IS-A-PROBLEM.16031.
+The VALUE facet of the ANTECEDENT role is (EXPLOSION-XP.15971).
+The VALUE facet of the CONSEQUENT role is IS-A-PROBLEM.16031.
+The VALUE facet of the ROLE role is ACTOR.16029.
+The VALUE facet of the EXPLAINS role is ACTOR.16029.
+The VALUE facet of the PRE-XP-NODES role is (REMUS.15965 IS-A-PROBLEM.16031 QROUTE.15969 ACTOR.16029).
+The VALUE facet of the INTERNAL-NODES role is NIL.0.
+The VALUE facet of the XP-ASSERTED-NODES role is (EXPLOSION-XP.15971 MINE.15967).
+The VALUE facet of the LINK1 role is RESULTS.16099.
+The VALUE facet of the LINKS role is (RESULTS.16099).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame REMUS.15965:
+ (Which is in the ACTOR slot of frame PROBLEM-XP.15963)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame REMUS.15965)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame REMUS.15965)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the physical-object frame MINE.15967:
+ (Which is in the OBJECT slot of frame PROBLEM-XP.15963)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame MINE.15967)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MINE.15967)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame QROUTE.15969:
+ (Which is in the LOCATION slot of frame PROBLEM-XP.15963)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame QROUTE.15969)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame QROUTE.15969)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame EXPLOSION-XP.15971:
+ (Which is in the ANTE slot of frame PROBLEM-XP.15963)
+
+The VALUE facet of the ACTOR role is SHIP.15973.
+The VALUE facet of the OBJECT role is MINE.15967.
+The VALUE facet of the LOCATION role is QROUTE.15969.
+The VALUE facet of the ANTE role is MINE-XP.15977.
+The VALUE facet of the ANTE1 role is AT-LOCATION.16018.
+The VALUE facet of the CONSEQ role is EXPLOSION-SCENE.16001.
+The VALUE facet of the ANTECEDENT role is (MINE-XP.15977 AT-LOCATION.16018).
+The VALUE facet of the CONSEQUENT role is EXPLOSION-SCENE.16001.
+The VALUE facet of the ROLE role is ACTOR.1599
+
+52.323765 - Error reading from Meta-AQUA.
+

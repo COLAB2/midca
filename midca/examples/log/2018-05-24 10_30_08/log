@@ -1,0 +1,685 @@
+.201990 - Memory access at key __goals
+.202374 - Goal Graph initialized.
+
+.202636 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.203564 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.203856 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.204050 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.204203 - [cognitive] Initializing Interpret module 2 MAQuery_MOOS...done.
+
+.204738 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.204893 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.205051 - Memory access at key __PlanningCount
+.205183 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.205859 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.206010 - Memory access at key __goals
+.206158 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+8.384643 - Starting cycle 0
+
+8.385076 - ****** Starting Simulate Phase ******
+
+8.385400 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+8.679474 - ****** Starting Perceive Phase ******
+
+8.680121 - Memory access at key __world states
+8.681659 - Mine Report not received
+
+8.682304 - at_location(remus,transit)
+at_location(remus,home)
+
+8.682919 - Memory access at key __world states
+8.683126 - Memory access at key __world states
+8.683357 - World observed.
+
+8.686709 - Memory access at key __world states
+8.686987 - Memory access at key __world states
+8.687310 - Sending report to Meta-AQUA :
+
+8.687569 - (report.1
+())
+
+12.182418 - ****** Starting Interpret Phase ******
+
+12.182921 - Memory access at key __goals
+12.183179 - Please input a goal if desired. Otherwise, press enter to continue
+
+18.897452 - Memory access at key __world states
+18.898531 - Memory access at key __goals
+18.898962 - Goal added.
+
+18.899176 - Please input a goal if desired. Otherwise, press enter to continue
+
+19.145501 - Nothing Important from Meta-AQUA.
+
+19.387257 - ****** Starting Eval Phase ******
+
+19.387621 - Memory access at key __world states
+19.389563 - No current goals. Skipping eval
+
+19.615903 - ****** Starting Intend Phase ******
+
+19.616368 - Memory access at key __goals
+19.616525 - Memory access at key __current goals
+19.616752 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+19.839331 - ****** Starting Plan Phase ******
+
+19.839761 - Memory access at key __world states
+19.839929 - Memory access at key __current goals
+19.841701 - Memory access at key __goals
+19.841924 - Planning...
+
+19.842223 - Memory access at key __PlanningCount
+19.842362 - Memory access at key __PlanningCount
+19.842613 - Planning complete.
+
+19.842790 - Plan: 
+
+19.842994 -   survey(remus, ga1)
+
+19.843161 - Memory access at key __goals
+20.146826 - ****** Starting Act Phase ******
+
+20.147157 - Memory access at key __world states
+20.147280 - Memory access at key __current goals
+20.147420 - Memory access at key __goals
+20.149382 - Selected action survey(remus, ga1) from plan:
+
+20.149553 - survey(remus, ga1)]0m
+
+20.149669 - Memory access at key __actions
+20.149782 - Memory access at key __actions
+20.149917 - Memory access at key __actions
+20.150130 - Memory access at key __feedback
+20.150240 - Memory access at key __previous action
+20.390505 - Starting cycle 1
+
+20.390854 - ****** Starting Simulate Phase ******
+
+20.391277 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+20.658517 - ****** Starting Perceive Phase ******
+
+20.658945 - Memory access at key __world states
+20.660266 - Mine Report not received
+
+20.660904 - at_location(remus,transit)
+
+20.661174 - Memory access at key __world states
+20.661312 - Memory access at key __world states
+20.661459 - World observed.
+
+20.663268 - Memory access at key __world states
+20.663470 - Memory access at key __world states
+20.663604 - Memory access at key __actions
+20.663859 - Sending report to Meta-AQUA :
+
+20.664229 - (report.4
+(	(
+(survey.1
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.1  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+
+20.920731 - ****** Starting Interpret Phase ******
+
+20.921045 - Memory access at key __goals
+21.189246 - ****** Starting Eval Phase ******
+
+21.189551 - Memory access at key __world states
+21.189667 - Memory access at key __current goals
+21.191080 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+21.464719 - ****** Starting Intend Phase ******
+
+21.465455 - Memory access at key __goals
+21.465696 - Memory access at key __current goals
+21.465906 - Memory access at key __current goals
+21.466089 - No goals selected.
+
+21.761490 - ****** Starting Plan Phase ******
+
+21.761848 - Memory access at key __world states
+21.761988 - Memory access at key __current goals
+21.763500 - Memory access at key __goals
+21.763934 - Old plan retrieved. Checking validity... valid.
+
+21.764449 - checking to see if all goals are achieved... yes
+
+22.055710 - ****** Starting Act Phase ******
+
+22.056083 - Memory access at key __world states
+22.056223 - Memory access at key __current goals
+22.056394 - Memory access at key __goals
+22.059128 - Selected action survey(remus, ga1) from plan:
+
+22.059378 - survey(remus, ga1)]0m
+
+22.059532 - Memory access at key __actions
+22.059725 - Memory access at key __actions
+22.059920 - Memory access at key __actions
+22.060144 - Memory access at key __feedback
+22.060325 - Memory access at key __feedback
+22.060510 - Memory access at key __feedback
+22.307289 - Starting cycle 2
+
+22.307809 - ****** Starting Simulate Phase ******
+
+22.308138 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+22.589649 - ****** Starting Perceive Phase ******
+
+22.589949 - Memory access at key __world states
+22.590067 - Memory access at key __latest mine detected
+22.590339 - HAZARD(mine6)
+hazard_at_location(mine6,transit)
+at_location(remus,transit)
+
+22.590595 - Memory access at key __world states
+22.590761 - Memory access at key __world states
+22.590879 - World observed.
+
+22.592348 - Memory access at key __world states
+22.592552 - Memory access at key __world states
+22.592638 - Memory access at key __actions
+22.592754 - Sending report to Meta-AQUA :
+
+22.593040 - (report.7
+(	(
+(survey.4
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.4  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.4  (domain  (value remus)))
+	(hazard_at_location.1  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.1
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.5  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.5  (domain  (value remus)))
+	(hazard_at_location.2  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+22.827791 - ****** Starting Interpret Phase ******
+
+22.828105 - Memory access at key __goals
+23.070882 - ****** Starting Eval Phase ******
+
+23.071212 - Memory access at key __world states
+23.071342 - Memory access at key __current goals
+23.073920 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+23.321367 - ****** Starting Intend Phase ******
+
+23.321951 - Memory access at key __goals
+23.322150 - Memory access at key __current goals
+23.322287 - Memory access at key __current goals
+23.322457 - No goals selected.
+
+23.613880 - ****** Starting Plan Phase ******
+
+23.614760 - Memory access at key __world states
+23.615018 - Memory access at key __current goals
+23.618043 - Memory access at key __goals
+23.619007 - Old plan retrieved. Checking validity... valid.
+
+23.619699 - checking to see if all goals are achieved... yes
+
+23.853693 - ****** Starting Act Phase ******
+
+23.854360 - Memory access at key __world states
+23.854563 - Memory access at key __current goals
+23.854875 - Memory access at key __goals
+23.857676 - Selected action survey(remus, ga1) from plan:
+
+23.857904 - survey(remus, ga1)]0m
+
+23.858060 - Memory access at key __actions
+23.858197 - Memory access at key __actions
+23.858310 - Memory access at key __actions
+23.858496 - Memory access at key __feedback
+23.858632 - Memory access at key __feedback
+23.858799 - Memory access at key __feedback
+24.086086 - Starting cycle 3
+
+24.086931 - ****** Starting Simulate Phase ******
+
+24.087297 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit) and hazard_at_location(mine6, transit)
+]
+
+24.317791 - ****** Starting Perceive Phase ******
+
+24.318349 - Memory access at key __world states
+24.319781 - Mine Report not received
+
+24.320769 - at_location(remus,qroute)
+
+24.321139 - Memory access at key __world states
+24.321342 - Memory access at key __world states
+24.321564 - World observed.
+
+24.325361 - Memory access at key __world states
+24.325631 - Memory access at key __world states
+24.325845 - Memory access at key __actions
+24.326147 - Sending report to Meta-AQUA :
+
+24.326924 - (report.10
+(	(
+(survey.7
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.10  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.10  (domain  (value remus)))
+	(hazard_at_location.7  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.4
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.11  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.11  (domain  (value remus)))
+	(hazard_at_location.8  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+24.578682 - ****** Starting Interpret Phase ******
+
+24.579031 - Memory access at key __goals
+24.910600 - ****** Starting Eval Phase ******
+
+24.910933 - Memory access at key __world states
+24.911090 - Memory access at key __current goals
+24.912499 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+25.211261 - ****** Starting Intend Phase ******
+
+25.211801 - Memory access at key __goals
+25.212076 - Memory access at key __current goals
+25.212341 - Memory access at key __current goals
+25.212556 - No goals selected.
+
+26.585567 - ****** Starting Plan Phase ******
+
+26.585938 - Memory access at key __world states
+26.586090 - Memory access at key __current goals
+26.588016 - Memory access at key __goals
+26.588718 - Old plan retrieved. Checking validity... valid.
+
+26.589389 - checking to see if all goals are achieved... yes
+
+27.720289 - ****** Starting Act Phase ******
+
+27.720770 - Memory access at key __world states
+27.720987 - Memory access at key __current goals
+27.721133 - Memory access at key __goals
+27.723564 - Selected action survey(remus, ga1) from plan:
+
+27.723819 - survey(remus, ga1)]0m
+
+27.724006 - Memory access at key __actions
+27.724182 - Memory access at key __actions
+27.724363 - Memory access at key __actions
+27.724554 - Memory access at key __feedback
+27.724675 - Memory access at key __feedback
+27.724887 - Memory access at key __feedback
+28.024616 - Starting cycle 4
+
+28.024959 - ****** Starting Simulate Phase ******
+
+28.025381 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+qroute (SEA_ROUTE) : at_location(remus, qroute)
+remus (UUV) : at_location(remus, qroute) and enabled(remus)
+transit (SEA_ROUTE) : hazard_at_location(mine6, transit)
+]
+
+28.261577 - ****** Starting Perceive Phase ******
+
+28.261961 - Memory access at key __world states
+28.262143 - Memory access at key __latest mine detected
+28.262943 - HAZARD(mine9)
+hazard_at_location(mine9,qroute)
+at_location(remus,qroute)
+
+28.263371 - Memory access at key __world states
+28.263569 - Memory access at key __world states
+28.263877 - World observed.
+
+28.266158 - Memory access at key __world states
+28.266341 - Memory access at key __world states
+28.266483 - Memory access at key __actions
+28.266670 - Sending report to Meta-AQUA :
+
+28.267600 - (report.13
+(	(
+(survey.10
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.16  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.16  (domain  (value remus)))
+	(hazard_at_location.13  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.14  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.7
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.17  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.17  (domain  (value remus)))
+	(hazard_at_location.15  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.16  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(is-a-problem.1
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.18  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.18  (domain  (value remus)))
+	(hazard_at_location.17  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.18  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.8
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.19  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.19  (domain  (value remus)))
+	(hazard_at_location.19  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.20  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+29.747604 - ****** Starting Interpret Phase ******
+
+29.748082 - Memory access at key __goals
+1:00.880189 - ****** Starting Eval Phase ******
+
+1:00.881246 - Memory access at key __world states
+1:00.881552 - Memory access at key __current goals
+1:00.884459 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+1:01.144148 - ****** Starting Intend Phase ******
+
+1:01.144700 - Memory access at key __goals
+1:01.144871 - Memory access at key __current goals
+1:01.145009 - Memory access at key __current goals
+1:01.145194 - No goals selected.
+
+1:01.393466 - ****** Starting Plan Phase ******
+
+1:01.393818 - Memory access at key __world states
+1:01.393981 - Memory access at key __current goals
+1:01.395659 - Memory access at key __goals
+1:01.396065 - Old plan retrieved. Checking validity... valid.
+
+1:01.396462 - checking to see if all goals are achieved... yes
+
+1:01.609642 - ****** Starting Act Phase ******
+
+1:01.610064 - Memory access at key __world states
+1:01.610248 - Memory access at key __current goals
+1:01.610404 - Memory access at key __goals
+1:01.612687 - Selected action survey(remus, ga1) from plan:
+
+1:01.612935 - survey(remus, ga1)]0m
+
+1:01.613128 - Memory access at key __actions
+1:01.613299 - Memory access at key __actions
+1:01.613439 - Memory access at key __actions
+1:01.613675 - Memory access at key __feedback
+1:01.613909 - Memory access at key __feedback
+1:01.614164 - Memory access at key __feedback
+1:01.810996 - Starting cycle 5
+
+1:01.811336 - ****** Starting Simulate Phase ******
+
+1:01.811743 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+mine6 (HAZARD) : hazard_at_location(mine6, transit)
+mine9 (HAZARD) : hazard_at_location(mine9, qroute)
+qroute (SEA_ROUTE) : hazard_at_location(mine9, qroute) and at_location(remus, qroute)
+remus (UUV) : enabled(remus) and at_location(remus, qroute)
+transit (SEA_ROUTE) : hazard_at_location(mine6, transit)
+]
+
+1:02.008398 - ****** Starting Perceive Phase ******
+
+1:02.008737 - Memory access at key __world states
+1:02.008877 - Memory access at key __latest mine detected
+1:02.009394 - HAZARD(mine1)
+hazard_at_location(mine1,qroute)
+at_location(remus,qroute)
+at_location(remus,ga1)
+
+1:02.009613 - Memory access at key __world states
+1:02.009718 - Memory access at key __world states
+1:02.009830 - World observed.
+
+1:02.013506 - Memory access at key __world states
+1:02.013679 - Memory access at key __world states
+1:02.013787 - Memory access at key __actions
+1:02.013959 - Sending report to Meta-AQUA :
+
+1:02.014996 - (report.16
+(	(
+(survey.13
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.28  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.29  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.28  (domain  (value remus)))
+	(hazard_at_location.37  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.38  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.39  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.13
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.30  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.31  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.29  (domain  (value remus)))
+	(hazard_at_location.40  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.41  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.42  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(is-a-problem.4
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.32  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.33  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.30  (domain  (value remus)))
+	(hazard_at_location.43  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.44  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.45  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.14
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.34  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.35  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.31  (domain  (value remus)))
+	(hazard_at_location.46  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.47  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.48  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(is-a-problem.5
+	(actor  (value remus))
+	(location  (value qroute))
+	(object  (value mine)))
+"")
+((state
+	(at_location.36  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.37  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.32  (domain  (value remus)))
+	(hazard_at_location.49  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.50  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.51  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+	(
+(hazard-detection.15
+	(actor  (value remus))
+	(location  (value transit))
+	(object  (value mine)))
+"")
+((state
+	(at_location.38  (co-domain  (value ga1))
+		(domain  (value remus)))
+	(at_location.39  (co-domain  (value qroute))
+		(domain  (value remus)))
+	(enabled.33  (domain  (value remus)))
+	(hazard_at_location.52  (co-domain  (value qroute))
+		(domain  (value mine1)))
+	(hazard_at_location.53  (co-domain  (value qroute))
+		(domain  (value mine9)))
+	(hazard_at_location.54  (co-domain  (value transit))
+		(domain  (value mine6))))
+"")
+))
+
+1:02.230915 - ****** Starting Interpret Phase ******
+
+1:02.231217 - Memory access at key __goals
+1:03.967137 - ****** Starting Eval Phase ******
+
+1:03.967869 - Memory access at key __world states
+1:03.968034 - Memory access at key __current goals
+1:03.969865 - All current goals achieved. Removing them from goal graph
+
+1:03.970062 - Memory access at key __goals
+1:03.970466 - removing 1 plans that no longer apply.
+
+1:03.970628 - Memory access at key __current goals

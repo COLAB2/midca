@@ -2,6 +2,7 @@ from midca import base
 from midca import midcatime
 import copy
 try:
+   from MIDCA.modules._plan import modified_pyhop
    from midca.examples._gazebo_baxter import halo_color
 except ImportError:
    pass
@@ -26,6 +27,8 @@ class EvalPointingFromFeedback(base.BaseModule):
             else:
                 if plan.finished():
 		    try:
+			modified_pyhop.generated_monitors[:] = []
+		        modified_pyhop.wait_time = None
 			hallo = halo_color.HaloLed()
 			# set hallo to green as a sign for monitors
 			hallo.setGreen()

@@ -1,0 +1,26 @@
+.005966 - Memory access at key __goals
+.006271 - Goal Graph initialized.
+
+.006498 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.007272 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.007464 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.007611 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.007755 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.007895 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.008031 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.008281 - Memory access at key __PlanningCount
+.008509 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.009501 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.009700 - Memory access at key __goals
+.009823 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+

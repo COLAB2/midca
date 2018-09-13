@@ -1,0 +1,53 @@
+.000773 - Memory access at key __goals
+.000913 - Goal Graph initialized.
+
+.001090 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001700 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001855 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.002012 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002150 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.002270 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002387 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002505 - Memory access at key __PlanningCount
+.002603 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003416 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.003580 - Memory access at key __goals
+.003691 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.514215 - Starting cycle 0
+
+.514714 - ****** Starting Simulate Phase ******
+
+.515300 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+.774849 - ****** Starting Perceive Phase ******
+
+.775198 - Memory access at key __world states
+.776542 - Mine Report not received
+
+.776931 - at_location(remus,transit)
+at_location(remus,home)
+
+.777304 - Memory access at key __world states
+.777448 - Memory access at key __world states
+.777601 - World observed.
+
+.779969 - Memory access at key __world states
+.780183 - Memory access at key __world states

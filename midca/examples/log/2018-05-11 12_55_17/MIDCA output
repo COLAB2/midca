@@ -1,0 +1,1747 @@
+.202693 - Goal Graph initialized.
+
+.203205 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.204907 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.205342 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.205649 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.205911 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.206212 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.206390 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.206817 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.207510 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.207829 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+4.731618 - Starting cycle 0
+
+4.732065 - ****** Starting Simulate Phase ******
+
+4.732490 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+5.162530 - ****** Starting Perceive Phase ******
+
+5.164520 - Mine Report not received
+
+5.165151 - at_location(remus,transit)
+at_location(remus,home)
+
+5.165940 - World observed.
+
+5.169234 - Sending report to Meta-AQUA :
+
+5.169498 - (report.1
+())
+
+9.288809 - ****** Starting Interpret Phase ******
+
+9.289195 - Please input a goal if desired. Otherwise, press enter to continue
+
+19.497154 - Goal added.
+
+19.497383 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.017066 - Meta-AQUA output unrecognized. No goal generated. Output:
+
+20.017283 - Error reading from Meta-AQUA.
+
+20.032554 -  Got:
+(XP-DEFENSIVE-BARK (ACTOR (VALUE DOG.1034)) (OBJECT (VALUE LUGGAGE.1036))
+                   (BARKING (VALUE DOG-BARKS.1035)) (ROLE (VALUE ACTOR.1068))
+                   (THREAT (VALUE STATE.2323))
+                   (THREATENING-ACTION (VALUE MOP.2325))
+                   (EXPLAINS (VALUE ACTOR.1068))
+                   (PRE-XP-NODES
+                    (VALUE (DOG.1034 DOG-BARKS.1035 LUGGAGE.1036 ACTOR.1068)))
+                   (INTERNAL-NODES (VALUE (STATE.2323)))
+                   (XP-ASSERTED-NODES (VALUE (MOP.2325)))
+                   (LINK1 (VALUE RESULTS.2335)) (LINK2 (VALUE ENABLES.2339))
+                   (LINKS (VALUE (RESULTS.2335 ENABLES.2339)))
+                   (STATUS (VALUE QUESTION.0))
+                   (MXP (VALUE TRACE-META-XP.3319))
+                   (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame XP-DEFENSIVE-BARK.5964:
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The VALUE facet of the BARKING role is DOG-BARKS.5970.
+The VALUE facet of the ROLE role is ACTOR.5973.
+The VALUE facet of the THREAT role is STATE.6023.
+The VALUE facet of the THREATENING-ACTION role is MOP.6025.
+The VALUE facet of the EXPLAINS role is ACTOR.5973.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5966
+                                             DOG-BARKS.5970
+                                             LUGGAGE.5968
+                                             ACTOR.5973).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6023).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6025).
+The VALUE facet of the LINK1 role is RESULTS.6035.
+The VALUE facet of the LINK2 role is ENABLES.6039.
+The VALUE facet of the LINKS role is (RESULTS.6035 ENABLES.6039).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG.5966)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG.5966)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the OBJECT slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LUGGAGE.5968)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LUGGAGE.5968)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the BARKING slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame ACTOR.5973)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame XP-DEFENSIVE-BARK.5964:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.5973)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The VALUE facet of the BARKING role is DOG-BARKS.5970.
+The VALUE facet of the ROLE role is ACTOR.5973.
+The VALUE facet of the THREAT role is STATE.6023.
+The VALUE facet of the THREATENING-ACTION role is MOP.6025.
+The VALUE facet of the EXPLAINS role is ACTOR.5973.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5966
+                                             DOG-BARKS.5970
+                                             LUGGAGE.5968
+                                             ACTOR.5973).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6023).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6025).
+The VALUE facet of the LINK1 role is RESULTS.6035.
+The VALUE facet of the LINK2 role is ENABLES.6039.
+The VALUE facet of the LINKS role is (RESULTS.6035 ENABLES.6039).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.5978:
+ (Which is in the INDICES slot of frame ACTOR.5973)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.5973.
+The VALUE facet of the CO-DOMAIN role is ACTOR.5973.
+The VALUE facet of the RELATION role is ACTOR.5973.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.5973.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.5978)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the DOMAIN slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the CO-DOMAIN slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the RELATION slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INDEX.5978)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.5985:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame OBJECT.5985)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame AT-LOCATION.5989:
+ (Which is in the TO slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.5992.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame PHYSICAL-LOCATION.5992:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame PHYSICAL-LOCATION.5992)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame PHYSICAL-LOCATION.5992)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TO.5994:
+ (Which is in the TO slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is AT-LOCATION.5989.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TO.5994)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame TO.5994)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.5989:
+ (Which is in the CO-DOMAIN slot of frame TO.5994)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.5992.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TO.5994)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.6001:
+ (Which is in the ACTOR slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is SPEAK.5998.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the DOMAIN slot of frame ACTOR.6001)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame SOUNDS.6005:
+ (Which is in the OBJECT slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SOUNDS.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SOUNDS.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSTRUMENTAL-SCENE.6007:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is SPEAK.5998.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the CO-DOMAIN slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame KNOWLEDGE-STATE.6011:
+ (Which is in the MAIN-PRECONDITION slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is DOG.5966.
+The VALUE facet of the BELIEVED-ITEM role is AT-LOCATION.6014.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the DOMAIN slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.6014:
+ (Which is in the BELIEVED-ITEM slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the DOMAIN role is DRUG.6016.
+The VALUE facet of the CO-DOMAIN role is INSIDE-CONTAINER.6018.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6016:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DRUG.6016)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DRUG.6016)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSIDE-CONTAINER.6018:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the DOMAIN role is DRUG.6016.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6016:
+ (Which is in the DOMAIN slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the CO-DOMAIN slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the ROLE slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame STATE.6023:
+ (Which is in the THREAT slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame STATE.6023)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the THREATENING-ACTION slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the MAIN-RESULT slot of frame MOP.6025)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MOP.6025)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the EXPLAINS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame STATE.6023:
+ (Which is in the INTERNAL-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the XP-ASSERTED-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.6035:
+ (Which is in the LINK1 slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is MOP.6025.
+The VALUE facet of the CO-DOMAIN role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the DOMAIN slot of frame RESULTS.6035)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.6035)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame RESULTS.6035)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ENABLES.6039:
+ (Which is in the LINK2 slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is STATE.6023.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the DOMAIN slot of frame ENABLES.6039)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the CO-DOMAIN slot of frame ENABLES.6039)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ENABLES.6039)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame RESULTS.6035:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is MOP.6025.
+The VALUE facet of the CO-DOMAIN role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ENABLES.6039:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is STATE.6023.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+20.826687 - ****** Starting Eval Phase ******
+
+20.829315 - No current goals. Skipping eval
+
+21.481527 - ****** Starting Intend Phase ******
+
+21.482137 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+22.200141 - ****** Starting Plan Phase ******
+
+22.202604 - Planning...
+
+22.203319 - Planning complete.
+
+22.203488 - Plan: 
+
+22.203758 -   survey(remus, ga1)
+
+23.853640 - ****** Starting Act Phase ******
+
+23.856763 - Selected action survey(remus, ga1) from plan:
+
+23.857003 - survey(remus, ga1)]0m
+
+24.414646 - Starting cycle 1
+
+24.415057 - ****** Starting Simulate Phase ******
+
+24.415558 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+25.066224 - ****** Starting Perceive Phase ******
+
+25.068018 - Mine Report not received
+
+25.068731 - at_location(remus,transit)
+at_location(remus,home)
+
+25.069381 - World observed.
+
+25.072557 - Sending report to Meta-AQUA :
+
+25.073118 - (report.4
+(	(
+(survey.1
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.1  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.2  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+
+25.535978 - ****** Starting Interpret Phase ******
+
+25.838560 - ****** Starting Eval Phase ******
+
+25.842498 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+26.484660 - ****** Starting Intend Phase ******
+
+26.485978 - No goals selected.
+
+26.777551 - ****** Starting Plan Phase ******
+
+26.780422 - Old plan retrieved. Checking validity... valid.
+
+26.780832 - checking to see if all goals are achieved... yes
+
+27.035174 - ****** Starting Act Phase ******
+
+27.037470 - Selected action survey(remus, ga1) from plan:
+
+27.037696 - survey(remus, ga1)]0m
+
+27.317045 - Starting cycle 2
+
+27.317430 - ****** Starting Simulate Phase ******
+
+27.317807 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+27.567584 - ****** Starting Perceive Phase ******
+
+27.569312 - Mine Report not received
+
+27.569787 - at_location(remus,transit)
+at_location(remus,home)
+
+27.570324 - World observed.
+
+27.573887 - Sending report to Meta-AQUA :
+
+27.574268 - (report.7
+(	(
+(survey.4
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.7  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.8  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.4  (domain  (value remus))))
+"")
+))
+
+27.840425 - ****** Starting Interpret Phase ******
+
+28.149690 - ****** Starting Eval Phase ******
+
+28.152015 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+28.409299 - ****** Starting Intend Phase ******
+
+28.410086 - No goals selected.
+
+28.702109 - ****** Starting Plan Phase ******
+
+28.705044 - Old plan retrieved. Checking validity... valid.
+
+28.705521 - checking to see if all goals are achieved... yes
+
+28.973799 - ****** Starting Act Phase ******
+
+28.977087 - Selected action survey(remus, ga1) from plan:
+
+28.977320 - survey(remus, ga1)]0m
+
+29.216134 - Starting cycle 3
+
+29.216887 - ****** Starting Simulate Phase ******
+
+29.217527 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+29.475123 - ****** Starting Perceive Phase ******
+
+29.477141 - Mine Report not received
+
+29.478010 - at_location(remus,transit)
+at_location(remus,home)
+
+29.478574 - World observed.
+
+29.480915 - Sending report to Meta-AQUA :
+
+29.481256 - (report.10
+(	(
+(survey.7
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.13  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.14  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.7  (domain  (value remus))))
+"")
+))
+
+29.696071 - ****** Starting Interpret Phase ******
+
+29.988903 - ****** Starting Eval Phase ******
+
+29.993745 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+30.240388 - ****** Starting Intend Phase ******
+
+30.241176 - No goals selected.
+
+30.490378 - ****** Starting Plan Phase ******
+
+30.492954 - Old plan retrieved. Checking validity... valid.
+
+30.493355 - checking to see if all goals are achieved... yes
+
+30.771932 - ****** Starting Act Phase ******
+
+30.774926 - Selected action survey(remus, ga1) from plan:
+
+30.775133 - survey(remus, ga1)]0m
+
+31.049718 - Starting cycle 4
+
+31.050388 - ****** Starting Simulate Phase ******
+
+31.050648 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+31.322728 - ****** Starting Perceive Phase ******
+
+31.324443 - Mine Report not received
+
+31.324895 - at_location(remus,transit)
+at_location(remus,home)
+
+31.325281 - World observed.
+
+31.326756 - Sending report to Meta-AQUA :
+
+31.326964 - (report.13
+(	(
+(survey.10
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.19  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.20  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.10  (domain  (value remus))))
+"")
+))
+
+31.611213 - ****** Starting Interpret Phase ******
+
+31.909644 - ****** Starting Eval Phase ******
+
+31.912930 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+32.161229 - ****** Starting Intend Phase ******
+
+32.161947 - No goals selected.
+
+32.429450 - ****** Starting Plan Phase ******
+
+32.432185 - Old plan retrieved. Checking validity... valid.
+
+32.432640 - checking to see if all goals are achieved... yes
+
+32.712957 - ****** Starting Act Phase ******
+
+32.716693 - Selected action survey(remus, ga1) from plan:
+
+32.716973 - survey(remus, ga1)]0m
+
+33.013966 - Starting cycle 5
+
+33.014360 - ****** Starting Simulate Phase ******
+
+33.014761 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+33.274856 - ****** Starting Perceive Phase ******
+
+33.277093 - Mine Report not received
+
+33.277786 - at_location(remus,transit)
+at_location(remus,home)
+
+33.278549 - World observed.
+
+33.283231 - Sending report to Meta-AQUA :
+
+33.283635 - (report.16
+(	(
+(survey.13
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.25  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.26  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.13  (domain  (value remus))))
+"")
+))
+
+33.603323 - ****** Starting Interpret Phase ******
+
+34.003128 - ****** Starting Eval Phase ******
+
+34.005475 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+34.410612 - ****** Starting Intend Phase ******
+
+34.411689 - No goals selected.
+
+34.674463 - ****** Starting Plan Phase ******
+
+34.676398 - Old plan retrieved. Checking validity... valid.
+
+34.676736 - checking to see if all goals are achieved... yes
+
+34.912490 - ****** Starting Act Phase ******
+
+34.915687 - Selected action survey(remus, ga1) from plan:
+
+34.915996 - survey(remus, ga1)]0m
+
+35.105267 - Starting cycle 6
+
+35.105842 - ****** Starting Simulate Phase ******
+
+35.106204 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+35.347140 - ****** Starting Perceive Phase ******
+
+35.349280 - Mine Report not received
+
+35.349961 - at_location(remus,transit)
+at_location(remus,home)
+
+35.350558 - World observed.
+
+35.353373 - Sending report to Meta-AQUA :
+
+35.353745 - (report.19
+(	(
+(survey.16
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.31  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.32  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.16  (domain  (value remus))))
+"")
+))
+
+35.574056 - ****** Starting Interpret Phase ******
+
+35.826729 - ****** Starting Eval Phase ******
+
+35.829467 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+36.214909 - ****** Starting Intend Phase ******
+
+36.216211 - No goals selected.
+
+36.604736 - ****** Starting Plan Phase ******
+
+36.608640 - Old plan retrieved. Checking validity... valid.
+
+36.609050 - checking to see if all goals are achieved... yes
+
+36.877010 - ****** Starting Act Phase ******
+
+36.879594 - Selected action survey(remus, ga1) from plan:
+
+36.879820 - survey(remus, ga1)]0m
+
+37.105138 - Starting cycle 7
+
+37.105681 - ****** Starting Simulate Phase ******
+
+37.106251 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+37.573876 - ****** Starting Perceive Phase ******
+
+37.575624 - Mine Report not received
+
+37.576127 - at_location(remus,transit)
+at_location(remus,home)
+
+37.576656 - World observed.
+
+37.578762 - Sending report to Meta-AQUA :
+
+37.579040 - (report.22
+(	(
+(survey.19
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.37  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.38  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.19  (domain  (value remus))))
+"")
+))
+
+37.836079 - ****** Starting Interpret Phase ******
+
+38.804584 - ****** Starting Eval Phase ******
+
+38.807947 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+39.062956 - ****** Starting Intend Phase ******
+
+39.063821 - No goals selected.
+
+39.315269 - ****** Starting Plan Phase ******
+
+39.317815 - Old plan retrieved. Checking validity... valid.
+
+39.318535 - checking to see if all goals are achieved... yes
+
+39.513148 - ****** Starting Act Phase ******
+
+39.518110 - Selected action survey(remus, ga1) from plan:
+
+39.518447 - survey(remus, ga1)]0m
+
+39.715689 - Starting cycle 8
+
+39.716302 - ****** Starting Simulate Phase ******
+
+39.716802 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+39.817316 - ****** Starting Perceive Phase ******
+
+39.819551 - Mine Report not received
+
+39.820108 - at_location(remus,transit)
+at_location(remus,home)
+
+39.820602 - World observed.
+
+39.822664 - Sending report to Meta-AQUA :
+
+39.822893 - (report.25
+(	(
+(survey.22
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.43  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.44  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.22  (domain  (value remus))))
+"")
+))
+
+40.076061 - ****** Starting Interpret Phase ******
+
+40.329151 - ****** Starting Eval Phase ******
+
+40.331854 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+40.536770 - ****** Starting Intend Phase ******
+
+40.537523 - No goals selected.
+
+40.769307 - ****** Starting Plan Phase ******
+
+40.773558 - Old plan retrieved. Checking validity... valid.
+
+40.774231 - checking to see if all goals are achieved... yes
+
+40.976175 - ****** Starting Act Phase ******
+
+40.979155 - Selected action survey(remus, ga1) from plan:
+
+40.979380 - survey(remus, ga1)]0m
+
+41.137851 - Starting cycle 9
+
+41.138224 - ****** Starting Simulate Phase ******
+
+41.138603 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+41.360126 - ****** Starting Perceive Phase ******
+
+41.361910 - Mine Report not received
+
+41.362810 - at_location(remus,transit)
+at_location(remus,home)
+
+41.363387 - World observed.
+
+41.365949 - Sending report to Meta-AQUA :
+
+41.366383 - (report.28
+(	(
+(survey.25
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.49  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.50  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.25  (domain  (value remus))))
+"")
+))
+
+41.568161 - ****** Starting Interpret Phase ******
+
+41.779847 - ****** Starting Eval Phase ******
+
+41.783225 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+42.107851 - ****** Starting Intend Phase ******
+
+42.108835 - No goals selected.
+
+42.320738 - ****** Starting Plan Phase ******
+
+42.323907 - Old plan retrieved. Checking validity... valid.
+
+42.324370 - checking to see if all goals are achieved... yes
+
+42.597991 - ****** Starting Act Phase ******
+
+42.600571 - Selected action survey(remus, ga1) from plan:
+
+42.600784 - survey(remus, ga1)]0m
+
+42.871897 - Starting cycle 10
+
+42.872331 - ****** Starting Simulate Phase ******
+
+42.872722 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+55.164973 - ****** Starting Perceive Phase ******
+
+55.166727 - Mine Report not received
+
+55.167525 - at_location(remus,transit)
+at_location(remus,home)
+
+55.168368 - World observed.
+
+55.170659 - Sending report to Meta-AQUA :
+
+55.171057 - (report.31
+(	(
+(survey.28
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.55  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.56  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.28  (domain  (value remus))))
+"")
+))
+
+55.366640 - ****** Starting Interpret Phase ******
+
+55.547072 - ****** Starting Eval Phase ******
+
+55.549482 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+55.730926 - ****** Starting Intend Phase ******
+
+55.731991 - No goals selected.
+
+56.269285 - ****** Starting Plan Phase ******
+
+56.272568 - Old plan retrieved. Checking validity... valid.
+
+56.273525 - checking to see if all goals are achieved... yes
+
+56.697578 - ****** Starting Act Phase ******
+
+56.701244 - Selected action survey(remus, ga1) from plan:
+
+56.701565 - survey(remus, ga1)]0m
+
+57.065274 - Starting cycle 11
+
+57.065873 - ****** Starting Simulate Phase ******
+
+57.066225 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+57.378390 - ****** Starting Perceive Phase ******
+
+57.380485 - Mine Report not received
+
+57.381309 - at_location(remus,transit)
+at_location(remus,home)
+
+57.382063 - World observed.
+
+57.385352 - Sending report to Meta-AQUA :
+
+57.385821 - (report.34
+(	(
+(survey.31
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.61  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.62  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.31  (domain  (value remus))))
+"")
+))
+
+57.706238 - ****** Starting Interpret Phase ******
+
+58.237631 - ****** Starting Eval Phase ******
+
+58.240270 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+58.459950 - ****** Starting Intend Phase ******
+
+58.460938 - No goals selected.
+
+58.666947 - ****** Starting Plan Phase ******
+
+58.669344 - Old plan retrieved. Checking validity... valid.
+
+58.669819 - checking to see if all goals are achieved... yes
+
+58.869185 - ****** Starting Act Phase ******
+
+58.873173 - Selected action survey(remus, ga1) from plan:
+
+58.873433 - survey(remus, ga1)]0m
+
+59.047651 - Starting cycle 12
+
+59.047907 - ****** Starting Simulate Phase ******
+
+59.048154 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+59.239812 - ****** Starting Perceive Phase ******
+
+59.241510 - Mine Report not received
+
+59.241965 - at_location(remus,transit)
+at_location(remus,home)
+
+59.242418 - World observed.
+
+59.244138 - Sending report to Meta-AQUA :
+
+59.244451 - (report.37
+(	(
+(survey.34
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.67  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.68  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.34  (domain  (value remus))))
+"")
+))
+
+59.400688 - ****** Starting Interpret Phase ******
+
+59.570254 - ****** Starting Eval Phase ******
+
+59.573482 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+59.734065 - ****** Starting Intend Phase ******
+
+59.735198 - No goals selected.
+
+59.904718 - ****** Starting Plan Phase ******
+
+59.907006 - Old plan retrieved. Checking validity... valid.
+
+59.907305 - checking to see if all goals are achieved... yes
+
+1:00.224956 - ****** Starting Act Phase ******
+
+1:00.230947 - Selected action survey(remus, ga1) from plan:
+
+1:00.231308 - survey(remus, ga1)]0m
+
+1:00.467162 - Starting cycle 13
+
+1:00.467589 - ****** Starting Simulate Phase ******
+
+1:00.468076 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+1:00.705690 - ****** Starting Perceive Phase ******
+
+1:00.707431 - Mine Report not received
+
+1:00.707967 - at_location(remus,transit)
+at_location(remus,home)
+
+1:00.708698 - World observed.
+
+1:00.711382 - Sending report to Meta-AQUA :
+
+1:00.711732 - (report.40
+(	(
+(survey.37
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.73  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.74  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.37  (domain  (value remus))))
+"")
+))
+
+1:00.928237 - ****** Starting Interpret Phase ******
+
+1:01.165625 - ****** Starting Eval Phase ******
+
+1:01.168069 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+1:01.397739 - ****** Starting Intend Phase ******
+
+1:01.399093 - No goals selected.
+
+1:01.646620 - ****** Starting Plan Phase ******
+
+1:01.649918 - Old plan retrieved. Checking validity... valid.
+
+1:01.650311 - checking to see if all goals are achieved... yes
+
+1:02.265522 - ****** Starting Act Phase ******
+
+1:02.270657 - Selected action survey(remus, ga1) from plan:
+
+1:02.270905 - survey(remus, ga1)]0m
+

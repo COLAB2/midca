@@ -4,7 +4,8 @@ from midca import rosrun, midcatime, base
 import copy
 import os
 import zmq
-import socket
+import socket,time
+
 
 try:
 	# baxter robot requirements
@@ -219,6 +220,7 @@ class MoosObserver(base.BaseModule):
                 mine_label = mine_label.split("=")[1]
 
                 mines_checked = []
+		# ignore already checked mines
                 for atom in self.world.atoms:
                     if atom.predicate.name == "hazard_checked":
                         mines_checked.append(atom.args[0].name)
@@ -226,13 +228,27 @@ class MoosObserver(base.BaseModule):
                 if "mine"+mine_label in mines_checked:
                     raise Exception("Mine previously checked.")
 
-                # for mine at qroute or not
-                if mine_y >=-98 and mine_y<=-48:
-                    states+= "HAZARD(mine" + mine_label + ")\n"
-                    states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
-                else:
-                    states+= "HAZARD(mine" + mine_label + ")\n"
-                    states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+		# for mine at GA1 and GA2
+		if (mine_x>=-3 and mine_x<=44) and (mine_y>=-102 and mine_y<=-56):
+		    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
+		    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga1"])
+		elif (mine_x>=124 and mine_x<=175) and (mine_y>=-102 and mine_y<=-56):
+		    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
+		    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga2"])
+			
+		else:	
+                	# for mine at qroute or not
+                	if mine_y >=-98 and mine_y<=-48:
+                    		states+= "HAZARD(mine" + mine_label + ")\n"
+                    		states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+		    		self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "qroute"])
+                	else:
+                    		states+= "HAZARD(mine" + mine_label + ")\n"
+                    		states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+		    		self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "transit"])
+		
             except:
                 print ("Mine Report not received")
                 pass
@@ -397,6 +413,19 @@ class MAReport:
         elif action[0] == "burns":
             valuepairs["actor"] = {"value": "nature"}
         valuepairs["object"] = {"value": str(action[1]).replace(" ", "_")}
+
+        if action[0] in ("survey"):
+            valuepairs["actor"] = {"value": str(action[1]).replace(" ", "_")}
+            valuepairs["location"] = { "value":  str(action[2]).replace(" ", "_") }
+            del valuepairs["object"]
+
+        if action[0] in ("remove" , "ignore", "hazard-detection", "is-a-problem"):
+            valuepairs["actor"] = {"value": str(action[3]).replace(" ", "_")}
+            object = str(action[1]).replace(" ", "_")
+            object = ''.join([i for i in object if not i.isdigit()])
+            valuepairs["object"] = {"value": object}
+            valuepairs["location"] =  {"value" :  str(action[2]).replace(" ", "_") }
+
         if action[0] in ("stack", "unstack"):
             valuepairs["recipient"] = {"value": str(action[2]).replace(" ", "_")}
         return s + self.str_dict(valuepairs, skipfirsttab = False) + ")"
@@ -462,6 +491,7 @@ class MAReporter(base.BaseModule):
     def __init__(self, writePort):
         self.writeS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.writeS.connect(("localhost", writePort))
+        time.sleep(0.1)
 
     def get_lit_blocks(self, world):
         res = []
@@ -501,6 +531,18 @@ class MAReporter(base.BaseModule):
             for block in burning:
                 if block not in lastBurning or block in blocksPutOut:
                     report.actions.append(["burns", block])
+
+	# mine that is currently detected
+	current_mine = self.mem.get (self.mem.CURRENT_HAZARD)
+	mine_to_explain = ""
+	if current_mine:
+		mine_to_explain = "mine" + current_mine[0]
+        for atom in world.atoms:
+            if (atom.predicate.name) == "hazard_at_location" and atom.args[0].name == mine_to_explain:
+                report.actions.append( ["hazard-detection", atom.args[0].name, atom.args[1].name,"remus"] )
+                #if atom.args[1].name == "qroute":
+                #    report.actions.append(["is-a-problem", atom.args[0].name, atom.args[1].name, "remus"])
+
         #report is finished, send to Meta-AQUA
 		#report contains actions and state, 
 		#for every action there will be the state attached to it

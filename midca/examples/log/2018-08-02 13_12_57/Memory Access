@@ -1,0 +1,53 @@
+.044824 - Memory access at key __goals
+.048115 - Memory access at key A-Distance memory
+.049118 - Memory access at key Last Scored Goal
+.049199 - Memory access at key Score
+.049549 - Memory access at key __PlanningCount
+.049939 - Memory access at key __goals
+2.270800 - Starting cycle 0
+
+2.271409 - ****** Starting Simulate Phase ******
+
+2.271965 - Memory access at key Score
+3.500605 - ****** Starting Perceive Phase ******
+
+3.500862 - Memory access at key __world states
+3.500942 - Memory access at key __world states
+4.187622 - ****** Starting Interpret Phase ******
+
+4.187896 - Memory access at key __world states
+4.191566 - Memory access at key A-Distance memory
+4.195510 - Memory access at key A-Distance memory
+4.195750 - Memory access at key anomaly state
+4.195869 - Memory access at key A-Distance memory
+4.195988 - Memory access at key A-Distance memory
+4.196299 - Memory access at key A-Distance memory
+4.196456 - Memory access at key __goals
+4.196574 - Memory access at key __world states
+4.199250 - Memory access at key __goals
+4.199470 - Memory access at key __world states
+4.200213 - Memory access at key __world states
+4.200384 - Memory access at key __world states
+19.951193 - ****** Starting Eval Phase ******
+
+19.951427 - Memory access at key __world states
+19.954263 - Memory access at key Last Scored Goal
+20.821116 - ****** Starting Intend Phase ******
+
+20.821373 - Memory access at key __goals
+20.821469 - Memory access at key __current goals
+30.897980 - ****** Starting Plan Phase ******
+
+30.898299 - Memory access at key __world states
+30.898429 - Memory access at key __current goals
+30.902675 - Memory access at key __goals
+30.903166 - Memory access at key __PlanningCount
+30.903315 - Memory access at key __PlanningCount
+30.905737 - Memory access at key __goals
+31.902618 - ****** Starting Act Phase ******
+
+31.902839 - Memory access at key __world states
+31.902919 - Memory access at key __current goals
+31.902992 - Memory access at key __goals
+31.907162 - Memory access at key __actions
+31.907240 - Memory access at key __actions

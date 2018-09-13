@@ -1,0 +1,150 @@
+.000831 - Memory access at key __goals
+.001054 - Goal Graph initialized.
+
+.001438 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.002078 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.002198 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.002300 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002392 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.002487 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002578 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002675 - Memory access at key __PlanningCount
+.002755 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.003253 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.003373 - Memory access at key __goals
+.003470 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+5.121440 - Starting cycle 0
+
+5.121898 - ****** Starting Simulate Phase ******
+
+5.122304 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+5.658363 - ****** Starting Perceive Phase ******
+
+5.658828 - Memory access at key __world states
+5.660229 - Mine Report not received
+
+5.660804 - at_location(remus,transit)
+at_location(remus,home)
+
+5.661079 - Memory access at key __world states
+5.661227 - Memory access at key __world states
+5.661380 - World observed.
+
+5.663138 - Memory access at key __world states
+5.663312 - Memory access at key __world states
+5.663515 - Sending report to Meta-AQUA :
+
+5.663682 - (report.1
+())
+
+6.400852 - ****** Starting Interpret Phase ******
+
+6.401255 - Memory access at key __goals
+6.401473 - Please input a goal if desired. Otherwise, press enter to continue
+
+7.398167 - Memory access at key __world states
+7.398918 - Error reading from Meta-AQUA.
+
+7.399192 -  Unable to read from socket.
+
+7.752959 - ****** Starting Eval Phase ******
+
+7.753347 - Memory access at key __world states
+7.755180 - No current goals. Skipping eval
+
+8.037271 - ****** Starting Intend Phase ******
+
+8.037761 - Memory access at key __goals
+8.037928 - No Goals in Goal graph. Intend will do nothing.
+
+8.652992 - ****** Starting Plan Phase ******
+
+8.653445 - Memory access at key __world states
+8.655030 - No goals received by planner. Skipping planning.
+
+9.108265 - ****** Starting Act Phase ******
+
+9.108844 - Memory access at key __world states
+9.109107 - Memory access at key __goals
+9.109322 - No valid plan found that achieves any current goals.
+
+9.111244 - MIDCA will not select an action this cycle.
+
+9.111472 - Memory access at key __actions
+9.511381 - Starting cycle 1
+
+9.511762 - ****** Starting Simulate Phase ******
+
+9.512156 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+9.814219 - ****** Starting Perceive Phase ******
+
+9.814592 - Memory access at key __world states
+9.815942 - Mine Report not received
+
+9.816729 - at_location(remus,transit)
+at_location(remus,home)
+
+9.817031 - Memory access at key __world states
+9.817197 - Memory access at key __world states
+9.817356 - World observed.
+
+9.819452 - Memory access at key __world states
+9.819655 - Memory access at key __world states
+9.819781 - Memory access at key __actions
+9.819973 - Sending report to Meta-AQUA :
+
+9.820166 - (report.4
+())
+
+10.088562 - ****** Starting Interpret Phase ******
+
+10.088984 - Memory access at key __goals
+10.089189 - Please input a goal if desired. Otherwise, press enter to continue
+
+10.438622 - Memory access at key __world states
+10.439530 - Error reading from Meta-AQUA.
+
+10.439767 -  Unable to read from socket.
+
+10.795780 - ****** Starting Eval Phase ******
+
+10.796289 - Memory access at key __world states
+10.798062 - No current goals. Skipping eval
+
+11.190808 - ****** Starting Intend Phase ******
+
+11.191343 - Memory access at key __goals
+11.191601 - No Goals in Goal graph. Intend will do nothing.
+
+12.099329 - ****** Starting Plan Phase ******
+
+12.099688 - Memory access at key __world states
+12.101372 - No goals received by planner. Skipping planning.
+

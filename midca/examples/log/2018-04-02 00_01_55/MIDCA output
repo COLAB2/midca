@@ -1,0 +1,61 @@
+.001197 - Goal Graph initialized.
+
+.001363 - [cognitive] Initializing Simulate module 1 FireReset...done.
+
+.001490 - [cognitive] Initializing Simulate module 2 MidcaActionSimulator...done.
+
+.001613 - [cognitive] Initializing Simulate module 3 ArsonSimulator...done.
+
+.001734 - [cognitive] Initializing Simulate module 4 ASCIIWorldViewer...done.
+
+.001862 - [cognitive] Initializing Perceive module 1 PerfectObserver...done.
+
+.001982 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.004059 - [cognitive] Initializing Interpret module 1 ADistanceAnomalyNoter...done.
+
+.004186 - [cognitive] Initializing Interpret module 2 TFStack...done.
+
+.004323 - [cognitive] Initializing Interpret module 3 TFFire...done.
+
+.004445 - [cognitive] Initializing Interpret module 4 MAQuery...done.
+
+.004762 - [cognitive] Initializing Eval module 1 Scorer...done.
+
+.004883 - [cognitive] Initializing Eval module 2 SimpleEval...done.
+
+.005005 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.005223 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.005342 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.005556 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+2.687097 - Starting cycle 0
+
+2.687679 - ****** Starting Simulate Phase ******
+
+2.688581 - Simulator: no actions selected yet by MIDCA.
+
+2.690378 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+3.288721 - ****** Starting Perceive Phase ******
+
+3.290231 - World observed.
+
+3.300047 - Sending report to Meta-AQUA :
+
+3.300568 - (report.1
+())
+

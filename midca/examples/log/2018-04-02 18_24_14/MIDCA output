@@ -1,0 +1,49 @@
+.001023 - Goal Graph initialized.
+
+.001228 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001840 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.001979 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.002101 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.002221 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.002340 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.002455 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.002659 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.004068 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.004506 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.540017 - Starting cycle 0
+
+.540435 - ****** Starting Simulate Phase ******
+
+.540780 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+1.200140 - ****** Starting Perceive Phase ******
+
+1.202605 - Mine Report not received
+
+1.202932 - at_location(remus,transit)
+at_location(remus,home)
+
+1.203255 - World observed.
+
+1.204561 - home
+
+1.204691 - transit
+

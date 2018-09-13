@@ -1,0 +1,147 @@
+.003946 - Memory access at key __goals
+.004250 - Goal Graph initialized.
+
+.004506 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.005521 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.005875 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.006383 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.006812 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.006975 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.007117 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.007265 - Memory access at key __PlanningCount
+.007392 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.008112 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.008287 - Memory access at key __goals
+.008438 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+17.835136 - Starting cycle 0
+
+17.835610 - ****** Starting Simulate Phase ******
+
+17.835982 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+18.884038 - ****** Starting Perceive Phase ******
+
+18.885052 - Memory access at key __world states
+18.886631 - states not received
+
+18.887229 - Memory access at key __world states
+18.887459 - World observed.
+
+18.889922 - Memory access at key __world states
+18.890159 - Memory access at key __world states
+18.890423 - Sending report to Meta-AQUA :
+
+18.890690 - (report.1
+())
+
+22.638127 - ****** Starting Interpret Phase ******
+
+22.638842 - Memory access at key __goals
+22.639120 - Please input a goal if desired. Otherwise, press enter to continue
+
+32.308439 - Memory access at key __world states
+32.308765 - Memory access at key __goals
+32.309039 - Goal added.
+
+32.309218 - Please input a goal if desired. Otherwise, press enter to continue
+
+32.891486 - Memory access at key __world states
+32.900073 - Meta-AQUA output unrecognized. No goal generated. Output:
+
+33.661799 - ****** Starting Eval Phase ******
+
+33.662165 - Memory access at key __world states
+33.663267 - No current goals. Skipping eval
+
+34.359303 - ****** Starting Intend Phase ******
+
+34.359815 - Memory access at key __goals
+34.359997 - Memory access at key __current goals
+34.360272 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+35.420512 - ****** Starting Plan Phase ******
+
+35.420976 - Memory access at key __world states
+35.421157 - Memory access at key __current goals
+35.423318 - Memory access at key __goals
+35.423571 - Planning...
+
+35.423869 - Memory access at key __PlanningCount
+35.424020 - Memory access at key __PlanningCount
+35.424341 - Planning complete.
+
+35.424570 - Plan: 
+
+35.424806 -   survey(remus, ga1)
+
+35.425026 - Memory access at key __goals
+36.179440 - ****** Starting Act Phase ******
+
+36.179822 - Memory access at key __world states
+36.179953 - Memory access at key __current goals
+36.180063 - Memory access at key __goals
+36.181614 - Selected action survey(remus, ga1) from plan:
+
+36.181791 - survey(remus, ga1)]0m
+
+36.181936 - Memory access at key __actions
+36.182066 - Memory access at key __actions
+36.182170 - Memory access at key __actions
+36.182369 - Memory access at key __feedback
+36.182497 - Memory access at key __previous action
+36.872882 - Starting cycle 1
+
+36.873323 - ****** Starting Simulate Phase ******
+
+36.873656 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+37.560952 - ****** Starting Perceive Phase ******
+
+37.561257 - Memory access at key __world states
+37.562506 - states not received
+
+37.562766 - Memory access at key __world states
+37.562867 - World observed.
+
+37.563863 - Memory access at key __world states
+37.563953 - Memory access at key __world states
+37.564029 - Memory access at key __actions
+37.564137 - Sending report to Meta-AQUA :
+
+37.564331 - (report.4
+(	(
+(survey.1
+	(actor  (value remus))
+	(inside  (co-domain  (value ga1))
+		(domain  (value remus))))
+"")
+((state
+	(enabled.1  (domain  (value remus))))
+"")
+))
+

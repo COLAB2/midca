@@ -1,0 +1,73 @@
+.202624 - Memory access at key __goals
+.203211 - Goal Graph initialized.
+
+.203694 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.238615 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.239050 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.239315 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.239554 - [cognitive] Initializing Interpret module 2 MAQuery_MOOS...done.
+
+.239792 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.240024 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.240266 - Memory access at key __PlanningCount
+.240472 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.241511 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.241768 - Memory access at key __goals
+.242023 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+27.770840 - Starting cycle 0
+
+27.771334 - ****** Starting Simulate Phase ******
+
+27.771768 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+28.064389 - ****** Starting Perceive Phase ******
+
+28.064764 - Memory access at key __world states
+28.066119 - Mine Report not received
+
+28.066546 - at_location(remus,transit)
+at_location(remus,home)
+
+28.066807 - Memory access at key __world states
+28.066926 - Memory access at key __world states
+28.067081 - World observed.
+
+28.069144 - Memory access at key __world states
+28.069435 - Memory access at key __world states
+28.069657 - Sending report to Meta-AQUA :
+
+28.069898 - (report.1
+())
+
+31.993584 - ****** Starting Interpret Phase ******
+
+31.993913 - Memory access at key __goals
+31.994055 - Please input a goal if desired. Otherwise, press enter to continue
+
+37.914843 - Memory access at key __world states
+37.935357 - Memory access at key __goals
+37.935840 - Goal added.
+
+37.936383 - Please input a goal if desired. Otherwise, press enter to continue
+
+38.404692 - (XP-DEFENSIVE-BARK (ACTOR (VALUE DOG.1047)) (OBJECT (VALUE LUGGAGE.1049))
+
+2:12.486355 - enterError reading from Meta-AQUA.
+

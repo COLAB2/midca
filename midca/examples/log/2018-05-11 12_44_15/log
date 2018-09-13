@@ -1,0 +1,2172 @@
+.201636 - Memory access at key __goals
+.202137 - Goal Graph initialized.
+
+.202439 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.203446 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.204073 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.204269 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.204435 - [cognitive] Initializing Interpret module 2 MAQuery...done.
+
+.204617 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.204798 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.204961 - Memory access at key __PlanningCount
+.205094 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.205834 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.205987 - Memory access at key __goals
+.206152 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+5.450830 - Starting cycle 0
+
+5.451502 - ****** Starting Simulate Phase ******
+
+5.452048 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+]
+
+6.843780 - ****** Starting Perceive Phase ******
+
+6.844256 - Memory access at key __world states
+6.845633 - Mine Report not received
+
+6.846079 - at_location(remus,transit)
+at_location(remus,home)
+
+6.846371 - Memory access at key __world states
+6.846508 - Memory access at key __world states
+6.846643 - World observed.
+
+6.848208 - Memory access at key __world states
+6.848370 - Memory access at key __world states
+6.848555 - Sending report to Meta-AQUA :
+
+6.848788 - (report.1
+())
+
+10.847869 - ****** Starting Interpret Phase ******
+
+10.867834 - Memory access at key __goals
+10.868181 - Please input a goal if desired. Otherwise, press enter to continue
+
+18.860209 - Memory access at key __world states
+18.860669 - Memory access at key __goals
+18.861051 - Goal added.
+
+18.861348 - Please input a goal if desired. Otherwise, press enter to continue
+
+20.497094 - Memory access at key __world states
+20.514207 - Meta-AQUA output unrecognized. No goal generated. Output:
+
+20.514564 - Error reading from Meta-AQUA.
+
+20.527999 -  Got:
+(XP-DEFENSIVE-BARK (ACTOR (VALUE DOG.1034)) (OBJECT (VALUE LUGGAGE.1036))
+                   (BARKING (VALUE DOG-BARKS.1035)) (ROLE (VALUE ACTOR.1068))
+                   (THREAT (VALUE STATE.2323))
+                   (THREATENING-ACTION (VALUE MOP.2325))
+                   (EXPLAINS (VALUE ACTOR.1068))
+                   (PRE-XP-NODES
+                    (VALUE (DOG.1034 DOG-BARKS.1035 LUGGAGE.1036 ACTOR.1068)))
+                   (INTERNAL-NODES (VALUE (STATE.2323)))
+                   (XP-ASSERTED-NODES (VALUE (MOP.2325)))
+                   (LINK1 (VALUE RESULTS.2335)) (LINK2 (VALUE ENABLES.2339))
+                   (LINKS (VALUE (RESULTS.2335 ENABLES.2339)))
+                   (STATUS (VALUE QUESTION.0))
+                   (MXP (VALUE TRACE-META-XP.3319))
+                   (TRUTH (VALUE HYPOTHESIZED.0))) 
+
+
+
+For the state frame XP-DEFENSIVE-BARK.5964:
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The VALUE facet of the BARKING role is DOG-BARKS.5970.
+The VALUE facet of the ROLE role is ACTOR.5973.
+The VALUE facet of the THREAT role is STATE.6023.
+The VALUE facet of the THREATENING-ACTION role is MOP.6025.
+The VALUE facet of the EXPLAINS role is ACTOR.5973.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5966
+                                             DOG-BARKS.5970
+                                             LUGGAGE.5968
+                                             ACTOR.5973).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6023).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6025).
+The VALUE facet of the LINK1 role is RESULTS.6035.
+The VALUE facet of the LINK2 role is ENABLES.6039.
+The VALUE facet of the LINKS role is (RESULTS.6035 ENABLES.6039).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG.5966)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame STORY-INSTANCE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame ATTRIBUTE-VALUE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG.5966)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame IN.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the OBJECT slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame LUGGAGE.5968)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame LUGGAGE.5968)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the BARKING slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the ACTOR slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame ACTOR.5973)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.5973)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame XP-DEFENSIVE-BARK.5964:
+ (Which is in the EXPLANATIONS slot of frame ACTOR.5973)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The VALUE facet of the BARKING role is DOG-BARKS.5970.
+The VALUE facet of the ROLE role is ACTOR.5973.
+The VALUE facet of the THREAT role is STATE.6023.
+The VALUE facet of the THREATENING-ACTION role is MOP.6025.
+The VALUE facet of the EXPLAINS role is ACTOR.5973.
+The VALUE facet of the PRE-XP-NODES role is (DOG.5966
+                                             DOG-BARKS.5970
+                                             LUGGAGE.5968
+                                             ACTOR.5973).
+The VALUE facet of the INTERNAL-NODES role is (STATE.6023).
+The VALUE facet of the XP-ASSERTED-NODES role is (MOP.6025).
+The VALUE facet of the LINK1 role is RESULTS.6035.
+The VALUE facet of the LINK2 role is ENABLES.6039.
+The VALUE facet of the LINKS role is (RESULTS.6035 ENABLES.6039).
+The VALUE facet of the STATUS role is QUESTION.0.
+The VALUE facet of the TRUTH role is HYPOTHESIZED.0.
+
+
+For the state frame INDEX.5978:
+ (Which is in the INDICES slot of frame ACTOR.5973)
+
+The VALUE facet of the TYPE role is QUESTION-TYPE.0.
+The VALUE facet of the DOMAIN role is ACTOR.5973.
+The VALUE facet of the CO-DOMAIN role is ACTOR.5973.
+The VALUE facet of the RELATION role is ACTOR.5973.
+The VALUE facet of the MEMORY-ITEM role is ACTOR.5973.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION-TYPE.0:
+ (Which is in the TYPE slot of frame INDEX.5978)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION-TYPE.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the DOMAIN slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the CO-DOMAIN slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the RELATION slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the state frame ACTOR.5973:
+ (Which is in the MEMORY-ITEM slot of frame INDEX.5978)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INDEX.5978)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame OBJECT.5985:
+ (Which is in the OBJECT slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame OBJECT.5985)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the CO-DOMAIN slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame OBJECT.5985)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame AT-LOCATION.5989:
+ (Which is in the TO slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.5992.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame PHYSICAL-LOCATION.5992:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.5989)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame PHYSICAL-LOCATION.5992)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame PHYSICAL-LOCATION.5992)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame TO.5994:
+ (Which is in the TO slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is AT-LOCATION.5989.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame TO.5994)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame TO.5994)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.5989:
+ (Which is in the CO-DOMAIN slot of frame TO.5994)
+
+The VALUE facet of the DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the CO-DOMAIN role is PHYSICAL-LOCATION.5992.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame TO.5994)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the ACTOR slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.6001:
+ (Which is in the ACTOR slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is SPEAK.5998.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the DOMAIN slot of frame ACTOR.6001)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the CO-DOMAIN slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ACTOR.6001)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame SOUNDS.6005:
+ (Which is in the OBJECT slot of frame SPEAK.5998)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame SOUNDS.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame SOUNDS.6005)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSTRUMENTAL-SCENE.6007:
+ (Which is in the INSTRUMENTAL-SCENE slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is SPEAK.5998.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the DOMAIN slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame SPEAK.5998:
+ (Which is in the CO-DOMAIN slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.6001.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the OBJECT role is SOUNDS.6005.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSTRUMENTAL-SCENE.6007)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame KNOWLEDGE-STATE.6011:
+ (Which is in the MAIN-PRECONDITION slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the DOMAIN role is DOG.5966.
+The VALUE facet of the BELIEVED-ITEM role is AT-LOCATION.6014.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the DOMAIN slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame AT-LOCATION.6014:
+ (Which is in the BELIEVED-ITEM slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the DOMAIN role is DRUG.6016.
+The VALUE facet of the CO-DOMAIN role is INSIDE-CONTAINER.6018.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6016:
+ (Which is in the DOMAIN slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DRUG.6016)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DRUG.6016)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame INSIDE-CONTAINER.6018:
+ (Which is in the CO-DOMAIN slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the DOMAIN role is DRUG.6016.
+The VALUE facet of the CO-DOMAIN role is LUGGAGE.5968.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the physical-object frame DRUG.6016:
+ (Which is in the DOMAIN slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the CO-DOMAIN slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame INSIDE-CONTAINER.6018)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame AT-LOCATION.6014)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame KNOWLEDGE-STATE.6011)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame STORY-INSTANCE.0:
+ (Which is in the STATUS slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame DOG-BARKS.5970)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the ROLE slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame STATE.6023:
+ (Which is in the THREAT slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame STATE.6023)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the THREATENING-ACTION slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the MAIN-RESULT slot of frame MOP.6025)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame MOP.6025)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the EXPLAINS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the physical-object frame DOG.5966:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame LUGGAGE.5968:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ACTOR.5973:
+ (Which is in the PRE-XP-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the CO-DOMAIN role is DOG.5966.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+The VALUE facet of the EXPLANATIONS role is (XP-DEFENSIVE-BARK.5964).
+The VALUE facet of the INDICES role is (INDEX.5978).
+
+
+For the frame STATE.6023:
+ (Which is in the INTERNAL-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the XP-ASSERTED-NODES slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame RESULTS.6035:
+ (Which is in the LINK1 slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is MOP.6025.
+The VALUE facet of the CO-DOMAIN role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame MOP.6025:
+ (Which is in the DOMAIN slot of frame RESULTS.6035)
+
+The VALUE facet of the MAIN-RESULT role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the CO-DOMAIN slot of frame RESULTS.6035)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame RESULTS.6035)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame ENABLES.6039:
+ (Which is in the LINK2 slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is STATE.6023.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame STATE.6023:
+ (Which is in the DOMAIN slot of frame ENABLES.6039)
+
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the process frame DOG-BARKS.5970:
+ (Which is in the CO-DOMAIN slot of frame ENABLES.6039)
+
+The VALUE facet of the ACTOR role is DOG.5966.
+The RELATION facet of the ACTOR role is ACTOR.5973.
+The VALUE facet of the OBJECT role is LUGGAGE.5968.
+The RELATION facet of the OBJECT role is OBJECT.5985.
+The VALUE facet of the TO role is AT-LOCATION.5989.
+The RELATION facet of the TO role is TO.5994.
+The VALUE facet of the INSTRUMENTAL-SCENE role is SPEAK.5998.
+The RELATION facet of the INSTRUMENTAL-SCENE role is INSTRUMENTAL-SCENE.6007.
+The VALUE facet of the MAIN-PRECONDITION role is KNOWLEDGE-STATE.6011.
+The VALUE facet of the STATUS role is STORY-INSTANCE.0.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame IN.0:
+ (Which is in the TRUTH slot of frame ENABLES.6039)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the state frame RESULTS.6035:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is MOP.6025.
+The VALUE facet of the CO-DOMAIN role is STATE.6023.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the state frame ENABLES.6039:
+ (Which is in the LINKS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the DOMAIN role is STATE.6023.
+The VALUE facet of the CO-DOMAIN role is DOG-BARKS.5970.
+The VALUE facet of the TRUTH role is IN.0.
+
+
+For the frame QUESTION.0:
+ (Which is in the STATUS slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame QUESTION.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame NIL.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame HYPOTHESIZED.0:
+ (Which is in the TRUTH slot of frame XP-DEFENSIVE-BARK.5964)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+
+For the frame ATTRIBUTE-VALUE.0:
+ (Which is in the STATUS slot of frame HYPOTHESIZED.0)
+
+The VALUE facet of the STATUS role is ATTRIBUTE-VALUE.0.
+
+23.461716 - ****** Starting Eval Phase ******
+
+23.462115 - Memory access at key __world states
+23.463806 - No current goals. Skipping eval
+
+23.878754 - ****** Starting Intend Phase ******
+
+23.879249 - Memory access at key __goals
+23.879437 - Memory access at key __current goals
+23.879713 - Selecting goal(s): Goal(remus, ga1, predicate: at_location)
+
+24.151866 - ****** Starting Plan Phase ******
+
+24.152239 - Memory access at key __world states
+24.152408 - Memory access at key __current goals
+24.154031 - Memory access at key __goals
+24.154227 - Planning...
+
+24.154492 - Memory access at key __PlanningCount
+24.154620 - Memory access at key __PlanningCount
+24.154853 - Planning complete.
+
+24.155008 - Plan: 
+
+24.155168 -   survey(remus, ga1)
+
+24.155309 - Memory access at key __goals
+24.381819 - ****** Starting Act Phase ******
+
+24.382503 - Memory access at key __world states
+24.382705 - Memory access at key __current goals
+24.382999 - Memory access at key __goals
+24.387362 - Selected action survey(remus, ga1) from plan:
+
+24.387788 - survey(remus, ga1)]0m
+
+24.388096 - Memory access at key __actions
+24.388404 - Memory access at key __actions
+24.388742 - Memory access at key __actions
+24.389282 - Memory access at key __feedback
+24.389566 - Memory access at key __previous action
+24.613730 - Starting cycle 1
+
+24.614240 - ****** Starting Simulate Phase ******
+
+24.614821 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+24.849792 - ****** Starting Perceive Phase ******
+
+24.850239 - Memory access at key __world states
+24.851606 - Mine Report not received
+
+24.852209 - at_location(remus,transit)
+at_location(remus,home)
+
+24.852495 - Memory access at key __world states
+24.852703 - Memory access at key __world states
+24.852855 - World observed.
+
+24.854754 - Memory access at key __world states
+24.854929 - Memory access at key __world states
+24.855063 - Memory access at key __actions
+24.855244 - Sending report to Meta-AQUA :
+
+24.855616 - (report.4
+(	(
+(survey.1
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.1  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.2  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.1  (domain  (value remus))))
+"")
+))
+
+25.083186 - ****** Starting Interpret Phase ******
+
+25.083523 - Memory access at key __goals
+25.083670 - Memory access at key __world states
+25.340358 - ****** Starting Eval Phase ******
+
+25.340759 - Memory access at key __world states
+25.340902 - Memory access at key __current goals
+25.342641 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+25.552245 - ****** Starting Intend Phase ******
+
+25.553852 - Memory access at key __goals
+25.554024 - Memory access at key __current goals
+25.554146 - Memory access at key __current goals
+25.554298 - No goals selected.
+
+25.775011 - ****** Starting Plan Phase ******
+
+25.775315 - Memory access at key __world states
+25.775432 - Memory access at key __current goals
+25.777107 - Memory access at key __goals
+25.777507 - Old plan retrieved. Checking validity... valid.
+
+25.777840 - checking to see if all goals are achieved... yes
+
+26.033374 - ****** Starting Act Phase ******
+
+26.033688 - Memory access at key __world states
+26.033819 - Memory access at key __current goals
+26.033927 - Memory access at key __goals
+26.035536 - Selected action survey(remus, ga1) from plan:
+
+26.035713 - survey(remus, ga1)]0m
+
+26.035866 - Memory access at key __actions
+26.035989 - Memory access at key __actions
+26.036089 - Memory access at key __actions
+26.036252 - Memory access at key __feedback
+26.036356 - Memory access at key __feedback
+26.036506 - Memory access at key __feedback
+26.275297 - Starting cycle 2
+
+26.275799 - ****** Starting Simulate Phase ******
+
+26.276405 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+26.533105 - ****** Starting Perceive Phase ******
+
+26.533508 - Memory access at key __world states
+26.534839 - Mine Report not received
+
+26.535538 - at_location(remus,transit)
+at_location(remus,home)
+
+26.535821 - Memory access at key __world states
+26.536050 - Memory access at key __world states
+26.536265 - World observed.
+
+26.537816 - Memory access at key __world states
+26.537961 - Memory access at key __world states
+26.538076 - Memory access at key __actions
+26.538231 - Sending report to Meta-AQUA :
+
+26.538585 - (report.7
+(	(
+(survey.4
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.7  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.8  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.4  (domain  (value remus))))
+"")
+))
+
+26.733388 - ****** Starting Interpret Phase ******
+
+26.733710 - Memory access at key __goals
+26.733863 - Memory access at key __world states
+26.962199 - ****** Starting Eval Phase ******
+
+26.962541 - Memory access at key __world states
+26.962667 - Memory access at key __current goals
+26.964356 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+27.163924 - ****** Starting Intend Phase ******
+
+27.164346 - Memory access at key __goals
+27.164499 - Memory access at key __current goals
+27.164638 - Memory access at key __current goals
+27.164801 - No goals selected.
+
+27.392076 - ****** Starting Plan Phase ******
+
+27.392451 - Memory access at key __world states
+27.392635 - Memory access at key __current goals
+27.394309 - Memory access at key __goals
+27.394785 - Old plan retrieved. Checking validity... valid.
+
+27.395233 - checking to see if all goals are achieved... yes
+
+27.654228 - ****** Starting Act Phase ******
+
+27.654571 - Memory access at key __world states
+27.654711 - Memory access at key __current goals
+27.654824 - Memory access at key __goals
+27.656618 - Selected action survey(remus, ga1) from plan:
+
+27.656809 - survey(remus, ga1)]0m
+
+27.656941 - Memory access at key __actions
+27.657057 - Memory access at key __actions
+27.657155 - Memory access at key __actions
+27.657312 - Memory access at key __feedback
+27.657412 - Memory access at key __feedback
+27.657560 - Memory access at key __feedback
+27.891396 - Starting cycle 3
+
+27.891786 - ****** Starting Simulate Phase ******
+
+27.892088 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+28.104487 - ****** Starting Perceive Phase ******
+
+28.104954 - Memory access at key __world states
+28.106493 - Mine Report not received
+
+28.107414 - at_location(remus,transit)
+at_location(remus,home)
+
+28.107831 - Memory access at key __world states
+28.107990 - Memory access at key __world states
+28.108139 - World observed.
+
+28.110072 - Memory access at key __world states
+28.110271 - Memory access at key __world states
+28.110401 - Memory access at key __actions
+28.110574 - Sending report to Meta-AQUA :
+
+28.110955 - (report.10
+(	(
+(survey.7
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.13  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.14  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.7  (domain  (value remus))))
+"")
+))
+
+28.343280 - ****** Starting Interpret Phase ******
+
+28.343565 - Memory access at key __goals
+28.343682 - Memory access at key __world states
+28.576312 - ****** Starting Eval Phase ******
+
+28.576721 - Memory access at key __world states
+28.576879 - Memory access at key __current goals
+28.578549 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+28.818905 - ****** Starting Intend Phase ******
+
+28.819430 - Memory access at key __goals
+28.819592 - Memory access at key __current goals
+28.819738 - Memory access at key __current goals
+28.819909 - No goals selected.
+
+29.047479 - ****** Starting Plan Phase ******
+
+29.047830 - Memory access at key __world states
+29.047963 - Memory access at key __current goals
+29.049404 - Memory access at key __goals
+29.049757 - Old plan retrieved. Checking validity... valid.
+
+29.050114 - checking to see if all goals are achieved... yes
+
+29.293257 - ****** Starting Act Phase ******
+
+29.293711 - Memory access at key __world states
+29.293860 - Memory access at key __current goals
+29.293997 - Memory access at key __goals
+29.296261 - Selected action survey(remus, ga1) from plan:
+
+29.296474 - survey(remus, ga1)]0m
+
+29.296649 - Memory access at key __actions
+29.296788 - Memory access at key __actions
+29.296919 - Memory access at key __actions
+29.297128 - Memory access at key __feedback
+29.297260 - Memory access at key __feedback
+29.297456 - Memory access at key __feedback
+29.569889 - Starting cycle 4
+
+29.570263 - ****** Starting Simulate Phase ******
+
+29.570649 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+29.823913 - ****** Starting Perceive Phase ******
+
+29.824442 - Memory access at key __world states
+29.825913 - Mine Report not received
+
+29.826509 - at_location(remus,transit)
+at_location(remus,home)
+
+29.826831 - Memory access at key __world states
+29.827034 - Memory access at key __world states
+29.827201 - World observed.
+
+29.829016 - Memory access at key __world states
+29.829184 - Memory access at key __world states
+29.829328 - Memory access at key __actions
+29.829649 - Sending report to Meta-AQUA :
+
+29.830172 - (report.13
+(	(
+(survey.10
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.19  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.20  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.10  (domain  (value remus))))
+"")
+))
+
+30.100472 - ****** Starting Interpret Phase ******
+
+30.100811 - Memory access at key __goals
+30.101000 - Memory access at key __world states
+30.368390 - ****** Starting Eval Phase ******
+
+30.368799 - Memory access at key __world states
+30.368932 - Memory access at key __current goals
+30.370603 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+30.609800 - ****** Starting Intend Phase ******
+
+30.611508 - Memory access at key __goals
+30.611663 - Memory access at key __current goals
+30.611775 - Memory access at key __current goals
+30.611957 - No goals selected.
+
+30.867364 - ****** Starting Plan Phase ******
+
+30.867883 - Memory access at key __world states
+30.868083 - Memory access at key __current goals
+30.869712 - Memory access at key __goals
+30.870116 - Old plan retrieved. Checking validity... valid.
+
+30.870561 - checking to see if all goals are achieved... yes
+
+31.110162 - ****** Starting Act Phase ******
+
+31.110562 - Memory access at key __world states
+31.110716 - Memory access at key __current goals
+31.110835 - Memory access at key __goals
+31.112644 - Selected action survey(remus, ga1) from plan:
+
+31.112828 - survey(remus, ga1)]0m
+
+31.112976 - Memory access at key __actions
+31.113116 - Memory access at key __actions
+31.113228 - Memory access at key __actions
+31.113408 - Memory access at key __feedback
+31.113519 - Memory access at key __feedback
+31.113689 - Memory access at key __feedback
+31.377088 - Starting cycle 5
+
+31.377416 - ****** Starting Simulate Phase ******
+
+31.377818 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+31.620690 - ****** Starting Perceive Phase ******
+
+31.621289 - Memory access at key __world states
+31.622684 - Mine Report not received
+
+31.623232 - at_location(remus,transit)
+at_location(remus,home)
+
+31.623503 - Memory access at key __world states
+31.623623 - Memory access at key __world states
+31.623751 - World observed.
+
+31.627058 - Memory access at key __world states
+31.627279 - Memory access at key __world states
+31.627429 - Memory access at key __actions
+31.627657 - Sending report to Meta-AQUA :
+
+31.628000 - (report.16
+(	(
+(survey.13
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.25  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.26  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.13  (domain  (value remus))))
+"")
+))
+
+31.876538 - ****** Starting Interpret Phase ******
+
+31.876894 - Memory access at key __goals
+31.877043 - Memory access at key __world states
+32.140468 - ****** Starting Eval Phase ******
+
+32.140763 - Memory access at key __world states
+32.140887 - Memory access at key __current goals
+32.142175 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+32.690814 - ****** Starting Intend Phase ******
+
+32.691540 - Memory access at key __goals
+32.691778 - Memory access at key __current goals
+32.691976 - Memory access at key __current goals
+32.692206 - No goals selected.
+
+32.946963 - ****** Starting Plan Phase ******
+
+32.947404 - Memory access at key __world states
+32.947598 - Memory access at key __current goals
+32.950350 - Memory access at key __goals
+32.951004 - Old plan retrieved. Checking validity... valid.
+
+32.951569 - checking to see if all goals are achieved... yes
+
+33.209512 - ****** Starting Act Phase ******
+
+33.209883 - Memory access at key __world states
+33.210068 - Memory access at key __current goals
+33.210258 - Memory access at key __goals
+33.212191 - Selected action survey(remus, ga1) from plan:
+
+33.212431 - survey(remus, ga1)]0m
+
+33.212568 - Memory access at key __actions
+33.212869 - Memory access at key __actions
+33.213036 - Memory access at key __actions
+33.213216 - Memory access at key __feedback
+33.213316 - Memory access at key __feedback
+33.213462 - Memory access at key __feedback
+33.429139 - Starting cycle 6
+
+33.429756 - ****** Starting Simulate Phase ******
+
+33.430326 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+33.681432 - ****** Starting Perceive Phase ******
+
+33.682175 - Memory access at key __world states
+33.683705 - Mine Report not received
+
+33.684768 - at_location(remus,transit)
+at_location(remus,home)
+
+33.685114 - Memory access at key __world states
+33.685260 - Memory access at key __world states
+33.685408 - World observed.
+
+33.687044 - Memory access at key __world states
+33.687215 - Memory access at key __world states
+33.687343 - Memory access at key __actions
+33.687527 - Sending report to Meta-AQUA :
+
+33.687863 - (report.19
+(	(
+(survey.16
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.31  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.32  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.16  (domain  (value remus))))
+"")
+))
+
+33.937314 - ****** Starting Interpret Phase ******
+
+33.937594 - Memory access at key __goals
+33.937706 - Memory access at key __world states
+34.201941 - ****** Starting Eval Phase ******
+
+34.202474 - Memory access at key __world states
+34.202746 - Memory access at key __current goals
+34.205695 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+34.451571 - ****** Starting Intend Phase ******
+
+34.452118 - Memory access at key __goals
+34.452303 - Memory access at key __current goals
+34.452440 - Memory access at key __current goals
+34.452640 - No goals selected.
+
+34.723855 - ****** Starting Plan Phase ******
+
+34.724251 - Memory access at key __world states
+34.724385 - Memory access at key __current goals
+34.726163 - Memory access at key __goals
+34.726563 - Old plan retrieved. Checking validity... valid.
+
+34.727014 - checking to see if all goals are achieved... yes
+
+34.962683 - ****** Starting Act Phase ******
+
+34.963129 - Memory access at key __world states
+34.963352 - Memory access at key __current goals
+34.963540 - Memory access at key __goals
+34.965924 - Selected action survey(remus, ga1) from plan:
+
+34.966187 - survey(remus, ga1)]0m
+
+34.966403 - Memory access at key __actions
+34.966547 - Memory access at key __actions
+34.967072 - Memory access at key __actions
+34.967493 - Memory access at key __feedback
+34.967734 - Memory access at key __feedback
+34.968099 - Memory access at key __feedback
+35.206418 - Starting cycle 7
+
+35.206783 - ****** Starting Simulate Phase ******
+
+35.207207 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+35.455770 - ****** Starting Perceive Phase ******
+
+35.456338 - Memory access at key __world states
+35.457785 - Mine Report not received
+
+35.458446 - at_location(remus,transit)
+at_location(remus,home)
+
+35.458727 - Memory access at key __world states
+35.458879 - Memory access at key __world states
+35.459041 - World observed.
+
+35.460973 - Memory access at key __world states
+35.461382 - Memory access at key __world states
+35.461626 - Memory access at key __actions
+35.461857 - Sending report to Meta-AQUA :
+
+35.462227 - (report.22
+(	(
+(survey.19
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.37  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.38  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.19  (domain  (value remus))))
+"")
+))
+
+35.697136 - ****** Starting Interpret Phase ******
+
+35.697418 - Memory access at key __goals
+35.697529 - Memory access at key __world states
+35.986093 - ****** Starting Eval Phase ******
+
+35.986616 - Memory access at key __world states
+35.986785 - Memory access at key __current goals
+35.989692 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+36.247975 - ****** Starting Intend Phase ******
+
+36.248442 - Memory access at key __goals
+36.248633 - Memory access at key __current goals
+36.248778 - Memory access at key __current goals
+36.248994 - No goals selected.
+
+36.476392 - ****** Starting Plan Phase ******
+
+36.476820 - Memory access at key __world states
+36.476969 - Memory access at key __current goals
+36.479818 - Memory access at key __goals
+36.480687 - Old plan retrieved. Checking validity... valid.
+
+36.481195 - checking to see if all goals are achieved... yes
+
+36.728316 - ****** Starting Act Phase ******
+
+36.728776 - Memory access at key __world states
+36.728910 - Memory access at key __current goals
+36.729031 - Memory access at key __goals
+36.730970 - Selected action survey(remus, ga1) from plan:
+
+36.731152 - survey(remus, ga1)]0m
+
+36.731292 - Memory access at key __actions
+36.731412 - Memory access at key __actions
+36.731540 - Memory access at key __actions
+36.731736 - Memory access at key __feedback
+36.731855 - Memory access at key __feedback
+36.732056 - Memory access at key __feedback
+37.007121 - Starting cycle 8
+
+37.007541 - ****** Starting Simulate Phase ******
+
+37.008004 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+37.258505 - ****** Starting Perceive Phase ******
+
+37.258916 - Memory access at key __world states
+37.260215 - Mine Report not received
+
+37.260895 - at_location(remus,transit)
+at_location(remus,home)
+
+37.261155 - Memory access at key __world states
+37.261278 - Memory access at key __world states
+37.261408 - World observed.
+
+37.263215 - Memory access at key __world states
+37.263401 - Memory access at key __world states
+37.263506 - Memory access at key __actions
+37.263667 - Sending report to Meta-AQUA :
+
+37.263975 - (report.25
+(	(
+(survey.22
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.43  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.44  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.22  (domain  (value remus))))
+"")
+))
+
+37.526100 - ****** Starting Interpret Phase ******
+
+37.526367 - Memory access at key __goals
+37.526476 - Memory access at key __world states
+37.820065 - ****** Starting Eval Phase ******
+
+37.820703 - Memory access at key __world states
+37.820868 - Memory access at key __current goals
+37.822753 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+38.078207 - ****** Starting Intend Phase ******
+
+38.078796 - Memory access at key __goals
+38.079096 - Memory access at key __current goals
+38.079289 - Memory access at key __current goals
+38.079570 - No goals selected.
+
+38.322101 - ****** Starting Plan Phase ******
+
+38.322606 - Memory access at key __world states
+38.322832 - Memory access at key __current goals
+38.325815 - Memory access at key __goals
+38.326508 - Old plan retrieved. Checking validity... valid.
+
+38.327727 - checking to see if all goals are achieved... yes
+
+38.598942 - ****** Starting Act Phase ******
+
+38.599430 - Memory access at key __world states
+38.599611 - Memory access at key __current goals
+38.599744 - Memory access at key __goals
+38.602287 - Selected action survey(remus, ga1) from plan:
+
+38.602516 - survey(remus, ga1)]0m
+
+38.602676 - Memory access at key __actions
+38.602820 - Memory access at key __actions
+38.602941 - Memory access at key __actions
+38.603247 - Memory access at key __feedback
+38.603430 - Memory access at key __feedback
+38.603621 - Memory access at key __feedback
+38.896850 - Starting cycle 9
+
+38.897229 - ****** Starting Simulate Phase ******
+
+38.897696 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+39.160057 - ****** Starting Perceive Phase ******
+
+39.160678 - Memory access at key __world states
+39.162194 - Mine Report not received
+
+39.162717 - at_location(remus,transit)
+at_location(remus,home)
+
+39.162987 - Memory access at key __world states
+39.163108 - Memory access at key __world states
+39.163239 - World observed.
+
+39.164662 - Memory access at key __world states
+39.164816 - Memory access at key __world states
+39.164919 - Memory access at key __actions
+39.165199 - Sending report to Meta-AQUA :
+
+39.165603 - (report.28
+(	(
+(survey.25
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.49  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.50  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.25  (domain  (value remus))))
+"")
+))
+
+39.720721 - ****** Starting Interpret Phase ******
+
+39.721159 - Memory access at key __goals
+39.721357 - Memory access at key __world states
+39.967762 - ****** Starting Eval Phase ******
+
+39.968114 - Memory access at key __world states
+39.968248 - Memory access at key __current goals
+39.970054 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+40.210620 - ****** Starting Intend Phase ******
+
+40.211167 - Memory access at key __goals
+40.211388 - Memory access at key __current goals
+40.211532 - Memory access at key __current goals
+40.211724 - No goals selected.
+
+40.467921 - ****** Starting Plan Phase ******
+
+40.468419 - Memory access at key __world states
+40.468708 - Memory access at key __current goals
+40.471678 - Memory access at key __goals
+40.472386 - Old plan retrieved. Checking validity... valid.
+
+40.473033 - checking to see if all goals are achieved... yes
+
+40.720193 - ****** Starting Act Phase ******
+
+40.721160 - Memory access at key __world states
+40.721330 - Memory access at key __current goals
+40.721482 - Memory access at key __goals
+40.723804 - Selected action survey(remus, ga1) from plan:
+
+40.724062 - survey(remus, ga1)]0m
+
+40.724234 - Memory access at key __actions
+40.724376 - Memory access at key __actions
+40.724513 - Memory access at key __actions
+40.724952 - Memory access at key __feedback
+40.725604 - Memory access at key __feedback
+40.725990 - Memory access at key __feedback
+40.966812 - Starting cycle 10
+
+40.967239 - ****** Starting Simulate Phase ******
+
+40.967575 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+41.249310 - ****** Starting Perceive Phase ******
+
+41.249711 - Memory access at key __world states
+41.251090 - Mine Report not received
+
+41.252085 - at_location(remus,transit)
+at_location(remus,home)
+
+41.252454 - Memory access at key __world states
+41.252630 - Memory access at key __world states
+41.252780 - World observed.
+
+41.254450 - Memory access at key __world states
+41.254617 - Memory access at key __world states
+41.254735 - Memory access at key __actions
+41.254902 - Sending report to Meta-AQUA :
+
+41.255243 - (report.31
+(	(
+(survey.28
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.55  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.56  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.28  (domain  (value remus))))
+"")
+))
+
+41.527505 - ****** Starting Interpret Phase ******
+
+41.527818 - Memory access at key __goals
+41.527941 - Memory access at key __world states
+41.841560 - ****** Starting Eval Phase ******
+
+41.842042 - Memory access at key __world states
+41.842241 - Memory access at key __current goals
+41.844223 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+42.119426 - ****** Starting Intend Phase ******
+
+42.120007 - Memory access at key __goals
+42.120134 - Memory access at key __current goals
+42.120224 - Memory access at key __current goals
+42.120339 - No goals selected.
+
+42.382932 - ****** Starting Plan Phase ******
+
+42.383307 - Memory access at key __world states
+42.383461 - Memory access at key __current goals
+42.385030 - Memory access at key __goals
+42.385469 - Old plan retrieved. Checking validity... valid.
+
+42.385935 - checking to see if all goals are achieved... yes
+
+42.641976 - ****** Starting Act Phase ******
+
+42.642477 - Memory access at key __world states
+42.642674 - Memory access at key __current goals
+42.642858 - Memory access at key __goals
+42.646296 - Selected action survey(remus, ga1) from plan:
+
+42.646553 - survey(remus, ga1)]0m
+
+42.646714 - Memory access at key __actions
+42.646859 - Memory access at key __actions
+42.646971 - Memory access at key __actions
+42.647165 - Memory access at key __feedback
+42.647278 - Memory access at key __feedback
+42.647447 - Memory access at key __feedback
+42.957649 - Starting cycle 11
+
+42.957985 - ****** Starting Simulate Phase ******
+
+42.958361 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+43.210495 - ****** Starting Perceive Phase ******
+
+43.211042 - Memory access at key __world states
+43.212396 - Mine Report not received
+
+43.213316 - at_location(remus,transit)
+at_location(remus,home)
+
+43.213616 - Memory access at key __world states
+43.213760 - Memory access at key __world states
+43.213911 - World observed.
+
+43.215581 - Memory access at key __world states
+43.215803 - Memory access at key __world states
+43.215954 - Memory access at key __actions
+43.216141 - Sending report to Meta-AQUA :
+
+43.216432 - (report.34
+(	(
+(survey.31
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.61  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.62  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.31  (domain  (value remus))))
+"")
+))
+
+43.488029 - ****** Starting Interpret Phase ******
+
+43.488288 - Memory access at key __goals
+43.488417 - Memory access at key __world states
+43.811706 - ****** Starting Eval Phase ******
+
+43.812000 - Memory access at key __world states
+43.812101 - Memory access at key __current goals
+43.813524 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+44.189985 - ****** Starting Intend Phase ******
+
+44.190458 - Memory access at key __goals
+44.190670 - Memory access at key __current goals
+44.190921 - Memory access at key __current goals
+44.191197 - No goals selected.
+
+44.639599 - ****** Starting Plan Phase ******
+
+44.640025 - Memory access at key __world states
+44.640191 - Memory access at key __current goals
+44.642107 - Memory access at key __goals
+44.642570 - Old plan retrieved. Checking validity... valid.
+
+44.642962 - checking to see if all goals are achieved... yes
+
+44.916776 - ****** Starting Act Phase ******
+
+44.917134 - Memory access at key __world states
+44.917291 - Memory access at key __current goals
+44.917420 - Memory access at key __goals
+44.919326 - Selected action survey(remus, ga1) from plan:
+
+44.919530 - survey(remus, ga1)]0m
+
+44.919688 - Memory access at key __actions
+44.919829 - Memory access at key __actions
+44.919946 - Memory access at key __actions
+44.920130 - Memory access at key __feedback
+44.920247 - Memory access at key __feedback
+44.920423 - Memory access at key __feedback
+45.159832 - Starting cycle 12
+
+45.160190 - ****** Starting Simulate Phase ******
+
+45.160531 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+45.399128 - ****** Starting Perceive Phase ******
+
+45.399765 - Memory access at key __world states
+45.401284 - Mine Report not received
+
+45.401824 - at_location(remus,transit)
+at_location(remus,home)
+
+45.402050 - Memory access at key __world states
+45.402178 - Memory access at key __world states
+45.402354 - World observed.
+
+45.403836 - Memory access at key __world states
+45.403971 - Memory access at key __world states
+45.404091 - Memory access at key __actions
+45.404256 - Sending report to Meta-AQUA :
+
+45.404557 - (report.37
+(	(
+(survey.34
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.67  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.68  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.34  (domain  (value remus))))
+"")
+))
+
+52.882145 - ****** Starting Interpret Phase ******
+
+52.918884 - Memory access at key __goals
+52.919050 - Memory access at key __world states
+53.191023 - ****** Starting Eval Phase ******
+
+53.191445 - Memory access at key __world states
+53.191587 - Memory access at key __current goals
+53.193626 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+53.505175 - ****** Starting Intend Phase ******
+
+53.505760 - Memory access at key __goals
+53.506044 - Memory access at key __current goals
+53.506213 - Memory access at key __current goals
+53.506406 - No goals selected.
+
+53.795826 - ****** Starting Plan Phase ******
+
+53.796301 - Memory access at key __world states
+53.796488 - Memory access at key __current goals
+53.798276 - Memory access at key __goals
+53.798796 - Old plan retrieved. Checking validity... valid.
+
+53.799376 - checking to see if all goals are achieved... yes
+
+54.033368 - ****** Starting Act Phase ******
+
+54.033720 - Memory access at key __world states
+54.033872 - Memory access at key __current goals
+54.033999 - Memory access at key __goals
+54.035822 - Selected action survey(remus, ga1) from plan:
+
+54.036017 - survey(remus, ga1)]0m
+
+54.036167 - Memory access at key __actions
+54.036309 - Memory access at key __actions
+54.036421 - Memory access at key __actions
+54.036620 - Memory access at key __feedback
+54.036739 - Memory access at key __feedback
+54.036909 - Memory access at key __feedback
+54.277106 - Starting cycle 13
+
+54.277467 - ****** Starting Simulate Phase ******
+
+54.277800 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+54.536405 - ****** Starting Perceive Phase ******
+
+54.536931 - Memory access at key __world states
+54.538328 - Mine Report not received
+
+54.538895 - at_location(remus,transit)
+at_location(remus,home)
+
+54.539138 - Memory access at key __world states
+54.539269 - Memory access at key __world states
+54.539406 - World observed.
+
+54.541193 - Memory access at key __world states
+54.541353 - Memory access at key __world states
+54.541627 - Memory access at key __actions
+54.541819 - Sending report to Meta-AQUA :
+
+54.542128 - (report.40
+(	(
+(survey.37
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.73  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.74  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.37  (domain  (value remus))))
+"")
+))
+
+54.799075 - ****** Starting Interpret Phase ******
+
+54.799331 - Memory access at key __goals
+54.799428 - Memory access at key __world states
+55.066257 - ****** Starting Eval Phase ******
+
+55.066550 - Memory access at key __world states
+55.066652 - Memory access at key __current goals
+55.067802 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+55.328647 - ****** Starting Intend Phase ******
+
+55.329157 - Memory access at key __goals
+55.329334 - Memory access at key __current goals
+55.329477 - Memory access at key __current goals
+55.329679 - No goals selected.
+
+55.576983 - ****** Starting Plan Phase ******
+
+55.577453 - Memory access at key __world states
+55.577654 - Memory access at key __current goals
+55.579804 - Memory access at key __goals
+55.580406 - Old plan retrieved. Checking validity... valid.
+
+55.580980 - checking to see if all goals are achieved... yes
+
+56.532223 - ****** Starting Act Phase ******
+
+56.532779 - Memory access at key __world states
+56.533045 - Memory access at key __current goals
+56.533234 - Memory access at key __goals
+56.537312 - Selected action survey(remus, ga1) from plan:
+
+56.537619 - survey(remus, ga1)]0m
+
+56.537810 - Memory access at key __actions
+56.537968 - Memory access at key __actions
+56.538100 - Memory access at key __actions
+56.538339 - Memory access at key __feedback
+56.538499 - Memory access at key __feedback
+56.538771 - Memory access at key __feedback
+56.824969 - Starting cycle 14
+
+56.825439 - ****** Starting Simulate Phase ******
+
+56.825968 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE) : at_location(remus, home)
+qroute (SEA_ROUTE)
+remus (UUV) : at_location(remus, home) and at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+]
+
+57.092894 - ****** Starting Perceive Phase ******
+
+57.093323 - Memory access at key __world states
+57.094717 - Mine Report not received
+
+57.095379 - at_location(remus,transit)
+at_location(remus,home)
+
+57.095897 - Memory access at key __world states
+57.096090 - Memory access at key __world states
+57.096262 - World observed.
+
+57.097688 - Memory access at key __world states
+57.097863 - Memory access at key __world states
+57.098114 - Memory access at key __actions
+57.098320 - Sending report to Meta-AQUA :
+
+57.098670 - (report.43
+(	(
+(survey.40
+	(actor  (value remus))
+	(location  (value ga1)))
+"")
+((state
+	(at_location.79  (co-domain  (value home))
+		(domain  (value remus)))
+	(at_location.80  (co-domain  (value transit))
+		(domain  (value remus)))
+	(enabled.40  (domain  (value remus))))
+"")
+))
+
+57.912096 - ****** Starting Interpret Phase ******
+
+57.912362 - Memory access at key __goals
+57.912471 - Memory access at key __world states
+58.413221 - ****** Starting Eval Phase ******
+
+58.413639 - Memory access at key __world states
+58.413784 - Memory access at key __current goals
+58.415512 - Not all goals achieved; Goal(remus, ga1, predicate: at_location) is not true.
+
+5:38.188358 - ****** Starting Intend Phase ******
+
+5:38.189081 - Memory access at key __goals
+5:38.189357 - Memory access at key __current goals
+5:38.189576 - Memory access at key __current goals
+5:38.190079 - No goals selected.
+
+5:38.929923 - ****** Starting Plan Phase ******
+
+5:38.930372 - Memory access at key __world states
+5:38.930569 - Memory access at key __current goals
+5:38.933441 - Memory access at key __goals
+5:38.934173 - Old plan retrieved. Checking validity... valid.
+
+5:38.934773 - checking to see if all goals are achieved... yes
+

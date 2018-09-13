@@ -1,0 +1,1093 @@
+.001624 - Goal Graph initialized.
+
+.002006 - [cognitive] Initializing Simulate module 1 FireReset...done.
+
+.002297 - [cognitive] Initializing Simulate module 2 MidcaActionSimulator...done.
+
+.002569 - [cognitive] Initializing Simulate module 3 ArsonSimulator...done.
+
+.002845 - [cognitive] Initializing Simulate module 4 ASCIIWorldViewer...done.
+
+.004609 - [cognitive] Initializing Perceive module 1 PerfectObserver...done.
+
+.006022 - [cognitive] Initializing Perceive module 2 MAReporter...done.
+
+.007573 - [cognitive] Initializing Interpret module 1 ADistanceAnomalyNoter...done.
+
+.007706 - [cognitive] Initializing Interpret module 2 TFStack...done.
+
+.007813 - [cognitive] Initializing Interpret module 3 TFFire...done.
+
+.007915 - [cognitive] Initializing Interpret module 4 MAQuery...done.
+
+.008164 - [cognitive] Initializing Eval module 1 Scorer...done.
+
+.008255 - [cognitive] Initializing Eval module 2 SimpleEval...done.
+
+.008348 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.008553 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.008646 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.008819 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.008986 - Starting cycle 0
+
+.009109 - ****** Starting Simulate Phase ******
+
+.009343 - Simulator: no actions selected yet by MIDCA.
+
+.009881 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+.010098 - ****** Starting Perceive Phase ******
+
+.010436 - World observed.
+
+.013210 - Sending report to Meta-AQUA :
+
+.013314 - (report.1
+())
+
+.013581 - ****** Starting Interpret Phase ******
+
+.018879 - No anomaly detected.
+
+.020773 - TF-Tree goal generated: Goal(C_, B_, predicate: on)
+
+5.026828 - Error: no data received from Meta-AQUA before timeout.
+
+5.027596 - ****** Starting Eval Phase ******
+
+5.036857 - No current goals. Skipping eval
+
+5.037602 - ****** Starting Intend Phase ******
+
+5.038967 - Selecting goal(s): Goal(C_, B_, predicate: on)
+
+5.039818 - ****** Starting Plan Phase ******
+
+5.049487 - Planning...
+
+5.051835 - hand
+
+5.052126 - True
+
+5.052555 - Planning complete.
+
+5.052788 - Plan: 
+
+5.053027 -   unstack(D_, B_)
+
+5.053250 -   putdown(D_)
+
+5.053500 -   pickup(C_)
+
+5.053848 -   stack(C_, B_)
+
+5.054845 - ****** Starting Act Phase ******
+
+5.059839 - Selected action unstack(D_, B_) from plan:
+
+5.060022 - unstack(D_, B_)]0m putdown(D_) pickup(C_) stack(C_, B_)
+
+5.060349 - Starting cycle 1
+
+5.060663 - ****** Starting Simulate Phase ******
+
+5.061884 - simulating MIDCA action: unstack(D_, B_)
+
+5.063673 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+5.064277 - ****** Starting Perceive Phase ******
+
+5.064784 - World observed.
+
+5.069033 - Sending report to Meta-AQUA :
+
+5.069346 - (report.4
+(	(
+(unstack.1
+	(actor  (value person.0))
+	(object  (value D_))
+	(recipient  (value B_)))
+"")
+((state
+	(arsonist.1  (domain  (value Gui_Montag)))
+	(block.1  (domain  (value C_)))
+	(block.2  (domain  (value B_)))
+	(block.3  (domain  (value A_)))
+	(clear.1  (domain  (value C_)))
+	(clear.2  (domain  (value B_)))
+	(free.1  (domain  (value Gui_Montag)))
+	(holding.1  (domain  (value D_)))
+	(on-table.1  (domain  (value A_)))
+	(on-table.2  (domain  (value C_)))
+	(on.1  (co-domain  (value A_))
+		(domain  (value B_)))
+	(table.1  (domain  (value table)))
+	(triangle.1  (domain  (value D_))))
+"")
+))
+
+5.069925 - ****** Starting Interpret Phase ******
+
+5.076158 - No anomaly detected.
+
+5.076557 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+10.081894 - Error: no data received from Meta-AQUA before timeout.
+
+10.082836 - ****** Starting Eval Phase ******
+
+10.097070 - Not all goals achieved; Goal(C_, B_, predicate: on) is not true.
+
+10.097948 - ****** Starting Intend Phase ******
+
+10.099490 - No goals selected.
+
+10.100056 - ****** Starting Plan Phase ******
+
+10.108480 - Old plan retrieved. Checking validity... valid.
+
+10.110349 - checking to see if all goals are achieved... yes
+
+10.111032 - ****** Starting Act Phase ******
+
+10.116103 - Selected action putdown(D_) from plan:
+
+10.116345 - unstack(D_, B_) putdown(D_)]0m pickup(C_) stack(C_, B_)
+
+10.116960 - Starting cycle 2
+
+10.117161 - ****** Starting Simulate Phase ******
+
+10.117847 - simulating MIDCA action: putdown(D_)
+
+10.118788 -         -------                            
+       |  B_  |                            
+        -------                            
+        -------        -------          / \  
+       |  A_  |       |  C_  |         /   \ 
+        -------        -------        /  D_ \
+--------------------------------------------------------
+
+10.119099 - ****** Starting Perceive Phase ******
+
+10.119599 - World observed.
+
+10.122747 - Sending report to Meta-AQUA :
+
+10.123034 - (report.7
+(	(
+(putdown.1
+	(actor  (value person.0))
+	(object  (value D_)))
+"")
+((state
+	(arm-empty.1 )
+	(arsonist.4  (domain  (value Gui_Montag)))
+	(block.10  (domain  (value C_)))
+	(block.11  (domain  (value B_)))
+	(block.12  (domain  (value A_)))
+	(clear.7  (domain  (value D_)))
+	(clear.8  (domain  (value C_)))
+	(clear.9  (domain  (value B_)))
+	(free.4  (domain  (value Gui_Montag)))
+	(on-table.7  (domain  (value D_)))
+	(on-table.8  (domain  (value A_)))
+	(on-table.9  (domain  (value C_)))
+	(on.4  (co-domain  (value A_))
+		(domain  (value B_)))
+	(table.4  (domain  (value table)))
+	(triangle.4  (domain  (value D_))))
+"")
+))
+
+10.123544 - ****** Starting Interpret Phase ******
+
+10.129464 - No anomaly detected.
+
+10.129837 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+15.135657 - Error: no data received from Meta-AQUA before timeout.
+
+15.136661 - ****** Starting Eval Phase ******
+
+15.146790 - Not all goals achieved; Goal(C_, B_, predicate: on) is not true.
+
+15.147460 - ****** Starting Intend Phase ******
+
+15.148933 - No goals selected.
+
+15.149435 - ****** Starting Plan Phase ******
+
+15.161645 - Old plan retrieved. Checking validity... valid.
+
+15.162101 - checking to see if all goals are achieved... yes
+
+15.162305 - ****** Starting Act Phase ******
+
+15.168234 - Selected action pickup(C_) from plan:
+
+15.168620 - unstack(D_, B_) putdown(D_) pickup(C_)]0m stack(C_, B_)
+
+15.169021 - Starting cycle 3
+
+15.169133 - ****** Starting Simulate Phase ******
+
+15.169532 - simulating MIDCA action: pickup(C_)
+
+15.169801 - Simulating action: lightonfire(Gui Montag, C_)
+
+15.170289 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       |  A_  |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+15.170464 - ****** Starting Perceive Phase ******
+
+15.170760 - World observed.
+
+15.173290 - Sending report to Meta-AQUA :
+
+15.173725 - (report.10
+(	(
+(pickup.1
+	(actor  (value person.0))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.7  (domain  (value Gui_Montag)))
+	(block.19  (domain  (value C_)))
+	(block.20  (domain  (value B_)))
+	(block.21  (domain  (value A_)))
+	(clear.16  (domain  (value D_)))
+	(clear.17  (domain  (value B_)))
+	(free.7  (domain  (value Gui_Montag)))
+	(holding.4  (domain  (value C_)))
+	(on-table.16  (domain  (value D_)))
+	(on-table.17  (domain  (value A_)))
+	(on.7  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.1  (domain  (value C_)))
+	(table.7  (domain  (value table)))
+	(triangle.7  (domain  (value D_))))
+"")
+	(
+(burns.1
+	(actor  (value nature))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.8  (domain  (value Gui_Montag)))
+	(block.22  (domain  (value C_)))
+	(block.23  (domain  (value B_)))
+	(block.24  (domain  (value A_)))
+	(clear.18  (domain  (value D_)))
+	(clear.19  (domain  (value B_)))
+	(free.8  (domain  (value Gui_Montag)))
+	(holding.5  (domain  (value C_)))
+	(on-table.18  (domain  (value D_)))
+	(on-table.19  (domain  (value A_)))
+	(on.8  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.2  (domain  (value C_)))
+	(table.8  (domain  (value table)))
+	(triangle.8  (domain  (value D_))))
+"")
+))
+
+15.174454 - ****** Starting Interpret Phase ******
+
+15.180632 - No anomaly detected.
+
+15.180975 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+15.181535 - TF-Tree goal generated: Goal(C_, negate: True, predicate: onfire)
+
+20.184641 - Error: no data received from Meta-AQUA before timeout.
+
+20.185447 - ****** Starting Eval Phase ******
+
+20.194564 - Not all goals achieved; Goal(C_, B_, predicate: on) is not true.
+
+20.195139 - ****** Starting Intend Phase ******
+
+20.197285 - Selecting goal(s): Goal(C_, negate: True, predicate: onfire)
+
+20.197901 - ****** Starting Plan Phase ******
+
+20.205453 - Planning...
+
+20.205878 - Planning complete.
+
+20.205963 - Plan: 
+
+20.206051 -   putoutfire(C_)
+
+20.206315 - ****** Starting Act Phase ******
+
+20.209298 - Selected action putoutfire(C_) from plan:
+
+20.209454 - putoutfire(C_)]0m
+
+20.209849 - Starting cycle 4
+
+20.210002 - ****** Starting Simulate Phase ******
+
+20.210451 - simulating MIDCA action: putoutfire(C_)
+
+20.210800 - Simulating action: lightonfire(Gui Montag, C_)
+
+20.211919 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       |  A_  |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+20.212336 - ****** Starting Perceive Phase ******
+
+20.212717 - World observed.
+
+20.216265 - Sending report to Meta-AQUA :
+
+20.216877 - (report.13
+(	(
+(putoutfire.1
+	(actor  (value person.0))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.13  (domain  (value Gui_Montag)))
+	(block.37  (domain  (value C_)))
+	(block.38  (domain  (value B_)))
+	(block.39  (domain  (value A_)))
+	(clear.28  (domain  (value D_)))
+	(clear.29  (domain  (value B_)))
+	(free.13  (domain  (value Gui_Montag)))
+	(holding.10  (domain  (value C_)))
+	(on-table.28  (domain  (value D_)))
+	(on-table.29  (domain  (value A_)))
+	(on.13  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.7  (domain  (value C_)))
+	(table.13  (domain  (value table)))
+	(triangle.13  (domain  (value D_))))
+"")
+	(
+(burns.4
+	(actor  (value nature))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.14  (domain  (value Gui_Montag)))
+	(block.40  (domain  (value C_)))
+	(block.41  (domain  (value B_)))
+	(block.42  (domain  (value A_)))
+	(clear.30  (domain  (value D_)))
+	(clear.31  (domain  (value B_)))
+	(free.14  (domain  (value Gui_Montag)))
+	(holding.11  (domain  (value C_)))
+	(on-table.30  (domain  (value D_)))
+	(on-table.31  (domain  (value A_)))
+	(on.14  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.8  (domain  (value C_)))
+	(table.14  (domain  (value table)))
+	(triangle.14  (domain  (value D_))))
+"")
+))
+
+20.217832 - ****** Starting Interpret Phase ******
+
+20.223863 - No anomaly detected.
+
+20.224229 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+20.224885 - TF-Tree goal generated: Goal(C_, negate: True, predicate: onfire) . This goal was already in the graph.
+
+25.230278 - Error: no data received from Meta-AQUA before timeout.
+
+25.231190 - ****** Starting Eval Phase ******
+
+25.241087 - Not all goals achieved; Goal(C_, negate: True, predicate: onfire) is not true.
+
+25.241775 - ****** Starting Intend Phase ******
+
+25.243691 - No goals selected.
+
+25.244616 - ****** Starting Plan Phase ******
+
+25.253824 - Old plan retrieved. Checking validity... valid.
+
+25.254306 - checking to see if all goals are achieved... no. Goals achieved: set([])
+
+25.254630 - Planning...
+
+25.255844 - Planning complete.
+
+25.256144 - Plan: 
+
+25.256496 -   putoutfire(C_)
+
+25.257265 - ****** Starting Act Phase ******
+
+25.259067 - Retrieved plan does not achieve all goals. Trying to retrieve a different plan...
+
+25.266786 - Selected action putoutfire(C_) from plan:
+
+25.267177 - putoutfire(C_)]0m
+
+25.268162 - Starting cycle 5
+
+25.268650 - ****** Starting Simulate Phase ******
+
+25.269563 - simulating MIDCA action: putoutfire(C_)
+
+25.270132 - Simulating action: lightonfire(Gui Montag, A_)
+
+25.271388 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       | *A_* |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+25.271846 - ****** Starting Perceive Phase ******
+
+25.272659 - World observed.
+
+25.279339 - Sending report to Meta-AQUA :
+
+25.280442 - (report.16
+(	(
+(putoutfire.4
+	(actor  (value person.0))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.19  (domain  (value Gui_Montag)))
+	(block.55  (domain  (value C_)))
+	(block.56  (domain  (value B_)))
+	(block.57  (domain  (value A_)))
+	(clear.40  (domain  (value D_)))
+	(clear.41  (domain  (value B_)))
+	(free.19  (domain  (value Gui_Montag)))
+	(holding.16  (domain  (value C_)))
+	(on-table.40  (domain  (value D_)))
+	(on-table.41  (domain  (value A_)))
+	(on.19  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.13  (domain  (value A_)))
+	(table.19  (domain  (value table)))
+	(triangle.19  (domain  (value D_))))
+"")
+	(
+(burns.7
+	(actor  (value nature))
+	(object  (value A_)))
+"")
+((state
+	(arsonist.20  (domain  (value Gui_Montag)))
+	(block.58  (domain  (value C_)))
+	(block.59  (domain  (value B_)))
+	(block.60  (domain  (value A_)))
+	(clear.42  (domain  (value D_)))
+	(clear.43  (domain  (value B_)))
+	(free.20  (domain  (value Gui_Montag)))
+	(holding.17  (domain  (value C_)))
+	(on-table.42  (domain  (value D_)))
+	(on-table.43  (domain  (value A_)))
+	(on.20  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.14  (domain  (value A_)))
+	(table.20  (domain  (value table)))
+	(triangle.20  (domain  (value D_))))
+"")
+))
+
+25.282377 - ****** Starting Interpret Phase ******
+
+25.294702 - No anomaly detected.
+
+25.295369 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+25.296653 - TF-Tree goal generated: Goal(A_, negate: True, predicate: onfire)
+
+30.302142 - Error: no data received from Meta-AQUA before timeout.
+
+30.303011 - ****** Starting Eval Phase ******
+
+30.329633 - All current goals achieved. Removing them from goal graph
+
+30.330984 - removing 2 plans that no longer apply.
+
+30.332041 - ****** Starting Intend Phase ******
+
+30.333426 - Selecting goal(s): Goal(A_, negate: True, predicate: onfire)
+
+30.333859 - ****** Starting Plan Phase ******
+
+30.343246 - Planning...
+
+30.344312 - Planning complete.
+
+30.344533 - Plan: 
+
+30.344718 -   putoutfire(A_)
+
+30.345335 - ****** Starting Act Phase ******
+
+30.353410 - Selected action putoutfire(A_) from plan:
+
+30.353710 - putoutfire(A_)]0m
+
+30.354404 - Starting cycle 6
+
+30.354625 - ****** Starting Simulate Phase ******
+
+30.355340 - simulating MIDCA action: putoutfire(A_)
+
+30.355774 - Simulating action: lightonfire(Gui Montag, C_)
+
+30.356764 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       |  A_  |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+30.357106 - ****** Starting Perceive Phase ******
+
+30.357714 - World observed.
+
+30.362735 - Sending report to Meta-AQUA :
+
+30.363804 - (report.19
+(	(
+(putoutfire.7
+	(actor  (value person.0))
+	(object  (value A_)))
+"")
+((state
+	(arsonist.25  (domain  (value Gui_Montag)))
+	(block.73  (domain  (value C_)))
+	(block.74  (domain  (value B_)))
+	(block.75  (domain  (value A_)))
+	(clear.52  (domain  (value D_)))
+	(clear.53  (domain  (value B_)))
+	(free.25  (domain  (value Gui_Montag)))
+	(holding.22  (domain  (value C_)))
+	(on-table.52  (domain  (value D_)))
+	(on-table.53  (domain  (value A_)))
+	(on.25  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.19  (domain  (value C_)))
+	(table.25  (domain  (value table)))
+	(triangle.25  (domain  (value D_))))
+"")
+	(
+(burns.10
+	(actor  (value nature))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.26  (domain  (value Gui_Montag)))
+	(block.76  (domain  (value C_)))
+	(block.77  (domain  (value B_)))
+	(block.78  (domain  (value A_)))
+	(clear.54  (domain  (value D_)))
+	(clear.55  (domain  (value B_)))
+	(free.26  (domain  (value Gui_Montag)))
+	(holding.23  (domain  (value C_)))
+	(on-table.54  (domain  (value D_)))
+	(on-table.55  (domain  (value A_)))
+	(on.26  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.20  (domain  (value C_)))
+	(table.26  (domain  (value table)))
+	(triangle.26  (domain  (value D_))))
+"")
+))
+
+30.365365 - ****** Starting Interpret Phase ******
+
+30.374090 - No anomaly detected.
+
+30.374668 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+30.376079 - TF-Tree goal generated: Goal(C_, negate: True, predicate: onfire)
+
+35.378647 - Error: no data received from Meta-AQUA before timeout.
+
+35.379607 - ****** Starting Eval Phase ******
+
+35.389294 - All current goals achieved. Removing them from goal graph
+
+35.390269 - removing 1 plans that no longer apply.
+
+35.391353 - ****** Starting Intend Phase ******
+
+35.393500 - Selecting goal(s): Goal(C_, negate: True, predicate: onfire)
+
+35.394340 - ****** Starting Plan Phase ******
+
+35.398491 - Planning...
+
+35.398928 - Planning complete.
+
+35.399025 - Plan: 
+
+35.399125 -   putoutfire(C_)
+
+35.399420 - ****** Starting Act Phase ******
+
+35.402326 - Selected action putoutfire(C_) from plan:
+
+35.402448 - putoutfire(C_)]0m
+
+35.402775 - Starting cycle 7
+
+35.402897 - ****** Starting Simulate Phase ******
+
+35.403272 - simulating MIDCA action: putoutfire(C_)
+
+35.403507 - Simulating action: lightonfire(Gui Montag, A_)
+
+35.404032 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       | *A_* |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+35.404232 - ****** Starting Perceive Phase ******
+
+35.404586 - World observed.
+
+35.407874 - Sending report to Meta-AQUA :
+
+35.408578 - (report.22
+(	(
+(putoutfire.10
+	(actor  (value person.0))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.31  (domain  (value Gui_Montag)))
+	(block.91  (domain  (value C_)))
+	(block.92  (domain  (value B_)))
+	(block.93  (domain  (value A_)))
+	(clear.64  (domain  (value D_)))
+	(clear.65  (domain  (value B_)))
+	(free.31  (domain  (value Gui_Montag)))
+	(holding.28  (domain  (value C_)))
+	(on-table.64  (domain  (value D_)))
+	(on-table.65  (domain  (value A_)))
+	(on.31  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.25  (domain  (value A_)))
+	(table.31  (domain  (value table)))
+	(triangle.31  (domain  (value D_))))
+"")
+	(
+(burns.13
+	(actor  (value nature))
+	(object  (value A_)))
+"")
+((state
+	(arsonist.32  (domain  (value Gui_Montag)))
+	(block.94  (domain  (value C_)))
+	(block.95  (domain  (value B_)))
+	(block.96  (domain  (value A_)))
+	(clear.66  (domain  (value D_)))
+	(clear.67  (domain  (value B_)))
+	(free.32  (domain  (value Gui_Montag)))
+	(holding.29  (domain  (value C_)))
+	(on-table.66  (domain  (value D_)))
+	(on-table.67  (domain  (value A_)))
+	(on.32  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.26  (domain  (value A_)))
+	(table.32  (domain  (value table)))
+	(triangle.32  (domain  (value D_))))
+"")
+))
+
+35.409408 - ****** Starting Interpret Phase ******
+
+35.415060 - No anomaly detected.
+
+35.415477 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+35.416141 - TF-Tree goal generated: Goal(A_, negate: True, predicate: onfire)
+
+40.421169 - Error: no data received from Meta-AQUA before timeout.
+
+40.422238 - ****** Starting Eval Phase ******
+
+40.432146 - All current goals achieved. Removing them from goal graph
+
+40.433434 - removing 1 plans that no longer apply.
+
+40.434641 - ****** Starting Intend Phase ******
+
+40.436657 - Selecting goal(s): Goal(A_, negate: True, predicate: onfire)
+
+40.437391 - ****** Starting Plan Phase ******
+
+40.445161 - Planning...
+
+40.446266 - Planning complete.
+
+40.446517 - Plan: 
+
+40.446773 -   putoutfire(A_)
+
+40.447481 - ****** Starting Act Phase ******
+
+40.455753 - Selected action putoutfire(A_) from plan:
+
+40.456097 - putoutfire(A_)]0m
+
+40.456932 - Starting cycle 8
+
+40.457209 - ****** Starting Simulate Phase ******
+
+40.458170 - simulating MIDCA action: putoutfire(A_)
+
+40.458790 - Simulating action: lightonfire(Gui Montag, C_)
+
+40.459950 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       |  A_  |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+40.460391 - ****** Starting Perceive Phase ******
+
+40.461062 - World observed.
+
+40.469525 - Sending report to Meta-AQUA :
+
+40.470469 - (report.25
+(	(
+(putoutfire.13
+	(actor  (value person.0))
+	(object  (value A_)))
+"")
+((state
+	(arsonist.37  (domain  (value Gui_Montag)))
+	(block.109  (domain  (value C_)))
+	(block.110  (domain  (value B_)))
+	(block.111  (domain  (value A_)))
+	(clear.76  (domain  (value D_)))
+	(clear.77  (domain  (value B_)))
+	(free.37  (domain  (value Gui_Montag)))
+	(holding.34  (domain  (value C_)))
+	(on-table.76  (domain  (value D_)))
+	(on-table.77  (domain  (value A_)))
+	(on.37  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.31  (domain  (value C_)))
+	(table.37  (domain  (value table)))
+	(triangle.37  (domain  (value D_))))
+"")
+	(
+(burns.16
+	(actor  (value nature))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.38  (domain  (value Gui_Montag)))
+	(block.112  (domain  (value C_)))
+	(block.113  (domain  (value B_)))
+	(block.114  (domain  (value A_)))
+	(clear.78  (domain  (value D_)))
+	(clear.79  (domain  (value B_)))
+	(free.38  (domain  (value Gui_Montag)))
+	(holding.35  (domain  (value C_)))
+	(on-table.78  (domain  (value D_)))
+	(on-table.79  (domain  (value A_)))
+	(on.38  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.32  (domain  (value C_)))
+	(table.38  (domain  (value table)))
+	(triangle.38  (domain  (value D_))))
+"")
+))
+
+40.472013 - ****** Starting Interpret Phase ******
+
+40.483563 - No anomaly detected.
+
+40.484201 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+40.485406 - TF-Tree goal generated: Goal(C_, negate: True, predicate: onfire)
+
+45.487064 - Error: no data received from Meta-AQUA before timeout.
+
+45.488031 - ****** Starting Eval Phase ******
+
+45.497339 - All current goals achieved. Removing them from goal graph
+
+45.498357 - removing 1 plans that no longer apply.
+
+45.499199 - ****** Starting Intend Phase ******
+
+45.500586 - Selecting goal(s): Goal(C_, negate: True, predicate: onfire)
+
+45.501073 - ****** Starting Plan Phase ******
+
+45.508765 - Planning...
+
+45.509852 - Planning complete.
+
+45.510100 - Plan: 
+
+45.510340 -   putoutfire(C_)
+
+45.511279 - ****** Starting Act Phase ******
+
+45.518795 - Selected action putoutfire(C_) from plan:
+
+45.519090 - putoutfire(C_)]0m
+
+45.519889 - Starting cycle 9
+
+45.520180 - ****** Starting Simulate Phase ******
+
+45.521109 - simulating MIDCA action: putoutfire(C_)
+
+45.521679 - Simulating action: lightonfire(Gui Montag, D_)
+
+45.523113 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       |  A_  |         / * \ 
+        -------        / *D_*\
+------------------------------------------
+
+45.523831 - ****** Starting Perceive Phase ******
+
+45.524767 - World observed.
+
+45.532070 - Sending report to Meta-AQUA :
+
+45.533227 - (report.28
+(	(
+(putoutfire.16
+	(actor  (value person.0))
+	(object  (value C_)))
+"")
+((state
+	(arsonist.43  (domain  (value Gui_Montag)))
+	(block.127  (domain  (value C_)))
+	(block.128  (domain  (value B_)))
+	(block.129  (domain  (value A_)))
+	(clear.88  (domain  (value D_)))
+	(clear.89  (domain  (value B_)))
+	(free.43  (domain  (value Gui_Montag)))
+	(holding.40  (domain  (value C_)))
+	(on-table.88  (domain  (value D_)))
+	(on-table.89  (domain  (value A_)))
+	(on.43  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.37  (domain  (value D_)))
+	(table.43  (domain  (value table)))
+	(triangle.43  (domain  (value D_))))
+"")
+	(
+(burns.19
+	(actor  (value nature))
+	(object  (value D_)))
+"")
+((state
+	(arsonist.44  (domain  (value Gui_Montag)))
+	(block.130  (domain  (value C_)))
+	(block.131  (domain  (value B_)))
+	(block.132  (domain  (value A_)))
+	(clear.90  (domain  (value D_)))
+	(clear.91  (domain  (value B_)))
+	(free.44  (domain  (value Gui_Montag)))
+	(holding.41  (domain  (value C_)))
+	(on-table.90  (domain  (value D_)))
+	(on-table.91  (domain  (value A_)))
+	(on.44  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.38  (domain  (value D_)))
+	(table.44  (domain  (value table)))
+	(triangle.44  (domain  (value D_))))
+"")
+))
+
+45.535090 - ****** Starting Interpret Phase ******
+
+45.547587 - No anomaly detected.
+
+45.548467 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+45.549582 - TF-Tree goal generated: Goal(D_, negate: True, predicate: onfire)
+
+50.555092 - Error: no data received from Meta-AQUA before timeout.
+
+50.556053 - ****** Starting Eval Phase ******
+
+50.566426 - All current goals achieved. Removing them from goal graph
+
+50.567666 - removing 1 plans that no longer apply.
+
+50.568956 - ****** Starting Intend Phase ******
+
+50.570704 - Selecting goal(s): Goal(D_, negate: True, predicate: onfire)
+
+50.571333 - ****** Starting Plan Phase ******
+
+50.577449 - Planning...
+
+50.578710 - Planning complete.
+
+50.579015 - Plan: 
+
+50.579333 -   putoutfire(D_)
+
+50.580134 - ****** Starting Act Phase ******
+
+50.586510 - Selected action putoutfire(D_) from plan:
+
+50.586809 - putoutfire(D_)]0m
+
+50.587626 - Starting cycle 10
+
+50.587880 - ****** Starting Simulate Phase ******
+
+50.588412 - simulating MIDCA action: putoutfire(D_)
+
+50.588789 - Simulating action: lightonfire(Gui Montag, A_)
+
+50.589574 -                             
+                            
+                            
+        -------              
+       |  B_  |              
+        -------              
+        -------          / \  
+       | *A_* |         /   \ 
+        -------        /  D_ \
+------------------------------------------
+
+50.589859 - ****** Starting Perceive Phase ******
+
+50.590324 - World observed.
+
+50.593560 - Sending report to Meta-AQUA :
+
+50.594140 - (report.31
+(	(
+(putoutfire.19
+	(actor  (value person.0))
+	(object  (value D_)))
+"")
+((state
+	(arsonist.49  (domain  (value Gui_Montag)))
+	(block.145  (domain  (value C_)))
+	(block.146  (domain  (value B_)))
+	(block.147  (domain  (value A_)))
+	(clear.100  (domain  (value D_)))
+	(clear.101  (domain  (value B_)))
+	(free.49  (domain  (value Gui_Montag)))
+	(holding.46  (domain  (value C_)))
+	(on-table.100  (domain  (value D_)))
+	(on-table.101  (domain  (value A_)))
+	(on.49  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.43  (domain  (value A_)))
+	(table.49  (domain  (value table)))
+	(triangle.49  (domain  (value D_))))
+"")
+	(
+(burns.22
+	(actor  (value nature))
+	(object  (value A_)))
+"")
+((state
+	(arsonist.50  (domain  (value Gui_Montag)))
+	(block.148  (domain  (value C_)))
+	(block.149  (domain  (value B_)))
+	(block.150  (domain  (value A_)))
+	(clear.102  (domain  (value D_)))
+	(clear.103  (domain  (value B_)))
+	(free.50  (domain  (value Gui_Montag)))
+	(holding.47  (domain  (value C_)))
+	(on-table.102  (domain  (value D_)))
+	(on-table.103  (domain  (value A_)))
+	(on.50  (co-domain  (value A_))
+		(domain  (value B_)))
+	(onfire.44  (domain  (value A_)))
+	(table.50  (domain  (value table)))
+	(triangle.50  (domain  (value D_))))
+"")
+))
+
+50.595166 - ****** Starting Interpret Phase ******
+
+50.604225 - No anomaly detected.
+
+50.604718 - MIDCA already has a block stacking goal. Skipping TF-Tree stacking goal generation
+
+50.605503 - TF-Tree goal generated: Goal(A_, negate: True, predicate: onfire)
+
+51.191787 - Error reading from Meta-AQUA.
+
