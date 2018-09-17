@@ -1388,7 +1388,7 @@ class ReactiveSurvive(base.BaseModule):
                     existed = True
 
             if not existed:
-                hypotheses = self.survive_GDA()
+                hypotheses = self.survive()
 
                 goal = goals.Goal(predicate="survive", subgoals=hypotheses)
                 inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
