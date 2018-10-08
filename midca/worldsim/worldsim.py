@@ -59,7 +59,6 @@ class Predicate_function:
 
             arg = self.args[1].instantiate(args[1])
 
-
             return self.args[0].instantiate(args[0]), arg
 
 
@@ -103,7 +102,6 @@ class Atom:
 
     def __init__(self, predicate, args, val=None):
         if len(predicate.argnames) != len(args):
-
             raise Exception("Wrong number of args for " + predicate.name + " " + args.__str__())
         i = 0
         if predicate.argtypes:
@@ -805,7 +803,6 @@ class World:
         a = next((x for x in self.atoms if x.func and x.func == atom.func and x.args == atom.args), None)
         if a:
             if not isinstance(val, numbers.Number):
-
                 func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
 
                 val = func_2.val
@@ -845,7 +842,7 @@ class World:
         # a = next((x for x in self.atoms if x.func and x.func == atom.func), None)
         a = self.get_val_func(atom)
         # TODO: I only assume greater operator here; it needs to be changes for <, =
-        if verbose >=2: print(a.val)
+        if verbose >= 2: print(a.val)
         if a.val is None:
             a.val = 0
         return int(a.val) > int(atom.val)
@@ -925,8 +922,13 @@ class World:
     def is_applicable(self, action):
         for i in range(len(action.preconds)):
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
+                print("false")
+                print(action.preconds[i])
                 return False
+
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
+                print(action.preconds[i])
+                print("false")
                 return False
 
         # todo: Zohreh; fix the bug later here
@@ -946,22 +948,23 @@ class World:
             #     print("not true")
             #     return False
 
-
         return True
 
     # convenience method for operating with MIDCA
     def midca_action_applicable(self, midcaAction):
         try:
             operator = self.operators[midcaAction.op]
+
             args = [self.objects[arg] for arg in midcaAction.args]
         except KeyError:
+            print("key error")
             return False
 
         # print(operator)
         # print("is going to be instantiated")
 
         action = operator.instantiate(args)
-
+        # print("here")
         return self.is_applicable(action)
 
     def get_val_func(self, atom):
@@ -972,7 +975,7 @@ class World:
                         return f
 
                 if not f.args:
-                   return f
+                    return f
 
         return None
 
@@ -982,7 +985,7 @@ class World:
             # func = next((x for x in self.atoms if x.func and x.func == atom.func  and x.args == atom.args), None)
             # print("atom" + str(atom))
             func = self.get_val_func(atom)
-            #todo: Zohreh -- change this later
+            # todo: Zohreh -- change this later
             if func.val is None:
                 func.val = 0
 
@@ -1021,7 +1024,6 @@ class World:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
 
-
     def apply_named_action(self, opName, argNames, verbose=2):
 
         args = []
@@ -1045,47 +1047,19 @@ class World:
 
     def apply_event(self, opName, argNames=[], verbose=2):
         try:
-            func = self.functions["player-current-health"]
-            a = next((x for x in self.atoms if x.func == func), None)
-            a.val = a.val - 5
-
-            if opName == "thing-at-map":
-                pred = self.predicates[opName]
-
-                if (argNames[0] or argNames[1]) not in self.objects:
-                    raise Exception(": Object - " + argNames[0] + " DNE ")
-
-                newatom = Atom(pred, [self.objects[argNames[0]], self.objects[argNames[1]]])
-                self.add_atom(newatom)
-                if verbose >= 2:
-                    print(str(argNames[0]) + "is simulated to be spawned at " + str(argNames[1]))
-
-            if opName == "zombie_damage":
-                pred = self.predicates["monster-at"]
-                # (zombie-at zombie m0_1)
-                newatom = Atom(pred, ["zombie", "m1_2"])
-                self.add_atom(newatom)
-
-                if verbose >= 2:
-                    print("player's current health is down to " + str(a.val))
-
-            if opName == "arrow_damage":
-                pred = self.predicates["thing-at-map"]
-                # (obj-at arrow m0_1)
-                name = "arrow"
-                loc = "m1_2"
-                args = []
-                if (name or loc) not in self.objects:
-                    raise Exception(": Object - " + name + " DNE ")
-                args.append(self.objects[name])
-
-                args.append(self.objects[loc])
-
-                newatom = Atom(pred, args)
-                self.add_atom(newatom)
-
-                print("player's current health is down to " + str(a.val) + " and arrows are nearby")
-                print()
+            if opName == "cigbutt_found":
+                cigr = ''
+                loc = ''
+                for objectname in self.objects:
+                    if self.objects[objectname].type.name == "CIGARETTE":
+                        cigr = objectname
+                    if self.objects[objectname].type.name == "LOCATION" and\
+                            self.objects[objectname].name == "r1":
+                        loc = objectname
+                if cigr and loc:
+                    pred = self.predicates[opName]
+                    newatom = Atom(pred, [cigr], self.objects[loc])
+                    self.add_atom(newatom)
 
         except Exception as e:
             print("ERROR: " + str(e))

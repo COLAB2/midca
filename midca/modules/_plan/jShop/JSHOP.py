@@ -20,10 +20,9 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
 
     p = Popen(['java', '-jar', thisDir + '/jshop.jar', DOMAIN_FIILE,
                STATE_FILE, '1'], stdout=PIPE, stderr=STDOUT)
-
+    print(p.stdout)
     for line in p.stdout:
-        print()
-        line
+        print(line)
         if (line.startswith(" ( (!")):
             plan = line
             break
@@ -60,4 +59,10 @@ def parse(str):
 
 
 if __name__ == "__main__":
-    jshop("tasks")
+    thisDir = os.path.dirname(os.path.realpath(__file__))
+    MIDCA_ROOT = thisDir + "/../../../"
+
+    DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+    #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_5.shp"
+    jshop("tasks", DOMAIN_FIILE, STATE_FILE)

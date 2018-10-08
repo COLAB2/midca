@@ -28,6 +28,18 @@ def preferApprehend(goal1, goal2):
     return 0
 
 
+def preferMaintain(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'maintain' and goal2['predicate'] != 'maintain':
+        return -1
+    elif goal1['predicate'] != 'maintain' and goal2['predicate'] == 'maintain':
+        return 1
+    elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
+        return -1
+    elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
+        return 1
+    return 0
 
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -109,17 +121,28 @@ def pyhop_state_from_world(world, name="state"):
     s.holding = False
     s.fire = {}
     s.free = {}
+    s.has_cigarette = {}
+    s.looking = {}
+    s.knownloc_a = {}
+    s.knownloc_c = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
     s.hasmortar = {}  # keys are 
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
+    workers = []
     for objname in world.objects:
         if world.objects[objname].type.name == "BLOCK" and objname != "table":
             blocks.append(objname)
         elif world.objects[objname].type.name == "ARSONIST":
             s.free[objname] = False
+            s.knownloc_a[objname] = False
+        elif world.objects[objname].type.name == "CIGARETTE":
+            s.knownloc_c[objname] = False
+        elif world.objects[objname].type.name == "WORKER":
+            workers.append(objname)
+            s.has_cigarette[objname] = False
         elif world.objects[objname].type.name == "MORTARBLOCK":
             mortarblocks.append(objname)
     for atom in world.atoms:
@@ -127,6 +150,8 @@ def pyhop_state_from_world(world, name="state"):
             s.clear[atom.args[0].name] = True
         elif atom.predicate.name == "holding":
             s.holding = atom.args[0].name
+        elif atom.predicate.name == "looking":
+            s.looking[atom.args[0].name] = True
         elif atom.predicate.name == "fire-extinguisher":
             s.fire_ext_avail.add(atom.args[0].name)
         elif atom.predicate.name == "holdingextinguisher":
@@ -141,6 +166,12 @@ def pyhop_state_from_world(world, name="state"):
             s.fire[atom.args[0].name] = True
         elif atom.predicate.name == "free":
             s.free[atom.args[0].name] = True
+        elif atom.predicate.name == "has_cigarette":
+            s.has_cigarette[atom.args[0].name] = True
+        elif atom.predicate.name == "knownloc_a":
+            s.knownloc_a[atom.args[0].name] = True
+        elif atom.predicate.name == "knownloc_c":
+            s.knownloc_c[atom.args[0].name] = True
         elif atom.predicate.name == "available":
             s.mortaravailable[atom.args[0].name] = True
         elif "hasmortar" in world.types and atom.predicate.name == "hasmortar":
@@ -154,6 +185,10 @@ def pyhop_state_from_world(world, name="state"):
             s.pos[block] = "in-arm"
         if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
+
+    # for worker in workers:
+    #     if worker in s.has_cigarette:
+    #         s.has_cigarette[worker] = True
 
     for mblock in mortarblocks:
         if mblock not in list(s.mortaravailable.keys()):
@@ -191,6 +226,8 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             alltasks.append(("put_out", args[0]))
         elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
             alltasks.append(("catch_arsonist", args[0]))
+        elif predicate == "has_cigarette" and 'negate' in goal and goal['negate'] == True:
+            alltasks.append(("warn_worker", args[0]))
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     if blkgoals.pos:

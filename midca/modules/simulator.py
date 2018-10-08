@@ -344,10 +344,70 @@ class AttackSimulator:
                     print("failed")
 
 
+class BadWorkingConditionSimulator:
+
+    def __init__(self, badconditionChance=0.9, start=2):
+        self.chance = badconditionChance
+        self.start = start
+
+    def getBadConditionChance(self):
+        return self.chance
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def has_cigarette(self):
+        for atom in self.world.atoms:
+            if atom.predicate.name == "has_cigarette":
+                if atom.args[0].type.name == "WORKER":
+                    return atom.args[0].name
+        return False
+
+    def cigronfloor(self):
+        for atom in self.world.atoms:
+            if atom.predicate.name == "onfloor":
+                if atom.args[0].type.name == "CIGARETTE":
+                    return atom.args[0].name
+        return False
+
+    def get_unlit_blocks(self):
+        res = []
+        for objectname in self.world.objects:
+            if not self.world.is_true("onfire", [objectname]) and self.world.objects[objectname].type.name == "BLOCK"\
+                    and objectname != "table":
+                res.append(objectname)
+        return res
+
+    def find_sigarbutt(self):
+        for atom in self.world.atoms:
+            if atom.predicate.name == "looking":
+                self.world.apply_event("cigbutt_found")
+
+    def run(self, cycle, verbose=2):
+        worker = self.has_cigarette()
+        cigr = self.cigronfloor()
+        if worker and cycle > self.start and random.random() < self.chance:
+            try:
+                block = random.choice(self.get_unlit_blocks())
+                try:
+                    self.world.apply_named_action("cigarette_butt_start_fire", [worker, block, cigr])
+                    if verbose >= 2:
+                        print("Simulating event: cigarette butt cause fire(" + str(block) + ")")
+
+                except Exception:
+                    if verbose >= 1:
+                        print("Action lightonfire(", str(block), ") invalid.")
+            except IndexError:
+                if verbose >= 1:
+                    print("All blocks on fire.", worker, random.choice(ARSONIST_VICTORY_ACTIVITIES))
+
+
+
 
 class ArsonSimulator:
 
-    def __init__(self, arsonChance=0.5, arsonStart=10):
+    def __init__(self, arsonChance=0.9, arsonStart=10):
         self.chance = arsonChance
         self.start = arsonStart
 

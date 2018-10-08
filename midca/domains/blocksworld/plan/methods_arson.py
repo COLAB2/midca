@@ -159,6 +159,7 @@ def apprehend_m(state, perp):
     if state.free[perp]:
         return [("searchroom1", perp), ("searchroom2", perp), ("searchroom3", perp), ("searchroom4", perp),
                 ("apprehend", perp)]
+    return []
 
 
 def give_warning(state, prep):
@@ -169,11 +170,7 @@ def give_warning(state, prep):
 
 
 def declare_methods(longApprehend=True):
-    if longApprehend:
-        pyhop.declare_methods("catch_arsonist", long_apprehend_m)
-    else:
-        pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
-    pyhop.declare_methods("catch_arsonist_", apprehend_m)
+    pyhop.declare_methods("catch_arsonist", apprehend_m)
     pyhop.declare_methods("warn_worker", give_warning)
     pyhop.declare_methods("put_out", put_out_m)
     pyhop.declare_methods('put', put_m)

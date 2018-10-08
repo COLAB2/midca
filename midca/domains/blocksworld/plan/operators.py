@@ -82,7 +82,33 @@ def apprehend(state, perp):
         return False
 
 
+def warn(state, perp):
+    if state.has_cigarette[perp] == True:
+        state.has_cigarette[perp] = False
+        return state
+    else:
+
+        return False
+
+
 def searchfor(state, perp):
+    return state
+
+def searchroom1(state, perp):
+    state.looking[perp] = True
+    return state
+
+def searchroom2(state, perp):
+    state.looking[perp] = True
+    return state
+
+def searchroom3(state, perp):
+    state.looking[perp] = True
+    return state
+
+def searchroom4(state, perp):
+    state.looking[perp] = True
+    state.knownloc_a[perp] = True
     return state
 
 
@@ -93,4 +119,5 @@ what the operators are. Note that the operator names are *not* quoted.
 
 
 def declare_ops():
-    pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor)
+    pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor, warn, searchroom1,
+                            searchroom2, searchroom3, searchroom4)

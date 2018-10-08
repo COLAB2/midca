@@ -1132,11 +1132,6 @@ class ReactiveSurvive(base.BaseModule):
                 skeleton = atom.args
                 return atom.args[0], "unknown", 0.5
 
-        # # if arrow and skeleton:
-        # #     return skeleton, 1
-        # if arrow:
-        #     return arrow, 0.5
-
         return False
 
     def arrow_trap(self):
@@ -1287,6 +1282,7 @@ class ReactiveSurvive(base.BaseModule):
 
         return None
 
+    #for experiment goal##
     def survive_GDA(self, verbose=2):
         hypotheses = []
         monitors = []
@@ -1305,13 +1301,9 @@ class ReactiveSurvive(base.BaseModule):
                     if self.weapon_for_skeleton():
                         goal = goals.Goal(*[skeleton], predicate="thing-at", negate=True, probability=0.5,
                                           danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     else:
                         goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
                     if verbose >= 2:
@@ -1324,13 +1316,9 @@ class ReactiveSurvive(base.BaseModule):
                     if self.weapon_for_skeleton():
                         goal = goals.Goal(*[skeleton], predicate="thing-at", negate=True, probability=1,
                                           danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     else:
                         goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
                     if verbose >= 2:
@@ -1344,8 +1332,7 @@ class ReactiveSurvive(base.BaseModule):
                     trap = world.objects["arrowtrap"]
                     loc = "unknown"
                     goal = goals.Goal(*[trap], predicate="thing-at", negate=True, probability=0.5, danger="low")
-                    # m = Monitor(self.mem, trap, goal)
-                    # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
+
                     hypotheses.append(goal)
                     if verbose >= 2:
                         print("goal generated:", goal, )
@@ -1355,8 +1342,7 @@ class ReactiveSurvive(base.BaseModule):
                     trap = world.objects["arrowtrap"]
                     loc = world.objects[loc.name]
                     goal = goals.Goal(*[trap], predicate="thing-at", negate=True, probability=1, danger="low")
-                    # m = Monitor(self.mem, skeleton, goal)
-                    # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
+
                     hypotheses.append(goal)
                     if verbose >= 2:
                         print("goal generated:", goal, )
@@ -1403,6 +1389,97 @@ class ReactiveSurvive(base.BaseModule):
             else:
                 print(". This goal was already in the graph.")
 
+
+
+
+class ReactiveConstruction(base.BaseModule):
+    '''
+    MIDCA module that generates a goal to apprehend an arsonist if there is one who is free and there is a fire in the current world state. This is designed to simulate the behavior of the Meta-AQUA system.
+    '''
+
+    # to explain why the fire is here:
+    # a cigar butt started the fire. ante: there is a butt, there is a smoker => fire
+    # there is an arsonist that started the fire. there is an arsonist => fire
+
+
+
+    def cigr_butt_exist(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate.name == "onfloor" and atom.args[0].type.name == "CIGARETTE":
+                return atom.args[0]
+        return False
+
+    def worker(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate.name == "has_cigarette" and atom.args[0].type.name == "WORKER":
+                return atom.args[0].name
+        return False
+
+    def free_arsonist(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate.name == "free" and atom.args[0].type.name == "ARSONIST":
+                return atom.args[0].name
+        return False
+
+    def is_fire(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate.name == "onfire":
+                return True
+        return False
+
+    def maintain(self,  verbose=2):
+        hypotheses = []
+        arsonist = self.free_arsonist()
+        if arsonist and self.is_fire():
+            goal = goals.Goal(arsonist, predicate="free", negate=True, probability=0.5)
+            m = Monitor(self.mem, arsonist, goal)
+            Thread(target=m.goalmonitor, args=[arsonist, "arsonistlocation"]).start()
+            Thread(target=m.neggoalmonitor, args=[arsonist, "arsonistlocation", "knownloc_a"]).start()
+            hypotheses.append(goal)
+            # inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+
+        cigr = self.cigr_butt_exist()
+        worker = self.worker()
+        if worker and self.is_fire():
+            goal = goals.Goal(worker, predicate="has_cigarette", negate=True, probability=0.5)
+            m = Monitor(self.mem, worker, goal)
+            Thread(target=m.goalmonitor, args=[cigr.name, "cigrlocation", cigr.type]).start()
+            Thread(target=m.neggoalmonitor, args=[cigr.name, "cigrlocation", "knownloc_c", cigr.type]).start()
+
+            hypotheses.append(goal)
+
+        return hypotheses
+
+    def run(self, cycle, verbose=2):
+        '''event name should come from an explnation module'''
+
+        if self.is_fire():
+
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            pending_goals = goalGraph.getUnrestrictedGoals()
+
+            existed = False
+            inserted = False
+
+            for p in pending_goals:
+                if "predicate" in p.kwargs and p["predicate"] == "maintain":
+                    existed = True
+
+            if not existed:
+                hypotheses = self.maintain()
+
+                goal = goals.Goal(predicate="maintain", subgoals=hypotheses)
+                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+
+            if inserted:
+                print("a goal to maintain is generated")
+
+            else:
+                print(". This goal was already in the graph.")
 
 
 class ReactiveApprehend(base.BaseModule):

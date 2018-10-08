@@ -112,7 +112,7 @@ class SimpleEvalSubgoals(base.BaseModule):
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
-        self.score()
+        # self.score()
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:

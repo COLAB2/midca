@@ -714,22 +714,18 @@ class PyHopPlanner(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print(
-                "Old plan retrieved. Checking validity...",)
+                print("Old plan retrieved. Checking validity...",)
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
                 # if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print()
-                    "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print()
-                "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
-                    print(
-                    "checking to see if all goals are achieved...",)
+                    print("checking to see if all goals are achieved...",)
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
@@ -767,11 +763,11 @@ class PyHopPlanner(base.BaseModule):
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:
-                    print(
-                    "Planning failed for ",)
+                    # print(pyhopState)
+                    # print(pyhopTasks)
+                    print("Planning failed for ",)
                     for goal in goals:
-                        print(
-                        goal, " ",)
+                        print(goal, " ",)
                     print()
 
                 if trace: trace.add_data("PLAN", None)  # planning failed, record NONE for plan
@@ -780,8 +776,7 @@ class PyHopPlanner(base.BaseModule):
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
 
             if verbose >= 1:
-                print(
-                "Planning complete.")
+                print("Planning complete.")
             if verbose >= 2:
                 print("Plan: " ) # , midcaPlan
                 for a in midcaPlan:
