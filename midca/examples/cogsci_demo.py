@@ -41,7 +41,7 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
@@ -52,8 +52,8 @@ myMidca.append_module("Act", act.SimpleAct())
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
-myMidca.insert_module('Interpret', guide.TFFire(), 2)
+#myMidca.insert_module('Interpret', guide.TFStack(), 1)
+#myMidca.insert_module('Interpret', guide.TFFire(), 2)
 myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 

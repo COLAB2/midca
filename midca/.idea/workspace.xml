@@ -4,48 +4,89 @@
     <bookmark url="file://$PROJECT_DIR$/domains/moos_domain/states/moos_state.sim" description="SEA_ROUTE(ga2)" line="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec528ca9-bcab-4575-a434-3a4af6efea29" name="Default" comment="" />
+    <list default="true" id="ec528ca9-bcab-4575-a434-3a4af6efea29" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/midca.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/midca.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/cogsci_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/cogsci_demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/moos_uuv.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/moos_uuv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals.py" beforeDir="false" afterPath="$PROJECT_DIR$/goals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mem.py" beforeDir="false" afterPath="$PROJECT_DIR$/mem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/act.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/act.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/assess.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/assess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/evaluate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/guide.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/guide.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/perceive.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/perceive.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="53053520">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file leaf-file-name="cogsci_demo_mortar_construction.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="87">
               <caret line="60" column="83" lean-forward="true" selection-start-line="60" selection-start-column="83" selection-end-line="60" selection-end-column="83" />
               <folding />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/moos_uuv.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="705">
+              <caret line="57" column="67" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cogsci_demo.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/cogsci_demo.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/assess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="83" />
+            <state relative-caret-position="15">
+              <caret line="106" column="88" selection-start-line="106" selection-start-column="88" selection-end-line="106" selection-end-column="88" />
               <folding>
-                <element signature="e#22#44#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="perceive.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/perceive.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="2520">
               <caret line="174" column="5" lean-forward="false" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
               <folding />
+=======
+            <state relative-caret-position="345">
+              <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="moos_methods.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -110,6 +151,13 @@
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/guide.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1425">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
             </state>
           </provider>
         </entry>
@@ -136,19 +184,32 @@
       <find>apply_named_action</find>
       <find>apply_midca_action</find>
       <find>self.mem.MOOS_FEEDBACK</find>
+<<<<<<< HEAD
       <find>home</find>
       <find>or</find>
       <find>remove</find>
       <find>2.0</find>
+=======
+      <find>survey</find>
+      <find>atom_pairs</find>
+      <find>get_lit_blocks</find>
+      <find>moos</find>
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/examples/predicateworld.py" />
-        <option value="$PROJECT_DIR$/examples/cogsci_demo_ma.py" />
         <option value="$PROJECT_DIR$/modules/_xp_goal/parser.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/modules/assess.py" />
+=======
+        <option value="$PROJECT_DIR$/modules/evaluate.py" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         <option value="$PROJECT_DIR$/modules/planning.py" />
         <option value="$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py" />
         <option value="$PROJECT_DIR$/examples/cogsci_demo_mortar_goal_transforms.py" />
@@ -159,6 +220,7 @@
         <option value="$PROJECT_DIR$/modules/_plan/pyhop.py" />
         <option value="$PROJECT_DIR$/domains/moos_domain/states/moos_state.sim" />
         <option value="$PROJECT_DIR$/domains/moos_domain/util.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/mem.py" />
         <option value="$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim" />
         <option value="$PROJECT_DIR$/modules/guide.py" />
@@ -174,20 +236,28 @@
     <option name="x" value="342" />
     <option name="y" value="23" />
     <option name="width" value="1070" />
+=======
+        <option value="$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py" />
+        <option value="$PROJECT_DIR$/mem.py" />
+        <option value="$PROJECT_DIR$/examples/cogsci_demo_ma.py" />
+        <option value="$PROJECT_DIR$/examples/moos_uuv.py" />
+        <option value="$PROJECT_DIR$/modules/act.py" />
+        <option value="$PROJECT_DIR$/modules/perceive.py" />
+        <option value="$PROJECT_DIR$/modules/guide.py" />
+        <option value="$PROJECT_DIR$/modules/assess.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="61" />
+    <option name="y" value="27" />
+    <option name="width" value="1440" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     <option name="height" value="822" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -207,6 +277,7 @@
             <path>
               <item name="midca" type="b2602c69:ProjectViewProjectNode" />
               <item name="midca" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="domains" type="462c0819:PsiDirectoryNode" />
               <item name="moos_domain" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -227,17 +298,22 @@
             <path>
               <item name="midca" type="b2602c69:ProjectViewProjectNode" />
               <item name="midca" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
               <item name="modules" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="Scratches" />
+=======
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../MobileApp/backend/SquadUp" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -251,9 +327,6 @@
         </RuleState>
       </list>
     </option>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -269,6 +342,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="342" y="23" width="1070" height="822" extended-state="0" />
     <editor active="true" />
     <layout>
@@ -290,6 +364,28 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+    <frame x="-1" y="27" width="1602" height="844" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24793912" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Data View" order="3" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -308,11 +404,10 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
     </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/modules/_xp_goal/frame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -418,66 +513,50 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     <entry file="file://$PROJECT_DIR$/examples/predicateworld.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="17" column="74" lean-forward="false" selection-start-line="17" selection-start-column="74" selection-end-line="17" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/_xp_goal/frame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="17" column="74" selection-start-line="17" selection-start-column="74" selection-end-line="17" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/_xp_goal/parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1700">
-          <caret line="104" column="41" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
+          <caret line="104" column="41" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/intend.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9360">
-          <caret line="627" column="43" lean-forward="false" selection-start-line="627" selection-start-column="30" selection-end-line="627" selection-end-column="43" />
+          <caret line="627" column="43" selection-start-line="627" selection-start-column="30" selection-end-line="627" selection-end-column="43" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="66" column="61" selection-start-line="66" selection-start-column="61" selection-end-line="66" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
     <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_goal_transforms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1003">
-          <caret line="72" column="42" lean-forward="false" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_ma.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="34" column="92" lean-forward="false" selection-start-line="34" selection-start-column="92" selection-end-line="34" selection-end-column="92" />
+          <caret line="72" column="42" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/_xp_goal/traverser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
-          <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_all_examples.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/assess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="81" column="4" lean-forward="false" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -485,10 +564,11 @@
     <entry file="file://$PROJECT_DIR$/examples/chicken_run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="31" />
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="31" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-650">
@@ -500,6 +580,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/modules/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8055">
+          <caret line="539" column="4" selection-start-line="539" selection-start-column="4" selection-end-line="539" selection-end-column="4" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         </state>
       </provider>
     </entry>
@@ -513,42 +599,36 @@
     <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-244">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="48" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/moos/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Desktop/moos/client.py" />
     <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_operators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="34" lean-forward="false" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/planning.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8985">
-          <caret line="599" column="33" lean-forward="false" selection-start-line="599" selection-start-column="28" selection-end-line="599" selection-end-column="33" />
+          <caret line="599" column="33" selection-start-line="599" selection-start-column="28" selection-end-line="599" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/_plan/pyhop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
-          <caret line="225" column="20" lean-forward="false" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
+          <caret line="225" column="20" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/simulator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
-          <caret line="32" column="81" lean-forward="false" selection-start-line="32" selection-start-column="81" selection-end-line="32" selection-end-column="81" />
+          <caret line="32" column="81" selection-start-line="32" selection-start-column="81" selection-end-line="32" selection-end-column="81" />
         </state>
       </provider>
     </entry>
@@ -562,27 +642,37 @@
     <entry file="file://$PROJECT_DIR$/domains/restaurant_domain/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="16" />
+          <caret line="7" selection-start-line="7" selection-end-line="8" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/domains/moos_domain/states/moos_state.sim">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
+<<<<<<< HEAD
           <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+=======
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/domains/uuv/util.py">
+    <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state relative-caret-position="240">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/domains/moos_domain/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
+<<<<<<< HEAD
           <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="29" />
         </state>
       </provider>
@@ -591,11 +681,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" selection-start-line="40" selection-end-line="40" selection-end-column="83" />
+          <folding>
+            <element signature="e#22#44#0" expanded="true" />
+          </folding>
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="405">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
@@ -607,11 +718,23 @@
         <state relative-caret-position="2520">
           <caret line="174" column="5" lean-forward="false" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
           <folding />
+=======
+        <state relative-caret-position="345">
+          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_ma.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="38" column="63" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="63" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/act.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="6660">
           <caret line="448" column="17" lean-forward="false" selection-start-line="448" selection-start-column="17" selection-end-line="448" selection-end-column="17" />
           <folding>
@@ -635,19 +758,38 @@
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="709">
+          <caret line="408" column="66" selection-start-line="408" selection-start-column="66" selection-end-line="408" selection-end-column="66" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/guide.py">
+    <entry file="file://$PROJECT_DIR$/modules/perceive.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="412" selection-start-line="412" selection-end-line="412" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/moos_uuv.py">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="1545">
           <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
+=======
+        <state relative-caret-position="705">
+          <caret line="57" column="67" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/modules/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1875">
@@ -674,6 +816,28 @@
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="83" />
           <folding>
             <element signature="e#22#44#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/guide.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/assess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="106" column="88" selection-start-line="106" selection-start-column="88" selection-end-line="106" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
           </folding>
         </state>
       </provider>

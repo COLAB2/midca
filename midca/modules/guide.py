@@ -94,6 +94,7 @@ class MoosGoalInput(UserGoalInput):
 
     def run(self, cycle, verbose = 2):
 
+<<<<<<< HEAD
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             self.mem.set(self.mem.MOOS_DEADLINE , self.deadline)
             UserGoalInput.run(self, cycle, verbose = 2)
@@ -108,12 +109,26 @@ class MoosGoalInput(UserGoalInput):
                 mines_checked.append(atom.args[0].name)
 
         for atom in atoms:
+=======
+		if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+			UserGoalInput.run(self, cycle, verbose = 2)
+		'''
+		world = self.mem.get(self.mem.STATES)[-1]
+		atoms = copy.deepcopy(world.atoms)
+		mines_checked = []
+		
+		for atom in atoms:
+			if atom.predicate.name == "hazard_checked":
+				mines_checked.append(atom.args[0].name)
+	
+		for atom in atoms:
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
 			if atom.predicate.name == "hazard_at_location" \
 					and not atom.args[0].name in mines_checked:
 				g = goals.Goal(*[atom.args[0].name,atom.args[1].name], predicate = 'hazard_checked')
 				print("Midca generated a goal" + str(g))
 				self.mem.get(self.mem.GOAL_GRAPH).insert(g)
-
+		'''
 
 
 class SimpleMortarGoalGen(base.BaseModule):

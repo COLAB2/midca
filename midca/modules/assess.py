@@ -2,7 +2,8 @@ import socket
 from midca.modules._xp_goal.parser import *
 from midca.modules._xp_goal.traverser import *
 from midca import goals, base
-import socket
+import socket,time,copy
+
 
 class MAQuery(base.BaseModule):
     '''
@@ -17,12 +18,15 @@ class MAQuery(base.BaseModule):
     
     def __init__(self, readPort, waitTime = 5.0):       
         self.readS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	time.sleep(0.1)
         self.readS.connect(("localhost", readPort))
         self.readS.settimeout(waitTime)
 
     def run(self, cycle, verbose = 2):
         try:
             text = self.readS.recv(self.readSize)
+	    print ("Meta-Aqua Output : ")
+	    print (str(text))
             if text != "None\n":
                p = Parser()
                # create frames
@@ -33,6 +37,8 @@ class MAQuery(base.BaseModule):
                t = Traverser(frames, noem)
                # gets the frame operator and effect
                (frame, operator, effect) = t.traverse()
+	       print (frame.name)
+	       print (str(effect))
                if operator == "apprehend":
                    apprehendGoal = goals.Goal("Gui Montag", predicate = "free",
                                               negate = True)
@@ -45,19 +51,83 @@ class MAQuery(base.BaseModule):
                            print ". This goal was already in the graph."
                else:
                    if verbose >= 2:
-                       print "Meta-AQUA output unrecognized. No goal generated. Output:\n",
-                       text
+                       print "Meta-AQUA output unrecognized. No goal generated. Output:\n", + text
         except socket.timeout:
             if verbose >= 1:
                 print "Error: no data received from Meta-AQUA before timeout."
         except:
             if verbose >= 1:
-                print "Error reading from Meta-AQUA.", + str(text)
+                print "Error reading from Meta-AQUA."
                 try:
-                    #print " Got:\n" + text
+                    #print " Got:\n" + str(text)
                     pass
                 except NameError:
                     print " Unable to read from socket."
+                except:
+                    pass
+               
+
+    def __del__(self):
+        '''
+        close socket on deletion. 
+        '''
+        self.readS.shutdown(socket.SHUT_RDWR)
+
+
+class MAQuery_MOOS(base.BaseModule):
+    '''
+    Reads the ouput from Meta-Aqua, builds the meta-aqua frame system.
+    Every frame has values,relations and roles.
+    searches for CRIMINAL-VOLITIONAL-AGENT from the frames and
+    adds a goal if the operator is apprehend.
+    '''
+
+    endMsg = "Done"
+    readSize = 100000
+    
+    def __init__(self, readPort, waitTime = 5.0):       
+        self.readS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        time.sleep(0.1)
+        self.readS.connect(("localhost", readPort))
+        self.readS.settimeout(waitTime)
+
+    def run(self, cycle, verbose = 2):
+        try:
+            text = self.readS.recv(self.readSize)
+            print ("Meta-Aqua Output : ")
+            print (str(text))
+            formulated_goal = None
+            if text != "None\n":
+	       lines = text.split("\n")
+               for each in lines:
+                   if "ANTECEDENT" and "AT-LOCATION" in each:
+			       mine_id = "mine" + self.mem.get(self.mem.CURRENT_HAZARD)[0]
+			       location = self.mem.get(self.mem.CURRENT_HAZARD)[1]
+                               formulated_goal = goals.Goal(*[mine_id, location], predicate='hazard_checked')
+                               self.mem.get(self.mem.GOAL_GRAPH).insert(formulated_goal)
+		   	       break
+               if verbose >= 2:
+		   if formulated_goal:
+                       print "Meta-AQUA goal generated:", formulated_goal,
+		       print ("\n")
+               	   else:
+                   	if verbose >= 2:
+                       		#print "Meta-AQUA output unrecognized. No goal generated. Output:\n", + str(text)
+				pass
+	       self.mem.set (self.mem.CURRENT_HAZARD, None)
+        except socket.timeout:
+            if verbose >= 1:
+                print "Error: no data received from Meta-AQUA before timeout."
+        except:
+            if verbose >= 1:
+                print "Nothing Important from Meta-AQUA."
+                try:
+                    #print " Got:\n" + str(text)
+                    pass
+                except NameError:
+                    print " Unable to read from socket."
+                except:
+                    pass
                
 
     def __del__(self):

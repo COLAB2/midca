@@ -398,9 +398,14 @@ class Moosact(base.BaseModule):
 
                     if (action.op == "ignore"):
                         label = int(action.args[0].replace("mine", ""))
+<<<<<<< HEAD
                         for i in range(2):
                             self.publisher.send_multipart(
                                 		[b"M", b"speed =0.0"])
+=======
+                        self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.0001"])
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
                         self.world.apply_midca_action(action)
                         self.mem.set(self.mem.MOOS_FEEDBACK, None)
                         return True
@@ -421,7 +426,13 @@ class Moosact(base.BaseModule):
                             [b"M", b"speed =0.0"])
                             self.publisher_mine.send_multipart(
                                 		[b"M", b"x=0,y=0,width=0, label="+str(label)])
+<<<<<<< HEAD
                         time.sleep(4)
+=======
+                        self.publisher.send_multipart(
+                                		[b"M", b"speed = 0.0001"])
+                        time.sleep(1)
+>>>>>>> 12077fdc21a4fe96bd1b6df7a390ca019ea7e30b
                         self.world.apply_midca_action(action)
                         self.mem.set(self.mem.MOOS_FEEDBACK, None)
 

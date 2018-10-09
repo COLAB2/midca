@@ -1,6 +1,6 @@
 from __future__ import print_function
 from midca import base
-from midca.modules import simulator, perceive, guide, evaluate, intend, planning, act
+from midca.modules import simulator, perceive, guide,assess, evaluate, intend, planning, act
 from midca.worldsim import domainread, stateread
 from midca.domains.moos_domain import util
 from midca.domains.moos_domain.plan import moos_methods, moos_operators
@@ -14,6 +14,10 @@ This script runs a simple version of MIDCA in a trivial domain where chickens cr
 
 https://github.com/mclumd/MIDCA/wiki/Running-Example-Scripts
 '''
+
+#Meta-Aqua
+writePort = 5150
+readPort = 5151
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -49,6 +53,11 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
 myMidca.append_module("Act", act.Moosact())
+
+myMidca.append_module('Perceive', perceive.MAReporter(writePort))
+myMidca.insert_module('Interpret', assess.MAQuery_MOOS(readPort), 5)
+
+
 '''
 # Set world viewer to output text
 myMidca.set_display_function(DISPLAY_FUNC) 

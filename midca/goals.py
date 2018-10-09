@@ -118,6 +118,22 @@ class GoalGraph:
 
     #inserts a goal into the graph using the graph's comparator
     def insert(self, goal):
+	'''
+	algorithm : 
+		1. Create a GoalNode and call it newnode; 
+			the goal node contains:
+				self.goal = goal
+        			self.parents = set()
+        			self.children = set()
+        			self.plan = None
+        			self.id = GoalNode.id
+        			GoalNode.id += 1
+		2. If there is no root the newnode will be the root
+		3. Check the precedence of the the goals from the newnode with all the nodes.
+			if one is greater than the other, make the later as a child to the former
+		4. Update the root; maintain only the nodes in the root if it's not the child for the newnode
+		5. if the newnode doesn't have a parent the newnode will be the root.
+	'''
         if goal in self:
             return False
         newNode = GoalNode(goal)
