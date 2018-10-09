@@ -54,8 +54,6 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
 myMidca.append_module("Act", act.Moosact())
 
-myMidca.append_module('Perceive', perceive.MAReporter(writePort))
-myMidca.insert_module('Interpret', assess.MAQuery_MOOS(readPort), 5)
 
 
 '''
