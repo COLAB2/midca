@@ -791,7 +791,7 @@ class World:
 
     def is_true(self, predname, argnames=[]):
         for atom in self.atoms:
-            if atom.predicate.name == predname:
+            if atom.predicate and atom.predicate.name == predname:
                 if len(atom.args) == len(argnames):
                     namesCorrect = True
                     for i in range(len(atom.args)):

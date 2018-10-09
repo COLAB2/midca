@@ -1090,6 +1090,9 @@ class ReactiveSurvive(base.BaseModule):
     '''
     MIDCA module that generates a goal
     '''
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
 
     def DH(self):
         # if self.nearby_arrow():
@@ -1098,19 +1101,25 @@ class ReactiveSurvive(base.BaseModule):
 
         if True:
             world = self.mem.get(self.mem.STATES)[-1]
-            newatom1 = worldsim.Atom("thing-at", ["skeleton"])
+
             print("EXPLANATION1:")
             print("(ASSUME-INITIAL-VALUE (THING-AT SKELETON ADJ-M))")
             print("(SKELETON-ATTACKED " + user_loc + " ADJ-M)")
 
-            newatom2 = worldsim.Atom("thing-at", ["arrowtrap"])
+
             print("EXPLANATION2:")
             print("(ASSUME-INITIAL-VALUE (THING-AT ARROWTRAP ADJ-M))")
             print("(FALL-IN-TRAP " +  user_loc + " ADJ-M)")
 
-            world.add_atom(newatom1)
-            world.add_atom(newatom2)
-            print("Two new hypotheses are added to the MIDCA's belief state")
+            world.add_fact("thing-at", ["skeleton"])
+            world.add_fact("thing-at", ["arrowtrap"])
+
+            self.world.add_fact("thing-at", ["skeleton"])
+            self.world.add_fact("thing-at", ["arrowtrap"])
+
+            for atom in world.atoms:
+                if atom.predicate and atom.predicate.name == "thing-at":
+                    print("A new hypothesis is added to the MIDCA's belief state")
 
 
     def nearby_location(self, user_loc):
@@ -1410,7 +1419,7 @@ class ReactiveSurvive(base.BaseModule):
 
             if not existed:
                 print("An anomaly is detected. Health is decreasing. Calling DISCOVER HISTORY to explain the anomaly")
-                # self.DH()
+                self.DH()
 
                 hypotheses = self.survive()
 
