@@ -172,7 +172,7 @@ class MoosObserver(base.BaseModule):
         self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
 
         self.subscriber.setsockopt(zmq.CONFLATE, 1)
-	self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
+	#self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
 
         self.subscriber.connect("tcp://127.0.0.1:5563")
 
@@ -210,6 +210,7 @@ class MoosObserver(base.BaseModule):
 
         try:
             current_position = self.subscriber.recv()
+            print (current_position)
         # for mine
             try:
                 mine_report = self.subscriber_mine.recv()
@@ -227,7 +228,13 @@ class MoosObserver(base.BaseModule):
                     raise Exception("Mine previously checked.")
 
                 # for mine at qroute or not
-                if mine_y >=-98 and mine_y<=-48:
+                if mine_x >=5 and mine_x <=35 and mine_y >=-94 and mine_y<=-65:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
+                elif mine_x >=133 and mine_x <=164 and mine_y >=-94 and mine_y<=-65:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
+                elif mine_y >=-98 and mine_y<=-48:
                     states+= "HAZARD(mine" + mine_label + ")\n"
                     states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
                 else:
@@ -242,8 +249,8 @@ class MoosObserver(base.BaseModule):
             x = float(x.split(":")[1])
             y = float(y.split(":")[1])
             speed = float(speed.split(":")[1])
-
-
+            print (x)
+            print (y)
 
             if y >=-98 and y<=-48:
                 states+="at_location(remus,qroute)\n"
@@ -251,14 +258,14 @@ class MoosObserver(base.BaseModule):
                 states+="at_location(remus,transit)\n"
 
 
-            if (x>=-3 and x<=44) and (y>=-102 and y<=-56) and (speed == 0.0):
+            if (x > 27 and x<= 31) and (y > -64 and y<= -57) :
+            #if (x == 28) and (y == -62) :
                     states+="at_location(remus,ga1)"
-   
 
-            if (x>=124 and x<=175) and (y>=-102 and y<=-56) and (speed == 0.0):
+            if (x > 156 and x<= 163) and (y > -64 and y <=-57):
                     states+="at_location(remus,ga2)"
 
-            if x==0 and y==0:
+            if x>167 and y > -6:
                 states+="at_location(remus,home)"
 
         except:

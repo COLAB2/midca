@@ -14,14 +14,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="moos_uuv.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/moos_uuv.py">
+      <file leaf-file-name="cogsci_demo_mortar_construction.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="692">
-              <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="87">
+              <caret line="60" column="83" lean-forward="true" selection-start-line="60" selection-start-column="83" selection-end-line="60" selection-end-column="83" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,18 +39,8 @@
       <file leaf-file-name="perceive.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/perceive.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="257" column="45" lean-forward="false" selection-start-line="257" selection-start-column="45" selection-end-line="257" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/domains/moos_domain/util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="29" />
+            <state relative-caret-position="2520">
+              <caret line="174" column="5" lean-forward="false" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -61,8 +49,8 @@
       <file leaf-file-name="moos_methods.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="37" lean-forward="false" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+            <state relative-caret-position="480">
+              <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -71,9 +59,23 @@
       <file leaf-file-name="guide.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/guide.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="105" column="61" lean-forward="false" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
-              <folding />
+            <state relative-caret-position="1545">
+              <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="evaluate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/evaluate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1875">
+              <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#22#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,18 +83,18 @@
       <file leaf-file-name="moos_domain.sim" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="35" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="35" />
+            <state relative-caret-position="405">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="act.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="act.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/act.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="443" column="85" lean-forward="false" selection-start-line="443" selection-start-column="85" selection-end-line="443" selection-end-column="85" />
+            <state relative-caret-position="6660">
+              <caret line="448" column="17" lean-forward="false" selection-start-line="448" selection-start-column="17" selection-end-line="448" selection-end-column="17" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -103,8 +105,8 @@
       <file leaf-file-name="mem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="83" column="46" lean-forward="false" selection-start-line="83" selection-start-column="46" selection-end-line="83" selection-end-column="46" />
+            <state relative-caret-position="1245">
+              <caret line="85" column="17" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="17" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -134,6 +136,10 @@
       <find>apply_named_action</find>
       <find>apply_midca_action</find>
       <find>self.mem.MOOS_FEEDBACK</find>
+      <find>home</find>
+      <find>or</find>
+      <find>remove</find>
+      <find>2.0</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -143,31 +149,31 @@
         <option value="$PROJECT_DIR$/examples/cogsci_demo_ma.py" />
         <option value="$PROJECT_DIR$/modules/_xp_goal/parser.py" />
         <option value="$PROJECT_DIR$/modules/assess.py" />
-        <option value="$PROJECT_DIR$/modules/evaluate.py" />
         <option value="$PROJECT_DIR$/modules/planning.py" />
         <option value="$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py" />
         <option value="$PROJECT_DIR$/examples/cogsci_demo_mortar_goal_transforms.py" />
         <option value="$PROJECT_DIR$/modules/_xp_goal/traverser.py" />
         <option value="$USER_HOME$/Desktop/moos/client.py" />
-        <option value="$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim" />
         <option value="$PROJECT_DIR$/examples/cogsci_demo.py" />
         <option value="$PROJECT_DIR$/domains/moos_domain/plan/moos_operators.py" />
         <option value="$PROJECT_DIR$/modules/_plan/pyhop.py" />
         <option value="$PROJECT_DIR$/domains/moos_domain/states/moos_state.sim" />
-        <option value="$PROJECT_DIR$/examples/moos_uuv.py" />
         <option value="$PROJECT_DIR$/domains/moos_domain/util.py" />
-        <option value="$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py" />
-        <option value="$PROJECT_DIR$/modules/guide.py" />
-        <option value="$PROJECT_DIR$/modules/perceive.py" />
         <option value="$PROJECT_DIR$/mem.py" />
+        <option value="$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim" />
+        <option value="$PROJECT_DIR$/modules/guide.py" />
+        <option value="$PROJECT_DIR$/modules/evaluate.py" />
+        <option value="$PROJECT_DIR$/modules/perceive.py" />
         <option value="$PROJECT_DIR$/modules/act.py" />
+        <option value="$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py" />
+        <option value="$PROJECT_DIR$/examples/moos_uuv.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="61" />
+    <option name="x" value="342" />
     <option name="y" value="23" />
-    <option name="width" value="1440" />
+    <option name="width" value="1070" />
     <option name="height" value="822" />
   </component>
   <component name="ProjectView">
@@ -185,6 +191,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -206,13 +213,26 @@
             <path>
               <item name="midca" type="b2602c69:ProjectViewProjectNode" />
               <item name="midca" type="462c0819:PsiDirectoryNode" />
+              <item name="domains" type="462c0819:PsiDirectoryNode" />
+              <item name="moos_domain" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="midca" type="b2602c69:ProjectViewProjectNode" />
+              <item name="midca" type="462c0819:PsiDirectoryNode" />
+              <item name="domains" type="462c0819:PsiDirectoryNode" />
+              <item name="moos_domain" type="462c0819:PsiDirectoryNode" />
+              <item name="plan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="midca" type="b2602c69:ProjectViewProjectNode" />
+              <item name="midca" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -249,10 +269,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="61" y="23" width="1440" height="822" extended-state="0" />
+    <frame x="342" y="23" width="1070" height="822" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27708334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3906542" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -266,7 +286,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24953271" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -293,13 +313,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/_xp_goal/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/_xp_goal/frame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -433,13 +446,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="66" column="61" lean-forward="false" selection-start-line="66" selection-start-column="61" selection-end-line="66" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_goal_transforms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1003">
@@ -480,13 +486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8055">
-          <caret line="539" column="4" lean-forward="false" selection-start-line="539" selection-start-column="4" selection-end-line="539" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -571,7 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -579,33 +577,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/moos_uuv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="35" lean-forward="false" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="37" lean-forward="false" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -613,7 +584,87 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midcatime.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domains/moos_domain/domain/moos_domain.sim">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/perceive.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2520">
+          <caret line="174" column="5" lean-forward="false" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/act.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6660">
+          <caret line="448" column="17" lean-forward="false" selection-start-line="448" selection-start-column="17" selection-end-line="448" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domains/moos_domain/plan/moos_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/moos_uuv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="43" column="66" lean-forward="false" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/guide.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1545">
+          <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1875">
+          <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="85" column="17" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -627,39 +678,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/guide.py">
+    <entry file="file://$PROJECT_DIR$/examples/cogsci_demo_mortar_construction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="105" column="61" lean-forward="false" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
+        <state relative-caret-position="87">
+          <caret line="60" column="83" lean-forward="true" selection-start-line="60" selection-start-column="83" selection-end-line="60" selection-end-column="83" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="83" column="46" lean-forward="false" selection-start-line="83" selection-start-column="46" selection-end-line="83" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/perceive.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="257" column="45" lean-forward="false" selection-start-line="257" selection-start-column="45" selection-end-line="257" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/act.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="443" column="85" lean-forward="false" selection-start-line="443" selection-start-column="85" selection-end-line="443" selection-end-column="85" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

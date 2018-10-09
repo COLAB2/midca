@@ -101,6 +101,79 @@ class SimpleEval(base.BaseModule):
         if trace and goals_changed: trace.add_data("GOALS",goals)
 
 
+class SimpleEval_moos(base.BaseModule):
+
+    def write_to_file(self,cycle):
+        file = open("agent.txt", "a")
+        file.write("midca is in cycle :" + str(cycle) + "\n")
+        time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+        file.write("Time Taken :" + str(time_taken) + "\n")
+        file.write("AGENT SCORE : "  + str(self.mem.get(self.mem.MOOS_SCORE)) + "\n")
+        file.write("-------------------------------------------------------\n")
+        file.close()
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+        if goals:
+            time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+            if (time_taken >= self.mem.get(self.mem.MOOS_DEADLINE)):
+                self.write_to_file(cycle)
+                raw_input("Experiment completed press cntrl + c to exit")
+                goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+                for goal in goals:
+                    goalGraph.remove(goal)
+                    goals_changed = True
+                    goals = []
+
+            for goal in goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if not achieved:
+                        if verbose >= 2:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All current goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+        if goals:
+	        del goals[-1]
+	        self.mem.set(self.mem.CURRENT_GOALS,goals)
+        else:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+
+        if trace and goals_changed: trace.add_data("GOALS",goals)
+
+
 class SimpleEval2(base.BaseModule):
 
     def run(self, cycle, verbose = 2):

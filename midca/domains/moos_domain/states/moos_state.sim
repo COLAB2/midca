@@ -1,9 +1,9 @@
 UUV(remus)
-SEA_ROUTE(transit)
 SEA_ROUTE(qroute)
 SEA_ROUTE(ga1)
 SEA_ROUTE(ga2)
-SEA_ROUTE(home)
+NOT_Q_ROUTE(transit)
+NOT_Q_ROUTE(home)
 
 enabled(remus)
 

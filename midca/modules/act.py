@@ -385,6 +385,8 @@ class Moosact(base.BaseModule):
             for action in actions:
                 if self.world.midca_action_applicable(action):
 
+                    # If it's continuing the same action then dont disturb
+
                     if self.mem.get(self.mem.MOOS_FEEDBACK):
                         if self.world.midca_action_applicable(self.mem.get(self.mem.MOOS_FEEDBACK)) \
 						and self.mem.get(self.mem.MOOS_FEEDBACK) == action:
@@ -393,63 +395,95 @@ class Moosact(base.BaseModule):
                         else:
                             self.mem.set(self.mem.MOOS_FEEDBACK, None)
 
+
                     if (action.op == "ignore"):
                         label = int(action.args[0].replace("mine", ""))
-                        self.publisher.send_multipart(
-                                		[b"M", b"speed = 0.3"])
+                        for i in range(2):
+                            self.publisher.send_multipart(
+                                		[b"M", b"speed =0.0"])
                         self.world.apply_midca_action(action)
-                        time.sleep(1)
+                        self.mem.set(self.mem.MOOS_FEEDBACK, None)
                         return True
 
                     if (action.op == "remove"):
                         label= int(action.args[0].replace("mine",""))
-                        self.publisher_mine.send_multipart(
+
+                        if (action.args[1] == "ga1" or action.args[1] == "ga2"):
+                            score = self.mem.get(self.mem.MOOS_SCORE) + 1
+                            self.mem.set(self.mem.MOOS_SCORE, score)
+
+                        if (action.args[1] == "qroute"):
+                                score = self.mem.get(self.mem.MOOS_SCORE) + 1
+                                self.mem.set(self.mem.MOOS_SCORE, score)
+
+                        for i in range(2):
+                            self.publisher.send_multipart(
+                            [b"M", b"speed =0.0"])
+                            self.publisher_mine.send_multipart(
                                 		[b"M", b"x=0,y=0,width=0, label="+str(label)])
-                        self.publisher.send_multipart(
-                                		[b"M", b"speed = 0.3"])
-                        time.sleep(1)
+                        time.sleep(4)
                         self.world.apply_midca_action(action)
                         self.mem.set(self.mem.MOOS_FEEDBACK, None)
+
                         return True
 
                     if (action.op == "survey"):
                         argnames = [str(arg) for arg in action.args]
 
                         if ("ga1" in argnames):
-                            message = [b"M", b"polygon= radial:: x=20, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2"]
+                            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=20, y=-80, width=20, height = 30,lane_width=20, rows=north-south,degs=0 # speed =2.0"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+
                             if (suspended_action) \
                                 and (suspended_action == message):
-                                self.publisher.send_multipart([b"M", b"speed = 2"])
+                                print ("Continue Surveying ....")
+                                for i in range(2):
+                                    self.publisher.send_multipart([b"M", b"speed =2.0"])
                                 self.mem.set(self.mem.MOOS_FEEDBACK, action)
                                 return False
 
                             else:
-                                self.publisher.send_multipart(message)
+                                print ("Start Surveying ....")
+                                for i in range(2):
+                                    self.publisher.send_multipart(message)
                                 self.mem.set(self.mem.MOOS_FEEDBACK , action)
                                 self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
                                 return False
 
                         if ("ga2" in argnames):
-                            message = [b"M",b"polygon= radial:: x=150, y=-80, radius=20, pts=8, snap=1, label=DUDLEY_LOITER # speed= 2"]
+                            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=150, y=-80, width=20, height = 30,lane_width=20, rows=north-south,degs=0 # speed =2.0"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
                             if (suspended_action) \
                                     and (suspended_action == message):
-                                self.publisher.send_multipart([b"M", b"speed = 2"])
+                                for i in range(2):
+                                    self.publisher.send_multipart([b"M", b"speed = 2.0"])
                                 self.mem.set(self.mem.MOOS_FEEDBACK, action)
                                 return False
 
                             else:
+                                for i in range(2):
+                                    self.publisher.send_multipart(message)
                                 self.mem.set(self.mem.MOOS_FEEDBACK, action)
                                 self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
-                                self.publisher.send_multipart(message)
                                 return False
 
                         if ("home" in argnames):
-                            self.publisher.send_multipart([b"M", b"point = 0,0 # speed= 2"])
-                            self.mem.set(self.mem.MOOS_FEEDBACK , action)
-                            return False
+                            message = [b"M", b"point = 170,0 # speed= 2.0"]
+                            suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+                            if (suspended_action) \
+                                    and (suspended_action == message):
+                                for i in range(2):
+                                    self.publisher.send_multipart([b"M", b"speed = 2.0"])
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                return False
 
+                            else:
+                                for i in range(2):
+                                    self.publisher.send_multipart(message)
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
+
+                                return False
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"

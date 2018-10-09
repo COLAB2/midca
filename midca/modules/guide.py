@@ -89,22 +89,29 @@ class MoosGoalInput(UserGoalInput):
     MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
     '''
 
+    def __init__(self,deadline):
+        self.deadline =  deadline
+
     def run(self, cycle, verbose = 2):
 
-		if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
-			UserGoalInput.run(self, cycle, verbose = 2)
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            self.mem.set(self.mem.MOOS_DEADLINE , self.deadline)
+            UserGoalInput.run(self, cycle, verbose = 2)
+            self.mem.set(self.mem.MOOS_TIME, midcatime.now())
+            self.mem.set(self.mem.MOOS_SCORE, 0)
 
-		world = self.mem.get(self.mem.STATES)[-1]
-		atoms = copy.deepcopy(world.atoms)
-		mines_checked = []
-		for atom in atoms:
-			if atom.predicate.name == "hazard_checked":
-				mines_checked.append(atom.args[0].name)
+        world = self.mem.get(self.mem.STATES)[-1]
+        atoms = copy.deepcopy(world.atoms)
+        mines_checked = []
+        for atom in atoms:
+            if atom.predicate.name == "hazard_checked":
+                mines_checked.append(atom.args[0].name)
 
-		for atom in atoms:
+        for atom in atoms:
 			if atom.predicate.name == "hazard_at_location" \
 					and not atom.args[0].name in mines_checked:
 				g = goals.Goal(*[atom.args[0].name,atom.args[1].name], predicate = 'hazard_checked')
+				print("Midca generated a goal" + str(g))
 				self.mem.get(self.mem.GOAL_GRAPH).insert(g)
 
 
@@ -113,7 +120,7 @@ class SimpleMortarGoalGen(base.BaseModule):
     '''
     MIDCA module that cycles through goals for the agent to achieve.
     '''
-    
+
     curr_goal_index = 0
 
     curr_goal_sets = [
@@ -142,7 +149,7 @@ class SimpleMortarGoalGen(base.BaseModule):
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
-            
+
         # first, check to see if we need a new goal, and only then insert a new one
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # get the next goal
@@ -158,12 +165,12 @@ class SimpleMortarGoalGen(base.BaseModule):
             if trace:
                 trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
                 trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
-        
+
 class SimpleMortarGoalGen_Restaurant(base.BaseModule):
     '''
     MIDCA module that cycles through goals for the agent to achieve.
     '''
-    
+
     curr_goal_index = 0
 
     order = 0
@@ -179,11 +186,11 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
     def remove_bunch_atoms(self,atoms):
 	# This function removes all the atoms in the world,follows recursion
 	if(len(atoms) == 0):
-		return 
+		return
 	if(self.world.atom_true(list(atoms)[len(atoms) - 1])):
 		self.world.remove_atom(list(atoms)[len(atoms) - 1])
 		if(len(atoms) == 0):
-			return 
+			return
 		else:
 			atoms.pop()
 		self.remove_bunch_atoms(atoms)
@@ -193,7 +200,7 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 	# create "count_goals" number of goals and append it to self.curr_goal_sets
 	# get random goals for each person
 	# get random no:of dishes ordered by a person
-	
+
 	for i in range(count_goals):
 		random.shuffle(dishes_names)
 		count_dishes = random.randint(1, len(dishes_names)-1)
@@ -216,10 +223,10 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 	count_goals = random.randint(2, len(persons_names)-1)
 	# add random goals into self.curr_goal_sets
 	self.create_current_goal_sets(count_goals,persons_names,dishes_names)
-		
+
     def save_30_goal_sets(self):
 	# this function is to save the random 30 problem sets in the form of a .pkl file
-	a = []	
+	a = []
 	for i in range(30):
 		self.create_random_goals()
 		a.append(copy.deepcopy(self.curr_goal_sets))
@@ -241,7 +248,7 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 		if each.args[0] in persons:
 			persons[each.args[0]].append(each.args[1])
 		else:
-			persons[each.args[0]] = [each.args[1]] 
+			persons[each.args[0]] = [each.args[1]]
 	return persons
 
     def set_memory_to_none(self):
@@ -263,7 +270,7 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 		data = ["S.NO" , "PROBLEM SET" , "SELECTED ORDERS" , "EXPECTED SCORES" ,
 			"ACTUAL SCORES" , "EXPECTED COST", "ACTUAL COST", "EXPECTED(P/T)",
 		        "ACTUAL(P/T) " , "COMPLETED ORDERS"
-		       ]		
+		       ]
 		writer.writerow(data)
 	else:
 		self.order = self.order + 1
@@ -279,20 +286,20 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 			exp_p_t = float(expected_scores)/float(expected_cost)
 		else:
 			exp_p_t = None
-		if actual_cost:		
+		if actual_cost:
 			act_p_t = float(actual_scores)/float(actual_cost)
 		else:
 			act_p_t = None
-		data = [sno, problem_set, selected_orders, str(expected_scores), 
-			str(actual_scores), str(expected_cost), str(actual_cost), 
+		data = [sno, problem_set, selected_orders, str(expected_scores),
+			str(actual_scores), str(expected_cost), str(actual_cost),
 			str(exp_p_t), str(act_p_t), completed_orders
 		       ]
 		writer.writerow(data)
 		self.set_memory_to_none()
-		
-		
-	
-	
+
+
+
+
     def next_goal(self):
 	# empty the previous goals and set the money to default in memory
 	self.mem.set(self.mem.MONEY,self.money)
@@ -307,7 +314,7 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
 	self.curr_goal_sets[:] = []
 	self.create_random_goals()
 	#self.save_30_goal_sets()
-	#self.write_memory_to_file()	
+	#self.write_memory_to_file()
 	#self.select_random_goals_from_30_sets()
 	# print the generated goals
 	print("")
@@ -325,7 +332,7 @@ class SimpleMortarGoalGen_Restaurant(base.BaseModule):
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
-            
+
         # first, check to see if we need a new goal, and only then insert a new one
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # get the next goal set
@@ -361,11 +368,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	'''
 
 	if(len(atoms) == 0):
-		return 
+		return
 	if(self.world.atom_true(list(atoms)[len(atoms) - 1])):
 		self.world.remove_atom(list(atoms)[len(atoms) - 1])
 		if(len(atoms) == 0):
-			return 
+			return
 		else:
 			atoms.pop()
 		self.remove_bunch_atoms(atoms)
@@ -377,7 +384,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			Time ( starting time)
 
 		functionality : initialization
-		output : class variables 		
+		output : class variables
 		'''
 		self.stateFile = stateFile
 		self.state_str = state_str
@@ -438,7 +445,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 				index = index + 1
 		self.curr_goal_sets.append(each_goal_set)
 
-		
+
     def save_30_buildings(self):
        '''
        save the 30 building goals into the 30_problem_set_ijcai.pickle file
@@ -458,11 +465,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	atoms = self.world.get_atoms()
 	self.remove_bunch_atoms(atoms)
 	stateread.apply_state_file(self.world, self.stateFile)
-	stateread.apply_state_str(self.world, self.state_str)	
+	stateread.apply_state_str(self.world, self.state_str)
 	self.mem.add(self.mem.STATES, copy.deepcopy(self.world))
 	self.mem.set(self.mem.TIME_CONSTRUCTION, self.Time)
 	#print(self.world)
-	# empty the selected goals list 
+	# empty the selected goals list
 	del self.selected_goals[:]
         # generate some random goals through random function on current goal set
 	# this random function is for no:of buildings
@@ -481,7 +488,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			print("(" + str(len(self.curr_goal_sets[i])) + " Block)")
 		else:
 			print("(" + str(len(self.curr_goal_sets[i])) + " Blocks)")
-		for j in self.curr_goal_sets[i]:			
+		for j in self.curr_goal_sets[i]:
 			#print(j)
 			self.selected_goals.append(j)
 		#print("")
@@ -511,8 +518,8 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	t = t.replace("[...]" , "")
 	if not actual_scores:
 		actual_scores = 0
- 
-	
+
+
 	if executed_buildings:
 		expected_scores = sum(selected_buildings)
 	else:
@@ -531,7 +538,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			a_t = None
 			a_s = None
 			a_p_t = None
-		
+
 		myfile  = open('evaluation.csv', "a")
 		writer = csv.writer(myfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 		with open("evaluation.csv", "a") as myfile:
@@ -551,7 +558,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 		 if actual_scores == 0:
 			a_s = 0
 		 e_b = executed_buildings
-		 data = [self.count , complete_buildings , selected_buildings , e_t , a_t , 
+		 data = [self.count , complete_buildings , selected_buildings , e_t , a_t ,
 			e_s , a_s , e_p_t , a_p_t , e_b, str(P), str(t)
 			]
 		 writer.writerow(data)
@@ -568,11 +575,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 		myfile  = open('evaluation.csv', "a")
 		writer = csv.writer(myfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 		data = ["S.NO" , "PROBLEM SET" , "SELECTED TOWERS" , "EXPECTED TIME" ,
-			"ACTUAL TIME", "EXPECTED SCORES" , "ACTUAL SCORES" , "EXPECTED(P/T)" , 
+			"ACTUAL TIME", "EXPECTED SCORES" , "ACTUAL SCORES" , "EXPECTED(P/T)" ,
 			"ACTUAL(P/T) " , "CONSTRUCTED BUILDINGS", "P" , "t"
-		       ]		
+		       ]
 		writer.writerow(data)
-				
+
 	self.curr_goal_sets[:] = []
 	objs_names = self.world.get_objects_names_by_type("BLOCK")
 	# remove the object table since we need only blocks
@@ -583,11 +590,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	atoms = self.world.get_atoms()
 	self.remove_bunch_atoms(atoms)
 	stateread.apply_state_file(self.world, self.stateFile)
-	stateread.apply_state_str(self.world, self.state_str)	
+	stateread.apply_state_str(self.world, self.state_str)
 	self.mem.add(self.mem.STATES, copy.deepcopy(self.world))
 	self.mem.set(self.mem.TIME_CONSTRUCTION, self.Time)
 	#print(self.world)
-	# empty the selected goals list 
+	# empty the selected goals list
 	del self.selected_goals[:]
 
 	with open('30_problem_set_ijcai.pickle', 'rb') as handle:
@@ -610,7 +617,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			print("(" + str(len(self.curr_goal_sets[i])) + " Block)")
 		else:
 			print("(" + str(len(self.curr_goal_sets[i])) + " Blocks)")
-		for j in self.curr_goal_sets[i]:			
+		for j in self.curr_goal_sets[i]:
 			#print(j)
 			self.selected_goals.append(j)
 		#print("")
@@ -636,9 +643,9 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	else:
 		myfile  = open('evaluation.csv', "a")
 		writer = csv.writer(myfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-		data = ["S.NO" , "PROBLEM SET", "ACTUAL SCORES" , "CONSTRUCTED BUILDINGS" ]		
+		data = ["S.NO" , "PROBLEM SET", "ACTUAL SCORES" , "CONSTRUCTED BUILDINGS" ]
 		writer.writerow(data)
-			
+
 	self.curr_goal_sets[:] = []
 	objs_names = self.world.get_objects_names_by_type("BLOCK")
 	# remove the object table since we need only blocks
@@ -649,11 +656,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	atoms = self.world.get_atoms()
 	self.remove_bunch_atoms(atoms)
 	stateread.apply_state_file(self.world, self.stateFile)
-	stateread.apply_state_str(self.world, self.state_str)	
+	stateread.apply_state_str(self.world, self.state_str)
 	self.mem.add(self.mem.STATES, copy.deepcopy(self.world))
 	self.mem.set(self.mem.TIME_CONSTRUCTION, self.Time)
 	print(self.world)
-	# empty the selected goals list 
+	# empty the selected goals list
 	del self.selected_goals[:]
 
 	with open('30_problem_set.pickle', 'rb') as handle:
@@ -680,7 +687,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			print("(" + str(len(self.curr_goal_sets[i])) + " Block)")
 		else:
 			print("(" + str(len(self.curr_goal_sets[i])) + " Blocks)")
-		for j in self.curr_goal_sets[i]:			
+		for j in self.curr_goal_sets[i]:
 			#print(j)
 			self.selected_goals.append(j)
 		#print("")
@@ -688,9 +695,9 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	print("")
 
         return self.selected_goals
-	
-	
-	
+
+
+
 
     def next_goal(self,write_to_file = False):
 	actual_time = self.mem.get(self.mem.ACTUAL_TIME_CONSTRUCTION)
@@ -706,27 +713,27 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	if actual_time and expected_time:
 		expected_p_t = float(expected_scores/expected_time[0])
 		actual_p_t = float(actual_scores/actual_time[0])
-		
+
 		if write_to_file :
 			with open("evaluation.txt", "a") as myfile:
-		
-		  		myfile.write("%-5s %-5s %-5s %-5s " 
-					     %( str(complete_buildings), 
-						str(selected_buildings) , 
-						str(expected_time), 
+
+		  		myfile.write("%-5s %-5s %-5s %-5s "
+					     %( str(complete_buildings),
+						str(selected_buildings) ,
+						str(expected_time),
 						str(actual_time)
 					      )
 					    )
-		  		myfile.write("%-5s %-5s %-5s %-5s %-5s " 
-					     % (  str([expected_scores]) , 
-						  str([actual_scores]) , 
-						  str([expected_p_t]) , 
-						  str([actual_p_t]) , 
-						  str(executed_buildings) 
+		  		myfile.write("%-5s %-5s %-5s %-5s %-5s "
+					     % (  str([expected_scores]) ,
+						  str([actual_scores]) ,
+						  str([expected_p_t]) ,
+						  str([actual_p_t]) ,
+						  str(executed_buildings)
 						)
 					    )
 		  		myfile.write("\n")
-			
+
 		self.mem.set(self.mem.ACTUAL_TIME_CONSTRUCTION , None)
 		self.mem.set(self.mem.EXPECTED_TIME_CONSTRUCTION , None)
  		self.mem.set(self.mem.SELECTED_BUILDING_LIST , None)
@@ -760,11 +767,11 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 	atoms = self.world.get_atoms()
 	self.remove_bunch_atoms(atoms)
 	stateread.apply_state_file(self.world, self.stateFile)
-	stateread.apply_state_str(self.world, self.state_str)	
+	stateread.apply_state_str(self.world, self.state_str)
 	self.mem.add(self.mem.STATES, copy.deepcopy(self.world))
 	self.mem.set(self.mem.TIME_CONSTRUCTION, self.Time)
 	#print(self.world)
-	# empty the selected goals list 
+	# empty the selected goals list
 	del self.selected_goals[:]
         # generate some random goals through random function on current goal set
 	# this random function is for no:of buildings
@@ -783,7 +790,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
 			print("(" + str(len(self.curr_goal_sets[i])) + " Block)")
 		else:
 			print("(" + str(len(self.curr_goal_sets[i])) + " Blocks)")
-		for j in self.curr_goal_sets[i]:			
+		for j in self.curr_goal_sets[i]:
 			#print(j)
 			self.selected_goals.append(j)
 	print("]")
@@ -800,7 +807,7 @@ class SimpleMortarGoalGen_construction(base.BaseModule):
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
-            
+
         # first, check to see if we need a new goal, and only then insert a new one
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # get the next goal
@@ -825,19 +832,19 @@ class NBeaconsGoalGenerator(base.BaseModule):
     MIDCA module for the nbeacons domain. Generates a goal to activate 3 different
     beacons in the domain.
     '''
-    
+
     def __init__(self, numbeacons=3, goalList=[]):
         self.numbeacons = numbeacons
         self.goalList = goalList
         self.currGoalIndex = 0
-    
+
     def activateGoalsExist(self):
         graph = self.mem.get(self.mem.GOAL_GRAPH)
         for goal in graph.getAllGoals():
             if goal['predicate'] == "activated":
                 return True
         return False
-    
+
     def generate_new_goals(self):
         if self.currGoalIndex < len(self.goalList):
             curr_goal = self.goalList[self.currGoalIndex]
@@ -848,8 +855,8 @@ class NBeaconsGoalGenerator(base.BaseModule):
             print "No more goals..."
             self.currGoalIndex+=1
         return []
-        
-        # this is a safety check to make sure experiments are running correctly. 
+
+        # this is a safety check to make sure experiments are running correctly.
         # if running manual (like running from examples/nbeacons...agentx.py remove this line
         raise Exception("randomly inserting goals, shouldn't be here when running from nbeacons_experiment_1.py")
         world = self.mem.get(self.mem.STATES)[-1]
@@ -862,23 +869,23 @@ class NBeaconsGoalGenerator(base.BaseModule):
                 # now test to see if it's activated
                 if not world.is_true('activated',[str(obj)]):
                     unactivated_b_ids.append(str(obj))
-        
+
         if len(unactivated_b_ids) == 0:
             if self.verbose >= 1: print("All beacons are activated. No activation goals will be generated.")
             return []
-                    
+
         num_chosen_beacons = 0
         while len(unactivated_b_ids) > 0 and num_chosen_beacons < self.numbeacons:
             b = random.choice(unactivated_b_ids)
             unactivated_b_ids.remove(b)
             goal_b_ids.append(b)
             num_chosen_beacons+=1
-            
+
         # turn into goals
         new_goals = map(lambda x: goals.Goal(str(x), predicate = "activated"), goal_b_ids)
-        
+
         return new_goals
-    
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         if self.activateGoalsExist():
@@ -893,10 +900,10 @@ class NBeaconsGoalGenerator(base.BaseModule):
 class SimpleNBeaconsGoalManager(base.BaseModule):
     '''
     MIDCA module for the nbeacons domain. Using the discrepancies and explanations from
-    note.DiscrepancyDetect and assess.SimpleExplain, this module will create new goals and 
+    note.DiscrepancyDetect and assess.SimpleExplain, this module will create new goals and
     insert / remove goals from the goal graph.
     '''
-    
+
     def run(self, cycle, verbose=2):
         trace = self.mem.trace
         if trace:
@@ -906,31 +913,31 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
         discrep = self.mem.get(self.mem.DISCREPANCY)
         # if discrepancy, get explanation
         if discrep and (len(discrep[0]) > 0 or len(discrep[1]) > 0):
-            # first remove old 
+            # first remove old
             # go ahead and remove old plans for any goals the agent has
             # refresh the goals to trigger replanning
             goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
             curr_goals = self.mem.get(self.mem.CURRENT_GOALS)
-            
+
             if type(curr_goals) is not list:
-                curr_goals = [curr_goals] 
+                curr_goals = [curr_goals]
             for goal in curr_goals:
                 # get any plans associated with this goal, and remove them
                 plan = goalgraph.getMatchingPlan([goal])
                 if plan:
                     goalgraph.removePlan(plan)
                     if self.verbose >= 1: print "Just removed a plan for goal " +str(goal)
-            
+
             #print "aware of actual discrepancy, retrieving explanation"
             explain_exists = self.mem.get(self.mem.EXPLANATION)
             explanation = self.mem.get(self.mem.EXPLANATION_VAL)
             if explain_exists:
-                        
+
                 # now do stuff based on explanation
                 if 'stuck' in explanation:
                     # remove current goal from goal graph
                     # insert goal to become free
-                    # The priority will automatically be shifted to 
+                    # The priority will automatically be shifted to
                     goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
                     free_goal = goals.Goal('Curiosity', predicate = "free")
                     goalgraph.insert(free_goal)
@@ -939,8 +946,8 @@ class SimpleNBeaconsGoalManager(base.BaseModule):
                 else: #if 'wind' in explanation:
                     # do nothing for other explanations, this will just lead to replanning
                     return
-            else:  
-                if self.verbose >= 1: print "No explanation, old plans removed, but no goal management actions"    
+            else:
+                if self.verbose >= 1: print "No explanation, old plans removed, but no goal management actions"
                 return
 
 
@@ -956,27 +963,27 @@ class DeliverGoal(base.BaseModule):
         g = self.mem.get(self.mem.DELIVERED)
         if g:
             return True
-        
+
     def deliveringGoalsExist(self):
         graph = self.mem.get(self.mem.GOAL_GRAPH)
         for goal in graph.getAllGoals():
             if goal['predicate'] == "obj-at":
                 return True
         return False
-    
+
     def run(self, cycle, verbose = 2):
         if self.deliveringGoalsExist():
             if verbose >= 2:
                 print "MIDCA already has a delivering goal. Skipping delivering goal generation"
             return
-        
+
         if self.alreadygenerated():
             if verbose >= 2:
                 print "MIDCA already generated the goals for this problem"
             return
-        #if obj-at(p,l) is in the state, it means it needs to be delivered! 
+        #if obj-at(p,l) is in the state, it means it needs to be delivered!
         world = self.mem.get(self.mem.STATES)[-1]
-       
+
         orders = deliverstate.get_order_list(world)
 #\         goal = self.tree.givegoal(blocks)
         for order in orders:
@@ -989,10 +996,10 @@ class DeliverGoal(base.BaseModule):
                 m = Monitor(self.mem, "m" + order.id, order.id, goal)
 #                 Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
                 self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-    
-        
-        
-        
+
+
+
+
 class TFStack(base.BaseModule):
 
     '''
@@ -1084,11 +1091,11 @@ class ReactiveApprehend(base.BaseModule):
                     print ". This goal was already in the graph."
 
 class InstructionReceiver_sr:
-	
+
 	def init(self, world, mem):
 		self.mem = mem
 		self.lastTime = midcatime.now()
-	
+
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATE)
 		i = len(world.utterances)
@@ -1103,7 +1110,7 @@ class InstructionReceiver_sr:
 			if verbose >= 2:
 				print "received utterance:", utterance
 			if utterance == "point to the quad" or utterance == "goodbye baxter":
-				goal = goals.Goal(objective = "show-loc", subject = "self", 
+				goal = goals.Goal(objective = "show-loc", subject = "self",
 				directObject = "quad", indirectObject = "observer")
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1113,7 +1120,7 @@ class InstructionReceiver_sr:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 			if utterance == "get the red block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'red block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1122,9 +1129,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "get the green block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'green block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1135,7 +1142,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "get the blue block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'blue block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1143,9 +1150,9 @@ class InstructionReceiver_sr:
 						print "adding goal:", str(goal)
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
-						goal graph"						
+						goal graph"
 			if utterance == "put the green block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'green block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1155,7 +1162,7 @@ class InstructionReceiver_sr:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
                         if utterance == "put the blue block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'blue block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1164,9 +1171,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "put the red block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'red block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1175,9 +1182,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack the green block on the red block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1186,9 +1193,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack the blue block on the red block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'blue block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1199,7 +1206,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
 		        if utterance == "stack the blue block on the green block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'blue block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1210,7 +1217,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "stack the red block on the blue block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'red block:blue block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1221,7 +1228,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "stack the green block on the blue block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'green block:blue block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1229,10 +1236,10 @@ class InstructionReceiver_sr:
 						print "adding goal:", str(goal)
 					else:
 						print "generated goal:", str(goal), "but it is already in the \ goal graph"
-			
+
 
 			if utterance == "stack the red block on the green block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1241,9 +1248,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1252,21 +1259,21 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
-			
-				
+
+
+
 # 			else:
 # 				print "message is unknown"
-							
+
 		self.lastTime = midcatime.now()
 
 
 class InstructionReceiver:
-    
+
     def init(self, world, mem):
         self.mem = mem
         self.lastTime = midcatime.now()
-    
+
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATE)
         i = len(world.utterances)
@@ -1280,7 +1287,7 @@ class InstructionReceiver:
             if verbose >= 2:
                 print "received utterance:", utterance
             if utterance == "point to the quad" or utterance == "goodbye baxter":
-                goal = goals.Goal(objective = "show-loc", subject = "self", 
+                goal = goals.Goal(objective = "show-loc", subject = "self",
                 directObject = "quad", indirectObject = "observer")
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1290,7 +1297,7 @@ class InstructionReceiver:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
             if utterance == "get the red block":
-                goal = goals.Goal(objective = "holding", subject = "self", 
+                goal = goals.Goal(objective = "holding", subject = "self",
                 directObject = "red block", indirectObject = "observer", pos = 'red block:arm')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1299,9 +1306,9 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
+
             if utterance == "get the green block":
-                goal = goals.Goal(objective = "holding", subject = "self", 
+                goal = goals.Goal(objective = "holding", subject = "self",
                 directObject = "green block", indirectObject = "observer", pos = 'green block:arm')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1312,7 +1319,7 @@ class InstructionReceiver:
                         goal graph"
 
                         if utterance == "get the blue block":
-                            goal = goals.Goal(objective = "holding", subject = "self", 
+                            goal = goals.Goal(objective = "holding", subject = "self",
                                               directObject = "blue block", indirectObject = "observer", pos = 'blue block:arm')
                             added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1320,9 +1327,9 @@ class InstructionReceiver:
                         print "adding goal:", str(goal)
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
-                        goal graph"                        
+                        goal graph"
             if utterance == "put the green block on table":
-                goal = goals.Goal(objective = "moving", subject = "self", 
+                goal = goals.Goal(objective = "moving", subject = "self",
                 directObject = "green block", indirectObject = "observer", pos = 'green block:table')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1332,7 +1339,7 @@ class InstructionReceiver:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
                         if utterance == "put the blue block on table":
-                            goal = goals.Goal(objective = "moving", subject = "self", 
+                            goal = goals.Goal(objective = "moving", subject = "self",
                                   directObject = "blue block", indirectObject = "observer", pos = 'blue block:table')
                             added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1341,9 +1348,9 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
+
             if utterance == "put the red block on table":
-                goal = goals.Goal(objective = "moving", subject = "self", 
+                goal = goals.Goal(objective = "moving", subject = "self",
                 directObject = "red block", indirectObject = "observer", pos = 'red block:table')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1352,9 +1359,9 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
+
             if utterance == "stack the green block on the red block":
-                goal = goals.Goal(objective = "stacking", subject = "self", 
+                goal = goals.Goal(objective = "stacking", subject = "self",
                 directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1363,9 +1370,9 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
+
             if utterance == "stack the blue block on the red block":
-                goal = goals.Goal(objective = "stacking", subject = "self", 
+                goal = goals.Goal(objective = "stacking", subject = "self",
                 directObject = "red block", indirectObject = "observer", pos = 'blue block:red block')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1376,7 +1383,7 @@ class InstructionReceiver:
                         goal graph"
 
                 if utterance == "stack the blue block on the green block":
-                    goal = goals.Goal(objective = "stacking", subject = "self", 
+                    goal = goals.Goal(objective = "stacking", subject = "self",
                                       directObject = "green block", indirectObject = "observer", pos = 'blue block:green block')
                     added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1387,7 +1394,7 @@ class InstructionReceiver:
                         goal graph"
 
                         if utterance == "stack the red block on the blue block":
-                            goal = goals.Goal(objective = "stacking", subject = "self", 
+                            goal = goals.Goal(objective = "stacking", subject = "self",
                                               directObject = "blue block", indirectObject = "observer", pos = 'red block:blue block')
                             added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1398,7 +1405,7 @@ class InstructionReceiver:
                         goal graph"
 
                         if utterance == "stack the green block on the blue block":
-                            goal = goals.Goal(objective = "stacking", subject = "self", 
+                            goal = goals.Goal(objective = "stacking", subject = "self",
                                               directObject = "blue block", indirectObject = "observer", pos = 'green block:blue block')
                             added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1406,10 +1413,10 @@ class InstructionReceiver:
                         print "adding goal:", str(goal)
                     else:
                         print "generated goal:", str(goal), "but it is already in the \ goal graph"
-            
+
 
             if utterance == "stack the red block on the green block":
-                goal = goals.Goal(objective = "stacking", subject = "self", 
+                goal = goals.Goal(objective = "stacking", subject = "self",
                 directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1418,9 +1425,9 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
+
             if utterance == "stack":
-                goal = goals.Goal(objective = "stacking", subject = "self", 
+                goal = goals.Goal(objective = "stacking", subject = "self",
                 directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
                 added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
                 if verbose >= 2:
@@ -1429,20 +1436,20 @@ class InstructionReceiver:
                     else:
                         print "generated goal:", str(goal), "but it is already in the \
                         goal graph"
-            
-            
-                
+
+
+
 #             else:
 #                 print "message is unknown"
-                            
+
         self.lastTime = midcatime.now()
 
 class InstructionReceiver_sr:
-	
+
 	def init(self, world, mem):
 		self.mem = mem
 		self.lastTime = midcatime.now()
-	
+
 	def run(self, cycle, verbose = 2):
 		world = self.mem.get(self.mem.STATE)
 		i = len(world.utterances)
@@ -1456,7 +1463,7 @@ class InstructionReceiver_sr:
 			if verbose >= 2:
 				print "received utterance:", utterance
 			if utterance == "point to the quad" or utterance == "goodbye baxter":
-				goal = goals.Goal(objective = "show-loc", subject = "self", 
+				goal = goals.Goal(objective = "show-loc", subject = "self",
 				directObject = "quad", indirectObject = "observer")
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1466,7 +1473,7 @@ class InstructionReceiver_sr:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
 			if utterance == "get the red block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'red block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1475,9 +1482,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "get the green block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'green block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1488,7 +1495,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "get the blue block":
-				goal = goals.Goal(objective = "holding", subject = "self", 
+				goal = goals.Goal(objective = "holding", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'blue block:arm')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1496,9 +1503,9 @@ class InstructionReceiver_sr:
 						print "adding goal:", str(goal)
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
-						goal graph"						
+						goal graph"
 			if utterance == "put the green block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'green block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1508,7 +1515,7 @@ class InstructionReceiver_sr:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
                         if utterance == "put the blue block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'blue block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1517,9 +1524,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "put the red block on table":
-				goal = goals.Goal(objective = "moving", subject = "self", 
+				goal = goals.Goal(objective = "moving", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'red block:table')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1528,9 +1535,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack the green block on the red block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'green block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1539,9 +1546,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack the blue block on the red block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "red block", indirectObject = "observer", pos = 'blue block:red block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1552,7 +1559,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
 		        if utterance == "stack the blue block on the green block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'blue block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1563,7 +1570,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "stack the red block on the blue block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'red block:blue block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1574,7 +1581,7 @@ class InstructionReceiver_sr:
 						goal graph"
 
                         if utterance == "stack the green block on the blue block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "blue block", indirectObject = "observer", pos = 'green block:blue block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1582,10 +1589,10 @@ class InstructionReceiver_sr:
 						print "adding goal:", str(goal)
 					else:
 						print "generated goal:", str(goal), "but it is already in the \ goal graph"
-			
+
 
 			if utterance == "stack the red block on the green block":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1594,9 +1601,9 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
+
 			if utterance == "stack":
-				goal = goals.Goal(objective = "stacking", subject = "self", 
+				goal = goals.Goal(objective = "stacking", subject = "self",
 				directObject = "green block", indirectObject = "observer", pos = 'red block:green block')
 				added = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 				if verbose >= 2:
@@ -1605,12 +1612,12 @@ class InstructionReceiver_sr:
 					else:
 						print "generated goal:", str(goal), "but it is already in the \
 						goal graph"
-			
-			
-				
+
+
+
 # 			else:
 # 				print "message is unknown"
-							
+
 		self.lastTime = midcatime.now()
 
-      
+

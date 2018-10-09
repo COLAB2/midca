@@ -25,7 +25,7 @@ def check_hazard(state,mine,location,vehicle):
     Go through each goal and create an order for each goal
     '''
 
-    if location == "qroute":
+    if (location == "ga1") or (location == "ga2"):
 	return[('remove',mine,location,vehicle)]
     else:
 	return[('ignore',mine,location,vehicle)]
