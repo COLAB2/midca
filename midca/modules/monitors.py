@@ -106,4 +106,4 @@ class Monitor:
                 self.mem.get(self.mem.GOAL_GRAPH).remove(self.goal)
                 print(id.__str__() + "does not exist, the goal is removed")
 
-            time.sleep(5)
+            time.sleep(3)

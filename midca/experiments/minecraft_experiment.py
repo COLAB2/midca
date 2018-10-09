@@ -135,7 +135,7 @@ class MIDCAInstance():
         MIDCA_ROOT = thisDir + "/../"
 
         DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
+        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
 
         world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE, EVENT_FILE)
@@ -159,7 +159,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        # myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)

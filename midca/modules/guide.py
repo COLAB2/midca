@@ -1181,8 +1181,14 @@ class ReactiveSurvive(base.BaseModule):
         func = world.functions["player-current-health"]
         a = next((x for x in world.atoms if x.func == func), None)
         # 15 is a threshold here;
+        pre_health =  self.mem.get(self.mem.AGENT_HEALTH)
 
-        if a.val < 19:
+        if not pre_health:
+            pre_health = 20
+
+        self.mem.set(self.mem.AGENT_HEALTH, a.val)
+
+        if a.val < pre_health:
             return True
 
         return False
@@ -1191,7 +1197,7 @@ class ReactiveSurvive(base.BaseModule):
         hypotheses = []
         monitors = []
 
-        if self.is_damaged() and self.nearby_arrow():
+        if self.nearby_arrow():
             if self.skeleton(): #this needs to come from assume-init-value from DH
                 print("damaged and arrow is around")
                 s, loc, chance = self.skeleton()
@@ -1291,7 +1297,7 @@ class ReactiveSurvive(base.BaseModule):
         hypotheses = []
         monitors = []
         world = self.mem.get(self.mem.STATES)[-1]
-        if self.is_damaged() and self.nearby_arrow():
+        if self.nearby_arrow():
             exp = self.explanation(world)
 
             if exp and exp == "skeleton": #this needs to come from assume-init-value from DH
@@ -1388,7 +1394,7 @@ class ReactiveSurvive(base.BaseModule):
                     existed = True
 
             if not existed:
-                hypotheses = self.survive_GDA()
+                hypotheses = self.survive()
 
                 goal = goals.Goal(predicate="survive", subgoals=hypotheses)
                 inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)

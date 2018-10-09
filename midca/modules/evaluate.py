@@ -180,8 +180,8 @@ class SimpleEvalSubgoals(base.BaseModule):
         world = self.mem.get(self.mem.STATES)[-1]
         func = world.functions["player-current-health"]
         a = next((x for x in world.atoms if x.func == func), None)
-        if a.val and a.val < 20:
-            self.mem.set(self.mem.AGENT_HEALTH, a.val)
+        # if a.val and a.val < 20:
+        #     self.mem.set(self.mem.AGENT_HEALTH, a.val)
         if a.val <= 0:
             print("THE AGENT DIED")
             self.mem.set(self.mem.AGENT_ALIEVE, False)
