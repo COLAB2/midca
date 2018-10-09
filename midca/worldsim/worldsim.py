@@ -1016,9 +1016,10 @@ class World:
         for i in range(len(simAction.results)):
 
             if simAction.postPos[i]:  ## it is an atom
+                print("adding_atom " + str(simAction.results[i]))
                 self.add_atom(simAction.results[i])
             else:
-                # print("removing_atom "+str(simAction.results[i]))
+                print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
 
 

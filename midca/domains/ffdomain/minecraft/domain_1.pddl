@@ -23,7 +23,7 @@
 		(player-at  ?loc - mapgrid)
 
 		(in-shelter)
-        (trap-destroyed)
+        (trap-destroyed ?loc - mapgrid)
         (searched-left ?obj - resource)
         (searched-right ?obj - resource)
         (searched-behind ?obj - resource)
@@ -47,7 +47,7 @@
         (know-where ?res - resource ?loc - mapgrid)
 		(crafting)
 		(survive)
-        (attacking)
+        (attacking ?loc - mapgrid)
 		(looking-for ?res - resource)
 		(head-armed)
    	    (chest-armed)
@@ -246,7 +246,7 @@
             (player-at ?loc1)
    			 (connect ?loc1 ?loc)
    			 (thing-at-loc skeleton ?loc)
-             (attacking)
+             (attacking ?loc1)
 
 
       	)
@@ -255,7 +255,8 @@
    			(not (thing-at-loc skeleton ?loc))
    			(not (thing-at-map skeleton ?loc))
    			(not (thing-at-map arrow ?loc))
-   			(assign (player-current-health) 20)
+   			(not(is-attacked))
+
       	)
 	)
 
@@ -267,7 +268,7 @@
             (player-at ?loc1)
    			 (connect ?loc1 ?loc)
    			 (thing-at-loc arrowtrap ?loc)
-             (trap-destroyed)
+             (trap-destroyed ?loc1)
 
 
 
@@ -277,7 +278,8 @@
    			(not (thing-at-loc arrowtrap ?loc))
    			(not (thing-at-map arrowtrap ?loc))
    			(not (thing-at-map arrow ?loc))
-   			 (assign (player-current-health) 20)
+   			(not (is-trapped))
+
       	)
 	)
 

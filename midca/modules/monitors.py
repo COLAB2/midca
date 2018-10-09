@@ -12,7 +12,7 @@ from itertools import chain
 
 class Monitor:
 
-    def __init__(self, mem, item, goal, parent=None):
+    def __init__(self, mem, world, item, goal, parent=None):
         self.name = uuid.uuid4()
         self.mem = mem
         self.obj = item
@@ -21,6 +21,7 @@ class Monitor:
         self.goalmonitor = self.monitor_belief
         self.goal = goal
         self.parent = parent
+        self.world = world
 
     def monitor_state(self, id, location, predicate):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -79,10 +80,13 @@ class Monitor:
                 if self.goal in current_goal:
                     self.goal.kwargs["probability"] = 1
                     print(id.__str__() + " is observed, the current goal's probability is 1 now")
+
                     break
                 else:
                     self.goal.kwargs["probability"] = 1
                     self.mem.set(self.mem.CURRENT_GOALS, [])
+                    world.add_fact("thing-at", [id.__str__()])
+                    self.world.add_fact("thing-at", [id.__str__()])
                     print(id.__str__() + " is observed")
                     break
 
@@ -93,10 +97,20 @@ class Monitor:
                     self.goal.kwargs["probability"] = 0
                     self.mem.set(self.mem.CURRENT_GOALS, [])
                     print(id.__str__() + " does not exist, the current goal is suspended ")
+
+                    for atom in world.atoms:
+                        if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
+                            world.remove_atom(atom)
+                            break
+
                     break
                 else:
                     self.goal.kwargs["probability"] = 0
                     print(id.__str__() + " does not exist, this goal's probability is 0 now")
+                    for atom in world.atoms:
+                        if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
+                            world.remove_atom(atom)
+                            break
                     break
 
             # elif location != "unknown" and current_atom:

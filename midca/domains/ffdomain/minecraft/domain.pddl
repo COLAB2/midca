@@ -22,7 +22,7 @@
 		(player-at  ?loc - mapgrid)
 		
 		(in-shelter)
-        (trap-destroyed)
+        (trap-destroyed ?loc - mapgrid)
         (searched-left ?obj - resource)
         (searched-right ?obj - resource)
         (searched-behind ?obj - resource)
@@ -46,7 +46,7 @@
         (know-where ?res - resource ?loc - mapgrid)
 		(crafting)
 		(survive)
-        (attacking)
+        (attacking ?loc - mapgrid)
 		(looking-for ?res - resource)
 		(head-armed)
    	    (chest-armed)
@@ -129,8 +129,8 @@
 		:parameters (?res -resource )
 		:precondition
 			(and
-			   (chest-armed)
-		    	(head-armed)
+			  ;; (chest-armed)
+		    	;;(head-armed)
 				(not (known-loc ?res))
 			)
 		:effect
@@ -150,6 +150,7 @@
 		:effect
 			(and
 				(searched-left ?res)
+				(not (looking-forward))
 			    (looking-left)
 			)
 	)
@@ -160,12 +161,13 @@
 		:parameters (?res -resource )
 		:precondition
 			(and
-			    (not (known-loc ?res))
 			    (searched-left ?res)
+			    (not (known-loc ?res))
 			)
 		:effect
 			(and
 				(searched-right ?res)
+				;;(not (looking-left))
 				(looking-right)
 			)
 	)
@@ -181,6 +183,7 @@
 		:effect
 			(and
 				(known-loc ?res)
+			;;	(not (looking-right))
 				(looking-behind)
 				(looking-for ?res)
 			)
@@ -192,9 +195,10 @@
     ;;--------------------------------------------------------
 	;;--------------------------------------------------------
 	(:action attack-skeleton
-		:parameters (?tool - tool )
+		:parameters (?tool - tool ?loc - mapgrid))
 		:precondition
 			(and
+			    (player-at ?loc)
 				(known-loc skeleton)
 				(thing-at skeleton)
 				(= (tool-id ?tool) 10)
@@ -206,7 +210,7 @@
 			(and
 
 				(not (thing-at skeleton))
-				(attacking)
+				(attacking ?loc)
 			)
 	)
 
@@ -232,9 +236,10 @@
 
 	;;--------------------------------------------------------
 	(:action destroy-trap
-		:parameters (?tool - tool )
+		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
+			    (player-at ?loc)
 				(known-loc arrowtrap)
 				(thing-at arrowtrap)
 				(= (tool-id ?tool) 11)
@@ -244,7 +249,7 @@
 		:effect
 			(and
 				(not (thing-at arrowtrap))
-				(trap-destroyed)
+				(trap-destroyed ?loc)
 			)
 	)
 	;------------------------------------------------------------

@@ -352,7 +352,7 @@ class MetricFFPlanner(base.BaseModule):
             if verbose >= 2:
                 print("Planning...")
             try:
-                self.ff_state_from_midca_state(world, self.state_file)
+                self.ff_state_from_midca_state(self.world, self.state_file)
                 ffgoals = self.ff_goals_from_midca_goals(goals, self.state_file)
 
             except Exception as e:
