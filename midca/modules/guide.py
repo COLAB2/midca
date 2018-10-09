@@ -4,6 +4,7 @@ from ._goalgen import tf_3_scen, tf_fire
 from midca.domains.logistics import deliverstate
 from midca.domains.blocksworld import blockstate
 from midca.worldsim import stateread
+from midca import worldsim
 import copy, csv
 import random
 from midca.modules.monitors import Monitor
@@ -1091,12 +1092,25 @@ class ReactiveSurvive(base.BaseModule):
     '''
 
     def DH(self):
-        if self.nearby_arrow():
-            user_loc = self.user_location()
-            adj_location = self.nearby_location(user_loc)
+        # if self.nearby_arrow():
+        user_loc = self.user_location()
+        adj_location = self.nearby_location(user_loc)
 
-            assume_init_val1 = "thing-at-loc skeleton ajd-m"
-            assume_init_val2= "thing-at-loc arrowtrap ajd-m"
+        if True:
+            world = self.mem.get(self.mem.STATES)[-1]
+            newatom1 = worldsim.Atom("thing-at", ["skeleton"])
+            print("EXPLANATION1:")
+            print("(ASSUME-INITIAL-VALUE (THING-AT SKELETON ADJ-M))")
+            print("(SKELETON-ATTACKED " + user_loc + " ADJ-M)")
+
+            newatom2 = worldsim.Atom("thing-at", ["arrowtrap"])
+            print("EXPLANATION2:")
+            print("(ASSUME-INITIAL-VALUE (THING-AT ARROWTRAP ADJ-M))")
+            print("(FALL-IN-TRAP " +  user_loc + " ADJ-M)")
+
+            world.add_atom(newatom1)
+            world.add_atom(newatom2)
+            print("Two new hypotheses are added to the MIDCA's belief state")
 
 
     def nearby_location(self, user_loc):
@@ -1189,6 +1203,7 @@ class ReactiveSurvive(base.BaseModule):
         self.mem.set(self.mem.AGENT_HEALTH, a.val)
 
         if a.val < pre_health:
+
             return True
 
         return False
@@ -1394,6 +1409,9 @@ class ReactiveSurvive(base.BaseModule):
                     existed = True
 
             if not existed:
+                print("An anomaly is detected. Health is decreasing. Calling DISCOVER HISTORY to explain the anomaly")
+                # self.DH()
+
                 hypotheses = self.survive()
 
                 goal = goals.Goal(predicate="survive", subgoals=hypotheses)
