@@ -1,0 +1,13 @@
+type(root)
+type(ENTITY,root)
+type(COORDINATE, root)
+
+predicate(atlocation, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+predicate(atsearcharea, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+
+operator(move, 
+args = [(ent, ENTITY), (x, COORDINATE), (y, COORDINATE)], 
+preconditions = [
+	condition(atlocation, [ent, x, y], negate = True)], 
+results = [
+	condition(atlocation, [ent, x, y])])
