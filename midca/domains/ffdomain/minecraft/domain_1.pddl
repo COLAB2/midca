@@ -99,7 +99,7 @@
 		:precondition
 			(and
 			 (player-at ?player_loc)
-			    (looking-left)
+			    (looking-left ?player_loc)
 				 (connect-left ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
 			)
@@ -119,7 +119,7 @@
 		:parameters (?res -resource  ?loc - mapgrid ?player_loc -mapgrid)
 		:precondition
 			(and
-			    (looking-forward)
+			    (looking-forward ?player_loc)
 			    (player-at ?player_loc)
 				 (connect-left ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
@@ -140,7 +140,7 @@
 		:precondition
 			(and
 			 (player-at ?player_loc)
-			    (looking-right)
+			    (looking-right ?player_loc)
 				 (connect-right  ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
 			)
@@ -161,7 +161,7 @@
 		:precondition
 			(and
 			 (player-at ?player_loc)
-			    (looking-behind)
+			    (looking-behind ?player_loc)
 				 (connect-behind ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
 			)
@@ -170,7 +170,7 @@
 
 				(thing-at-map ?res ?loc)
 				(known-loc ?res ?player_loc)
-				(not (looking-behind))
+				(not (looking-behind ?player_loc))
 			)
 
 	)

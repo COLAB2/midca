@@ -27,10 +27,10 @@
         (searched-right ?obj - resource ?loc - mapgrid)
         (searched-behind ?obj - resource ?loc - mapgrid)
         (searched-forward ?obj - resource ?loc - mapgrid)
-        (looking-right)
-        (looking-left)
-        (looking-forward)
-        (looking-behind)
+        (looking-right  ?loc - mapgrid)
+        (looking-left  ?loc - mapgrid)
+        (looking-forward  ?loc - mapgrid)
+        (looking-behind  ?loc - mapgrid)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
 		(thing-at ?obj - resource ?loc - mapgrid)
 		(known-loc ?obj - resource ?playerloc - mapgrid )
@@ -94,6 +94,7 @@
 		:parameters (?res - material  ?target - mapgrid)
 		:precondition
 			(and
+
 				(player-at ?target)
 				(not (placed-thing-at-map ?res ?target))
 				(> (thing-available ?res) 0)
@@ -137,7 +138,7 @@
 		:effect
 			(and
 				(searched-forward ?res ?playerloc)
-			    (looking-forward)
+			    (looking-forward ?playerloc)
 			)
 	)
 	;---------------------------------------------------------
@@ -152,8 +153,8 @@
 		:effect
 			(and
 				(searched-left ?res ?playerloc)
-				(not (looking-forward))
-			    (looking-left)
+				(not (looking-forward ?playerloc))
+			    (looking-left ?playerloc)
 			)
 	)
 
@@ -170,8 +171,8 @@
 		:effect
 			(and
 				(searched-right ?res ?playerloc)
-				(not (looking-left))
-				(looking-right)
+				(not (looking-left ?playerloc))
+				(looking-right ?playerloc)
 			)
 	)
 	;;----------------------------------------
@@ -187,8 +188,8 @@
 		:effect
 			(and
 				(known-loc ?res ?playerloc)
-				(not (looking-right))
-				(looking-behind)
+				(not (looking-right ?playerloc))
+				(looking-behind ?playerloc)
 				(looking-for ?res ?playerloc)
 			)
 	)
@@ -269,7 +270,7 @@
 			)
 		:effect
 			(and
-				(assign (current-harvest-duration) 0)
+				;;(assign (current-harvest-duration) 0)
 				(assign (current-harvest-location) (location-id ?target))
 			)
 	)

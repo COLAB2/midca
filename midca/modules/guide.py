@@ -1202,7 +1202,8 @@ class ReactiveSurvive(base.BaseModule):
         self.mem.set(self.mem.AGENT_HEALTH, a.val)
 
         if a.val < pre_health:
-
+            print("new health is observed:  " + str(a.val))
+            print("It is expected to be " + str(pre_health))
             return True
 
         return False
