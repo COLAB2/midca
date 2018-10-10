@@ -1111,15 +1111,16 @@ class ReactiveSurvive(base.BaseModule):
             print("(ASSUME-INITIAL-VALUE (THING-AT ARROWTRAP ADJ-M))")
             print("(FALL-IN-TRAP " +  user_loc + " ADJ-M)")
 
-            world.add_fact("thing-at", ["skeleton"])
+            world.add_fact("thing-at", ["skeleton", user_loc])
             # world.add_fact("thing-at", ["arrowtrap"])
 
-            self.world.add_fact("thing-at", ["skeleton"])
+            self.world.add_fact("thing-at", ["skeleton", user_loc])
             # self.world.add_fact("thing-at", ["arrowtrap"])
 
             for atom in world.atoms:
                 if atom.predicate and atom.predicate.name == "thing-at":
-                    print("A new hypothesis is added to the MIDCA's belief state")
+                    print("A new hypothesis is added to the MIDCA's belief state: thing-at( "
+                          + str(atom.args[0]) +", " + user_loc +" )")
 
 
     def nearby_location(self, user_loc):
@@ -1156,12 +1157,6 @@ class ReactiveSurvive(base.BaseModule):
 
         return world.objects["skeleton"], "unknown", 0.5
 
-        # # if arrow and skeleton:
-        # #     return skeleton, 1
-        # if arrow:
-        #     return arrow, 0.5
-
-        return False
 
     def arrow_trap(self):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1173,13 +1168,6 @@ class ReactiveSurvive(base.BaseModule):
             # if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == "arrowtrap":
 
         return world.objects["arrowtrap"], "unknown", 0.5
-
-        # # if arrow and trap:
-        # #     return trap, 1
-        # if arrow:
-        #     return arrow, 0.5
-
-        return False
 
     def weapon_for_skeleton(self):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1225,15 +1213,16 @@ class ReactiveSurvive(base.BaseModule):
 
         if self.nearby_arrow():
             if self.skeleton(): #this needs to come from assume-init-value from DH
-                print("damaged and arrow is around")
+
                 s, loc, chance = self.skeleton()
+                player_loc = self.user_location()
                 print(chance)
                 if chance == 0.5:
                     world = self.mem.get(self.mem.STATES)[-1]
                     skeleton = world.objects["skeleton"]
                     loc = "unknown"
                     if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton], predicate="thing-at", negate=True, probability=0.5,
+                        goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
                                           danger="high")
                         m = Monitor(self.mem, self.world, skeleton, goal)
                         Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
@@ -1244,23 +1233,25 @@ class ReactiveSurvive(base.BaseModule):
                         Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
+
                     if verbose >= 2:
                         print("goal generated:", goal, )
 
-                if chance == 1:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    skeleton = world.objects["skeleton"]
-                    loc = world.objects[loc.name]
-                    if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probability=1,
-                                          danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
-
-                    else:
-                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
+                    print("it is added to the subgoals of SURVIVE")
+                # if chance == 1:
+                #     world = self.mem.get(self.mem.STATES)[-1]
+                #     skeleton = world.objects["skeleton"]
+                #     loc = world.objects[loc.name]
+                #     if self.weapon_for_skeleton():
+                #         goal = goals.Goal(*[skeleton, loc], predicate="thing-at-map", negate=True, probability=1,
+                #                           danger="high")
+                #         # m = Monitor(self.mem, skeleton, goal)
+                #         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
+                #
+                #     else:
+                #         goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                #         # m = Monitor(self.mem, skeleton, goal)
+                #         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
                     if verbose >= 2:
@@ -1273,23 +1264,23 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     trap = world.objects["arrowtrap"]
                     loc = "unknown"
-                    goal = goals.Goal(*[trap], predicate="thing-at", negate=True, probability=0.5, danger="low")
+                    goal = goals.Goal(*[trap, player_loc], predicate="thing-at", negate=True, probability=0.5, danger="low")
                     m = Monitor(self.mem, self.world,trap, goal)
                     Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
                     hypotheses.append(goal)
                     if verbose >= 2:
                         print("goal generated:", goal, )
 
-                if chance == 1:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    trap = world.objects["arrowtrap"]
-                    loc = world.objects[loc.name]
-                    goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probability=1, danger="low")
-                    # m = Monitor(self.mem, skeleton, goal)
-                    # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
-                    hypotheses.append(goal)
-                    if verbose >= 2:
-                        print("goal generated:", goal, )
+                # if chance == 1:
+                #     world = self.mem.get(self.mem.STATES)[-1]
+                #     trap = world.objects["arrowtrap"]
+                #     loc = world.objects[loc.name]
+                #     goal = goals.Goal(*[trap, loc], predicate="thing-at-map", negate=True, probability=1, danger="low")
+                #     # m = Monitor(self.mem, skeleton, goal)
+                #     # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
+                #     hypotheses.append(goal)
+                #     if verbose >= 2:
+                #         print("goal generated:", goal, )
         return hypotheses
 
     def explanation(self, world):

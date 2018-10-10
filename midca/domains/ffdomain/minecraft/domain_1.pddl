@@ -33,8 +33,8 @@
         (looking-forward)
         (looking-behind)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
-		(thing-at ?obj - resource)
-		(known-loc ?obj - resource)
+		(thing-at ?obj - resource ?loc - mapgrid)
+		(known-loc ?obj - resource ?playerloc - mapgrid )
 		(thing-at-loc ?obj - resource ?loc - mapgrid)
 		(placed-thing-at-map  ?obj - material  ?loc - mapgrid)
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
@@ -48,7 +48,7 @@
 		(crafting)
 		(survive)
         (attacking ?loc - mapgrid)
-		(looking-for ?res - resource)
+		(looking-for ?res - resource ?loc - mapgrid)
 		(head-armed)
    	    (chest-armed)
    	    (is-attacked)
@@ -77,7 +77,8 @@
 		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
 		:precondition
 			(and
-			    (looking-for ?res)
+			    (looking-for ?res ?player_loc)
+			    (player-at ?player_loc)
 				 (connect ?loc ?player_loc)
 				 (thing-at-loc ?res ?loc)
 			)
@@ -85,7 +86,7 @@
 			(and
 				(know-where ?res ?loc)
 				(thing-at-map ?res ?loc)
-                (not (looking-for ?res))
+                (not (looking-for ?res ?player_loc))
 			)
 
 	)
@@ -106,8 +107,8 @@
 			(and
 
 				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-				(not (looking-left))
+				(known-loc ?res ?player_loc)
+				;;(not (looking-left))
 			)
 
 	)
@@ -127,15 +128,15 @@
 			(and
 
 				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-				(not (looking-forward))
+				(known-loc ?res ?player_loc)
+				;;(not (looking-forward))
 			)
 
 	)
     ;;--------------------------------------------------------
 
     (:action event-find-right
-		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
+		:parameters (?res -resource ?loc - mapgrid ?player_loc - mapgrid)
 		:precondition
 			(and
 			 (player-at ?player_loc)
@@ -147,8 +148,8 @@
 			(and
 
 				(thing-at-map ?res ?loc)
-				(known-loc ?res)
-				(not (looking-right))
+				(known-loc ?res ?player_loc)
+				;;(not (looking-right))
 			)
 
 	)
@@ -156,7 +157,7 @@
 
     ;;--------------------------------------------------------
      (:action event-find-behind
-		:parameters (?res -resource ?loc - mapgrid ?player_loc -mapgrid)
+		:parameters (?res -resource ?loc - mapgrid ?player_loc - mapgrid)
 		:precondition
 			(and
 			 (player-at ?player_loc)
@@ -168,7 +169,7 @@
 			(and
 
 				(thing-at-map ?res ?loc)
-				(known-loc ?res)
+				(known-loc ?res ?player_loc)
 				(not (looking-behind))
 			)
 

@@ -23,17 +23,17 @@
 		
 		(in-shelter)
         (trap-destroyed ?loc - mapgrid)
-        (searched-left ?obj - resource)
-        (searched-right ?obj - resource)
-        (searched-behind ?obj - resource)
-        (searched-forward ?obj - resource)
+        (searched-left ?obj - resource ?loc - mapgrid)
+        (searched-right ?obj - resource ?loc - mapgrid)
+        (searched-behind ?obj - resource ?loc - mapgrid)
+        (searched-forward ?obj - resource ?loc - mapgrid)
         (looking-right)
         (looking-left)
         (looking-forward)
         (looking-behind)
 		(thing-at-map  ?obj - resource  ?loc - mapgrid)
-		(thing-at ?obj - resource)
-		(known-loc ?obj - resource)
+		(thing-at ?obj - resource ?loc - mapgrid)
+		(known-loc ?obj - resource ?playerloc - mapgrid )
 		(thing-at-loc ?obj - resource ?loc - mapgrid)
 		(placed-thing-at-map  ?obj - material  ?loc - mapgrid)
 		(resource-at-craft  ?res - thing  ?loc - craftgrid)
@@ -47,7 +47,7 @@
 		(crafting)
 		(survive)
         (attacking ?loc - mapgrid)
-		(looking-for ?res - resource)
+		(looking-for ?res - resource ?loc - mapgrid)
 		(head-armed)
    	    (chest-armed)
    	    (is-attacked)
@@ -126,30 +126,32 @@
 	)
 	;;----------------------------------------
 	(:action find-forward
-		:parameters (?res -resource )
+		:parameters (?res -resource ?playerloc - mapgrid )
 		:precondition
 			(and
 			  ;; (chest-armed)
 		    	;;(head-armed)
-				(not (known-loc ?res))
+		    	(player-at ?playerloc)
+				(not (known-loc ?res ?playerloc))
 			)
 		:effect
 			(and
-				(searched-forward ?res)
+				(searched-forward ?res ?playerloc)
 			    (looking-forward)
 			)
 	)
 	;---------------------------------------------------------
 	(:action find-left
-		:parameters (?res -resource )
+		:parameters (?res -resource ?playerloc - mapgrid )
 		:precondition
 			(and
-			    (searched-forward ?res)
-				(not (known-loc ?res))
+			    (searched-forward ?res ?playerloc)
+			    (player-at ?playerloc)
+				(not (known-loc ?res ?playerloc))
 			)
 		:effect
 			(and
-				(searched-left ?res)
+				(searched-left ?res ?playerloc)
 				(not (looking-forward))
 			    (looking-left)
 			)
@@ -158,34 +160,36 @@
     ;;----------------------------------------
 
 	(:action find-right
-		:parameters (?res -resource )
+		:parameters (?res -resource ?playerloc - mapgrid )
 		:precondition
 			(and
-			    (searched-left ?res)
-			    (not (known-loc ?res))
+			    (searched-left ?res ?playerloc)
+			    (player-at ?playerloc)
+			    (not (known-loc ?res ?playerloc))
 			)
 		:effect
 			(and
-				(searched-right ?res)
-				;;(not (looking-left))
+				(searched-right ?res ?playerloc)
+				(not (looking-left))
 				(looking-right)
 			)
 	)
 	;;----------------------------------------
 
 	(:action find-behind
-		:parameters (?res -resource )
+		:parameters (?res -resource ?playerloc - mapgrid )
 		:precondition
 			(and
-			   (searched-right ?res)
-				(not (known-loc ?res))
+			   (searched-right ?res ?playerloc)
+			   (player-at ?playerloc)
+				(not (known-loc ?res ?playerloc))
 			)
 		:effect
 			(and
-				(known-loc ?res)
-			;;	(not (looking-right))
+				(known-loc ?res ?playerloc)
+				(not (looking-right))
 				(looking-behind)
-				(looking-for ?res)
+				(looking-for ?res ?playerloc)
 			)
 	)
 
@@ -195,12 +199,12 @@
     ;;--------------------------------------------------------
 	;;--------------------------------------------------------
 	(:action attack-skeleton
-		:parameters (?tool - tool ?loc - mapgrid))
+		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
 			    (player-at ?loc)
-				(known-loc skeleton)
-				(thing-at skeleton)
+				(known-loc skeleton ?loc)
+				(thing-at skeleton ?loc)
 				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) 10)
 
@@ -209,7 +213,7 @@
 		:effect
 			(and
 
-				(not (thing-at skeleton))
+				(not (thing-at skeleton ?loc))
 				(attacking ?loc)
 			)
 	)
@@ -220,7 +224,7 @@
 ;;		:precondition
 ;;			(and
 ;;				(thing-at-map arrowtrap ?loc)
-;;				(thing-at arrowtrap)
+;;				(thing-at arrowtrap ?loc)
 ;;				(= (tool-id ?tool) 11)
 ;;				(= (tool-in-hand) 11)
 ;;
@@ -240,15 +244,15 @@
 		:precondition
 			(and
 			    (player-at ?loc)
-				(known-loc arrowtrap)
-				(thing-at arrowtrap)
+				(known-loc arrowtrap ?loc)
+				(thing-at arrowtrap ?loc)
 				(= (tool-id ?tool) 11)
 				(= (tool-in-hand) 11)
 
 			)
 		:effect
 			(and
-				(not (thing-at arrowtrap))
+				(not (thing-at arrowtrap ?loc))
 				(trap-destroyed ?loc)
 			)
 	)

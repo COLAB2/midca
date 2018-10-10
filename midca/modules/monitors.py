@@ -23,6 +23,12 @@ class Monitor:
         self.parent = parent
         self.world = world
 
+    def player_location(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "player-at":
+                return atom.args[0].name
+
     def monitor_state(self, id, location, predicate):
         world = self.mem.get(self.mem.STATES)[-1]
         #         print world
@@ -49,6 +55,7 @@ class Monitor:
 
     def monitor_belief(self, id, location, predicate):
         print(('goal monitor to check ' + id.__str__() + ' in ' + location.__str__() + ' is running... '))
+        player_loc = self.player_location()
 
         while True:
             world = self.mem.get(self.mem.STATES)[-1]
@@ -69,7 +76,8 @@ class Monitor:
             #              and a.args[0].name == id]
             exist_obj = None
             for a in world.atoms:
-                if a.predicate and a.predicate.name == "known-loc" and a.args and str(a.args[0].name) == str(id):
+                if a.predicate and a.predicate.name == "known-loc" and\
+                        a.args and str(a.args[0].name) == str(id) and str(a.args[1].name) == str(player_loc):
                     exist_obj = a
                     break
 
@@ -85,8 +93,8 @@ class Monitor:
                 else:
                     self.goal.kwargs["probability"] = 1
                     self.mem.set(self.mem.CURRENT_GOALS, [])
-                    world.add_fact("thing-at", [id.__str__()])
-                    self.world.add_fact("thing-at", [id.__str__()])
+                    world.add_fact("thing-at", [id.__str__(), player_loc])
+                    self.world.add_fact("thing-at", [id.__str__(), player_loc])
                     print(id.__str__() + " is observed")
                     break
 
@@ -102,14 +110,21 @@ class Monitor:
                         if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
                             world.remove_atom(atom)
                             break
+                    for atom in self.world.atoms:
+                        if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
+                            self.world.remove_atom(atom)
+                            break
 
-                    break
                 else:
                     self.goal.kwargs["probability"] = 0
                     print(id.__str__() + " does not exist, this goal's probability is 0 now")
                     for atom in world.atoms:
                         if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
                             world.remove_atom(atom)
+                            break
+                    for atom in self.world.atoms:
+                        if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
+                            self.world.remove_atom(atom)
                             break
                     break
 
