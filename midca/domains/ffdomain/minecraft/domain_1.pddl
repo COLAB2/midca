@@ -212,7 +212,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 1)
+   			(decrease (player-current-health) 3)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked)

@@ -113,6 +113,7 @@
 		:parameters (?from - mapgrid ?to - mapgrid)
 		:precondition
 			(and
+			 (> (player-current-health) 0)
 				(player-at ?from)
 				(connect ?from ?to)
 

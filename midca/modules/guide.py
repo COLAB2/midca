@@ -1418,7 +1418,7 @@ class ReactiveSurvive(base.BaseModule):
                 hypotheses = self.survive()
 
                 goal = goals.Goal(predicate="survive", subgoals=hypotheses)
-                inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
+                # inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
                 inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
             # if inserted1:
