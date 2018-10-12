@@ -121,7 +121,7 @@
 			(and
 			    (looking-forward ?player_loc)
 			    (player-at ?player_loc)
-				 (connect-left ?player_loc ?loc)
+				 (connect-forward ?player_loc ?loc)
 				 (thing-at-loc ?res ?loc)
 			)
 		:effect
@@ -212,7 +212,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 3)
+   			(decrease (player-current-health) 1)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked)

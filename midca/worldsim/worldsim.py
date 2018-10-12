@@ -487,7 +487,7 @@ class Operator:
             s += name + ", "
         if self.objnames:
             s = s[:-2]
-        s += ")\nPreconditions: ["
+        # s += ")\nPreconditions: ["
         i = 0
         # for condition in self.preconditions:
         #     # print "precondition is "+str(condition)
@@ -497,7 +497,7 @@ class Operator:
         #     i += 1
         # if self.preconditions:
         #     s = s[:-3]
-        s += "]\nPostconditions: ["
+        # s += "]\nPostconditions: ["
         i = 0
         # for condition in self.results:
         #     print ("postcondition is "+str(condition))
@@ -812,12 +812,12 @@ class World:
 
             new_val = a.val
 
-            print(a.val)
+            # print(a.val)
 
             if not a.val:
                 for f in func_val_dict:
                     if f.func.name == a.func.name:
-                        print("found one: " + str(f))
+                        # print("found one: " + str(f))
                         if f.args and f.args == atom.args:
                             new_val = func_val_dict[f]
 
@@ -833,7 +833,7 @@ class World:
             if op == "=":
                 return float(new_val) == float(val)
 
-        print("return false")
+        # print("return false")
         return False
 
     def atom_true(self, atom):
@@ -925,27 +925,31 @@ class World:
     def is_applicable(self, action):
         for i in range(len(action.preconds)):
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
+                # print("nor true + " + str( action.preconds[i]))
                 return False
             if not action.prePos[i] and self.atom_true(action.preconds[i]):
+                # print("nor true + " + str(action.preconds[i]))
                 return False
 
         # todo: Zohreh; fix the bug later here
-        for i in range(len(action.preFuncPos)):
-            (atom, arg2, op) = action.funcPre[i]
-            # if action.preFuncPos[i] and not self.atom_func_true(atom, arg2, op):
-            #     print(action.preFuncPos[i])
-            #     print("not true")
-            #     return False
-            #
-            # if not action.preFuncPos[i] and self.atom_func_true(atom, arg2, op):
-            #     print(action.preFuncPos[i])
-            #     print("not false")
-            #     return False
+        try:
+            for i in range(len(action.preFuncPos)):
+                (atom, arg2, op) = action.funcPre[i]
+                if action.preFuncPos[i] and not self.atom_func_true(atom, arg2, op):
+                    print(action.preFuncPos[i])
+                    # print("not true")
+                    return False
 
-            # if True and not self.atom_func_true(atom, arg2, op):
-            #     print("not true")
-            #     return False
+                if not action.preFuncPos[i] and self.atom_func_true(atom, arg2, op):
+                    print(action.preFuncPos[i])
+                    # print("not false")
+                    return False
 
+                # if True and not self.atom_func_true(atom, arg2, op):
+                #     print("not true")
+                #     return False
+        except Exception as e:
+            print("ERROR: " + str(e))
 
         return True
 
@@ -1170,7 +1174,8 @@ class World:
             if not testWorld.midca_action_applicable(action):
                 print("it is not applicable")
                 break
-            testWorld.apply_midca_action(action)
+            else:
+                testWorld.apply_midca_action(action)
 
         for goal in goalSet:
             achieved = testWorld.atom_true(self.midcaGoalAsAtom(goal))
@@ -1178,6 +1183,8 @@ class World:
                 achieved = not achieved
             if achieved:
                 achievedGoals.add(goal)
+            else:
+                print(self.midcaGoalAsAtom(goal))
         return achievedGoals
 
     def goals_achieved_now(self, goalSet):

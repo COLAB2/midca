@@ -339,7 +339,7 @@ class MetricFFPlanner(base.BaseModule):
                     if len(achieved) == len(midcaPlan.goals):
                         print("yes")
                     else:
-                        print("no. Goals achieved: " + str({str(goal) for goal in achieved}))
+                        print("no. Goals achieved: " + str({str(goal) for goal in midcaPlan.goals}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None  # triggers replanning.
 
@@ -416,7 +416,7 @@ class JSHOP2Planner(base.BaseModule):
             traceback.print_exc()
             self.working = False
 
-    def init(self, world, mem):
+    def init(self, world, mem, verbose=2):
         self.world = world
         self.mem = mem
         self.mem.set(self.mem.PLANNING_COUNT, 0)

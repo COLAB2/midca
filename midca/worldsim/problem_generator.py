@@ -16,9 +16,10 @@
 import midca.worldsim.worldsim as worldsim
 
 import inspect, os, random
-
-SKELETON_CHANCE = 0.8
-ARROW_TRAP_CHANCE = 0.8
+SKELETON_MAX = 3
+TRAP_MAX = 3
+SKELETON_CHANCE = 0.05
+ARROW_TRAP_CHANCE = 0.05
 # MONSTER_CHANCE = 0.3
 SKELETON_LOC = 0
 TRAP_LOC = 0
@@ -143,18 +144,21 @@ def generate_file(file):
         i, j = randomxy()
         f.write("(thing-at-map tree  m" + str(i) + "_" + str(j) + ")\n")
 
-
-    # if skeleton_chance():
-    #     sx, sy = randomxy()
-    f.write("(thing-at skeleton)\n")
-        # f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
-        # SKELETON_LOC = sx, sy
-
+    k = 0
+    kk = 0
+    for i in range(n):
+        for j in range(n):
+            if skeleton_chance() and k < SKELETON_MAX:
+                f.write("(thing-at-loc skeleton  m" + str(i) + "_" + str(j) + ")\n")
+                k = k + 1
+            if trap_chance() and kk < TRAP_MAX:
+                f.write("(thing-at-loc arrowtrap  m" + str(i) + "_" + str(j) + ")\n")
+                kk = kk + 1
     # if trap_chance():
-    sx, sy = randomxy()
-    f.write("(thing-at arrowtrap)\n")
-    f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
-    TRAP_LOC = sx, sy
+    # sx, sy = randomxy()
+    # # f.write("(thing-at arrowtrap)\n")
+    # f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
+    # TRAP_LOC = sx, sy
 
     # if monster_chance():
     #     sx, sy = randomxy()

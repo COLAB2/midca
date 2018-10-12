@@ -70,19 +70,19 @@
 
 	)
 
-	(:action restore-health
-		:parameters (?p -potion)
-		:precondition
-			(and
-				(> (thing-available ?p) 0)
-				(< (player-current-health) 20)
-			)
-		:effect
-			(and
-				(assign (player-current-health) 20)
-				(decrease (thing-available ?p) 1)
-			)
-	)
+	;;(:action restore-health
+	;;	:parameters (?p -potion)
+	;;	:precondition
+	;;		(and
+	;;;			(> (thing-available ?p) 0)
+		;;		(< (player-current-health) 20)
+	;;		)
+	;;	:effect
+	;;		(and
+	;;			(assign (player-current-health) 20)
+	;;			(decrease (thing-available ?p) 1)
+	;;		)
+	;;)
 
 
 	;;-------------------------------------------------
@@ -204,6 +204,7 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
+			(> (player-current-health) 0)
 			    (player-at ?loc)
 				(known-loc skeleton ?loc)
 				(thing-at skeleton ?loc)
@@ -221,23 +222,24 @@
 	)
 
 	;;----------------------------------
-  ;;  (:action destroy-trap-with-loc
-;;		:parameters (?tool - tool ?loc -mapgrid)
-;;		:precondition
-;;			(and
-;;				(thing-at-map arrowtrap ?loc)
-;;				(thing-at arrowtrap ?loc)
-;;				(= (tool-id ?tool) 11)
-;;				(= (tool-in-hand) 11)
-;;
-;;			)
-;;		:effect
-;;			(and
-;;
-;;				(not (thing-at-map arrowtrap ?loc))
-;;			(trap-destroyed)
-;;			)
-;;	)
+    (:action destroy-trap-with-loc
+		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
+		:precondition
+			(and
+			(> (player-current-health) 0)
+				(thing-at-map arrowtrap ?loc)
+				;;(thing-at arrowtrap ?player_loc)
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
+                (player-at ?player_loc)
+			)
+		:effect
+			(and
+
+				(not (thing-at-map arrowtrap ?loc))
+			(trap-destroyed ?player_loc)
+			)
+	)
 
 
 	;;--------------------------------------------------------
@@ -245,6 +247,7 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
+			(> (player-current-health) 0)
 			    (player-at ?loc)
 				(known-loc arrowtrap ?loc)
 				(thing-at arrowtrap ?loc)
@@ -397,6 +400,7 @@
 		:parameters (?target - mapgrid ?tool - tool)
 		:precondition
 			(and
+			(> (player-current-health) 0)
 				(player-at ?target)
 				(thing-at-map tree ?target)
 				(= (tool-in-hand) (tool-id ?tool))

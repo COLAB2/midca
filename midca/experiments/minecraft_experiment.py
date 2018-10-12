@@ -81,13 +81,13 @@ def runexperiment():
     MIDCA_ROOT = thisDir + "/../"
 
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
-    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
-    run_id = 10
-    i = 111
+    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/results"
+    run_id = 0
+    i = 1
     # for i in range(10):
     #     run_id = i
     # problem_generator.generate_file(STATE_FILE + str(i))
-    copyfile(STATE_FILE , STATE_FILE + str(i) + "_copy")
+    # copyfile(STATE_FILE , STATE_FILE + str(i) + "_copy")
     results = singlerun(run_id, STATE_FILE)
 
     # Uses multiprocessing to give each run its own python process
