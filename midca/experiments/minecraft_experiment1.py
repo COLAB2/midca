@@ -41,6 +41,9 @@ NUM_PROCESSES = 8  # Number of individual python processes to use
 
 
 def singlerun_output_str(run_id, curr_midca, num_cycles):
+    thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    MIDCA_ROOT = thisDir + "/../"
+    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results1"
     health = curr_midca.mem.get(curr_midca.mem.AGENT_HEALTH)
     print(health)
     tree = curr_midca.mem.get(curr_midca.mem.TREE_HARVEST)
@@ -52,6 +55,11 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     print(num_actions)
     result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
              str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
+
+    f = open(DATA_FILENAME, 'a')
+    f.write(result)
+
+
     return result
 
 def stop_point(curr_midca):
@@ -89,6 +97,7 @@ def runexperiment():
         state_file = STATE_FILE + str(i)
         problem_generator.generate_file(STATE_FILE + str(i))
         copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+        # copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
 
         curr_args = [run_id, state_file]
         runs.append(curr_args)
@@ -228,69 +237,69 @@ def get_max_score_for_cycles(cycle):
     return max_scores[cycle]
 
 
-def graph(prev_file):
-    '''
-    Produce the graph
-    '''
-    from mpl_toolkits.mplot3d import Axes3D
-    import matplotlib.pyplot as plt
-    from matplotlib import cm
-    # get the most recent filename
-    files = sorted([f for f in os.listdir(DATADIR)])
-    datafile = DATADIR + files[-(prev_file + 1)]
-    print(("-- About to graph data from " + str(datafile)))
-    header = True
-    mortar_ys = []
-    cycles_xs = []
-    score_zs = []
-
-    with open(datafile, 'r') as f:
-        for line in f.readlines():
-            if header:
-                header = False
-            else:
-                row = line.strip().split(',')
-                mortar_ys.append(int(row[1]))
-                num_cycles = int(row[4])
-                score = int(row[3])
-                score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
-                score_zs.append(score)
-                cycles_xs.append(num_cycles)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_trisurf(cycles_xs, mortar_ys, score_zs, cmap=cm.coolwarm)
-    ax.set_zlim(bottom=0.0, top=1.0)
-    ax.set_xlim(max(cycles_xs), 0)
-    ax.set_ylim(max(mortar_ys), 0)
-    ax.legend()
-    ax.set_xlabel("Goals")
-    ax.set_ylabel("Resources")
-    ax.set_zlabel("Score")
-    plt.show()
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-def graph():
-
-    # Fixing random state for reproducibility
-    np.random.seed(19680801)
-
-    mu, sigma = 100, 15
-    x = mu + sigma * np.random.randn(10000)
-
-    # the histogram of the data
-    n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
-
-    plt.xlabel('Smarts')
-    plt.ylabel('Probability')
-    plt.title('Histogram of IQ')
-    plt.text(60, .025, r'$\mu=100,\ \sigma=15$')
-    plt.axis([40, 160, 0, 0.03])
-    plt.grid(True)
-    plt.show()
-    return 0
+# def graph(prev_file):
+#     '''
+#     Produce the graph
+#     '''
+#     from mpl_toolkits.mplot3d import Axes3D
+#     import matplotlib.pyplot as plt
+#     from matplotlib import cm
+#     # get the most recent filename
+#     files = sorted([f for f in os.listdir(DATADIR)])
+#     datafile = DATADIR + files[-(prev_file + 1)]
+#     print(("-- About to graph data from " + str(datafile)))
+#     header = True
+#     mortar_ys = []
+#     cycles_xs = []
+#     score_zs = []
+#
+#     with open(datafile, 'r') as f:
+#         for line in f.readlines():
+#             if header:
+#                 header = False
+#             else:
+#                 row = line.strip().split(',')
+#                 mortar_ys.append(int(row[1]))
+#                 num_cycles = int(row[4])
+#                 score = int(row[3])
+#                 score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
+#                 score_zs.append(score)
+#                 cycles_xs.append(num_cycles)
+#
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111, projection='3d')
+#     ax.plot_trisurf(cycles_xs, mortar_ys, score_zs, cmap=cm.coolwarm)
+#     ax.set_zlim(bottom=0.0, top=1.0)
+#     ax.set_xlim(max(cycles_xs), 0)
+#     ax.set_ylim(max(mortar_ys), 0)
+#     ax.legend()
+#     ax.set_xlabel("Goals")
+#     ax.set_ylabel("Resources")
+#     ax.set_zlabel("Score")
+#     plt.show()
+#
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# def graph():
+#
+#     # Fixing random state for reproducibility
+#     np.random.seed(19680801)
+#
+#     mu, sigma = 100, 15
+#     x = mu + sigma * np.random.randn(10000)
+#
+#     # the histogram of the data
+#     n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
+#
+#     plt.xlabel('Smarts')
+#     plt.ylabel('Probability')
+#     plt.title('Histogram of IQ')
+#     plt.text(60, .025, r'$\mu=100,\ \sigma=15$')
+#     plt.axis([40, 160, 0, 0.03])
+#     plt.grid(True)
+#     plt.show()
+#     return 0
 
 
 if __name__ == "__main__":
@@ -310,6 +319,6 @@ if __name__ == "__main__":
     # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
     # # problem_generator.generate_file(STATE_FILE)
     #
-    # runexperiment()
+    runexperiment()
 
-    graph()
+    # graph()

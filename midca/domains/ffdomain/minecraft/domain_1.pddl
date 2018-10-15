@@ -73,23 +73,23 @@
 ;;--------------------------------------------------------
 	;;------------EVENTS--------------------------------------
 	;;--------------------------------------------------------
-    (:action event-find
-		:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
-		:precondition
-			(and
-			    (looking-for ?res ?player_loc)
-			    (player-at ?player_loc)
-				 (connect ?loc ?player_loc)
-				 (thing-at-loc ?res ?loc)
-			)
-		:effect
-			(and
-				(know-where ?res ?loc)
-				(thing-at-map ?res ?loc)
-                (not (looking-for ?res ?player_loc))
-			)
+   ;; (:action event-find
+	;;	:parameters (?res - resource ?loc - mapgrid ?player_loc -mapgrid)
+	;;	:precondition
+	;;		(and
+	;;		    (looking-for ?res ?player_loc)
+	;;		    (player-at ?player_loc)
+	;;			 (connect ?loc ?player_loc)
+	;;			 (thing-at-loc ?res ?loc)
+	;;		)
+	;;	:effect
+	;;		(and
+	;;			(know-where ?res ?loc)
+	;;			(thing-at-map ?res ?loc)
+      ;;          (not (looking-for ?res ?player_loc))
+		;;	)
 
-	)
+	;;)
 
 
     ;;--------------------------------------------------------

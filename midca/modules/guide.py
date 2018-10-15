@@ -1312,7 +1312,8 @@ class ReactiveSurvive(base.BaseModule):
 
         known_loc = None
         for a in world.atoms:
-            if a.predicate and a.predicate.name == "known-loc" and a.args and str(a.args[0].name) == "skeleton":
+            if a.predicate and a.predicate.name == "known-loc" and a.args and str(a.args[0].name) == "skeleton" \
+                    and str(a.args[1].name) == user_loc:
                 known_loc = a
 
 

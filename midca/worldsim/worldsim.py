@@ -858,7 +858,10 @@ class World:
             self.add_atom(Atom(self.predicates[predname], [self.objects[name] for name in argnames]))
 
     def remove_atom(self, atom):
-        self.atoms.remove(atom)
+        try:
+            self.atoms.remove(atom)
+        except Exception as e:
+            print("ERROR: " + str(atom))
 
     def remove_fact(self, predname, argnames=[]):
         toRemove = None
