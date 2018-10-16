@@ -23,6 +23,8 @@ def pyhop_state_from_world(world, name = "state"):
     s.enabled = []
     s.checked_hazards = []
     s.survey = {}
+    s.location = ""
+    s.path_mines = []
 
     for atom in world.atoms:
 	# get the orders into the s.order_received dictionary
@@ -30,6 +32,10 @@ def pyhop_state_from_world(world, name = "state"):
             s.enabled.append(atom.args[0].name)
         if atom.predicate.name == "hazard_checked":
             s.checked_hazards.append(atom.args[0].name)
+        if atom.predicate.name == "at_location":
+            s.location = atom.args[1].name
+        if atom.predicate.name == "hazard_at_pathway":
+            s.path_mines.append(atom.args[0].name)
     return s
 
 

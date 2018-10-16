@@ -15,7 +15,7 @@ class Obj:
 		return self.name
 
 class Type:
-	
+
 	def __init__(self, name, parents = []):
 		self.parents = parents
 		self.name = name
@@ -650,6 +650,16 @@ class World:
 			return False
 		action = operator.instantiate(args)
 		return self.is_applicable(action)
+
+	def get_action(self, midcaAction):
+		try:
+			operator = self.operators[midcaAction.op]
+			args = [self.objects[arg] for arg in midcaAction.args]
+		except KeyError:
+			return False
+		action = operator.instantiate(args)
+		return action
+
 
 	def apply(self, simAction):
 		for i in range(len(simAction.results)):
