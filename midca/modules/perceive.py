@@ -280,7 +280,15 @@ class MoosObserver(base.BaseModule):
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
 
+                if (abs(x-0.5 > mine_x) and abs(x + 0.5 < mine_x )):
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+
                 if (abs(y-0.5 < mine_y) and abs(y + 0.5 > mine_y )):
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+
+                if (abs(y-0.5 > mine_y) and abs(y + 0.5 < mine_y )):
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
 

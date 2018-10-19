@@ -335,6 +335,9 @@ class Moosact(base.BaseModule):
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
         self.publisher_mine = context.socket(zmq.PUB)
+        self.publisher_mine_ship = context.socket(zmq.PUB)
+        # for moos-application to know mines are cleared
+        self.publisher_mine_ship.bind("tcp://127.0.0.1:5570")
         self.publisher.bind("tcp://127.0.0.1:5560")
         self.publisher_mine.bind("tcp://127.0.0.1:5565")
         self.mem = mem
@@ -465,6 +468,8 @@ class Moosact(base.BaseModule):
                             [b"M", b"speed =0.0"])
                             self.publisher_mine.send_multipart(
                                                 [b"M", b"x=0,y=0,width=0, label="+str(label)])
+                            self.publisher_mine_ship.send_multipart(
+                                [b"M", b""+str(label)])
                         self.publisher.send_multipart(
                                                 [b"M", b"speed = 0.0001"])
                         self.world.apply_midca_action(action)
