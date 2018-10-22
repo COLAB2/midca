@@ -65,32 +65,16 @@ class MidcaEventSimulator:
                     func = self.world.functions["player-current-health"]
                     a = next((x for x in self.world.atoms if x.func == func), None)
                     # 15 is a threshold here;
-                    # print("the result:")
-                    # print(a.val)
-                    # if a.val and a.val < 20:
-                    #     self.mem.set(self.mem.AGENT_HEALTH, a.val)
+                    print("the Health:")
+                    print(a.val)
 
                     if not self.mem.get(self.mem.AGENT_DEAD_CYCLE) and a.val <= 0:
                         print("THE AGENT DIED")
                         self.mem.set(self.mem.AGENT_DEAD_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
 
-                    # func = self.world.functions["thing-available"]
-                    # a = next((x for x in self.world.atoms if x.func == func and x.args and x.args[0] == "wood"), None)
-                    # if a.val and a.val ==5:
-                    #     self.mem.set(self.mem.ACHIEVED_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
-
                     if verbose >= 2:
                         print("simulating MIDCA event:", __event)
-                    # except:
-                    #     print("something went wrong...")
 
-
-                # if self.get_all_instantiations(self.world,__event):
-                #     print("it is applicable")
-
-
-
-                    # self.world.apply_midca_action(__event)
 
         else:
             if verbose >= 2:
@@ -142,7 +126,7 @@ class MidcaEventSimulator:
 
             if world.is_applicable(op_inst):
                 applicable_permutations.append(op_inst)
-                break # uncomment this line if you just want to get the first valid instantiation
+                # break # uncomment this line if you just want to get the first valid instantiation
 
         return applicable_permutations
 

@@ -41,9 +41,7 @@ NUM_PROCESSES = 8  # Number of individual python processes to use
 
 
 def singlerun_output_str(run_id, curr_midca, num_cycles):
-    thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    MIDCA_ROOT = thisDir + "/../"
-    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results1"
+
     health = curr_midca.mem.get(curr_midca.mem.AGENT_HEALTH)
     print(health)
     tree = curr_midca.mem.get(curr_midca.mem.TREE_HARVEST)
@@ -56,8 +54,7 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
              str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
 
-    f = open(DATA_FILENAME, 'a')
-    f.write(result)
+
 
 
     return result
@@ -73,7 +70,7 @@ def singlerun(args):
     statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
-    num_cycles = 50
+    num_cycles = 35
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)
@@ -173,6 +170,8 @@ class MIDCAInstance():
 
         MIDCA_ROOT = thisDir + "/../"
 
+        # DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
+        # EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1_nongda.pddl"
         DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
         EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
@@ -198,7 +197,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        # myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)

@@ -240,7 +240,26 @@
 			(trap-destroyed ?player_loc)
 			)
 	)
+;;
 
+(:action attack-skeleton-with-loc
+		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
+		:precondition
+			(and
+			(> (player-current-health) 0)
+				(thing-at-map skeleton ?loc)
+
+				(= (tool-id ?tool) 10)
+				(= (tool-in-hand) 10)
+                (player-at ?player_loc)
+			)
+		:effect
+			(and
+
+				(not (thing-at-map skeleton ?loc))
+			(attacking ?player_loc)
+			)
+	)
 
 	;;--------------------------------------------------------
 	(:action destroy-trap

@@ -1298,16 +1298,16 @@ class ReactiveSurvive(base.BaseModule):
         user_loc = self.user_location()
 
         if s_chance == 1:
-            world.add_fact("thing-at", ["skeleton", user_loc])
+            # world.add_fact("thing-at", ["skeleton", user_loc])
             # world.add_fact("thing-at", ["arrowtrap"])
 
-            self.world.add_fact("thing-at", ["skeleton", user_loc])
+            # self.world.add_fact("thing-at", ["skeleton", user_loc])
             return "skeleton"
         if a_chance == 1:
-            world.add_fact("thing-at", ["arrowtrap", user_loc])
+            # world.add_fact("thing-at", ["arrowtrap", user_loc])
             # world.add_fact("thing-at", ["arrowtrap"])
 
-            self.world.add_fact("thing-at", ["arrowtrap", user_loc])
+            # self.world.add_fact("thing-at", ["arrowtrap", user_loc])
             return "trap"
 
         known_loc = None
@@ -1376,7 +1376,7 @@ class ReactiveSurvive(base.BaseModule):
                     skeleton = world.objects["skeleton"]
                     loc = world.objects[loc.name]
                     if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton,player_loc], predicate="thing-at", negate=True, probability=1,
+                        goal = goals.Goal(*[skeleton,loc], predicate="thing-at-map", negate=True, probability=1,
                                           danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
@@ -1408,7 +1408,7 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     trap = world.objects["arrowtrap"]
                     loc = world.objects[loc.name]
-                    goal = goals.Goal(*[trap,player_loc], predicate="thing-at", negate=True, probability=1, danger="low")
+                    goal = goals.Goal(*[trap,loc], predicate="thing-at-map", negate=True, probability=1, danger="low")
                     # m = Monitor(self.mem, skeleton, goal)
                     # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
                     hypotheses.append(goal)
