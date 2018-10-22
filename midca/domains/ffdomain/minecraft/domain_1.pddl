@@ -250,6 +250,7 @@
              (attacking ?loc1)
 
 
+
       	)
       	:effect
       	(and
