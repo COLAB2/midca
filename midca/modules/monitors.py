@@ -77,26 +77,39 @@ class Monitor:
             #
             current_atom = None
             for a in world.atoms:
-                if a.predicate and a.predicate.name == predicate and a.args[0] and str(a.args[0].name) == str(id)\
+                if a.predicate and a.predicate.name == predicate and a.args[0] and str(a.args[0].name) == str(id) \
                         and str(a.args[1].name) in adj_tiles:
-
-                        current_atom = a
-                        break
+                    current_atom = a
+                    break
 
             # exist_obj = [a for a in world.atoms if a.predicate and a.predicate.name == "known-loc" and a.args[0]
             #              and a.args[0].name == id]
             exist_obj = None
             for a in world.atoms:
-                if a.predicate and a.predicate.name == "known-loc" and\
+                if a.predicate and a.predicate.name == "known-loc" and \
                         a.args and str(a.args[0].name) == str(id) and str(a.args[1].name) == str(player_loc):
                     exist_obj = a
                     break
 
             # if exist_obj: print(exist_obj)
-
-            # it assumes there is obj around, the monitor fires if it observes one
+            # print("monitoring this goal")
+            # print(self.goal)
+            #
+            # if [self.goal] in current_goal:
+            #     print("this is current")
+            #
+            # print("list o current goals:")
+            # for gg in current_goal:
+            #     for p in gg:
+            #         print(p)
+            #         if "predicate" in p.kwargs and p["predicate"] == self.goal["predicate"] and p.args[0] and \
+            #                 self.goal.args[0] == p.args[0] \
+            #                 and p.args[1] and self.goal.args[1] == p.args[1]:
+            #             print("yes")
+                # it assumes there is obj around, the monitor fires if it observes one
             if location == "unknown" and current_atom:
-                if self.goal in current_goal:
+
+                if [self.goal] in current_goal:
                     self.goal.kwargs["probability"] = 1
                     print(id.__str__() + " is observed, the current goal's probability is 1 now")
 
@@ -107,12 +120,15 @@ class Monitor:
                     world.add_fact("thing-at", [id.__str__(), player_loc])
                     self.world.add_fact("thing-at", [id.__str__(), player_loc])
                     print(id.__str__() + " is observed")
+                    print("this fact is added to the belief: ")
+                    print("thing-at", id.__str__(), player_loc)
+
                     break
 
             # if known-skeleton but there is no (thing-at skeleton)
             elif location == "unknown" and exist_obj and not current_atom:
 
-                if self.goal in current_goal:
+                if [self.goal] in current_goal:
                     self.goal.kwargs["probability"] = 0
                     self.mem.set(self.mem.CURRENT_GOALS, [])
                     print(id.__str__() + " does not exist, the current goal is suspended ")

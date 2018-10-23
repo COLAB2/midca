@@ -82,7 +82,13 @@ class SimpleAct(base.BaseModule):
         goalsAchieved = set()
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
 
+        # print("all matching plans:")
+        # for i in goalGraph.allMatchingPlans(goals):
+        #     print(i)
+
         for nextPlan in goalGraph.allMatchingPlans(goals):
+            print(nextPlan)
+
             achieved = world.goals_achieved(nextPlan, goals)
             if len(achieved) > len(goalsAchieved):
                 goalsAchieved = achieved
@@ -91,7 +97,7 @@ class SimpleAct(base.BaseModule):
                 break
             elif verbose >= 2:
                 print("Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
-                if verbose >= 2:
+                if verbose >= 3:
                     print("  Retrieved Plan:")
                     for a in nextPlan:
                         print("  " + str(a))
@@ -116,6 +122,8 @@ class SimpleAct(base.BaseModule):
             goals = []
 
         plan = self.get_best_plan(world, goals, verbose)
+        print("the best plan is:")
+        print(plan)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)

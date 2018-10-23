@@ -326,11 +326,9 @@ class MetricFFPlanner(base.BaseModule):
                 midcaPlan = None
                 # if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print()
-                    "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print()
-                "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
                     print("checking to see if all goals are achieved...",)
@@ -342,7 +340,8 @@ class MetricFFPlanner(base.BaseModule):
                         print("no. Goals achieved: " + str({str(goal) for goal in midcaPlan.goals}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None  # triggers replanning.
-                    print("replanning...")
+                    if verbose >= 2:
+                        print("replanning...")
         # ensure goals is a collection to simplify things later.
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
@@ -380,8 +379,9 @@ class MetricFFPlanner(base.BaseModule):
                 for a in midcaPlan:
                     print(("  " + str(a)))
             # save new plan
-            if midcaPlan != None:
+            if midcaPlan:
                 #TODO: zohreh; I added this line becasue it didn't update the new plan
+                print("a new plan is added")
                 self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN", midcaPlan)

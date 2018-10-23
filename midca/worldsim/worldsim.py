@@ -1175,7 +1175,7 @@ class World:
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
-                # print("it is not applicable")
+                print("it is not applicable")
                 break
             else:
                 testWorld.apply_midca_action(action)

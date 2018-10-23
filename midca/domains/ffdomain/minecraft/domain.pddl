@@ -365,7 +365,8 @@
 				(> (thing-available ?tool) 0)
 				(thing-at-map ?obj ?target)
 				(= (current-harvest-location) (location-id ?target))
-				(= (tool-in-hand) (tool-id ?tool))
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
 
 
 			)
@@ -422,7 +423,8 @@
 			(> (player-current-health) 0)
 				(player-at ?target)
 				(thing-at-map tree ?target)
-				(= (tool-in-hand) (tool-id ?tool))
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
 				(= (current-harvest-location) (location-id ?target))
 
 
