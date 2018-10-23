@@ -70,7 +70,7 @@ def singlerun(args):
     statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
-    num_cycles = 35
+    num_cycles = 50
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)
@@ -89,12 +89,12 @@ def runexperiment():
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
     DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
 
-    run_id = 0
-    for i in range(10):
+    run_id = 16
+    for i in range(16,17):
         state_file = STATE_FILE + str(i)
-        problem_generator.generate_file(STATE_FILE + str(i))
-        copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
-        # copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
+        # problem_generator.generate_file(STATE_FILE + str(i))
+        # copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+        copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
 
         curr_args = [run_id, state_file]
         runs.append(curr_args)
@@ -197,7 +197,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        # myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)

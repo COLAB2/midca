@@ -53,9 +53,18 @@ class Monitor:
 
             time.sleep(3)
 
+    def nearby_location(self, user_loc):
+        world = self.mem.get(self.mem.STATES)[-1]
+        locations = []
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "connect" and atom.args[0].name == user_loc:
+                locations.append(atom.args[1].name)
+        return locations
+
     def monitor_belief(self, id, location, predicate):
         print(('goal monitor to check ' + id.__str__() + ' in ' + location.__str__() + ' is running... '))
         player_loc = self.player_location()
+        adj_tiles = self.nearby_location(player_loc)
 
         while True:
             world = self.mem.get(self.mem.STATES)[-1]
@@ -68,9 +77,11 @@ class Monitor:
             #
             current_atom = None
             for a in world.atoms:
-                if a.predicate and a.predicate.name == predicate and a.args[0] and str(a.args[0].name) == str(id):
-                    current_atom = a
-                    break
+                if a.predicate and a.predicate.name == predicate and a.args[0] and str(a.args[0].name) == str(id)\
+                        and str(a.args[1].name) in adj_tiles:
+
+                        current_atom = a
+                        break
 
             # exist_obj = [a for a in world.atoms if a.predicate and a.predicate.name == "known-loc" and a.args[0]
             #              and a.args[0].name == id]

@@ -50,8 +50,8 @@
 		(looking-for ?res - resource ?loc - mapgrid)
 		(head-armed)
    	    (chest-armed)
-   	    (is-attacked)
-   	    (is-trapped)
+   	    (is-attacked ?loc - mapgrid)
+   	    (is-trapped ?loc - mapgrid)
 	)
 
 	(:functions

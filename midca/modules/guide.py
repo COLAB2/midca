@@ -1120,7 +1120,7 @@ class ReactiveSurvive(base.BaseModule):
             for atom in world.atoms:
                 if atom.predicate and atom.predicate.name == "thing-at":
                     print("A new hypothesis is added to the MIDCA's belief state: thing-at( "
-                          + str(atom.args[0]) +", " + user_loc +" )")
+                          + str(atom.args[0]) +", " + str(atom.args[1]) +" )")
 
 
     def nearby_location(self, user_loc):

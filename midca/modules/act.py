@@ -91,7 +91,7 @@ class SimpleAct(base.BaseModule):
                 break
             elif verbose >= 2:
                 print("Retrieved plan does not achieve all goals. Trying to retrieve a different plan...")
-                if verbose >= 3:
+                if verbose >= 2:
                     print("  Retrieved Plan:")
                     for a in nextPlan:
                         print("  " + str(a))
@@ -127,8 +127,7 @@ class SimpleAct(base.BaseModule):
             action = plan.get_next_step()
             if not action:
                 if verbose >= 1:
-                    print(
-                    "Plan to achieve goals has already been completed. Taking no action.")
+                    print("Plan to achieve goals has already been completed. Taking no action.")
                 self.mem.add(self.mem.ACTIONS, [])
             else:
                 if verbose == 1:

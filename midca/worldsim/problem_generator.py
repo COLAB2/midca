@@ -74,37 +74,37 @@ def generate_file(file):
 
     for i in range(n):
         for j in range(n):
-            if i + 1 < n and j+1 < n:
-                f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j+1) + ")\n")
-            if i - 1 >= 0 and j+1 < n:
-                f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j+1) + ")\n")
+            # if i + 1 < n and j+1 < n:
+            #     f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j+1) + ")\n")
+            # if i - 1 >= 0 and j+1 < n:
+            #     f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j+1) + ")\n")
             if j + 1 < n:
                 f.write("(connect-right m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j + 1) + ")\n")
 
-            if i + 1 < n and j -1 >= 0:
-                f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j -1) + ")\n")
-            if i - 1 >= 0 and j -1 >= 0:
-                f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j -1) + ")\n")
+            # if i + 1 < n and j -1 >= 0:
+            #     f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j -1) + ")\n")
+            # if i - 1 >= 0 and j -1 >= 0:
+            #     f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j -1) + ")\n")
             if j -1 >= 0:
                 f.write("(connect-left m" + str(i) + "_" + str(j) + " " + "m" + str(i) + "_" + str(j  -1) + ")\n")
 
-            if i + 1 < n and j - 1 >= 0:
-                f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j - 1) + ")\n")
+            # if i + 1 < n and j - 1 >= 0:
+            #     f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j - 1) + ")\n")
             if i + 1 < n:
                 f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j) + ")\n")
-            if i + 1 < n and j + 1 < n:
-                f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j + 1) + ")\n")
+            # if i + 1 < n and j + 1 < n:
+            #     f.write("(connect-behind m" + str(i) + "_" + str(j) + " " + "m" + str(i + 1) + "_" + str(j + 1) + ")\n")
 
-            if i - 1 >= 0 and j - 1 >= 0:
-                f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j - 1) + ")\n")
+            # if i - 1 >= 0 and j - 1 >= 0:
+            #     f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j - 1) + ")\n")
             if i - 1 >= 0:
                 f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j) + ")\n")
-            if i - 1 >= 0 and j + 1 < n:
-                f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j + 1) + ")\n")
+            # if i - 1 >= 0 and j + 1 < n:
+            #     f.write("(connect-forward m" + str(i) + "_" + str(j) + " " + "m" + str(i - 1) + "_" + str(j + 1) + ")\n")
 
     f.write(" (player-at m0_0)\n")
 
-    f.write("(= (player-current-health) 20)\n")
+    f.write("(= (player-current-health) 30)\n")
 
     f.write(" (= (tool-in-hand) 11)\n")
     f.write("(= (tool-id hand) 0)\n")

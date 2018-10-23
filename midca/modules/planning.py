@@ -342,7 +342,7 @@ class MetricFFPlanner(base.BaseModule):
                         print("no. Goals achieved: " + str({str(goal) for goal in midcaPlan.goals}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None  # triggers replanning.
-
+                    print("replanning...")
         # ensure goals is a collection to simplify things later.
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
@@ -381,6 +381,8 @@ class MetricFFPlanner(base.BaseModule):
                     print(("  " + str(a)))
             # save new plan
             if midcaPlan != None:
+                #TODO: zohreh; I added this line becasue it didn't update the new plan
+                self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN", midcaPlan)
 

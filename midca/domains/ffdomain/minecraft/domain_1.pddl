@@ -51,8 +51,8 @@
 		(looking-for ?res - resource ?loc - mapgrid)
 		(head-armed)
    	    (chest-armed)
-   	    (is-attacked)
-   	    (is-trapped)
+   	    (is-attacked ?loc - mapgrid)
+   	    (is-trapped ?loc - mapgrid)
 	)
 
 	(:functions
@@ -195,7 +195,7 @@
    			(decrease (player-current-health) 1)
    			(thing-at-map arrow ?loc)
 
-   			(is-trapped)
+   			(is-trapped ?loc1)
       	)
 	)
     ;;------------------------------------------------------
@@ -215,28 +215,28 @@
    			(decrease (player-current-health) 1)
    			(thing-at-map arrow ?loc)
 
-   			(is-attacked)
+   			(is-attacked ?loc1)
       	)
 	)
     ;;----------------------------------------------
-    (:action event-monster-explosion
-      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
-      	:precondition
-      	( and
-            (player-at ?loc1)
-   			 (connect ?loc1 ?loc)
-   			 (thing-at-loc monster ?loc)
-   			 (not (is-attacked))
-   			 (> (player-current-health) 0)
+  ;;  (:action event-monster-explosion
+    ;;  	:parameters (?loc1 - mapgrid ?loc - mapgrid)
+      ;;	:precondition
+      ;;	( and
+        ;;    (player-at ?loc1)
+   		;;	 (connect ?loc1 ?loc)
+   		;;	 (thing-at-loc monster ?loc)
+   		;;	 (not (is-attacked))
+   		;;	 (> (player-current-health) 0)
 
-      	)
-      	:effect
-      	(and
-   			(decrease (player-current-health) 5)
-   			(thing-at-map monster-remains ?loc1)
-   			(is-attacked)
-      	)
-	)
+      	;;)
+      	;;:effect
+      	;;(and
+   		;;	(decrease (player-current-health) 5)
+   		;;	(thing-at-map monster-remains ?loc1)
+   		;;	(is-attacked)
+      	;;)
+;;	)
     ;;----------------------------------------------
 
     ;;----------------------------------
@@ -257,7 +257,7 @@
    			(not (thing-at-loc skeleton ?loc))
    			(not (thing-at-map skeleton ?loc))
    			(not (thing-at-map arrow ?loc))
-   			(not(is-attacked))
+   			(not(is-attacked ?loc1))
 
       	)
 	)
@@ -280,7 +280,7 @@
    			(not (thing-at-loc arrowtrap ?loc))
    			(not (thing-at-map arrowtrap ?loc))
    			(not (thing-at-map arrow ?loc))
-   			(not (is-trapped))
+   			(not (is-trapped ?loc1))
 
       	)
 	)
