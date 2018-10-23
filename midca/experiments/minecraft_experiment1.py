@@ -89,8 +89,8 @@ def runexperiment():
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
     DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
 
-    run_id = 16
-    for i in range(16,17):
+    run_id = 3
+    for i in range(3,4):
         state_file = STATE_FILE + str(i)
         # problem_generator.generate_file(STATE_FILE + str(i))
         # copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")

@@ -87,7 +87,8 @@ class SimpleAct(base.BaseModule):
         #     print(i)
 
         for nextPlan in goalGraph.allMatchingPlans(goals):
-            print(nextPlan)
+            # print("next plan:")
+            # print(nextPlan)
 
             achieved = world.goals_achieved(nextPlan, goals)
             if len(achieved) > len(goalsAchieved):
@@ -108,8 +109,7 @@ class SimpleAct(base.BaseModule):
             print("Best plan does not achieve all goals.")
             if verbose >= 2:
                 print("Plan:", str(plan))
-                print(
-                "Goals achieved:", [str(goal) for goal in goalsAchieved])
+                print( "Goals achieved:", [str(goal) for goal in goalsAchieved])
         return plan
 
     def run(self, cycle, verbose=2):

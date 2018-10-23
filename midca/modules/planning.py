@@ -382,7 +382,7 @@ class MetricFFPlanner(base.BaseModule):
             if midcaPlan:
                 #TODO: zohreh; I added this line becasue it didn't update the new plan
                 print("a new plan is added")
-                self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                self.mem.get(self.mem.GOAL_GRAPH).removeAllPlans()
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN", midcaPlan)
 

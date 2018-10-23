@@ -221,7 +221,6 @@
 	;;;-------------------------------------
 
 
-
     ;;----------------------------------------------
   ;;  (:action event-monster-explosion
     ;;  	:parameters (?loc1 - mapgrid ?loc - mapgrid)

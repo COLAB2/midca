@@ -201,6 +201,9 @@ class GoalGraph:
     def removeOldPlans(self, requireAllGoals=True):
         self.plans = {plan for plan in self.plans if self.planCurrent(plan, requireAllGoals)}
 
+    def removeAllPlans(self, requireAllGoals=True):
+        self.plans = set()
+
     def numMatchingGoals(self, plan, goals):
         num = 0
         for goal in goals:
