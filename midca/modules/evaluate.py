@@ -145,20 +145,33 @@ class SimpleEvalSubgoals(base.BaseModule):
                 print("All current goals achieved. Removing them from goal graph")
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
 
+            goalGraph.remove(goal)
+            if trace: trace.add_data("REMOVED GOAL", goal)
+            goals_changed = True
+
             # get all the goals from the root of the goal graph
             all_goals = goalGraph.getUnrestrictedGoals()
 
-            for goal in goals:
-                for pending_goal in all_goals:
+            #check to see if the subgoals are achieved; remove the abstract goal
+            for pending_goal in all_goals:
+                flag = 0
+                if "subgoals" in pending_goal.kwargs and goal in pending_goal["subgoals"]:
+                    #if there is another subgoal that the probability is 1 now
+                    subgoals = pending_goal.kwargs["subgoals"]
+                    for subgoal in subgoals:
+                        if subgoal.kwargs["probability"] == 1 and subgoal != goal:
+                            print("there is another subgoal with probability 1", subgoal)
+                            flag = 1
 
-                    if "subgoals" in pending_goal.kwargs and goal in pending_goal["subgoals"]:
+                    if flag == 0:
                         goalGraph.remove(pending_goal)
-                        if verbose >= 3:
+                        if verbose >= 2:
                             print("REMOVED GOAL", pending_goal)
 
-                goalGraph.remove(goal)
-                if trace: trace.add_data("REMOVED GOAL", goal)
-                goals_changed = True
+            for pending_goal in all_goals:
+                if "subgoals" in pending_goal.kwargs and goal in pending_goal["subgoals"]:
+                        subgoals = pending_goal.kwargs["subgoals"]
+                        subgoals.remove(goal)
 
             numPlans = len(goalGraph.plans)
             goalGraph.removeOldPlans()

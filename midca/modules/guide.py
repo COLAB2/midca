@@ -121,7 +121,7 @@ class SimpleMinecraftGoalGen(base.BaseModule):
 
     curr_goal_index = 0
 
-    curr_goal = goals.Goal(*["wood"], func='thing-available', op=">", val="4")
+    curr_goal = goals.Goal(*["wood"], func='thing-available', op=">", val="6")
 
 
     # starting state: on(D,B), on(B,A), ontable(A) ontable(C)

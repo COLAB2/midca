@@ -204,6 +204,7 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
+			(head-armed)
 			(> (player-current-health) 0)
 			    (player-at ?loc)
 				(known-loc skeleton ?loc)
@@ -226,6 +227,7 @@
 		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
 		:precondition
 			(and
+			 (chest-armed)
 			(> (player-current-health) 0)
 				(thing-at-map arrowtrap ?loc)
 				;;(thing-at arrowtrap ?player_loc)
@@ -248,7 +250,7 @@
 			(and
 			(> (player-current-health) 0)
 				(thing-at-map skeleton ?loc)
-
+                (head-armed)
 				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) 10)
                 (player-at ?player_loc)
@@ -266,6 +268,7 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
+			 (chest-armed)
 			(> (player-current-health) 0)
 			    (player-at ?loc)
 				(known-loc arrowtrap ?loc)

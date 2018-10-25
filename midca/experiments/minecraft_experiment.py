@@ -27,7 +27,7 @@ GOAL_GRAPH_CMP_FUNC = minecraft_util.preferSurvive
 DATADIR = "experiments/mortar-experiment-1-data/"
 # NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
 # DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + NOW_STR + ".csv"
-DATA_FILE_HEADER_STR = "runID,numMortar,towersCompleted,score,numcycles\n"
+DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles\n"
 
 CYCLES_START = 10
 CYCLES_END = 50
@@ -41,17 +41,22 @@ NUM_PROCESSES = 8  # Number of individual python processes to use
 
 
 def singlerun_output_str(run_id, curr_midca, num_cycles):
+
     health = curr_midca.mem.get(curr_midca.mem.AGENT_HEALTH)
     print(health)
     tree = curr_midca.mem.get(curr_midca.mem.TREE_HARVEST)
     print(tree)
     dead_point = curr_midca.mem.get(curr_midca.mem.AGENT_DEAD_CYCLE)
     print(dead_point)
-    action_executed_goal = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
+    midca_cycle = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
     print(num_actions)
     result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
-             str(health) + "," + str(tree) + "," + str(action_executed_goal) + "\n"
+             str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
+
+
+
+
     return result
 
 def stop_point(curr_midca):
@@ -59,12 +64,13 @@ def stop_point(curr_midca):
     if not alive:
         return True
 
-def singlerun(run_id, statefile):
+def singlerun(args):
 
-
+    run_id = args[0]
+    statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
-    num_cycles = 50
+    num_cycles = 30
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)
@@ -80,35 +86,65 @@ def runexperiment():
 
     MIDCA_ROOT = thisDir + "/../"
 
-    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
-    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/results"
+    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
+    DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
+
     run_id = 0
-    i = 1
-    # for i in range(10):
-    #     run_id = i
-    # problem_generator.generate_file(STATE_FILE + str(i))
-    # copyfile(STATE_FILE , STATE_FILE + str(i) + "_copy")
-    results = singlerun(run_id, STATE_FILE)
+    for i in range(2):
+        state_file = STATE_FILE + str(i)
+        problem_generator.generate_file(STATE_FILE + str(i))
+        copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+        # copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
+
+        curr_args = [run_id, state_file]
+        runs.append(curr_args)
+        run_id += 1
+
 
     # Uses multiprocessing to give each run its own python process
-    print("-- Starting experiment using")
+    print(("-- Starting experiment using " + str(NUM_PROCESSES) + " processes..."))
     t0 = time.time()
-        # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
-        # **** (each MIDCA must use its own python process)
-
-
+    # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
+    # **** (each MIDCA must use its own python process)
+    pool = Pool(processes=NUM_PROCESSES, maxtasksperchild=1)
+    results = pool.map(singlerun, runs, chunksize=1)
     t1 = time.time()
     timestr = '%.2f' % (t1 - t0)
-
     print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
     print("-- Writing data to file...")
     f = open(DATA_FILENAME, 'w')
-    # f.write(DATA_FILE_HEADER_STR)
+    f.write(DATA_FILE_HEADER_STR)
     for r in results:
         f.write(r)
-        f.write("\n")
-        print(r)
-        print("\n")
+    print(("-- Data written to file " + str(DATA_FILENAME)))
+    print("-- Experiment complete!")
+
+
+    # for i in range(10):
+    #     run_id = i
+    #     problem_generator.generate_file(STATE_FILE + str(i))
+    #     copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+    #     results = singlerun(run_id, STATE_FILE+ str(i))
+    #
+    # # Uses multiprocessing to give each run its own python process
+    #     print("-- Starting experiment using")
+    #     t0 = time.time()
+    #     # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
+    #     # **** (each MIDCA must use its own python process)
+    #
+    #
+    #     t1 = time.time()
+    #     timestr = '%.2f' % (t1 - t0)
+    #
+    # print(("-- Experiment finished! Took " + timestr + "s, generated " + str(len(results)) + " data points"))
+    # print("-- Writing data to file...")
+    # f = open(DATA_FILENAME, 'w')
+    # # f.write(DATA_FILE_HEADER_STR)
+    # for r in results:
+    #     f.write(r)
+    #     f.write("\n")
+    #     print(r)
+    #     print("\n")
 
     print(results)
 
@@ -134,12 +170,14 @@ class MIDCAInstance():
 
         MIDCA_ROOT = thisDir + "/../"
 
-        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
-        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
+        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
+        EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1_nongda.pddl"
+        # DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+        # EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
 
         world = pddlread.load_domain(DOMAIN_FILE, STATE_FILE, EVENT_FILE)
-        myMidca = base.PhaseManager(world, display='', verbose=4)
+        myMidca = base.PhaseManager(world, display='', verbose=0)
         # add phases by name
         for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
             myMidca.append_phase(phase)
@@ -159,7 +197,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        # myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
@@ -198,49 +236,69 @@ def get_max_score_for_cycles(cycle):
     return max_scores[cycle]
 
 
-def graph(prev_file):
-    '''
-    Produce the graph
-    '''
-    from mpl_toolkits.mplot3d import Axes3D
-    import matplotlib.pyplot as plt
-    from matplotlib import cm
-    # get the most recent filename
-    files = sorted([f for f in os.listdir(DATADIR)])
-    datafile = DATADIR + files[-(prev_file + 1)]
-    print(("-- About to graph data from " + str(datafile)))
-    header = True
-    mortar_ys = []
-    cycles_xs = []
-    score_zs = []
-
-    with open(datafile, 'r') as f:
-        for line in f.readlines():
-            if header:
-                header = False
-            else:
-                row = line.strip().split(',')
-                mortar_ys.append(int(row[1]))
-                num_cycles = int(row[4])
-                score = int(row[3])
-                score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
-                score_zs.append(score)
-                cycles_xs.append(num_cycles)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_trisurf(cycles_xs, mortar_ys, score_zs, cmap=cm.coolwarm)
-    ax.set_zlim(bottom=0.0, top=1.0)
-    ax.set_xlim(max(cycles_xs), 0)
-    ax.set_ylim(max(mortar_ys), 0)
-    ax.legend()
-    ax.set_xlabel("Goals")
-    ax.set_ylabel("Resources")
-    ax.set_zlabel("Score")
-    plt.show()
-
-
-
+# def graph(prev_file):
+#     '''
+#     Produce the graph
+#     '''
+#     from mpl_toolkits.mplot3d import Axes3D
+#     import matplotlib.pyplot as plt
+#     from matplotlib import cm
+#     # get the most recent filename
+#     files = sorted([f for f in os.listdir(DATADIR)])
+#     datafile = DATADIR + files[-(prev_file + 1)]
+#     print(("-- About to graph data from " + str(datafile)))
+#     header = True
+#     mortar_ys = []
+#     cycles_xs = []
+#     score_zs = []
+#
+#     with open(datafile, 'r') as f:
+#         for line in f.readlines():
+#             if header:
+#                 header = False
+#             else:
+#                 row = line.strip().split(',')
+#                 mortar_ys.append(int(row[1]))
+#                 num_cycles = int(row[4])
+#                 score = int(row[3])
+#                 score = (score * 1.0) / get_max_score_for_cycles(num_cycles)
+#                 score_zs.append(score)
+#                 cycles_xs.append(num_cycles)
+#
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111, projection='3d')
+#     ax.plot_trisurf(cycles_xs, mortar_ys, score_zs, cmap=cm.coolwarm)
+#     ax.set_zlim(bottom=0.0, top=1.0)
+#     ax.set_xlim(max(cycles_xs), 0)
+#     ax.set_ylim(max(mortar_ys), 0)
+#     ax.legend()
+#     ax.set_xlabel("Goals")
+#     ax.set_ylabel("Resources")
+#     ax.set_zlabel("Score")
+#     plt.show()
+#
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# def graph():
+#
+#     # Fixing random state for reproducibility
+#     np.random.seed(19680801)
+#
+#     mu, sigma = 100, 15
+#     x = mu + sigma * np.random.randn(10000)
+#
+#     # the histogram of the data
+#     n, bins, patches = plt.hist(x, 50, normed=1, facecolor='g', alpha=0.75)
+#
+#     plt.xlabel('Smarts')
+#     plt.ylabel('Probability')
+#     plt.title('Histogram of IQ')
+#     plt.text(60, .025, r'$\mu=100,\ \sigma=15$')
+#     plt.axis([40, 160, 0, 0.03])
+#     plt.grid(True)
+#     plt.show()
+#     return 0
 
 
 if __name__ == "__main__":
@@ -253,11 +311,13 @@ if __name__ == "__main__":
     # elif len(sys.argv) > 1 and sys.argv[1] == 'graphslices':
     #     graph_slices_hardcoded()
     # else:
-    thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-
-    MIDCA_ROOT = thisDir + "/../"
-
-    STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
-    # problem_generator.generate_file(STATE_FILE)
-
+    # thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    #
+    # MIDCA_ROOT = thisDir + "/../"
+    #
+    # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
+    # # problem_generator.generate_file(STATE_FILE)
+    #
     runexperiment()
+
+    # graph()

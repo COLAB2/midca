@@ -186,9 +186,27 @@
             (player-at ?loc1)
    			 (connect ?loc1 ?loc)
    			 (thing-at-loc arrowtrap ?loc)
-
-
    			 (> (player-current-health) 0)
+   			 (not (chest-armed))
+      	)
+      	:effect
+      	(and
+   			(decrease (player-current-health) 2)
+   			(thing-at-map arrow ?loc)
+
+   			(is-trapped ?loc1)
+      	)
+	)
+	;;-----------------------------------------------------
+	(:action event-fall-in-trap-armor
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid)
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc arrowtrap ?loc)
+   			 (> (player-current-health) 0)
+   			 (chest-armed)
       	)
       	:effect
       	(and
@@ -207,7 +225,7 @@
             (player-at ?loc1)
    			 (connect ?loc1 ?loc)
    			 (thing-at-loc skeleton ?loc)
-
+             (not  (head-armed))
       	)
       	:effect
       	(and
@@ -215,11 +233,50 @@
    			(decrease (player-current-health) 1)
    			(thing-at-map arrow ?loc)
 
-   			(is-attacked ?loc1)
+   			(is-attacked ?loc)
+      	)
+	)
+	;;;;;----------------------------------------
+	(:action event-skeleton-attacked-armor
+      	:parameters (?loc1 - mapgrid ?loc - mapgrid )
+      	:precondition
+      	( and
+            (player-at ?loc1)
+   			 (connect ?loc1 ?loc)
+   			 (thing-at-loc skeleton ?loc)
+
+             (head-armed)
+      	)
+      	:effect
+      	(and
+
+   			(decrease (player-current-health) 0.5)
+   			(thing-at-map arrow ?loc)
+
+   			(is-attacked ?loc)
       	)
 	)
 	;;;-------------------------------------
 
+  ;;  (:action event-skeleton-attackd-moved
+    ;;  	:parameters (?sloc - mapgrid ?ploc - mapgrid)
+      ;;	:precondition
+      	;;( and
+      ;;	    (is-attacked ?sloc)
+       ;;     (player-at ?ploc)
+   ;;			(not (connect ?ploc ?sloc))
+
+    ;;  	)
+   ;;   	:effect
+   ;;   	(and
+
+  ;;          (not (thing-at-loc skeleton ?sloc))
+   	;;		(thing-at-loc skeleton ?ploc)
+   	;;		(thing-at-map arrow ?ploc)
+      ;;      (not (is-attacked ?sloc))
+
+    ;;  	)
+;;	)
 
     ;;----------------------------------------------
   ;;  (:action event-monster-explosion
@@ -260,7 +317,7 @@
    			(not (thing-at-loc skeleton ?loc))
    			(not (thing-at-map skeleton ?loc))
    			(not (thing-at-map arrow ?loc))
-   			(not(is-attacked ?loc1))
+   			(not(is-attacked ?loc))
 
       	)
 	)

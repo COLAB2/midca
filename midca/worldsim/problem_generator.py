@@ -17,7 +17,7 @@ import midca.worldsim.worldsim as worldsim
 
 import inspect, os, random
 SKELETON_MAX = 5
-TRAP_MAX = 5
+TRAP_MAX = 7
 SKELETON_CHANCE = 0.05
 ARROW_TRAP_CHANCE = 0.05
 # MONSTER_CHANCE = 0.3
@@ -140,37 +140,42 @@ def generate_file(file):
             f.write("(= (location-id m" + str(i) + "_" + str(j) + ") " + str(k) + ")\n")
             k = k + 1
     tree_locations = []
-    for x in range(1,6):
+
+
+
+    for x in range(1,8):
         i, j = randomxy()
         while [i,j] in tree_locations:
             i, j = randomxy()
         tree_locations.append([i,j])
         f.write("(thing-at-map tree  m" + str(i) + "_" + str(j) + ")\n")
 
-    k = 0
-    kk = 0
-    for i in range(n):
-        for j in range(n):
-            if skeleton_chance() and k < SKELETON_MAX:
-                f.write("(thing-at-loc skeleton  m" + str(i) + "_" + str(j) + ")\n")
-                k = k + 1
-            if trap_chance() and kk < TRAP_MAX:
-                f.write("(thing-at-loc arrowtrap  m" + str(i) + "_" + str(j) + ")\n")
-                kk = kk + 1
+    # k = 0
+    # kk = 0
+    # for i in range(n):
+    #     for j in range(n):
+    #         if skeleton_chance() and k < SKELETON_MAX:
+    #             f.write("(thing-at-loc skeleton  m" + str(i) + "_" + str(j) + ")\n")
+    #             k = k + 1
+    #         if trap_chance() and kk < TRAP_MAX:
+    #             f.write("(thing-at-loc arrowtrap  m" + str(i) + "_" + str(j) + ")\n")
+    #             kk = kk + 1
 
-    # for i in range(TRAP_MAX):
-    #     # if trap_chance():
-    #     sx, sy = randomxy()
-    #     # f.write("(thing-at arrowtrap)\n")
-    #     f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
-    #
-    # for i in range(SKELETON_MAX):
-    #     # if trap_chance():
-    #     sx, sy = randomxy()
-    #     # f.write("(thing-at arrowtrap)\n")
-    #     f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
 
-    # TRAP_LOC = sx, sy
+
+    for i in range(TRAP_MAX):
+        # if trap_chance():
+        sx, sy = randomxy()
+        # f.write("(thing-at arrowtrap)\n")
+        f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
+
+    for i in range(SKELETON_MAX):
+        # if trap_chance():
+        sx, sy = randomxy()
+        # f.write("(thing-at arrowtrap)\n")
+        f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
+
+    TRAP_LOC = sx, sy
 
     # if monster_chance():
     #     sx, sy = randomxy()
@@ -207,8 +212,8 @@ def trap_chance():
 
 
 def randomxy():
-    i = random.randint(0,n-1)
-    j = random.randint(0,n-1)
+    i = random.randint(0,n-2)
+    j = random.randint(0,n-2)
     return (i, j)
 
 

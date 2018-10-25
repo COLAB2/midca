@@ -192,7 +192,7 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 1)
+   			(decrease (player-current-health) 2)
    			(thing-at-map arrow ?loc)
 
    			(is-trapped)

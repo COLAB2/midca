@@ -122,8 +122,8 @@ class SimpleAct(base.BaseModule):
             goals = []
 
         plan = self.get_best_plan(world, goals, verbose)
-        print("the best plan is:")
-        print(plan)
+        # print("the best plan is:")
+        # print(plan)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)

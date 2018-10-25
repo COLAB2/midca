@@ -109,7 +109,7 @@ class Monitor:
                 # it assumes there is obj around, the monitor fires if it observes one
             if location == "unknown" and current_atom:
 
-                if [self.goal] in current_goal:
+                if [self.goal] in current_goal or self.goal in current_goal:
                     self.goal.kwargs["probability"] = 1
                     print(id.__str__() + " is observed, the current goal's probability is 1 now")
 
@@ -128,7 +128,7 @@ class Monitor:
             # if known-skeleton but there is no (thing-at skeleton)
             elif location == "unknown" and exist_obj and not current_atom:
 
-                if [self.goal] in current_goal:
+                if [self.goal] in current_goal or self.goal in current_goal:
                     self.goal.kwargs["probability"] = 0
                     self.mem.set(self.mem.CURRENT_GOALS, [])
                     print(id.__str__() + " does not exist, the current goal is suspended ")
