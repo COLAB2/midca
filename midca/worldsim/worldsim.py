@@ -818,13 +818,8 @@ class World:
                 val = func_2.val
 
             new_val = a.val
-            if verbose >= 2:
-                print("atom", atom.func)
-                print("a.val", a.val)
 
             if a.val is None:
-                if verbose >= 2:
-                    print("not a.val")
                 for f in func_val_dict:
                     if f.func.name == a.func.name:
                         # print("found one: " + str(f))
@@ -839,11 +834,6 @@ class World:
 
             if val is None:
                 val = 0
-
-            if verbose >= 2:
-                print("new_val", new_val)
-
-                print("val", val)
 
             try:
                 if op == ">":
@@ -860,8 +850,6 @@ class World:
                 print(atom)
                 print(a)
                 print(new_val)
-        if verbose >= 2:
-            print("return false")
 
         return False
 
@@ -1043,9 +1031,6 @@ class World:
                     # print("val" + str(func.val))
 
                 elif op == "assign":
-                    print(atom)
-                    print(func.val)
-                    print(val)
                     func.val = float(val)
         except Exception as e:
             print("apply function;; ", e)

@@ -173,6 +173,29 @@ class SimpleEvalSubgoals(base.BaseModule):
                         subgoals = pending_goal.kwargs["subgoals"]
                         subgoals.remove(goal)
 
+            # for pending_goal in all_goals:
+            #     try:
+            #         achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+            #         if 'func' in goal.kwargs:
+            #             achieved = world.atom_val_true(world.midcaGoalAsAtom(goal))
+            #         if 'negate' in goal and goal['negate']:
+            #             achieved = not achieved
+            #         if not achieved:
+            #             if verbose >= 2:
+            #                 print("Not all goals achieved;", goal, "is not true.")
+            #             return
+            #     except ValueError:
+            #         if verbose >= 1:
+            #             print("Could not test goal", goal, ". It does not seem to be a valid world state")
+            #         return
+            # if verbose >= 1:
+            #     print("All current goals achieved. Removing them from goal graph")
+            # goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            #
+            # goalGraph.remove(goal)
+            # if trace: trace.add_data("REMOVED GOAL", goal)
+            # goals_changed = True
+
             numPlans = len(goalGraph.plans)
             goalGraph.removeOldPlans()
             newNumPlans = len(goalGraph.plans)

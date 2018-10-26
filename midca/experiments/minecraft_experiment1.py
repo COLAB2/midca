@@ -22,7 +22,7 @@ import time
 from multiprocessing import Pool
 import sys
 import ctypes  # for popups
-GOAL_GRAPH_CMP_FUNC = minecraft_util.preferSurvive
+GOAL_GRAPH_CMP_FUNC = minecraft_util.preferHealth
 
 DATADIR = "experiments/mortar-experiment-1-data/"
 # NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')

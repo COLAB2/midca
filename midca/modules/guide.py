@@ -1224,16 +1224,16 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     skeleton = world.objects["skeleton"]
                     sloc = "unknown"
-                    if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
+                    # if self.weapon_for_skeleton():
+                    goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
                                           danger="high")
-                        m = Monitor(self.mem, self.world, skeleton, goal)
-                        Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
+                    m = Monitor(self.mem, self.world, skeleton, goal)
+                    Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
 
-                    else:
-                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                        m = Monitor(self.mem, self.world, skeleton, goal)
-                        Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                    #     m = Monitor(self.mem, self.world, skeleton, goal)
+                    #     Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
 
                     hypotheses.append(goal)
 
@@ -1245,14 +1245,14 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     skeleton = world.objects["skeleton"]
                     sloc = world.objects[sloc.name]
-                    if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, sloc], predicate="thing-at-map", negate=True, probability=1,
+                    # if self.weapon_for_skeleton():
+                    goal = goals.Goal(*[skeleton, sloc], predicate="thing-at-map", negate=True, probability=1,
                                           danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
-                    else:
-                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
@@ -1356,14 +1356,14 @@ class ReactiveSurvive(base.BaseModule):
 
                     skeleton = world.objects["skeleton"]
                     loc = "unknown"
-                    if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
+                    # if self.weapon_for_skeleton():
+                    goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
                                           danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
-                    else:
-                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
@@ -1375,14 +1375,14 @@ class ReactiveSurvive(base.BaseModule):
                     world = self.mem.get(self.mem.STATES)[-1]
                     skeleton = world.objects["skeleton"]
                     loc = world.objects[loc.name]
-                    if self.weapon_for_skeleton():
-                        goal = goals.Goal(*[skeleton,loc], predicate="thing-at-map", negate=True, probability=1,
+                    # if self.weapon_for_skeleton():
+                    goal = goals.Goal(*[skeleton,loc], predicate="thing-at-map", negate=True, probability=1,
                                           danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
-                    else:
-                        goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
                         # m = Monitor(self.mem, skeleton, goal)
                         # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
 
@@ -1438,7 +1438,7 @@ class ReactiveSurvive(base.BaseModule):
             inserted1 = False
 
             for p in pending_goals:
-                if "predicate" in p.kwargs and p["predicate"] == "survive":
+                if "func" in p.kwargs and p["func"] == "player-current-health":
                     existed = True
 
             if not existed:
@@ -1447,7 +1447,8 @@ class ReactiveSurvive(base.BaseModule):
 
                 hypotheses = self.survive()
 
-                goal = goals.Goal(predicate="survive", subgoals=hypotheses)
+                # goal = goals.Goal(predicate="survive", subgoals=hypotheses)
+                goal = goals.Goal(op="> ", func="player-current-health", val=20, subgoals=hypotheses)
                 # inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
                 inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 

@@ -107,5 +107,19 @@ def preferSurvive(goal1, goal2):
         if goal1['predicate'] == 'survive' and goal2['func'] == "player-current-healthp":
             return -1
 
+    return 0
+
+def preferHealth(goal1, goal2):
+    if 'func' in goal1 and 'func' in goal2:
+        if goal1['func'] == 'player-current-health' and goal2['func'] != 'player-current-health':
+            return -1
+        elif goal1['func'] != 'player-current-health' and goal2['func'] == 'player-current-health':
+            return 1
+
+    if 'predicate' in goal1 and 'func' in goal2:
+        return 1
+
+    if 'predicate' in goal2 and 'func' in goal1:
+        return -1
 
     return 0
