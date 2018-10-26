@@ -191,7 +191,7 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 2)
+   			(decrease (player-current-health) 7)
    			(thing-at-map arrow ?loc)
 
    			(is-trapped ?loc1)
@@ -210,7 +210,7 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 1)
+   			(decrease (player-current-health) 6)
    			(thing-at-map arrow ?loc)
 
    			(is-trapped ?loc1)
@@ -230,7 +230,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 1)
+   			(decrease (player-current-health) 5)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked ?loc)
@@ -250,7 +250,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 0.5)
+   			(decrease (player-current-health) 5)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked ?loc)
@@ -318,6 +318,7 @@
    			(not (thing-at-map skeleton ?loc))
    			(not (thing-at-map arrow ?loc))
    			(not(is-attacked ?loc))
+   			(not (head-armed))
 
       	)
 	)
@@ -341,7 +342,7 @@
    			(not (thing-at-map arrowtrap ?loc))
    			(not (thing-at-map arrow ?loc))
    			(not (is-trapped ?loc1))
-
+            (not (chest-armed))
       	)
 	)
 

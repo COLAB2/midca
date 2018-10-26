@@ -172,7 +172,7 @@ class MIDCAInstance():
 
         # DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
         # EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1_nongda.pddl"
-        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_newlife.pddl"
         EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"
         # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood"
 
@@ -318,6 +318,8 @@ if __name__ == "__main__":
     # STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
     # # problem_generator.generate_file(STATE_FILE)
     #
+    if float(0) == float(0.0):
+        print("yes")
     runexperiment()
 
     # graph()

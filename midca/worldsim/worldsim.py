@@ -434,30 +434,37 @@ class Operator:
 
         results = []
         func_results = []
+        # resourceType = None
         for condition in self.resultorder:
             names = self.results[condition]
             args = []
-            for name in names:
-                if not (type(name) == list):
-                    if name and name in objdict.keys():
-                        args.append(objdict[name])
-                    elif name:
-                        for t in self.types:
-                            for x in t:
-                                if x.name == "resource":
-                                    resourceType = x
-                        args.append(Obj(name, resourceType))
-                else:
-                    for n in name:
-                        if n in objdict.keys():
-                            args.append(objdict[n])
-                        elif n:
+            try:
+                for name in names:
+                    if not (type(name) == list):
+                        if name and name in objdict.keys():
+                            args.append(objdict[name])
+                        elif name:
                             for t in self.types:
                                 for x in t:
                                     if x.name == "resource":
                                         resourceType = x
-                            args.append(Obj(n, resourceType))
-
+                            args.append(Obj(name, resourceType))
+                    else:
+                        for n in name:
+                            if n in objdict.keys():
+                                args.append(objdict[n])
+                            elif n:
+                                for t in self.types:
+                                    for x in t:
+                                        if x.name == "resource":
+                                            resourceType = x
+                                args.append(Obj(n, resourceType))
+            except Exception as e:
+                print(e)
+                print("name", name)
+                for t in self.types:
+                    for x in t:
+                        print(x.name)
             if condition.op:
 
                 # if not isinstance(condition.val, numbers.Number):
@@ -801,7 +808,7 @@ class World:
                         return True
         return False
 
-    def atom_func_true(self, atom, val, op):
+    def atom_func_true(self, atom, val, op, verbose=3):
         a = next((x for x in self.atoms if x.func and x.func == atom.func and x.args == atom.args), None)
         if a:
             if not isinstance(val, numbers.Number):
@@ -811,10 +818,13 @@ class World:
                 val = func_2.val
 
             new_val = a.val
+            if verbose >= 2:
+                print("atom", atom.func)
+                print("a.val", a.val)
 
-            # print(a.val)
-
-            if not a.val:
+            if a.val is None:
+                if verbose >= 2:
+                    print("not a.val")
                 for f in func_val_dict:
                     if f.func.name == a.func.name:
                         # print("found one: " + str(f))
@@ -824,16 +834,35 @@ class World:
                         if not f.args:
                             new_val = func_val_dict[f]
 
-            if op == ">":
-                return float(new_val) > float(val)
+            if new_val is None:
+                new_val = 0
 
-            if op == "<":
-                return float(new_val) < float(val)
+            if val is None:
+                val = 0
 
-            if op == "=":
-                return float(new_val) == float(val)
+            if verbose >= 2:
+                print("new_val", new_val)
 
-        # print("return false")
+                print("val", val)
+
+            try:
+                if op == ">":
+                    return float(new_val) >= float(val)
+
+                if op == "<":
+                    return float(new_val) <= float(val)
+
+                if op == "=":
+                    return float(new_val) == float(val)
+
+            except Exception as e:
+                print(e)
+                print(atom)
+                print(a)
+                print(new_val)
+        if verbose >= 2:
+            print("return false")
+
         return False
 
     def atom_true(self, atom):
@@ -848,7 +877,7 @@ class World:
         if verbose >=2: print(a.val)
         if a.val is None:
             a.val = 0
-        return int(a.val) > int(atom.val)
+        return int(a.val) >= int(atom.val)
 
     def add_atom(self, atom):
         self.atoms.add(atom)
@@ -928,24 +957,28 @@ class World:
     def is_applicable(self, action):
         for i in range(len(action.preconds)):
             if action.prePos[i] and not self.atom_true(action.preconds[i]):
-                # print("nor true + " + str( action.preconds[i]))
-                return False
-            if not action.prePos[i] and self.atom_true(action.preconds[i]):
-                # print("nor true + " + str(action.preconds[i]))
+                if action.operator.name == "attack-skeleton-hand":
+                    print("nor true + " + str( action.preconds[i]))
                 return False
 
-        # todo: Zohreh; fix the bug later here
+            if not action.prePos[i] and self.atom_true(action.preconds[i]):
+                if action.operator.name == "attack-skeleton-hand":
+                    print("nor false + " + str( action.preconds[i]))
+
+                return False
+
+
         try:
             for i in range(len(action.preFuncPos)):
                 (atom, arg2, op) = action.funcPre[i]
-                if action.preFuncPos[i] and not self.atom_func_true(atom, arg2, op):
-                    print(action.preFuncPos[i])
-                    # print("not true")
+                if action.preFuncPos[i] and not self.atom_func_true(atom, arg2, op, 2):
+                    if action.operator.name == "attack-skeleton-hand":
+                        print("fun pre true + ", atom)
                     return False
 
                 if not action.preFuncPos[i] and self.atom_func_true(atom, arg2, op):
-                    print(action.preFuncPos[i])
-                    # print("not false")
+                    if action.operator.name == "attack-skeleton-hand":
+                        print("fun pre false + " + str(action.preconds[i]))
                     return False
 
                 # if True and not self.atom_func_true(atom, arg2, op):
@@ -953,6 +986,7 @@ class World:
                 #     return False
         except Exception as e:
             print("ERROR: " + str(e))
+            print()
 
         return True
 
@@ -965,9 +999,9 @@ class World:
             return False
 
         # print(operator)
-        # print("is going to be instantiated")
 
         action = operator.instantiate(args)
+        # print("is going to be instantiated")
 
         return self.is_applicable(action)
 
@@ -984,32 +1018,40 @@ class World:
         return None
 
     def apply(self, simAction, verbose=2):
+        try:
+            for (atom, val, op) in simAction.funcRes:
+                # func = next((x for x in self.atoms if x.func and x.func == atom.func  and x.args == atom.args), None)
+                # print("atom" + str(atom))
+                func = self.get_val_func(atom)
+                #todo: Zohreh -- change this later
+                if not func.val:
+                    func.val = 0
 
-        for (atom, val, op) in simAction.funcRes:
-            # func = next((x for x in self.atoms if x.func and x.func == atom.func  and x.args == atom.args), None)
-            # print("atom" + str(atom))
-            func = self.get_val_func(atom)
-            #todo: Zohreh -- change this later
-            if func.val is None:
-                func.val = 0
+                if not isinstance(val, numbers.Number):
+                    func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
 
-            if not isinstance(val, numbers.Number):
-                func_2 = next((x for x in self.atoms if x.func and x.func == val.func and x.args == val.args), None)
+                    val = func_2.val
+                    if not val:
+                        val = 0
 
-                val = func_2.val
-                if val == None:
-                    val = 0
+                if op == "decrease":
+                    func.val = float(func.val) - float(val)
 
-            if op == "decrease":
-                func.val = float(func.val) - float(val)
+                elif op == "increase":
+                    # print("func" + str(func))
+                    func.val = float(func.val) + float(val)
+                    # print("val" + str(func.val))
 
-            elif op == "increase":
-                # print("func" + str(func))
-                func.val = float(func.val) + float(val)
-                # print("val" + str(func.val))
-
-            elif op == "assign":
-                func.val = float(val)
+                elif op == "assign":
+                    print(atom)
+                    print(func.val)
+                    print(val)
+                    func.val = float(val)
+        except Exception as e:
+            print("apply function;; ", e)
+            print(atom)
+            print(func.val)
+            print(val)
 
             # for f in func_val_dict:
             #     if f.func.name == func.func.name:
@@ -1171,11 +1213,12 @@ class World:
         return True
 
     def goals_achieved(self, plan, goalSet):
+        #TODO: I think the problem is the val of function doesn't change in the test world
         testWorld = copy.deepcopy(self)
         achievedGoals = set()
         for action in plan.get_remaining_steps():
             if not testWorld.midca_action_applicable(action):
-                print("it is not applicable")
+                print("it is not applicable", action)
                 break
             else:
                 testWorld.apply_midca_action(action)

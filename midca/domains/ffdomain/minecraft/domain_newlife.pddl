@@ -47,11 +47,14 @@
 		(crafting)
 		(survive)
         (attacking ?loc - mapgrid)
+        (attacking-hand ?loc - mapgrid)
 		(looking-for ?res - resource ?loc - mapgrid)
 		(head-armed)
    	    (chest-armed)
    	    (is-attacked ?loc - mapgrid)
    	    (is-trapped ?loc - mapgrid)
+   	    (harvesting ?target - mapgrid)
+   	    (destroying-trap ?loc  - mapgrid)
 	)
 
 	(:functions
@@ -70,19 +73,26 @@
 
 	)
 
-	;;(:action restore-health
-	;;	:parameters (?p -potion)
-	;;	:precondition
-	;;		(and
-	;;;			(> (thing-available ?p) 0)
-		;;		(< (player-current-health) 20)
-	;;		)
-	;;	:effect
-	;;		(and
-	;;			(assign (player-current-health) 20)
-	;;			(decrease (thing-available ?p) 1)
-	;;		)
-	;;)
+	(:action restore-health
+		:parameters (?p - potion ?axe_tool - tool ?bow_tool - tool)
+		:precondition
+			(and
+				(> (thing-available ?p) 0)
+				(< (player-current-health) 0)
+				(= (tool-id ?axe_tool) 11)
+				(= (tool-id ?bow_tool) 10)
+			)
+		:effect
+			(and
+				(assign (player-current-health) 30)
+				(decrease (thing-available ?p) 1)
+
+				(decrease (thing-available ?axe_tool) 1)
+				(decrease (thing-available ?bow_tool) 1)
+				(assign (tool-in-hand) 0)
+				;;(player-at m0_0)
+			)
+	)
 
 
 	;;-------------------------------------------------
@@ -94,7 +104,7 @@
 		:parameters (?res - material  ?target - mapgrid)
 		:precondition
 			(and
-
+                (> (player-current-health) 0)
 				(player-at ?target)
 				(not (placed-thing-at-map ?res ?target))
 				(> (thing-available ?res) 0)
@@ -133,9 +143,8 @@
 		:parameters (?res -resource ?playerloc - mapgrid )
 		:precondition
 			(and
-			  ;; (chest-armed)
-		    	;;(head-armed)
-		    	 (> (player-current-health) 0)
+			   (> (player-current-health) 0)
+		    	(head-armed)
 		    	(player-at ?playerloc)
 				(not (known-loc ?res ?playerloc))
 			)
@@ -210,7 +219,6 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
-
 			(head-armed)
 			(> (player-current-health) 0)
 			    (player-at ?loc)
@@ -218,8 +226,7 @@
 				(thing-at skeleton ?loc)
 				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) 10)
-
-
+				(> (thing-available ?tool) 0)
 			)
 		:effect
 			(and
@@ -228,28 +235,49 @@
 				(attacking ?loc)
 			)
 	)
-
-	;;----------------------------------
-    (:action destroy-trap-with-loc
-		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
+	;;-----------------------------------------------------------
+	(:action attack-skeleton-hand
+		:parameters (?tool - tool ?loc - mapgrid )
 		:precondition
 			(and
-			 (chest-armed)
+
 			(> (player-current-health) 0)
-				(thing-at-map arrowtrap ?loc)
-				;;(thing-at arrowtrap ?player_loc)
-				(= (tool-id ?tool) 11)
-				(= (tool-in-hand) 11)
-                (player-at ?player_loc)
+			    (player-at ?loc)
+				(known-loc skeleton ?loc)
+				(thing-at skeleton ?loc)
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+
 			)
 		:effect
 			(and
 
-				(not (thing-at-map arrowtrap ?loc))
-			(trap-destroyed ?player_loc)
+				(attacking-hand ?loc)
 			)
 	)
-;;
+	;;--------------------------------------
+	(:action attack-skeleton-hand_2
+		:parameters (?tool - tool ?loc - mapgrid)
+		:precondition
+			(and
+
+
+                (attacking-hand ?loc)
+
+			)
+		:effect
+			(and
+
+				(not (thing-at skeleton ?loc))
+				(attacking ?loc)
+				(not (attacking-hand ?loc))
+			)
+	)
+
+
+
+
+;;------------------------------------------------------
 
 (:action attack-skeleton-with-loc
 		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
@@ -258,6 +286,7 @@
 			(> (player-current-health) 0)
 				(thing-at-map skeleton ?loc)
                 (head-armed)
+                ( > (thing-available ?tool) 0)
 				(= (tool-id ?tool) 10)
 				(= (tool-in-hand) 10)
                 (player-at ?player_loc)
@@ -267,6 +296,48 @@
 
 				(not (thing-at-map skeleton ?loc))
 			(attacking ?player_loc)
+			)
+	)
+	;;	;;--------------------------------------------------------
+	(:action attack-skeleton-with-loc-hand
+		:parameters ( ?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
+		:precondition
+			(and
+			    (> (player-current-health) 0)
+			     ( < (thing-available bow) 1)
+				(thing-at-map skeleton ?loc)
+
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+                (player-at ?player_loc)
+			)
+		:effect
+			(and
+                (attacking-hand ?loc)
+
+			)
+	)
+
+	;;--------------------------------------------------------
+	(:action attack-skeleton-with-loc-hand_2
+		:parameters ( ?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
+		:precondition
+			(and
+			(> (player-current-health) 0)
+			  (< (thing-available bow) 1)
+				(thing-at-map skeleton ?loc)
+
+
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+                (player-at ?player_loc)
+                (attacking-hand ?loc)
+			)
+		:effect
+			(and
+                (not (attacking-hand ?loc))
+				(not (thing-at-map skeleton ?loc))
+			    (attacking ?player_loc)
 			)
 	)
 
@@ -282,6 +353,7 @@
 				(thing-at arrowtrap ?loc)
 				(= (tool-id ?tool) 11)
 				(= (tool-in-hand) 11)
+				(> (thing-available ?tool) 0)
 
 			)
 		:effect
@@ -291,8 +363,116 @@
 			)
 	)
 	;------------------------------------------------------------
+	(:action destroy-trap-hand
+		:parameters (?tool - tool ?loc - mapgrid)
+		:precondition
+			(and
 
+			(> (player-current-health) 0)
+			(< (thing-available wood-axe) 1)
+			    (player-at ?loc)
+				(known-loc arrowtrap ?loc)
+				(thing-at arrowtrap ?loc)
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
 
+			)
+		:effect
+			(and
+				(destroying-trap ?loc)
+			)
+	)
+
+;;---------------------------------------------------------------
+(:action destroy-trap-hand_2
+		:parameters (?tool - tool ?loc - mapgrid)
+		:precondition
+			(and
+
+			(> (player-current-health) 0)
+			(< (thing-available wood-axe) 1)
+			    (player-at ?loc)
+				(known-loc arrowtrap ?loc)
+				(thing-at arrowtrap ?loc)
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+				(destroying-trap ?loc)
+
+			)
+		:effect
+			(and
+				(not (thing-at arrowtrap ?loc))
+				(trap-destroyed ?loc)
+				(not (destroying-trap ?loc))
+			)
+	)
+	;;----------------------------------
+    (:action destroy-trap-with-loc
+		:parameters (?tool - tool ?loc - mapgrid ?player_loc - mapgrid)
+		:precondition
+			(and
+			 (chest-armed)
+			(> (player-current-health) 0)
+				(thing-at-map arrowtrap ?loc)
+				;;(thing-at arrowtrap ?player_loc)
+				(= (tool-id ?tool) 11)
+				(= (tool-in-hand) 11)
+				(> (thing-available ?tool) 0)
+                (player-at ?player_loc)
+			)
+		:effect
+			(and
+
+				(not (thing-at-map arrowtrap ?loc))
+			(trap-destroyed ?player_loc)
+			)
+	)
+;;----------------------------------
+    (:action destroy-trap-with-loc-hand
+		:parameters (?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
+		:precondition
+			(and
+
+			    (> (player-current-health) 0)
+				(thing-at-map arrowtrap ?loc)
+				(< (thing-available wood-axe) 1)
+
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+
+                (player-at ?player_loc)
+			)
+		:effect
+			(and
+                (destroying-trap ?loc)
+
+			)
+	)
+
+	;;----------------------------------
+    (:action destroy-trap-with-loc-hand-2
+		:parameters (?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
+		:precondition
+			(and
+
+			    (> (player-current-health) 0)
+				(thing-at-map arrowtrap ?loc)
+				(< (thing-available wood-axe) 1)
+
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+
+                (player-at ?player_loc)
+              (destroying-trap ?loc)
+			)
+		:effect
+			(and
+                (not (destroying-trap ?loc))
+				(not (thing-at-map arrowtrap ?loc))
+			    (trap-destroyed ?player_loc)
+			)
+	)
+;;---------------------------------------------------------------
 	(:action change-harvest-loc
 		:parameters (?target - mapgrid)
 		:precondition
@@ -334,6 +514,7 @@
 				(player-at ?target)
 				(thing-at-map shelter ?target)
 				(not (in-shelter))
+				 (> (player-current-health) 0)
 				
 			)
 		:effect
@@ -391,12 +572,57 @@
 				(decrease (tool-current-health ?tool) 1)
 			)
 	)
+	;;-----------------------------------------------------
+
+	(:action harvest-hand
+		:parameters (?target - mapgrid ?tool - tool ?obj - resource)
+		:precondition
+			(and
+			 (> (player-current-health) 0)
+				(player-at ?target)
+				(< (thing-available wood-axe) 0)
+				(thing-at-map ?obj ?target)
+				(= (current-harvest-location) (location-id ?target))
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+
+
+			)
+		:effect
+			(and
+				(harvesting ?target)
+			)
+	)
+	;;;----------------------------------------------------
+	(:action harvest-hand-2
+		:parameters (?target - mapgrid ?tool - tool ?obj - resource)
+		:precondition
+			(and
+			 (> (player-current-health) 0)
+				(player-at ?target)
+				(< (thing-available wood-axe) 0)
+				(thing-at-map ?obj ?target)
+				(= (current-harvest-location) (location-id ?target))
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+              (harvesting ?target)
+
+			)
+		:effect
+			(and
+				(increase (current-harvest-duration) 1)
+				(decrease (tool-current-health ?tool) 1)
+				(not (harvesting ?target))
+			)
+	)
+
 
 	;; ----------------------------------------------------
 	(:action harvest-loose-tool
 		:parameters (?tool - tool)
 		:precondition
 			(and
+			 (> (player-current-health) 0)
 				(> (thing-available ?tool) 0)
 				(= (tool-in-hand) (tool-id ?tool))
 				(= (tool-current-health ?tool) 0)
@@ -440,6 +666,26 @@
 				(thing-at-map tree ?target)
 				(= (tool-id ?tool) 11)
 				(= (tool-in-hand) 11)
+				(= (current-harvest-location) (location-id ?target))
+
+
+			)
+		:effect
+			(and
+				(increase (thing-available wood) 1)
+				(not (thing-at-map tree ?target))
+			)
+	)
+	;;-----------------------------------------------
+	(:action get-harvest-wood-hand
+		:parameters (?target - mapgrid ?tool - tool)
+		:precondition
+			(and
+			(> (player-current-health) 0)
+				(player-at ?target)
+				(thing-at-map tree ?target)
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
 				(= (current-harvest-location) (location-id ?target))
 
 

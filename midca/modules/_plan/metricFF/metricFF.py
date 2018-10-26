@@ -37,7 +37,7 @@ def metric_ff(DOMAIN_FIILE, STATE_FILE):
 
             plan.append((line.split(":")[1].strip().split(" ")))
 
-    # print(plan)
+    print(plan)
     return plan
 
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     thisDir = os.path.dirname(os.path.realpath(__file__))
     MIDCA_ROOT = thisDir + "/../../../"
     print("start....")
-    DOMAIN_FIILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
+    DOMAIN_FIILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_newlife.pddl"
     #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 

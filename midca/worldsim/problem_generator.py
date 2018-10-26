@@ -17,7 +17,7 @@ import midca.worldsim.worldsim as worldsim
 
 import inspect, os, random
 SKELETON_MAX = 5
-TRAP_MAX = 7
+TRAP_MAX = 5
 SKELETON_CHANCE = 0.05
 ARROW_TRAP_CHANCE = 0.05
 # MONSTER_CHANCE = 0.3
