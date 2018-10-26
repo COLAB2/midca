@@ -210,7 +210,7 @@
       	)
       	:effect
       	(and
-   			(decrease (player-current-health) 3)
+   			(decrease (player-current-health) 2)
    			(thing-at-map arrow ?loc)
 
    			(is-trapped ?loc1)
@@ -230,7 +230,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 4)
+   			(decrease (player-current-health) 3)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked ?loc)
@@ -250,7 +250,7 @@
       	:effect
       	(and
 
-   			(decrease (player-current-health) 3)
+   			(decrease (player-current-health) 2)
    			(thing-at-map arrow ?loc)
 
    			(is-attacked ?loc)
