@@ -125,6 +125,33 @@ class SimpleEvalSubgoals(base.BaseModule):
             trace.add_data("GOALS", copy.deepcopy(goals))
 
         goals_changed = False  # for trace
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        # get all the goals from the root of the goal graph
+        all_goals = goalGraph.getUnrestrictedGoals()
+        for pending_goal in all_goals:
+            try:
+                achieved = world.atom_true(world.midcaGoalAsAtom(pending_goal))
+                if 'func' in pending_goal.kwargs:
+                    achieved = world.atom_val_true(world.midcaGoalAsAtom(pending_goal))
+                if 'negate' in pending_goal and pending_goal['negate']:
+                    achieved = not achieved
+
+                if achieved:
+                    goalGraph.remove(pending_goal)
+                    if "subgoals" in pending_goal.kwargs:
+                        subgoals = pending_goal.kwargs["subgoals"]
+                        for sgoal in subgoals:
+                            goalGraph.remove(sgoal)
+
+                    if trace: trace.add_data("REMOVED GOAL", pending_goal)
+                    goals_changed = True
+                    if verbose >= 2:
+                        print("goal achieved;", pending_goal)
+            except ValueError:
+                if verbose >= 1:
+                    print("Could not test goal", pending_goal, ". It does not seem to be a valid world state")
+                return
+
         if goals:
             for goal in goals:
                 try:
@@ -149,8 +176,7 @@ class SimpleEvalSubgoals(base.BaseModule):
             if trace: trace.add_data("REMOVED GOAL", goal)
             goals_changed = True
 
-            # get all the goals from the root of the goal graph
-            all_goals = goalGraph.getUnrestrictedGoals()
+
 
             #check to see if the subgoals are achieved; remove the abstract goal
             for pending_goal in all_goals:
@@ -172,29 +198,35 @@ class SimpleEvalSubgoals(base.BaseModule):
                 if "subgoals" in pending_goal.kwargs and goal in pending_goal["subgoals"]:
                         subgoals = pending_goal.kwargs["subgoals"]
                         subgoals.remove(goal)
+#
+            #  #check to see if goals in pending goal is achieved
+            for pending_goal in all_goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(pending_goal))
+                    if 'func' in pending_goal.kwargs:
+                        achieved = world.atom_val_true(world.midcaGoalAsAtom(pending_goal))
+                    if 'negate' in pending_goal and pending_goal['negate']:
+                        achieved = not achieved
 
-            # for pending_goal in all_goals:
-            #     try:
-            #         achieved = world.atom_true(world.midcaGoalAsAtom(goal))
-            #         if 'func' in goal.kwargs:
-            #             achieved = world.atom_val_true(world.midcaGoalAsAtom(goal))
-            #         if 'negate' in goal and goal['negate']:
-            #             achieved = not achieved
-            #         if not achieved:
-            #             if verbose >= 2:
-            #                 print("Not all goals achieved;", goal, "is not true.")
-            #             return
-            #     except ValueError:
-            #         if verbose >= 1:
-            #             print("Could not test goal", goal, ". It does not seem to be a valid world state")
-            #         return
-            # if verbose >= 1:
-            #     print("All current goals achieved. Removing them from goal graph")
-            # goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
-            #
-            # goalGraph.remove(goal)
-            # if trace: trace.add_data("REMOVED GOAL", goal)
-            # goals_changed = True
+                    if achieved:
+                        goalGraph.remove(pending_goal)
+                        if "subgoals" in pending_goal.kwargs:
+                            subgoals = pending_goal.kwargs["subgoals"]
+                            for sgoal in subgoals:
+                                goalGraph.remove(sgoal)
+
+                        if trace: trace.add_data("REMOVED GOAL", pending_goal)
+                        goals_changed = True
+                        if verbose >= 2:
+                            print("goal achieved;", pending_goal)
+
+                except ValueError:
+                    if verbose >= 1:
+                        print("Could not test goal", pending_goal, ". It does not seem to be a valid world state")
+                    return
+
+            if verbose >= 1:
+                print("All current goals achieved. Removing them from goal graph")
 
             numPlans = len(goalGraph.plans)
             goalGraph.removeOldPlans()
