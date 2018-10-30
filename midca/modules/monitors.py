@@ -90,11 +90,20 @@ class Monitor:
 
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             pending_goals = goalGraph.getUnrestrictedGoals()
-            goal_in_pending_list = True
+            goal_in_pending_list = False
             if self.goal in pending_goals or [self.goal] in pending_goals:
-                goal_in_pending_list = False
+                goal_in_pending_list = True
+
+            for pending_goal in pending_goals:
+                # print(pending_goal)
+                if "subgoals" in pending_goal.kwargs:
+                    subgoals = pending_goal.kwargs["subgoals"]
+                    if self.goal in subgoals or [self.goal] in subgoals:
+                        goal_in_pending_list = True
+
 
             if goal_in_pending_list is False:
+                print("this goal was removed, monitoring for this goal stopped")
                 return
 
             current_goal = self.mem.get(self.mem.CURRENT_GOALS)

@@ -399,7 +399,7 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
-
+ (chest-armed)
 		(> (player-current-health) 0)
 			    (player-at ?loc)
 				(known-loc arrowtrap ?loc)
@@ -462,6 +462,7 @@
 		:parameters (?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
 		:precondition
 			(and
+			 (chest-armed)
                 (> (player-current-health) 0)
 
 				(thing-at-map arrowtrap ?loc)

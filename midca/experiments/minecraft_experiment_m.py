@@ -194,7 +194,7 @@ class MIDCAInstance():
             STATE_FILE
         ))
         myMidca.append_module("Act", act.SimpleAct())
-        myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+        myMidca.insert_module('Interpret', guide.ReactiveSurviveMonitor(), 3)
 
         myMidca.storeHistory = True
         myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)

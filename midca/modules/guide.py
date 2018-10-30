@@ -1094,34 +1094,6 @@ class ReactiveSurvive(base.BaseModule):
         self.world = world
         self.mem = mem
 
-    def DH(self):
-        # if self.nearby_arrow():
-        user_loc = self.user_location()
-        adj_location = self.nearby_location(user_loc)
-
-        if True:
-            world = self.mem.get(self.mem.STATES)[-1]
-
-            print("EXPLANATION1:")
-            print("(ASSUME-INITIAL-VALUE (THING-AT SKELETON ADJ-M))")
-            print("(SKELETON-ATTACKED " + user_loc + " ADJ-M)")
-
-
-            print("EXPLANATION2:")
-            print("(ASSUME-INITIAL-VALUE (THING-AT ARROWTRAP ADJ-M))")
-            print("(FALL-IN-TRAP " +  user_loc + " ADJ-M)")
-
-            world.add_fact("thing-at", ["skeleton", user_loc])
-            # world.add_fact("thing-at", ["arrowtrap"])
-
-            self.world.add_fact("thing-at", ["skeleton", user_loc])
-            # self.world.add_fact("thing-at", ["arrowtrap"])
-
-            for atom in world.atoms:
-                if atom.predicate and atom.predicate.name == "thing-at":
-                    print("A new hypothesis is added to the MIDCA's belief state: thing-at( "
-                          + str(atom.args[0]) +", " + str(atom.args[1]) +" )")
-
 
     def nearby_location(self, user_loc):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1202,100 +1174,17 @@ class ReactiveSurvive(base.BaseModule):
         pre_health =  self.mem.get(self.mem.AGENT_HEALTH)
 
         if not pre_health:
-            pre_health = 20
+            pre_health = 30
 
         self.mem.set(self.mem.AGENT_HEALTH, a.val)
 
-        if a.val < pre_health:
+        if pre_health > a.val > 0:
             print("new health is observed:  " + str(a.val))
             print("It is expected to be " + str(pre_health))
             return True
 
         return False
 
-    def survive(self, verbose=2):
-        hypotheses = []
-        monitors = []
-        s, sloc, schance = self.skeleton()
-        a, aloc, achance = self.arrow_trap()
-        player_loc = self.user_location()
-
-        if not(schance == 1 or achance == 1):
-            self.DH()
-
-        if self.nearby_arrow():
-            if self.skeleton(): #this needs to come from assume-init-value from DH
-                if schance == 0.5:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    skeleton = world.objects["skeleton"]
-                    sloc = "unknown"
-                    # if self.weapon_for_skeleton():
-                    mnts = []
-                    goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
-                                      danger="high")
-                    m = Monitor(self.mem, self.world, skeleton, goal)
-                    t = Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"])
-                    t.start()
-                    mnts.append(t)
-
-                    # else:
-                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                    #     m = Monitor(self.mem, self.world, skeleton, goal)
-                    #     Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
-
-                    hypotheses.append(goal)
-
-                    if verbose >= 2:
-                        print("goal generated:", goal, )
-
-                    print("it is added to the subgoals of SURVIVE")
-                if schance == 1:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    skeleton = world.objects["skeleton"]
-                    sloc = world.objects[sloc.name]
-                    # if self.weapon_for_skeleton():
-                    goal = goals.Goal(*[skeleton, sloc], predicate="thing-at-map", negate=True, probability=1,
-                                          danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
-
-                    # else:
-                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
-                        # m = Monitor(self.mem, skeleton, goal)
-                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
-
-                    hypotheses.append(goal)
-                    if verbose >= 2:
-                        print("goal generated:", goal, )
-
-            if self.arrow_trap():
-
-
-                if achance == 0.5:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    trap = world.objects["arrowtrap"]
-                    aloc = "unknown"
-
-
-                    goal = goals.Goal(*[trap, player_loc], predicate="thing-at", negate=True, probability=0.5, danger="low")
-                    m = Monitor(self.mem, self.world,trap, goal)
-
-                    Thread(target=m.goalmonitor, args=[trap, aloc, "thing-at-map"]).start()
-                    hypotheses.append(goal)
-                    if verbose >= 2:
-                        print("goal generated:", goal, )
-
-                if achance == 1:
-                    world = self.mem.get(self.mem.STATES)[-1]
-                    trap = world.objects["arrowtrap"]
-                    aloc = world.objects[aloc.name]
-                    goal = goals.Goal(*[trap, aloc], predicate="thing-at-map", negate=True, probability=1, danger="low")
-                    # m = Monitor(self.mem, skeleton, goal)
-                    # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
-                    hypotheses.append(goal)
-                    if verbose >= 2:
-                        print("goal generated:", goal, )
-        return hypotheses
 
     def explanation(self, world):
         # if not self.skeleton():
@@ -1472,6 +1361,262 @@ class ReactiveSurvive(base.BaseModule):
             else:
                 print(". This goal was already in the graph.")
 
+
+class ReactiveSurviveMonitor(base.BaseModule):
+    '''
+    MIDCA module that generates a goal
+    '''
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+
+    def DH(self):
+        # if self.nearby_arrow():
+        user_loc = self.user_location()
+        adj_location = self.nearby_location(user_loc)
+
+        if True:
+            world = self.mem.get(self.mem.STATES)[-1]
+
+            print("EXPLANATION1:")
+            print("(ASSUME-INITIAL-VALUE (THING-AT SKELETON ADJ-M))")
+            print("(SKELETON-ATTACKED " + user_loc + " ADJ-M)")
+
+
+            print("EXPLANATION2:")
+            print("(ASSUME-INITIAL-VALUE (THING-AT ARROWTRAP ADJ-M))")
+            print("(FALL-IN-TRAP " +  user_loc + " ADJ-M)")
+
+            world.add_fact("thing-at", ["skeleton", user_loc])
+            # world.add_fact("thing-at", ["arrowtrap"])
+
+            self.world.add_fact("thing-at", ["skeleton", user_loc])
+            # self.world.add_fact("thing-at", ["arrowtrap"])
+
+            for atom in world.atoms:
+                if atom.predicate and atom.predicate.name == "thing-at":
+                    print("A new hypothesis is added to the MIDCA's belief state: thing-at( "
+                          + str(atom.args[0]) +", " + str(atom.args[1]) +" )")
+
+
+    def nearby_location(self, user_loc):
+        world = self.mem.get(self.mem.STATES)[-1]
+        locations = []
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "connect" and atom.args[0].name == user_loc:
+                locations.append(atom.args[1].name)
+        return locations
+
+    def user_location(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "player-at":
+                return atom.args[0].name
+
+    def attacking_zombie(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "zombie-at" and atom.args[0].type.name == "monster":
+                return atom.args
+        return False
+
+    def skeleton(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        player_loc = self.user_location()
+        adj_loc = self.nearby_location(player_loc)
+
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "skeleton":
+                if atom.args[1].name in adj_loc:
+                    return atom.args[0], atom.args[1], 1
+            # elif atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == "skeleton":
+            #     skeleton = atom.args
+
+        return world.objects["skeleton"], "unknown", 0.5
+
+
+    def arrow_trap(self):
+        player_loc = self.user_location()
+        adj_loc = self.nearby_location(player_loc)
+
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+        trap = None
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrowtrap":
+                if atom.args[1].name in adj_loc:
+                    return atom.args[0], atom.args[1], 1
+            # if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == "arrowtrap":
+
+        return world.objects["arrowtrap"], "unknown", 0.5
+
+    def weapon_for_skeleton(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+        trap = None
+        for atom in world.atoms:
+            if atom.func and atom.func.name == "thing-available" and atom.args[0].name == "wood-axe" and atom.val > 0:
+                return atom.args
+        return False
+
+    def nearby_arrow(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        arrow = None
+
+        for atom in world.atoms:
+            if atom.predicate and atom.predicate.name == "thing-at-map" and atom.args[0].name == "arrow":
+                return atom.args
+
+
+        return False
+
+    def is_damaged(self):
+        world = self.mem.get(self.mem.STATES)[-1]
+        func = world.functions["player-current-health"]
+        a = next((x for x in world.atoms if x.func == func), None)
+        # 15 is a threshold here;
+        pre_health =  self.mem.get(self.mem.AGENT_HEALTH)
+
+        if not pre_health:
+            pre_health = 30
+
+        self.mem.set(self.mem.AGENT_HEALTH, a.val)
+
+        if pre_health > a.val > 0:
+            print("new health is observed:  " + str(a.val))
+            print("It is expected to be " + str(pre_health))
+            return True
+
+        return False
+
+    def survive(self, verbose=2):
+        hypotheses = []
+        monitors = []
+        s, sloc, schance = self.skeleton()
+        a, aloc, achance = self.arrow_trap()
+        player_loc = self.user_location()
+
+        if not(schance == 1 or achance == 1):
+            self.DH()
+
+        if self.nearby_arrow():
+            if self.skeleton(): #this needs to come from assume-init-value from DH
+                if schance == 0.5:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    skeleton = world.objects["skeleton"]
+                    sloc = "unknown"
+                    # if self.weapon_for_skeleton():
+
+                    goal = goals.Goal(*[skeleton, player_loc], predicate="thing-at", negate=True, probability=0.5,
+                                      danger="high")
+                    m = Monitor(self.mem, self.world, skeleton, goal)
+                    t = Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"])
+                    # t.start()
+                    monitors.append(t)
+
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                    #     m = Monitor(self.mem, self.world, skeleton, goal)
+                    #     Thread(target=m.goalmonitor, args=[skeleton, sloc, "thing-at-map"]).start()
+
+                    hypotheses.append(goal)
+
+                    if verbose >= 2:
+                        print("goal generated:", goal, )
+
+                    print("it is added to the subgoals of SURVIVE")
+                if schance == 1:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    skeleton = world.objects["skeleton"]
+                    sloc = world.objects[sloc.name]
+                    # if self.weapon_for_skeleton():
+                    goal = goals.Goal(*[skeleton, sloc], predicate="thing-at-map", negate=True, probability=1,
+                                          danger="high")
+                        # m = Monitor(self.mem, skeleton, goal)
+                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
+
+                    # else:
+                    #     goal = goals.Goal(predicate="in-shelter", probability=0.5, danger="high")
+                        # m = Monitor(self.mem, skeleton, goal)
+                        # Thread(target=m.goalmonitor, args=[skeleton, loc, "thing-at-map"]).start()
+
+                    hypotheses.append(goal)
+                    if verbose >= 2:
+                        print("goal generated:", goal, )
+
+            if self.arrow_trap():
+
+
+                if achance == 0.5:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    trap = world.objects["arrowtrap"]
+                    aloc = "unknown"
+
+
+                    goal = goals.Goal(*[trap, player_loc], predicate="thing-at", negate=True, probability=0.5, danger="low")
+                    m = Monitor(self.mem, self.world,trap, goal)
+                    arrow_t = Thread(target=m.goalmonitor, args=[trap, aloc, "thing-at-map"])
+                    # arrow_t.start()
+                    hypotheses.append(goal)
+                    monitors.append(arrow_t)
+                    if verbose >= 2:
+                        print("goal generated:", goal, )
+
+                if achance == 1:
+                    world = self.mem.get(self.mem.STATES)[-1]
+                    trap = world.objects["arrowtrap"]
+                    aloc = world.objects[aloc.name]
+                    goal = goals.Goal(*[trap, aloc], predicate="thing-at-map", negate=True, probability=1, danger="low")
+                    # m = Monitor(self.mem, skeleton, goal)
+                    # Thread(target=m.goalmonitor, args=[trap, loc, "thing-at-map"]).start()
+                    hypotheses.append(goal)
+                    if verbose >= 2:
+                        print("goal generated:", goal, )
+        return hypotheses, monitors
+
+
+    def run(self, cycle, verbose=2):
+        '''event name should come from an explnation module'''
+        event_name = "zombie-attack"
+        if verbose>=2:
+            print(self)
+
+        if self.is_damaged():
+
+            # TODO: this needs to be changed: These information comes from the explanation node
+            # I like to find a better way to implement the goal decomosing to the subgoals
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            pending_goals = goalGraph.getUnrestrictedGoals()
+
+            existed = False
+            inserted = False
+
+
+            for p in pending_goals:
+                if "func" in p.kwargs and p["func"] == "player-current-health":
+                    existed = True
+
+            if not existed:
+                print("An anomaly is detected. Health is decreasing. Calling DISCOVER HISTORY to explain the anomaly")
+
+
+                hypotheses, monitors = self.survive()
+
+                # goal = goals.Goal(predicate="survive", subgoals=hypotheses)
+                goal = goals.Goal(op="> ", func="player-current-health", val=30, subgoals=hypotheses)
+                # inserted1 = self.mem.get(self.mem.GOAL_GRAPH).insert(restore_health_goal)
+                inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+
+            # if inserted1:
+            #     print("a goal to restore the health is generated")
+
+            if inserted:
+                print("a goal to survive is generated")
+                for m in monitors:
+                    m.start()
+
+            else:
+                print(". This goal was already in the graph.")
 
 
 class ReactiveApprehend(base.BaseModule):
