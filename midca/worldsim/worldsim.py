@@ -1056,6 +1056,40 @@ class World:
                 # print("removing_atom "+str(simAction.results[i]))
                 self.remove_atom(simAction.results[i])
 
+    # it is used when the agent dies
+    def removeOldMemory(self):
+        pred = "is-attacked"
+        predd = "is-trapped"
+        pred2 = "known-loc"
+        pred3 = "thing-at-map"
+        pred4 = "thing-at"
+        pred5 = "searched-right"
+        pred6 = "searched-left"
+        pred7 = "searched-behind"
+        pred8 = "searched-forward"
+        pred9 = "chest-armed"
+        pred10 = "head-armed"
+        attacked_list = []
+
+        for x in self.atoms:
+            if x.predicate:
+                if x.predicate.name == pred or x.predicate.name == predd:
+                    attacked_list.append(x)
+                if x.predicate.name == pred2:
+                    attacked_list.append(x)
+                if x.predicate.name == pred4:
+                    attacked_list.append(x)
+                if x.predicate.name == pred9 or x.predicate.name == pred10:
+                    attacked_list.append(x)
+                if x.predicate.name == pred5 or x.predicate.name == pred6 or x.predicate.name == pred7 or x.predicate.name == pred8:
+                    attacked_list.append(x)
+
+                if x.predicate.name == pred3 and x.args[0].name != "tree":
+                    attacked_list.append(x)
+
+        for a in attacked_list:
+            print(a)
+            self.remove_atom(a)
 
     def apply_named_action(self, opName, argNames, verbose=2):
 

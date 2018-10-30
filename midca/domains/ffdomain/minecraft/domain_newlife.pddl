@@ -95,7 +95,32 @@
 				(not (player-at ?from))
 			)
 	)
+;;----------------------------------------------
+;;;this is like when the agent dies
+	(:action restore-health_2
+		:parameters (?p - potion ?axe_tool - tool ?bow_tool - tool ?from - mapgrid ?loc - mapgrid)
+		:precondition
+			(and
+				(> (thing-available ?p) 0)
+				(< (player-current-health) 0)
+				(= (tool-id ?axe_tool) 11)
+				(= (tool-id ?bow_tool) 10)
+				(player-at ?from)
+				(is-attacked ?loc)
+			)
+		:effect
+			(and
+				(assign (player-current-health) 30)
+				(decrease (thing-available ?p) 1)
 
+				(decrease (thing-available ?axe_tool) 1)
+				(decrease (thing-available ?bow_tool) 1)
+				(assign (tool-in-hand) 0)
+				(player-at m0_0)
+				(not (player-at ?from))
+				(not (is-attacked ?loc))
+			)
+	)
 
 	;;-------------------------------------------------
 
@@ -262,8 +287,11 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
-
-                (= (tool-id ?tool) 0)
+                (> (player-current-health) 0)
+			    (player-at ?loc)
+				(known-loc skeleton ?loc)
+				(thing-at skeleton ?loc)
+				(= (tool-id ?tool) 0)
 				(= (tool-in-hand) 0)
                 (attacking-hand ?loc)
 
@@ -288,6 +316,7 @@
 			(and
 			(> (player-current-health) 0)
 				(thing-at-map skeleton ?loc)
+				(connect ?player_loc ?loc)
                 (head-armed)
                 ( > (thing-available ?tool) 0)
 				(= (tool-id ?tool) 10)
@@ -309,7 +338,7 @@
 			    (> (player-current-health) 0)
 			  ;;   ( < (thing-available bow) 1)
 				(thing-at-map skeleton ?loc)
-
+                (connect ?player_loc ?loc)
 				(= (tool-id ?tool) 0)
 				(= (tool-in-hand) 0)
                 (player-at ?player_loc)
@@ -326,10 +355,15 @@
 		:parameters ( ?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
 		:precondition
 			(and
+			  (> (player-current-health) 0)
+				(thing-at-map skeleton ?loc)
+                (connect ?player_loc ?loc)
+				(= (tool-id ?tool) 0)
+				(= (tool-in-hand) 0)
+                (player-at ?player_loc)
 
                 (attacking-hand ?loc)
-                (= (tool-id ?tool) 0)
-				(= (tool-in-hand) 0)
+
 			)
 		:effect
 			(and
@@ -385,9 +419,12 @@
 		:parameters (?tool - tool ?loc - mapgrid)
 		:precondition
 			(and
-                (= (tool-id ?tool) 0)
+               	(> (player-current-health) 0)
+			    (player-at ?loc)
+				(known-loc arrowtrap ?loc)
+				(thing-at arrowtrap ?loc)
+				(= (tool-id ?tool) 0)
 				(= (tool-in-hand) 0)
-
 				(destroying-trap ?loc)
 
 			)
@@ -411,6 +448,7 @@
 				(= (tool-in-hand) 11)
 				(> (thing-available ?tool) 0)
                 (player-at ?player_loc)
+                (connect ?player_loc ?loc)
 			)
 		:effect
 			(and
@@ -425,12 +463,13 @@
 		:precondition
 			(and
                 (> (player-current-health) 0)
-			  ;;   ( < (thing-available wood-axe) 1)
+
 				(thing-at-map arrowtrap ?loc)
 
 				(= (tool-id ?tool) 0)
 				(= (tool-in-hand) 0)
                 (player-at ?player_loc)
+                (connect ?player_loc ?loc)
 			)
 		:effect
 			(and
@@ -444,8 +483,14 @@
 		:parameters (?loc - mapgrid ?player_loc - mapgrid ?tool - tool)
 		:precondition
 			(and
-			(= (tool-id ?tool) 0)
+			  (> (player-current-health) 0)
+
+				(thing-at-map arrowtrap ?loc)
+
+				(= (tool-id ?tool) 0)
 				(= (tool-in-hand) 0)
+                (player-at ?player_loc)
+                (connect ?player_loc ?loc)
 
               (destroying-trap ?loc)
 			)

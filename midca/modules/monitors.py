@@ -7,7 +7,26 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 from _io import open
 import time
 import uuid
+import threading
 from itertools import chain
+
+
+class StoppableThread(threading.Thread):
+    """Thread class with a stop() method. The thread itself has to check
+    regularly for the stopped() condition."""
+
+    def __init__(self):
+        super(StoppableThread, self).__init__()
+        self._stop_event = threading.Event()
+
+    def run(self):
+        return
+
+    def stop(self):
+        self._stop_event.set()
+
+    def stopped(self):
+        return self._stop_event.is_set()
 
 
 class Monitor:
@@ -68,8 +87,15 @@ class Monitor:
 
         while True:
             world = self.mem.get(self.mem.STATES)[-1]
-            flag = 0
-            obj_exist = False
+
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            pending_goals = goalGraph.getUnrestrictedGoals()
+            goal_in_pending_list = True
+            if self.goal in pending_goals or [self.goal] in pending_goals:
+                goal_in_pending_list = False
+
+            if goal_in_pending_list is False:
+                return
 
             current_goal = self.mem.get(self.mem.CURRENT_GOALS)
             # current_atom = [a for a in world.atoms if a.predicate and a.predicate.name == predicate and a.args[0]
@@ -91,21 +117,6 @@ class Monitor:
                     exist_obj = a
                     break
 
-            # if exist_obj: print(exist_obj)
-            # print("monitoring this goal")
-            # print(self.goal)
-            #
-            # if [self.goal] in current_goal:
-            #     print("this is current")
-            #
-            # print("list o current goals:")
-            # for gg in current_goal:
-            #     for p in gg:
-            #         print(p)
-            #         if "predicate" in p.kwargs and p["predicate"] == self.goal["predicate"] and p.args[0] and \
-            #                 self.goal.args[0] == p.args[0] \
-            #                 and p.args[1] and self.goal.args[1] == p.args[1]:
-            #             print("yes")
                 # it assumes there is obj around, the monitor fires if it observes one
             if location == "unknown" and current_atom:
 
@@ -113,7 +124,7 @@ class Monitor:
                     self.goal.kwargs["probability"] = 1
                     print(id.__str__() + " is observed, the current goal's probability is 1 now")
 
-                    break
+                    return
                 else:
                     self.goal.kwargs["probability"] = 1
                     self.mem.set(self.mem.CURRENT_GOALS, [])
@@ -123,7 +134,7 @@ class Monitor:
                     print("this fact is added to the belief: ")
                     print("thing-at", id.__str__(), player_loc)
 
-                    break
+                    return
 
             # if known-skeleton but there is no (thing-at skeleton)
             elif location == "unknown" and exist_obj and not current_atom:
@@ -142,6 +153,8 @@ class Monitor:
                             self.world.remove_atom(atom)
                             break
 
+                    return
+
                 else:
                     self.goal.kwargs["probability"] = 0
                     print(id.__str__() + " does not exist, this goal's probability is 0 now")
@@ -153,7 +166,7 @@ class Monitor:
                         if atom.predicate and atom.predicate.name == "thing-at" and atom.args[0].name == id.__str__():
                             self.world.remove_atom(atom)
                             break
-                    break
+                    return
 
             # elif location != "unknown" and current_atom:
             #     obj_exist = True
@@ -161,5 +174,6 @@ class Monitor:
             elif location != "unknown" and not current_atom:
                 self.mem.get(self.mem.GOAL_GRAPH).remove(self.goal)
                 print(id.__str__() + "does not exist, the goal is removed")
+                return
 
             time.sleep(3)

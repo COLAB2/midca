@@ -27,7 +27,7 @@ GOAL_GRAPH_CMP_FUNC = minecraft_util.preferHealth
 DATADIR = "experiments/mortar-experiment-1-data/"
 # NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
 # DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + NOW_STR + ".csv"
-DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles\n"
+DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles,deadcount\n"
 
 CYCLES_START = 10
 CYCLES_END = 50
@@ -41,21 +41,18 @@ NUM_PROCESSES = 8  # Number of individual python processes to use
 
 
 def singlerun_output_str(run_id, curr_midca, num_cycles):
-
-    health = curr_midca.mem.get(curr_midca.mem.AGENT_HEALTH)
+    health = curr_midca.mem.get(curr_midca.mem.AGENT_CURRENT_HEALTH)
     print(health)
     tree = curr_midca.mem.get(curr_midca.mem.TREE_HARVEST)
     print(tree)
     dead_point = curr_midca.mem.get(curr_midca.mem.AGENT_DEAD_CYCLE)
     print(dead_point)
-    midca_cycle = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
+    midca_cycle = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED_GOAL)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
+    dead_count = curr_midca.mem.get(curr_midca.mem.DEAD_COUNTER)
     print(num_actions)
-    result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
-             str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
-
-
-
+    result = str(run_id) + "," + str(dead_point) + "," + str(num_actions) + "," + "," + \
+             str(health) + "," + str(tree) + "," + str(midca_cycle) + str(dead_count) + "\n"
 
     return result
 
@@ -70,7 +67,7 @@ def singlerun(args):
     statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
-    num_cycles = 50
+    num_cycles = 70
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)

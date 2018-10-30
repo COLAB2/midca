@@ -16,8 +16,8 @@
 import midca.worldsim.worldsim as worldsim
 
 import inspect, os, random
-SKELETON_MAX = 5
-TRAP_MAX = 5
+SKELETON_MAX = 3
+TRAP_MAX = 4
 SKELETON_CHANCE = 0.05
 ARROW_TRAP_CHANCE = 0.05
 # MONSTER_CHANCE = 0.3
@@ -25,7 +25,7 @@ SKELETON_LOC = 0
 TRAP_LOC = 0
 MONSTER_LOC = 0
 n = 10
-
+TREE_MAX = 8
 # Random Problem Generator
 def generate_file(file):
     f = open(file, "w")
@@ -143,7 +143,7 @@ def generate_file(file):
 
 
 
-    for x in range(1,8):
+    for x in range(1,TREE_MAX):
         i, j = randomxy()
         while [i,j] in tree_locations:
             i, j = randomxy()
@@ -165,13 +165,13 @@ def generate_file(file):
 
     for i in range(TRAP_MAX):
         # if trap_chance():
-        sx, sy = randomxy()
+        sx, sy = randomxy2()
         # f.write("(thing-at arrowtrap)\n")
         f.write("(thing-at-loc arrowtrap  m" + str(sx) + "_" + str(sy) + ")\n")
 
     for i in range(SKELETON_MAX):
         # if trap_chance():
-        sx, sy = randomxy()
+        sx, sy = randomxy2()
         # f.write("(thing-at arrowtrap)\n")
         f.write("(thing-at-loc skeleton  m" + str(sx) + "_" + str(sy) + ")\n")
 
@@ -212,10 +212,14 @@ def trap_chance():
 
 
 def randomxy():
+    i = random.randint(0,n-1)
+    j = random.randint(0,n-1)
+    return (i, j)
+
+def randomxy2():
     i = random.randint(0,n-2)
     j = random.randint(0,n-2)
     return (i, j)
-
 
 if __name__ == "__main__":
     thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

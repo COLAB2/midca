@@ -27,7 +27,7 @@ GOAL_GRAPH_CMP_FUNC = minecraft_util.preferSurvive
 DATADIR = "experiments/mortar-experiment-1-data/"
 # NOW_STR = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d--%H-%M-%S')
 # DATA_FILENAME = DATADIR + "MortarCogSciDemoExperiment1" + NOW_STR + ".csv"
-DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles\n"
+DATA_FILE_HEADER_STR = "runID,deadpoint,num_actions,health,tree,numcycles,deadcount\n"
 
 CYCLES_START = 10
 CYCLES_END = 50
@@ -42,7 +42,7 @@ NUM_PROCESSES = 8  # Number of individual python processes to use
 
 def singlerun_output_str(run_id, curr_midca, num_cycles):
 
-    health = curr_midca.mem.get(curr_midca.mem.AGENT_HEALTH)
+    health = curr_midca.mem.get(curr_midca.mem.AGENT_CURRENT_HEALTH)
     print(health)
     tree = curr_midca.mem.get(curr_midca.mem.TREE_HARVEST)
     print(tree)
@@ -50,9 +50,10 @@ def singlerun_output_str(run_id, curr_midca, num_cycles):
     print(dead_point)
     midca_cycle = curr_midca.mem.get(curr_midca.mem. ACTIONS_EXECUTED_GOAL)
     num_actions = curr_midca.mem.get(curr_midca.mem.ACTIONS_EXECUTED)
+    dead_count = curr_midca.mem.get(curr_midca.mem.DEAD_COUNTER)
     print(num_actions)
     result =str(run_id) + "," +  str(dead_point)+"," + str(num_actions) + ","  + "," + \
-             str(health) + "," + str(tree) + "," + str(midca_cycle) + "\n"
+             str(health) + "," + str(tree) + "," + str(midca_cycle) + str(dead_count) + "\n"
 
 
 
@@ -70,7 +71,7 @@ def singlerun(args):
     statefile = args[1]
     midca_inst = MIDCAInstance()
     midca_inst.createMIDCAObj(statefile)
-    num_cycles = 30
+    num_cycles = 50
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     midca_inst.run_cycles(num_cycles)
@@ -90,11 +91,11 @@ def runexperiment():
     DATA_FILENAME = MIDCA_ROOT + "domains/ffdomain/minecraft/wood_results"
 
     run_id = 0
-    for i in range(2):
+    for i in range(1):
         state_file = STATE_FILE + str(i)
-        problem_generator.generate_file(STATE_FILE + str(i))
-        copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
-        # copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
+        # problem_generator.generate_file(STATE_FILE + str(i))
+        # copyfile(STATE_FILE + str(i), STATE_FILE + str(i) + "_copy")
+        copyfile(STATE_FILE + str(i) + "_copy", STATE_FILE + str(i))
 
         curr_args = [run_id, state_file]
         runs.append(curr_args)
@@ -170,7 +171,7 @@ class MIDCAInstance():
 
         MIDCA_ROOT = thisDir + "/../"
 
-        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_nongda.pddl"
+        DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_newlife.pddl"
         EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1_nongda.pddl"
         # DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain.pddl"
         # EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_1.pddl"

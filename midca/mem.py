@@ -79,12 +79,15 @@ class Memory:
     ACTUAL_COST = "__actual cost"
 
     #minecraft
+    AGENT_CURRENT_HEALTH = "__healthcurrent"
     AGENT_ALIEVE = "__agentAlive"
     TREE_HARVEST = "__treeHarvest"
     AGENT_HEALTH = "__agenthealth"
     AGENT_DEAD_CYCLE = "__dead"
     ACHIEVED_CYCLE = "__cycle"
     ACTIONS_EXECUTED_GOAL = "__aeg"
+    DEAD_COUNTER = "__deadcounter"
+
     def __init__(self, args={}):
         self.knowledge = {}
         self.update(args)
