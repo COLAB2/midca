@@ -346,6 +346,7 @@ class MetricFFPlanner(base.BaseModule):
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
 
+
         if not midcaPlan:
             # use pyhop to generate new plan
             if verbose >= 2:
