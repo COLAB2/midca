@@ -4,12 +4,10 @@ from midca.modules import simulator, guide, evaluate, perceive, note, intend, pl
 
 from midca.worldsim import domainread, stateread
 import inspect, os
-import midca.examples.API
 
 # Domain Specific Imports
-from midca.domains.rpa_domain import util
+from midca.domains.rpa_domain import util, API
 #from midca.domains.rpa_domain.plan import methods, operators
-
 
 '''
 This is the TwoAgentDemo with MIDCA
@@ -27,20 +25,20 @@ DISPLAY_FUNC = util.rpa_display
 GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 
 world = domainread.load_domain(DOMAIN_FILE)
-state_str = midca.examples.API.json_predicateargument()
 stateread.apply_state_file(world, STATE_FILE)
 
-# now load the state
-stateread.apply_state_str(world, state_str)
 #creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
 #add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
-'''
+
 #add the modules which instantiate basic blocksworld operation
-myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
+myMidca.append_module("Perceive", perceive.RpaObserver())
+myMidca.insert_module("Plan", planning.RPAPlanner_send(), 0)
+myMidca.insert_module("Plan", planning.RPAPlanner_request(), 1)
+myMidca.append_module("Act", act.SimpleAct_rpa())
+'''
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
@@ -62,7 +60,7 @@ myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so th
 '''
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
-myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
+myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
 myMidca.run()
 

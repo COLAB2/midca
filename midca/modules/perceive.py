@@ -9,6 +9,13 @@ try:
 	from bzrlib.config import LocationStore
 except:
 	pass
+import stomp
+try:
+    from midca.domains.rpa_domain import API
+    from midca.worldsim import stateread
+except:
+	pass
+
 
 class ROSObserver:
     
@@ -369,3 +376,105 @@ class MAReporter(base.BaseModule):
             self.writeS.send(self.endMsg)
         finally:
             self.writeS.shutdown(socket.SHUT_RDWR)
+
+
+class RpaObserver(base.BaseModule):
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+
+    class MyListener(stomp.ConnectionListener):
+
+        def __init__(self):
+            self.msg = None
+
+        def on_error(self, headers, message):
+            print('received an error "%s"' % message)
+
+        def on_message(self, headers, message):
+            # replace double quotes with single quotes
+            self.msg = message
+
+
+    def init(self, world, mem):
+        # establish ActiveMQ connection
+        self.listener = self.MyListener()
+        self.conn = stomp.Connection()
+        self.conn.set_listener('', self.listener)
+        self.conn.start()
+        self.conn.connect('admin', 'admin', wait=True)
+        self.conn.subscribe(destination="/topic/twoAgentSimOutput", id=1, ack='auto')
+
+
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    # perfect observation
+    def observe(self):
+        return self.world.copy()
+
+    def remove_bunch_atoms(self, atoms):
+
+        # This function removes all the atoms in the world,follows recursion
+        if len(atoms) == 0:
+            return
+
+        if self.world.atom_true(list(atoms)[len(atoms) - 1]):
+            self.world.remove_atom(list(atoms)[len(atoms) - 1])
+            if len(atoms) == 0:
+                return
+            else:
+                atoms.pop()
+            self.remove_bunch_atoms(atoms)
+
+    def run(self, cycle, verbose=2):
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+        if self.listener.msg:
+            # get all the states
+            atoms = self.world.get_atoms()
+            # remove all the states
+            self.remove_bunch_atoms(atoms)
+            # get the message
+            message = self.listener.msg
+            # print message
+            print ("Recieved message : ")
+            print (message)
+            # save the json to memory
+            self.mem.set(self.mem.JSON_STATE, message)
+            # get the states from the json
+            state_str = API.json_predicateargument(message)
+            # apply it to the world
+            stateread.apply_state_str(self.world, state_str)
+
+        self.mem.add(self.mem.STATES, self.world)
+
+        # Memory Usage Optimization (optional, feel free to comment
+        # drop old memory states if not being used
+        # this should help with high memory costs
+        states = self.mem.get(self.mem.STATES)
+        if len(states) > 400:
+            # print "trimmed off 200 old stale states"
+            states = states[200:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(self.world))
+
+    def __del__(self):
+        '''
+            close ActiveMQ on deletion.
+        '''
+        self.conn.disconnect()

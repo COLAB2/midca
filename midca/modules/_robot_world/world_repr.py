@@ -173,3 +173,18 @@ class SimpleWorld:
 		if object and object in sightings:
 			return [detectedObject for detectedObject in sightings[object]]
 		return []
+		
+	def limit_sightings(self):
+		'''
+		Limits the sightings and positions for each object to last 10 findings
+		'''
+		for object in self.sightings:
+			if (len (self.sightings[object]) > 10):
+				self.sightings[object] = self.sightings[object][10:]
+		
+		for object in self.pos:
+			if (len (self.pos[object] > 10)):
+				self.pos[object] = self.pos[object][10:]
+				
+		
+				

@@ -80,11 +80,11 @@ def json_predicateargument():
     '''
     Reads the json file and converts into predicate argument format
     '''
-    with open('/home/sampath/Documents/rpa.json') as json_data:
+    with open('C:/Users/Sampath/Documents/midca/midca/domains/rpa_domain/sample.json') as json_data:
         states = json.load(json_data)
         predicate = ""
-        for each in range(0,10):
-            predicate = create_coordinate(predicate,each)
+        for each in range(0, 10):
+            predicate = create_coordinate(predicate, each)
 
         if 'knownEntities' in states:
             predicate = create_entity(predicate, states['knownEntities'])
@@ -95,7 +95,7 @@ def json_predicateargument():
 
         if 'searchArea' in states:
             predicate = create_searchlocation(predicate, states['searchArea'])
-	
+
         return predicate
 
 

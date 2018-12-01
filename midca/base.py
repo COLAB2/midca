@@ -2,7 +2,8 @@ from __future__ import print_function
 import copy, datetime, sys
 import time
 from midca.mem import Memory
-from midca import goals, logging, trace
+from midca import goals, trace
+from midca import logs as logging
 from midca.worldsim import stateread
 import threading
 
@@ -490,7 +491,8 @@ class PhaseManager:
         while 1:
             if usingInterface:
                 print("Next MIDCA command:  ", file = sys.stderr, end = "")
-                val = raw_input()
+                val = ""
+                #val = raw_input()
                 print
                 if val == "q":
                     break
@@ -618,10 +620,12 @@ class PhaseManager:
                     print("command not understood")
                 else:
                     val = self.next_phase()
+                    time.sleep(0.2)
                     if self.mem.metaEnabled:
                         metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
                     if val == "continue":
                         self.next_phase()
+
                     elif val == "q":
                         break
                     if self.mem.metaEnabled:

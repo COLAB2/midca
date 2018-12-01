@@ -1,6 +1,13 @@
 from midca.modules._plan.asynch import asynch
 from midca import base
 import copy
+import json
+import sys
+
+try:
+    import stomp
+except:
+    pass
 
 
 class AsynchronousAct(base.BaseModule):
@@ -69,14 +76,14 @@ class AsynchronousAct(base.BaseModule):
             else:
                 break
 
-class SimpleAct(base.BaseModule):
 
+class SimpleAct(base.BaseModule):
     '''
     MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
     To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
     '''
 
-    #returns the plan that achieves the most current goals, based on simulation.
+    # returns the plan that achieves the most current goals, based on simulation.
     def get_best_plan(self, world, goals, verbose):
         plan = None
         goalsAchieved = set()
@@ -93,7 +100,7 @@ class SimpleAct(base.BaseModule):
                 if verbose >= 3:
                     print "  Retrieved Plan:"
                     for a in nextPlan:
-                        print "  "+str(a)
+                        print "  " + str(a)
                     print "Goals achieved:", [str(goal) for goal in achieved]
         if plan == None and verbose >= 1:
             print "No valid plan found that achieves any current goals."
@@ -103,19 +110,19 @@ class SimpleAct(base.BaseModule):
                 print "Plan:", str(plan)
                 print "Goals achieved:", [str(goal) for goal in goalsAchieved]
         return plan
-        
-    def run(self, cycle, verbose = 2):
+
+    def run(self, cycle, verbose=2):
         self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
-        except :
+        except:
             goals = []
-	plan = self.get_best_plan(world, goals, verbose)
+        plan = self.get_best_plan(world, goals, verbose)
         trace = self.mem.trace
         if trace:
-            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD", copy.deepcopy(world))
             trace.add_data("GOALS", copy.deepcopy(goals))
             trace.add_data("PLAN", copy.deepcopy(plan))
@@ -135,16 +142,16 @@ class SimpleAct(base.BaseModule):
                         print "Selected action", action, "from plan:\n"
                         if verbose >= 3:
                             for a in plan:
-                                print "  "+str(a)
+                                print "  " + str(a)
                     else:
                         # print the whole plan
                         print "Selected action", action, "from plan:\n", plan
                 self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
-                    actions = actions[200:] # trim off old stale actions
+                    actions = actions[200:]  # trim off old stale actions
                     self.mem.set(self.mem.ACTIONS, actions)
-                    #print "Trimmed off 200 old stale actions to save space"
+                    # print "Trimmed off 200 old stale actions to save space"
                 plan.advance()
 
                 if trace: trace.add_data("ACTION", action)
@@ -325,4 +332,75 @@ class NBeaconsSimpleAct(base.BaseModule):
             self.mem.add(self.mem.ACTIONS, [])
 
             if trace: trace.add_data("ACTION", None)
+
+
+class SimpleAct_rpa(base.BaseModule):
+    '''
+    MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
+    To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
+    '''
+
+
+
+    def init(self, world, mem):
+        # establish ActiveMQ connection
+        self.mem = mem
+        self.world = world
+        self.act_conn = stomp.Connection()
+        self.act_conn.start()
+        self.act_conn.connect('admin', 'admin', wait=True)
+
+
+    def run(self, cycle, verbose=2):
+
+        self.verbose = verbose
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        if self.mem.get(self.mem.JSON_ACT):
+            message = self.mem.get(self.mem.JSON_ACT)
+            plan = eval(message)
+            instruction = plan["plan"].pop(0)
+            if instruction["action"] == "Land":
+                sys.exit()
+            message = json.dumps(instruction)
+            print ("Sent instruction ")
+            print (message)
+            self.act_conn.send(body=message, destination='/topic/plan', ack='auto')
+            #print ("Plan modified")
+            self.mem.set(self.mem.JSON_ACT, json.dumps(plan))
+            #print(json.dumps(plan))
+
+        '''
+        atoms = self.world.get_atoms()
+
+        plan = dict()
+        tile = dict()
+
+        tile['location'] = {"type" : "tile" , "X" : 9, "Y": 8}
+
+        for each in atoms:
+            if each.predicate.name == "atlocation":
+                if each.args[0].name == "RPA":
+                    x = int(each.args[1].name)
+                    y = int(each.args[2].name) - 1
+                    plan['action'] = "Move"
+                    plan['name'] = "RPA"
+                    plan['target'] = ""
+                    tile['location'] = {"type": "tile", "X": x, "Y": y}
+                    plan['target'] = tile
+                    print json.dumps(plan)
+                    self.act_conn.send(body=json.dumps(plan), destination='/topic/plan', ack='auto')
+                    break
+        '''
+    def __del__(self):
+        '''
+            close ActiveMQ on deletion.
+        '''
+        self.act_conn.disconnect()
+
+
 

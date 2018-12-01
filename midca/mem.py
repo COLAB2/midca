@@ -1,4 +1,4 @@
-from midca.logging import Event
+from midca.logs import Event
 from midca.trace import CogTrace
 import threading
 
@@ -53,6 +53,11 @@ class Memory:
 	EXPLANATION = "__explanation"
 	EXPLANATION_VAL = "__explanation_val"
 
+	# RPA
+	JSON_STATE = "__states"
+	JSON_ACT = "__act"
+	STORM = "__listofstorms"
+	REPLAN = "__REPLAN"
 
     	#Goal Tranformation
     	CL_TREE = "__class heirarchy tree"

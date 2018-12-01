@@ -1,9 +1,11 @@
 type(root)
 type(ENTITY,root)
 type(COORDINATE, root)
+type(EFFECT, root)
 
 predicate(atlocation, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
 predicate(atsearcharea, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+predicate(is_affected, [ent, efct, x, y], [ENTITY, EFFECT, COORDINATE, COORDINATE])
 
 operator(move, 
 args = [(ent, ENTITY), (x, COORDINATE), (y, COORDINATE)], 
