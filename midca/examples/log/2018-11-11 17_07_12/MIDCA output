@@ -1,0 +1,1381 @@
+.001039 - Goal Graph initialized.
+
+.002781 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.003945 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.004341 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.004645 - [cognitive] Initializing Eval module 1 SimpleEval_moos...done.
+
+.004960 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.005648 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.006768 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.007524 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.007836 - Starting cycle 0
+
+.008204 - ****** Starting Simulate Phase ******
+
+.008693 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+.009276 - ****** Starting Perceive Phase ******
+
+.011648 - states not received
+
+.012364 - World observed.
+
+.015386 - ****** Starting Interpret Phase ******
+
+.016182 - Please input a goal if desired. Otherwise, press enter to continue
+
+1.033206 - ****** Starting Eval Phase ******
+
+1.037291 - No current goals. Skipping eval
+
+1.037928 - ****** Starting Intend Phase ******
+
+1.038835 - No Goals in Goal graph. Intend will do nothing.
+
+1.039327 - ****** Starting Plan Phase ******
+
+1.042187 - No goals received by planner. Skipping planning.
+
+1.042628 - ****** Starting Act Phase ******
+
+1.043427 - No valid plan found that achieves any current goals.
+
+1.044948 - MIDCA will not select an action this cycle.
+
+1.045414 - Starting cycle 1
+
+1.045760 - ****** Starting Simulate Phase ******
+
+1.046540 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+1.047063 - ****** Starting Perceive Phase ******
+
+1.049018 - states not received
+
+1.049715 - World observed.
+
+1.053869 - ****** Starting Interpret Phase ******
+
+1.054650 - Please input a goal if desired. Otherwise, press enter to continue
+
+1.665706 - ****** Starting Eval Phase ******
+
+1.669553 - No current goals. Skipping eval
+
+1.669931 - ****** Starting Intend Phase ******
+
+1.670721 - No Goals in Goal graph. Intend will do nothing.
+
+1.671136 - ****** Starting Plan Phase ******
+
+1.674915 - No goals received by planner. Skipping planning.
+
+1.675220 - ****** Starting Act Phase ******
+
+1.676030 - No valid plan found that achieves any current goals.
+
+1.677432 - MIDCA will not select an action this cycle.
+
+1.677989 - Starting cycle 2
+
+1.678272 - ****** Starting Simulate Phase ******
+
+1.678846 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+1.679231 - ****** Starting Perceive Phase ******
+
+1.681233 - states not received
+
+1.682047 - World observed.
+
+1.683924 - ****** Starting Interpret Phase ******
+
+1.685209 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.107454 - ****** Starting Eval Phase ******
+
+2.109934 - No current goals. Skipping eval
+
+2.110253 - ****** Starting Intend Phase ******
+
+2.110833 - No Goals in Goal graph. Intend will do nothing.
+
+2.111156 - ****** Starting Plan Phase ******
+
+2.113387 - No goals received by planner. Skipping planning.
+
+2.113807 - ****** Starting Act Phase ******
+
+2.114601 - No valid plan found that achieves any current goals.
+
+2.117682 - MIDCA will not select an action this cycle.
+
+2.118183 - Starting cycle 3
+
+2.118453 - ****** Starting Simulate Phase ******
+
+2.118784 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+2.119030 - ****** Starting Perceive Phase ******
+
+2.120911 - states not received
+
+2.121967 - World observed.
+
+2.123678 - ****** Starting Interpret Phase ******
+
+2.124502 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.361715 - ****** Starting Eval Phase ******
+
+2.365811 - No current goals. Skipping eval
+
+2.366534 - ****** Starting Intend Phase ******
+
+2.367517 - No Goals in Goal graph. Intend will do nothing.
+
+2.367940 - ****** Starting Plan Phase ******
+
+2.371107 - No goals received by planner. Skipping planning.
+
+2.371459 - ****** Starting Act Phase ******
+
+2.372308 - No valid plan found that achieves any current goals.
+
+2.373791 - MIDCA will not select an action this cycle.
+
+2.374288 - Starting cycle 4
+
+2.374652 - ****** Starting Simulate Phase ******
+
+2.375325 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+2.375707 - ****** Starting Perceive Phase ******
+
+2.377623 - states not received
+
+2.378225 - World observed.
+
+2.380456 - ****** Starting Interpret Phase ******
+
+2.381624 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.592728 - ****** Starting Eval Phase ******
+
+2.596961 - No current goals. Skipping eval
+
+2.597479 - ****** Starting Intend Phase ******
+
+2.598235 - No Goals in Goal graph. Intend will do nothing.
+
+2.598580 - ****** Starting Plan Phase ******
+
+2.601441 - No goals received by planner. Skipping planning.
+
+2.601790 - ****** Starting Act Phase ******
+
+2.602520 - No valid plan found that achieves any current goals.
+
+2.603999 - MIDCA will not select an action this cycle.
+
+2.604481 - Starting cycle 5
+
+2.604902 - ****** Starting Simulate Phase ******
+
+2.605526 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+2.605830 - ****** Starting Perceive Phase ******
+
+2.607976 - states not received
+
+2.608986 - World observed.
+
+2.610841 - ****** Starting Interpret Phase ******
+
+2.611626 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.809034 - ****** Starting Eval Phase ******
+
+2.811768 - No current goals. Skipping eval
+
+2.812181 - ****** Starting Intend Phase ******
+
+2.812857 - No Goals in Goal graph. Intend will do nothing.
+
+2.813276 - ****** Starting Plan Phase ******
+
+2.815891 - No goals received by planner. Skipping planning.
+
+2.816203 - ****** Starting Act Phase ******
+
+2.816897 - No valid plan found that achieves any current goals.
+
+2.818682 - MIDCA will not select an action this cycle.
+
+2.819216 - Starting cycle 6
+
+2.819575 - ****** Starting Simulate Phase ******
+
+2.820093 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+2.820423 - ****** Starting Perceive Phase ******
+
+2.822096 - states not received
+
+2.822795 - World observed.
+
+2.824745 - ****** Starting Interpret Phase ******
+
+2.825413 - Please input a goal if desired. Otherwise, press enter to continue
+
+3.032131 - ****** Starting Eval Phase ******
+
+3.034266 - No current goals. Skipping eval
+
+3.034637 - ****** Starting Intend Phase ******
+
+3.035270 - No Goals in Goal graph. Intend will do nothing.
+
+3.035635 - ****** Starting Plan Phase ******
+
+3.038147 - No goals received by planner. Skipping planning.
+
+3.038513 - ****** Starting Act Phase ******
+
+3.039302 - No valid plan found that achieves any current goals.
+
+3.041036 - MIDCA will not select an action this cycle.
+
+3.041734 - Starting cycle 7
+
+3.042034 - ****** Starting Simulate Phase ******
+
+3.042426 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+3.042655 - ****** Starting Perceive Phase ******
+
+3.044535 - states not received
+
+3.045384 - World observed.
+
+3.048187 - ****** Starting Interpret Phase ******
+
+3.048917 - Please input a goal if desired. Otherwise, press enter to continue
+
+3.240009 - ****** Starting Eval Phase ******
+
+3.242289 - No current goals. Skipping eval
+
+3.242619 - ****** Starting Intend Phase ******
+
+3.243322 - No Goals in Goal graph. Intend will do nothing.
+
+3.243680 - ****** Starting Plan Phase ******
+
+3.246271 - No goals received by planner. Skipping planning.
+
+3.246602 - ****** Starting Act Phase ******
+
+3.247396 - No valid plan found that achieves any current goals.
+
+3.249246 - MIDCA will not select an action this cycle.
+
+3.249886 - Starting cycle 8
+
+3.250166 - ****** Starting Simulate Phase ******
+
+3.250468 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+3.250698 - ****** Starting Perceive Phase ******
+
+3.252357 - states not received
+
+3.253176 - World observed.
+
+3.254836 - ****** Starting Interpret Phase ******
+
+3.255506 - Please input a goal if desired. Otherwise, press enter to continue
+
+3.448157 - ****** Starting Eval Phase ******
+
+3.450583 - No current goals. Skipping eval
+
+3.451067 - ****** Starting Intend Phase ******
+
+3.451712 - No Goals in Goal graph. Intend will do nothing.
+
+3.452003 - ****** Starting Plan Phase ******
+
+3.454063 - No goals received by planner. Skipping planning.
+
+3.454452 - ****** Starting Act Phase ******
+
+3.455300 - No valid plan found that achieves any current goals.
+
+3.456968 - MIDCA will not select an action this cycle.
+
+3.457420 - Starting cycle 9
+
+3.457687 - ****** Starting Simulate Phase ******
+
+3.458083 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+3.458323 - ****** Starting Perceive Phase ******
+
+3.460212 - states not received
+
+3.461136 - World observed.
+
+3.463020 - ****** Starting Interpret Phase ******
+
+3.463963 - Please input a goal if desired. Otherwise, press enter to continue
+
+3.656424 - ****** Starting Eval Phase ******
+
+3.659463 - No current goals. Skipping eval
+
+3.659827 - ****** Starting Intend Phase ******
+
+3.660621 - No Goals in Goal graph. Intend will do nothing.
+
+3.661016 - ****** Starting Plan Phase ******
+
+3.663564 - No goals received by planner. Skipping planning.
+
+3.663856 - ****** Starting Act Phase ******
+
+3.665122 - No valid plan found that achieves any current goals.
+
+3.666893 - MIDCA will not select an action this cycle.
+
+3.667532 - Starting cycle 10
+
+3.667829 - ****** Starting Simulate Phase ******
+
+3.668277 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+3.668684 - ****** Starting Perceive Phase ******
+
+3.670767 - states not received
+
+3.671488 - World observed.
+
+3.673002 - ****** Starting Interpret Phase ******
+
+3.674004 - Please input a goal if desired. Otherwise, press enter to continue
+
+3.865206 - ****** Starting Eval Phase ******
+
+3.867949 - No current goals. Skipping eval
+
+3.868291 - ****** Starting Intend Phase ******
+
+3.869011 - No Goals in Goal graph. Intend will do nothing.
+
+3.869453 - ****** Starting Plan Phase ******
+
+3.871838 - No goals received by planner. Skipping planning.
+
+3.872284 - ****** Starting Act Phase ******
+
+3.873531 - No valid plan found that achieves any current goals.
+
+3.875380 - MIDCA will not select an action this cycle.
+
+3.875918 - Starting cycle 11
+
+3.876248 - ****** Starting Simulate Phase ******
+
+3.877024 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+3.877454 - ****** Starting Perceive Phase ******
+
+3.879340 - states not received
+
+3.880262 - World observed.
+
+3.881741 - ****** Starting Interpret Phase ******
+
+3.883206 - Please input a goal if desired. Otherwise, press enter to continue
+
+4.066228 - ****** Starting Eval Phase ******
+
+4.071077 - No current goals. Skipping eval
+
+4.071777 - ****** Starting Intend Phase ******
+
+4.072951 - No Goals in Goal graph. Intend will do nothing.
+
+4.073563 - ****** Starting Plan Phase ******
+
+4.076316 - No goals received by planner. Skipping planning.
+
+4.076608 - ****** Starting Act Phase ******
+
+4.077296 - No valid plan found that achieves any current goals.
+
+4.078841 - MIDCA will not select an action this cycle.
+
+4.079603 - Starting cycle 12
+
+4.079967 - ****** Starting Simulate Phase ******
+
+4.080654 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+4.081062 - ****** Starting Perceive Phase ******
+
+4.082920 - states not received
+
+4.083788 - World observed.
+
+4.086088 - ****** Starting Interpret Phase ******
+
+4.086993 - Please input a goal if desired. Otherwise, press enter to continue
+
+4.282044 - ****** Starting Eval Phase ******
+
+4.286201 - No current goals. Skipping eval
+
+4.286544 - ****** Starting Intend Phase ******
+
+4.287184 - No Goals in Goal graph. Intend will do nothing.
+
+4.287593 - ****** Starting Plan Phase ******
+
+4.291237 - No goals received by planner. Skipping planning.
+
+4.291994 - ****** Starting Act Phase ******
+
+4.293038 - No valid plan found that achieves any current goals.
+
+4.295887 - MIDCA will not select an action this cycle.
+
+4.296460 - Starting cycle 13
+
+4.296795 - ****** Starting Simulate Phase ******
+
+4.297412 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+4.297942 - ****** Starting Perceive Phase ******
+
+4.300199 - states not received
+
+4.300738 - World observed.
+
+4.302729 - ****** Starting Interpret Phase ******
+
+4.304166 - Please input a goal if desired. Otherwise, press enter to continue
+
+4.481258 - ****** Starting Eval Phase ******
+
+4.485401 - No current goals. Skipping eval
+
+4.486041 - ****** Starting Intend Phase ******
+
+4.487553 - No Goals in Goal graph. Intend will do nothing.
+
+4.488167 - ****** Starting Plan Phase ******
+
+4.491018 - No goals received by planner. Skipping planning.
+
+4.491772 - ****** Starting Act Phase ******
+
+4.492920 - No valid plan found that achieves any current goals.
+
+4.495254 - MIDCA will not select an action this cycle.
+
+4.495949 - Starting cycle 14
+
+4.496576 - ****** Starting Simulate Phase ******
+
+4.497205 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+4.497550 - ****** Starting Perceive Phase ******
+
+4.499455 - states not received
+
+4.500843 - World observed.
+
+4.502855 - ****** Starting Interpret Phase ******
+
+4.503717 - Please input a goal if desired. Otherwise, press enter to continue
+
+4.705325 - ****** Starting Eval Phase ******
+
+4.709415 - No current goals. Skipping eval
+
+4.709889 - ****** Starting Intend Phase ******
+
+4.710790 - No Goals in Goal graph. Intend will do nothing.
+
+4.711304 - ****** Starting Plan Phase ******
+
+4.714075 - No goals received by planner. Skipping planning.
+
+4.714692 - ****** Starting Act Phase ******
+
+4.715597 - No valid plan found that achieves any current goals.
+
+4.717317 - MIDCA will not select an action this cycle.
+
+4.718017 - Starting cycle 15
+
+4.718378 - ****** Starting Simulate Phase ******
+
+4.718898 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+4.719187 - ****** Starting Perceive Phase ******
+
+4.721005 - states not received
+
+4.721710 - World observed.
+
+4.723431 - ****** Starting Interpret Phase ******
+
+4.724909 - Please input a goal if desired. Otherwise, press enter to continue
+
+4.921877 - ****** Starting Eval Phase ******
+
+4.926262 - No current goals. Skipping eval
+
+4.926719 - ****** Starting Intend Phase ******
+
+4.927542 - No Goals in Goal graph. Intend will do nothing.
+
+4.927934 - ****** Starting Plan Phase ******
+
+4.931360 - No goals received by planner. Skipping planning.
+
+4.931772 - ****** Starting Act Phase ******
+
+4.932495 - No valid plan found that achieves any current goals.
+
+4.933868 - MIDCA will not select an action this cycle.
+
+4.934306 - Starting cycle 16
+
+4.934686 - ****** Starting Simulate Phase ******
+
+4.935240 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+4.935671 - ****** Starting Perceive Phase ******
+
+4.938016 - states not received
+
+4.938550 - World observed.
+
+4.940633 - ****** Starting Interpret Phase ******
+
+4.941487 - Please input a goal if desired. Otherwise, press enter to continue
+
+5.144464 - ****** Starting Eval Phase ******
+
+5.146574 - No current goals. Skipping eval
+
+5.146866 - ****** Starting Intend Phase ******
+
+5.147955 - No Goals in Goal graph. Intend will do nothing.
+
+5.148362 - ****** Starting Plan Phase ******
+
+5.150773 - No goals received by planner. Skipping planning.
+
+5.151189 - ****** Starting Act Phase ******
+
+5.151969 - No valid plan found that achieves any current goals.
+
+5.153976 - MIDCA will not select an action this cycle.
+
+5.154593 - Starting cycle 17
+
+5.154898 - ****** Starting Simulate Phase ******
+
+5.155335 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+5.155574 - ****** Starting Perceive Phase ******
+
+5.157270 - states not received
+
+5.157875 - World observed.
+
+5.159662 - ****** Starting Interpret Phase ******
+
+5.160347 - Please input a goal if desired. Otherwise, press enter to continue
+
+5.385503 - ****** Starting Eval Phase ******
+
+5.388906 - No current goals. Skipping eval
+
+5.389456 - ****** Starting Intend Phase ******
+
+5.390448 - No Goals in Goal graph. Intend will do nothing.
+
+5.390914 - ****** Starting Plan Phase ******
+
+5.394041 - No goals received by planner. Skipping planning.
+
+5.394489 - ****** Starting Act Phase ******
+
+5.395228 - No valid plan found that achieves any current goals.
+
+5.396704 - MIDCA will not select an action this cycle.
+
+5.397184 - Starting cycle 18
+
+5.397486 - ****** Starting Simulate Phase ******
+
+5.398501 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+5.398914 - ****** Starting Perceive Phase ******
+
+5.400943 - states not received
+
+5.401838 - World observed.
+
+5.403467 - ****** Starting Interpret Phase ******
+
+5.404467 - Please input a goal if desired. Otherwise, press enter to continue
+
+5.649265 - ****** Starting Eval Phase ******
+
+5.651528 - No current goals. Skipping eval
+
+5.651876 - ****** Starting Intend Phase ******
+
+5.652446 - No Goals in Goal graph. Intend will do nothing.
+
+5.652791 - ****** Starting Plan Phase ******
+
+5.656006 - No goals received by planner. Skipping planning.
+
+5.656398 - ****** Starting Act Phase ******
+
+5.657438 - No valid plan found that achieves any current goals.
+
+5.658896 - MIDCA will not select an action this cycle.
+
+5.659326 - Starting cycle 19
+
+5.659591 - ****** Starting Simulate Phase ******
+
+5.660088 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+5.660401 - ****** Starting Perceive Phase ******
+
+5.662059 - states not received
+
+5.662662 - World observed.
+
+5.664621 - ****** Starting Interpret Phase ******
+
+5.665671 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.150068 - ****** Starting Eval Phase ******
+
+6.153345 - No current goals. Skipping eval
+
+6.153692 - ****** Starting Intend Phase ******
+
+6.154384 - No Goals in Goal graph. Intend will do nothing.
+
+6.154798 - ****** Starting Plan Phase ******
+
+6.157481 - No goals received by planner. Skipping planning.
+
+6.157890 - ****** Starting Act Phase ******
+
+6.158857 - No valid plan found that achieves any current goals.
+
+6.160840 - MIDCA will not select an action this cycle.
+
+6.161556 - Starting cycle 20
+
+6.161941 - ****** Starting Simulate Phase ******
+
+6.162434 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.162953 - ****** Starting Perceive Phase ******
+
+6.165155 - states not received
+
+6.165979 - World observed.
+
+6.167618 - ****** Starting Interpret Phase ******
+
+6.168829 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.232195 - ****** Starting Eval Phase ******
+
+6.234999 - No current goals. Skipping eval
+
+6.235358 - ****** Starting Intend Phase ******
+
+6.236461 - No Goals in Goal graph. Intend will do nothing.
+
+6.236811 - ****** Starting Plan Phase ******
+
+6.239354 - No goals received by planner. Skipping planning.
+
+6.239792 - ****** Starting Act Phase ******
+
+6.241022 - No valid plan found that achieves any current goals.
+
+6.242517 - MIDCA will not select an action this cycle.
+
+6.243099 - Starting cycle 21
+
+6.243457 - ****** Starting Simulate Phase ******
+
+6.244029 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.244325 - ****** Starting Perceive Phase ******
+
+6.246336 - states not received
+
+6.247486 - World observed.
+
+6.249404 - ****** Starting Interpret Phase ******
+
+6.250454 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.315750 - ****** Starting Eval Phase ******
+
+6.319220 - No current goals. Skipping eval
+
+6.319553 - ****** Starting Intend Phase ******
+
+6.320652 - No Goals in Goal graph. Intend will do nothing.
+
+6.320997 - ****** Starting Plan Phase ******
+
+6.323944 - No goals received by planner. Skipping planning.
+
+6.324325 - ****** Starting Act Phase ******
+
+6.325046 - No valid plan found that achieves any current goals.
+
+6.327102 - MIDCA will not select an action this cycle.
+
+6.327543 - Starting cycle 22
+
+6.327809 - ****** Starting Simulate Phase ******
+
+6.328262 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.328604 - ****** Starting Perceive Phase ******
+
+6.330583 - states not received
+
+6.331330 - World observed.
+
+6.333160 - ****** Starting Interpret Phase ******
+
+6.334333 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.399594 - ****** Starting Eval Phase ******
+
+6.401454 - No current goals. Skipping eval
+
+6.401742 - ****** Starting Intend Phase ******
+
+6.402359 - No Goals in Goal graph. Intend will do nothing.
+
+6.402780 - ****** Starting Plan Phase ******
+
+6.405003 - No goals received by planner. Skipping planning.
+
+6.405384 - ****** Starting Act Phase ******
+
+6.406054 - No valid plan found that achieves any current goals.
+
+6.407741 - MIDCA will not select an action this cycle.
+
+6.408527 - Starting cycle 23
+
+6.408989 - ****** Starting Simulate Phase ******
+
+6.409399 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.409743 - ****** Starting Perceive Phase ******
+
+6.411736 - states not received
+
+6.412533 - World observed.
+
+6.414565 - ****** Starting Interpret Phase ******
+
+6.415591 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.483326 - ****** Starting Eval Phase ******
+
+6.486075 - No current goals. Skipping eval
+
+6.486854 - ****** Starting Intend Phase ******
+
+6.487769 - No Goals in Goal graph. Intend will do nothing.
+
+6.488183 - ****** Starting Plan Phase ******
+
+6.490585 - No goals received by planner. Skipping planning.
+
+6.490987 - ****** Starting Act Phase ******
+
+6.492082 - No valid plan found that achieves any current goals.
+
+6.493715 - MIDCA will not select an action this cycle.
+
+6.494307 - Starting cycle 24
+
+6.494638 - ****** Starting Simulate Phase ******
+
+6.495132 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.495430 - ****** Starting Perceive Phase ******
+
+6.497333 - states not received
+
+6.497993 - World observed.
+
+6.499792 - ****** Starting Interpret Phase ******
+
+6.500677 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.567041 - ****** Starting Eval Phase ******
+
+6.569646 - No current goals. Skipping eval
+
+6.570236 - ****** Starting Intend Phase ******
+
+6.571249 - No Goals in Goal graph. Intend will do nothing.
+
+6.571645 - ****** Starting Plan Phase ******
+
+6.575844 - No goals received by planner. Skipping planning.
+
+6.576196 - ****** Starting Act Phase ******
+
+6.577472 - No valid plan found that achieves any current goals.
+
+6.579034 - MIDCA will not select an action this cycle.
+
+6.579536 - Starting cycle 25
+
+6.579905 - ****** Starting Simulate Phase ******
+
+6.580440 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.580777 - ****** Starting Perceive Phase ******
+
+6.582677 - states not received
+
+6.583440 - World observed.
+
+6.585319 - ****** Starting Interpret Phase ******
+
+6.586815 - Please input a goal if desired. Otherwise, press enter to continue
+
+6.651258 - ****** Starting Eval Phase ******
+
+6.654084 - No current goals. Skipping eval
+
+6.654421 - ****** Starting Intend Phase ******
+
+6.655255 - No Goals in Goal graph. Intend will do nothing.
+
+6.655753 - ****** Starting Plan Phase ******
+
+6.659264 - No goals received by planner. Skipping planning.
+
+6.659628 - ****** Starting Act Phase ******
+
+6.660390 - No valid plan found that achieves any current goals.
+
+6.661861 - MIDCA will not select an action this cycle.
+
+6.662510 - Starting cycle 26
+
+6.662847 - ****** Starting Simulate Phase ******
+
+6.663367 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+6.663747 - ****** Starting Perceive Phase ******
+
+6.665515 - states not received
+
+6.666115 - World observed.
+
+6.667669 - ****** Starting Interpret Phase ******
+
+6.668622 - Please input a goal if desired. Otherwise, press enter to continue
+
+7.208582 - ****** Starting Eval Phase ******
+
+7.212204 - No current goals. Skipping eval
+
+7.212594 - ****** Starting Intend Phase ******
+
+7.213366 - No Goals in Goal graph. Intend will do nothing.
+
+7.214037 - ****** Starting Plan Phase ******
+
+7.216700 - No goals received by planner. Skipping planning.
+
+7.217072 - ****** Starting Act Phase ******
+
+7.217849 - No valid plan found that achieves any current goals.
+
+7.219343 - MIDCA will not select an action this cycle.
+
+7.219936 - Starting cycle 27
+
+7.220224 - ****** Starting Simulate Phase ******
+
+7.220675 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+7.220987 - ****** Starting Perceive Phase ******
+
+7.223273 - states not received
+
+7.223932 - World observed.
+
+7.225818 - ****** Starting Interpret Phase ******
+
+7.226650 - Please input a goal if desired. Otherwise, press enter to continue
+
+7.465512 - ****** Starting Eval Phase ******
+
+7.469495 - No current goals. Skipping eval
+
+7.469948 - ****** Starting Intend Phase ******
+
+7.471345 - No Goals in Goal graph. Intend will do nothing.
+
+7.471862 - ****** Starting Plan Phase ******
+
+7.475092 - No goals received by planner. Skipping planning.
+
+7.475635 - ****** Starting Act Phase ******
+
+7.476648 - No valid plan found that achieves any current goals.
+
+7.478836 - MIDCA will not select an action this cycle.
+
+7.479369 - Starting cycle 28
+
+7.479664 - ****** Starting Simulate Phase ******
+
+7.480125 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+7.480506 - ****** Starting Perceive Phase ******
+
+7.482317 - states not received
+
+7.483109 - World observed.
+
+7.485041 - ****** Starting Interpret Phase ******
+
+7.485970 - Please input a goal if desired. Otherwise, press enter to continue
+
+50.014806 - ****** Starting Eval Phase ******
+
+50.017174 - No current goals. Skipping eval
+
+50.017647 - ****** Starting Intend Phase ******
+
+50.018641 - No Goals in Goal graph. Intend will do nothing.
+
+50.019045 - ****** Starting Plan Phase ******
+
+50.021464 - No goals received by planner. Skipping planning.
+
+50.021752 - ****** Starting Act Phase ******
+
+50.022582 - No valid plan found that achieves any current goals.
+
+50.025078 - MIDCA will not select an action this cycle.
+
+50.025536 - Starting cycle 29
+
+50.025829 - ****** Starting Simulate Phase ******
+
+50.026253 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+50.026541 - ****** Starting Perceive Phase ******
+
+50.027456 - X:0.000000,Y:10.000000,SPEED:0.000000
+
+50.027807 - 0.0
+
+50.028375 - 10.0
+
+50.030101 - Mine Report not received
+
+50.030755 - at_location(remus,transit)
+
+50.031644 - World observed.
+
+50.034540 - ****** Starting Interpret Phase ******
+
+50.035644 - Please input a goal if desired. Otherwise, press enter to continue
+
+53.686349 - ****** Starting Eval Phase ******
+
+53.688933 - No current goals. Skipping eval
+
+53.689270 - ****** Starting Intend Phase ******
+
+53.690072 - No Goals in Goal graph. Intend will do nothing.
+
+53.690431 - ****** Starting Plan Phase ******
+
+53.693213 - No goals received by planner. Skipping planning.
+
+53.693506 - ****** Starting Act Phase ******
+
+53.694477 - No valid plan found that achieves any current goals.
+
+53.696252 - MIDCA will not select an action this cycle.
+
+53.696852 - Starting cycle 30
+
+53.697186 - ****** Starting Simulate Phase ******
+
+53.697830 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : at_location(remus, transit) and enabled(remus)
+transit (SEA_ROUTE) : at_location(remus, transit)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+53.698148 - ****** Starting Perceive Phase ******
+
+53.698841 - X:0.000000,Y:10.000000,SPEED:0.000000
+
+53.699059 - 0.0
+
+53.699271 - 10.0
+
+53.700847 - Mine Report not received
+
+53.702045 - at_location(remus,transit)
+
+53.703074 - World observed.
+
+53.704716 - ****** Starting Interpret Phase ******
+
+53.705792 - Please input a goal if desired. Otherwise, press enter to continue
+

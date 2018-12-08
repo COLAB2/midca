@@ -166,11 +166,16 @@ class MoosObserver(base.BaseModule):
         self.subscriber = context.socket(zmq.SUB)
         self.subscriber_mine = context.socket(zmq.SUB)
 
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber_mine_removal = context.socket(zmq.SUB)
+
         self.subscriber.setsockopt(zmq.SUBSCRIBE, '')
         self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_mine_removal.setsockopt(zmq.SUBSCRIBE, '')
 
         self.subscriber.setsockopt(zmq.RCVTIMEO, 1)
         self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber_mine_removal.setsockopt(zmq.RCVTIMEO, 1)
 
         self.subscriber.setsockopt(zmq.CONFLATE, 1)
         #self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
@@ -179,7 +184,9 @@ class MoosObserver(base.BaseModule):
 
         self.subscriber_mine.connect("tcp://127.0.0.1:5564")
 
+        self.subscriber_mine_removal.connect("tcp://127.0.0.1:5580")
 
+        self.removed_mines = set()
     # perfect observation
     def observe(self):
         return self.world.copy()
@@ -197,11 +204,12 @@ class MoosObserver(base.BaseModule):
         x = -1
         y = -1
         speed = -1
+        direction = -1
         mine_x = -1
         mine_y = -1
         mine_label = -1
         states = ""
-
+        removed_mine = ""
 
         '''
         The following code gets the current X,Y,Speed and updates the location of uuv.
@@ -212,27 +220,39 @@ class MoosObserver(base.BaseModule):
         try:
             current_position = self.subscriber.recv()
             print (current_position)
-            x,y,speed = current_position.split(",")
+            x,y,speed,direction = current_position.split(",")
             x = float(x.split(":")[1])
             y = float(y.split(":")[1])
             speed = float(speed.split(":")[1])
+            direction = float(direction.split(":")[1])
             print (x)
             print (y)
+            print(direction)
         # for mine
             try:
+                mines_checked = []
+                # for removed mine
+                try:
+                    removed_mine = self.subscriber_mine_removal.recv()
+                    self.removed_mines.add(removed_mine)
+                except:
+                    if verbose > 2:
+                        print ("No mines removed ")
+
                 mine_report = self.subscriber_mine.recv()
                 mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
                 mine_x = float(mine_x.split("=")[1])
                 mine_y = float(mine_y.split("=")[1])
                 mine_label = mine_label.split("=")[1]
 
-                mines_checked = []
+
                 # ignore already checked mines
                 for atom in self.world.atoms:
                     if atom.predicate.name == "hazard_checked":
                         mines_checked.append(atom.args[0].name)
 
-                if "mine"+mine_label in mines_checked:
+                if "mine"+mine_label in mines_checked or \
+                   "mine"+mine_label in self.removed_mines:
                     raise Exception("Mine previously checked.")
                 '''
                 # for mine at qroute,ga1,ga2 or not
@@ -254,6 +274,7 @@ class MoosObserver(base.BaseModule):
                     states+= "HAZARD(mine" + mine_label + ")\n"
                     states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
                     self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga1"])
+
                 elif (mine_x>=124 and mine_x<=175) and (mine_y>=-102 and mine_y<=-56):
                     states+= "HAZARD(mine" + mine_label + ")\n"
                     states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
@@ -276,22 +297,22 @@ class MoosObserver(base.BaseModule):
                     path_mines = {}
 
                 # for mine in the pathway
-                if (abs(x-0.5 < mine_x) and abs(x + 0.5 > mine_x )):
+                if (mine_x-5 < x) and (mine_x + 5 > x ) and direction > 100:
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
 
-                if (abs(x-0.5 > mine_x) and abs(x + 0.5 < mine_x )):
+                if (mine_x-5 > x) and (mine_x + 5 < x ) and direction < 0:
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
 
-                if (abs(y-0.5 < mine_y) and abs(y + 0.5 > mine_y )):
+                if (mine_y-5 < y) and (mine_y + 5 > y ) and direction < 100:
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
-
-                if (abs(y-0.5 > mine_y) and abs(y + 0.5 < mine_y )):
+                '''
+                if (mine_y-5 > y) and (mine_y + 5 < y ):
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
-
+                '''
                 self.mem.set(self.mem.MINE_LOCATION, path_mines)
 
 
@@ -302,32 +323,33 @@ class MoosObserver(base.BaseModule):
 
 
 
+
             if y >=-98 and y<=-48:
                 states+="at_location(remus,qroute)\n"
             else:
-                if (x >= -1 and y >= -21) and (x <= 1 and y <= -15):
+                if (x >= -13 and y >= -35) and (x <= 14 and y <= -15):
                     states+="at_location(remus,transit1)\n"
 
-                elif (x >= 150 and y >= -30) and (x <= 157 and y <= -24):
+                elif (x >= 133 and y >= -30) and (x <= 173 and y <= -12):
                     states+="at_location(remus,transit2)\n"
 
                 else:
                     states+="at_location(remus,transit)\n"
 
-            if (x >= 56 and y >= -66) and (x <= 62 and y <= -60):
+            if (x >= 50 and y >= -80) and (x <= 90 and y <= -45):
                 states+="at_location(remus,qroute_transit)\n"
 
-            if (x > 30 and x<= 35) and (y > -70 and y<= -63) :
+            if (x > 28 and x<= 37) and (y > -72 and y<= -61) :
             #if (x == 28) and (y == -62) :
                 states+="at_location(remus,ga1)\n"
 
-            if (x > 158 and x<= 163) and (y > -68 and y <=-63):
+            if (x > 154 and x<= 163) and (y > -75 and y <=-63):
                 states+="at_location(remus,ga2)\n"
 
             if x>165 and y > -6:
                 states+="at_location(remus,home)\n"
 
-            self.mem.set(self.mem.REMUS_LOCATION, {"X": x, "Y": y, "speed": speed})
+            self.mem.set(self.mem.REMUS_LOCATION, {"X": x, "Y": y, "speed": speed, "direction": speed})
 
         except:
             print ("states not received")

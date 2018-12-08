@@ -1,0 +1,99 @@
+.000887 - Memory access at key __goals
+.001321 - Goal Graph initialized.
+
+.001778 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.003394 - [cognitive] Initializing Perceive module 1 MoosObserver...done.
+
+.004158 - [cognitive] Initializing Interpret module 1 MoosGoalInput...done.
+
+.004521 - [cognitive] Initializing Eval module 1 SimpleEval_moos...done.
+
+.005229 - [cognitive] Initializing Intend module 1 SimpleIntend...done.
+
+.005648 - Memory access at key __PlanningCount
+.006026 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.007207 - [cognitive] Initializing Act module 1 Moosact...done.
+
+.007463 - Memory access at key __goals
+.007734 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.008159 - Starting cycle 0
+
+.008609 - ****** Starting Simulate Phase ******
+
+.009215 - [
+ga1 (SEA_ROUTE)
+ga2 (SEA_ROUTE)
+home (SEA_ROUTE)
+qroute (SEA_ROUTE)
+qroute_transit (SEA_ROUTE)
+remus (UUV) : enabled(remus)
+transit (SEA_ROUTE)
+transit1 (SEA_ROUTE)
+transit2 (SEA_ROUTE)
+]
+
+.009718 - ****** Starting Perceive Phase ******
+
+.010407 - Memory access at key __world states
+.012704 - states not received
+
+.013212 - Memory access at key __world states
+.013669 - World observed.
+
+.015569 - ****** Starting Interpret Phase ******
+
+.015996 - Memory access at key __goals
+.016212 - Memory access at key __evaluate time
+.016422 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.866133 - Memory access at key __world states
+2.866653 - Goal() - self.mem.get(self.mem.MOOS_TIME, predicate: time_taken = midcatime.now) is not a valid goal
+Possible predicates: ['hazard_at_location', 'hazard_checked', 'enabled', 'hazard_at_pathway', 'at_location'] 
+Possible arguments ['transit', 'remus', 'ga1', 'ga2', 'qroute', 'home', 'qroute_transit', 'transit2', 'transit1']
+
+2.868256 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.868474 - Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world
+
+2.868696 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.869088 - Memory access at key __world states
+2.869424 - Goal(cycle, predicate: self.write_to_file) is not a valid goal
+Possible predicates: ['hazard_at_location', 'hazard_checked', 'enabled', 'hazard_at_pathway', 'at_location'] 
+Possible arguments ['transit', 'remus', 'ga1', 'ga2', 'qroute', 'home', 'qroute_transit', 'transit2', 'transit1']
+
+2.869677 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.869913 - Memory access at key __world states
+2.870547 - Goal("Experiment completed press cntrl + c to exit", predicate: raw_input) is not a valid goal
+Possible predicates: ['hazard_at_location', 'hazard_checked', 'enabled', 'hazard_at_pathway', 'at_location'] 
+Possible arguments ['transit', 'remus', 'ga1', 'ga2', 'qroute', 'home', 'qroute_transit', 'transit2', 'transit1']
+
+2.870940 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.871481 - Memory access at key __world states
+2.871996 - Goal(self.mem.GOAL_GRAPH, predicate: goalGraph = self.mem.get) is not a valid goal
+Possible predicates: ['hazard_at_location', 'hazard_checked', 'enabled', 'hazard_at_pathway', 'at_location'] 
+Possible arguments ['transit', 'remus', 'ga1', 'ga2', 'qroute', 'home', 'qroute_transit', 'transit2', 'transit1']
+
+2.872238 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.872445 - Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world
+
+2.872860 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.873090 - Memory access at key __world states
+2.873416 - Goal(goal, predicate: goalGraph.remove) is not a valid goal
+Possible predicates: ['hazard_at_location', 'hazard_checked', 'enabled', 'hazard_at_pathway', 'at_location'] 
+Possible arguments ['transit', 'remus', 'ga1', 'ga2', 'qroute', 'home', 'qroute_transit', 'transit2', 'transit1']
+
+2.873796 - Please input a goal if desired. Otherwise, press enter to continue
+
+2.874046 - Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world
+
+2.874271 - Please input a goal if desired. Otherwise, press enter to continue
+

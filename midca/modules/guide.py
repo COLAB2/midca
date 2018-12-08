@@ -4,7 +4,7 @@ from _goalgen import tf_3_scen, tf_fire
 from midca.domains.logistics import deliverstate
 from midca.domains.blocksworld import blockstate
 from midca.worldsim import stateread
-import copy,csv
+import copy,csv,sys
 import random
 from midca.modules.monitors import Monitor
 from threading import Thread
@@ -92,11 +92,41 @@ class MoosGoalInput(UserGoalInput):
     def __init__(self,deadline):
         self.deadline =  deadline
 
+    def write_to_file(self,cycle):
+        file = open("agent.txt", "a")
+        file.write("midca is in cycle :" + str(cycle) + "\n")
+        time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+        file.write("Time Taken :" + str(time_taken) + "\n")
+        file.write("AGENT SCORE : "  + str(self.mem.get(self.mem.MOOS_SCORE)) + "\n")
+        file.write("-------------------------------------------------------\n")
+        file.close()
+
     def run(self, cycle, verbose = 2):
 
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            # for experiment
+            if self.mem.get(self.mem.MOOS_TIME):
+                self.write_to_file(cycle)
+                print ("Experiment Completed")
+                sys.exit()
+
             self.mem.set(self.mem.MOOS_DEADLINE , self.deadline)
-            UserGoalInput.run(self, cycle, verbose = 2)
+
+            # for experiment
+
+            g = goals.Goal(*["remus","ga1"], predicate = 'at_location')
+            g1 = goals.Goal(*["remus","ga2"], predicate = 'at_location')
+            g2 = goals.Goal(*["remus","home"], predicate = 'at_location')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g1)
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g2)
+            print("Midca generated a goal : " + str(g))
+            print("Midca generated a goal : " + str(g1))
+            print("Midca generated a goal : " + str(g2))
+            raw_input("Press Enter to start the Experiment")
+            # Remove after experiment
+            #UserGoalInput.run(self, cycle, verbose = 2)
+
             self.mem.set(self.mem.MOOS_TIME, midcatime.now())
             self.mem.set(self.mem.MOOS_SCORE, 0)
 
