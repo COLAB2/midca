@@ -30,14 +30,18 @@ stateread.apply_state_file(world, STATE_FILE)
 #creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
 #add phases by name
-for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 
 #add the modules which instantiate basic blocksworld operation
-myMidca.append_module("Perceive", perceive.RpaObserver())
+myMidca.insert_module("Perceive", perceive.RpaObserver(), 0)
+myMidca.insert_module("Perceive", simulator.RPA_ActionSimulator(), 1)
+myMidca.append_module("Interpret", guide.RpaGoalGen())
+myMidca.append_module("Eval", evaluate.RpaEval())
+myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.insert_module("Plan", planning.RPAPlanner_send(), 0)
-myMidca.insert_module("Plan", planning.RPAPlanner_request(), 1)
-myMidca.append_module("Act", act.SimpleAct_rpa())
+myMidca.insert_module("Plan", planning.RPAPlanner(), 1)
+myMidca.append_module("Act", act.RPA_Act())
 '''
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())

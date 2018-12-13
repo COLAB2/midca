@@ -1585,4 +1585,99 @@ class InstructionReceiver_sr:
 							
 		self.lastTime = midcatime.now()
 
-      
+
+class RpaGoalGen(base.BaseModule):
+	'''
+    MIDCA module that cycles through goals for the agent to achieve.
+    '''
+
+
+
+
+	# starting state: on(D,B), on(B,A), ontable(A) ontable(C)
+	# first goal: on(C,B)
+	# second goal
+
+	def rpa_goals(self):
+
+		curr_goal_set = []
+		total_goals = 0
+		# get the total hikers
+		for atom in self.world.get_atoms():
+			if atom.predicate.name == 'totalhikers':
+				total_goals = int(atom.args[0].name)
+				break
+
+		# get the next goal
+		for i in range(0, total_goals):
+			curr_goal_set.append(goals.Goal(*['hiker'+str(i)], predicate='is_rescued'))
+
+		if curr_goal_set:
+			curr_goal_set.append(goals.Goal(*['RPA'], predicate='at_base'))
+		return curr_goal_set
+
+	def remove_plan(self):
+		'''
+		Remove the plans of the current goal
+		:return:
+		'''
+
+		goal = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+		goalgraph = self.mem.get(self.mem.GOAL_GRAPH)
+		# get any plans associated with this goal, and remove them
+		plan = goalgraph.getMatchingPlan(goal)
+		if plan:
+			goalgraph.removePlan(plan)
+			print "Just removed a plan for goal " + str(goal)
+
+	def check_affect_by_storm(self):
+		'''
+		Check if the RPA is affected by storm
+		:return:
+		'''
+
+		for atom in self.world.atoms:
+			if atom.predicate.name == 'is_affected':
+				if self.mem.get(self.mem.STORM):
+					if atom.args[0].name in self.mem.get(self.mem.STORM):
+						return
+					else:
+						storm = self.mem.get(self.mem.STORM)
+						storm.append(atom.args[0].name)
+						self.mem.set(self.mem.STORM, storm)
+						self.remove_plan()
+						return
+				else:
+					storm = []
+					storm.append(atom.args[0].name)
+					self.mem.set(self.mem.STORM, storm)
+					self.remove_plan()
+					return
+
+	def init(self, world, mem):
+		base.BaseModule.init(self, mem)
+		self.world = world
+
+	def run(self, cycle, verbose=2):
+		trace = self.mem.trace
+		if trace:
+			trace.add_module(cycle, self.__class__.__name__)
+
+		# first, check to see if we need a new goal, and only then insert a new one
+		if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+			# get the next goal
+			goal_set = self.rpa_goals()
+			# insert that goal
+			for g in goal_set:
+				self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+				if verbose >= 2:
+					print "goal generated:", g
+			# update trace
+			if trace:
+				trace.add_data("NEXT GOAL(s)", goal_set)
+				trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+		else:
+			self.check_affect_by_storm()
+			if trace:
+				trace.add_data("NEXT GOAL", 'goals not empty; no goal chosen')
+				trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))

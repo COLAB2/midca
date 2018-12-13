@@ -4,12 +4,24 @@ type(COORDINATE, root)
 type(EFFECT, root)
 
 predicate(atlocation, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
-predicate(atsearcharea, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+predicate(toreachsearcharea, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+predicate(exploredsearcharea, [ent, x, y], [ENTITY, COORDINATE, COORDINATE])
+predicate(totalhikers, [x], [COORDINATE])
+predicate(is_rescued, [ent], [ENTITY])
+predicate(at_base, [ent], [ENTITY])
 predicate(is_affected, [ent, efct, x, y], [ENTITY, EFFECT, COORDINATE, COORDINATE])
 
-operator(move, 
+
+operator(Move,
 args = [(ent, ENTITY), (x, COORDINATE), (y, COORDINATE)], 
 preconditions = [
 	condition(atlocation, [ent, x, y], negate = True)], 
+results = [
+	condition(atlocation, [ent, x, y])])
+
+operator(Land,
+args = [(ent, ENTITY), (x, COORDINATE), (y, COORDINATE)],
+preconditions = [
+	condition(atlocation, [ent, x, y])],
 results = [
 	condition(atlocation, [ent, x, y])])

@@ -207,6 +207,11 @@ def json_predicateargument(json_data):
     midca_states = midca_states + "atlocation(" + rpa_name + "," \
                                                 + location_rpa + ")" + "\n"
 
+    # an rpa should know the total no:of hikers
+    midca_states = midca_states + "totalhikers(" + str(states['totalHikers']) + ")" + "\n"
+
+    for i in range(0, int(states['totalHikers'])):
+        midca_states = midca_states + "ENTITY(hiker" + str(i) + ")" + "\n"
 
     if 'knownEntities' in states:
         # iterate through all the entities
@@ -254,9 +259,97 @@ def json_predicateargument(json_data):
             location = ""
             function = each_tile['type'].lower()
             location = location + eval(function)(each_tile)
-            midca_states = midca_states + "atsearcharea(" + rpa_name + "," \
+            midca_states = midca_states + "toreachsearcharea(" + rpa_name + "," \
+                                                          + location + ")" + "\n"
+
+    if 'eploredsearchArea' in states:
+        for each_tile in states['exploredsearchArea']:
+            location = ""
+            function = each_tile['type'].lower()
+            location = location + eval(function)(each_tile)
+            midca_states = midca_states + "exploredsearcharea(" + rpa_name + "," \
                                                           + location + ")" + "\n"
     return midca_states
 
 
 #print (json_predicateargument())
+def json_planoutput(data):
+    '''
+
+    :param data: Json data of form
+{
+  "plan": [
+    {
+      "name": "RPA",
+      "action": "Move",
+      "target": {
+        "location": {
+          "X": 9,
+          "Y": 8
+        }
+      }
+    },
+    {
+      "name": "RPA",
+      "action": "Move",
+      "target": {
+        "location": {
+          "X": 9,
+          "Y": 7
+        }
+      }
+    }]
+    }
+    :return: list of list of action,arguments
+    '''
+
+    actions = []
+    if data:
+        states = eval(data)
+        if states:
+            for action in states["plan"]:
+                actions.append([action["action"], action["name"],
+                               str(action["target"]["location"]["X"]),
+                               str(action["target"]["location"]["Y"])]
+
+                               )
+            return actions
+        else:
+            return None
+    else:
+        return None
+
+def actoutput_json(action):
+    '''
+
+    :param action: action from midca contains ops and arguments
+
+    :return: data of the form
+
+    {
+      "name": "RPA",
+      "action": "Move",
+      "target": {
+        "location": {
+          "X": 9,
+          "Y": 7
+        }
+      }
+    }
+
+    '''
+    plan = dict()
+    tile = dict()
+    if action:
+        op = action.op
+        name = action.args[0]
+        x = int(action.args[1])
+        y = int(action.args[2])
+        plan["name"] = name
+        plan["action"] = op
+        tile["location"] = {"type": "tile", "X": x, "Y": y}
+        plan["target"] = tile
+        return plan
+
+    else:
+        return None

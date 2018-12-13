@@ -513,5 +513,26 @@ class CustomRunSimulator:
         pass
 
 
+class RPA_ActionSimulator:
 
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except TypeError, IndexError:
+            if verbose >= 1:
+                print " No actions available to check feedback"
+            return
+        if actions:
+            for action in actions:
+                if not self.world.midca_action_applicable(action):
+                    if verbose >= 2:
+                        print "MIDCA action executed:", action
+                    goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+                    plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+                    plan.advance()
 

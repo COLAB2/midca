@@ -867,3 +867,77 @@ class NBeaconsDataRecorder:
             self.mem.get(self.mem.MEM_PLANS).remove_goals(currentgoals)
             self.mem.get(self.mem.MEM_GOALS).remove_goal_set(currentgoals)
 
+class RpaEval(base.BaseModule):
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def check_achievement(self, world, goal):
+        '''
+        check if the hiker is rescued or not
+        :param goal: goals
+        :return: whether the goal is achieved or not
+        '''
+
+        name = goal.args[0]
+        predicate = goal["predicate"]
+
+        # if the RPA location == Hiker location return true
+        for atom in self.world.atoms:
+            if 'atlocation' == atom.predicate.name:
+                if (name == atom.args[0].name) and \
+                        (predicate == 'is_rescued'):
+                        return True
+
+        return False
+
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+        if goals:
+            for goal in goals:
+                try:
+                    achieved = self.check_achievement(world,goal)
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if not achieved:
+                        if verbose >= 2:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All current goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+	    del goals[-1]
+	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+        else:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+
+        if trace and goals_changed: trace.add_data("GOALS",goals)
