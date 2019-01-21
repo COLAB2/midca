@@ -530,12 +530,12 @@ class Moosact(base.BaseModule):
                                 return False
 
                         if ("transit2" in argnames):
-                            message = [b"M", b"point = 154,-27 # speed= 0.5"]
+                            message = [b"M", b"point = 154,-27 # speed= 1.0"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
                             if (suspended_action) \
                                     and (suspended_action == message):
                                 for i in range(2):
-                                    self.publisher.send_multipart([b"M", b"speed = 0.5"])
+                                    self.publisher.send_multipart([b"M", b"speed = 1.0"])
                                 self.mem.set(self.mem.MOOS_FEEDBACK, action)
                                 return False
 
