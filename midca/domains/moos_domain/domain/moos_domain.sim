@@ -30,14 +30,12 @@ preconditions = [condition(enabled, [uuv]),
                  condition(hazard_at_location, [mine, location]),
                  condition(hazard_at_pathway, [mine])],
 results = [condition(hazard_checked, [mine, location]),
-    condition(hazard_at_location, [mine, location], negate= True),
     condition(hazard_at_pathway, [mine], negate = True)])
 
 operator(ignore,
 args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
 preconditions = [condition(enabled, [uuv]), condition(hazard_at_location, [mine, location])],
-results = [condition(hazard_checked, [mine, location]),
-	   condition(hazard_at_location, [mine, location], negate = True)])
+results = [condition(hazard_checked, [mine, location])])
 
 operator(remove,
 args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
