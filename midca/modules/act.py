@@ -438,7 +438,7 @@ class Moosact(base.BaseModule):
                             return False
 
 
-                    if (action.op == "ignore"):
+                    elif (action.op == "ignore"):
                         label = int(action.args[0].replace("mine", ""))
                         for i in range(2):
                             self.publisher.send_multipart(
@@ -449,7 +449,12 @@ class Moosact(base.BaseModule):
                         self.mem.set(self.mem.MOOS_FEEDBACK, None)
                         return True
 
-                    if (action.op == "remove"):
+                    elif (action.op == "remove_mines"):
+                        self.world.apply_midca_action(action)
+                        self.mem.set(self.mem.MOOS_FEEDBACK, None)
+                        return True
+
+                    elif (action.op == "remove"):
                         label= int(action.args[0].replace("mine",""))
 
                         if (action.args[1] == "ga1" or action.args[1] == "ga2"):
@@ -473,12 +478,14 @@ class Moosact(base.BaseModule):
 
                         return True
 
-                    if (action.op == "fast_survey"):
+                    elif (action.op == "fast_survey"):
                         argnames = [str(arg) for arg in action.args]
 
                         if ("transit1" in argnames):
                             message = [b"M", b"point = 0,-20 # speed= 1.0"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+                            # if the action gets suspended then just give the moos the speed
+                            # because it will have it's behaviour already running
                             if (suspended_action) \
                                     and (suspended_action == message):
                                 for i in range(2):
@@ -547,7 +554,7 @@ class Moosact(base.BaseModule):
 
                                 return False
 
-                    if (action.op == "slow_survey"):
+                    elif (action.op == "slow_survey"):
                         argnames = [str(arg) for arg in action.args]
 
                         if ("ga1" in argnames):
@@ -604,8 +611,6 @@ class Moosact(base.BaseModule):
                                 self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
 
                                 return False
-
-
 
                 else:
                     if verbose >= 1:

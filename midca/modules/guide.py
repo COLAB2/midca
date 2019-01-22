@@ -114,8 +114,8 @@ class MoosGoalInput(UserGoalInput):
 
             # for experiment
 
-            g = goals.Goal(*["remus","ga1"], predicate = 'at_location')
-            g1 = goals.Goal(*["remus","ga2"], predicate = 'at_location')
+            g = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
+            g1 = goals.Goal(*["remus","ga2"], predicate = 'cleared_mines')
             g2 = goals.Goal(*["remus","home"], predicate = 'at_location')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             self.mem.get(self.mem.GOAL_GRAPH).insert(g1)

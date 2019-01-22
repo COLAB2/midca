@@ -11,26 +11,30 @@ def achieve_goals(state,goals):
         predicate= goal['predicate']
         args = goal.args
         goals.remove(goal)
-        if predicate == "at_location" and args[0] in state.enabled:
+        if predicate == "cleared_mines" and args[0] in state.enabled:
             if args[1] == "ga1":
                 if state.location == "transit1":
-                    return[('slow_survey',args[0],args[1]), ('achieve_goals', goals)]
+                    return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
                 else:
-                    return[('fast_survey',args[0],"transit1") , ('slow_survey',args[0],args[1]), ('achieve_goals', goals)]
-            if args[1] == "ga2":
+                    return[('fast_survey',args[0],"transit1") , ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
+            elif args[1] == "ga2":
                 if state.location == "qroute_transit":
-                    return[('slow_survey',args[0],args[1]), ('achieve_goals', goals)]
+                    return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
                 else:
-                    return[('fast_survey',args[0],"qroute_transit") , ('slow_survey',args[0],args[1]), ('achieve_goals', goals)]
+                    return[('fast_survey',args[0],"qroute_transit") , ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
+            else:
+                pass
+        elif predicate == "at_location" and args[0] in state.enabled:
             if args[1] == "home":
                 if state.location == "transit2":
                     return[('fast_survey',args[0],args[1]), ('achieve_goals', goals)]
                 else:
                     return[('fast_survey',args[0],"transit2") , ('fast_survey',args[0],args[1]), ('achieve_goals', goals)]
-
-        if predicate == "hazard_checked":
+        elif predicate == "hazard_checked":
             vehicle = state.enabled.pop()
             return[('check',args[0],args[1],vehicle) , ('achieve_goals', goals)]
+        else:
+            return []
     return []
 
 
