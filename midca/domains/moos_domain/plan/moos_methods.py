@@ -22,6 +22,8 @@ def achieve_goals(state,goals):
                     return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
                 else:
                     return[('fast_survey',args[0],"qroute_transit") , ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
+            elif args[1] == "way_point":
+                return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
             else:
                 pass
         elif predicate == "at_location" and args[0] in state.enabled:

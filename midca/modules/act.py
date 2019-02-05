@@ -472,7 +472,7 @@ class Moosact(base.BaseModule):
                                                 [b"M", str(label)])
                         self.publisher.send_multipart(
                                                 [b"M", b"speed = 0.0001"])
-                        time.sleep(2)
+                        #time.sleep(2)
                         self.world.apply_midca_action(action)
                         self.mem.set(self.mem.MOOS_FEEDBACK, None)
 
@@ -501,7 +501,7 @@ class Moosact(base.BaseModule):
                                 return False
 
                         if ("qroute_transit" in argnames):
-                            message = [b"M", b"point = 60,-65 # speed= 1.0"]
+                            message = [b"M", b"point = 55,-72 # speed= 1.0"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
                             if (suspended_action) \
                                     and (suspended_action == message):
@@ -596,6 +596,36 @@ class Moosact(base.BaseModule):
 
                         if ("home" in argnames):
                             message = [b"M", b"point = 170,0 # speed= 0.5"]
+                            suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
+                            if (suspended_action) \
+                                    and (suspended_action == message):
+                                for i in range(2):
+                                    self.publisher.send_multipart([b"M", b"speed = 0.5"])
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                return False
+
+                            else:
+                                for i in range(2):
+                                    self.publisher.send_multipart(message)
+                                self.mem.set(self.mem.MOOS_FEEDBACK, action)
+                                self.mem.set(self.mem.MOOS_SUSPENDED_ACTION, message)
+
+                                return False
+
+                        if ("way_point" in argnames):
+                            # get the go to way_points from memory
+                            way_points = self.mem.get(self.mem.WAY_POINTS)
+                            # compute the string using way_points
+                            # fromat is "x,y:x1,y1:x2,y2:...."
+                            # sample string "12,35:15,38"
+                            points = ""
+                            for way_point in way_points:
+                                if not points == "":
+                                    points = points + ":"
+                                x = way_point[0]
+                                y = way_point[1]
+                                points = points + str(x) + "," + str(y)
+                            message = [b"M", b"points = " +points+" # speed= 0.5"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
                             if (suspended_action) \
                                     and (suspended_action == message):

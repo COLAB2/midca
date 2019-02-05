@@ -313,6 +313,7 @@ class MoosObserver(base.BaseModule):
                         states+="hazard_at_pathway(mine" + mine_label+")\n"
                         path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
                 '''
+                path_mines["mine" + mine_label] = {"X": mine_x, "Y": mine_y}
                 self.mem.set(self.mem.MINE_LOCATION, path_mines)
 
 
@@ -336,7 +337,7 @@ class MoosObserver(base.BaseModule):
                 else:
                     states+="at_location(remus,transit)\n"
 
-            if (x >= 50 and y >= -80) and (x <= 90 and y <= -45):
+            if (x >= 50 and y >= -80) and (x <= 64 and y <= -70):
                 states+="at_location(remus,qroute_transit)\n"
 
             if (x > 28 and x<= 37) and (y > -72 and y<= -61) :
@@ -349,6 +350,19 @@ class MoosObserver(base.BaseModule):
             if x>165 and y > -6:
                 states+="at_location(remus,home)\n"
 
+            way_points = self.mem.get(self.mem.WAY_POINTS)
+
+            if way_points:
+                way_point = way_points[-1]
+                if (x > (way_point[0] - 5) and x < (way_point[0] + 5)) and (y > (way_point[1] - 5) and y < (way_point[1] + 5)) :
+                    states += "at_location(remus,way_point)\n"
+                else:
+                    if "at_location(remus, way_point)" in states:
+                        states += "!at_location(remus,way_point)\n"
+            else:
+                if "at_location(remus, way_point)" in states:
+                    states += "!at_location(remus,way_point)\n"
+
             self.mem.set(self.mem.REMUS_LOCATION, {"X": x, "Y": y, "speed": speed, "direction": speed})
 
         except:
@@ -359,7 +373,7 @@ class MoosObserver(base.BaseModule):
         atoms = copy.deepcopy(self.world.atoms)
         for atom in atoms:
             if atom.predicate.name == "at_location":
-                self.world.atoms.remove(atom)
+                    self.world.atoms.remove(atom)
 
         # this is to update the world into memory
         if not states == "":

@@ -3,6 +3,7 @@ from midca import midcatime
 from _goalgen import tf_3_scen, tf_fire
 from midca.domains.logistics import deliverstate
 from midca.domains.blocksworld import blockstate
+from midca.domains.moos_domain.util import polynomial_regression
 from midca.worldsim import stateread
 import copy,csv,sys
 import random
@@ -139,9 +140,24 @@ class MoosGoalInput(UserGoalInput):
         for atom in atoms:
             if atom.predicate.name == "hazard_at_location" \
                         and not atom.args[0].name in mines_checked:
-                g = goals.Goal(*[atom.args[0].name,atom.args[1].name], predicate = 'hazard_checked')
+                g = []
+                g = goals.Goal(*[atom.args[0].name, atom.args[1].name], predicate='hazard_checked')
                 print("Midca generated a goal" + str(g))
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+
+                if atom.args[1].name == "qroute":
+                    g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
+                    mine_locations = self.mem.get(self.mem.MINE_LOCATION)
+                    x = mine_locations[atom.args[0].name]["X"]
+                    way_points = []
+                    for i in range(0,3):
+                        predicted_y = polynomial_regression(data=x)
+                        way_points.append( [x, predicted_y])
+                        x = x + 10
+                    self.mem.set(self.mem.WAY_POINTS, way_points)
+                    print("Midca generated a goal" + str(g))
+                    self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+
 
 
 
