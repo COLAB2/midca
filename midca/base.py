@@ -169,10 +169,10 @@ class MIDCA:
         if len(self.modules[phase]) == MAX_MODULES_PER_PHASE:
             raise Exception("max module per phase [" + str(MAX_MODULES_PER_PHASE) + "] exceeded for phase" + str(phase) + ". Cannot add another.")
         self.modules[phase].insert(i, module)
-        
+
         try: # TODO: hacky fix for having modules with two kinds of init functions (one with verbose and one without)
             # some modules use verbose to get the new verbose value
-            # and others don't 
+            # and others don't
             module.init(mem=self.mem, world=self.world, verbose=self.verbose)
         except:
             module.init(mem=self.mem, world=self.world)
@@ -187,7 +187,7 @@ class MIDCA:
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
             return modules.pop(i)
-                
+
     def clearPhase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -437,11 +437,11 @@ class PhaseManager:
                     self.twoSevenWarning = True
                 time.sleep(pause)
 
-    
+
     def one_cycle(self, verbose = 1, pause = 0.5, meta=False, noInterface=True):
         '''
         Runs one cycle of midca. If meta == True, it will run one cycle of metacognition, otherwise
-        it will run one cycle of cognition. If you want to run one cycle of cognition, with metacognition 
+        it will run one cycle of cognition. If you want to run one cycle of cognition, with metacognition
         interleaved, use one_cycle_with_meta_intrlvd().
         '''
         phases = self.midca.phases
@@ -490,9 +490,9 @@ class PhaseManager:
         while 1:
             if usingInterface:
                 print("Next MIDCA command:  ", file = sys.stderr, end = "")
-                #val = raw_input()
-		val = ""
-		print
+                val = raw_input()
+                #val = ""
+                print
                 if val == "q":
                     break
                 elif val == "skip":
@@ -581,7 +581,7 @@ class PhaseManager:
                     print('----- and now: self.mem.get("__world states")[-1].atoms ----')
                     for atom in self.mem.get("__world states")[-1].atoms:
                         print("  "+str(atom))
-                        
+
                 elif val == "change":
                     print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:

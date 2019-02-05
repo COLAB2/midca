@@ -1,0 +1,9 @@
+PRESIDENT(CEO)
+UNMANNED_ORG(institution)
+EMPLOYEES(union)
+CUSTOMERS(client)
+PROFIT(money)
+
+existed_stats(money, client, union)
+agreed_new_policy(institution, union)
+added_new_ideas(institution)

@@ -160,7 +160,21 @@ class MoosGoalInput(UserGoalInput):
 
 
 
+class ManagementGoalInput(UserGoalInput):
 
+    '''
+    MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+    '''
+
+
+
+    def run(self, cycle, verbose = 2):
+
+            # for experiment
+            g = goals.Goal(*["institution","money", "client", "union"], predicate = 'reputed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            raw_input("Press Enter to start the Experiment")
 
 
 

@@ -598,8 +598,8 @@ class PyHopPlanner(base.BaseModule):
                 # record attempt to replann
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
-            except Exception:
-
+            except Exception as e:
+                print (e)
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:

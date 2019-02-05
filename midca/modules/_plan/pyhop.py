@@ -234,7 +234,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
         if newstate:
             solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
             if solution != False:
-                return solution
+                return solution 
     if task1[0] in methods:
         if verbose>2: print('depth {} method instance {}'.format(depth,task1))
         relevant = methods[task1[0]]

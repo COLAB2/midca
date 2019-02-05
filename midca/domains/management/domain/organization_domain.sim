@@ -1,0 +1,56 @@
+type(PRESIDENT)
+type(UNMANNED_ORG)
+type(EMPLOYEES)
+type(CUSTOMERS)
+type(PROFIT)
+
+
+predicate(reputed,[org, profits, customer, employees], [UNMANNED_ORG, PROFIT, CUSTOMERS, EMPLOYEES])
+predicate(negotiation_started, [president, employees], [PRESIDENT, EMPLOYEES])
+predicate(negotiation_monitored, [president, employees], [PRESIDENT, EMPLOYEES])
+predicate(existed_stats,[profits, customers, employees], [PROFIT, CUSTOMERS, EMPLOYEES])
+predicate(analyzed_stats,[profits, customers, employees], [PROFIT, CUSTOMERS, EMPLOYEES])
+predicate(added_new_ideas, [org], [UNMANNED_ORG])
+predicate(created_new_policy, [org], [UNMANNED_ORG])
+predicate(agreed_new_policy, [org, employees], [UNMANNED_ORG, EMPLOYEES])
+predicate(implemented_new_policy, [org, employees], [UNMANNED_ORG, EMPLOYEES])
+predicate(understood_problem, [employees], [EMPLOYEES])
+predicate(resolved_problem, [employees], [EMPLOYEES])
+predicate(created_revised_policy, [org], [UNMANNED_ORG])
+predicate(implemented_revised_policy, [org, employees], [UNMANNED_ORG, EMPLOYEES])
+
+operator(see_statistics,
+args = [(profits, PROFIT), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(existed_stats, [profits, customers, employees])],
+results = [condition(analyzed_stats, [profits, customers, employees])])
+
+operator(make_policy,
+args = [(org, UNMANNED_ORG), (profits, PROFIT), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(analyzed_stats, [profits, customers, employees]), condition(added_new_ideas, [org])],
+results = [condition(created_new_policy, [org])])
+
+operator(inform_policy,
+args = [(org, UNMANNED_ORG), (employees, EMPLOYEES)],
+preconditions = [condition(created_new_policy, [org])],
+results = [condition(agreed_new_policy, [org, employees])])
+
+operator(implement_policy,
+args = [(org, UNMANNED_ORG), (profits, PROFIT), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(created_new_policy, [org]), condition(agreed_new_policy, [org, employees])],
+results = [condition(implemented_new_policy, [org, employees]), condition(reputed, [org, profits, customers, employees])])
+
+operator(look_at_disagreement,
+args = [(president, PRESIDENT), (org, UNMANNED_ORG), (employees, EMPLOYEES)],
+preconditions = [condition(created_new_policy, [org]), condition(agreed_new_policy, [org, employees], negate = True)],
+results = [condition(understood_problem, [employees]), condition(negotiation_started, [president, employees])])
+
+operator(resolve_disagreement,
+args = [(president, PRESIDENT), (org, UNMANNED_ORG), (employees, EMPLOYEES)],
+preconditions = [condition(understood_problem, [employees]),  condition(negotiation_started, [president, employees]), condition(agreed_new_policy, [org, employees], negate = True)],
+results = [condition(resolved_problem, [employees]), condition(negotiation_started, [president, employees], negate = True), condition(created_revised_policy, [org])])
+
+operator(implement_revised_policy,
+args = [(president, PRESIDENT), (org, UNMANNED_ORG), (profits, PROFIT), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(created_revised_policy, [org]), condition(resolved_problem, [employees])],
+results = [condition(implemented_revised_policy, [org, employees]), condition(reputed, [org, profits, customers, employees])])
+
