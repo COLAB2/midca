@@ -90,6 +90,10 @@ class Memory:
 	REMUS_LOCATION = "__ remus location"
 	WAY_POINTS ="__ predicted waypoint"
 
+	#Management
+	RESOLVED_POLICIES = "__policies taken care of"
+	TIME_DISAGREEMENTS =  "__ disagreement_time"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)

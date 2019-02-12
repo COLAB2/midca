@@ -5,6 +5,8 @@ import copy
 import os
 import zmq
 import socket,time
+import random
+import sys
 
 
 try:
@@ -150,6 +152,143 @@ class PerfectObserver(base.BaseModule):
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
 
+class ManagementObserver(base.BaseModule):
+
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+
+    def __init__(self,time):
+        self.time = time
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        self.count = 0
+        random.seed(2222)
+        self.random_disagreement = [random.randint(1,101) for x in range(100)]
+
+    #perfect observation
+    def observe(self):
+        return self.world.copy()
+
+
+    def add_time_to_memory(self,policy):
+        time_dis = self.mem.get(self.mem.TIME_DISAGREEMENTS)
+        if not time_dis:
+            time_dis = {}
+        time_dis[policy] = midcatime.now()
+        self.mem.set(self.mem.TIME_DISAGREEMENTS, time_dis)
+
+    def generate_random_disagreement(self, world):
+        '''
+
+        :param world: States of the world
+        :return: add an atom if there is disagreement and
+                return the world
+        '''
+
+        # If already there is a disagreement generated
+        # then we donot need to generate again
+        # else there is a possibility of disagrement
+        policies = self.mem.get(self.mem.RESOLVED_POLICIES)
+        if not policies:
+            policies = []
+
+        copied_world = world.copy()
+        for atom in copied_world.atoms:
+            if atom.predicate.name == "implemented_new_policy":
+                if atom.args[1].name in policies:
+                    pass
+                else:
+                    policies.append(atom.args[1].name)
+                    self.mem.set(self.mem.RESOLVED_POLICIES, policies)
+                    disag = random.Random(self.count).choice([0, 1])
+                    self.count = self.count + 1
+                    if disag:
+                        intensity = str(self.random_disagreement.pop())
+                        self.world.add_fact("disagreement", [atom.args[0].name, atom.args[1].name, intensity])
+                        self.add_time_to_memory(atom.args[1].name)
+
+        return world
+
+
+
+    def modify_reputation(self, world):
+        '''
+
+        :param world: States of the world
+        :return: modify the reputable atom if there is disagreement and
+                return the world
+        '''
+
+        intensity = 0
+        score = 0
+        state_atom = None
+        for atom in world.atoms:
+            if atom.predicate.name == "reputable":
+                score = int(atom.args[1].name)
+                state_atom = atom
+
+        for atom in world.atoms:
+            if atom.predicate.name == "disagreement":
+                intensity = int(atom.args[2].name)
+                time_lapsed = midcatime.now() - self.mem.get(self.mem.TIME_DISAGREEMENTS)[atom.args[1].name]
+                exp_factor = 1
+                if time_lapsed > self.time:
+                    exp_factor = 4
+                score = int(score) - int(((float(intensity)/100) * time_lapsed) + exp_factor)
+                try:
+                    self.world.remove_atom(state_atom)
+                except:
+                    print ("ignore if it already removed")
+                print (time_lapsed)
+                raw_input("Enter ")
+                if score < 0:
+                    print ("Out of Reputation")
+                    print ("Experiment Completed")
+                    sys.exit()
+                self.world.add_fact("reputable", [state_atom[0].name, str(score)])
+
+        return world
+
+
+    def run(self, cycle, verbose = 2):
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+
+        # Reduce the reputation if the disagreement exists.
+        self.modify_reputation(world)
+
+
+        # generate disagreement for the policy in a random way
+        world = self.generate_random_disagreement(world)
+
+        self.mem.add(self.mem.STATES, world)
+
+        # Memory Usage Optimization (optional, feel free to comment
+        # drop old memory states if not being used
+        # this should help with high memory costs
+        states = self.mem.get(self.mem.STATES)
+        if len(states) > 400:
+            #print "trimmed off 200 old stale states"
+            states = states[200:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD",copy.deepcopy(world))
 
 class MoosObserver(base.BaseModule):
     '''

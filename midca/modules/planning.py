@@ -600,6 +600,7 @@ class PyHopPlanner(base.BaseModule):
                 pyhopPlan = pyhop.pyhop(pyhopState, pyhopTasks, verbose = 0)
             except Exception as e:
                 print (e)
+                print (traceback.print_exc())
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:

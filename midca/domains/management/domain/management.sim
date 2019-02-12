@@ -1,0 +1,50 @@
+type(PRESIDENT)
+type(UNMANNED_ORG)
+type(EMPLOYEES)
+type(CUSTOMERS)
+type(SCORE)
+type(RESOURCES)
+type(POLICY)
+
+predicate(available_policy, [policy], [POLICY])
+predicate(available_resources, [res], [RESOURCES])
+predicate(reputable,[org, score], [UNMANNED_ORG, SCORE])
+predicate(increased_reputation, [org, score], [UNMANNED_ORG, SCORE])
+predicate(existed_stats,[res, customers, employees], [RESOURCES, CUSTOMERS, EMPLOYEES])
+predicate(analyzed_stats,[res, customers, employees], [RESOURCES, CUSTOMERS, EMPLOYEES])
+predicate(created_new_policy, [org, policy], [UNMANNED_ORG, POLICY])
+predicate(informed_new_policy, [org, policy, employees], [UNMANNED_ORG, POLICY, EMPLOYEES])
+predicate(implemented_new_policy, [org, policy], [UNMANNED_ORG, POLICY])
+predicate(disagreement, [org, policy, score], [UNMANNED_ORG, POLICY, SCORE])
+predicate(checked_disagreement, [org, policy, score], [UNMANNED_ORG, POLICY, SCORE])
+
+
+operator(see_statistics,
+args = [(res, RESOURCES), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(available_resources, [res])],
+results = [condition(analyzed_stats, [res, customers, employees])])
+
+operator(make_policy,
+args = [(org, UNMANNED_ORG), (policy, POLICY), (old_res, RESOURCES), (new_res, RESOURCES), (customers, CUSTOMERS), (employees, EMPLOYEES)],
+preconditions = [condition(analyzed_stats, [old_res, customers, employees])],
+results = [condition(created_new_policy, [org, policy]), condition(available_resources, [old_res], negate=True), condition(available_resources, [new_res]), condition(available_policy, [policy], negate=True)])
+
+operator(inform_policy,
+args = [(org, UNMANNED_ORG), (policy, POLICY), (employees, EMPLOYEES)],
+preconditions = [condition(created_new_policy, [org, policy])],
+results = [condition(informed_new_policy, [org, policy, employees])])
+
+operator(implement_policy,
+args = [(org, UNMANNED_ORG), (policy, POLICY), (score, SCORE), (employees, EMPLOYEES)],
+preconditions = [condition(created_new_policy, [org, policy]), condition(informed_new_policy, [org, policy, employees])],
+results = [condition(implemented_new_policy, [org, policy]), condition(increased_reputation, [org, score])])
+
+operator(resolve_disagreement,
+args = [(org, UNMANNED_ORG), (policy, POLICY), (score, SCORE), (old_res, RESOURCES), (new_res, RESOURCES)],
+preconditions = [condition(disagreement, [org, policy, score])],
+results = [condition(checked_disagreement, [org, policy, score]), condition(disagreement, [org, policy, score], negate=True), condition(available_resources, [old_res], negate=True), condition(available_resources, [new_res])])
+
+operator(ignore_disagreement,
+args = [(org, UNMANNED_ORG), (policy, POLICY), (score, SCORE)],
+preconditions = [condition(disagreement, [org, policy, score])],
+results = [condition(checked_disagreement, [org, policy, score])])

@@ -30,6 +30,42 @@ class MidcaActionSimulator:
             if verbose >= 2:
                 print "No actions selected this cycle by MIDCA."
 
+class ManagementActionSimulator:
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except TypeError, IndexError:
+            if verbose >= 1:
+                print "Simulator: no actions selected yet by MIDCA."
+            return
+        if actions:
+            for action in actions:
+                if self.world.midca_action_applicable(action):
+                    if verbose >= 2:
+                        print "simulating MIDCA action:", action
+                    if action.op == "implement_policy":
+                        for atom in self.world.atoms:
+                            if atom.predicate.name == "reputable":
+                                temp = copy.deepcopy(atom)
+                                calc = str( int(temp.args[1].name) + int(action.args[2]))
+                                if int(calc) <= 100:
+                                    self.world.remove_atom(atom)
+                                    self.world.add_fact(temp.predicate.name, [temp.args[0].name, calc])
+                                    break
+                    self.world.apply_midca_action(action)
+                else:
+                    if verbose >= 1:
+                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+        else:
+            if verbose >= 2:
+                print "No actions selected this cycle by MIDCA."
+
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]
 
 class ASCIIWorldViewer(base.BaseModule):

@@ -166,15 +166,92 @@ class ManagementGoalInput(UserGoalInput):
     MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
     '''
 
+    def __init__(self,increment):
+        self.increment =  increment
+        self.policy_count = 0
 
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        self.world = world
+
+    def available_policies(self, atoms):
+        '''
+        :param atoms: States in the world
+        :return: Boolean : whether there are policies to create
+        '''
+        for atom in atoms:
+            if atom.predicate.name == "available_policy":
+                return True
+        return False
+
+    def current_reputation(self, atoms):
+        '''
+
+        :param atoms: States in the world
+        :return: Returns the institutions current reputable score
+        '''
+        for atom in atoms:
+            if atom.predicate.name == "increase_reputation":
+                score = int(atom.args[1].name)
+                return score
+
+    def write_to_file(self, atoms, name = "management.csv"):
+
+        available_resources = 0
+        reputation = 0
+
+        for atom in atoms:
+            if atom.predicate.name == "available_resources":
+                available_resources = int(atom.args[0].name.replace("R" , ""))
+            elif atom.predicate.name == "reputable":
+                reputation = int(atom.args[1].name)
+
+        with open(name, mode='a') as file:
+                    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    writer.writerow([self.policy_count, available_resources, reputation])
+
+        self.policy_count +=1
 
     def run(self, cycle, verbose = 2):
 
-            # for experiment
-            g = goals.Goal(*["institution","money", "client", "union"], predicate = 'reputed')
-            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
-            print("Midca generated a goal : " + str(g))
-            raw_input("Press Enter to start the Experiment")
+            # If there are no goals, generate a goal for the institution to be more reputable
+            if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+
+                world = self.mem.get(self.mem.STATES)[-1]
+                atoms = copy.deepcopy(world.atoms)
+
+                # check if there are no available policies to make
+                # call it a day end the experiment
+                if not (self.available_policies(atoms)):
+                    print ("Experiment Completed")
+                    sys.exit()
+
+                # remove the increased_reputation
+                for atom in world.atoms:
+                    if atom.predicate.name == "increased_reputation":
+                        self.world.remove_atom(atom)
+                        break
+
+                # generate the goal
+                self.write_to_file(atoms)
+                g = goals.Goal(*["institution",str(self.increment)], predicate = 'increased_reputation')
+                self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                print("Midca generated a goal : " + str(g))
+
+            world = self.mem.get(self.mem.STATES)[-1]
+            atoms = copy.deepcopy(world.atoms)
+
+            policy_checked = []
+            for atom in atoms:
+                if atom.predicate.name == "checked_disagreement":
+                    policy_checked.append(atom.args[1].name)
+
+            for atom in world.atoms:
+                if atom.predicate.name == "disagreement" \
+                    and not atom.args[1].name in policy_checked :
+                    g = goals.Goal(*[atom.args[0].name, atom.args[1].name, atom.args[2].name], predicate='checked_disagreement')
+                    self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                    print("Midca generated a goal : " + str(g))
 
 
 

@@ -312,6 +312,7 @@ class MIDCA:
         #self.mem.set("phase", self.phases[self.phasei].name)
         #metareasoner.MetaReasoner(self.trace, self.mem).run()
 
+
         return retVal
 
     def copy(self):
@@ -629,6 +630,7 @@ class PhaseManager:
                         if metaval == "continue":
                             self.next_meta_phase() # TODO - not sure when this gets called
             else: # not using interface - TODO # duplicate code, clean this code up
+                time.sleep(0.5)
                 val = self.next_phase()
                 if self.mem.metaEnabled:
                     metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
