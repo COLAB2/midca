@@ -192,8 +192,8 @@ def main():
         # Take each frame
         #_, frame = cap.read()
         color_location = {}
-        image = baxter.getImageFromRightHandCamera()
-        frame = baxter.getLastCvImage()
+        frame = baxter.getImageFromRightHandCamera()
+        #frame = baxter.getLastCvImage()
         #send_image_to_screen(frame)
 	
         
