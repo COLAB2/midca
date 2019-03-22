@@ -2,7 +2,7 @@
 layout: default
 ---
 
-# Third Annual MIDCA Workshop
+# Third Annual MIDCA Workshop ***CANCELED***
 
 **Date:** Friday, April 5th, 2019
 
