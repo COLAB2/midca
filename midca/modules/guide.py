@@ -10,6 +10,12 @@ import random
 from midca.modules.monitors import Monitor
 from threading import Thread
 
+from midca.domains.moos_domain.explanations import Explanations
+
+
+import pickle
+import random
+
 class UserGoalInput(base.BaseModule):
 
     '''
@@ -104,6 +110,21 @@ class MoosGoalInput(UserGoalInput):
 
     def run(self, cycle, verbose = 2):
 
+        world = self.mem.get(self.mem.STATES)[-1]
+        #filehandler = open("states.obj", 'w')
+
+        #pickle.dump(world, filehandler)
+
+        '''
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+            actionhandler = open("actions.obj", "w")
+            pickle.dump(actions, actionhandler)
+        except Exception:
+            pass
+        '''
+
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             # for experiment
             if self.mem.get(self.mem.MOOS_TIME):
@@ -145,6 +166,7 @@ class MoosGoalInput(UserGoalInput):
                 print("Midca generated a goal" + str(g))
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
 
+                '''
                 if atom.args[1].name == "qroute":
                     g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
                     mine_locations = self.mem.get(self.mem.MINE_LOCATION)
@@ -157,6 +179,135 @@ class MoosGoalInput(UserGoalInput):
                     self.mem.set(self.mem.WAY_POINTS, way_points)
                     print("Midca generated a goal" + str(g))
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+
+                '''
+
+class MoosGoalInterpret(UserGoalInput):
+
+        '''
+        MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+        '''
+
+        def __init__(self, deadline):
+            self.deadline = deadline
+            self.xps = Explanations()
+            self.xps.read_explanations()
+
+        def remove_all_goals(self):
+            '''
+
+            :return: Remove all the goals in the goalgraph
+            '''
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goalGraph.getUnrestrictedGoals():
+                goalGraph.remove(goal)
+            self.mem.set(self.mem.CURRENT_GOALS , [])
+            self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
+
+
+
+        def run(self, cycle, verbose=2):
+
+            world = self.mem.get(self.mem.STATES)[-1]
+
+            try:
+                # get selected actions for this cycle. This is set in the act phase.
+                actions = self.mem.get(self.mem.ACTIONS)[-1]
+            except Exception:
+                actions = None
+
+            if self.mem.get(self.mem.explanations):
+                return
+
+            candidates = self.xps.retrieval(world, actions)
+
+
+
+            '''
+            if candidates:
+
+                print "Retrieved Explanations"
+                for each in candidates:
+
+                    print ("Explains node: ")
+                    print str(each.explains_node.predicate) + "(" + str(each.explains_node.args) + ")\n"
+
+                    print ("XP Asserted nodes: ")
+                    for node in each.xp_asserted_nodes:
+                        print str(node.predicate) + "(" + str(node.args) + ")"
+
+                raw_input("enter")
+                
+            '''
+
+            if candidates:
+                random.seed(0)
+                xp = random.choice(candidates)
+
+                '''
+                for each in candidates:
+                    for node in each.xp_asserted_nodes:
+                        if node.predicate == "mine_layer":
+                            xp = each
+                '''
+                
+                if not xp.explains_node.args[1].name == "qroute":
+                    return
+
+                for node in xp.xp_asserted_nodes:
+                    #raw_input("Enter")
+                    if node.predicate == "mission_failed":
+                        g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
+                        self.remove_all_goals()
+                        message = [b"M",
+                                   b" points=format=lawnmower,label=dedley_survey, x=81, y=-80, width=250, height = 30,lane_width=20, rows=north-south,degs=0 # speed =0.5"]
+                        self.mem.set(self.mem.WAY_POINTS, {"id": "mission_failed", "message": message})
+                        print("Midca generated a goal" + str(g))
+                        self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+
+                        g2 = goals.Goal(*["remus", "home"], predicate='at_location')
+                        self.mem.get(self.mem.GOAL_GRAPH).insert(g2)
+
+                        #raw_input("Enter")
+                        self.mem.set(self.mem.explanations, xp)
+                        return
+
+                    elif node.predicate == "mine_layer":
+                        if "single" in node.args:
+                            #self.mem.set(self.mem.explanations, xp)
+                            return
+
+                        if "random" in node.args:
+                            location = self.mem.get( self.mem.REMUS_LOCATION)
+                            g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
+                            location = self.mem.get(self.mem.REMUS_LOCATION)
+
+                            message = [b"M",
+                                       b" points=format=radial,label=way_point, x=" + location['X'] + "," + " y=" + location['Y'] + ",radius=20, pts=8, snap=1 # speed =0.5"]
+                            self.mem.set(self.mem.WAY_POINTS, {"id": "random", "message": message})
+                            print("Midca generated a goal" + str(g))
+                            raw_input("Enter")
+                            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            self.mem.set(self.mem.explanations, xp)
+                            return
+
+                        if "line" in node.args:
+                            g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
+                            points = "100,-67:77,-85:63,-96"
+                            message = [b"M", b"points = " + points + " # speed= 0.5"]
+                            self.mem.set(self.mem.WAY_POINTS, {"id":"line", "message":message})
+                            print("Midca generated a goal" + str(g))
+                            raw_input("Enter")
+                            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            self.mem.set(self.mem.explanations, xp)
+                            return
+
+                    elif node.predicate == "drifted":
+                        #self.mem.set(self.mem.explanations, xp)
+                        return
+
+                    else:
+                        pass
 
 
 

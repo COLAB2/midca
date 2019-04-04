@@ -17,14 +17,17 @@ def preferApprehend(goal1, goal2):
         return -1
     elif goal1['predicate'] != 'hazard_checked' and goal2['predicate'] == 'hazard_checked':
         return 1
+
     elif len(goal1.args) ==2  and len(goal2.args) == 2 :
         if goal1.args[1] == "way_point" and goal2.args[1] != "way_point":
             return -1
         elif goal1.args[1] != "way_point" and goal2.args[1] == "way_point":
             return 1
+
     elif len(goal1.args) ==2 and len(goal2.args) !=2:
         if goal1.args[1] == "way_point":
             return -1
+
     elif len(goal2.args) ==2 and len(goal1.args) !=2:
         if goal2.args[1] == "way_point":
             return 1
@@ -71,7 +74,7 @@ def polynomial_regression(data=0,  deg = 1):
     :param deg:  What will be the degree of polynomial equation
     :return: The new predicted Y value from the equation
     '''
-    datas = pd.read_csv('/home/sampath/moos-ivp/moos-ivp-midca/missions/gatars/mines_ga1.csv')
+    datas = pd.read_csv('/home/sampath/moos-ivp/moos-ivp-midca/missions/gatars/mines_qroute.csv')
     x = []
     y = []
     # get the data (x and y rows)

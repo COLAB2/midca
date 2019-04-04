@@ -353,9 +353,21 @@ class MoosObserver(base.BaseModule):
             way_points = self.mem.get(self.mem.WAY_POINTS)
 
             if way_points:
+
+                '''
                 way_point = way_points[-1]
                 if (x > (way_point[0] - 5) and x < (way_point[0] + 5)) and (y > (way_point[1] - 5) and y < (way_point[1] + 5)) :
                     states += "at_location(remus,way_point)\n"
+                '''
+
+                if way_points["id"] == "line":
+                    if (x > (63 - 5) and x < (63 + 5)) and (y > (-96 - 5) and y < (-96 + 5)):
+                        states += "at_location(remus,way_point)\n"
+
+                if way_points["id"] == "mission_failed":
+                    if (x > (216 - 5) and x < (216 + 5)) and (y > (-63 - 5) and y < (-63 + 5)):
+                        states += "at_location(remus,way_point)\n"
+
                 else:
                     if "at_location(remus, way_point)" in states:
                         states += "!at_location(remus,way_point)\n"

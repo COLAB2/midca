@@ -1,0 +1,67 @@
+{
+  "Explanations": [
+    
+    {
+      "PREXP_NODES": [
+        "at_location(remus, mine)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(mine, SEA_ROUTE)",
+        "drifted(mine, SEA_ROUTE)"
+      ]
+    },
+    
+    {
+      "PREXP_NODES": [
+        "at_location(remus, mine)",
+        "hazard_checked(mine, SEA_ROUTE)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(aeroplane, SEA_ROUTE)",
+        "mine_layer(straight, mines)"
+      ]
+    },
+    
+    
+    {
+      "PREXP_NODES": [
+        "at_location(remus, mine)",
+        "hazard_checked(mine, SEA_ROUTE)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(ship, SEA_ROUTE)",
+        "mine_layer(random, mines)"
+      ]
+    },
+    
+     {
+      "PREXP_NODES": [
+        "at_location(remus, mine)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(fisher_vessel, SEA_ROUTE)",
+        "mine_layer(single, mine)"
+      ]
+    },
+    
+     {
+      "PREXP_NODES": [
+       "at_location(remus, mine)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(previous_agent, SEA_ROUTE)",
+        "mission_failed(previous_agent)"
+      ]
+    }
+    
+    
+  
+  ]
+  
+}
+

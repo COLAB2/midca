@@ -618,14 +618,7 @@ class Moosact(base.BaseModule):
                             # compute the string using way_points
                             # fromat is "x,y:x1,y1:x2,y2:...."
                             # sample string "12,35:15,38"
-                            points = ""
-                            for way_point in way_points:
-                                if not points == "":
-                                    points = points + ":"
-                                x = way_point[0]
-                                y = way_point[1]
-                                points = points + str(x) + "," + str(y)
-                            message = [b"M", b"points = " +points+" # speed= 0.5"]
+                            message = way_points["message"]
                             suspended_action = self.mem.get(self.mem.MOOS_SUSPENDED_ACTION)
                             if (suspended_action) \
                                     and (suspended_action == message):
