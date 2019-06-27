@@ -613,7 +613,7 @@ class PhaseManager:
                             except Exception as e:
                                 print(e)
                 elif val == "?" or val == "help":
-                    print("interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n log -> log some text \n ? or help -> show this list of commands \n")
+                    print("interface: \n enter/return -> input commands. Empty command goes to next cycle \n q -> quit \n skip n -> skips n cycles \n show -> print world representation \n change -> modify or clear world state \n log -> log some text \n drawgoalgraph -> show the current goal graph \n memorydump -> show the variables in MIDCA's memory \n printtrace -> show the entire trace up until the MIDCA's last phase \n toggle meta verbose -> turn off/on meta output \n ? or help -> show this list of commands \n")
                 elif val:
                     print("command not understood")
                 else:
