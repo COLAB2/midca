@@ -483,7 +483,7 @@ class PhaseManager:
         stateread.apply_state_str(self.midca.world, stateStr)
 
     #function which runs MIDCA with a text UI
-    def run(self,usingInterface=True):
+    def run(self,usingInterface=True, phaseDelay=0):
         if not self.midca.initialized:
             raise Exception("MIDCA has not been initialized! Please call Midca.init() before running.")
         print("\nMIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.")
@@ -628,6 +628,7 @@ class PhaseManager:
                         if metaval == "continue":
                             self.next_meta_phase() # TODO - not sure when this gets called
             else: # not using interface - TODO # duplicate code, clean this code up
+		time.sleep(phaseDelay)
                 val = self.next_phase()
                 if self.mem.metaEnabled:
                     metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)
