@@ -490,8 +490,7 @@ class PhaseManager:
         while 1:
             if usingInterface:
                 print("Next MIDCA command:  ", file = sys.stderr, end = "")
-                #val = raw_input()
-		val = ""
+                val = raw_input()
 		print
                 if val == "q":
                     break

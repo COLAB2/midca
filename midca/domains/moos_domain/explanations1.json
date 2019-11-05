@@ -24,7 +24,6 @@
       ]
     },
     
-    
     {
       "PREXP_NODES": [
         "at_location(remus, mine)",
@@ -57,10 +56,27 @@
         "at_location(previous_agent, SEA_ROUTE)",
         "mission_failed(previous_agent)"
       ]
+    },
+
+    {
+      "PREXP_NODES": [
+       "at_location(remus, mine)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "sensor_failed(remus)"
+      ]
+    },
+
+    {
+      "PREXP_NODES": [
+       "at_location(remus, mine)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "callibration_failed(remus)"
+      ]
     }
-    
-    
-  
   ]
   
 }

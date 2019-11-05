@@ -4,11 +4,7 @@ A collection of functions that are domain specific, which different MIDCA compon
 import os,copy
 from midca.modules._plan import pyhop
 
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
+
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -44,6 +40,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.checked_hazards = []
     s.survey = {}
     s.location = ""
+    s.ships = []
     s.path_mines = []
 
     for atom in world.atoms:
@@ -56,6 +53,9 @@ def pyhop_state_from_world(world, name = "state"):
             s.location = atom.args[1].name
         if atom.predicate.name == "hazard_at_pathway":
             s.path_mines.append(atom.args[0].name)
+    for objname in world.objects:
+        if world.objects[objname].type.name == "SHIP":
+            s.ships.append(objname)
     return s
 
 
@@ -74,6 +74,14 @@ def polynomial_regression(data=0,  deg = 1):
     :param deg:  What will be the degree of polynomial equation
     :return: The new predicted Y value from the equation
     '''
+
+    # statistical imports
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import PolynomialFeatures
+
     datas = pd.read_csv('/home/sampath/moos-ivp/moos-ivp-midca/missions/gatars/mines_qroute.csv')
     x = []
     y = []

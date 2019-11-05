@@ -130,13 +130,15 @@ class MoosGoalInput(UserGoalInput):
             if self.mem.get(self.mem.MOOS_TIME):
                 self.write_to_file(cycle)
                 print ("Experiment Completed")
-                sys.exit()
+                return
 
             self.mem.set(self.mem.MOOS_DEADLINE , self.deadline)
 
             # for experiment
 
+
             g = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
+            #g = goals.Goal(*["fisher4"], predicate = 'apprehended')
             g1 = goals.Goal(*["remus","ga2"], predicate = 'cleared_mines')
             g2 = goals.Goal(*["remus","home"], predicate = 'at_location')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
@@ -145,7 +147,7 @@ class MoosGoalInput(UserGoalInput):
             print("Midca generated a goal : " + str(g))
             print("Midca generated a goal : " + str(g1))
             print("Midca generated a goal : " + str(g2))
-            raw_input("Press Enter to start the Experiment")
+            #raw_input("Press Enter to start the Experiment")
             # Remove after experiment
             #UserGoalInput.run(self, cycle, verbose = 2)
 
@@ -188,8 +190,7 @@ class MoosGoalInterpret(UserGoalInput):
         MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
         '''
 
-        def __init__(self, deadline):
-            self.deadline = deadline
+        def __init__(self):
             self.xps = Explanations()
             self.xps.read_explanations()
 

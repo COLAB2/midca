@@ -1,11 +1,12 @@
 from midca import base
 from midca import midcatime
 import copy,sys
+import os, inspect
 try:
-   from MIDCA.modules._plan import modified_pyhop
-   from midca.examples._gazebo_baxter import halo_color
+    from MIDCA.modules._plan import modified_pyhop
+    from midca.examples._gazebo_baxter import halo_color
 except ImportError:
-   pass
+    pass
 
 
 class EvalPointingFromFeedback(base.BaseModule):
@@ -26,16 +27,16 @@ class EvalPointingFromFeedback(base.BaseModule):
                     "Skipping eval based on plan completion"
             else:
                 if plan.finished():
-		    try:
-			modified_pyhop.generated_monitors[:] = []
-		        modified_pyhop.wait_time = None
-			hallo = halo_color.HaloLed()
-			# set hallo to green as a sign for monitors
-			hallo.setGreen()
-		    except:
-			pass
-	    	    finally:
-			print("robot stuff")
+                    try:
+                        modified_pyhop.generated_monitors[:] = []
+                        modified_pyhop.wait_time = None
+                        hallo = halo_color.HaloLed()
+                        # set hallo to green as a sign for monitors
+                        hallo.setGreen()
+                    except:
+                        pass
+                    finally:
+                        print("robot stuff")
                     if verbose >= 1:
                         print "Plan:", plan, "complete. Removing its goals"
                     for goal in plan.goals:
@@ -46,13 +47,89 @@ class EvalPointingFromFeedback(base.BaseModule):
                     if numPlans != newNumPlans and verbose >= 1:
                         print "removing", numPlans - newNumPlans,
                         "plans that no longer apply."
-		    del goals[-1]
-	    	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+                    del goals[-1]
+                    self.mem.set(self.mem.CURRENT_GOALS,goals)
+                else:
+                    if verbose >= 2:
+                        print "Plan:", plan, "not complete"
+
+class EvalMoosFromFeedback(base.BaseModule):
+
+    def __init__(self, path, ships_start):
+            self.path = path
+            self.ships_start = ships_start
+
+
+    def write_to_file(self,cycle):
+        world = self.mem.get(self.mem.STATES)[-1]
+        count = 10
+        for atom in world.atoms:
+            if atom.predicate.name == "wrecked":
+                count -= 1
+
+        thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        MIDCA_ROOT = thisDir + "/../"
+        DIR = MIDCA_ROOT + '/examples/results/'
+        file_count = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
+
+        with open(self.path +str(file_count-1)+'.csv','a') as fd:
+            fd.write(str(self.ships_start) + "," +  str(count) + "\n")
+
+
+    def run(self, cycle, verbose = 2):
+
+        # for saving results to file
+        time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+        print (time_taken)
+        if (time_taken >= self.mem.get(self.mem.MOOS_DEADLINE)):
+            self.write_to_file(cycle)
+            print("Experiment completed")
+            sys.exit()
+
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+        if not goals:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+        else:
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            plan = goalGraph.getMatchingPlan(goals)
+            if not plan:
+                if verbose >= 2:
+                    print "No plan found that achieves all current goals. ",
+                    "Skipping eval based on plan completion"
+            else:
+                if plan.finished():
+                    try:
+                        modified_pyhop.generated_monitors[:] = []
+                        modified_pyhop.wait_time = None
+                        hallo = halo_color.HaloLed()
+                        # set hallo to green as a sign for monitors
+                        hallo.setGreen()
+                    except:
+                        pass
+                    finally:
+                        print("robot stuff")
+                    if verbose >= 1:
+                        print "Plan:", plan, "complete. Removing its goals"
+                    for goal in plan.goals:
+                        goalGraph.remove(goal)
+                    numPlans = len(goalGraph.plans)
+                    goalGraph.removeOldPlans()
+                    newNumPlans = len(goalGraph.plans)
+                    if numPlans != newNumPlans and verbose >= 1:
+                        print "removing", numPlans - newNumPlans,
+                        "plans that no longer apply."
+                    del goals[-1]
+                    self.mem.set(self.mem.CURRENT_GOALS,goals)
                 else:
                     if verbose >= 2:
                         print "Plan:", plan, "not complete"
 
 class SimpleEval(base.BaseModule):
+
 
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -95,8 +172,9 @@ class SimpleEval(base.BaseModule):
             if numPlans != newNumPlans and verbose >= 1:
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
-	    del goals[-1]
-	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+            goals = self.mem.get(self.mem.CURRENT_GOALS)
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
@@ -167,8 +245,9 @@ class SimpleEval_moos(base.BaseModule):
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
         if goals:
-	        del goals[-1]
-	        self.mem.set(self.mem.CURRENT_GOALS,goals)
+            goals = self.mem.get(self.mem.CURRENT_GOALS)
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
@@ -233,8 +312,8 @@ class SimpleEval2(base.BaseModule):
             if numPlans != newNumPlans and verbose >= 1:
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
-	    del goals[-1]
-	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"
@@ -284,10 +363,10 @@ class SimpleEval_Restaurant(base.BaseModule):
 
         goals_changed = False # for trace
 
-	# if the time from memory is 0 then remove all goals from the goal graph
-	goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        # if the time from memory is 0 then remove all goals from the goal graph
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         money = self.mem.get(self.mem.MONEY)
-	if money == 0:
+        if money == 0:
             print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient money")
             for goal in goalGraph.getUnrestrictedGoals():
                 goalGraph.remove(goal)
@@ -311,7 +390,7 @@ class SimpleEval_Restaurant(base.BaseModule):
                     return
             if verbose >= 1:
                 print "All current goals achieved. Removing them from goal graph"
-		self.mem.set(self.mem.CURRENT_GOALS, None)
+                self.mem.set(self.mem.CURRENT_GOALS, None)
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
                 goalGraph.remove(goal)
@@ -348,22 +427,22 @@ class SimpleEval_construction(base.BaseModule):
             trace.add_data("WORLD", copy.deepcopy(world))
             trace.add_data("GOALS", copy.deepcopy(goals))
 
-	# this variable is to skip one eval phase, when the building gets completed
-	try:
-		self.skip
-	except AttributeError:
-		self.skip = False
+        # this variable is to skip one eval phase, when the building gets completed
+        try:
+            self.skip
+        except AttributeError:
+            self.skip = False
 
-	goals_changed = False # for trace
+        goals_changed = False # for trace
 
-	goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         time = self.mem.get(self.mem.TIME_CONSTRUCTION)
 
         if time == 0:
             print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient Time")
             for goal in goalGraph.getUnrestrictedGoals():
                 goalGraph.remove(goal)
-	    goalGraph.removeOldPlans()
+            goalGraph.removeOldPlans()
             self.mem.set(self.mem.CURRENT_GOALS , [])
             self.mem.set(self.mem.REJECTED_GOALS , None)
             self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
@@ -372,15 +451,15 @@ class SimpleEval_construction(base.BaseModule):
 
         rejected_goals = self.mem.get(self.mem.REJECTED_GOALS)
 
-	if rejected_goals :
-                print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient Time")
-		for goal in goalGraph.getUnrestrictedGoals():
-			goalGraph.remove(goal)
-		self.mem.set(self.mem.CURRENT_GOALS , [])
-		goals_changed = True
-		self.mem.set(self.mem.REJECTED_GOALS , None)
-		self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
-		goals=[]
+        if rejected_goals :
+            print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient Time")
+            for goal in goalGraph.getUnrestrictedGoals():
+                goalGraph.remove(goal)
+            self.mem.set(self.mem.CURRENT_GOALS , [])
+            goals_changed = True
+            self.mem.set(self.mem.REJECTED_GOALS , None)
+            self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
+            goals=[]
 
 
 
@@ -399,17 +478,17 @@ class SimpleEval_construction(base.BaseModule):
                         print "Could not test goal", goal, ". It does not seem to be a valid world state"
                     return
 
-	    if self.skip == False:
-		if verbose >= 1:
-                	print "Skipping one phase"
-		self.skip = True
-		return
-	    if self.skip ==True:
-		del self.skip
+            if self.skip == False:
+                if verbose >= 1:
+                    print "Skipping one phase"
+                self.skip = True
+                return
+            if self.skip ==True:
+                del self.skip
 
             if verbose >= 1:
                 print "All current goals achieved. Removing them from goal graph"
-		self.mem.set(self.mem.CURRENT_GOALS, None)
+                self.mem.set(self.mem.CURRENT_GOALS, None)
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
                 goalGraph.remove(goal)
@@ -466,15 +545,15 @@ class Scorer:
 
     #returns one current block stacking goal, if one exists.
     def get_stacking_goal(self):
-		try:
-			if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
-				return None
-		except:
-				return None
-		for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
-			if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on'):
-				return goal
-		return None
+        try:
+            if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+                return None
+        except:
+            return None
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+            if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on'):
+                return goal
+        return None
 
     def is_on_fire(self, block):
         return self.world.is_true("onfire", [block.name])
@@ -566,15 +645,15 @@ class MortarScorer:
 
     #returns one current block stacking goal, if one exists.
     def get_stacking_goal(self):
-         try:
+        try:
             if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
-		  return None
-	 except:
-		  return None
-	 for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
+                return None
+        except:
+            return None
+        for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and goal['predicate'] == 'on':
                 return goal
-         return None
+        return None
 
     # TODO: should there only be 1 get_stacking_goal function?
     # I added this function when the goal was multiple atoms, the previous method (above)
@@ -590,8 +669,8 @@ class MortarScorer:
             return None
         for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
                 #print("goal.args[0] = "+str(goal.args[0]))
-                if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
-                    return goal
+            if 'predicate' in goal and (goal['predicate'] == 'on' or goal['predicate'] == 'stable-on') and goal.args[0] == 'D_': # TODO this should just automatically figure out the highest block in the tower, but this is assuming D is always the highest, which in Intend, it will always choose goals with 'D' on top
+                return goal
         return None
 
 
@@ -601,7 +680,7 @@ class MortarScorer:
         for atom in self.world.atoms:
             #print("atom is "+str(atom))
             if atom.predicate.name == "hasmortar" and atom.args[0].name == block.name:
-                #print("found hasmortar("+str(atom.args[0].name)+")")
+            #print("found hasmortar("+str(atom.args[0].name)+")")
                 return True
         return False
 
@@ -877,8 +956,8 @@ class NBeaconsDataRecorder:
             if numPlans != newNumPlans and verbose >= 1:
                 if self.verbose >= 1: print "removing", numPlans - newNumPlans, "plans that no longer apply."
                 goals_changed = True
-	    del goals[-1]
-	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS,goals)
         else:
             if verbose >= 2:
                 print "No current goals. Skipping eval"

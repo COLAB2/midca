@@ -88,6 +88,8 @@ class Memory:
 	CURRENT_HAZARD = "__latest mine detected"
 	MINE_LOCATION = "__location of mines"
 	REMUS_LOCATION = "__ remus location"
+	ENEMY_LOCATION = "__ enemy location"
+	AGENT_LOCATION = "__ agent location"
 	WAY_POINTS ="__ predicted waypoint"
 	explanations ="__explanations"
 
