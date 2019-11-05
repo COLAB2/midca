@@ -93,7 +93,7 @@ class Experiment:
             self.send_message(x,y)
 
         elif ga2_mines[index] == "single":
-            x = [134]
+            x = [138]
             y = [-77]
             self.send_message(x,y)
 

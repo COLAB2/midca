@@ -587,14 +587,14 @@ class MoosObserverWithFishingVessels(base.BaseModule):
         if y >=-98 and y<=-48:
                 states+="at_location(" + vehicle + ",qroute)\n"
 
-                if (x >= 50 and y >= -80) and (x <= 64 and y <= -70):
+                if (x >= 45 and y >= -85) and (x <= 68 and y <= -65):
                     states+="at_location(" + vehicle + ",qroute_transit)\n"
 
-                elif (x > 28 and x<= 37) and (y > -72 and y<= -61) :
+                elif (x > 23 and x<= 42) and (y > -67 and y<= -56) :
                         #if (x == 28) and (y == -62) :
                         states+="at_location(" + vehicle + ",ga1)\n"
 
-                elif (x > 154 and x<= 163) and (y > -75 and y <=-63):
+                elif (x > 150 and x<= 160) and (y > -70 and y <=-60):
                         states+="at_location(" + vehicle + ",ga2)\n"
 
         elif y >=-166 and y<=-226:
