@@ -26,6 +26,7 @@ class Minelayer:
         # distribution of the x and the y
         x, y = np.random.multivariate_normal(self.mean, self.cov, self.total_mines).T
         for i, element in enumerate(x):
+            time.sleep(0.2)
             content = [b"M", b"x=" + str(x[i]) + ",y=" + str(y[i]) + ",label= " + str(self.label_count) + ", type=hazard"]
             self.publisher.send_multipart(content)
             time.sleep(0.1)

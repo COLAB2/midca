@@ -7,6 +7,7 @@ from midca.domains.moos_domain.util import polynomial_regression
 from midca.worldsim import stateread
 import copy,csv,sys
 import random
+from math import sqrt
 from midca.modules.monitors import Monitor
 from threading import Thread
 
@@ -138,6 +139,7 @@ class MoosGoalInput(UserGoalInput):
 
 
             g = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
+            #g3 = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
             #g = goals.Goal(*["fisher4"], predicate = 'apprehended')
             g1 = goals.Goal(*["remus","ga2"], predicate = 'cleared_mines')
             g2 = goals.Goal(*["remus","home"], predicate = 'at_location')
@@ -168,7 +170,7 @@ class MoosGoalInput(UserGoalInput):
                 print("Midca generated a goal" + str(g))
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
 
-                '''
+                """
                 if atom.args[1].name == "qroute":
                     g = goals.Goal(*["remus", "way_point"], predicate='cleared_mines')
                     mine_locations = self.mem.get(self.mem.MINE_LOCATION)
@@ -181,8 +183,8 @@ class MoosGoalInput(UserGoalInput):
                     self.mem.set(self.mem.WAY_POINTS, way_points)
                     print("Midca generated a goal" + str(g))
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                """
 
-                '''
 
 class MoosGoalInterpret(UserGoalInput):
 
@@ -311,8 +313,283 @@ class MoosGoalInterpret(UserGoalInput):
                         pass
 
 
+class MoosGoalInterpretFlairs(UserGoalInput):
+
+        '''
+        MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+        '''
 
 
+        def __init__(self):
+            self.xps = Explanations()
+            self.xps.read_explanations()
+            self.previous = None
+
+
+        def remove_goal(self, goal_remove):
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            goals = [goal for goal in goalGraph.getAllGoals()]
+
+            for goal in goals:
+                if goal.args == goal_remove.args:
+                    if not cmp(goal.kwargs, goal_remove.kwargs):
+                        goalGraph.remove(goal)
+                        goalGraph.removeOldPlans()
+                        break
+
+
+
+        def remove_all_goals(self):
+            '''
+
+            :return: Remove all the goals in the goalgraph
+            '''
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            goals = []
+            for goal in goalGraph.getAllGoals():
+                goals.append(goal)
+            for goal in goals:
+                goalGraph.remove(goal)
+
+            self.mem.set(self.mem.CURRENT_GOALS , [])
+            self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
+
+
+        def get_all_transit_detected_mines(self, world, location):
+            """
+
+            :param world: states
+            :return: list of mine labels
+            """
+            mines = []
+            for atom in world.atoms:
+                if atom.predicate.name == "hazard_checked" or atom.predicate.name == "hazard_at_location":
+                    if atom.args[1].name == location :
+                        label = atom.args[0].name.replace("mine", "")
+                        mines.append(self.mem.get(self.mem.MINES_HISTORY)[label])
+
+            return mines
+
+
+        def get_all_recently_detected_mines(self, world, location):
+            """
+
+            :param world: states
+            :return: list of mine labels
+            """
+            mines = []
+            for atom in world.atoms:
+                if atom.predicate.name == "hazard_at_location":
+                    if atom.args[1].name == location :
+                        label = atom.args[0].name.replace("mine", "")
+                        mines.append(self.mem.get(self.mem.MINES_HISTORY)[label])
+
+            return mines
+
+
+        def collinear(self, points):
+
+            x1 = points[0][0]
+            y1 = points[0][1]
+
+            x2 = points[1][0]
+            y2 = points[1][1]
+
+            x3 = points[2][0]
+            y3 = points[2][1]
+
+            diff = (y3 - y2)*(x2 - x1) - (y2 - y1)*(x3 - x2)
+            if (diff > -0.1 and diff < 0.1):
+                if  (y3 - y2)*(x2 - x1) == 0:
+                    return -0.7
+                else:
+                    return (y3 - y2)*(x2 - x1)
+
+            else:
+                return False
+
+
+        def certain_distance_line(self,  point, m, distance=100):
+
+            def dy(distance, m):
+                return m*dx(distance, m)
+
+            def dx(distance, m):
+                return sqrt(distance/(m**2+1))
+
+            point_b = (point[0]+dx(distance,m), point[1]+dy(distance,m))
+            other_possible_point_b = (point[0]-dx(distance,m), point[1]-dy(distance,m)) # going the other way
+
+            return point_b, other_possible_point_b
+
+        def qroute_goals(self, mines, xp):
+
+                print (len(mines))
+                if mines:
+                    if len(mines) >= 3:
+                        line_slope = self.collinear([mines[0], mines[int(len(mines)/2)], mines[len(mines)-1]])
+                        if line_slope :
+                            # goals to change qroute and goals to clear in mine pattern
+                            point1, point2 = self.certain_distance_line(mines[len(mines)-1], line_slope, 100)
+                            point11, point21 = self.certain_distance_line(mines[len(mines)-1], line_slope, 3000)
+                            points = str(point11[0]) + "," + str(point11[1]) + ":" + str(point2[0]) + "," + str(point2[1])
+                            message = [b"M", b"points = " + points + " # speed= 0.5"]
+                            self.mem.set(self.mem.WAY_POINTS, {"id": "line", "message": message, "endpoint":point2})
+                            g = [goals.Goal(*["remus", "way_point"], predicate='cleared_mines'),
+                                 goals.Goal(*["remus", "qroute1"], predicate='reported')
+                                 ]
+                            previous =1
+                            if previous == self.previous:
+                                return
+                            else:
+                                self.previous = previous
+                                #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                                self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                                self.mem.set(self.mem.explanations, xp)
+
+                            return
+                        else:
+                            point = mines[len(mines) - 1]
+                            value = 13
+                            points = str(point[0]) + "," + str(point[1]) + ":" + str(point[0]-value) + "," + str(point[1]+(value-4)) + ":" + \
+                                        str(point[0]-value) + "," + str(point[1]-(value+4)) + ":" + str(point[0]+value) + "," + str(point[1]-(value+4)) + ":" + \
+                                        str(point[0]+value) + "," + str(point[1]+(value-4)) + ":" + str(point[0]) + "," + str(point[1])
+                            endpoint = [point[0]+value, point[1]+(value-4)]
+                            message = [b"M", b"points = " + points + " # speed= 0.5"]
+                            self.mem.set(self.mem.WAY_POINTS, {"id": "random", "message": message, "endpoint":endpoint})
+                            g = [
+                                goals.Goal(*["remus", "way_point"], predicate='cleared_mines'),
+                                 goals.Goal(*["fisher4"], predicate='apprehended'),
+                                 goals.Goal(*["qroute1"], predicate='reported')
+                                 ]
+                            previous = 2
+                            #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            if previous == self.previous:
+                                return
+                            else:
+                                self.previous = previous
+                                self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                                self.mem.set(self.mem.explanations, xp)
+                            return
+                    elif len(mines) == 1:
+                        g = [
+                             goals.Goal(*["fisher4"], predicate='apprehended'),
+                             goals.Goal(*["remus", "qroute1"], predicate='reported')
+                             ]
+                        previous = 3
+                        if previous == self.previous:
+                            return
+                        else:
+                            self.previous = previous
+                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                        return
+
+                    elif len(mines) == 2:
+                        point = mines[len(mines) - 1]
+                        value = 13
+                        points = str(point[0]) + "," + str(point[1]) + ":" + str(point[0]-value) + "," + str(point[1]+value) + ":" + \
+                                    str(point[0]-value) + "," + str(point[1]-value) + ":" + str(point[0]+value) + "," + str(point[1]-value) + ":" + \
+                                    str(point[0]+value) + "," + str(point[1]+value)
+                        endpoint = [point[0]+value, point[1]+value]
+                        message = [b"M", b"points = " + points + " # speed= 0.5"]
+                        self.mem.set(self.mem.WAY_POINTS, {"id": "random", "message": message, "endpoint":endpoint})
+                        g = [goals.Goal(*["remus", "way_point"], predicate='cleared_mines'),
+                             goals.Goal(*["fisher4"], predicate='apprehended'),
+                             goals.Goal(*["remus", "qroute1"], predicate='reported')
+                             ]
+                        previous = 4
+                        if previous == self.previous:
+                            return
+                        else:
+                            self.previous = previous
+                            #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                        return
+
+
+
+        def transit_goals(self, mines, xp):
+
+                print (len(mines))
+                if mines:
+                    if len(mines) >= 3:
+                        line_slope = self.collinear([mines[0], mines[int(len(mines)/2)], mines[len(mines)-1]])
+                        if line_slope :
+                            # goals to change qroute and goals to clear in mine pattern
+                            g = []
+                            #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            #self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                            #self.mem.set(self.mem.explanations, xp)
+
+                            return
+                        else:
+                            previous = 5
+                            g = [goals.Goal(*["fisher4"], predicate='apprehended')]
+                            #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                            if previous == self.previous:
+                                return
+                            else:
+                                self.previous = previous
+                                self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                            #self.mem.set(self.mem.explanations, xp)
+                            return
+                    """
+                    elif len(mines)  == 1:
+                        previous = 6
+                        g = [goals.Goal(*["fisher4"], predicate='apprehended')
+                             ]
+                        if previous == self.previous:
+                            return
+                        else:
+                            self.previous = previous
+                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                        return
+                    elif len(mines) == 2:
+                        previous = 7
+                        g = [goals.Goal(*["fisher4"], predicate='apprehended')]
+                        #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                        if previous == self.previous:
+                            return
+                        else:
+                            self.previous = previous
+                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
+                        #self.mem.set(self.mem.explanations, xp)
+                        return
+                    """
+
+
+        def run(self, cycle, verbose=2):
+
+            world = self.mem.get(self.mem.STATES)[-1]
+
+            try:
+                # get selected actions for this cycle. This is set in the act phase.
+                actions = self.mem.get(self.mem.ACTIONS)[-1]
+            except Exception:
+                actions = None
+
+            if self.mem.get(self.mem.explanations):
+                return
+
+            candidates = self.xps.retrieval(world, actions)
+            if candidates:
+                xp = candidates[0]
+                # donot want explanation for ga1 and ga2
+                # because they are expected to be present there
+                if not (xp.explains_node.args[1].name == "qroute" or \
+                     xp.explains_node.args[1].name == "transit"):
+                        return
+
+                if xp.explains_node.args[1].name == "qroute":
+                    mines = self.get_all_recently_detected_mines(world, "qroute")
+                    self.qroute_goals(mines, xp)
+
+                elif xp.explains_node.args[1].name == "transit":
+                    mines = self.get_all_transit_detected_mines(world, "transit")
+                    self.transit_goals(mines, xp)
+
+                else:
+                    pass
 
 
 

@@ -211,7 +211,7 @@ class IgnoreMine(AsynchAction):
         if self.skip:
             self.skip = False
             return False
-        self.publisher.send_multipart([b"M", b"speed = 0.5"])
+        self.mem.set(self.mem.PAUSE, True)
         return True
 
 class RemoveMines(AsynchAction):
@@ -265,12 +265,13 @@ class RemoveMine(AsynchAction):
         completionCheck, True)
 
     def implement_action(self, action):
-        time.sleep(0.25)
+        time.sleep(0.3)
         label= int(action.args[0].replace("mine",""))
+        self.publisher_mine.send_multipart([b"M", str(label)])
+        time.sleep(0.1)
         for i in range(2):
             self.publisher.send_multipart([b"M", b"speed =0.0"])
-            self.publisher_mine.send_multipart([b"M", str(label)])
-
+            time.sleep(0.1)
         # assign scores
         if (action.args[1] == "ga1" or action.args[1] == "ga2"):
             score = self.mem.get(self.mem.MOOS_SCORE) + 1
@@ -286,8 +287,9 @@ class RemoveMine(AsynchAction):
         if self.skip:
             self.skip = False
             return False
-        time.sleep(2)
-        self.publisher.send_multipart([b"M", b"speed = 0.5"])
+        time.sleep(0.4)
+        self.mem.set(self.mem.PAUSE, True)
+        #self.publisher.send_multipart([b"M", b"speed = 0.5"])
         return True
 
 class FastSurvey(AsynchAction):
@@ -336,6 +338,11 @@ class FastSurvey(AsynchAction):
             for i in range(2):
                 self.publisher.send_multipart(message)
 
+        elif ("ga3" in argnames):
+            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=149, y=-194, width=30, height = 30,lane_width=10, rows=north-south,degs=0 # speed =1.0"]
+            for i in range(2):
+                self.publisher.send_multipart(message)
+
 
     def check_confirmation(self, action):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -345,6 +352,39 @@ class FastSurvey(AsynchAction):
                   atom.args[0].name == argnames[0] and \
                   atom.args[1].name == argnames[1]:
             return True
+
+        pause = self.mem.get(self.mem.PAUSE)
+        if pause:
+            for i in range(2):
+                self.publisher.send_multipart([b"M", b"speed = 1.0"])
+                time.sleep(0.1)
+                self.mem.set(self.mem.PAUSE, False)
+            for i in range(2):
+                self.publisher.send_multipart([b"M", b"speed = 1.0"])
+                time.sleep(0.1)
+
+        else:
+            speed = self.mem.get(self.mem.REMUS_SPEED)
+            if speed == 0:
+                self.implement_action(action)
+
+
+        if argnames[1] == "ga3":
+            atomic_world = world.copy()
+            flag = 0
+            for atom in atomic_world.atoms:
+                if atom.predicate.name == "hazard_at_location":
+                    world.remove_atom(atom)
+                    flag = 1
+            if flag:
+                self.mem.add(self.mem.STATES, world)
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            goals =  goalGraph.getAllGoals()
+            for each_goal in goals:
+                if each_goal["predicate"] == "hazard_checked":
+                    goalGraph.remove(each_goal)
+                    goalGraph.removeOldPlans()
+
         return False
 
 class SlowSurvey(AsynchAction):
@@ -375,13 +415,13 @@ class SlowSurvey(AsynchAction):
         argnames = [str(arg) for arg in action.args]
 
         if ("ga1" in argnames):
-            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=20, y=-80, width=20, height = 30,lane_width=20, rows=north-south,degs=0 # speed =0.5"]
+            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=20, y=-80, width=30, height = 30,lane_width=10, rows=north-south,degs=0 # speed =0.5"]
             print ("Start Surveying ....")
             for i in range(2):
                 self.publisher.send_multipart(message)
 
         if ("ga2" in argnames):
-            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=150, y=-80, width=20, height = 30,lane_width=20, rows=north-south,degs=0 # speed =0.5"]
+            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=150, y=-80, width=30, height = 30,lane_width=10, rows=north-south,degs=0 # speed =0.5"]
             for i in range(2):
                 self.publisher.send_multipart(message)
 
@@ -398,22 +438,45 @@ class SlowSurvey(AsynchAction):
             # sample string "12,35:15,38"
             message = way_points["message"]
             for i in range(2):
-                self.publisher.send_multipart([b"M", b"speed = 0.5"])
-
-            else:
-                for i in range(2):
-                    self.publisher.send_multipart(message)
+                self.publisher.send_multipart(message)
+                time.sleep(0.1)
 
 
 
     def check_confirmation(self, action):
         world = self.mem.get(self.mem.STATES)[-1]
         argnames = [str(arg) for arg in action.args]
+
         for atom in world.atoms:
           if atom.predicate.name == "at_location" and \
                   atom.args[0].name == argnames[0] and \
                   atom.args[1].name == argnames[1]:
+
+            if ("way_point" in argnames):
+                self.mem.set(self.mem.explanations, None)
             return True
+
+        if self.mem.get(self.mem.apprehended):
+            speed = self.mem.get(self.mem.REMUS_SPEED)
+            if speed == 0:
+                self.implement_action(action)
+                self.mem.set(self.mem.apprehended, False)
+                return False
+
+        pause = self.mem.get(self.mem.PAUSE)
+        if pause:
+            self.mem.set(self.mem.PAUSE, False)
+            self.publisher.send_multipart([b"M", b"speed = 0.5"])
+            time.sleep(0.1)
+            self.publisher.send_multipart([b"M", b"speed = 0.5"])
+            for i in range(2):
+                self.publisher.send_multipart([b"M", b"speed = 0.5"])
+                time.sleep(0.1)
+
+        else:
+            speed = self.mem.get(self.mem.REMUS_SPEED)
+            if speed == 0:
+                self.implement_action(action)
         return False
 
 class CatchEnemy(AsynchAction):
@@ -441,15 +504,15 @@ class CatchEnemy(AsynchAction):
         time.sleep(0.25)
         argnames = [str(arg) for arg in action.args]
         enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)
-        message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 1.0"]
+        message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.5"]
         self.publisher.send_multipart(message)
 
     def check_confirmation(self, action):
         enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)
         agent_location = self.mem.get(self.mem.AGENT_LOCATION)
         distance = math.sqrt(sum([(a - b) ** 2 for a, b in zip(enemy_location, agent_location)]))
-        if distance > 100:
-                message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 1.0"]
+        if distance >= 50:
+                message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.5"]
                 self.publisher.send_multipart(message)
                 return False
         else:
@@ -465,6 +528,9 @@ class Apprehend(AsynchAction):
         # initialize memory
         self.mem = mem
         self.midcaAction = midcaAction
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUB)
+        self.publisher.connect("tcp://127.0.0.1:5560")
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -474,11 +540,34 @@ class Apprehend(AsynchAction):
 
     def implement_action(self):
         moosworld.pirate_flag = True
+        self.publisher.send_multipart([b"M", b"speed = 0.0"])
 
     def check_confirmation(self):
+        world = self.mem.get(self.mem.STATES)[-1]
         if self.skip:
             self.skip = False
             return False
+
+        self.mem.set(self.mem.PAUSE, False)
+
+        atomic_world = world.copy()
+        flag = 0
+        for atom in atomic_world.atoms:
+            if atom.predicate.name == "hazard_at_location":
+                world.remove_atom(atom)
+                flag = 1
+        if flag:
+            self.mem.add(self.mem.STATES, world)
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        goals =  goalGraph.getAllGoals()
+        for each_goal in goals:
+            if each_goal["predicate"] == "hazard_checked":
+                goalGraph.remove(each_goal)
+                goalGraph.removeOldPlans()
+
+
+        self.mem.set(self.mem.apprehended, True)
         return True
 
 class Report(AsynchAction):
@@ -501,12 +590,29 @@ class Report(AsynchAction):
     def implement_action(self, action):
         argnames = [str(arg) for arg in action.args]
         # get the index from the argument 1 (ex ship1)
-        vessel_index = argnames.replace("ship", "")
+        vessel_index = int(argnames[1].replace("ship", ""))
         moosworld.change_qroute[vessel_index] =True
 
 
     def check_confirmation(self, action):
+        world = self.mem.get(self.mem.STATES)[-1]
         if self.skip:
             self.skip = False
             return False
+
+        atomic_world = world.copy()
+        flag = 0
+        for atom in atomic_world.atoms:
+            if atom.predicate.name == "hazard_at_location":
+                world.remove_atom(atom)
+                flag = 1
+        if flag:
+            self.mem.add(self.mem.STATES, world)
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        goals =  goalGraph.getAllGoals()
+        for each_goal in goals:
+            if each_goal["predicate"] == "hazard_checked":
+                goalGraph.remove(each_goal)
+                goalGraph.removeOldPlans()
         return True

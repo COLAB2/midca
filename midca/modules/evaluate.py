@@ -75,6 +75,20 @@ class EvalMoosFromFeedback(base.BaseModule):
         with open(self.path +str(file_count-1)+'.csv','a') as fd:
             fd.write(str(self.ships_start) + "," +  str(count) + "\n")
 
+    def remove_achieved_explanation_goals(self, goals_remove):
+        exp_goals = self.mem.get(self.mem.SELECT_EXPLANATION_GOALS)
+        if exp_goals:
+            for goal_remove in goals_remove:
+                for index, goal in enumerate(exp_goals):
+                    if goal.args == goal_remove.args:
+                        if not cmp(goal.kwargs, goal_remove.kwargs):
+                            print ("Explanation goal removed : {}".format(goal))
+                            del exp_goals[index]
+                            for each in exp_goals:
+                                print each
+                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, exp_goals)
+                            return
+
 
     def run(self, cycle, verbose = 2):
 
@@ -82,9 +96,12 @@ class EvalMoosFromFeedback(base.BaseModule):
         time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
         print (time_taken)
         if (time_taken >= self.mem.get(self.mem.MOOS_DEADLINE)):
-            self.write_to_file(cycle)
-            print("Experiment completed")
-            sys.exit()
+            if self.mem.get(self.mem.SUBSCRIBE_SHIPS):
+                self.write_to_file(cycle)
+                print("Experiment completed")
+                sys.exit()
+            else:
+                self.mem.set(self.mem.SUBSCRIBE_SHIPS, True)
 
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
@@ -102,6 +119,7 @@ class EvalMoosFromFeedback(base.BaseModule):
                     "Skipping eval based on plan completion"
             else:
                 if plan.finished():
+                    #self.remove_achieved_explanation_goals(goals)
                     try:
                         modified_pyhop.generated_monitors[:] = []
                         modified_pyhop.wait_time = None

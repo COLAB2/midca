@@ -434,7 +434,7 @@ class MoosObserverWithFishingVessels(base.BaseModule):
         #connection to know about mines detected
         self.subscriber_mine = context.socket(zmq.SUB)
         self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, '')
-        self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 5)
+        self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
         self.subscriber_mine.bind("tcp://127.0.0.1:5564")
 
         #connection to know about fisher vessels
@@ -476,14 +476,17 @@ class MoosObserverWithFishingVessels(base.BaseModule):
             connection.setsockopt(zmq.CONFLATE, 1)
             connection.bind("tcp://127.0.0.1:651"+str(i))
             self.subscriber_friendly_vessels.append(connection)
-            time.sleep(0.1)
 
         self.removed_mines = set()
     # perfect observation
     def observe(self):
-        return self.world.copy()
+        if not self.mem.get(self.mem.STATES):
+            return self.world.copy()
+        else:
+            world = self.mem.get(self.mem.STATES)[-1]
+            return world.copy()
 
-    def get_the_mine_location(self, mine_report, states):
+    def get_the_mine_location(self, world, mine_report, states):
         """
 
         :param msg: the mine location
@@ -494,46 +497,52 @@ class MoosObserverWithFishingVessels(base.BaseModule):
         # for mine
         mines_checked = []
         # for removed mine
-
         mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
         mine_x = float(mine_x.split("=")[1])
         mine_y = float(mine_y.split("=")[1])
         mine_label = mine_label.split("=")[1]
 
         # ignore already checked mines
-        for atom in self.world.atoms:
+        for atom in world.atoms:
             if atom.predicate.name == "hazard_checked":
                 mines_checked.append(atom.args[0].name)
 
-        if "mine"+mine_label in mines_checked:
-            raise Exception("Mine previously checked.")
+        #if "mine"+mine_label in mines_checked:
+        #    return
+        #    #raise Exception("Mine previously checked.")
+
+        # ignore detected mines
+        #if self.mem.get(self.mem.MINES_HISTORY) and \
+        #       mine_label in self.mem.get(self.mem.MINES_HISTORY) :
+        #    return
 
         # for mine at GA1 and GA2
         if (mine_x>=-3 and mine_x<=44) and (mine_y>=-102 and mine_y<=-56):
             states+= "HAZARD(mine" + mine_label + ")\n"
             states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
-            self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga1"])
-
         elif (mine_x>=124 and mine_x<=175) and (mine_y>=-102 and mine_y<=-56):
             states+= "HAZARD(mine" + mine_label + ")\n"
             states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
-            self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga2"])
-
+        elif (mine_x>=109 and mine_x<=188) and (mine_y>=-102 and mine_y<=-56):
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard_at_location(mine" + mine_label + ",ga3)\n"
         elif mine_y >=-98 and mine_y<=-48:
             states+= "HAZARD(mine" + mine_label + ")\n"
             states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
-            self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "qroute"])
-
-        elif y >=-166 and y<=-226:
+        elif mine_y >=-226 and mine_y<=-166:
             states+= "HAZARD(mine" + mine_label + ")\n"
             states+="hazard_at_location(mine" + mine_label + ",qroute1)\n"
-            self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "qroute1"])
-
         else:
             states+= "HAZARD(mine" + mine_label + ")\n"
             states+="hazard_at_location(mine" + mine_label + ",transit)\n"
-            self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "transit"])
 
+        #for information purpose
+        mines_memory = self.mem.get(self.mem.MINES_HISTORY)
+        if mines_memory:
+            mines_memory[mine_label] = [mine_x, mine_y]
+            self.mem.set(self.mem.MINES_HISTORY, mines_memory)
+        else:
+            self.mem.set(self.mem.MINES_HISTORY, {mine_label:[mine_x, mine_y]})
 
         return states
 
@@ -579,39 +588,44 @@ class MoosObserverWithFishingVessels(base.BaseModule):
         # update agent and fisher location
         if vehicle == "remus":
             self.mem.set(self.mem.AGENT_LOCATION, [x,y])
+            self.mem.set(self.mem.REMUS_SPEED, speed)
 
         if vehicle == "fisher4":
             self.mem.set(self.mem.ENEMY_LOCATION, [x,y])
 
         #should check if the vehicle is in Q-route1, Q-route2, GA1, GA2
         if y >=-98 and y<=-48:
+                states+="passed(" + vehicle + ",transit1)\n"
                 states+="at_location(" + vehicle + ",qroute)\n"
-
                 if (x >= 45 and y >= -85) and (x <= 68 and y <= -65):
                     states+="at_location(" + vehicle + ",qroute_transit)\n"
-
-                elif (x > 23 and x<= 42) and (y > -67 and y<= -56) :
+                    states+="passed(" + vehicle + ",qroute_transit)\n"
+                elif (x > 33 and x<= 37) and (y > -65 and y<= -60) :
                         #if (x == 28) and (y == -62) :
                         states+="at_location(" + vehicle + ",ga1)\n"
-
-                elif (x > 150 and x<= 160) and (y > -70 and y <=-60):
+                elif (x > 160 and x<= 170) and (y > -70 and y <=-60):
                         states+="at_location(" + vehicle + ",ga2)\n"
-
-        elif y >=-166 and y<=-226:
+        elif y >=-226 and y<=-166:
                 states+="at_location(" + vehicle + ",qroute1)\n"
-
+                if (x > 155 and x<= 175) and (y > -190 and y <=-160):
+                        states+="at_location(" + vehicle + ",ga3)\n"
         elif (x >= -13 and y >= -35) and (x <= 14 and y <= -15):
                 states+="at_location(" + vehicle + ",transit1)\n"
-
+                states+="passed(" + vehicle + ",transit1)\n"
         elif (x >= 133 and y >= -30) and (x <= 173 and y <= -12):
                 states+="at_location(" + vehicle + ",transit2)\n"
-
         elif x>165 and y > -6:
                 states+="at_location(" + vehicle + ",home)\n"
-
         else:
             states+="at_location(" + vehicle + ",transit)\n"
 
+        way_points = self.mem.get(self.mem.WAY_POINTS)
+
+        if way_points:
+            way_point = way_points["endpoint"]
+            if (x > (way_point[0] - 5) and x < (way_point[0] + 5)) and (y > (way_point[1] - 5) and y < (way_point[1] + 5)) :
+                states += "at_location(remus,way_point)\n"
+                states+="passed(" + vehicle + ",qroute_transit)\n"
         return states
 
     def run(self, cycle, verbose=2):
@@ -638,6 +652,7 @@ class MoosObserverWithFishingVessels(base.BaseModule):
 
 
         try:
+            """
             current_position = self.subscriber_fisher1.recv()
             states += self.get_the_location(current_position, states, "fisher1")
 
@@ -646,49 +661,57 @@ class MoosObserverWithFishingVessels(base.BaseModule):
 
             current_position = self.subscriber_fisher3.recv()
             states += self.get_the_location(current_position, states, "fisher3")
+            """
 
             current_position = self.subscriber_fisher4.recv()
             states += self.get_the_location(current_position, states, "fisher4")
 
+
         except :
             print ("Fishing vessels location not recieved")
 
-        try:
-            mine_report = self.subscriber_mine.recv()
-            states += self.get_the_mine_location(mine_report,states)
+        # taking a lot of time to get ships location
+        # so limited condition
+        # the variable is only set in evaluate phase
+        if self.mem.get(self.mem.SUBSCRIBE_SHIPS):
+            try:
+                for index, ship_subscribe in enumerate(self.subscriber_friendly_vessels):
+                    ship_status = ship_subscribe.recv()
+                    states += self.get_ship_status(ship_status,states,"ship"+str(index))
+            except Exception as e:
+                    print (e)
+                    print ("Ships details not recieved")
+                    pass
 
+
+        try:
+                while (True):
+                    mine_report = self.subscriber_mine.recv()
+                    if mine_report:
+                        states += self.get_the_mine_location(world, mine_report,states)
         except:
                 print ("Mine Report not received")
                 pass
 
-        try:
-            for index, ship_subscribe in enumerate(self.subscriber_friendly_vessels):
-                ship_status = ship_subscribe.recv()
-                states += self.get_ship_status(ship_status,states,"ship"+str(index))
-        except Exception as e:
-                print (e)
-                print ("Ships details not recieved")
-                pass
-
-        # remove all states related to at_location
-        atoms = copy.deepcopy(self.world.atoms)
-        for atom in atoms:
-            if atom.predicate.name == "at_location":
-                    self.world.atoms.remove(atom)
 
         # this is to update the world into memory
         if not states == "":
-            if verbose >= 1:
-                #print(states)
-                pass
-            stateread.apply_state_str(self.world, states)
-            self.mem.add(self.mem.STATES, self.world)
+            # remove all states related to at_location
+            atoms = copy.deepcopy(world.atoms)
+            for atom in atoms:
+                if atom.predicate.name == "at_location":
+                    world.atoms.remove(atom)
+                if verbose >= 1:
+                    #print(states)
+                    pass
+            stateread.apply_state_str(world, states)
+            self.mem.add(self.mem.STATES, world)
 
 
         states = self.mem.get(self.mem.STATES)
-        if states and len(states) > 400:
+        if states and len(states) > 3:
             # print "trimmed off 200 old stale states"
-            states = states[200:]
+            states = states[2:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
 
@@ -698,7 +721,7 @@ class MoosObserverWithFishingVessels(base.BaseModule):
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
-            trace.add_data("WORLD", copy.deepcopy(self.world))
+            trace.add_data("WORLD", copy.deepcopy(world))
 
 
 

@@ -84,6 +84,7 @@ class AsynchronousMoosAct(base.BaseModule):
         self.world = world
 
     def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
         self.verbose = verbose
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
@@ -117,7 +118,7 @@ class AsynchronousMoosAct(base.BaseModule):
                 if action.status != asynch.FAILED and action.status != asynch.COMPLETE:
                     completed = action.check_complete()
                     if completed:
-                        self.world.apply_asynch_midca_action(action.midcaAction)
+                        world.apply_asynch_midca_action(action.midcaAction)
                         if verbose >= 2:
                             print "Action", action, "completed"
 

@@ -5,6 +5,8 @@ import zmq
 
 import mine_layer
 
+import sys
+
 pirate_flag = False
 
 # mines set by experiment.py
@@ -101,6 +103,7 @@ class MoosWorld:
         :param way_point: List of way_points enemy should travel
         :return:
         """
+        global pirate_flag
         #so each is just the typical cell coordinate string, since
         # way_points is a list of such coordinates
         for each in way_points:
@@ -120,6 +123,10 @@ class MoosWorld:
             while (x >= each[0] + 5 or x <= each[0] - 5) \
                         and (y > each[1] +5 or y <= each[1] - 5):
                 try:
+                    if (pirate_flag == True):
+                        for i in range(2):
+                            self.publisher_enemy.send_multipart([b"M", b"speed =0.0"])
+                        sys.exit()
                     enemy_pos = self.subscriber_enemy.recv()
                     x, y, speed, direction = enemy_pos.split(",")
                     x = float(x.split(":")[1])
@@ -179,6 +186,11 @@ class MoosWorld:
             self.enemy_way_point_behavior(way_points)
             return
 
+
+
+
+
+
         """
         # lay mines
         # ideally would have more realistic way of "mining an area" with a
@@ -230,6 +242,14 @@ class MoosWorld:
         publisher.send_multipart(message)
         time.sleep(0.1)
         publisher.send_multipart(message)
+        time.sleep(0.1)
+        publisher.send_multipart(message)
+        time.sleep(0.1)
+        publisher.send_multipart(message)
+        time.sleep(0.1)
+        publisher.send_multipart(message)
+        time.sleep(0.1)
+        publisher.send_multipart(message)
 
 
     def ship_movement(self):
@@ -242,6 +262,7 @@ class MoosWorld:
 
         global change_qroute
 
+        time.sleep(self.delay)
         self.way_points_friendly_vessels = [
                                                 # Qroute 1
                                                 [
@@ -284,7 +305,7 @@ class MoosWorld:
                     change = 1
             self.ship_way_points_behavior(self.publisher_friendly_vessels[i],
                                           self.way_points_friendly_vessels[change][i], speed)
-            time.sleep(0.2)
+            time.sleep(0.3)
 
 def main(friendly_delay):
     w = MoosWorld(friendly_delay, True, True)
