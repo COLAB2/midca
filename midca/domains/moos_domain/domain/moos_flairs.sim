@@ -1,15 +1,25 @@
 type(UUV)
 type(SEA_ROUTE)
 type(HAZARD)
+type(SHIP)
 
+predicate(apprehended, [vessel], [UUV])
 predicate(cleared_mines,[uuv,location], [UUV,SEA_ROUTE])
 predicate(at_location,[uuv,location], [UUV,SEA_ROUTE])
+predicate(passed,[uuv,location], [UUV,SEA_ROUTE])
 predicate(hazard_at_location, [mine,location], [HAZARD,SEA_ROUTE])
 predicate(hazard_checked, [mine,location], [HAZARD,SEA_ROUTE])
 predicate(hazard_at_pathway, [mine], [HAZARD])
 predicate(enabled,[uuv],[UUV])
+predicate(reported,[vessel, location],[SHIP, SEA_ROUTE])
+predicate(wrecked,[vessel],[SHIP])
 
 operator(fast_survey,
+args = [(uuv, UUV), (location, SEA_ROUTE)],
+preconditions = [condition(enabled, [uuv]), condition(at_location, [uuv, location], negate = True)],
+results = [condition(at_location, [uuv, location])])
+
+operator(reach_to_catch,
 args = [(uuv, UUV), (location, SEA_ROUTE)],
 preconditions = [condition(enabled, [uuv]), condition(at_location, [uuv, location], negate = True)],
 results = [condition(at_location, [uuv, location])])
@@ -43,3 +53,13 @@ args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
 preconditions = [condition(enabled, [uuv]), condition(hazard_at_location, [mine, location])],
 results = [condition(hazard_checked, [mine, location]),
 	   condition(hazard_at_location, [mine, location], negate = True)])
+
+operator(apprehend,
+args = [(agent,UUV), (enemy,UUV)],
+preconditions = [condition(enabled, [agent])],
+results = [condition(apprehended, [enemy])])
+
+operator(report,
+args = [(uuv,UUV), (vessel,SHIP), (location,SEA_ROUTE)],
+preconditions = [condition(enabled, [uuv])],
+results = [condition(reported, [vessel, location])])

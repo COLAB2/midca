@@ -687,6 +687,20 @@ class World:
 		opname = midcaAction.op
 		argnames = [str(arg) for arg in midcaAction.args]
 		self.apply_named_action(opname, argnames)
+
+	#convenience method for operating with MIDCA :force execute
+	def apply_asynch_midca_action(self, midcaAction):
+		opname = midcaAction.op
+		argNames = [str(arg) for arg in midcaAction.args]
+		args = []
+		for name in argNames:
+			if name not in self.objects:
+				raise Exception("Object " + name + " DNE")
+			args.append(self.objects[name])
+		if opname not in self.operators:
+			raise Exception("Operator " + opName + " DNE")
+		simAction = self.operators[opname].instantiate(args)
+		self.apply(simAction)
 	
 	#interprets a MIDCA goal as a predicate statement. Expects the predicate name to be either in kwargs under 'predicate' or 'Predicate', or in args[0]. This is complicated mainly due to error handling.
 	def midcaGoalAsAtom(self, goal):

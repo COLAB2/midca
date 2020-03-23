@@ -4,27 +4,59 @@ A collection of functions that are domain specific, which different MIDCA compon
 import os,copy
 from midca.modules._plan import pyhop
 
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
+
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
+
+    elif goal1['predicate'] == 'apprehended' and goal2['predicate'] != 'apprehended':
+        return -1
+    elif goal1['predicate'] != 'apprehended' and goal2['predicate'] == 'apprehended':
+        return 1
+
+
+
+    elif goal1.args[1] == "qroute1" and goal2.args[1] != "qroute1":
+            return -1
+    elif goal1.args[1] != "qroute1" and goal2.args[1] == "qroute1":
+            return 1
+
+
+    elif goal1.args[1] == "ga3" and goal2.args[1] != "ga3":
+            return -1
+    elif goal1.args[1] != "ga3" and goal2.args[1] == "ga3":
+            return 1
+
+
+    elif goal1['predicate'] == 'reported' and goal2['predicate'] != 'reported':
+        return -1
+    elif goal1['predicate'] != 'reported' and goal2['predicate'] == 'reported':
+        return 1
+
+
+
+
     elif goal1['predicate'] == 'hazard_checked' and goal2['predicate'] != 'hazard_checked':
         return -1
     elif goal1['predicate'] != 'hazard_checked' and goal2['predicate'] == 'hazard_checked':
         return 1
+
+    elif goal1.args[1] == "ga1" and goal2.args[1] != "ga1":
+            return -1
+    elif goal1.args[1] != "ga1" and goal2.args[1] == "ga1":
+            return 1
+
     elif len(goal1.args) ==2  and len(goal2.args) == 2 :
         if goal1.args[1] == "way_point" and goal2.args[1] != "way_point":
             return -1
         elif goal1.args[1] != "way_point" and goal2.args[1] == "way_point":
             return 1
+
     elif len(goal1.args) ==2 and len(goal2.args) !=2:
         if goal1.args[1] == "way_point":
             return -1
+
     elif len(goal2.args) ==2 and len(goal1.args) !=2:
         if goal2.args[1] == "way_point":
             return 1
@@ -33,6 +65,7 @@ def preferApprehend(goal1, goal2):
 
 def display(world):
     print(world)
+    pass
 
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
@@ -41,7 +74,9 @@ def pyhop_state_from_world(world, name = "state"):
     s.checked_hazards = []
     s.survey = {}
     s.location = ""
+    s.ships = []
     s.path_mines = []
+    s.passed = []
 
     for atom in world.atoms:
         # get the orders into the s.order_received dictionary
@@ -53,6 +88,11 @@ def pyhop_state_from_world(world, name = "state"):
             s.location = atom.args[1].name
         if atom.predicate.name == "hazard_at_pathway":
             s.path_mines.append(atom.args[0].name)
+        if atom.predicate.name == "passed":
+            s.passed.append(atom.args[1].name)
+    for objname in world.objects:
+        if world.objects[objname].type.name == "SHIP":
+            s.ships.append(objname)
     return s
 
 
@@ -71,7 +111,15 @@ def polynomial_regression(data=0,  deg = 1):
     :param deg:  What will be the degree of polynomial equation
     :return: The new predicted Y value from the equation
     '''
-    datas = pd.read_csv('/home/sampath/moos-ivp/moos-ivp-midca/missions/gatars/mines_ga1.csv')
+
+    # statistical imports
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import PolynomialFeatures
+
+    datas = pd.read_csv('/home/sampath/moos-ivp/moos-ivp-midca/missions/gatars/mines_qroute.csv')
     x = []
     y = []
     # get the data (x and y rows)

@@ -13,15 +13,17 @@ def achieve_goals(state,goals):
         goals.remove(goal)
         if predicate == "cleared_mines" and args[0] in state.enabled:
             if args[1] == "ga1":
-                if state.location == "transit1":
+                if state.location == "transit1" or state.location in state.passed:
                     return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
                 else:
                     return[('fast_survey',args[0],"transit1") , ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
             elif args[1] == "ga2":
-                if state.location == "qroute_transit":
+                if state.location == "qroute_transit" or state.location in state.passed:
                     return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
                 else:
-                    return[('fast_survey',args[0],"qroute_transit") , ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
+                    return[('fast_survey',args[0],"qroute_transit"), ('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
+            elif args[1] == "ga3":
+                return[('fast_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
             elif args[1] == "way_point":
                 return[('slow_survey',args[0],args[1]), ('remove_mines',args[0],args[1]), ('achieve_goals', goals)]
             else:
@@ -33,8 +35,18 @@ def achieve_goals(state,goals):
                 else:
                     return[('fast_survey',args[0],"transit2") , ('fast_survey',args[0],args[1]), ('achieve_goals', goals)]
         elif predicate == "hazard_checked":
-            vehicle = state.enabled.pop()
+            vehicle = state.enabled[-1]
             return[('check',args[0],args[1],vehicle) , ('achieve_goals', goals)]
+        elif predicate == "apprehended":
+            vehicle = state.enabled[-1]
+            return[('reach_to_catch',vehicle,"enemylocation"), ('apprehend',vehicle, args[0]), ('achieve_goals', goals)]
+        elif predicate == "reported":
+            vehicle = state.enabled[-1]
+            actions = []
+            for ship in state.ships:
+                actions.append(('report',vehicle,ship,args[1]))
+            actions.append(('achieve_goals', goals))
+            return actions
         else:
             return []
     return []
@@ -45,7 +57,7 @@ def check_hazard(state,mine,location,vehicle):
     Go through each goal and create an order for each goal
     '''
 
-    if (location == "ga1") or (location == "ga2")or (location == "qroute") :
+    if (location == "ga1") or (location == "ga2") or (location == "qroute") or (location == "qroute1"):
         return[('remove',mine,location,vehicle)]
     else:
         if mine in state.path_mines:

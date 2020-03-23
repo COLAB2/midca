@@ -46,6 +46,22 @@ class ASCIIWorldViewer(base.BaseModule):
                 self.display(self.world)
 
 
+class MoosWorldViewer(base.BaseModule):
+
+    def __init__(self, display=None):
+        self.display = display
+
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+
+    def run(self, cycle, verbose = 2):
+        if verbose >= 2:
+            if self.mem.get(self.mem.STATES):
+                world = self.mem.get(self.mem.STATES)[-1]
+                self.display(world)
+
+
 class WorldChanger:
 
     def init(self, world, mem):

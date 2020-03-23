@@ -1,0 +1,18 @@
+{
+  "Explanations": [
+    
+    {
+      "PREXP_NODES": [
+        "hazard_detection(remus, mine)",
+        "hazard_checked(mine, SEA_ROUTE)"
+      ],
+      "EXPLAINS_NODE": "hazard_at_location(mine, SEA_ROUTE)",
+      "XPASSERTED_NODES": [
+        "at_location(aeroplane, SEA_ROUTE)",
+        "mine_layer(straight, mines)"
+      ]
+    }
+  ]
+  
+}
+
