@@ -8,11 +8,11 @@ import socket,time
 
 
 try:
-	# baxter robot requirements
-	from midca.examples import ObjectDetector
-	from bzrlib.config import LocationStore
+    # baxter robot requirements
+    from midca.examples import ObjectDetector
+    from bzrlib.config import LocationStore
 except:
-	pass
+    pass
 
 class ROSObserver:
 
@@ -21,45 +21,45 @@ class ROSObserver:
         self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 
     def store_history(self,world,history,blocks):
-	'''
-	store the history of last 5 state changes
-	'''
-	if blocks:
-		a = {}
-		for each in blocks:
-			positions= world.all_pos(each)
-			a[each] = positions.pop().position
+        '''
+        store the history of last 5 state changes
+        '''
+        if blocks:
+            a = {}
+            for each in blocks:
+                positions= world.all_pos(each)
+                a[each] = positions.pop().position
 
-		if a:
-			history = history.append(a)
+            if a:
+                history = history.append(a)
 
-		if not history:
-			history = []
+            if not history:
+                history = []
 
-		if len(history) > 5:
-			history = history[:5]
+            if len(history) > 5:
+                history = history[:5]
 
-		history.reverse()
-		return history
-	return None
-	
+            history.reverse()
+            return history
+        return None
+
 
 
 
     def check_with_history(self,world,history,detectionEvents):
-	'''
-	store the past 5 change in events for the robot to remember things
-	'''
-	blocks = set()
-	for each in detectionEvents:
-		blocks.add(each.id)
-	if not history:
-		history = []
-		self.store_history(world,history,blocks)
-	else:
-		if not len(blocks) == len(history[len(history) -1]):
-			history = self.store_history(world,history,blocks)
-	return history
+        '''
+        store the past 5 change in events for the robot to remember things
+        '''
+        blocks = set()
+        for each in detectionEvents:
+            blocks.add(each.id)
+        if not history:
+            history = []
+            self.store_history(world,history,blocks)
+        else:
+            if not len(blocks) == len(history[len(history) -1]):
+                history = self.store_history(world,history,blocks)
+        return history
 
     def run(self, cycle, verbose = 2):
         #self.ObserveWorld()
@@ -92,13 +92,13 @@ class ROSObserver:
             d['received_at'] = float(midcatime.now())
             self.mem.add(self.mem.FEEDBACK, d)
 
-	# if there are any change in events remember
-	history = self.check_with_history(world,history,detecttionBlockState)
-	self.mem.unlock(self.mem.STATE_HISTORY)
-	if history:
-		if len(history) > 5:
-			history = history[:5]
-		self.mem.set(self.mem.STATE_HISTORY , history)		
+        # if there are any change in events remember
+        history = self.check_with_history(world,history,detecttionBlockState)
+        self.mem.unlock(self.mem.STATE_HISTORY)
+        if history:
+            if len(history) > 5:
+                history = history[:5]
+            self.mem.set(self.mem.STATE_HISTORY , history)
         self.mem.unlock(self.mem.STATE)
 
 
@@ -166,20 +166,27 @@ class MoosObserver(base.BaseModule):
         self.subscriber = context.socket(zmq.SUB)
         self.subscriber_mine = context.socket(zmq.SUB)
 
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber_mine_removal = context.socket(zmq.SUB)
+
         self.subscriber.setsockopt(zmq.SUBSCRIBE, '')
         self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_mine_removal.setsockopt(zmq.SUBSCRIBE, '')
 
         self.subscriber.setsockopt(zmq.RCVTIMEO, 1)
         self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber_mine_removal.setsockopt(zmq.RCVTIMEO, 1)
 
         self.subscriber.setsockopt(zmq.CONFLATE, 1)
-	self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
+        #self.subscriber_mine.setsockopt(zmq.CONFLATE, 1)
 
         self.subscriber.connect("tcp://127.0.0.1:5563")
 
-	self.subscriber_mine.connect("tcp://127.0.0.1:5564")
+        self.subscriber_mine.connect("tcp://127.0.0.1:5564")
 
+        self.subscriber_mine_removal.connect("tcp://127.0.0.1:5580")
 
+        self.removed_mines = set()
     # perfect observation
     def observe(self):
         return self.world.copy()
@@ -197,85 +204,166 @@ class MoosObserver(base.BaseModule):
         x = -1
         y = -1
         speed = -1
+        direction = -1
         mine_x = -1
         mine_y = -1
         mine_label = -1
         states = ""
-
+        removed_mine = ""
 
         '''
         The following code gets the current X,Y,Speed and updates the location of uuv.
-        i.e., if the vehicle is in qroute or green area 1 or green area 2. 
+        i.e., if the vehicle is in qroute or green area 1 or green area 2.
         the else part is to remove the state after the vehicle leaves the specific location
         '''
 
         try:
             current_position = self.subscriber.recv()
+            print (current_position)
+            x,y,speed,direction = current_position.split(",")
+            x = float(x.split(":")[1])
+            y = float(y.split(":")[1])
+            speed = float(speed.split(":")[1])
+            direction = float(direction.split(":")[1])
+            print (x)
+            print (y)
+            print(direction)
         # for mine
             try:
+                mines_checked = []
+                # for removed mine
+                try:
+                    removed_mine = self.subscriber_mine_removal.recv()
+                    self.removed_mines.add(removed_mine)
+                except:
+                    if verbose > 2:
+                        print ("No mines removed ")
+
                 mine_report = self.subscriber_mine.recv()
                 mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
                 mine_x = float(mine_x.split("=")[1])
                 mine_y = float(mine_y.split("=")[1])
                 mine_label = mine_label.split("=")[1]
 
-                mines_checked = []
-		# ignore already checked mines
+
+                # ignore already checked mines
                 for atom in self.world.atoms:
                     if atom.predicate.name == "hazard_checked":
                         mines_checked.append(atom.args[0].name)
 
-                if "mine"+mine_label in mines_checked:
+                if "mine"+mine_label in mines_checked or \
+                   "mine"+mine_label in self.removed_mines:
                     raise Exception("Mine previously checked.")
-
-		# for mine at GA1 and GA2
-		if (mine_x>=-3 and mine_x<=44) and (mine_y>=-102 and mine_y<=-56):
-		    states+= "HAZARD(mine" + mine_label + ")\n"
+                '''
+                # for mine at qroute,ga1,ga2 or not
+                if mine_x >=5 and mine_x <=35 and mine_y >=-94 and mine_y<=-65:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
                     states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
-		    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga1"])
-		elif (mine_x>=124 and mine_x<=175) and (mine_y>=-102 and mine_y<=-56):
-		    states+= "HAZARD(mine" + mine_label + ")\n"
+                elif mine_x >=133 and mine_x <=164 and mine_y >=-94 and mine_y<=-65:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
                     states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
-		    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga2"])
-			
-		else:	
-                	# for mine at qroute or not
-                	if mine_y >=-98 and mine_y<=-48:
-                    		states+= "HAZARD(mine" + mine_label + ")\n"
-                    		states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
-		    		self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "qroute"])
-                	else:
-                    		states+= "HAZARD(mine" + mine_label + ")\n"
-                    		states+="hazard_at_location(mine" + mine_label + ",transit)\n"
-		    		self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "transit"])
-		
+                elif mine_y >=-98 and mine_y<=-48:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+                else:
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+                '''
+                # for mine at GA1 and GA2
+                if (mine_x>=-3 and mine_x<=44) and (mine_y>=-102 and mine_y<=-56):
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
+                    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga1"])
+
+                elif (mine_x>=124 and mine_x<=175) and (mine_y>=-102 and mine_y<=-56):
+                    states+= "HAZARD(mine" + mine_label + ")\n"
+                    states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
+                    self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "ga2"])
+
+                else:
+                        # for mine at qroute or not
+                    if mine_y >=-98 and mine_y<=-48:
+                        states+= "HAZARD(mine" + mine_label + ")\n"
+                        states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+                        self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "qroute"])
+                    else:
+                        states+= "HAZARD(mine" + mine_label + ")\n"
+                        states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+                        self.mem.set (self.mem.CURRENT_HAZARD, [mine_label , "transit"])
+
+                path_mines = self.mem.get(self.mem.MINE_LOCATION)
+                remus_location = self.mem.get(self.mem.REMUS_LOCATION)
+                if not path_mines:
+                    path_mines = {}
+
+                # for mine in the pathway
+                if (mine_x-5 < x) and (mine_x + 5 > x ) and direction > 100:
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+
+                if (mine_x-5 > x) and (mine_x + 5 < x ) and direction < 0:
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+
+                if (mine_y-5 < y) and (mine_y + 5 > y ) and direction < 100:
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+                '''
+                if (mine_y-5 > y) and (mine_y + 5 < y ):
+                        states+="hazard_at_pathway(mine" + mine_label+")\n"
+                        path_mines["mine"+mine_label] = {"X": mine_x , "Y": mine_y}
+                '''
+                path_mines["mine" + mine_label] = {"X": mine_x, "Y": mine_y}
+                self.mem.set(self.mem.MINE_LOCATION, path_mines)
+
+
             except:
                 print ("Mine Report not received")
                 pass
 
-	    
-            x,y,speed = current_position.split(",")
-            x = float(x.split(":")[1])
-            y = float(y.split(":")[1])
-            speed = float(speed.split(":")[1])
+
 
 
 
             if y >=-98 and y<=-48:
                 states+="at_location(remus,qroute)\n"
             else:
-                states+="at_location(remus,transit)\n"
+                if (x >= -13 and y >= -35) and (x <= 14 and y <= -15):
+                    states+="at_location(remus,transit1)\n"
 
+                elif (x >= 133 and y >= -30) and (x <= 173 and y <= -12):
+                    states+="at_location(remus,transit2)\n"
 
-            if (x>=-3 and x<=44) and (y>=-102 and y<=-56) and (speed == 0.0):
-                    states+="at_location(remus,ga1)"
-   
+                else:
+                    states+="at_location(remus,transit)\n"
 
-            if (x>=124 and x<=175) and (y>=-102 and y<=-56) and (speed == 0.0):
-                    states+="at_location(remus,ga2)"
+            if (x >= 50 and y >= -80) and (x <= 64 and y <= -70):
+                states+="at_location(remus,qroute_transit)\n"
 
-            if x==0 and y==0:
-                states+="at_location(remus,home)"
+            if (x > 28 and x<= 37) and (y > -72 and y<= -61) :
+            #if (x == 28) and (y == -62) :
+                states+="at_location(remus,ga1)\n"
+
+            if (x > 154 and x<= 163) and (y > -75 and y <=-63):
+                states+="at_location(remus,ga2)\n"
+
+            if x>165 and y > -6:
+                states+="at_location(remus,home)\n"
+
+            way_points = self.mem.get(self.mem.WAY_POINTS)
+
+            if way_points:
+                way_point = way_points[-1]
+                if (x > (way_point[0] - 5) and x < (way_point[0] + 5)) and (y > (way_point[1] - 5) and y < (way_point[1] + 5)) :
+                    states += "at_location(remus,way_point)\n"
+                else:
+                    if "at_location(remus, way_point)" in states:
+                        states += "!at_location(remus,way_point)\n"
+            else:
+                if "at_location(remus, way_point)" in states:
+                    states += "!at_location(remus,way_point)\n"
+
+            self.mem.set(self.mem.REMUS_LOCATION, {"X": x, "Y": y, "speed": speed, "direction": speed})
 
         except:
             print ("states not received")
@@ -285,7 +373,7 @@ class MoosObserver(base.BaseModule):
         atoms = copy.deepcopy(self.world.atoms)
         for atom in atoms:
             if atom.predicate.name == "at_location":
-                self.world.atoms.remove(atom)
+                    self.world.atoms.remove(atom)
 
         # this is to update the world into memory
         if not states == "":
@@ -330,7 +418,7 @@ class PerfectObserverWithThief(base.BaseModule):
     #perfect observation
     def observe(self):
         return self.world.copy()
-	
+
     def run(self, cycle, verbose = 2):
         world = self.observe()
         thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
@@ -338,9 +426,9 @@ class PerfectObserverWithThief(base.BaseModule):
         theft_items=[]
 
         with open(thief_file) as f:
-	    	lines = f.readlines()
-	    	for line in lines:
-	    		theft_items.append(line.split(" "))
+            lines = f.readlines()
+            for line in lines:
+                theft_items.append(line.split(" "))
 
         if not world:
             raise Exception("World observation failed.")
@@ -349,11 +437,11 @@ class PerfectObserverWithThief(base.BaseModule):
 
         for item in theft_items:
 
-			for atom in world.atoms:
-				if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
-					world.atoms.remove(atom)   
-					print("removed:" + atom.args[0].name)
-					break
+            for atom in world.atoms:
+                if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
+                    world.atoms.remove(atom)
+                    print("removed:" + atom.args[0].name)
+                    break
 
         self.mem.add(self.mem.STATES, world)
 
@@ -532,11 +620,11 @@ class MAReporter(base.BaseModule):
                 if block not in lastBurning or block in blocksPutOut:
                     report.actions.append(["burns", block])
 
-	# mine that is currently detected
-	current_mine = self.mem.get (self.mem.CURRENT_HAZARD)
-	mine_to_explain = ""
-	if current_mine:
-		mine_to_explain = "mine" + current_mine[0]
+        # mine that is currently detected
+        current_mine = self.mem.get (self.mem.CURRENT_HAZARD)
+        mine_to_explain = ""
+        if current_mine:
+            mine_to_explain = "mine" + current_mine[0]
         for atom in world.atoms:
             if (atom.predicate.name) == "hazard_at_location" and atom.args[0].name == mine_to_explain:
                 report.actions.append( ["hazard-detection", atom.args[0].name, atom.args[1].name,"remus"] )
@@ -544,8 +632,8 @@ class MAReporter(base.BaseModule):
                 #    report.actions.append(["is-a-problem", atom.args[0].name, atom.args[1].name, "remus"])
 
         #report is finished, send to Meta-AQUA
-		#report contains actions and state, 
-		#for every action there will be the state attached to it
+                #report contains actions and state,
+                #for every action there will be the state attached to it
         if verbose >= 1:
             print "Sending report to Meta-AQUA",
             if verbose >= 2:

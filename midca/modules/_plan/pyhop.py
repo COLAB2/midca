@@ -15,7 +15,7 @@ Copyright 2013 Dana S. Nau - http://www.cs.umd.edu/~nau
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-   
+
 Pyhop should work correctly in both Python 2.7 and Python 3.2.
 For examples of how to use it, see the example files that come with Pyhop.
 
@@ -61,24 +61,24 @@ Pyhop provides the following classes and functions:
 # Pyhop uses HTN methods to decompose tasks into smaller and smaller
 # subtasks, until it finds tasks that correspond directly to actions.
 # But several of the details are different:
-# 
+#
 # (1) In SHOP and JSHOP, one uses a special-purpose language to write HTN
 #     methods and planning operators -- but in Pyhop, one writes the methods
 #     and operators as ordinary Python functions. This should make it easier
-#     to use Pyhop as part of other programs. 
-# 
+#     to use Pyhop as part of other programs.
+#
 # (2) Pyhop represents states as collections of variables, not collections
 #     of logical assertions. For example, to say that box b is in room r1,
 #     instead of writing an assertion such as "in(b,r1)", you would write
 #     something like "loc[b] = r1".
-# 
+#
 # (3) The current state is a Python object. The state variables are part of
 #     that object, and you need to refer to this object explicitly in the
 #     operator and method definitions. Thus, what you'd *really* write in
 #     the above example is something like this:
 #     s = State()
 #     s.loc['b'] = 'r1'
-# 
+#
 # (4) You also can define a goal as a Python object. For example, to specify
 #     that your goal is to have box b in room r2, you might write this:
 #     g = Goal()
@@ -89,13 +89,13 @@ Pyhop provides the following classes and functions:
 #     accomplish a sequence of goals, one at a time (e.g., first achieve g1,
 #     then g2, then g3), you could define all three of them as goal objects,
 #     pass all three of them as arguments to your operators and methods.
-# 
+#
 # (5) Unlike SHOP and JSHOP, Pyhop doesn't include a Horn-clause inference
 #     engine for use in evaluating preconditions. So far, I haven't seen any
 #     need for it; I've found it easier to write precondition-evaluation
 #     functions directly in Python. But I'll consider adding Horn-clause
 #     inference to Pyhop if someone convinces me that it's really necessary.
-# 
+#
 # Accompanying this file is a file called examples.py that provides examples
 # of how to use Pyhop. To run it, launch python and type 'import examples'.
 
@@ -114,7 +114,7 @@ class State():
 class Goal():
     """A goal is just a collection of variable bindings."""
     def __init__(self,name):
-        self.__name__ = name        
+        self.__name__ = name
 
 
 ### print_state and print_goal are identical except for the name
@@ -165,7 +165,7 @@ methods = {}
 
 def declare_operators(*op_list):
     """
-    Call this after defining the operators, to tell Pyhop what they are. 
+    Call this after defining the operators, to tell Pyhop what they are.
     op_list must be a list of functions, not strings.
     """
     operators.update({op.__name__:op for op in op_list})
@@ -198,7 +198,7 @@ def print_methods(mlist=methods):
 
 def pyhop(state,tasks,verbose=0):
     """
-    Try to find a plan that accomplishes tasks in state. 
+    Try to find a plan that accomplishes tasks in state.
     If successful, return the plan. Otherwise return False.
     """
     if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))

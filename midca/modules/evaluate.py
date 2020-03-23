@@ -1,6 +1,6 @@
 from midca import base
 from midca import midcatime
-import copy
+import copy,sys
 try:
    from MIDCA.modules._plan import modified_pyhop
    from midca.examples._gazebo_baxter import halo_color
@@ -104,6 +104,78 @@ class SimpleEval(base.BaseModule):
         if trace and goals_changed: trace.add_data("GOALS",goals)
 
 
+class SimpleEval_moos(base.BaseModule):
+
+    def write_to_file(self,cycle):
+        file = open("agent.txt", "a")
+        file.write("midca is in cycle :" + str(cycle) + "\n")
+        time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+        file.write("Time Taken :" + str(time_taken) + "\n")
+        file.write("AGENT SCORE : "  + str(self.mem.get(self.mem.MOOS_SCORE)) + "\n")
+        file.write("-------------------------------------------------------\n")
+        file.close()
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+
+        # for saving results to file
+        time_taken = midcatime.now() - self.mem.get(self.mem.MOOS_TIME)
+        print (time_taken)
+        if (time_taken >= self.mem.get(self.mem.MOOS_DEADLINE)):
+            self.write_to_file(cycle)
+            raw_input("Experiment completed")
+            sys.exit()
+
+        if goals:
+            for goal in goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if not achieved:
+                        if verbose >= 2:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All current goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+        if goals:
+	        del goals[-1]
+	        self.mem.set(self.mem.CURRENT_GOALS,goals)
+        else:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+
+        if trace and goals_changed: trace.add_data("GOALS",goals)
+
+
 class SimpleEval2(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
@@ -137,9 +209,9 @@ class SimpleEval2(base.BaseModule):
                         elif not (goal in lastGoals):
                             self.mem.add(LAST_SCORED_GOAL, goal)
                             self.mem.set(self.mem.DELIVERED, score+1)
-                        
-                        
-                        print str(self.mem.get(self.mem.DELIVERED))    
+
+
+                        print str(self.mem.get(self.mem.DELIVERED))
                     if not achieved:
                         if verbose >= 2:
                             print "Not all goals achieved;", goal, "is not true."
@@ -168,28 +240,28 @@ class SimpleEval2(base.BaseModule):
                 print "No current goals. Skipping eval"
 
         if trace and goals_changed: trace.add_data("GOALS",goals)
-    
-    
+
+
     def generate_thief_file(self,goal, stolen_number):
         args = [str(arg) for arg in goal.args]
         current_w = args[2]
         graph = self.mem.get(self.mem.GOAL_GRAPH)
         goals = graph.getAllGoals()
-        
+
         other_w_goals = []
-        
+
         for g in goals:
             args = [str(arg) for arg in g.args]
             if args[2] != current_w:
                 other_w_goals.append(g)
 #         other_w_goals =  filter(lambda g: str(g.args[2]) != current_w, goals.copy())
         randomgoals = random.sample(other_w_goals, stolen_number)
-        
+
         thisDir =  "C:/Users/Zohreh/git/midca/modules/_plan/jShop"
         thief_file = thisDir + "/theif.txt"
-        
+
         f = open(thief_file, 'w')
-        
+
         for g in randomgoals:
             f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
             1
@@ -222,7 +294,7 @@ class SimpleEval_Restaurant(base.BaseModule):
             self.mem.set(self.mem.CURRENT_GOALS , [])
             self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
             goals = []
-	
+
         if goals:
             for goal in goals:
                 try:
@@ -264,7 +336,7 @@ class SimpleEval_construction(base.BaseModule):
         world = self.mem.get(self.mem.STATES)[-1]
 
 
-        
+
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)
         except KeyError:
@@ -286,7 +358,7 @@ class SimpleEval_construction(base.BaseModule):
 
 	goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         time = self.mem.get(self.mem.TIME_CONSTRUCTION)
-        
+
         if time == 0:
             print("Current Goals and Goals in Goal Graph are Removed Due to Insuffecient Time")
             for goal in goalGraph.getUnrestrictedGoals():
@@ -297,7 +369,7 @@ class SimpleEval_construction(base.BaseModule):
             self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
             goals = []
 
-	
+
         rejected_goals = self.mem.get(self.mem.REJECTED_GOALS)
 
 	if rejected_goals :
@@ -309,9 +381,9 @@ class SimpleEval_construction(base.BaseModule):
 		self.mem.set(self.mem.REJECTED_GOALS , None)
 		self.mem.set(self.mem.GOAL_GRAPH,goalGraph)
 		goals=[]
-	
 
-        
+
+
         if goals:
             for goal in goals:
                 try:
@@ -470,10 +542,10 @@ class MortarScore:
 
     def getMortarBlocks(self):
         return self.mortarblocks
-    
+
     def getRegularBlocks(self):
         return self.regularblocks
-    
+
     def __str__(self):
         return "towers="+str(self.towers)+",score="+str(self.score)+",mortarblocks="+str(self.mortarblocks)+",regularblocks="+str(self.regularblocks)
 
@@ -498,12 +570,12 @@ class MortarScorer:
             if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
 		  return None
 	 except:
-		  return None 
+		  return None
 	 for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and goal['predicate'] == 'on':
                 return goal
          return None
-    
+
     # TODO: should there only be 1 get_stacking_goal function?
     # I added this function when the goal was multiple atoms, the previous method (above)
     # was assuming goals were only single atoms (i.e. a single on(A,B) statement).
@@ -522,7 +594,7 @@ class MortarScorer:
                     return goal
         return None
 
-                
+
     def has_mortar(self, block):
         # see if hasmortar on this block is true
         #print("self.world = "+str(self.world))
@@ -530,7 +602,7 @@ class MortarScorer:
             #print("atom is "+str(atom))
             if atom.predicate.name == "hasmortar" and atom.args[0].name == block.name:
                 #print("found hasmortar("+str(atom.args[0].name)+")")
-                return True 
+                return True
         return False
 
     def block_under(self, block):
@@ -540,7 +612,7 @@ class MortarScorer:
             if (atom.predicate.name == "on" or atom.predicate.name == "stable-on") and atom.args[0] == block:
                 return atom.args[1]
         return None
-    
+
     def get_tower_score(self, goal):
         score = 0
         mortarblocks = 0
@@ -548,7 +620,7 @@ class MortarScorer:
         block = self.world.objects[goal.args[0]]
         while block:
             # every block is worth a point
-            score += 1 
+            score += 1
             # if the block also has mortar, give extra point
             if self.has_mortar(block):
                 score += 1
@@ -557,10 +629,10 @@ class MortarScorer:
                 mortarblocks += 1
             else:
                 regularblocks += 1
-            
+
             block = self.block_under(block)
             # Add code here to check if the block has mortar, and if so, give an extra point
-            
+
         return score, mortarblocks, regularblocks
 
     def run(self, cycle, verbose = 2):
@@ -693,7 +765,7 @@ class NBeaconsDataRecorder:
 
     def __init__(self):
         pass
-    
+
     def init(self, world, mem):
         self.mem = mem
         self.mem.set(LAST_SCORED_GOAL, None)
@@ -702,18 +774,18 @@ class NBeaconsDataRecorder:
 
     def get_activation_goal(self):
         activation_goals = []
-        
+
         # safety check
         if not self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             return activation_goals
-        
+
         for goal in self.mem.get(self.mem.CURRENT_GOALS)[-1]:
             if 'predicate' in goal and goal['predicate'] == 'activated':
                 activation_goals.append(goal)
         return activation_goals
 
     def newrun(self, cycle, verbose = 2):
-    
+
         lastGoal = self.mem.get(LAST_SCORED_GOAL)
         currentGoal = self.get_activation_goal()
         all_achieved = True
@@ -732,15 +804,15 @@ class NBeaconsDataRecorder:
                     at_least_one_achieved = True
         except Exception:
             print "unable to check goal", currentGoal, ". skipping scoring"
-        
+
         if at_least_one_achieved and all_achieved:
             print("All goals "+str(map(str,currentGoal))+" were achieved")
             goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
             last_pair = goal_action_pairs[-1]
-            actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED) 
+            actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED)
             self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(last_pair[0]+1,actions_executed_thus_far)])
-        
-            
+
+
         if not all_achieved:
             return
         self.mem.set(LAST_SCORED_GOAL, currentGoal)
@@ -778,7 +850,7 @@ class NBeaconsDataRecorder:
                     return
             if verbose >= 1:
                 print "All current goals achieved. Removing them from goal graph"
-            
+
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             if all_goals_achieved:
                 # remove goals
@@ -793,9 +865,9 @@ class NBeaconsDataRecorder:
                         # store goal achieved and actions executed
                         goal_action_pairs = self.mem.get(self.mem.GOALS_ACTIONS_ACHIEVED)
                         actions_executed_thus_far = self.mem.get(self.mem.ACTIONS_EXECUTED)
-                        if self.verbose >= 1: print " just added goals actions pair: " +str((goals_achieved,str(goal.args[0]),actions_executed_thus_far)) 
+                        if self.verbose >= 1: print " just added goals actions pair: " +str((goals_achieved,str(goal.args[0]),actions_executed_thus_far))
                         self.mem.set(self.mem.GOALS_ACTIONS_ACHIEVED, goal_action_pairs+[(goals_achieved,str(goal.args[0]),actions_executed_thus_far)])
-            
+
                     goalGraph.remove(goal)
                     if trace: trace.add_data("REMOVED GOAL", goal)
                     goals_changed = True
@@ -831,7 +903,7 @@ class NBeaconsDataRecorder:
                     accomplishedthis = world.is_true("activated", [arg.id for arg in currentgoal.goalargs])
                     print("accomplishedthis = "+str(accomplishedthis)+" for activated("+str([arg.id for arg in currentgoal.goalargs]))
                 accomplished = accomplished and accomplishedthis
-            
+
             if verbose >= 1:
                 s = "current goals: " + "".join([str(currentgoal) + " " for currentgoal in currentgoals]) + " have "
                 if not accomplished:
@@ -868,4 +940,3 @@ class NBeaconsDataRecorder:
             self.mem.set(self.mem.CURR_PLAN, None)
             self.mem.get(self.mem.MEM_PLANS).remove_goals(currentgoals)
             self.mem.get(self.mem.MEM_GOALS).remove_goal_set(currentgoals)
-

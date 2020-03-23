@@ -30,9 +30,9 @@ STATE_FILE = DOMAIN_ROOT + "states/moos_state.sim"
 DISPLAY_FUNC = util.display
 DECLARE_METHODS_FUNC = moos_methods.declare_methods
 DECLARE_OPERATORS_FUNC = moos_operators.declare_ops
-GOAL_GRAPH_CMP_FUNC = util.preferApprehend 
+GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 
-# Load Domain Files  
+# Load Domain Files
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
 
@@ -45,8 +45,8 @@ for phase in ["Simulate","Perceive","Interpret","Eval","Intend","Plan","Act"]:
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive",perceive.MoosObserver())
-myMidca.append_module("Interpret", guide.MoosGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Interpret", guide.MoosGoalInput(deadline=250))
+myMidca.append_module("Eval", evaluate.SimpleEval_moos())
 myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     util.pyhop_tasks_from_goals,
@@ -54,13 +54,11 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
 myMidca.append_module("Act", act.Moosact())
 
-myMidca.append_module('Perceive', perceive.MAReporter(writePort))
-myMidca.insert_module('Interpret', assess.MAQuery_MOOS(readPort), 5)
 
 
 '''
 # Set world viewer to output text
-myMidca.set_display_function(DISPLAY_FUNC) 
+myMidca.set_display_function(DISPLAY_FUNC)
 
 # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 # Note: Turning this on drastically increases MIDCA's running time.

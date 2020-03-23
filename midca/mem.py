@@ -82,7 +82,14 @@ class Memory:
 	# MOOS
 	MOOS_FEEDBACK = "__feedback"
 	MOOS_SUSPENDED_ACTION = "__previous action"
+	MOOS_SCORE= "__evaluate score"
+	MOOS_DEADLINE="__evaluate time"
+	MOOS_TIME = "__running time"
 	CURRENT_HAZARD = "__latest mine detected"
+	MINE_LOCATION = "__location of mines"
+	REMUS_LOCATION = "__ remus location"
+	WAY_POINTS ="__ predicted waypoint"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)
