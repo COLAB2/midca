@@ -20,7 +20,7 @@ preconditions = [condition(enabled, [uuv]), condition(at_location, [uuv, locatio
 results = [condition(at_location, [uuv, location])])
 
 operator(reach_to_catch,
-args = [(uuv, UUV), (location, SEA_ROUTE)],
+args = [(uuv, UUV), (fisher, UUV), (location, SEA_ROUTE)],
 preconditions = [condition(enabled, [uuv]), condition(at_location, [uuv, location], negate = True)],
 results = [condition(at_location, [uuv, location])])
 

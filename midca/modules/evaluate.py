@@ -80,14 +80,15 @@ class EvalMoosFromFeedback(base.BaseModule):
         if exp_goals:
             for goal_remove in goals_remove:
                 for index, goal in enumerate(exp_goals):
-                    if goal.args == goal_remove.args:
-                        if not cmp(goal.kwargs, goal_remove.kwargs):
-                            print ("Explanation goal removed : {}".format(goal))
-                            del exp_goals[index]
-                            for each in exp_goals:
-                                print each
-                            self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, exp_goals)
-                            return
+                    if goal:
+                        if goal.args == goal_remove.args:
+                            if not cmp(goal.kwargs, goal_remove.kwargs):
+                                print ("Explanation goal removed : {}".format(goal))
+                                del exp_goals[index]
+                                for each in exp_goals:
+                                    print each
+                                self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, exp_goals)
+                                return
 
 
     def run(self, cycle, verbose = 2):
@@ -119,7 +120,7 @@ class EvalMoosFromFeedback(base.BaseModule):
                     "Skipping eval based on plan completion"
             else:
                 if plan.finished():
-                    #self.remove_achieved_explanation_goals(goals)
+                    self.remove_achieved_explanation_goals(goals)
                     try:
                         modified_pyhop.generated_monitors[:] = []
                         modified_pyhop.wait_time = None

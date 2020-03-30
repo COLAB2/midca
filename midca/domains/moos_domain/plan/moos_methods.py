@@ -39,7 +39,7 @@ def achieve_goals(state,goals):
             return[('check',args[0],args[1],vehicle) , ('achieve_goals', goals)]
         elif predicate == "apprehended":
             vehicle = state.enabled[-1]
-            return[('reach_to_catch',vehicle,"enemylocation"), ('apprehend',vehicle, args[0]), ('achieve_goals', goals)]
+            return[('reach_to_catch', vehicle, args[1], "enemylocation"), ('apprehend',vehicle, args[1]), ('achieve_goals', goals)]
         elif predicate == "reported":
             vehicle = state.enabled[-1]
             actions = []

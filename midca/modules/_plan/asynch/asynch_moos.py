@@ -268,7 +268,7 @@ class RemoveMine(AsynchAction):
         time.sleep(0.3)
         label= int(action.args[0].replace("mine",""))
         self.publisher_mine.send_multipart([b"M", str(label)])
-        time.sleep(0.1)
+        time.sleep(0.3)
         for i in range(2):
             self.publisher.send_multipart([b"M", b"speed =0.0"])
             time.sleep(0.1)
@@ -287,7 +287,7 @@ class RemoveMine(AsynchAction):
         if self.skip:
             self.skip = False
             return False
-        time.sleep(0.4)
+        time.sleep(0.1)
         self.mem.set(self.mem.PAUSE, True)
         #self.publisher.send_multipart([b"M", b"speed = 0.5"])
         return True
@@ -403,6 +403,7 @@ class SlowSurvey(AsynchAction):
         self.mem = mem
         self.midcaAction = midcaAction
         self.complete = False
+        self.wait = 0
         executeAction = lambda mem, midcaAction, status: self.implement_action(midcaAction)
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation(midcaAction)
         AsynchAction.__init__(self, mem, midcaAction, executeAction,
@@ -460,7 +461,12 @@ class SlowSurvey(AsynchAction):
             speed = self.mem.get(self.mem.REMUS_SPEED)
             if speed == 0:
                 self.implement_action(action)
-                self.mem.set(self.mem.apprehended, False)
+                time.sleep(2)
+            else:
+                if self.wait == 4:
+                    self.mem.set(self.mem.apprehended, False)
+                time.sleep(2)
+                self.wait+=1
                 return False
 
         pause = self.mem.get(self.mem.PAUSE)
@@ -491,6 +497,7 @@ class CatchEnemy(AsynchAction):
         self.publisher = context.socket(zmq.PUB)
         self.publisher.connect("tcp://127.0.0.1:5560")
 
+
         # initialize memory
         self.mem = mem
         self.midcaAction = midcaAction
@@ -503,16 +510,17 @@ class CatchEnemy(AsynchAction):
     def implement_action(self, action):
         time.sleep(0.25)
         argnames = [str(arg) for arg in action.args]
-        enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)
-        message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.5"]
+        enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)[argnames[1]]
+        message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.8"]
         self.publisher.send_multipart(message)
 
     def check_confirmation(self, action):
-        enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)
+        argnames = [str(arg) for arg in action.args]
+        enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)[argnames[1]]
         agent_location = self.mem.get(self.mem.AGENT_LOCATION)
         distance = math.sqrt(sum([(a - b) ** 2 for a, b in zip(enemy_location, agent_location)]))
-        if distance >= 50:
-                message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.5"]
+        if distance >= 30:
+                message = [b"M", b"point = "+str(enemy_location[0]) + "," +str(enemy_location[1])+ "# speed= 0.8"]
                 self.publisher.send_multipart(message)
                 return False
         else:
@@ -531,18 +539,38 @@ class Apprehend(AsynchAction):
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
         self.publisher.connect("tcp://127.0.0.1:5560")
+
+        self.fisher1 = context.socket(zmq.PUB)
+        self.fisher1.connect("tcp://127.0.0.1:5595")
+
+        self.fisher2 = context.socket(zmq.PUB)
+        self.fisher2.connect("tcp://127.0.0.1:5598")
+
+        self.fisher3 = context.socket(zmq.PUB)
+        self.fisher3.connect("tcp://127.0.0.1:5601")
+
+        self.vessels = {"fisher1": self.fisher1,
+                        "fisher2": self.fisher2,
+                        "fisher3": self.fisher3,
+                        "fisher4": self.publisher}
+
         self.skip = True
         self.complete = False
-        executeAction = lambda mem, midcaAction, status: self.implement_action()
-        completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+        executeAction = lambda mem, midcaAction, status: self.implement_action(midcaAction)
+        completionCheck = lambda mem, midcaAction, status: self.check_confirmation(midcaAction)
         AsynchAction.__init__(self, mem, midcaAction, executeAction,
         completionCheck, True)
 
-    def implement_action(self):
-        moosworld.pirate_flag = True
+    def implement_action(self, action):
+        argnames = [str(arg) for arg in action.args]
+        if argnames[1] == "fisher4":
+            moosworld.pirate_flag = True
+        else:
+            self.vessels[argnames[1]].send_multipart([b"M", b"speed = 0.0"])
+
         self.publisher.send_multipart([b"M", b"speed = 0.0"])
 
-    def check_confirmation(self):
+    def check_confirmation(self, action):
         world = self.mem.get(self.mem.STATES)[-1]
         if self.skip:
             self.skip = False
