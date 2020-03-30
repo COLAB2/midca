@@ -160,7 +160,7 @@ class Experiment:
         elif qroute1_mines[index] == "multiple":
             x, y = np.random.multivariate_normal([143, -196], self.cov, self.total_mines).T
             self.send_message(x,y)
-            x, y = np.random.multivariate_normal([22, -190], self.cov, (self.total_mines - 7)).T
+            x, y = np.random.multivariate_normal([17, -202], self.cov, (self.total_mines - 7)).T
             self.send_message(x,y)
 
         else:

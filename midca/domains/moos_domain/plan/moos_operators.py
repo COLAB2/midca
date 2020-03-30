@@ -23,7 +23,7 @@ def remove(state,hazard,location,vehicle):
 def avoid(state,hazard,location,vehicle):
     return state
 
-def reach_to_catch(state,uuv,location):
+def reach_to_catch(state,uuv,vehicle,location):
     # add the order to the variable order_pending
     state.survey[uuv]=location
     return state

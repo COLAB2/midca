@@ -71,8 +71,9 @@ class SimpleIntendFlairs(base.BaseModule):
         self.forrandom = None
 
     def mine_count(self):
+        world = self.mem.get(self.mem.STATES)[-1]
         count = 0
-        for atom in self.world.atoms:
+        for atom in world.atoms:
             if atom.predicate == "hazard_checked" \
                 and atom.predicate == "hazard_at_location":
                 if atom.args[1].name == "qroute":
@@ -87,13 +88,14 @@ class SimpleIntendFlairs(base.BaseModule):
             :return: list of mine labels
             """
             mines = []
-            for atom in self.world.atoms:
+            world = self.mem.get(self.mem.STATES)[-1]
+            for atom in world.atoms:
                 if atom.predicate.name == "hazard_at_location":
                     if atom.args[1].name == location :
                         label = atom.args[0].name.replace("mine", "")
-                        mines.append(self.mem.get(self.mem.MINES_HISTORY)[label])
 
-            return mines
+                        mines.append(self.mem.get(self.mem.MINES_HISTORY)[label])
+            return len(mines)
 
     def remove_all_goals(self):
         '''
@@ -126,10 +128,10 @@ class SimpleIntendFlairs(base.BaseModule):
         mines = self.get_all_recently_detected_mines("qroute")
         enemy_location = self.mem.get(self.mem.ENEMY_LOCATION)
         agent_location = self.mem.get(self.mem.AGENT_LOCATION)
-        distance = math.sqrt(sum([(a - b) ** 2 for a, b in zip(enemy_location, agent_location)]))
+        distance = math.sqrt(sum([(a - b) ** 2 for a, b in zip(enemy_location["fisher4"], agent_location)]))
         explanation_goals = self.mem.get(self.mem.SELECT_EXPLANATION_GOALS)
         selected_goals = []
-        value = 80
+        value = 60
         print ("Deadline: {}".format(self.deadline))
         print ("Time Left: {}".format(time_left))
         print ("Mine Count: {}".format(mines))
@@ -139,12 +141,19 @@ class SimpleIntendFlairs(base.BaseModule):
             for explanation_goal in explanation_goals:
                 if explanation_goal:
                     if explanation_goal['predicate'] == "apprehended":
-                        if distance < 100 and time_left > (value-20):
+
+                        if distance < 120 and time_left > (value-30):
                             selected_goals.append(explanation_goal)
+
+                        elif distance < 90:
+                            selected_goals.append(explanation_goal)
+
+                        else:
+                            pass
 
                     if explanation_goal['predicate'] == "cleared_mines":
                         selected_goals.append(explanation_goal)
-                        self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, self.mem.get(self.mem.SELECT_EXPLANATION_GOALS).remove(explanation_goal))
+                        #self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, self.mem.get(self.mem.SELECT_EXPLANATION_GOALS).remove(explanation_goal))
 
                     if explanation_goal['predicate'] == "reported":
                        if mines >= 3 and time_left < value and not time_left < -5:
@@ -168,7 +177,16 @@ class SimpleIntendFlairs(base.BaseModule):
                         apprehended = 2
                         if not self.apprehended == apprehended:
                             self.apprehended = apprehended
-                            self.mem.get(self.mem.GOAL_GRAPH).insert(explanation_goal)
+                            if self.forrandom:
+                                choosen_goals = []
+                                world = self.mem.get(self.mem.STATES)[-1]
+                                for objname in world.objects:
+                                    if "fisher" in objname:
+                                        choosen_goals.append(make_goals.Goal(*["remus", objname], predicate='apprehended'))
+                                for each_goal in choosen_goals:
+                                    self.mem.get(self.mem.GOAL_GRAPH).insert(each_goal)
+                            else:
+                                self.mem.get(self.mem.GOAL_GRAPH).insert(explanation_goal)
                     if explanation_goal['predicate'] == "cleared_mines":
                         self.mem.get(self.mem.GOAL_GRAPH).insert(explanation_goal)
                         #self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, remaining_goals)
@@ -176,8 +194,9 @@ class SimpleIntendFlairs(base.BaseModule):
                         previous = 1
                         g = make_goals.Goal(*["remus", "ga3"], predicate='cleared_mines')
                         choosen_goals = []
-                        for objname in self.world.objects:
-                            if self.world.objects[objname].type.name == "SHIP":
+                        world = self.mem.get(self.mem.STATES)[-1]
+                        for objname in world.objects:
+                            if world.objects[objname].type.name == "SHIP":
                                 choosen_goals.append(make_goals.Goal(*["remus","qroute1"], predicate='reported'))
                         choosen_goals.append(g)
                         if not self.previous == previous:

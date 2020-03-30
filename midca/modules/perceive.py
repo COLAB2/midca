@@ -590,8 +590,15 @@ class MoosObserverWithFishingVessels(base.BaseModule):
             self.mem.set(self.mem.AGENT_LOCATION, [x,y])
             self.mem.set(self.mem.REMUS_SPEED, speed)
 
-        if vehicle == "fisher4":
-            self.mem.set(self.mem.ENEMY_LOCATION, [x,y])
+        if "fisher" in vehicle:
+            enemy = self.mem.get(self.mem.ENEMY_LOCATION)
+            if enemy:
+                enemy[vehicle] = [x,y]
+                self.mem.set(self.mem.ENEMY_LOCATION, enemy)
+            else:
+                enemy = {}
+                enemy[vehicle] = [x,y]
+                self.mem.set(self.mem.ENEMY_LOCATION, enemy)
 
         #should check if the vehicle is in Q-route1, Q-route2, GA1, GA2
         if y >=-98 and y<=-48:
@@ -652,7 +659,7 @@ class MoosObserverWithFishingVessels(base.BaseModule):
 
 
         try:
-            """
+
             current_position = self.subscriber_fisher1.recv()
             states += self.get_the_location(current_position, states, "fisher1")
 
@@ -661,7 +668,7 @@ class MoosObserverWithFishingVessels(base.BaseModule):
 
             current_position = self.subscriber_fisher3.recv()
             states += self.get_the_location(current_position, states, "fisher3")
-            """
+
 
             current_position = self.subscriber_fisher4.recv()
             states += self.get_the_location(current_position, states, "fisher4")

@@ -77,6 +77,13 @@ class MoosWorld:
         self.subscriber_enemy.setsockopt(zmq.CONFLATE, 1)
         self.subscriber_enemy.bind("tcp://127.0.0.1:6590")
 
+        self.publisher_fisher1 = context.socket(zmq.PUB)
+        self.publisher_enemy.connect("tcp://127.0.0.1:5592")
+
+
+
+
+
         # Zeromq connection with the friendly vessels for action
         self.publisher_friendly_vessels = []
         for i in range(0,10):
@@ -161,9 +168,13 @@ class MoosWorld:
             self.enemy_way_point_behavior(way_points)
 
         if multiple_single:
+            if (pirate_flag == True):
+                return
             way_points = [[111, -73]]
             self.enemy_way_point_behavior(way_points)
             layer.set_mean(way_points[0])
+            if (pirate_flag == True):
+                return
             layer.send_message()
             way_points = [[245,42]]
             self.enemy_way_point_behavior(way_points)
@@ -173,14 +184,20 @@ class MoosWorld:
             way_points = [[57, -73]]
             self.enemy_way_point_behavior(way_points)
             layer = mine_layer.Minelayer(mean = way_points[0], cov=[[80, 0], [0, 80]], total_mines=10)
+            if (pirate_flag == True):
+                return
             layer.send_message()
             way_points = [[245,42]]
             self.enemy_way_point_behavior(way_points)
 
         if multiple_random:
+            if (pirate_flag == True):
+                return
             way_points = [[111, -73]]
             self.enemy_way_point_behavior(way_points)
             layer.set_mean(way_points[0])
+            if (pirate_flag == True):
+                return
             layer.send_message()
             way_points = [[245,42]]
             self.enemy_way_point_behavior(way_points)
@@ -250,6 +267,8 @@ class MoosWorld:
         publisher.send_multipart(message)
         time.sleep(0.1)
         publisher.send_multipart(message)
+        time.sleep(0.1)
+        publisher.send_multipart(message)
 
 
     def ship_movement(self):
@@ -299,13 +318,14 @@ class MoosWorld:
         change = 0
         for i in range(0, len(self.publisher_friendly_vessels)):
             if (i%3 == 0):
-                time.sleep(5)
+                time.sleep(2)
 
             if change_qroute[i]:
                     change = 1
-            self.ship_way_points_behavior(self.publisher_friendly_vessels[i],
+            for j in range(2):
+                self.ship_way_points_behavior(self.publisher_friendly_vessels[i],
                                           self.way_points_friendly_vessels[change][i], speed)
-            time.sleep(0.3)
+                time.sleep(0.3)
 
 def main(friendly_delay):
     w = MoosWorld(friendly_delay, True, True)

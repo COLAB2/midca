@@ -427,14 +427,14 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                 print (len(mines))
                 if mines:
                     if len(mines) >= 3:
-                        line_slope = self.collinear([mines[0], mines[int(len(mines)/2)], mines[len(mines)-1]])
-                        if line_slope :
+                        line_slope = self.collinear([mines[0], mines[int(len(mines)-2)], mines[len(mines)-1]])
+                        if line_slope and not line_slope == 1:
                             # goals to change qroute and goals to clear in mine pattern
                             point1, point2 = self.certain_distance_line(mines[len(mines)-1], line_slope, 100)
                             point11, point21 = self.certain_distance_line(mines[len(mines)-1], line_slope, 3000)
-                            points = str(point11[0]) + "," + str(point11[1]) + ":" + str(point2[0]) + "," + str(point2[1])
+                            points = str(point11[0]) + "," + str(point11[1]) + ":" + str(mines[len(mines)-1][0]) + "," + str(mines[len(mines)-1][1]) + ":" + str(point2[0]) + "," + str(point2[1])
                             message = [b"M", b"points = " + points + " # speed= 0.5"]
-                            self.mem.set(self.mem.WAY_POINTS, {"id": "line", "message": message, "endpoint":point2})
+                            self.mem.set(self.mem.WAY_POINTS, {"id": "line", "message": message, "endpoint":point11})
                             g = [goals.Goal(*["remus", "way_point"], predicate='cleared_mines'),
                                  goals.Goal(*["remus", "qroute1"], predicate='reported')
                                  ]
@@ -459,7 +459,7 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                             self.mem.set(self.mem.WAY_POINTS, {"id": "random", "message": message, "endpoint":endpoint})
                             g = [
                                 goals.Goal(*["remus", "way_point"], predicate='cleared_mines'),
-                                 goals.Goal(*["fisher4"], predicate='apprehended'),
+                                 goals.Goal(*["remus", "fisher4"], predicate='apprehended'),
                                  goals.Goal(*["qroute1"], predicate='reported')
                                  ]
                             previous = 2
@@ -473,7 +473,7 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                             return
                     elif len(mines) == 1:
                         g = [
-                             goals.Goal(*["fisher4"], predicate='apprehended'),
+                             goals.Goal(*["remus","fisher4"], predicate='apprehended'),
                              goals.Goal(*["remus", "qroute1"], predicate='reported')
                              ]
                         previous = 3
@@ -485,6 +485,7 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                         return
 
                     elif len(mines) == 2:
+                        """
                         point = mines[len(mines) - 1]
                         value = 13
                         points = str(point[0]) + "," + str(point[1]) + ":" + str(point[0]-value) + "," + str(point[1]+value) + ":" + \
@@ -505,6 +506,8 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                             #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                             self.mem.set(self.mem.SELECT_EXPLANATION_GOALS, g)
                         return
+                        """
+
 
 
 
@@ -524,7 +527,7 @@ class MoosGoalInterpretFlairs(UserGoalInput):
                             return
                         else:
                             previous = 5
-                            g = [goals.Goal(*["fisher4"], predicate='apprehended')]
+                            g = [goals.Goal(*["remus","fisher4"], predicate='apprehended')]
                             #self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                             if previous == self.previous:
                                 return

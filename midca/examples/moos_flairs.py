@@ -51,7 +51,7 @@ if file_count == 0 or index ==0:
         file_count +=1
 
 deadline= []
-for i in range(0, 220, 25):
+for i in range(0, 220, 50):
     deadline.append(i)
 
 
