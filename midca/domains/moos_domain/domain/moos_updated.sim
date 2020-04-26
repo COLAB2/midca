@@ -1,0 +1,46 @@
+type(UUV)
+type(SEA_ROUTE)
+type(HAZARD)
+type(STATUS)
+
+predicate(cleared-mines,[uuv,location], [UUV,SEA_ROUTE])
+predicate(mode, [uuv, status], [UUV, STATUS])
+predicate(at-location,[uuv,location], [UUV,SEA_ROUTE])
+predicate(obstacle-at,[location], [SEA_ROUTE])
+predicate(hazard-at-location, [mine,location], [HAZARD,SEA_ROUTE])
+predicate(hazard-checked, [mine,location], [HAZARD,SEA_ROUTE])
+predicate(hazard-at-pathway, [mine], [HAZARD])
+predicate(enabled,[uuv],[UUV])
+
+operator(transit,
+args = [(uuv, UUV), (prevloc, SEA_ROUTE), (location, SEA_ROUTE)],
+preconditions = [condition(enabled, [uuv]),
+                 condition(at-location, [uuv, prevloc])
+                 condition(at-location, [uuv, location], negate = True)],
+results = [condition(at-location, [uuv, location]),
+           condition(at-location, [uuv, prevloc], negate = True)])
+
+operator(do-clear,
+args = [(uuv, UUV), (location, SEA_ROUTE)],
+preconditions = [condition(enabled, [uuv]), condition(at-location, [uuv, location])],
+results = [condition(cleared-mines, [uuv, location])])
+
+operator(avoid,
+args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
+preconditions = [condition(enabled, [uuv]),
+                 condition(hazard-at-location, [mine, location]),
+                 condition(hazard-at-pathway, [mine])],
+results = [condition(hazard-checked, [mine, location]),
+           condition(hazard-at-pathway, [mine], negate = True)]
+           )
+
+operator(ignore,
+args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
+preconditions = [condition(enabled, [uuv]), condition(hazard-at-location, [mine, location])],
+results = [condition(hazard-checked, [mine, location])])
+
+operator(remove,
+args = [(mine, HAZARD), (location, SEA_ROUTE), (uuv,UUV)],
+preconditions = [condition(enabled, [uuv]), condition(hazard-at-location, [mine, location])],
+results = [condition(hazard-checked, [mine, location]),
+	   condition(hazard-at-location, [mine, location], negate = True)])

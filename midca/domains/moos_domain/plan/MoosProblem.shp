@@ -1,0 +1,8 @@
+
+(defproblem problem UMC (
+(enabled remus)
+(at-location remus home)
+)
+ ((achieve-goals (list
+(cleared-mines remus GA1)
+ ))))

@@ -1,0 +1,122 @@
+(defdomain UMC
+ (
+ (:method (achieve-goals (list ?goal . ?goals))
+   ()
+   ((achieve-goal ?goal)(achieve-goals list ?goals)))
+
+ (:method (achieve-goals nil ?goal)
+        ()
+       ((achieve-goal ?goal)))
+
+ (:method (achieve-goals list nil)
+        ()
+       ())
+
+ (:method (achieve-goal (at-location ?agent ?location))
+  ;;; if the agent is at GA2 and the goal is to head to home2
+ ((at-location ?agent GA2)
+ (call equal ?location home2))
+ ((!transit ?agent GA2 transit-area-2)
+  (!transit ?agent transit-area-2 home)
+ )
+ )
+
+  ;;; if the agent has any obstacle or mines avoid it or ignore it
+  (:method (reach ?agent ?prevloc ?location)
+
+  ;;; if there is a mine at the path avoid it
+  ((hazard-at-pathway ?mine ?location1))
+  ((!avoid ?mine ?location1 ?agent))
+
+  ;;; if there is a mine not at the path ignore it
+  ((hazard-at-location ?mine ?location1) (hazard-checked ?mine1 ?location1)
+   (not(call equal ?mine ?mine1)) )
+  ((!ignore ?mine ?location1 ?agent))
+
+  ()
+  ((!transit ?agent ?prevloc ?location))
+ )
+
+ (:method (achieve-goal (cleared-mines ?agent ?location))
+
+ ;;; if the agent is at home and the goal is to clear mines in GA1
+ ((at-location ?agent home)
+ (call equal ?location GA1))
+ ((reach ?agent home transit-area-1)
+  (reach ?agent transit-area-1 GA1)
+  (!do-clear ?agent GA1)
+ )
+
+  ;;; if the agent is at home and the goal is to clear mines in GA2
+ ((at-location ?agent home)
+ (call equal ?location GA2))
+ ((reach ?agent home qroute-transit-area-1)
+  (reach ?agent qroute-transit-area-1 GA2)
+  (!do-clear ?agent GA2)
+ )
+
+ ;;; if the agent is at transit-area-1 and the goal is to clear mines in GA1
+ ((at-location ?agent transit-area-1)
+ (call equal ?location GA1))
+ ((reach ?agent transit-area-1 GA1)
+  (!do-clear ?agent GA1)
+ )
+
+ ;;; if the agent is at transit-area-1 and the goal is to clear mines in GA2
+ ((at-location ?agent transit-area-1)
+ (call equal ?location GA2))
+ ((reach ?agent transit-area-1 qroute-transit-area-1)
+  (reach ?agent qroute-transit-area-1 GA2)
+  (!do-clear ?agent GA2)
+ )
+
+   ;;; if the agent is at GA1 and the goal is to clear mines in GA1
+ ((at-location ?agent GA1)
+ (call equal ?location GA1))
+ ((!do-clear ?agent GA2))
+
+  ;;; if the agent is at GA1 and the goal is to clear mines in GA2
+ ((at-location ?agent GA1)
+ (call equal ?location GA2))
+ ((reach ?agent GA1 qroute-transit-area-1)
+  (reach ?agent qroute-transit-area-1 GA2)
+  (!do-clear ?agent GA2))
+
+  ;;; if the agent is at qroute-transit-area-1 and the goal is to clear mines in GA2
+ ((at-location ?agent qroute-transit-area-1)
+ (call equal ?location GA2))
+ ((reach ?agent qroute-transit-area-1 GA2)
+  (!do-clear ?agent GA2)
+ )
+
+ ;;; if the agent is at GA2 and the goal is to clear mines in GA2
+ ((at-location ?agent GA2)
+ (call equal ?location GA2))
+ ((!do-clear ?agent GA2)
+ )
+ )
+
+ (:operator (!transit ?agent ?prevlocation ?location)
+ ((enabled ?agent) (at-location ?agent ?prevlocation) (not(at-location ?agent ?location)))
+ ((at-location ?agent ?prevlocation))
+ ((at-location ?agent ?location)))
+
+ (:operator (!do-clear ?agent ?location)
+ ((enabled ?agent) (at-location ?agent ?location))
+ ()
+ ((cleared-mines ?agent ?location)))
+
+ (:operator (!avoid ?mine ?location ?uuv)
+ ((enabled ?agent) (hazard-at-location ?mine ?location) (hazard-at-pathway ?mine))
+ ((hazard-at-pathway ?mine))
+ ((hazard-checked ?mine ?location)))
+
+ (:operator (!ignore ?mine ?location ?uuv)
+ ((enabled ?agent) (hazard-at-location ?mine ?location))
+ ()
+ ((hazard-checked ?mine ?location)))
+
+ (:operator (!remove ?mine ?location ?uuv)
+ ((enabled ?agent) (hazard-at-location ?mine ?location))
+ ((hazard-at-location ?mine ?location))
+ ((hazard-checked ?mine ?location)))
