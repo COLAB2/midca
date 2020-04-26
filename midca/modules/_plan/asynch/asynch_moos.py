@@ -320,21 +320,21 @@ class FastSurvey(AsynchAction):
         argnames = [str(arg) for arg in action.args]
 
         if ("transit1" in argnames):
-            message = [b"M", b"point = 0,-20 # speed= 1.0"]
+            message = [b"M", b"point = -25,-43 # speed= 1.0"]
             self.publisher.send_multipart(message)
 
         elif ("qroute_transit" in argnames):
-            message = [b"M", b"point = 55,-72 # speed= 1.0"]
+            message = [b"M", b"point = 41,-119 # speed= 1.0"]
             for i in range(2):
                 self.publisher.send_multipart(message)
 
         elif ("home" in argnames):
-            message = [b"M", b"point = 167,0 # speed= 1.0"]
+            message = [b"M", b"point = 238,83 # speed= 1.0"]
             for i in range(2):
                     self.publisher.send_multipart(message)
 
         elif ("transit2" in argnames):
-            message = [b"M", b"point = 154,-27 # speed= 1.0"]
+            message = [b"M", b"point = 135,-44 # speed= 1.0"]
             for i in range(2):
                 self.publisher.send_multipart(message)
 
@@ -416,18 +416,18 @@ class SlowSurvey(AsynchAction):
         argnames = [str(arg) for arg in action.args]
 
         if ("ga1" in argnames):
-            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=20, y=-80, width=30, height = 30,lane_width=10, rows=north-south,degs=0 # speed =0.5"]
+            message = [b"M",b"   points=format=lawnmower,label=dedley_survey, x=-22, y=-128, width=50, height = 50,lane_width=10, rows=north-south,degs=0  # speed =0.5"]
             print ("Start Surveying ....")
             for i in range(2):
                 self.publisher.send_multipart(message)
 
         if ("ga2" in argnames):
-            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=150, y=-80, width=30, height = 30,lane_width=10, rows=north-south,degs=0 # speed =0.5"]
+            message = [b"M",b" points=format=lawnmower,label=dedley_survey, x=139, y=-128, width=50, height = 50,lane_width=10, rows=north-south,degs=0  # speed =0.5"]
             for i in range(2):
                 self.publisher.send_multipart(message)
 
         if ("home" in argnames):
-            message = [b"M", b"point = 170,0 # speed= 0.5"]
+            message = [b"M", b"point = 238,83 # speed= 0.5"]
             for i in range(2):
                     self.publisher.send_multipart(message)
 

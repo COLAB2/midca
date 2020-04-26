@@ -47,6 +47,7 @@ class AsynchronousAct(base.BaseModule):
                 if action.status != asynch.FAILED and action.status != asynch.COMPLETE:
                     completed = action.check_complete()
                     if completed:
+                        self.mem.add(self.mem.ACTIONS, [action.midcaAction])
                         if verbose >= 2:
                             print "Action", action, "completed"
             except AttributeError:

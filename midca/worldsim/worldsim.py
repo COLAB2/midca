@@ -754,6 +754,14 @@ class World:
 				return False
 			testWorld.apply_midca_action(action)
 		return True
+
+	def async_plan_correct(self, plan):
+		testWorld = self.copy()
+		for action in plan:
+			if not testWorld.midca_action_applicable(action.midcaAction):
+				return False
+			testWorld.apply_midca_action(action.midcaAction)
+		return True
 	
 	def goals_achieved(self, plan, goalSet):
 		testWorld = self.copy()

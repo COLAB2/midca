@@ -160,7 +160,7 @@ class MoosWorld:
             return
 
         if single:
-            way_points = [[57, -73]]
+            way_points = [[57, -120]]
             self.enemy_way_point_behavior(way_points)
             layer = mine_layer.Minelayer(mean = way_points[0], cov=[[100, 0], [0, 100]], total_mines=1)
             layer.send_message()
@@ -170,18 +170,18 @@ class MoosWorld:
         if multiple_single:
             if (pirate_flag == True):
                 return
-            way_points = [[111, -73]]
+            way_points = [[111, -120]]
             self.enemy_way_point_behavior(way_points)
             layer.set_mean(way_points[0])
             if (pirate_flag == True):
                 return
             layer.send_message()
-            way_points = [[245,42]]
+            way_points = [[245,-120]]
             self.enemy_way_point_behavior(way_points)
             return
 
         if random:
-            way_points = [[57, -73]]
+            way_points = [[57, -120]]
             self.enemy_way_point_behavior(way_points)
             layer = mine_layer.Minelayer(mean = way_points[0], cov=[[80, 0], [0, 80]], total_mines=10)
             if (pirate_flag == True):
@@ -193,7 +193,7 @@ class MoosWorld:
         if multiple_random:
             if (pirate_flag == True):
                 return
-            way_points = [[111, -73]]
+            way_points = [[111, -120]]
             self.enemy_way_point_behavior(way_points)
             layer.set_mean(way_points[0])
             if (pirate_flag == True):
@@ -285,16 +285,16 @@ class MoosWorld:
         self.way_points_friendly_vessels = [
                                                 # Qroute 1
                                                 [
-                                                [[-39, -52], [227, -62]],
-                                                [[-39, -70], [217, -86]],
-                                                [[-39, -90], [228, -74 ]],
-                                                [[-39, -80], [217, -86]],
-                                                [[-39, -90], [217, -84]],
-                                                [[-39, -60], [217, -55]],
-                                                [[-39, -55], [225, -65]],
-                                                [[-39, -93], [225, -69]],
-                                                [[-39, -75], [225, -75]],
-                                                [[-39, -54], [218, -93]],
+                                                [[-39, -52 + -60], [227, -62 + -60]],
+                                                [[-39, -70+ -60], [217, -86+ -60]],
+                                                [[-39, -90+ -60], [228, -74+ -60]],
+                                                [[-39, -80+ -60], [217, -86+ -60]],
+                                                [[-39, -90+ -60], [217, -84+ -60]],
+                                                [[-39, -60+ -60], [217, -55+ -60]],
+                                                [[-39, -55+ -60], [225, -65+ -60]],
+                                                [[-39, -93+ -60], [225, -69+ -60]],
+                                                [[-39, -75+ -60], [225, -75+ -60]],
+                                                [[-39, -54+ -60], [218, -93+ -60]],
                                                 ],
 
                                                 #Qroute 2

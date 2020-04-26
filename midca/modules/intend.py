@@ -231,8 +231,8 @@ class SimpleIntendFlairs(base.BaseModule):
             return
 
         #exp_goals = self.random()
-        exp_goals = self.select()
-        self.choose(exp_goals)
+        #exp_goals = self.select()
+        #self.choose(exp_goals)
 
         goals = goalGraph.getUnrestrictedGoals()
         # take the first goal

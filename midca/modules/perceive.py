@@ -730,7 +730,474 @@ class MoosObserverWithFishingVessels(base.BaseModule):
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD", copy.deepcopy(world))
 
+class MoosObserverMultiagent(base.BaseModule):
+    '''
+    MIDCA Module which interacts with moos to get the current states
+    of the vehicle in the moos.
+    '''
 
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        context = zmq.Context()
+
+        # connection for remus
+        self.subscriber_remus = context.socket(zmq.SUB)
+        self.subscriber_remus.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_remus.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_remus.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_remus.bind("tcp://127.0.0.1:5563")
+
+        #connection to know about mines detected
+        self.subscriber_mine = context.socket(zmq.SUB)
+        self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber_mine.bind("tcp://127.0.0.1:5564")
+
+        #connection to know about fisher vessels
+
+        # Zeromq connection with the fisher1 for perception
+        self.subscriber_fisher1 = context.socket(zmq.SUB)
+        self.subscriber_fisher1.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_fisher1.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_fisher1.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_fisher1.bind("tcp://127.0.0.1:5593")
+
+        # Zeromq connection with the fisher2 for perception
+        self.subscriber_fisher2 = context.socket(zmq.SUB)
+        self.subscriber_fisher2.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_fisher2.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_fisher2.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_fisher2.bind("tcp://127.0.0.1:5596")
+
+        # Zeromq connection with the fisher3 for perception
+        self.subscriber_fisher3 = context.socket(zmq.SUB)
+        self.subscriber_fisher3.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_fisher3.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_fisher3.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_fisher3.bind("tcp://127.0.0.1:5599")
+
+        # Zeromq connection with the fisher4 for perception
+        self.subscriber_fisher4 = context.socket(zmq.SUB)
+        self.subscriber_fisher4.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_fisher4.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_fisher4.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_fisher4.bind("tcp://127.0.0.1:5590")
+
+        # Zeromq connection with the friendly vessels for action
+        self.subscriber_friendly_vessels = []
+        for i in range(0,10):
+            connection = context.socket(zmq.SUB)
+            connection.setsockopt(zmq.SUBSCRIBE, '')
+            connection.setsockopt(zmq.RCVTIMEO, -1)
+            connection.setsockopt(zmq.CONFLATE, 1)
+            connection.bind("tcp://127.0.0.1:651"+str(i))
+            self.subscriber_friendly_vessels.append(connection)
+
+        self.removed_mines = set()
+    # perfect observation
+    def observe(self):
+        if not self.mem.get(self.mem.STATES):
+            return self.world.copy()
+        else:
+            world = self.mem.get(self.mem.STATES)[-1]
+            return world.copy()
+
+    def get_the_mine_location(self, world, mine_report, states):
+        """
+
+        :param msg: the mine location
+        :param states: predicate, argument format to create world
+        :return: the states
+        """
+
+        # for mine
+        mines_checked = []
+        # for removed mine
+        mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
+        mine_x = float(mine_x.split("=")[1])
+        mine_y = float(mine_y.split("=")[1])
+        mine_label = mine_label.split("=")[1]
+
+        # ignore already checked mines
+        for atom in world.atoms:
+            if atom.predicate.name == "hazard_checked":
+                mines_checked.append(atom.args[0].name)
+
+        #if "mine"+mine_label in mines_checked:
+        #    return
+        #    #raise Exception("Mine previously checked.")
+
+        # ignore detected mines
+        #if self.mem.get(self.mem.MINES_HISTORY) and \
+        #       mine_label in self.mem.get(self.mem.MINES_HISTORY) :
+        #    return
+
+        # GA1 and GA2 and Qroute
+        qroute_y = [-162, -83]
+        ga1_x = [-56,8]
+        ga1_y = [-161, -95]
+        ga2_x = [104, 170]
+        ga2_y = [-93, -162]
+
+        # for mine at GA1 and GA2
+        if (mine_x>=ga1_x[0] and mine_x<=ga1_x[1]) and (mine_y>=ga1_y[0] and mine_y<=ga1_y[1]):
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard_at_location(mine" + mine_label + ",ga1)\n"
+        elif (mine_x>=ga2_x[0] and mine_x<=ga2_x[1]) and (mine_y>=ga2_y[0] and mine_y<=ga2_y[1]):
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard_at_location(mine" + mine_label + ",ga2)\n"
+        elif mine_y >=qroute_y[0] and mine_y<=qroute_y[1]:
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard_at_location(mine" + mine_label + ",qroute)\n"
+        else:
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard_at_location(mine" + mine_label + ",transit)\n"
+
+        #for information purpose
+        mines_memory = self.mem.get(self.mem.MINES_HISTORY)
+        if mines_memory:
+            mines_memory[mine_label] = [mine_x, mine_y]
+            self.mem.set(self.mem.MINES_HISTORY, mines_memory)
+        else:
+            self.mem.set(self.mem.MINES_HISTORY, {mine_label:[mine_x, mine_y]})
+
+        return states
+
+    def get_ship_status(self, ship_status, states, vehicle):
+        """
+
+        :param ship_status: message about the active status of the ships
+        :param states: predicate, argument format to create world
+        :return: the states
+        """
+
+        x,y,speed,direction = ship_status.split(",")
+        x = float(x.split(":")[1])
+        y = float(y.split(":")[1])
+        speed = float(speed.split(":")[1])
+        direction = float(direction.split(":")[1])
+        #print ("Vehicle Name : {}".format(vehicle))
+        #print ("X : {}".format(x))
+        #print ("Y : {}".format(y))
+
+        #should check if the vehicle is in Q-route1, Q-route2, GA1, GA2
+        if x ==-1700.00 and y == -1500.00:
+            states+="wrecked(" + vehicle + ")\n"
+
+        return states
+
+    def get_the_location(self, current_position, states, vehicle):
+        """
+
+        :param states: contain predicate, argument format to create the world
+        :param vehicle: the name of the vehicle; ex : remus, fisher1 ... 4
+        :return: states
+        """
+        x,y,speed,direction = current_position.split(",")
+        x = float(x.split(":")[1])
+        y = float(y.split(":")[1])
+        speed = float(speed.split(":")[1])
+        direction = float(direction.split(":")[1])
+        #print ("Vehicle Name : {}".format(vehicle))
+        #print ("X : {}".format(x))
+        #print ("Y : {}".format(y))
+
+        # update agent and fisher location
+        if vehicle == "remus":
+            self.mem.set(self.mem.AGENT_LOCATION, [x,y])
+            self.mem.set(self.mem.REMUS_SPEED, speed)
+
+        if "fisher" in vehicle:
+            enemy = self.mem.get(self.mem.ENEMY_LOCATION)
+            if enemy:
+                enemy[vehicle] = [x,y]
+                self.mem.set(self.mem.ENEMY_LOCATION, enemy)
+            else:
+                enemy = {}
+                enemy[vehicle] = [x,y]
+                self.mem.set(self.mem.ENEMY_LOCATION, enemy)
+
+        # locations of qroute, GA1 and GA2
+        qroute_y = [-162, -83]
+        ga1 = [-47, -102git ]
+        ga2 = [164, -103]
+        home = [238, 83]
+        transit1 = [-25, -43]
+        transit2 = [135, -44]
+        qroute_transit = [41, -119]
+
+        #should check if the vehicle is in Q-route1, Q-route2, GA1, GA2
+        if y >=qroute_y[0] and y<=qroute_y[1]:
+                states+="passed(" + vehicle + ",transit1)\n"
+                states+="at_location(" + vehicle + ",qroute)\n"
+                if (x >= qroute_transit[0]-5 and y >= qroute_transit[1]-5) and (x <= qroute_transit[0]+5 and y <= qroute_transit[1]+5):
+                    states+="at_location(" + vehicle + ",qroute_transit)\n"
+                    states+="passed(" + vehicle + ",qroute_transit)\n"
+                elif (x > ga1[0]-5 and x<= ga1[0]+5) and (y > ga1[1]-5 and y<= ga1[1]+5) :
+                        #if (x == 28) and (y == -62) :
+                        states+="at_location(" + vehicle + ",ga1)\n"
+                elif (x > ga2[0]-5 and x<= ga2[0]+5) and (y > ga2[1]-5 and y <=ga2[1]+5):
+                        states+="at_location(" + vehicle + ",ga2)\n"
+        elif (x >= transit1[0]-5 and y >= transit1[1]-5) and (x <= transit1[0]+5 and y <= transit1[1]+5):
+                states+="at_location(" + vehicle + ",transit1)\n"
+                states+="passed(" + vehicle + ",transit1)\n"
+        elif (x >= transit2[0]-5 and y >= transit2[1]-5) and (x <= transit2[0]+5 and y <= transit2[1]+5):
+                states+="at_location(" + vehicle + ",transit2)\n"
+        elif x>home[0]-5 and y > home[1]-5:
+                states+="at_location(" + vehicle + ",home)\n"
+        else:
+            states+="at_location(" + vehicle + ",transit)\n"
+
+        way_points = self.mem.get(self.mem.WAY_POINTS)
+
+        if way_points:
+            way_point = way_points["endpoint"]
+            if (x > (way_point[0] - 5) and x < (way_point[0] + 5)) and (y > (way_point[1] - 5) and y < (way_point[1] + 5)) :
+                states += "at_location(remus,way_point)\n"
+                states+="passed(" + vehicle + ",qroute_transit)\n"
+        return states
+
+    def run(self, cycle, verbose=2):
+        '''
+        Read from the subscriber in the format "X:float,Y:float,SPEED:float"
+        '''
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+
+        states = ""
+
+        '''
+        The following code gets the current X,Y,Speed and updates the location of uuv.
+        i.e., if the vehicle is in qroute or green area 1 or green area 2.
+        the else part is to remove the state after the vehicle leaves the specific location
+        '''
+
+        try:
+            current_position = self.subscriber_remus.recv()
+            states += self.get_the_location(current_position, states, "remus")
+        except:
+            print ("Remus location not recieved")
+
+
+        try:
+
+            current_position = self.subscriber_fisher1.recv()
+            states += self.get_the_location(current_position, states, "fisher1")
+
+            current_position = self.subscriber_fisher2.recv()
+            states += self.get_the_location(current_position, states, "fisher2")
+
+            current_position = self.subscriber_fisher3.recv()
+            states += self.get_the_location(current_position, states, "fisher3")
+
+
+            current_position = self.subscriber_fisher4.recv()
+            states += self.get_the_location(current_position, states, "fisher4")
+
+
+        except :
+            print ("Fishing vessels location not recieved")
+
+        # taking a lot of time to get ships location
+        # so limited condition
+        # the variable is only set in evaluate phase
+        if self.mem.get(self.mem.SUBSCRIBE_SHIPS):
+            try:
+                for index, ship_subscribe in enumerate(self.subscriber_friendly_vessels):
+                    ship_status = ship_subscribe.recv()
+                    states += self.get_ship_status(ship_status,states,"ship"+str(index))
+            except Exception as e:
+                    print (e)
+                    print ("Ships details not recieved")
+                    pass
+
+
+        try:
+                while (True):
+                    mine_report = self.subscriber_mine.recv()
+                    if mine_report:
+                        states += self.get_the_mine_location(world, mine_report,states)
+        except:
+                print ("Mine Report not received")
+                pass
+
+
+        # this is to update the world into memory
+        if not states == "":
+            # remove all states related to at_location
+            atoms = copy.deepcopy(world.atoms)
+            for atom in atoms:
+                if atom.predicate.name == "at_location":
+                    world.atoms.remove(atom)
+                if verbose >= 1:
+                    #print(states)
+                    pass
+            stateread.apply_state_str(world, states)
+            self.mem.add(self.mem.STATES, world)
+
+
+        states = self.mem.get(self.mem.STATES)
+        if states and len(states) > 3:
+            # print "trimmed off 200 old stale states"
+            states = states[2:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+
+class GraceObserver(base.BaseModule):
+    '''
+    MIDCA Module which interacts with moos to get the current states
+    of the vehicle in the moos.
+    '''
+
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        context = zmq.Context()
+
+        # connection for remus
+        self.subscriber_remus = context.socket(zmq.SUB)
+        self.subscriber_remus.setsockopt(zmq.SUBSCRIBE, '')
+        self.subscriber_remus.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber_remus.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber_remus.bind("tcp://127.0.0.1:9563")
+
+
+    # perfect observation
+    def observe(self):
+        if not self.mem.get(self.mem.STATES):
+            return self.world.copy()
+        else:
+            world = self.mem.get(self.mem.STATES)[-1]
+            return world.copy()
+
+    # Takes simulation coordinates and transforms to grid coordinates,
+    # I.e., if (x, y) is in grid (i, j) will return string associated with
+    # (i, j). All simulation coordinates in a given grid cell mapped to
+    # grid coordinates of that cell
+    def sim_to_grid(self, x, y):
+        # side length of a grid cell
+        side = 80
+        #need offsets since [-131, 65] is center of top left cell
+        start_x = -100 - 10
+        start_y = 36 + 10
+        found = False
+        i = 0
+        j = -1
+        while (found == False):
+            current = start_x + (i * side)
+            if ((x >= current) and (x < (current + side))):
+                found = True
+            else:
+                i += 1
+        found = False
+        while (found == False):
+            current = start_y - (j * side)
+            if ((y <= current) and (y > (current - side))):
+                found = True
+            else:
+                j += 1
+        if i == -1:
+            i = 0
+        if j == -1:
+            j = 0
+        return "Tx" + str(i) + "y" + str(j)
+
+    def get_the_location(self, current_position, states, vehicle):
+        """
+
+        :param states: contain predicate, argument format to create the world
+        :param vehicle: the name of the vehicle; ex : remus, fisher1 ... 4
+        :return: states
+        """
+        x,y,speed,direction = current_position.split(",")
+        x = float(x.split(":")[1])
+        y = float(y.split(":")[1])
+        speed = float(speed.split(":")[1])
+        direction = float(direction.split(":")[1])
+        #print ("Vehicle Name : {}".format(vehicle))
+        #print ("X : {}".format(x))
+        #print ("Y : {}".format(y))
+
+        # update agent and fisher location
+        if vehicle == "grace":
+            self.mem.set(self.mem.AGENT_LOCATION, [x,y])
+            self.mem.set(self.mem.REMUS_SPEED, float(speed))
+            loc = self.sim_to_grid(x,y)
+            states+="agent-at(" + vehicle + "," + loc +")\n"
+
+        print (states)
+        return states
+
+    def run(self, cycle, verbose=2):
+        '''
+        Read from the subscriber in the format "X:float,Y:float,SPEED:float"
+        '''
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+
+        states = ""
+
+        '''
+        The following code gets the current X,Y,Speed and updates the location of uuv.
+        i.e., if the vehicle is in qroute or green area 1 or green area 2.
+        the else part is to remove the state after the vehicle leaves the specific location
+        '''
+
+        try:
+            current_position = self.subscriber_remus.recv()
+            states += self.get_the_location(current_position, states, "grace")
+        except:
+            print ("Remus location not recieved")
+
+
+        # this is to update the world into memory
+        if not states == "":
+            # remove all states related to at_location
+            atoms = copy.deepcopy(world.atoms)
+            for atom in atoms:
+                if atom.predicate.name == "agent-at":
+                    world.atoms.remove(atom)
+                    self.world.atoms.remove(atom)
+
+                if verbose >= 1:
+                    #print(states)
+                    pass
+            stateread.apply_state_str(world, states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, world)
+
+
+        states = self.mem.get(self.mem.STATES)
+        if states and len(states) > 3:
+            # print "trimmed off 200 old stale states"
+            states = states[2:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
 
 
 class PerfectObserverWithThief(base.BaseModule):

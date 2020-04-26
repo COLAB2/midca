@@ -185,6 +185,18 @@ class MoosGoalInput(UserGoalInput):
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                 """
 
+class GraceGoalInput(UserGoalInput):
+
+    '''
+    MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+    '''
+
+    def run(self, cycle, verbose = 2):
+
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
+            g = goals.Goal(*["grace","fumin", "sensordata", "Tx4y4"], predicate = 'communicated')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
 
 class MoosGoalInterpret(UserGoalInput):
 

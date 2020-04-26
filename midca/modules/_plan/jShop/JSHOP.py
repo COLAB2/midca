@@ -3,36 +3,69 @@ import subprocess
 
 from subprocess import Popen, PIPE, STDOUT
 
-def jshop(tasks):
-  
+
+def jshop(tasks, DOMAIN_FIILE, STATE_FILE, verbose=1):
+
     thisDir =  os.path.dirname(os.path.realpath(__file__))
 #     thisDir = "C:/Users/Zohreh/git/midca/modules/_plan/jShop/"
     MIDCA_ROOT = thisDir + "/../../../"
-    
-    DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/logistics/domain_D.shp"
-    #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
-    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/problems.shp"
-    
-    f = open(STATE_FILE, 'r')
-    a = f.read()
-    print a
-#     STATE_FILE = "C:/Users/Zohreh/git/MIDCA/domains/jshop_domains/logistics/problems.shp"
-    
-#     path = "C:/Users/Zohreh/git/midca/modules/_plan/jShop/"
-    
+
+#   DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+#     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
+#    STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_5.shp"
+#
+#     f = open(STATE_FILE, 'r')
+#     a = f.read()
+#     print a
+#
+
     p = Popen(['java', '-jar', thisDir+'/jshop.jar', DOMAIN_FIILE,
                STATE_FILE, '1'], stdout=PIPE, stderr=STDOUT)
-    
+
+
     for line in p.stdout:
-        print line
+        if verbose > 1:
+            print line
         if(line.startswith(" ( (!")):
             plan = line
             break
-    
-    if(plan):   
-        Jshop_plan = parse(plan)
-    
+
+    if(plan):
+        Jshop_plan = graceParse(parse(plan))
+
     return Jshop_plan
+
+def Tile(coordinates):
+    return "Tx" + str(int(float(coordinates[0]))) + "y" + str(int(float(coordinates[1])))
+
+def graceParse(plan):
+    """
+
+    :return: convert grid coordinates to tile co-ordinates
+    """
+    for i,each in enumerate(plan):
+        if each[0].startswith("move"):
+            tile1 = Tile(each[2:4])
+            tile2 = Tile(each[4:])
+            each = each[:2]
+            each.append(tile1)
+            each.append(tile2)
+            plan[i] = each
+
+        elif each[0].startswith("collect") :
+            tile2 = Tile(each[3:])
+            each = each[:3]
+            each.append(tile2)
+            plan[i] = each
+
+        elif each[0].startswith("communicate"):
+            tile2 = Tile(each[4:])
+            each = each[:4]
+            each.append(tile2)
+            plan[i] = each
+    return plan
+
+
 
 def parenthetic_contents(string):
     """Generate parenthesized contents in string as pairs (level, contents)."""
@@ -50,14 +83,11 @@ def parse(str):
     for elm in elements:
         if(elm[0] == '!' and '(' not in elm):
             elm = elm[1:]
-            print elm
             action_list = elm.strip().split(' ')
             plan.append(action_list)
-    
-    return plan        
-            
-if __name__ == "__main__": 
-    jshop("tasks")
-            
-            
-            
+
+    return plan
+
+if __name__ == "__main__":
+    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/grace/plan/GraceDomain.shp",
+    "/home/sampath/Documents/git/midca/midca/domains/grace/plan/GraceProblem.shp")
