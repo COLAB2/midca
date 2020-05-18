@@ -8,7 +8,7 @@ tmp: https://github.com/TonePoems/midca/blob/zohreh-minecraft-metricff/midca/dom
 tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domains/ffdomain/minecraft
 
 ### What needs to be created
-- midca\examples\<domain-name>.py
+- midca/examples/\<domain-name\>.py
 	- Based off of a template currently being created
 		- examples_template.txt
 		
