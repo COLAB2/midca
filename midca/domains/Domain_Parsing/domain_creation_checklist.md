@@ -12,7 +12,7 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 	- Based off of a template currently being created
 		- examples_template.txt
 		
-		- Needs to regex replace "<domain-name>" within the template with the new domain name
+		- Needs to regex replace <domain-name> within the template with the new domain name
 		
 		- Based on 
 		- https://github.com/COLAB2/midca/blob/master/midca/examples/nbeacons_demo.py
@@ -25,7 +25,7 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 	- Based off of a template currently being created
 		- methods_template.txt
 		
-		- Needs to regex replace "<domain-name>" within the template with the new domain name
+		- Needs to regex replace <domain-name> within the template with the new domain name
 		
 		- Based on 
 		- https://github.com/COLAB2/midca/blob/931a0430f72083227f952e0cb57f445c15e51548/midca/domains/nbeacons/plan/methods_nbeacons.py#L126
@@ -34,7 +34,7 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 	- Based off of a template currently being created
 		- operators_template.txt
 		
-		- Needs to regex replace "<domain-name>" within the template with the new domain name
+		- Needs to regex replace <domain-name> within the template with the new domain name
 		
 		- Based on 
 		- https://github.com/COLAB2/midca/blob/931a0430f72083227f952e0cb57f445c15e51548/midca/domains/blocksworld/plan/operators.py#L81
@@ -46,7 +46,7 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 	- Add any new file types to package_data
 
 - most likely have to update all of the midca\modules with a domain specific function
-	# TODO: Update the module references to be domain specific functions
+TODO: Update the module references to be domain specific functions
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Perceive", perceive.PerfectObserver())
