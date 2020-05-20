@@ -46,26 +46,26 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 	- Add any new file types to package_data
 
 - Midca/modules with domain specific functions
-```
-# TODO: Update the module references to be domain specific functions
-# Add the modules which instantiate basic operation
-myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.GenericPyhopPlanner(
-    DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
-```
+	```
+	# TODO: Update the module references to be domain specific functions
+	# Add the modules which instantiate basic operation
+	myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+	myMidca.append_module("Perceive", perceive.PerfectObserver())
+	myMidca.append_module("Interpret", guide.UserGoalInput())
+	myMidca.append_module("Eval", evaluate.SimpleEval())
+	myMidca.append_module("Intend", intend.SimpleIntend())
+	myMidca.append_module("Plan", planning.GenericPyhopPlanner(
+		DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
+	myMidca.append_module("Act", act.SimpleAct())
+	```
 
-	- [midca/modules/simulator.py](https://github.com/TonePoems/midca/blob/master/midca/modules/simulator.py)
+	-	[midca/modules/simulator.py](https://github.com/TonePoems/midca/blob/master/midca/modules/simulator.py)
 		- 
 
-	- [midca/modules/perceive.py](https://github.com/TonePoems/midca/blob/master/midca/modules/perceive.py)
+	-	[midca/modules/perceive.py](https://github.com/TonePoems/midca/blob/master/midca/modules/perceive.py)
 		- 
 
-	- [midca/modules/guide.py](https://github.com/TonePoems/midca/blob/master/midca/modules/guide.py)
+	-	[midca/modules/guide.py](https://github.com/TonePoems/midca/blob/master/midca/modules/guide.py)
 		- Goals need to come from a state file for the domain
 
 		- Add class for goal generator
@@ -74,14 +74,14 @@ myMidca.append_module("Act", act.SimpleAct())
 		
 		- Used in the examples/\<domain-name\>.py for the interpret module being appended or inserted
 
-	- [midca/modules/evaluate.py](https://github.com/TonePoems/midca/blob/master/midca/modules/evaluate.py)
+	-	[midca/modules/evaluate.py](https://github.com/TonePoems/midca/blob/master/midca/modules/evaluate.py)
 		- 
 
-	- [midca/modules/intend.py](https://github.com/TonePoems/midca/blob/master/midca/modules/intend.py)
+	-	[midca/modules/intend.py](https://github.com/TonePoems/midca/blob/master/midca/modules/intend.py)
 		- 
 
-	- [midca/modules/planning.py](https://github.com/TonePoems/midca/blob/master/midca/modules/planning.py)
+	-	[midca/modules/planning.py](https://github.com/TonePoems/midca/blob/master/midca/modules/planning.py)
 		- 
 
-	- [midca/modules/act.py](https://github.com/TonePoems/midca/blob/master/midca/modules/act.py)
+	-	[midca/modules/act.py](https://github.com/TonePoems/midca/blob/master/midca/modules/act.py)
 		- 
