@@ -40,12 +40,12 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 		- https://github.com/COLAB2/midca/blob/931a0430f72083227f952e0cb57f445c15e51548/midca/domains/blocksworld/plan/operators.py#L81
 
 ### What needs updated
-- midca\setup.py
+- [midca/setup.py](https://github.com/TonePoems/midca/blob/master/setup.py)
 	- Add domain to packages list
 	
 	- Add any new file types to package_data
 
-- most likely have to update all of the midca\modules with a domain specific function
+- Midca/modules with domain specific functions
 ```
 # TODO: Update the module references to be domain specific functions
 # Add the modules which instantiate basic operation
@@ -59,14 +59,29 @@ myMidca.append_module("Plan", planning.GenericPyhopPlanner(
 myMidca.append_module("Act", act.SimpleAct())
 ```
 
+	- [midca/modules/simulator.py](https://github.com/TonePoems/midca/blob/master/midca/modules/simulator.py)
+		- 
 
+	- [midca/modules/perceive.py](https://github.com/TonePoems/midca/blob/master/midca/modules/perceive.py)
+		- 
 
-- midca\modules\guide.py
-	- Goals need to come from a state file for the domain
+	- [midca/modules/guide.py](https://github.com/TonePoems/midca/blob/master/midca/modules/guide.py)
+		- Goals need to come from a state file for the domain
 
-	- Add class for goal generator
-	
-	- Can use UserGoalInput for any domain
-	
-	- Used in the examples\<domain-name>.py for the interpret module being appended or inserted
+		- Add class for goal generator
+		
+		- Can use UserGoalInput for any domain
+		
+		- Used in the examples/\<domain-name\>.py for the interpret module being appended or inserted
 
+	- [midca/modules/evaluate.py](https://github.com/TonePoems/midca/blob/master/midca/modules/evaluate.py)
+		- 
+
+	- [midca/modules/intend.py](https://github.com/TonePoems/midca/blob/master/midca/modules/intend.py)
+		- 
+
+	- [midca/modules/planning.py](https://github.com/TonePoems/midca/blob/master/midca/modules/planning.py)
+		- 
+
+	- [midca/modules/act.py](https://github.com/TonePoems/midca/blob/master/midca/modules/act.py)
+		- 
