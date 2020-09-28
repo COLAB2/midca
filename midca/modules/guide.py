@@ -109,8 +109,23 @@ class MoosGoalInput(UserGoalInput):
         file.write("-------------------------------------------------------\n")
         file.close()
 
-    def run(self, cycle, verbose = 2):
+    def displayEachGoalAgendaHistory(self, GoalAgendaHistory):
+        print ("*******************Goal Agenda*******************")
+        for goal in GoalAgendaHistory:
+            print goal
 
+    def displayGoalAgendaHistory(self):
+        """
+        print goal agend a history
+        """
+        print ("******************* Goal Agenda HISTORY *******************")
+        GoalAgendaHistory = self.mem.get(self.mem.GoalAgendaHistory)
+        for eachGoalHistory in GoalAgendaHistory:
+            self.displayEachGoalAgendaHistory(eachGoalHistory)
+        print ("*******************End Goal Agenda HISTORY*******************")
+
+    def run(self, cycle, verbose = 2):
+        goals_changed = False
         world = self.mem.get(self.mem.STATES)[-1]
         #filehandler = open("states.obj", 'w')
 
@@ -138,11 +153,11 @@ class MoosGoalInput(UserGoalInput):
             # for experiment
 
 
-            g = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
+            g = goals.Goal(*["remus","ga1"], predicate = 'cleared-mines')
             #g3 = goals.Goal(*["remus","ga1"], predicate = 'cleared_mines')
             #g = goals.Goal(*["fisher4"], predicate = 'apprehended')
-            g1 = goals.Goal(*["remus","ga2"], predicate = 'cleared_mines')
-            g2 = goals.Goal(*["remus","home"], predicate = 'at_location')
+            g1 = goals.Goal(*["remus","ga2"], predicate = 'cleared-mines')
+            g2 = goals.Goal(*["remus","home1"], predicate = 'at-location')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             self.mem.get(self.mem.GOAL_GRAPH).insert(g1)
             self.mem.get(self.mem.GOAL_GRAPH).insert(g2)
@@ -152,6 +167,7 @@ class MoosGoalInput(UserGoalInput):
             #raw_input("Press Enter to start the Experiment")
             # Remove after experiment
             #UserGoalInput.run(self, cycle, verbose = 2)
+            goals_changed = True
 
             self.mem.set(self.mem.MOOS_TIME, midcatime.now())
             self.mem.set(self.mem.MOOS_SCORE, 0)
@@ -160,15 +176,20 @@ class MoosGoalInput(UserGoalInput):
         atoms = copy.deepcopy(world.atoms)
         mines_checked = []
         for atom in atoms:
-            if atom.predicate.name == "hazard_checked":
-                mines_checked.append(atom.args[0].name)
+            if atom.predicate.name == "hazard-checked":
+                mines_checked.append(atom.args[1].name)
         for atom in atoms:
-            if atom.predicate.name == "hazard_at_location" \
-                        and not atom.args[0].name in mines_checked:
+            if atom.predicate.name == "hazard-at-location" \
+                        and (not atom.args[0].name in mines_checked) and atom.args[1].name == "qroute":
                 g = []
-                g = goals.Goal(*[atom.args[0].name, atom.args[1].name], predicate='hazard_checked')
+                g = goals.Goal(*["remus", atom.args[0].name, atom.args[1].name], predicate='hazard-checked')
                 print("Midca generated a goal" + str(g))
+                prevlen = (self.mem.get(self.mem.GOAL_GRAPH).getAllGoals())
                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                afterlen = (self.mem.get(self.mem.GOAL_GRAPH).getAllGoals())
+                # check if the goal is already in the goalGraph
+                if not prevlen == afterlen:
+                    goals_changed = True
 
                 """
                 if atom.args[1].name == "qroute":
@@ -184,6 +205,11 @@ class MoosGoalInput(UserGoalInput):
                     print("Midca generated a goal" + str(g))
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                 """
+        if goals_changed:
+            #goal agenda
+            goalAgenda = self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()
+            self.mem.add(self.mem.GoalAgendaHistory, copy.deepcopy(goalAgenda))
+            self.displayGoalAgendaHistory()
 
 class GraceGoalInput(UserGoalInput):
 

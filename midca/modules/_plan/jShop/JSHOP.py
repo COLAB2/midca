@@ -89,5 +89,5 @@ def parse(str):
     return plan
 
 if __name__ == "__main__":
-    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/grace/plan/GraceDomain.shp",
-    "/home/sampath/Documents/git/midca/midca/domains/grace/plan/GraceProblem.shp")
+    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/moos_domain/plan/MoosDomain.shp",
+    "/home/sampath/Documents/git/midca/midca/domains/moos_domain/plan/MoosProblem.shp", verbose=2)

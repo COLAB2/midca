@@ -410,6 +410,318 @@ class MoosObserver(base.BaseModule):
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD", copy.deepcopy(self.world))
 
+class MoosObserverUpdated(base.BaseModule):
+    '''
+    MIDCA Module which interacts with moos to get the current states
+    of the vehicle in the moos.
+    '''
+
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        context = zmq.Context()
+
+        # establish subscriber connection for remus
+        context = zmq.Context()
+        self.subscriber_remus = context.socket(zmq.SUB)
+        self.subscriber_mine = context.socket(zmq.SUB)
+
+        # to get vehicle reports
+        self.subscriber_remus.connect("tcp://127.0.0.1:4999")
+
+        # to get mine reports
+        self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, "Hazard")
+        self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber_mine.connect("tcp://127.0.0.1:4999")
+
+        self.removed_mines = set()
+
+        self.remove_location_flag = False
+
+        self.state_change_flag = False
+
+    def compare_atoms(self, atoms, world):
+        """
+
+        :param atoms: states in the world
+        :param world: object to the world
+        :return: boolean whether states are true
+        """
+        # check if the length of the atoms are same as the world atoms
+        if not len(atoms) == len(world.atoms):
+            return False
+        else:
+            prevatoms = [str(atom) for atom in atoms]
+            currentatoms = [str(atom) for atom in world.atoms]
+            if not prevatoms == currentatoms:
+                return False
+        return True
+
+
+
+
+    def DisplayEachHistory(self, ExecutionHistory):
+        print ("----------------STATES---------------------------")
+        for atom in ExecutionHistory[0]:
+            print atom
+        print ("----------------Action---------------------------")
+        print (ExecutionHistory[1])
+
+    def DisplayExecutionHistory(self):
+        ExecutionHistory = self.mem.get(self.mem.ExecutionHistory)
+        print ("*******************EXECUTION HISTORY*******************")
+        print("")
+        for eachExecutionHistory in ExecutionHistory:
+            self.DisplayEachHistory(eachExecutionHistory)
+        print("")
+        print ("*******************END EXECUTION HISTORY*******************")
+
+    def RecordExecutionHistory(self):
+        """
+        :param world: It is an object of current world
+        :return:
+        """
+        # check the last state
+        if self.mem.get(self.mem.ExecutionHistory):
+            [prevworld, action] = self.mem.get(self.mem.ExecutionHistory)[-1]
+            if not self.compare_atoms(prevworld, self.world):
+                atoms = [atom for atom in self.world.atoms]
+                self.mem.add(self.mem.ExecutionHistory, [copy.deepcopy(atoms), []])
+                self.DisplayExecutionHistory()
+        else:
+            # if there is no last state add the current state
+            atoms = [atom for atom in self.world.atoms]
+            self.mem.add(self.mem.ExecutionHistory, [copy.deepcopy(atoms), []])
+            self.DisplayExecutionHistory()
+
+    # perfect observation
+    def observe(self):
+            return self.world.copy()
+
+    def get_the_mine_location(self, world, mine_report, states):
+        """
+
+        :param msg: the mine location
+        :param states: predicate, argument format to create world
+        :return: the states
+        """
+
+        # for mine
+        mines_checked = []
+        # for removed mine
+        mine_x,mine_y,mine_label = mine_report.split(":")[1].split(",")
+        mine_x = float(mine_x.split("=")[1])
+        mine_y = float(mine_y.split("=")[1])
+        mine_label = mine_label.split("=")[1]
+
+        # ignore already checked mines
+        for atom in world.atoms:
+            if atom.predicate.name == "hazard-checked":
+                mines_checked.append(atom.args[1].name)
+
+        #if "mine"+mine_label in mines_checked:
+        #    return
+        #    #raise Exception("Mine previously checked.")
+
+        # ignore detected mines
+        #if self.mem.get(self.mem.MINES_HISTORY) and \
+        #       mine_label in self.mem.get(self.mem.MINES_HISTORY) :
+        #    return
+
+        # GA1 and GA2 and Qroute
+        qroute_y = [-98, -48]
+        ga1_x = [-3, 44]
+        ga1_y = [-102, -56]
+        ga2_x = [124, 175]
+        ga2_y = [-102, -56]
+
+        # for mine at GA1 and GA2
+        if (mine_x>=ga1_x[0] and mine_x<=ga1_x[1]) and (mine_y>=ga1_y[0] and mine_y<=ga1_y[1]):
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard-at-location(mine" + mine_label + ",ga1)\n"
+            return states
+        elif (mine_x>=ga2_x[0] and mine_x<=ga2_x[1]) and (mine_y>=ga2_y[0] and mine_y<=ga2_y[1]):
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard-at-location(mine" + mine_label + ",ga2)\n"
+            return states
+        elif mine_y >=qroute_y[0] and mine_y<=qroute_y[1]:
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard-at-location(mine" + mine_label + ",qroute)\n"
+            return states
+        else:
+            states+= "HAZARD(mine" + mine_label + ")\n"
+            states+="hazard-at-location(mine" + mine_label + ",transit-area)\n"
+
+        # for pathway mines
+        #path_mines = self.mem.get(self.mem.MINE_LOCATION)
+        agent_location = self.mem.get(self.mem.AGENT_LOCATION)
+        x = agent_location[0]
+        y = agent_location[1]
+        direction = agent_location[2]
+
+        # for mine in the pathway
+        if (mine_x-5 < x) and (mine_x + 5 > x ) and direction > 100:
+                states+="hazard-at-pathway(mine" + mine_label+")\n"
+
+        if (mine_x-5 > x) and (mine_x + 5 < x ) and direction < 0:
+                states+="hazard-at-pathway(mine" + mine_label+")\n"
+
+        if (mine_y-5 < y) and (mine_y + 5 > y ) and direction < 100:
+                states+="hazard_at_pathway(mine" + mine_label+")\n"
+
+
+        return states
+
+    def get_the_location(self, current_position, states, vehicle):
+        """
+
+        :param states: contain predicate, argument format to create the world
+        :param vehicle: the name of the vehicle; ex : remus, fisher1 ... 4
+        :return: states
+        """
+        x,y,speed,direction,status = current_position.split(",")
+        x = float(x.split(":")[1])
+        y = float(y.split(":")[1])
+        speed = float(speed.split(":")[1])
+        direction = float(direction.split(":")[1])
+        status = status.split(":")[1]
+        #print ("Vehicle Name : {}".format(vehicle))
+        #print ("X : {}".format(x))
+        #print ("Y : {}".format(y))
+
+        # update agent and fisher location
+        if vehicle == "remus":
+            self.mem.set(self.mem.AGENT_LOCATION, [x,y,direction,status])
+            self.mem.set(self.mem.REMUS_SPEED, speed)
+
+        # locations of qroute, GA1 and GA2
+        qroute_y = [-98, -48]
+        ga1_x = [-3, 44]
+        ga1_y = [-102, -56]
+        ga2_x = [124, 175]
+        ga2_y = [-102, -56]
+
+        home = [49, 67]
+        home1 = [165, -6]
+        transit1 = [11, -3]
+        transit2 = [133, -30]
+        qroute_transit = [50, -80]
+
+        """"
+        #should check if the vehicle is in Q-route1, Q-route2, GA1, GA2
+        if y >=qroute_y[0] and y<=qroute_y[1]:
+                if (x >= qroute_transit[0]-2 and y >= qroute_transit[1]-2) and (x <= qroute_transit[0]+2 and y <= qroute_transit[1]+2):
+                    states+="at-location(" + vehicle + ",qroute-transit-area-1)\n"
+                    self.skip_n_cycles(states, 5)
+                elif (x > ga1_x[0] and x<= ga1_x[1]) and (y > ga1_y[0] and y<= ga1_y[1]) :
+                        states+="at-location(" + vehicle + ",ga1)\n"
+                        self.skip_n_cycles(states, 5)
+                elif (x > ga2_x[0] and x<= ga2_x[1]) and (y > ga2_y[0] and y <= ga2_y[1]):
+                        states+="at-location(" + vehicle + ",ga2)\n"
+                        self.skip_n_cycles(states, 5)
+                else:
+                        pass
+                        #states+="at-location(" + vehicle + ",qroute)\n"
+
+        elif (x >= transit1[0]-2 and y >= transit1[1]-2) and (x <= transit1[0]+2 and y <= transit1[1]+2):
+                states+="at-location(" + vehicle + ",transit-area-1)\n"
+                self.skip_n_cycles(states, 5)
+        elif (x >= transit2[0]-2 and y >= transit2[1]-2) and (x <= transit2[0]+2 and y <= transit2[1]+2):
+                states+="at-location(" + vehicle + ",transit-area-2)\n"
+                self.skip_n_cycles(states, 5)
+
+        elif x>home1[0]-2 and y > home1[1]-2:
+                states+="at-location(" + vehicle + ",home1)\n"
+        """
+        if x>home[0]-5 and y > home[1]-5:
+                states+="at-location(" + vehicle + ",home)\n"
+        else:
+            pass
+            #states+="at-location(" + vehicle + ",transit-area)\n"
+        if states:
+            self.remove_location_flag = True
+
+        return states
+
+    def run(self, cycle, verbose=2):
+        '''
+        Read from the subscriber in the format "X:float,Y:float,SPEED:float"
+        '''
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+
+        states = ""
+
+        '''
+        The following code gets the current X,Y,Speed and updates the location of uuv.
+        i.e., if the vehicle is in qroute or green area 1 or green area 2.
+        the else part is to remove the state after the vehicle leaves the specific location
+        '''
+
+        try:
+                time.sleep(0.1)
+                self.subscriber_remus.setsockopt(zmq.SUBSCRIBE, "Vehicle")
+                self.subscriber_remus.setsockopt(zmq.RCVTIMEO, -1)
+                # get the message from the ip address
+                [address, current_position] = self.subscriber_remus.recv_multipart(copy=False)
+                self.subscriber_remus.setsockopt(zmq.UNSUBSCRIBE, "Vehicle")
+                if str(address) == "Vehicle" and current_position:
+                    states += self.get_the_location(str(current_position), states, "remus")
+                    # skip 5 cycles to be sure
+        except:
+            print ("Remus location not recieved")
+        try:
+                while (True):
+                    [address,mine_report] = self.subscriber_mine.recv_multipart(copy=True)
+                    if mine_report:
+                        states += self.get_the_mine_location(world, str(mine_report), states)
+        except Exception as e:
+                if verbose >= 2:
+                    print ("Mine Report not received")
+                pass
+
+
+        # this is to update the world into memory
+        if not states == "":
+            self.state_change_flag = True
+            # remove all states related to at_location
+            atoms = copy.deepcopy(world.atoms)
+            if self.remove_location_flag:
+                self.remove_location_flag = False
+                for atom in atoms:
+                    if atom.predicate.name == "at-location":
+                        world.atoms.remove(atom)
+                        self.world.atoms.remove(atom)
+            if verbose >= 1:
+                print(states)
+                pass
+            stateread.apply_state_str(world, states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, world)
+
+        else:
+            self.mem.add(self.mem.STATES, world)
+        states = self.mem.get(self.mem.STATES)
+        if states and len(states) > 3:
+            # print "trimmed off 200 old stale states"
+            states = states[2:]
+            self.mem.set(self.mem.STATES, states)
+        # End Memory Usage Optimization
+
+        if verbose >= 1:
+            print "World observed."
+
+        # record execution history
+        self.RecordExecutionHistory()
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+
 class MoosObserverWithFishingVessels(base.BaseModule):
     '''
     MIDCA Module which interacts with moos to get the current states
@@ -923,7 +1235,7 @@ class MoosObserverMultiagent(base.BaseModule):
 
         # locations of qroute, GA1 and GA2
         qroute_y = [-162, -83]
-        ga1 = [-47, -102git ]
+        ga1 = [-47, -102]
         ga2 = [164, -103]
         home = [238, 83]
         transit1 = [-25, -43]

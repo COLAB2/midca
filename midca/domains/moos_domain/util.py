@@ -3,69 +3,107 @@ A collection of functions that are domain specific, which different MIDCA compon
 '''
 import os,copy
 from midca.modules._plan import pyhop
-
+from midca.modules._plan.asynch import asynch_updated_moos
 
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
-
-    elif goal1['predicate'] == 'apprehended' and goal2['predicate'] != 'apprehended':
+    elif goal1['predicate'] == 'hazard-checked' and goal2['predicate'] != 'hazard-checked':
         return -1
-    elif goal1['predicate'] != 'apprehended' and goal2['predicate'] == 'apprehended':
+    elif goal1['predicate'] != 'hazard-checked' and goal2['predicate'] == 'hazard-checked':
         return 1
-
-
-
-    elif goal1.args[1] == "qroute1" and goal2.args[1] != "qroute1":
-            return -1
-    elif goal1.args[1] != "qroute1" and goal2.args[1] == "qroute1":
-            return 1
-
-
-    elif goal1.args[1] == "ga3" and goal2.args[1] != "ga3":
-            return -1
-    elif goal1.args[1] != "ga3" and goal2.args[1] == "ga3":
-            return 1
-
-
-    elif goal1['predicate'] == 'reported' and goal2['predicate'] != 'reported':
-        return -1
-    elif goal1['predicate'] != 'reported' and goal2['predicate'] == 'reported':
-        return 1
-
-
-
-
-    elif goal1['predicate'] == 'hazard_checked' and goal2['predicate'] != 'hazard_checked':
-        return -1
-    elif goal1['predicate'] != 'hazard_checked' and goal2['predicate'] == 'hazard_checked':
-        return 1
-
-    elif goal1.args[1] == "ga1" and goal2.args[1] != "ga1":
-            return -1
-    elif goal1.args[1] != "ga1" and goal2.args[1] == "ga1":
-            return 1
-
-    elif len(goal1.args) ==2  and len(goal2.args) == 2 :
-        if goal1.args[1] == "way_point" and goal2.args[1] != "way_point":
-            return -1
-        elif goal1.args[1] != "way_point" and goal2.args[1] == "way_point":
-            return 1
-
-    elif len(goal1.args) ==2 and len(goal2.args) !=2:
-        if goal1.args[1] == "way_point":
-            return -1
-
-    elif len(goal2.args) ==2 and len(goal1.args) !=2:
-        if goal2.args[1] == "way_point":
-            return 1
 
     return 0
 
 def display(world):
     print(world)
     pass
+
+def monitor(world, plan, mem, plans):
+    if plan:
+        converttomidcaplan = lambda plan: [action.midcaAction for action in plan if not(action.status == 2)]
+
+        actions = converttomidcaplan(plan)
+
+        for atom in world.atoms:
+            if atom.predicate.name == "hazard-at-pathway":
+                if actions[0].op == "avoid":
+                    return True, False
+                return False, False
+
+            elif atom.predicate.name == "hazard-at-location":
+                if actions[0].op == "do-clear" and \
+                        actions[0].args[1] == atom.args[1].name:
+                    action = ["remove", atom.args[0].name, atom.args[1].name, "remus"]
+                    midcaAction = plans.Action(action[0], *list(action[1:]))
+                    # insertion index
+                    index = 0
+                    for i, action in enumerate(plan):
+                        if action.midcaAction.op == "do-clear" and atom.args[1].name == action.midcaAction.args[1]:
+                            index = i
+                            break
+                    plan.actions.insert(i,asynch_updated_moos.RemoveMine(mem, midcaAction))
+                    return True, True
+
+    return True, False
+
+
+
+def jshop2_state_from_world(world, STATE_FILE, name = "state"):
+    import os
+    thisDir = os.path.dirname(os.path.realpath(__file__))
+#     MIDCA_ROOT = thisDir + "/../"
+# #     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
+#     STATE_FILE = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/problem"
+    f = open(STATE_FILE, 'w')
+    f.write('\n')
+    f.write("(defproblem problem UMC (\n")
+    f.write("\n")
+
+    for atom in world.atoms:
+        predicate = atom.predicate.name
+        args = []
+        for arg in atom.args:
+            args.append(arg.name)
+
+        arguments = ""
+        # iterate through arguments and make them as strings
+        for each in args:
+            arguments += " " + each
+
+        f.write("("+predicate + arguments +")\n")
+
+    f.write(")\n")
+    f.close()
+
+def jshop2_tasks_from_goals(goals,pyhopState, STATE_FILE):
+    import os
+    thisDir =  os.path.dirname(os.path.realpath(__file__))
+#     MIDCA_ROOT = thisDir + "/../"
+# #     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problem"
+#     STATE_FILE = "C:/Users/Zohreh/git/MIDCA/modules/_plan/jShop/problem"
+    f = open(STATE_FILE, 'a')
+
+    alltasks = []
+    f.write(" ((achieve-goals (list\n")
+    for goal in goals:
+        #extract predicate
+        if 'predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['predicate'])
+        elif 'Predicate' in goal.kwargs:
+            predicate = str(goal.kwargs['Predicate'])
+        elif goal.args:
+            predicate = str(goal.args[0])
+        else:
+            raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
+        args = [str(arg) for arg in goal.args]
+        if args[0] == predicate:
+            args.pop(0)
+        arguments = " ".join(args)
+        f.write("(" + predicate + " " + arguments+")\n")
+    f.write(" ))))")
+    f.close()
 
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)

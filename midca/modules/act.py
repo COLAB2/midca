@@ -84,8 +84,26 @@ class AsynchronousMoosAct(base.BaseModule):
         self.mem = mem
         self.world = world
 
+    def DisplayEachHistory(self, ExecutionHistory):
+        print ("----------------STATES---------------------------")
+        for atom in ExecutionHistory[0]:
+            print atom
+        print ("----------------Action---------------------------")
+        print (ExecutionHistory[1])
+        print ("----------------*******---------------------------")
+
+    def DisplayExecutionHistory(self):
+        ExecutionHistory = self.mem.get(self.mem.ExecutionHistory)
+        print ("*******************EXECUTION HISTORY*******************")
+        print("")
+        for eachExecutionHistory in ExecutionHistory:
+            self.DisplayEachHistory(eachExecutionHistory)
+        print("")
+        print ("*******************END EXECUTION HISTORY*******************")
+
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
+        ExecutionHistory = self.mem.get(self.mem.ExecutionHistory)[-1]
         self.verbose = verbose
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
@@ -112,13 +130,15 @@ class AsynchronousMoosAct(base.BaseModule):
             print "Plan", plan, "has already been completed"
             return
         #ideally MIDCA should check for other valid plans, but for now it doesn't.
-
+        current_action = None
         while i < len(plan):
             action = plan[i]
             try:
                 if action.status != asynch.FAILED and action.status != asynch.COMPLETE:
                     completed = action.check_complete()
                     if completed:
+                        self.mem.add(self.mem.ACTIONS, [action.midcaAction])
+                        self.world.apply_asynch_midca_action(action.midcaAction)
                         world.apply_asynch_midca_action(action.midcaAction)
                         if verbose >= 2:
                             print "Action", action, "completed"
@@ -132,8 +152,9 @@ class AsynchronousMoosAct(base.BaseModule):
             try:
                 if action.status == asynch.NOT_STARTED:
                     if verbose >= 2:
-                        print "Beginning action execution for", action
+                        print "Begining action execution for", action
                     action.execute()
+
             except AttributeError:
                 if verbose >= 1:
                     print "Action", action, "Does not seem to have a valid execute() ",
@@ -144,7 +165,14 @@ class AsynchronousMoosAct(base.BaseModule):
             elif not action.blocks:
                 i += 1
             else:
+                current_action = plan[i]
                 break
+
+        # representing execution history
+        if ExecutionHistory and current_action:
+            if not ExecutionHistory[1]:
+                ExecutionHistory[1] = copy.deepcopy(current_action.midcaAction)
+                self.DisplayExecutionHistory()
 
 class SimpleAct(base.BaseModule):
 

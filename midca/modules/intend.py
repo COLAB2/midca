@@ -55,6 +55,75 @@ class SimpleIntend(base.BaseModule):
                     print goal,
                 print
 
+class SimpleIntendSelectAll(base.BaseModule):
+    def displayEachGoalTrajectory(self, GoalTrajectory):
+        print ("*******************STATES*******************")
+        for atom in GoalTrajectory[0]:
+            print atom
+        print ("*******************GOALS*******************")
+        for goal in GoalTrajectory[1]:
+            print goal
+        print("**********************************************")
+
+    def displayGoalTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Trajectory*******************")
+        GoalTrajectory = self.mem.get(self.mem.GoalTrajectory)
+        for eachGoalTrajectory in GoalTrajectory:
+            self.displayEachGoalTrajectory(eachGoalTrajectory)
+        print ("*******************End Goal Trajectory*******************")
+
+
+    def run(self, cycle, verbose = 2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOALGRAPH",copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getAllGoals()
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS) :
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                self.mem.set(self.mem.CURRENT_GOALS, [goals])
+            else:
+                goals = []
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS",goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            #add it to goaltrajectory for representation
+            world = self.mem.get(self.mem.STATES)[-1]
+            get_atoms = [atom for atom in world.atoms]
+            self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
+            self.displayGoalTrajectory()
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
+
 class SimpleIntendFlairs(base.BaseModule):
 
     def __init__(self, deadline, seed , boost_seed):

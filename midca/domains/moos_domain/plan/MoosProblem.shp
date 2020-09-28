@@ -1,8 +1,21 @@
 
 (defproblem problem UMC (
+
+(hazard-at-location mine2 qroute)
+(at-location remus qroute-transit-area-1)
 (enabled remus)
-(at-location remus home)
+(hazard-checked remus mine36 ga1)
+(hazard-checked remus mine38 ga1)
+(hazard-checked remus mine37 ga1)
+(cleared-mines remus ga1)
+(hazard-checked remus mine1 ga1)
+(hazard-checked remus mine12 transit-area)
+(hazard-checked remus mine9 ga1)
+(hazard-at-location mine12 transit-area)
 )
  ((achieve-goals (list
-(cleared-mines remus GA1)
+(hazard-checked remus mine2 qroute)
+(cleared-mines remus ga1)
+(cleared-mines remus ga2)
+(at-location remus home1)
  ))))

@@ -100,6 +100,12 @@ class Memory:
 	REMUS_SPEED = "__Speed"
 	apprehended = "__apprehend"
 
+	# Problem Representation
+	ExecutionHistory = "__stateActionPair"
+	GoalAgendaHistory = "__GoalAgenda"
+	PlanTrajectory = "__plan"
+	GoalTrajectory = "__goaltrajectory"
+
 	def __init__(self, args = {}):
 		self.knowledge = {}
 		self.update(args)

@@ -517,6 +517,7 @@ class JSHOPPlannerAsync(base.BaseModule):
                  domain_file,
                  state_file,
                  async,
+                 monitor = False,
                  extinguishers = False,
                  mortar = False):
 
@@ -525,6 +526,7 @@ class JSHOPPlannerAsync(base.BaseModule):
         self.domain_file = domain_file
         self.state_file= state_file
         self.async = async
+        self.monitor = monitor
 
         self.validate_plan = lambda plan: self.async.FAILED not in [action.status for action in plan]
 
@@ -537,6 +539,39 @@ class JSHOPPlannerAsync(base.BaseModule):
             traceback.print_exc()
             self.working = False
 
+    def displayEachPlanTrajectory(self, PlanTrajectory):
+        print ("******************* Goals *******************")
+        for goal in PlanTrajectory[0]:
+            print goal
+        print ("******************* Plans *******************")
+        for plan in PlanTrajectory[1]:
+            print plan
+
+    def displayPlanTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Plan Trajectory*******************")
+        PlanTrajectory = self.mem.get(self.mem.PlanTrajectory)
+        for eachPlanTrajectory in PlanTrajectory:
+            self.displayEachPlanTrajectory(eachPlanTrajectory)
+        print ("*******************End Plan Trajectory *******************")
+
+    def compareGoals(self, goals):
+        """
+        :return: boolean if the goals are true
+        """
+        if self.mem.get(self.mem.PlanTrajectory):
+            prevgoals = self.mem.get(self.mem.PlanTrajectory)[-1][0]
+            prevgoals = [str(goal) for goal in prevgoals]
+            goals = [str(goal) for goal in goals]
+            if goals == prevgoals:
+                return True
+            else:
+                return False
+        return True
+
+
     def get_old_plan(self, goals, verbose = 2):
         try:
             plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -547,8 +582,25 @@ class JSHOPPlannerAsync(base.BaseModule):
                 # real world
                 # we should also check if the plan still
                 # achieves our goals
+
+
                 if self.validate_plan:
                     valid = self.validate_plan(plan) and self.world.async_plan_correct(self.converttomidcaplan(plan))
+                    # check monitors
+                    if valid:
+                        valid, changed = self.monitor(self.world, plan, self.mem, plans)
+                        if changed:
+                            # plan representation
+                            midcaPlan = [action.midcaAction for action in plan]
+                            self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+                            self.displayPlanTrajectory()
+
+                        # to record suspended goals
+                        if not self.compareGoals(goals):
+                            midcaPlan = [action.midcaAction for action in self.converttomidcaplan(plan)]
+                            self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+                            self.displayPlanTrajectory()
+
                     if valid:
                         if verbose >= 2:
                             print "Old plan found that tests as valid:", plan
@@ -581,7 +633,7 @@ class JSHOPPlannerAsync(base.BaseModule):
 
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
-        world = self.world
+        world = self.mem.get(self.mem.STATES)[-1]
         try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
@@ -645,6 +697,10 @@ class JSHOPPlannerAsync(base.BaseModule):
             #change from jshop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
             asynchPlan = self.async.asynch_plan(self.mem, midcaPlan)
+
+            # plan representation
+            self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+            self.displayPlanTrajectory()
 
             if verbose >= 1:
                 print "Planning complete."

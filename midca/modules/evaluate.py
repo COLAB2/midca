@@ -212,6 +212,40 @@ class SimpleEval_moos(base.BaseModule):
         file.write("-------------------------------------------------------\n")
         file.close()
 
+    def displayEachGoalAgendaHistory(self, GoalAgendaHistory):
+        print ("*******************Goal Agenda *******************")
+        for goal in GoalAgendaHistory:
+            print goal
+
+    def displayGoalAgendaHistory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Agenda HISTORY*******************")
+        GoalAgendaHistory = self.mem.get(self.mem.GoalAgendaHistory)
+        for eachGoalHistory in GoalAgendaHistory:
+            self.displayEachGoalAgendaHistory(eachGoalHistory)
+        print ("*******************End Goal Agenda HISTORY*******************")
+
+    def displayEachGoalTrajectory(self, GoalTrajectory):
+        print ("*******************STATES*******************")
+        for atom in GoalTrajectory[0]:
+            print atom
+        print ("*******************GOALS*******************")
+        for goal in GoalTrajectory[1]:
+            print goal
+        print("**********************************************")
+
+    def displayGoalTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Trajectory*******************")
+        GoalTrajectory = self.mem.get(self.mem.GoalTrajectory)
+        for eachGoalTrajectory in GoalTrajectory:
+            self.displayEachGoalTrajectory(eachGoalTrajectory)
+        print ("*******************End Goal Trajectory*******************")
+
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
 
@@ -271,6 +305,16 @@ class SimpleEval_moos(base.BaseModule):
             if verbose >= 2:
                 print "No current goals. Skipping eval"
 
+        if goals_changed:
+            #goal agenda
+            goalAgenda = self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()
+            self.mem.add(self.mem.GoalAgendaHistory, copy.deepcopy(goalAgenda))
+            self.displayGoalAgendaHistory()
+
+            #goal trajectory
+            get_atoms = [atom for atom in world.atoms]
+            self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), []])
+            self.displayGoalTrajectory()
         if trace and goals_changed: trace.add_data("GOALS",goals)
 
 

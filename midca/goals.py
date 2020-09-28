@@ -283,6 +283,7 @@ class GoalGraph:
         visited = set()
         goals = []
         nodes = list(self.roots)
+        nodes.sort(key = lambda x: x.id)
         while nodes:
             next = nodes.pop(0)
             if next in visited:
@@ -290,7 +291,9 @@ class GoalGraph:
             else:
                 visited.add(next)
             goals.append(next.goal)
-            for child in next.children:
+            children = list(next.children)
+            children.sort(key = lambda x: x.id)
+            for child in children:
                 nodes.append(child)
         return goals
 
