@@ -36,23 +36,6 @@ tmp: https://github.com/COLAB2/midca/tree/zohreh-minecraft-metricff/midca/domain
 		
 		- Needs to regex replace "\<domain-name\>" within the template with the new domain name
 
-- midca/domains/\<domain-name\>/plan/methods.py
-	- Based off of a template currently being created
-		- methods_template.txt
-		
-		- Needs to regex replace "\<domain-name\>" within the template with the new domain name
-		
-		- Based on 
-		- https://github.com/COLAB2/midca/blob/931a0430f72083227f952e0cb57f445c15e51548/midca/domains/nbeacons/plan/methods_nbeacons.py#L126
-
-- midca/domains/\<domain-name\>/plan/operators.py
-	- Based off of a template currently being created
-		- operators_template.txt
-		
-		- Needs to regex replace "\<domain-name\>" within the template with the new domain name
-		
-		- Based on 
-		- https://github.com/COLAB2/midca/blob/931a0430f72083227f952e0cb57f445c15e51548/midca/domains/blocksworld/plan/operators.py#L81
 
 ### What needs updated
 - [midca/setup.py](https://github.com/TonePoems/midca/blob/master/setup.py)
