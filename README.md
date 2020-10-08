@@ -1,6 +1,6 @@
 # MIDCA: The Metacognitive Integrated Dual-Cycle Architecture.
 
-MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dual-Cycle Architecture (https://drive.google.com/file/d/1l41RykGt-J5UZAlZcB2vlTmiD_GdaOEz/view?usp=sharing)
+MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dual-Cycle Architecture (https://tinyurl.com/midcadoc)
 
 1. MIDCA is written for python 2.7; currently it will not run with other python versions.
 
@@ -26,6 +26,6 @@ MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dua
 4. To see how the MIDCA instantiation used in `cogsci_demo.py` is created and populated, see `examples/cogsci_demo.py`
 
 5. For an overview of MIDCA and more details about how it works, see the github wiki
-   (https://github.com/COLAB2/midca/wiki) and/or docs folder.
+   (https://github.com/COLAB2/midca/wiki/MIDCA-Wiki-Home) and/or docs folder.
 
 6. Questions and comments are welcome, please email wsri-midca-help@wright.edu
