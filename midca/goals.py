@@ -142,13 +142,13 @@ class GoalGraph:
         allNodes = self._getAllNodes()
         if delNode in self.roots:
             self.roots.remove(delNode)
-            for node in allNodes:
-                if delNode in node.parents:
-                    node.parents.remove(delNode)
-                    if not node.parents and node != delNode:
-                        self.roots.add(node)
-                if delNode in node.children:
-                    node.children.remove(delNode)
+        for node in allNodes:
+            if delNode in node.parents:
+                node.parents.remove(delNode)
+                if not node.parents and node != delNode:
+                    self.roots.add(node)
+            if delNode in node.children:
+                node.children.remove(delNode)
 
     def remove(self, goal):
         delNode = self._getGoalNode(goal)
