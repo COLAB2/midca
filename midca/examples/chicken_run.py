@@ -10,7 +10,7 @@ import inspect, os
 '''
 This script runs a simple version of MIDCA in a trivial domain where chickens cross the road.
 
-https://github.com/mclumd/MIDCA/wiki/Running-Example-Scripts
+https://github.com/COLAB2/MIDCA/wiki/Running-Example-Scripts
 '''
 
 # Setup
