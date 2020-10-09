@@ -75,6 +75,15 @@ class SimpleAct(base.BaseModule):
     MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
     To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
     '''
+    def __init__(self, asynch_actions=None):
+        self.asynch_actions = asynch_actions
+        self.current_asynch_action = None
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
 
     #returns the plan that achieves the most current goals, based on simulation.
     def get_best_plan(self, world, goals, verbose):
@@ -103,16 +112,56 @@ class SimpleAct(base.BaseModule):
                 print "Plan:", str(plan)
                 print "Goals achieved:", [str(goal) for goal in goalsAchieved]
         return plan
-        
+
+    def manage_asynch_action(self, plan, asynchAction, midcaaction, verbose=1):
+        """
+
+        :param plan: midcaplan
+        :param action: corresponding action to midcaaction
+        :return:
+        """
+        #asynchAction = self.asynch_actions.asynch_action(self.mem, action)
+        # there exists a corresponding asynchronous action
+        if asynchAction:
+            # check if the action has started or not
+            if asynchAction.status == self.asynch_actions.NOT_STARTED:
+                asynchAction.execute()
+                self.mem.add(self.mem.ACTIONS, [])
+                """
+                # print statements
+                if verbose == 1:
+                    print "Action selected:", action
+                elif verbose >= 2:
+                    if len(plan) > 5:
+                        # print just the next 3 actions of the plan
+                        print "Selected action", action, "from plan:\n"
+                        if verbose >= 3:
+                            for a in plan:
+                                print "  "+str(a)
+                    else:
+                        # print the whole plan
+                        print "Selected action", action, "from plan:\n", plan
+
+                """
+            if asynchAction.status == self.asynch_actions.IN_PROGRESS:
+                asynchAction.check_complete()
+
+                #print statements
+            if asynchAction.status == self.asynch_actions.COMPLETE:
+                #self.mem.add(self.mem.ACTIONS, [midcaaction])
+                self.current_asynch_action= None
+                self.world.apply_midca_action(midcaaction)
+                plan.advance()
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except :
             goals = []
-	plan = self.get_best_plan(world, goals, verbose)
+        plan = self.get_best_plan(world, goals, verbose)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
@@ -127,6 +176,15 @@ class SimpleAct(base.BaseModule):
                     print "Plan to achieve goals has already been completed. Taking no action."
                 self.mem.add(self.mem.ACTIONS, [])
             else:
+                # actions that need to do some functionality
+                if self.asynch_actions:
+                    if not self.current_asynch_action:
+                        self.current_asynch_action = self.asynch_actions.asynch_action(self.mem, action)
+
+                    if self.current_asynch_action:
+                        self.manage_asynch_action(plan, self.current_asynch_action, action, verbose)
+                        return
+
                 if verbose == 1:
                     print "Action selected:", action
                 elif verbose >= 2:
@@ -152,9 +210,9 @@ class SimpleAct(base.BaseModule):
             if verbose >= 1:
                 print "MIDCA will not select an action this cycle."
             self.mem.add(self.mem.ACTIONS, [])
-            if goals:
-                for g in goals:
-                    self.mem.get(self.mem.GOAL_GRAPH).remove(g)
+            #if goals:
+            #    for g in goals:
+            #        self.mem.get(self.mem.GOAL_GRAPH).remove(g)
 
             if trace: trace.add_data("ACTION", None)
 
@@ -254,7 +312,7 @@ class NBeaconsSimpleAct(base.BaseModule):
     MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
     To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
     '''
-    
+
     def get_first_plan(self, goals):
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         plans = goalGraph.allMatchingPlans(goals)
@@ -269,7 +327,7 @@ class NBeaconsSimpleAct(base.BaseModule):
                 return p
         if self.verbose >= 1: print "Could not find an unfinished plan in get_first_plan() for goals "+str(goals)
         return None
-        
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         max_plan_print_size = 10
@@ -314,7 +372,7 @@ class NBeaconsSimpleAct(base.BaseModule):
                                 print "   *"+str(a)
                             else:
                                 print "  "+str(a)
-                                
+
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
 
@@ -325,4 +383,3 @@ class NBeaconsSimpleAct(base.BaseModule):
             self.mem.add(self.mem.ACTIONS, [])
 
             if trace: trace.add_data("ACTION", None)
-

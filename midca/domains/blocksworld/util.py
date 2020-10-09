@@ -25,6 +25,19 @@ def preferApprehend(goal1, goal2):
         return 1
     return 0
 
+def preferCommunication(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'committed' and goal2['predicate'] != 'committed':
+        return -1
+    elif goal1['predicate'] != 'committed' and goal2['predicate'] == 'committed':
+        return 1
+    elif goal1['predicate'] == 'rejected' and goal2['predicate'] != 'rejected':
+        return -1
+    elif goal1['predicate'] != 'rejected' and goal2['predicate'] == 'rejected':
+        return 1
+    return 0
+
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -182,6 +195,12 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             alltasks.append(("put_out", args[0]))
         elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
             alltasks.append(("catch_arsonist", args[0]))
+        elif predicate == "committed" or predicate == "rejected" or predicate == "requested"\
+                or predicate == "!committed":
+            negate = False
+            if 'negate' in goal and goal['negate'] == True:
+                negate = True
+            alltasks.append(("communicated", args[0], args[1], args[2], predicate, negate))
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     if blkgoals.pos:

@@ -1,8 +1,9 @@
 from midca.modules._robot_world import world_repr
-from midca import rosrun, midcatime, base
+from midca import rosrun, midcatime, base, goals
+from midca.worldsim import domainread, stateread
 import copy
 import os
-import socket
+import socket, zmq
 try:
 	# baxter robot requirements
 	from midca.examples import ObjectDetector
@@ -124,6 +125,7 @@ class PerfectObserver(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         world = self.observe()
+        print (world)
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
@@ -145,6 +147,150 @@ class PerfectObserver(base.BaseModule):
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
+
+class RecieveRequests(base.BaseModule):
+
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+    def __init__(self, publish, subscribe, name , other_agent_name):
+        self.name = name
+        self.other_agent_name = other_agent_name
+
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUB)
+        self.publisher.bind(publish)
+
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.setsockopt(zmq.RCVTIMEO, 5)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber.connect(subscribe)
+
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        self.mem.set(self.mem.CONNECTIONS, {"publish" : self.publisher,
+                                                        "subscribe": self.subscriber})
+
+    def goal_to_parsable_construct(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # convert commas in goal to ":" because of problem in parsing predicates by stateread
+        goal = str(goal).replace(",",";")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("(","[")
+        goal = goal.replace(")","]")
+
+        return goal
+
+    def run(self, cycle, verbose = 2):
+        states = ""
+        # get the message from the ip address
+        try:
+            message = self.subscriber.recv()
+            message = message.split(":")
+            performative = message[0]
+            goaltext = message[1]
+
+            if performative == "achieve":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "reject":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "commit":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "tell":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                states += "achieved(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+
+                    # this is to update the world into memory
+            if not states == "":
+                if verbose >= 1:
+                    print ("Updated States \n")
+                    print(states)
+                stateread.apply_state_str(self.world, states)
+                self.mem.add(self.mem.STATES, self.world)
+
+            # trace
+            trace = self.mem.trace
+            if trace:
+                trace.add_module(cycle, self.__class__.__name__)
+                trace.add_data("WORLD",copy.deepcopy(self.world))
+
+        except zmq.ZMQError as e:
+            if e.errno == zmq.EAGAIN:
+                pass # no message was ready (yet!)
+
+class RecieveRemoteMidcaWorld(base.BaseModule):
+
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+    def __init__(self, publish, subscribe):
+
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.PULL)
+        self.subscriber.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber.setsockopt(zmq.CONFLATE, 1)
+        self.subscriber.connect(subscribe)
+
+
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        # get the message from the ip address
+        try:
+            world = self.subscriber.recv_pyobj()
+            world = world.copy()
+            #recv_world_atoms, world_atoms = world.diff(self.world)
+            #for atom in world_atoms:
+            #    world.add_atom(atom)
+            copy_world = self.world.copy()
+            predicates = ["informed", "requested", "committed",
+                          "achieved", "exists", "rejected"]
+            for atom in copy_world.atoms:
+                if not atom.predicate.name in predicates:
+                    self.world.remove_atom(atom)
+
+            for atom in world.atoms:
+                self.world.add_fact(atom.predicate.name, [arg.name for arg in atom.args])
+
+        except zmq.ZMQError as e:
+            if e.errno == zmq.EAGAIN:
+                pass # no message was ready (yet!)
+
 
 class PerfectObserverWithThief(base.BaseModule):
 
@@ -209,7 +355,113 @@ class PerfectObserverWithThief(base.BaseModule):
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
         
-        
+class UserGoalInput(base.BaseModule):
+
+    '''
+    MIDCA module that allows users to input goals in a predicate representation.
+    These will be stored in MIDCA state
+    Note that this class only allows for simple goals with only predicate and argument information.
+    It does not currently check to see whether the type or number of arguments is appropriate.
+    '''
+    def __init__(self, name):
+        self.name = name
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    def parseGoal(self, txt):
+        if not txt.endswith(")"):
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+        try:
+            if txt.startswith('!'):
+                negate = True
+                txt = txt[1:]
+            else:
+                negate = False
+            predicateName = txt[:txt.index("(")]
+            args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+            #use on-table predicate
+            if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
+                predicateName = 'on-table'
+                args = args[:1]
+            if negate:
+                goal = goals.Goal(*args, predicate = predicateName, negate = True)
+            else:
+                goal = goals.Goal(*args, predicate = predicateName)
+            return goal
+        except Exception:
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+
+    def objectNames(self, world):
+        return world.objects.keys()
+
+    def predicateNames(self, world):
+        return world.predicates.keys()
+
+    def validGoal(self, goal, world):
+        try:
+            for arg in goal.args:
+                if arg not in self.objectNames(world):
+                    return False
+            return goal['predicate'] in self.predicateNames(world)
+        except Exception:
+            return False
+
+    def goal_to_parsable_construct(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # convert commas in goal to ":" because of problem in parsing predicates by stateread
+        goal = str(goal).replace(",",";")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("(","[")
+        goal = goal.replace(")","]")
+
+        return goal
+
+    def run(self, cycle, verbose = 2):
+        if verbose == 0:
+            return #if skipping, no user input
+        goals_entered = []
+        states = ""
+        while True:
+            val = raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
+            if not val:
+                break
+            elif val == 'q':
+                break
+            goaltext = val.strip()
+            goal = self.parseGoal(val.strip())
+            if goal:
+                if not self.validGoal(goal, self.world):
+                    print str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world)
+                else:
+                    #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                    print "Goal Recieved."
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "exists(human)\n"
+                    states += "GOAL(" +goal + ")\n"
+                    states += "requested(human," +self.name+ "," +goal+")\n"
+
+        # this is to update the world into memory
+        if not states == "":
+            if verbose >= 1:
+                print ("Updated States \n")
+                print(states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, self.world)
+
+        # trace
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD",copy.deepcopy(self.world))
 
 class MAReport:
 

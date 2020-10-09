@@ -1,0 +1,36 @@
+BLOCK(A_)
+BLOCK(B_)
+BLOCK(C_)
+BLOCK(table)
+BLOCK(D_)
+ARSONIST(Gui Montag)
+AGENT(human)
+AGENT(self)
+AGENT(morpheus)
+AGENT(neo)
+STATUS(achieved)
+STATUS(accepted)
+STATUS(achieve)
+STATUS(denied)
+
+on(B_, A_)
+on(D_, B_)
+on-table(A_)
+on-table(C_)
+
+block(A_)
+block(B_)
+block(C_)
+triangle(D_)
+table(table)
+
+clear(C_)
+clear(D_)
+arm-empty()
+
+
+
+free(Gui Montag)
+exists(self)
+exists(neo)
+exists(morpheus)

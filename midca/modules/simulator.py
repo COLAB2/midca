@@ -1,7 +1,8 @@
 import sys, random
-from midca import worldsim, goals, base
+from midca import worldsim, goals, base, plans
 from midca.domains.nbeacons import nbeacons_util
-import copy 
+import copy
+import zmq, time
 
 class MidcaActionSimulator:
 
@@ -23,6 +24,128 @@ class MidcaActionSimulator:
                     if verbose >= 2:
                         print "simulating MIDCA action:", action
                     self.world.apply_midca_action(action)
+                else:
+                    if verbose >= 1:
+                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+        else:
+            if verbose >= 2:
+                print "No actions selected this cycle by MIDCA."
+
+class RemoteMidcaActionSimulator:
+
+    def __init__(self, publish, subscribe):
+
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.setsockopt(zmq.RCVTIMEO, 1)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber.bind(subscribe)
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+
+    def create_action(self, text):
+        """
+        :param text: create action from text
+        :return: midcaAction
+        """
+        # convert drive(agent1,agent2) text to actual action
+        # replace braces wtih "," and then split
+        text = text.replace(" ", "").replace("(",",").replace(")","")
+        action_text = text.split(",")
+        action = plans.Action(action_text[0], *list(action_text[1:]))
+        return action
+
+
+    def run(self, cycle, verbose = 1):
+        verbose = 1
+        actions = []
+        try:
+            message = self.subscriber.recv()
+            actions_text = message.split(";")
+            for action_text in actions_text:
+                actions.append(self.create_action(message))
+        except zmq.ZMQError as e:
+            if e.errno == zmq.EAGAIN:
+                pass # no message was ready (yet!)
+
+        if actions:
+            for action in actions:
+                if self.world.midca_action_applicable(action):
+                    if verbose >= 1:
+                        print "simulating MIDCA action:", action
+                    self.world.apply_midca_action(action)
+                else:
+                    if verbose >= 1:
+                        print "MIDCA-selected action", action, "illegal in current world state. Skipping"
+        else:
+            if verbose >= 2:
+                print "No actions selected this cycle by MIDCA."
+
+class SendWorld:
+
+    def __init__(self, publish, subscribe):
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUSH)
+        self.publisher.setsockopt(zmq.CONFLATE, 1)
+        self.publisher.bind(publish)
+
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        self.publisher.send_pyobj(self.world)
+
+class SendRemoteMidcaActionSimulator:
+
+    def __init__(self, publish, subscribe):
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUB)
+        self.publisher.connect(publish)
+
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.connect(subscribe)
+        self.subscriber.setsockopt(zmq.RCVTIMEO, -1)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+
+    def create_action(self, text):
+        """
+        :param text: create action from text
+        :return: midcaAction
+        """
+        # convert drive(agent1,agent2) text to actual action
+        # replace braces wtih "," and then split
+        text = text.replace("(",",").replace(")","")
+        action_text = text.split(",")
+        action = plans.Action(action_text[0], *list(action_text[1:]))
+        return action
+
+
+    def run(self, cycle, verbose = 2):
+        try:
+            #get selected actions for this cycle. This is set in the act phase.
+            actions = self.mem.get(self.mem.ACTIONS)[-1]
+        except TypeError, IndexError:
+            if verbose >= 1:
+                print "Simulator: no actions selected yet by MIDCA."
+            return
+        if actions:
+            for action in actions:
+                if self.world.midca_action_applicable(action):
+                    if verbose >= 2:
+                        print "simulating MIDCA action:", action
+                    self.publisher.send_string(str(action))
+                    time.sleep(1)
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"

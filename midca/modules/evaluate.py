@@ -84,10 +84,12 @@ class SimpleEval(base.BaseModule):
             goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
             for goal in goals:
                 goalGraph.remove(goal)
+                print("REMOVED GOAL : ", str(goal))
                 if trace: trace.add_data("REMOVED GOAL", goal)
                 goals_changed = True
             numPlans = len(goalGraph.plans)
             goalGraph.removeOldPlans()
+            self.mem.set(self.mem.GOAL_GRAPH, goalGraph)
             newNumPlans = len(goalGraph.plans)
             if numPlans != newNumPlans and verbose >= 1:
                 print "removing", numPlans - newNumPlans, "plans that no longer apply."
@@ -100,6 +102,58 @@ class SimpleEval(base.BaseModule):
 
         if trace and goals_changed: trace.add_data("GOALS",goals)
 
+class SimpleEvalSuspend(base.BaseModule):
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+        if goals:
+            for goal in goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if not achieved:
+                        if verbose >= 3:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All suspended goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                print("REMOVED GOAL : ", str(goal))
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            self.mem.set(self.mem.GOAL_GRAPH, goalGraph)
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+	    del goals[-1]
+	    self.mem.set(self.mem.CURRENT_GOALS,goals)
+        else:
+            if verbose >= 3:
+                print "No current goals. Skipping eval"
+
+        if trace and goals_changed: trace.add_data("GOALS",goals)
 
 class SimpleEval2(base.BaseModule):
 
