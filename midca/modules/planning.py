@@ -118,7 +118,7 @@ class GenericPyhopPlanner(base.BaseModule):
                     print "No world state loaded. Skipping planning."
                 return
         #now state is the most recent (or only) state and is non-null
-       	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -156,8 +156,8 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
     '''
 
     def __init__(self, declare_methods, declare_operators,declare_monitors):
-                GenericPyhopPlanner.__init__(self, declare_methods,declare_operators, declare_monitors,
-                lambda state, plan: asynch.FAILED not in [action.status for action in plan])
+        GenericPyhopPlanner.__init__(self, declare_methods,declare_operators, declare_monitors,
+        lambda state, plan: asynch.FAILED not in [action.status for action in plan])
 
     def run(self, cycle, verbose = 2):
         state = self.mem.get(self.mem.STATE)
@@ -170,7 +170,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
                     print "No world state loaded. Skipping planning."
                 return
         #now state is the most recent (or only) state and is non-null
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -209,9 +209,9 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
     '''
 
     def __init__(self, declare_methods, declare_operators,declare_monitors):
-                GenericPyhopPlanner.__init__(self, declare_methods,declare_operators,declare_monitors,
-                lambda state, plan: asynch.FAILED not in [action.status for action in plan])
-		
+        GenericPyhopPlanner.__init__(self, declare_methods,declare_operators,declare_monitors,
+        lambda state, plan: asynch.FAILED not in [action.status for action in plan])
+
 
     def run(self, cycle, verbose = 2):
         state = self.mem.get(self.mem.STATE)
@@ -225,7 +225,7 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
                 return
         #now state is the most recent (or only) state and is non-null
 
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -242,11 +242,11 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
         if plan:
             return
         if not plan:
-            	plan = self.get_new_modified_plan(state, goals, verbose)
+            plan = self.get_new_modified_plan(state, goals, verbose)
         if not plan:
             return
         midcaPlan = plans.Plan(plan, goals)
-	asynchPlan = asynch_3d.asynch_plan(self.mem, midcaPlan)
+        asynchPlan = asynch_3d.asynch_plan(self.mem, midcaPlan)
         if verbose >= 1:
             print "Planning complete."
             if verbose >= 2:
@@ -267,7 +267,7 @@ class JSHOP2Planner(base.BaseModule):
     jshop_tasks_from_goals = None
     domain_file = ""
     state_file = ""
-    
+
     def __init__(self,
                  jshop_state_from_world,
                  jshop_tasks_from_goals,
@@ -296,7 +296,7 @@ class JSHOP2Planner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -392,7 +392,7 @@ class JSHOPPlanner(base.BaseModule):
     jshop_tasks_from_goals = None
     domain_file = ""
     state_file = ""
-    
+
     def __init__(self,
                  jshop_state_from_world,
                  jshop_tasks_from_goals,
@@ -405,7 +405,7 @@ class JSHOPPlanner(base.BaseModule):
         self.jshop_tasks_from_goals = jshop_tasks_from_goals
         self.domain_file = domain_file
         self.state_file= state_file
-        
+
         try:
             self.working = True
         except:
@@ -421,7 +421,7 @@ class JSHOPPlanner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -547,7 +547,7 @@ class PyHopPlanner(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -635,8 +635,8 @@ class PyHopPlanner(base.BaseModule):
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN",midcaPlan)
-			
-			
+
+
 class PyHopPlanner_temporary(base.BaseModule):
 
     '''
@@ -677,7 +677,7 @@ class PyHopPlanner_temporary(base.BaseModule):
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)
         except:
             goals = []
@@ -1381,7 +1381,7 @@ class HeuristicSearchPlanner(base.BaseModule):
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
 
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except:
             goals = []
@@ -1437,4 +1437,3 @@ class HeuristicSearchPlanner(base.BaseModule):
 
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
-
