@@ -1,7 +1,7 @@
 # This file contains helpful functions for the nbeacons domain
 
 import os
-from MIDCA.modules._plan import pyhop
+from midca.modules._plan import pyhop
 '''
  translate MIDCA init state to problem file in JSHOP 
  
@@ -172,5 +172,4 @@ def jshop2_tasks_from_goals(goals,pyhopState, STATE_FILE):
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" ))")
     f.close()
-   
    
