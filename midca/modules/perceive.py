@@ -4,67 +4,67 @@ import copy
 import os
 import socket
 try:
-	# baxter robot requirements
-	from midca.examples import ObjectDetector
-	from bzrlib.config import LocationStore
+    # baxter robot requirements
+    from midca.examples import ObjectDetector
+    from bzrlib.config import LocationStore
 except:
-	pass
+    pass
 
 class ROSObserver:
-    
+
     def init(self, world, mem):
         self.mem = mem
         self.mem.set(self.mem.STATE, world_repr.SimpleWorld())
 
     def store_history(self,world,history,blocks):
-	'''
-	store the history of last 5 state changes
-	'''
-	if blocks:
-		a = {}
-		for each in blocks:
-			positions= world.all_pos(each)
-			a[each] = positions.pop().position
+        '''
+        store the history of last 5 state changes
+        '''
+        if blocks:
+            a = {}
+            for each in blocks:
+                positions= world.all_pos(each)
+                a[each] = positions.pop().position
 
-		if a:
-			history = history.append(a)
+            if a:
+                history = history.append(a)
 
-		if not history:
-			history = []
+            if not history:
+                history = []
 
-		if len(history) > 5:
-			history = history[:5]
+            if len(history) > 5:
+                history = history[:5]
 
-		history.reverse()
-		return history
-	return None
-	
+            history.reverse()
+            return history
+        return None
 
-    
+
+
 
     def check_with_history(self,world,history,detectionEvents):
-	'''
-	store the past 5 change in events for the robot to remember things
-	'''
-	blocks = set()
-	for each in detectionEvents:
-		blocks.add(each.id)
-	if not history:
-		history = []
-		self.store_history(world,history,blocks)
-	else:
-		if not len(blocks) == len(history[len(history) -1]):
-			history = self.store_history(world,history,blocks)
-	return history
-    
+        '''
+        store the past 5 change in events for the robot to remember things
+        '''
+        blocks = set()
+        for each in detectionEvents:
+            blocks.add(each.id)
+        if not history:
+            history = []
+            self.store_history(world,history,blocks)
+        else:
+            if not len(blocks) == len(history[len(history) -1]):
+                history = self.store_history(world,history,blocks)
+        return history
+
     def run(self, cycle, verbose = 2):
-        #self.ObserveWorld() 
+        #self.ObserveWorld()
         detectionEvents = self.mem.get_and_clear(self.mem.ROS_OBJS_DETECTED)
         detecttionBlockState = self.mem.get_and_clear(self.mem.ROS_OBJS_STATE)
         utteranceEvents = self.mem.get_and_clear(self.mem.ROS_WORDS_HEARD)
         feedback = self.mem.get_and_clear(self.mem.ROS_FEEDBACK)
         world = self.mem.get_and_lock(self.mem.STATE)
-	history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
+        history = self.mem.get_and_lock(self.mem.STATE_HISTORY)
 
         if not detectionEvents:
             detectionEvents = []
@@ -88,20 +88,20 @@ class ROSObserver:
             d['received_at'] = float(midcatime.now())
             self.mem.add(self.mem.FEEDBACK, d)
 
-	# if there are any change in events remember
-	history = self.check_with_history(world,history,detecttionBlockState)
-	self.mem.unlock(self.mem.STATE_HISTORY)
-	if history:
-		if len(history) > 5:
-			history = history[:5]
-		self.mem.set(self.mem.STATE_HISTORY , history)		
+        # if there are any change in events remember
+        history = self.check_with_history(world,history,detecttionBlockState)
+        self.mem.unlock(self.mem.STATE_HISTORY)
+        if history:
+            if len(history) > 5:
+                history = history[:5]
+            self.mem.set(self.mem.STATE_HISTORY , history)
         self.mem.unlock(self.mem.STATE)
 
 
         if verbose > 1:
             print "World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
-            
-    
+
+
 
 class PerfectObserver(base.BaseModule):
 
@@ -127,7 +127,7 @@ class PerfectObserver(base.BaseModule):
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
-        
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
@@ -137,10 +137,10 @@ class PerfectObserver(base.BaseModule):
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
             print "World observed."
-        
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
@@ -164,33 +164,33 @@ class PerfectObserverWithThief(base.BaseModule):
     #perfect observation
     def observe(self):
         return self.world.copy()
-	
+
     def run(self, cycle, verbose = 2):
         world = self.observe()
         thisDir = os.path.dirname(os.path.realpath(__file__))
         thief_file = thisDir + "/theif.txt"
         theft_items=[]
-        
+
 #         with open(thief_file) as f:
-# 	    	lines = f.readlines()
-# 	    	for line in lines:
-# 	    		theft_items.append(line.split(" "))
-# 	    	
+#               lines = f.readlines()
+#               for line in lines:
+#                       theft_items.append(line.split(" "))
+#
         if not world:
             raise Exception("World observation failed.")
-        
+
 #         self.mem.add(self.mem.STATES, world)
-        
+
         for item in theft_items:
-        	
-			for atom in world.atoms:
-				if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
-					world.atoms.remove(atom)   
-					print("removed:" + atom.args[0].name)
-					break
-         			
-        self.mem.add(self.mem.STATES, world) 
-        
+
+            for atom in world.atoms:
+                if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
+                    world.atoms.remove(atom)
+                    print("removed:" + atom.args[0].name)
+                    break
+
+        self.mem.add(self.mem.STATES, world)
+
         # Memory Usage Optimization (optional, feel free to comment
         # drop old memory states if not being used
         # this should help with high memory costs
@@ -200,16 +200,16 @@ class PerfectObserverWithThief(base.BaseModule):
             states = states[200:]
             self.mem.set(self.mem.STATES, states)
         # End Memory Usage Optimization
-        
+
         if verbose >= 1:
             print "World observed."
-        
+
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
-        
-        
+
+
 
 class MAReport:
 
@@ -321,7 +321,7 @@ class MAReporter(base.BaseModule):
             objectname != "table":
                 res.append(objectname)
         return res
-    
+
 
     def run(self, cycle, verbose = 2):
         world = None
@@ -352,8 +352,8 @@ class MAReporter(base.BaseModule):
                 if block not in lastBurning or block in blocksPutOut:
                     report.actions.append(["burns", block])
         #report is finished, send to Meta-AQUA
-		#report contains actions and state, 
-		#for every action there will be the state attached to it
+                #report contains actions and state,
+                #for every action there will be the state attached to it
         if verbose >= 1:
             print "Sending report to Meta-AQUA",
             if verbose >= 2:

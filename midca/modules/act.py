@@ -103,16 +103,16 @@ class SimpleAct(base.BaseModule):
                 print "Plan:", str(plan)
                 print "Goals achieved:", [str(goal) for goal in goalsAchieved]
         return plan
-        
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         max_plan_print_size = 5
         world = self.mem.get(self.mem.STATES)[-1]
-	try:
+        try:
             goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
         except :
             goals = []
-	plan = self.get_best_plan(world, goals, verbose)
+        plan = self.get_best_plan(world, goals, verbose)
         trace = self.mem.trace
         if trace:
             trace.add_module(cycle,self.__class__.__name__)
@@ -254,7 +254,7 @@ class NBeaconsSimpleAct(base.BaseModule):
     MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
     To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
     '''
-    
+
     def get_first_plan(self, goals):
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         plans = goalGraph.allMatchingPlans(goals)
@@ -269,7 +269,7 @@ class NBeaconsSimpleAct(base.BaseModule):
                 return p
         if self.verbose >= 1: print "Could not find an unfinished plan in get_first_plan() for goals "+str(goals)
         return None
-        
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         max_plan_print_size = 10
@@ -314,7 +314,7 @@ class NBeaconsSimpleAct(base.BaseModule):
                                 print "   *"+str(a)
                             else:
                                 print "  "+str(a)
-                                
+
                 self.mem.add(self.mem.ACTIONS, [action])
                 plan.advance()
 
@@ -325,4 +325,3 @@ class NBeaconsSimpleAct(base.BaseModule):
             self.mem.add(self.mem.ACTIONS, [])
 
             if trace: trace.add_data("ACTION", None)
-
