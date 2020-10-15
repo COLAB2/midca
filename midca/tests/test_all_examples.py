@@ -15,7 +15,10 @@ import sys
 
 EXAMPLES_DIRECTORY = 'examples/'
 NUM_PROCESSES = 1 # number of python processes to run in parallel
-FILES_TO_IGNORE = ['__init__','predicateworld','homography','baxter', 'ObjectDetector', 'cogsci_demo_ma'] # will ignore any file containing one of these
+FILES_TO_IGNORE = ['__init__','predicateworld',
+                   'homography','baxter',
+                   'ObjectDetector', 'cogsci_demo_ma',
+                   "Calibrate", "nbeacons_aaai17_agent3"] # will ignore any file containing one of these
 
 # WARNING: if the run delay is ever too short (i.e. it takes longer than the delay for midca to execute
 # the skip command, this whole script will deadlock. Therefore the CUSTOM_RUN_DELAYS should be used for
