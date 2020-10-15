@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-import MIDCA
-from MIDCA import base, goals
-from MIDCA.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
-from MIDCA.metamodules import monitor, control, interpret, metaintend, plan
-from MIDCA.worldsim import domainread, stateread
+import midca
+from midca import base, goals
+from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
+from midca.metamodules import monitor, control, interpret, metaintend, plan
+from midca.worldsim import domainread, stateread
 import inspect, os
 import random
 
 # Domain Specific Imports
-from MIDCA.domains.nbeacons import nbeacons_util
-from MIDCA.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
+from midca.domains.nbeacons import nbeacons_util
+from midca.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
