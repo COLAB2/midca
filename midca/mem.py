@@ -53,6 +53,12 @@ class Memory:
 	EXPLANATION = "__explanation"
 	EXPLANATION_VAL = "__explanation_val"
 
+	#GRACE
+	INTERFACE = "__interface"
+	GETDATA = "__getdata"
+	GRID = "__grid"
+	ESTGRID = "__estgrid"
+
 
     	#Goal Tranformation
     	CL_TREE = "__class heirarchy tree"

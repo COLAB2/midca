@@ -1,0 +1,187 @@
+(defdomain travel
+ (
+ (:method (achieve-goals (list ?goal . ?goals))
+ ()
+ ((achieve-goal ?goal)(achieve-goals ?goals)))
+
+(:method (achieve-goals nil ?goal)
+         ()
+         ((achieve-goal ?goal)))
+
+    (:method (achieve-goals nil)
+         ()
+         ())
+
+ (:method (control-move ?agent ?destx ?desty)
+    ((agent-at ?agent ?waypt ?destX ?destY)
+     (same ?waypt subarea-1))
+    ((!moveto ?agent ?waypt subarea-2 ?destx ?desty))
+
+    ((agent-at ?agent ?waypt ?destX ?destY)
+     (same ?waypt subarea-2))
+    ((!moveto ?agent ?waypt subarea-3 ?destx ?desty))
+
+    ((agent-at ?agent ?waypt ?destX ?destY)
+     (same ?waypt subarea-3))
+    ((!moveto ?agent ?waypt subarea-4 ?destx ?desty))
+
+    ((agent-at ?agent ?waypt ?destX ?destY)
+     (same ?waypt subarea-4))
+    ((!moveto ?agent ?waypt subarea-5 ?destx ?desty))
+
+    ((agent-at ?agent subarea-0 ?destX ?destY))
+    ((!moveto ?agent subarea-0 subarea-1 ?destx ?desty))
+
+
+    )
+
+
+  (:method (control-collect ?agent fishtag ?destX ?destY)
+     ((agent-at ?agent ?destX ?destY)
+     (not(certainblocRadius ?agent ?destX ?destY)))
+
+     (;(!ascend ?agent ?destX ?destY)
+     ;(!descend ?agent ?destX ?destY)
+     (!collectdata ?agent fishtag ?destX ?destY))
+
+     ((agent-at ?agent ?destX ?destY)
+     (certainblocRadius ?agent ?destX ?destY))
+     ((!collectdata ?agent fishtag ?destX ?destY))
+
+    )
+
+
+ (:method (achieve-goal (surveyed ?agent ?destX ?destY))
+      ((surveyed ?agent ?destX ?destY))
+      ()
+
+      ((not(surveyed ?agent ?destX ?destY)))
+      (
+      (achieve-goal (agent-at ?agent ?destX ?destY))
+      (control-collect ?agent fishtag ?destX ?destY)
+      ))
+
+
+  (:method (achieve-goal (free ?agent))
+
+      ((not(agent-mode ?agent m1)))
+      (
+      (!glideback ?agent)
+      ))
+
+
+
+
+ (:method (achieve-goal (agent-at ?agent ?destX ?destY))
+
+ ((agent-at ?agent ?origX ?origY)
+ (not(atBottom ?agent)))
+ ((!descend ?agent ?origX ?origY)
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ ((agent-at ?agent ?origX ?origY)
+ (call equal ?destX ?origX)
+ (call equal ?destY ?origY))
+ ()
+
+ ;((agent-at ?agent ?origX ?origY)
+ ;(not(certainblocRadius ?agent ?origX ?origY)))
+ ;((!ascend ?agent ?origX ?origY)
+ ;(achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ ((agent-at ?agent ?origX ?origY)
+ (call < ?destX ?origX )
+ (not(call equal ?destX ?origX)))
+ ((!movewest ?agent ?origX ?origY (call - ?origX 1) ?origY)
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ ((agent-at ?agent ?origX ?origY)
+ (call > ?destX ?origX)
+ (not(call equal ?destX ?origX)))
+ ((!moveeast ?agent ?origX ?origY (call + ?origX 1) ?origY )
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ ((agent-at ?agent ?origX ?origY)
+ (call equal ?destX ?origX)
+ (call < ?destY ?origY))
+ ((!movenorth ?agent ?origX ?origY ?origX (call - ?origY 1) )
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ ((agent-at ?agent ?origX ?origY)
+ (call equal ?destX ?origX)
+ (call > ?destY ?origY))
+ ((!movesouth ?agent ?origX ?origY ?origX (call + ?origY 1) )
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+ )
+
+
+ (:operator (!moveeast ?agent ?startX ?startY ?destX ?destY)
+ ( (agent-at ?agent ?startX ?startY) (adjacent-east ?startX ?startY ?destX ?destY) (atBottom ?agent))
+ ((agent-at ?agent ?startX ?startY)
+  (agent-at ?agent ?startX ?startY)
+  )
+ ((agent-at ?agent ?destX ?destY)
+ (certainblocRadius ?agent ?destX ?destY)))
+
+ (:operator (!movewest ?agent ?startX ?startY ?destX ?destY )
+ ( (agent-at ?agent ?startX ?startY) (adjacent-west ?startX ?startY ?destX ?destY) (atBottom ?agent))
+ ((agent-at ?agent ?startX ?startY)
+  (agent-at ?agent ?startX ?startY)
+  )
+ ((agent-at ?agent ?destX ?destY)
+ (certainblocRadius ?agent ?destX ?destY)))
+
+ (:operator (!movenorth ?agent ?startX ?startY ?destX ?destY )
+ ( (agent-at ?agent ?startX ?startY) (adjacent-north ?startX ?startY ?destX ?destY) (atBottom ?agent))
+ ((agent-at ?agent ?startX ?startY)
+ (agent-at ?agent ?startX ?startY)
+ )
+ ((agent-at ?agent ?destX ?destY)
+ (certainblocRadius ?agent ?destX ?destY)))
+
+ (:operator (!movesouth ?agent ?startX ?startY ?destX ?destY )
+ ( (agent-at ?agent ?startX ?startY) (adjacent-south ?startX ?startY ?destX ?destY) (atBottom ?agent))
+ ((agent-at ?agent ?startX ?startY)
+ (agent-at ?agent ?startX ?startY))
+ ((agent-at ?agent ?destX ?destY)
+ (certainblocRadius ?agent ?destX ?destY)))
+
+ (:operator (!moveto ?agent ?startX ?startY)
+ ( (agent-at ?agent ?startX ?startY) (not(agent-at ?agent ?startX ?startY)))
+ ((agent-at ?agent ?startX ?startY))
+ ((agent-at ?agent ?startX ?startY)
+ ))
+
+ (:operator (!collectdata ?agent ?sensordata ?destX ?destY)
+ ((agent-at ?agent ?destX ?destY)
+  (atBottom ?agent))
+ ()
+ ((collecteddata ?agent ?sensordata ?destX ?destY)
+  (surveyed ?agent ?destX ?destY)))
+
+ (:operator (!communicate ?agent ?fumin ?destX ?destY)
+ ((collecteddata ?agent ?sensordata ?destX ?destY))
+ ()
+ ((communicated-hotspot ?agent ?fumin ?destX ?destY)))
+
+ (:operator (!ascend ?agent ?origX ?origY)
+ ((not(atSurface ?agent)))
+ ((atBottom ?agent))
+ ((atSurface ?agent)
+  (certainblocRadius ?agent ?origX ?origY)
+  ))
+
+ (:operator (!descend ?agent ?origX ?origY)
+ ((not(atBottom ?agent)))
+ ((atSurface ?agent))
+ ((atBottom ?agent)))
+
+  (:operator (!glideback ?agent)
+ ((not(free ?agent)))
+ ()
+ ((agent-mode ?agent m1) (free ?agent)))
+
+
+ (:- (same ?x ?x) ((call equal 1 1)))
+
+ ))

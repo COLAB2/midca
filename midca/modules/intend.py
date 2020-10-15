@@ -700,8 +700,6 @@ class SimpleIntend_Restaurant(base.BaseModule):
                     print goal,
                 print
 
-
-
 class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
     goals_goalgraph = []
@@ -1420,3 +1418,447 @@ class SimpleIntend_construction(base.BaseModule):
                 print
                 '''
                 print("")
+
+class BestHillClimbingIntendGraceNSF(base.BaseModule):
+
+    def __init__(self):
+        # for hill climbing
+        self.previous_goal = []
+
+    def displayEachGoalTrajectory(self, GoalTrajectory):
+        print ("*******************STATES*******************")
+        for atom in GoalTrajectory[0]:
+            print atom
+        print ("*******************GOALS*******************")
+        for goal in GoalTrajectory[1]:
+            print goal
+        print("**********************************************")
+
+    def displayGoalTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Trajectory*******************")
+        GoalTrajectory = self.mem.get(self.mem.GoalTrajectory)
+        for eachGoalTrajectory in GoalTrajectory:
+            self.displayEachGoalTrajectory(eachGoalTrajectory)
+        print ("*******************End Goal Trajectory*******************")
+
+    def parse_tile(self, input):
+        output = ""
+        y_index = input.index('y')
+        output = [int(input[2:y_index]), int(input[y_index + 1:])]
+        return output
+
+    def get_adjacent_goals(self, goal, all_goals):
+        """
+        :param goal: a goal of format (surveyed, subarea-5, Tx0y0)
+        :param goals: list of goals from goalgraph
+        :return: return a list of adjacent goals
+                         ex:
+                           (surveyed, subarea-5, Tx0y1)
+                           (surveyed, subarea-5, Tx1y0)
+        """
+        adjacent_goals = []
+        copy_goal = copy.deepcopy(goal)
+
+        # get the x and y coordinate from the goal
+        [x, y] = self.parse_tile(copy_goal.args[1])
+
+        arguments = list(copy_goal.args)
+        arguments[1] = "Tx" + str(x + 1) + "y" + str(y)
+        copy_goal.args = tuple(arguments)
+
+        if copy_goal in all_goals:
+            # to get the object first we need to get the index
+            index = all_goals.index(copy_goal)
+            adjacent_goals.append(all_goals[index])
+
+        arguments = list(copy_goal.args)
+        arguments[1] = "Tx" + str(x) + "y" + str(y+1)
+        copy_goal.args = tuple(arguments)
+
+        if copy_goal in all_goals:
+            # to get the object first we need to get the index
+            index = all_goals.index(copy_goal)
+            adjacent_goals.append(all_goals[index])
+
+        arguments = list(copy_goal.args)
+        arguments[1] = "Tx" + str(x - 1) + "y" + str(y)
+        copy_goal.args = tuple(arguments)
+
+        if copy_goal in all_goals:
+            # to get the object first we need to get the index
+            index = all_goals.index(copy_goal)
+            adjacent_goals.append(all_goals[index])
+
+        arguments = list(copy_goal.args)
+        arguments[1] = "Tx" + str(x) + "y" + str(y-1)
+        copy_goal.args = tuple(arguments)
+
+        if copy_goal in all_goals:
+            # to get the object first we need to get the index
+            index = all_goals.index(copy_goal)
+            adjacent_goals.append(all_goals[index])
+
+        return adjacent_goals
+
+    def createGraph(self, goals):
+        """
+        :param goals: list of goals from goalgraph
+        :return: return a connected graph
+        """
+        graph = {}
+
+        # get the previous and the adjacent are in graph
+        for goal in goals:
+            graph[goal] = self.get_adjacent_goals(goal, goals)
+
+        return graph
+
+    def get_score(self, goal, world):
+        """
+        :param goal: the goal in predicate(args*)
+        :param world: states of the world
+        :return: fish tag estimates of the position
+        """
+        for atom in world.atoms:
+            if atom.predicate.name == "estuniqueTagCount":
+                if goal.args[1] == atom.args[2].name:
+                    return float(atom.args[1].name)
+
+        #return 0
+
+    def createScoreGraph(self, goals, world):
+        """
+        :param goals: list of goals from goalgraph
+               world: obj of worldsim.world
+        :return: return a graph with key as goals and score as estimates
+        """
+        graph = {}
+
+        # get the previous and the adjacent are in graph
+        for goal in goals:
+            graph[goal] = self.get_score(goal, world)
+
+        return graph
+
+    def get_actual_score(self, goal, world):
+        """
+        :param goal: the goal in predicate(args*)
+        :param world: states of the world
+        :return: fish tag estimates of the position
+        """
+        for atom in world.atoms:
+            if atom.predicate.name == "uniqueTagCount":
+                if goal.args[1] == atom.args[2].name:
+                    return float(atom.args[1].name)
+
+        #return 0
+
+    def createActualScoreGraph(self, goals, world):
+        """
+        :param goals: list of goals from goalgraph
+               world: obj of worldsim.world
+        :return: return a graph with key as goals and score as estimates
+        """
+        graph = {}
+
+        # get the previous and the adjacent are in graph
+        for goal in goals:
+            graph[goal] = self.get_actual_score(goal, world)
+
+        return graph
+
+    # Function to print a BFS of graph
+    def bfs(self, graph, s, visited = []):
+
+        order = []
+        visited = {}
+        # Mark all the vertices as not visited
+        for each in graph:
+            visited[each] = False
+
+        #visited = [False] * (len(graph))
+
+        # Create a queue for BFS
+        queue = []
+
+        # Mark the source node as
+        # visited and enqueue it
+        queue.append(s)
+        order.append(s)
+        visited[s] = True
+
+        while queue:
+
+            # Dequeue a vertex from
+            # queue and print it
+            s = queue.pop(0)
+            order.append(s)
+            print (s)
+
+            # Get all adjacent vertices of the
+            # dequeued vertex s. If a adjacent
+            # has not been visited, then mark it
+            # visited and enqueue it
+            for i in graph[s]:
+                if visited[i] == False:
+                    queue.append(i)
+                    visited[i] = True
+
+        return order
+
+    def dfs(self, graph, neighbour, visited=[]):
+        """
+        :param graph: connected graph of goals
+        :param goal: start goal
+        :return: return a list of goals
+        """
+        if neighbour not in visited:
+            #print (neighbour)
+            visited.append(neighbour)
+            for neighbour in graph[neighbour]:
+                self.dfs(graph, neighbour, visited)
+
+        return visited
+
+    def Searchindfs(self, goals, world):
+        """
+        :param goals: goals of the grace
+        :param world: object of the worldsim.world
+        :return: list of goals in dfs
+        """
+
+        # get the current state of the agent
+        [atom] = world.get_atoms(["agent-at", "grace"])
+        start_goal = None
+
+        # get the start goal from where the agent is in
+        for goal in goals:
+            if goal.args[1] == atom.args[1].name:
+                start_goal = goal
+                break
+        if start_goal:
+            graph = self.createGraph(goals)
+            return self.dfs(graph, start_goal, visited=[])
+        else:
+            # create a dummy goal where the agent is
+            # so that you will have better connected graph
+            # since that goal is dummy add it in visited
+            start_goal = dummygoalgen.Goal(*["grace", atom.args[1].name], predicate='surveyed')
+            goals.append(start_goal)
+            graph = self.createGraph(goals)
+            visited = self.dfs(graph, start_goal, visited=[])
+            visited.remove(start_goal)
+            while start_goal in visited:
+                visited.remove(start_goal)
+            return visited
+
+    def get_max_neighbor(self, graph, score_graph, goal):
+        """
+
+        :param graph: connected graph with goals
+        :param score_graph: scores for the goals
+        :param start_goal: goal to start with
+        :param previous_goal: goal previously achieved
+        :return: goal
+        """
+
+        # check the scores of the neighbours of the previous goal an start goal
+        # select the one with highest score
+
+        max_score = -1
+        selected_goal = None
+        previous_goals = []
+
+        # get all the neighbors of start and previous goal
+        all_neighbours = graph[goal]
+
+        #convert previous_goals to string
+        if self.previous_goal:
+            previous_goals = [str(prevgoal) for prevgoal in self.previous_goal]
+
+        # check which one has maximum score
+        for goal in all_neighbours:
+            if not str(goal) in previous_goals:
+                if max_score <= score_graph[goal]:
+                    max_score = score_graph[goal]
+                    selected_goal = goal
+
+        return selected_goal
+
+    def lookalike(self, goal, graph):
+        for each in graph:
+            if str(each) == str(goal):
+                return each
+
+
+    def sortbyscores(self, previous_goals, score_graph):
+        sorted_goals = []
+        goals = sorted(score_graph, key=score_graph.get)
+        for each in goals:
+            if each in previous_goals:
+                sorted_goals.append(each)
+
+        return sorted_goals
+
+
+
+    def hillclimbing(self, graph, score_graph, actual_score_graph,
+                     previous_goals, start_goal):
+        """
+
+        :param graph: connected graph with goals
+        :param score_graph: expected scores for the goals
+        :param actual_score_graph: actual scores for the goals
+        :param start_goal: recently completed goal
+        :param previous_goals: goals previously achieved without start_goal
+        :return: goal
+        """
+        # if there are no previous trajectory
+        if not previous_goals:
+            goal = self.get_max_neighbor(graph, score_graph, start_goal)
+            #update previous goal
+            self.previous_goal.append(copy.deepcopy(goal))
+            return goal
+
+        # if there is a trajectory
+        # check the actual values of the previous goal and the previous previous one
+        else:
+            # previous previous one
+            previous_goal = previous_goals[-1]
+
+            # get a look alike goal from the actual_score_graph
+            previous_goal = self.lookalike(previous_goal, actual_score_graph)
+            start_goal = self.lookalike(start_goal, actual_score_graph)
+
+            # if the previous previous one is greater than previous goal backtrack
+            if actual_score_graph[previous_goal] >= actual_score_graph[start_goal]:
+
+                # back tracking
+                goal = self.get_max_neighbor(graph, score_graph, previous_goal)
+
+                if goal:
+                    # update previous goal
+                    return goal
+                # if there are no unexplored ones
+                else:
+                    previous_goals.pop()
+                    return self.hillclimbing(graph, score_graph, actual_score_graph,
+                                 previous_goals, start_goal)
+            else:
+                goal = self.get_max_neighbor(graph, score_graph, start_goal)
+                if goal:
+                    return goal
+                else:
+                    # back track to the one that has highest score
+                    start_goal = previous_goals.pop()
+                    return self.hillclimbing(graph, score_graph, actual_score_graph,
+                                 previous_goals, start_goal)
+
+
+    def Searchinhillclimbing(self, goals, world):
+        """
+        :param goals: goals of the grace
+        :param world: object of the worldsim.world
+        :return: list of goals in dfs
+        """
+
+        # get the current state of the agent
+        [atom] = world.get_atoms(["agent-at", "grace"])
+        start_goal = None
+        # get the start goal from where the agent is in
+        for goal in goals:
+
+            if goal.args[1] == atom.args[1].name:
+                start_goal = goal
+                break
+        if start_goal:
+            self.previous_goal.append(copy.deepcopy(start_goal))
+            return [start_goal]
+        else:
+            # create a dummy goal where the agent is
+            # so that you will have better connected graph
+            # since that goal is dummy add it in visited
+            previous_goals = copy.deepcopy(self.previous_goal)
+
+            # for connected graph
+            for each in previous_goals:
+                goals.append(each)
+
+            # previously achieved goal
+            start_goal = previous_goals.pop()
+
+            # create graph
+            graph = self.createGraph(goals)
+
+            # create estimated score graph
+            score_graph = self.createScoreGraph(goals, world)
+
+            # create actual score graph
+            actual_score_graph = self.createActualScoreGraph(goals, world)
+
+            # sort previous goals by values in actual_score_graph
+            previous_goals = self.sortbyscores(previous_goals, actual_score_graph)
+
+
+            goal = self.hillclimbing(graph, score_graph, actual_score_graph, previous_goals, start_goal)
+
+            self.previous_goal.append(copy.deepcopy(goal))
+
+            return [goal]
+
+    def filter(self, goals, predicatename):
+        filtered_goals = []
+        for goal in goals:
+            if goal['predicate'] == predicatename:
+                filtered_goals.append(goal)
+        return filtered_goals
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        world = self.mem.get(self.mem.STATES)[-1]
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("GOALGRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the goal graph
+        goals = goalGraph.getAllGoals()
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            goals = None
+        else:
+            goals = self.filter(goals, "surveyed")
+            goals = self.Searchinhillclimbing(goals, world)
+            goals = [goals[0]]
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            # add it to goaltrajectory for representation
+            world = self.mem.get(self.mem.STATES)[-1]
+            # get_atoms = [atom for atom in world.atoms]
+            # self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
+            # self.displayGoalTrajectory()
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print

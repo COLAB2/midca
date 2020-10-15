@@ -37,6 +37,17 @@ class Goal:
         else:
             self.kwargs[key] = item
 
+    def __eq__(self, other):
+
+
+        if str(self) == str(other):
+            return True
+        else:
+            return False
+
+    def __hash__(self):
+        return id(self)
+
     def get_args(self):
         '''
         Return the arguments for this goal.

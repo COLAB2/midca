@@ -962,7 +962,108 @@ class DeliverGoal(base.BaseModule):
 #                 Thread(target=m.goalmonitor, args=[order.id, order.location, "obj-at"]).start()
                 self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
 
+class GraceGoalInputNSF(UserGoalInput):
+    '''
+    MIDCA module that allows users to input goals in a predicate representation when there is no goal in the goal graph.
+    '''
 
+    def __init__(self, interface):
+        self.stopexperimentflag = False
+        self.interface = interface
+
+    def run(self, cycle, verbose=2):
+        if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0 and \
+                not self.stopexperimentflag:
+            # for experiment
+            g = goals.Goal(*["grace", "Tx0y0"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+
+
+            g = goals.Goal(*["grace", "Tx0y1"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+
+            g = goals.Goal(*["grace", "Tx0y2"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+
+            g = goals.Goal(*["grace", "Tx0y3"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g= goals.Goal(*["grace", "Tx0y4"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx1y4"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace",  "Tx1y3"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx1y2"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx1y1"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx1y0"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx2y0"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx2y1"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx2y2"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx2y3"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx2y4"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx3y4"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx3y3"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx3y2"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx3y1"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx3y0"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx4y0"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx4y1"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx4y2"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx4y3"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+            g = goals.Goal(*["grace", "Tx4y4"], predicate='surveyed')
+            self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+            print("Midca generated a goal : " + str(g))
+
+
+            self.stopexperimentflag = True
+
+        elif len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0 and \
+                self.stopexperimentflag:
+                print ("Experiment Completed")
+                tagworld = self.interface.TagWorld()
+                tagworld.endSim()
+                sys.exit()
 
 
 class TFStack(base.BaseModule):

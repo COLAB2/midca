@@ -191,7 +191,104 @@ class SimpleEval2(base.BaseModule):
         for g in randomgoals:
             f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
 
+class SimpleEvalAsync(base.BaseModule):
 
+    def displayEachGoalAgendaHistory(self, GoalAgendaHistory):
+        print ("*******************Goal Agenda *******************")
+        for goal in GoalAgendaHistory:
+            print goal
+
+    def displayGoalAgendaHistory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Agenda HISTORY*******************")
+        GoalAgendaHistory = self.mem.get(self.mem.GoalAgendaHistory)
+        for eachGoalHistory in GoalAgendaHistory:
+            self.displayEachGoalAgendaHistory(eachGoalHistory)
+        print ("*******************End Goal Agenda HISTORY*******************")
+
+    def displayEachGoalTrajectory(self, GoalTrajectory):
+        print ("*******************STATES*******************")
+        for atom in GoalTrajectory[0]:
+            print atom
+        print ("*******************GOALS*******************")
+        for goal in GoalTrajectory[1]:
+            print goal
+        print("**********************************************")
+
+    def displayGoalTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Goal Trajectory*******************")
+        GoalTrajectory = self.mem.get(self.mem.GoalTrajectory)
+        for eachGoalTrajectory in GoalTrajectory:
+            self.displayEachGoalTrajectory(eachGoalTrajectory)
+        print ("*******************End Goal Trajectory*******************")
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        goals_changed = False # for trace
+
+        if goals:
+            for goal in goals:
+                try:
+                    achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                    if 'negate' in goal and goal['negate']:
+                        achieved = not achieved
+                    if not achieved:
+                        if verbose >= 2:
+                            print "Not all goals achieved;", goal, "is not true."
+                        return
+                except ValueError:
+                    if verbose >= 1:
+                        print "Could not test goal", goal, ". It does not seem to be a valid world state"
+                    return
+            if verbose >= 1:
+                print "All current goals achieved. Removing them from goal graph"
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            for goal in goals:
+                goalGraph.remove(goal)
+                if trace: trace.add_data("REMOVED GOAL", goal)
+                goals_changed = True
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print "removing", numPlans - newNumPlans, "plans that no longer apply."
+                goals_changed = True
+        if goals:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS,goals)
+        else:
+            if verbose >= 2:
+                print "No current goals. Skipping eval"
+
+        #if goals_changed:
+        #    #goal agenda
+        #    #goalAgenda = self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()
+        #    #self.mem.add(self.mem.GoalAgendaHistory, copy.deepcopy(goalAgenda))
+        #    #self.displayGoalAgendaHistory()
+
+        #    #goal trajectory
+        #    #get_atoms = [atom for atom in world.atoms]
+        #    #self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), []])
+        #    #self.displayGoalTrajectory()
+        if trace and goals_changed: trace.add_data("GOALS",goals)
 
 class SimpleEval_Restaurant(base.BaseModule):
 

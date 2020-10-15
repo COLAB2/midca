@@ -506,6 +506,226 @@ class JSHOPPlanner(base.BaseModule):
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
             if trace: trace.add_data("PLAN",midcaPlan)
 
+class JSHOPPlannerAsync(base.BaseModule):
+    '''
+    MIDCA module that implements a python version of the SHOP hierarchical task network (HTN) planner. HTN planners require a set of user-defined methods to generate plans; these are defined in the methods python module and declared in the constructor for this class.
+    Note that this module uses has several methods to translate between MIDCA's world and goal representations and those used by pyhop; these should be changed if a new domain is introduced.
+    '''
+
+    jshop_state_from_world = None
+    jshop_tasks_from_goals = None
+    domain_file = ""
+    state_file = ""
+
+    def __init__(self,
+                 jshop_state_from_world,
+                 jshop_tasks_from_goals,
+                 domain_file,
+                 state_file,
+                 async,
+                 monitors = False,
+                 extinguishers = False,
+                 mortar = False):
+
+        self.jshop_state_from_world = jshop_state_from_world
+        self.jshop_tasks_from_goals = jshop_tasks_from_goals
+        self.domain_file = domain_file
+        self.state_file= state_file
+        self.async = async
+        self.monitors = monitors
+
+        self.validate_plan = lambda plan: self.async.FAILED not in [action.status for action in plan]
+
+        self.converttomidcaplan = lambda plan: [action for action in plan if not(action.status == self.async.COMPLETE)]
+        try:
+            self.working = True
+        except:
+            print "Error declaring pyhop methods and operators. This planner will be \
+            disabled"
+            traceback.print_exc()
+            self.working = False
+
+    def displayEachPlanTrajectory(self, PlanTrajectory):
+        print ("******************* Goals *******************")
+        for goal in PlanTrajectory[0]:
+            print goal
+        print ("******************* Plans *******************")
+        for plan in PlanTrajectory[1]:
+            print plan
+
+    def displayPlanTrajectory(self):
+        """
+        print goal agend a history
+        """
+        print ("*******************Plan Trajectory*******************")
+        PlanTrajectory = self.mem.get(self.mem.PlanTrajectory)
+        for eachPlanTrajectory in PlanTrajectory:
+            self.displayEachPlanTrajectory(eachPlanTrajectory)
+        print ("*******************End Plan Trajectory *******************")
+
+    def compareGoals(self, goals):
+        """
+        :return: boolean if the goals are true
+        """
+        if self.mem.get(self.mem.PlanTrajectory):
+            prevgoals = self.mem.get(self.mem.PlanTrajectory)[-1][0]
+            prevgoals = [str(goal) for goal in prevgoals]
+            goals = [str(goal) for goal in goals]
+            if goals == prevgoals:
+                return True
+            else:
+                return False
+        return True
+
+
+    def get_old_plan(self, goals, verbose = 2):
+        try:
+            plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+            if not plan:
+                return None
+            try:
+                # validate_plan checks if the action failed in
+                # real world
+                # we should also check if the plan still
+                # achieves our goals
+
+
+                if self.validate_plan:
+                    valid = self.validate_plan(plan) or self.world.async_plan_correct(self.converttomidcaplan(plan))
+                    # check monitors
+                    if valid and self.monitors:
+                        self.monitors(self.world, self.mem, plan)
+                    """
+                    if valid:
+                        valid, changed = self.monitor(self.world, plan, self.mem, plans)   
+                        if changed:
+                            # plan representation
+                            midcaPlan = [action.midcaAction for action in plan]
+                            self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+                            self.displayPlanTrajectory()
+
+                        # to record suspended goals
+                        if not self.compareGoals(goals):
+                            midcaPlan = [action.midcaAction for action in self.converttomidcaplan(plan)]
+                            self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+                            self.displayPlanTrajectory()
+                    """
+                    if valid:
+                        if verbose >= 2:
+                            print "Old plan found that tests as valid:", plan
+                    else:
+                        if verbose >= 2:
+                            print "Old plan found that tests as invalid:", plan, ". removing from stored plans."
+                        self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
+                else:
+                    if verbose >= 2:
+                        print "no validity check specified. assuming old plan is valid."
+                        valid = True
+            except Exception as e:
+                print (e)
+                print (traceback.format_exc())
+                if verbose >= 2:
+                    print "Error validating plan:", plan
+                valid = False
+            except SystemExit:
+                import sys
+                sys.exit()
+        except:
+            print "Error checking for old plans"
+            plan = None
+            valid = False
+        if valid:
+            return plan
+        return None
+
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+        self.mem.set(self.mem.PLANNING_COUNT, 0)
+
+
+    #this will require a lot more error handling, but ignoring now for debugging.
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals received by planner. Skipping planning."
+            return
+        try:
+            midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+        except AttributeError:
+            midcaPlan = None
+        if midcaPlan:
+            if verbose >= 2:
+                print "Old plan retrieved. Checking validity...",
+            valid = self.get_old_plan(goals)
+            if not valid:
+                midcaPlan = None
+                #if plan modification is added to MIDCA, do it here.
+                if verbose >= 2:
+                    print "invalid."
+            elif verbose >= 2:
+                print "valid."
+
+        #ensure goals is a collection to simplify things later.
+        if not isinstance(goals, collections.Iterable):
+            goals = [goals]
+
+        if not midcaPlan:
+            #use jshop to generate new plan
+            if verbose >= 2:
+                print "Planning..."
+            try:
+                jshopState = self.jshop_state_from_world(world, self.state_file)
+            except Exception:
+                print "Could not generate a valid jshop state from current world state. Skipping planning"
+            try:
+                jshopTasks = self.jshop_tasks_from_goals(goals,jshopState, self.state_file)
+            except Exception:
+                print "Could not generate a valid jshop task from current goal set. Skipping planning"
+            try:
+                self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
+                jshopPlan = JSHOP.jshop(jshopTasks, self.domain_file, self.state_file)
+            except Exception:
+                jshopPlan = None
+            if not jshopPlan and jshopPlan != []:
+                if verbose >= 1:
+                    print "Planning failed for ",
+                    for goal in goals:
+                        print goal, " ",
+                    print
+                if trace: trace.add_data("PLAN", jshopPlan)
+                return
+            #change from jshop plan to MIDCA plan
+            midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
+            asynchPlan = self.async.asynch_plan(self.mem, midcaPlan)
+
+            # plan representation
+            #self.mem.add(self.mem.PlanTrajectory, [copy.deepcopy(goals), copy.deepcopy(midcaPlan)])
+            #self.displayPlanTrajectory()
+
+            if verbose >= 1:
+                print "Planning complete."
+            if verbose >= 2:
+                print "Plan: "#, midcaPlan
+                for a in midcaPlan:
+                    print("  "+str(a))
+            #save new plan
+            # save new plan
+            if asynchPlan != None:
+                self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
+            if trace: trace.add_data("PLAN",midcaPlan)
 
 class PyHopPlanner(base.BaseModule):
 

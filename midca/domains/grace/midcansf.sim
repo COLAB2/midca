@@ -1,0 +1,148 @@
+# GraysReef domain (adapted from nbeacons domain)
+
+type(DEPTH)
+type(TILE)
+type(AGENT)
+type(FISH)
+type(FISH-TYPE)
+type(SENSOR)
+type(CONFIDENCE)
+type(DISTANCE)
+type(NUM)
+type(DIM)
+type(BEACON)
+type(BEACON-TYPE)
+type(NUM)
+type(RADIUS)
+type(MODE)
+
+#location of the agent
+predicate(surveyed,[agnt, loc], [AGENT, TILE])
+predicate(atSurface,[agnt], [AGENT])
+predicate(atBottom,[agnt], [AGENT])
+
+#agent mode
+predicate(agent-mode,[agnt, mode], [AGENT, MODE])
+
+# uncertainity
+predicate(QblocRadius, [agnt, loc, rad], [AGENT, TILE, RADIUS])
+predicate(certainblocRadius, [agnt, loc], [AGENT, TILE])
+predicate(priorblocRadius, [agnt, cnt], [AGENT, NUM])
+
+#hotspot detected
+predicate(hotspot-detected,[agnt, loc], [AGENT, TILE])
+
+#tag count
+predicate(uniqueTagCount,[agnt, cnt, loc], [AGENT, NUM, TILE])
+predicate(estuniqueTagCount,[agnt, cnt, loc], [AGENT, NUM, TILE])
+predicate(toDisplayuniqueTagCount,[agnt, cnt, fromloc, loc], [AGENT, NUM, TILE, TILE])
+
+#to acknowledge collectdata and communication states
+predicate(collecteddata, [agnt, info, loc], [AGENT, SENSOR, TILE])
+predicate(communicated-hotspot, [agnt, agnt1, loc], [AGENT, AGENT, TILE])
+
+predicate(agent-at, [agnt, loc], [AGENT, TILE])
+predicate(adjacent-north, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-south, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-east, [loc1, loc2], [TILE, TILE])
+predicate(adjacent-west, [loc1, loc2], [TILE, TILE])
+predicate(free, [agnt], [AGENT])
+
+operator(movenorth,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	#condition(certainblocRadius, [agnt, start]),
+	condition(atBottom, [agnt]),
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-north, [start, dest])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest]),
+	condition(certainblocRadius, [agnt, dest]),
+	condition(certainblocRadius, [agnt, start], negate = True)])
+
+operator(movesouth,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+    #condition(certainblocRadius, [agnt, start]),
+	condition(atBottom, [agnt]),
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-south, [start, dest])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest]),
+	condition(certainblocRadius, [agnt, dest]),
+	condition(certainblocRadius, [agnt, start], negate = True)])
+
+operator(moveeast,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	#condition(certainblocRadius, [agnt, start]),
+	condition(atBottom, [agnt]),
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-east, [start, dest])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest]),
+	condition(certainblocRadius, [agnt, dest]),
+	condition(certainblocRadius, [agnt, start], negate = True)])
+
+operator(movewest,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	#condition(certainblocRadius, [agnt, start]),
+	condition(atBottom, [agnt]),
+	condition(agent-at, [agnt, start]),
+	condition(adjacent-west, [start, dest])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest]),
+	condition(certainblocRadius, [agnt, dest]),
+	condition(certainblocRadius, [agnt, start], negate = True)])
+
+operator(moveto,
+args = [(agnt, AGENT), (dest, TILE)],
+preconditions = [
+	condition(agent-at, [agnt, dest]),
+	condition(agent-at, [agnt, dest], negate = TRUE)],
+results = [
+	condition(agent-at, [agnt,  dest], negate = TRUE),
+	condition(agent-at, [agnt, dest])])
+
+operator(communicate,
+args = [(agnt, AGENT), (agnt1, AGENT), (loc, TILE)],
+preconditions = [
+	#condition(atSurface, [agnt]),
+	condition(hotspot-detected, [agnt, loc])],
+results = [
+	condition(communicated-hotspot, [agnt, agnt1, loc])])
+
+operator(collectdata,
+args = [(agnt, AGENT), (info, SENSOR), (loc, TILE)],
+preconditions = [
+	condition(atBottom, [agnt]),
+	#condition(certainblocRadius, [agnt, loc]),
+	condition(agent-at, [agnt, loc])],
+results = [
+	condition(collecteddata, [agnt, info, loc]),
+	condition(surveyed, [agnt, loc])])
+
+operator(ascend,
+args = [(agnt, AGENT), (loc, TILE)],
+preconditions = [condition(atSurface, [agnt], negate = True)],
+results = [condition(atSurface, [agnt]),
+           condition(atBottom, [agnt], negate = True),
+           condition(certainblocRadius, [agnt, loc])])
+
+operator(descend,
+args = [(agnt, AGENT), (loc, TILE)],
+preconditions = [
+	condition(atBottom, [agnt], negate = True)],
+results = [condition(atBottom, [agnt]),
+           condition(atSurface, [agnt], negate = True)])
+
+operator(glideback,
+args = [(agnt, AGENT)],
+preconditions = [
+	condition(free, [agnt], negate = True)],
+results = [condition(free, [agnt])])

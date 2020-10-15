@@ -69,6 +69,110 @@ class AsynchronousAct(base.BaseModule):
             else:
                 break
 
+class AsynchronousGraceAct(base.BaseModule):
+
+    '''
+    MIDCA module that "executes" plans in which the individual actions will be conducted
+    asynchronously. This was originally designed to allow MIDCA to work as a robot
+    controller in communication with ROS sensor and effector nodes.
+    '''
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.world = world
+
+    def DisplayEachHistory(self, ExecutionHistory):
+        print ("----------------STATES---------------------------")
+        for atom in ExecutionHistory[0]:
+            print atom
+        print ("----------------Action---------------------------")
+        print (ExecutionHistory[1])
+        print ("----------------*******---------------------------")
+
+    def DisplayExecutionHistory(self):
+        ExecutionHistory = self.mem.get(self.mem.ExecutionHistory)
+        print ("*******************EXECUTION HISTORY*******************")
+        print("")
+        for eachExecutionHistory in ExecutionHistory:
+            self.DisplayEachHistory(eachExecutionHistory)
+        print("")
+        print ("*******************END EXECUTION HISTORY*******************")
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        #ExecutionHistory = self.mem.get(self.mem.ExecutionHistory)[-1]
+        self.verbose = verbose
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+        if not goals:
+            if verbose >= 2:
+                print "No Active goals. Act phase will do nothing"
+            return
+
+        try:
+            plan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+        except:
+            if verbose >= 1:
+                print "Error loading plan. Skipping act phase."
+            return
+
+        if not plan:
+            if verbose > 2:
+                print "No current plan. Skipping Act phase"
+            return
+        i = 0
+        if plan.finished():
+            print "Plan", plan, "has already been completed"
+            return
+        #ideally MIDCA should check for other valid plans, but for now it doesn't.
+        current_action = None
+        while i < len(plan):
+            current_action = plan[i]
+            action = plan[i]
+            try:
+                if action.status == asynch.NOT_STARTED:
+                    if verbose >= 2:
+                        print "Begining action execution for", action
+                    action.execute()
+                    self.mem.add(self.mem.ACTIONS, [action.midcaAction])
+            except AttributeError:
+                if verbose >= 1:
+                    print "Action", action, "Does not seem to have a valid execute() ",
+                    "method. Therefore MIDCA cannot execute it"
+                    action.status = asynch.FAILED
+            try:
+                if action.status != asynch.FAILED and action.status != asynch.COMPLETE:
+                    #while (True):
+                    completed = action.check_complete()
+                    if completed:
+                        #if self.world.midca_action_applicable(action.midcaAction):
+                        self.world.apply_asynch_midca_action(action.midcaAction)
+                        world.apply_asynch_midca_action(action.midcaAction)
+                    #            break
+                    #    import time
+                    #    time.sleep(0.2)
+
+            except AttributeError, e:
+                print (e)
+                if verbose >= 1:
+                    print "Action", action, "Does not seem to have a valid check_complete() ",
+                    "method. Therefore MIDCA cannot execute it."
+                    action.status = asynch.FAILED
+            if action.status == asynch.COMPLETE:
+                i += 1
+            elif not action.blocks:
+                i += 1
+            else:
+                break
+
+            # representing execution history
+            #if ExecutionHistory:
+            #    if not ExecutionHistory[1]:
+            #        ExecutionHistory[1] = copy.deepcopy(current_action.midcaAction)
+            #        self.DisplayExecutionHistory()
+
 class SimpleAct(base.BaseModule):
 
     '''

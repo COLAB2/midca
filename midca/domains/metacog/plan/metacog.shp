@@ -1,0 +1,160 @@
+(defdomain metacognition
+ (
+
+ (:method (evaluate ?agent ?state ?goal)
+
+    ; if the goal requested by other agent is achieved remove the goal
+    ; and remove the request
+     ((intend ?agent ?goal)
+      (active-goal ?agent ?goal)
+      (requested ?other-agent ?agent ?goal)
+      (forall (states ?atom) (call equal ?atom ?goal)))
+        ((!remove-goal ?agent ?state ?goal)
+         (!remove-request ?other-agent ?agent ?goal))
+
+
+    ; if the goal is achieved remove it from the goals
+    ((intend ?agent ?goal)
+     (active-goal ?agent ?goal)
+     (forall (states ?atom) (call equal ?atom ?goal)))
+        ((!remove-goal ?agent ?state ?goal))
+
+    )
+
+
+ (:method (select ?agent ?state ?goals)
+
+    ; if there is a higher priority goal select the priority goal
+    ; to do later
+
+    ; if there is an active goal do nothing
+    ((intend ?agent ?goal)
+     (active-goal ?agent ?goal))
+        ()
+
+    ; select a goal if there isn't an active goal
+     ((not(intend ?agent ?goal))
+      (not(active-goal ?agent ?goal)))
+        ((!select-goal ?agent ?state ?goals))
+    )
+
+
+  (:method (plan ?agent ?state ?goal)
+      ; if there is an active plan for the intended goal do nothing
+      ((committed ?agent ?plan ?goal)
+       (active-plan ?agent ?plan)
+       (intend ?agent ?goal))
+        ()
+
+      ; if there is no active plan then create plan
+      ((not(committed ?agent ?plan ?goal))
+       (not(active-plan ?agent ?plan)))
+       ((intend ?agent ?goal)
+        (!create-plan ?agent ?state ?goal))
+
+      ; replan if the current plan does not achieve the goal
+      ; to-do later
+   )
+
+  (:method (act ?agent ?state ?action ?plan)
+      ; if it is the last action apply action and remove commitment
+      ((committed ?agent ?plan ?goal)
+       (not(done ?agent ?action))
+       (at ?action ?step ?plan)
+       ; no action is greater than the current action
+       (not(forall (at ?next-action ?next-step ?plan) (call > ?next-step ?step)))
+       )
+       ; apply action and remove commitment
+        ((!apply-action ?agent ?state ?action ?plan)
+         (!remove-commitment ?agent ?plan))
+
+      ; if it is not the last action apply action
+      ((committed ?agent ?plan ?goal)
+       (not(done ?agent ?action))
+       (at ?action ?step)
+       ; if every action in the plan greater than the current action (?action) is not done
+       (not(forall (at ?next-action ?next-step ?plan ) (and (call < ?next-step ?step) (done ?next-action))))
+       )
+       ; apply action
+        ((!apply-action ?agent ?state ?action ?plan))
+   )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;evaluate phase;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (:operator (!remove-goal ?agent ?state ?goal)
+    ((intend ?agent ?goal)
+     (active-goal ?agent ?goal))
+    ; delete list
+    ((intend ?agent ?goal)
+      (active-goal ?agent ?goal))
+     ;add list
+     ()
+  )
+
+  (:operator (!remove-request ?other-agent ?agent ?goal)
+    ((requested ?other-agent ?agent ?goal))
+    ; delete list
+    ((requested ?other-agent ?agent ?goal))
+     ;add list
+     ()
+  )
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;; intend phase operators;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ (:operator (!select-goal ?agent ?goals)
+    ()
+    ; delete list
+    ()
+     ;add list
+     ((intend ?agent ?goal)
+      (active-goal ?agent ?goal))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;; act phase operators;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ (:operator (!remove-commitment ?agent ?plan)
+    ((committed ?agent ?plan ?goal))
+    ; delete list
+    ((committed ?agent ?plan ?goal)
+     (active-plan ?agent ?plan))
+     ;add list
+     ()
+  )
+
+ (:operator (!apply-action ?agent ?state ?action ?plan)
+    ((not(done ?agent ?action)))
+    ; delete list
+    ()
+    ((done ?agent ?action)
+     (changed ?state ?new-state ?action))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;; plan phase operators;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ (:operator (!create-plan ?agent ?state ?goal)
+    ; preconditions
+    ((intend ?agent ?goal)
+     ; there is no active and committed plans
+     (not(active-plan ?agent ?plan))
+     (not(committed ?agent ?plan ?goal))
+     )
+    ; delete list
+    ()
+    ; add list
+    ((committed ?agent ?new-plan ?goal)
+     (active-plan ?agent ?new-plan)
+     )
+  )
+
+ ))
