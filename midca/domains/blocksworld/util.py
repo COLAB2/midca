@@ -25,6 +25,19 @@ def preferApprehend(goal1, goal2):
         return 1
     return 0
 
+def preferCommunication(goal1, goal2):
+    if 'predicate' not in goal1 or 'predicate' not in goal2:
+        return 0
+    elif goal1['predicate'] == 'committed' and goal2['predicate'] != 'committed':
+        return -1
+    elif goal1['predicate'] != 'committed' and goal2['predicate'] == 'committed':
+        return 1
+    elif goal1['predicate'] == 'rejected' and goal2['predicate'] != 'rejected':
+        return -1
+    elif goal1['predicate'] != 'rejected' and goal2['predicate'] == 'rejected':
+        return 1
+    return 0
+
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -40,10 +53,10 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
 #     STATE_FILE = MIDCA_ROOT + "jshop_domains/blocks_world/bw_ran_problems_500.shp"
     try:
         f = open(STATE_FILE, 'w')
-    
+
         f.write('\n')
         f.write('(defproblem bw-ran-5-1 blocks-normal ((arm-empty)\n')
-        
+
         for atom in world.atoms:
             if atom.predicate.name == "clear":
                 f.write("(clear " +  atom.args[0].name+ ")\n")
@@ -51,14 +64,14 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
                 f.write("(on " + atom.args[0].name + " " +  atom.args[1].name + ")\n")
             elif atom.predicate.name == "on-table":
                 f.write("(on-table " +  atom.args[0].name + ")\n")
-        
+
         f.write(")\n")
         f.close()
-        
+
     except Exception:
         print "could not read the state file. Check the path..."
-        
-        
+
+
 def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
 #     thisDir =  os.path.dirname(os.path.realpath(__file__))
 #     MIDCA_ROOT = thisDir + "/../"
@@ -88,12 +101,12 @@ def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
             f.write("(on " +  args[0] + " " +  args[1] + ")\n")
         elif predicate == 'on-table':
             f.write("(on-table" + blkgoals.pos[args[0]]+ ")\n")
-        
+
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" ))))")
     f.close()
-    
+
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.pos = {}
@@ -103,7 +116,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.hasmortar = {} # keys are 
+    s.hasmortar = {} # keys are
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
@@ -146,7 +159,7 @@ def pyhop_state_from_world(world, name = "state"):
             s.pos[block] = "in-arm"
         if block not in s.hasmortar.keys():
             s.hasmortar[block] = False
-    
+
     for mblock in mortarblocks:
         if mblock not in s.mortaravailable.keys():
             s.mortaravailable[mblock] = False
@@ -170,7 +183,7 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             predicate = str(goal.args[0])
         else:
             raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
-        
+
         args = [str(arg) for arg in goal.args]
         if args[0] == predicate:
             args.pop(0)
@@ -182,6 +195,12 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             alltasks.append(("put_out", args[0]))
         elif predicate == "free" and 'negate' in goal and goal['negate'] == True:
             alltasks.append(("catch_arsonist", args[0]))
+        elif predicate == "committed" or predicate == "rejected" or predicate == "requested"\
+                or predicate == "!committed":
+            negate = False
+            if 'negate' in goal and goal['negate'] == True:
+                negate = True
+            alltasks.append(("communicated", args[0], args[1], args[2], predicate, negate))
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     if blkgoals.pos:

@@ -398,6 +398,7 @@ class JSHOPPlanner(base.BaseModule):
                  jshop_tasks_from_goals,
                  domain_file,
                  state_file,
+                 monitors = False,
                  extinguishers = False,
                  mortar = False):
 
@@ -405,6 +406,7 @@ class JSHOPPlanner(base.BaseModule):
         self.jshop_tasks_from_goals = jshop_tasks_from_goals
         self.domain_file = domain_file
         self.state_file= state_file
+        self.monitors = monitors
 
         try:
             self.working = True

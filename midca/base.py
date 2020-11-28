@@ -52,7 +52,7 @@ class BaseModule:
 
 class MIDCA:
 
-    def __init__(self, world = None, logenabled = True, logOutput = True,
+    def __init__(self, world = None, logenabled = False, logOutput = True,
                      logMemory = True, metaEnabled = False, phaseManager = None, verbose = 2):
         self.world = world
         self.mem = Memory()
@@ -336,7 +336,7 @@ class PhaseManager:
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
         # phasemanager is passed in as a self pointer for metacognitive modification
         self.verbose = verbose
-        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=False)
+        self.midca = MIDCA(world = world, verbose = verbose, metaEnabled = metaEnabled, phaseManager=self,logenabled=True)
         self.metaEnabled = metaEnabled
         self.mem = self.midca.mem
         self.storeHistory = storeHistory

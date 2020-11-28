@@ -3,7 +3,8 @@ from midca.worldsim import domainread, stateread
 from midca import rosrun, midcatime, base
 import copy
 import os
-import socket
+import socket, zmq
+from midca import goals
 try:
     # baxter robot requirements
     from midca.examples import ObjectDetector
@@ -204,7 +205,7 @@ class AsyncGraceObserver(base.BaseModule):
                  atom.args[2].name in positions:
                 self.world.atoms.remove(atom)
 
-    def get_adjacent_position_tags(self, position, states):
+    def get_adjacent_position_tags(self, position, states, dim):
         """
         create an object for Tagworld and call get_cell_poisson_rate
         :return: the position in Tile format
@@ -243,7 +244,7 @@ class AsyncGraceObserver(base.BaseModule):
         if positions:
             try:
                 self.delete_est_tag_atoms(positions)
-                self.display_est_tag(display_tag_data, position)
+                self.display_est_tag(display_tag_data, position, dim)
             except Exception as e:
                 print(e)
                 pass
@@ -328,9 +329,9 @@ class AsyncGraceObserver(base.BaseModule):
         tag = self.sim.TagWorld()
         tag_data = None
         action = self.mem.get(self.mem.ACTIONS)
-        if action:
-            if action[-1][0].op == "collectdata":
-                tag_data = tag.get_tags(position)
+        #if action:
+        #if "collectdata" in action[-1][0].op:
+        tag_data = tag.get_tags(position)
         return tag_data
 
     def get_fish_tags_wo_action(self, position):
@@ -353,6 +354,10 @@ class AsyncGraceObserver(base.BaseModule):
         tag = self.sim.TagWorld()
         mode = tag.get_mode()
         return mode
+
+    def kill_simulator(self):
+        tag = self.sim.TagWorld()
+        mode = tag.kill_simulator()
 
     def add_prev_tag(self, tag_data, position):
         """
@@ -394,7 +399,7 @@ class AsyncGraceObserver(base.BaseModule):
         result = result[:len(result) - 2]
         return result
 
-    def display_tag(self, tag_data=None, position=None, dim=5):
+    def display_tag(self, tag_data=None, position=None, dim=[5,5]):
         """
         create an object for Tagworld and call get_pos
         :return: the integer value of fish tags detected
@@ -404,9 +409,9 @@ class AsyncGraceObserver(base.BaseModule):
 
         if not grid:
             grid = []
-            for c in range(dim):
+            for c in range(dim[0]):
                 row = []
-                for r in range(dim):
+                for r in range(dim[1]):
                     row.append(".")
                 grid.append(row)
             self.mem.set(self.mem.GRID, grid)
@@ -416,8 +421,8 @@ class AsyncGraceObserver(base.BaseModule):
                 output = []
                 y_index = position.index('y')
                 output = [int(position[2:y_index]), int(position[y_index + 1:])]
-                if  grid[4-output[1]][output[0]]:
-                    grid[4-output[1]][output[0]] = str(tag_data)
+                if  grid[(dim[0]-1)-output[1]][output[0]]:
+                    grid[(dim[0]-1)-output[1]][output[0]] = str(tag_data)
                 self.mem.set(self.mem.GRID, grid)
 
         #display
@@ -425,7 +430,7 @@ class AsyncGraceObserver(base.BaseModule):
         print (self.drawlistinlists(grid))
         print ("-----------------------------------\n")
 
-    def display_est_tag(self, tag_data=None, position=None, dim=5):
+    def display_est_tag(self, tag_data=None, position=None, dim=[5,5]):
         """
         create an object for Tagworld and call get_pos
         :return: the integer value of fish tags detected
@@ -435,9 +440,9 @@ class AsyncGraceObserver(base.BaseModule):
 
         if not grid:
             grid = []
-            for c in range(dim):
+            for c in range(dim[0]):
                 row = []
-                for r in range(dim):
+                for r in range(dim[1]):
                     row.append(str([0.0, 0.0, 0.0, 0.0]))
                 grid.append(row)
             self.mem.set(self.mem.ESTGRID, grid)
@@ -448,8 +453,8 @@ class AsyncGraceObserver(base.BaseModule):
                 output = []
                 y_index = position.index('y')
                 output = [int(position[2:y_index]), int(position[y_index + 1:])]
-                if  grid[4-output[1]][output[0]]:
-                    grid[4-output[1]][output[0]] = str(tag_data)
+                if  grid[(dim[0]-1)-output[1]][output[0]]:
+                    grid[(dim[0]-1)-output[1]][output[0]] = str(tag_data)
                 self.mem.set(self.mem.ESTGRID, grid)
 
         #display
@@ -457,13 +462,28 @@ class AsyncGraceObserver(base.BaseModule):
         print (self.drawlistinlists(grid))
         print ("-----------------------------------\n")
 
+    def getdimensions(self):
+        """
+        :return: row, col
+        """
+        row= 0
+        col = 0
+        for objname in self.world.objects:
+            if self.world.objects[objname].type.name == "ROWDIM":
+                row = int(objname)
+            elif self.world.objects[objname].type.name == "COLDIM":
+                col = int(objname)
+
+        if row == 0:
+            row = col
+
+        if col == 0:
+            col = row
+        return row, col
+
+
 
     def run(self, cycle, verbose = 2):
-
-        world = self.observe()
-        if not world:
-            raise Exception("World observation failed.")
-
         states = ""
 
         position = self.get_agent_position()
@@ -476,7 +496,7 @@ class AsyncGraceObserver(base.BaseModule):
         states += "QblocRadius(grace," + position + ", HIGH)\n"
 
         # get the tag data
-        tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
+        tag_data = self.get_fish_tags(self.parse_tile(position))
 
         #get the operational mode of the grace
         mode = self.get_mode()
@@ -490,27 +510,36 @@ class AsyncGraceObserver(base.BaseModule):
             # grace is not free as it is not operating at regular mode
             if not mode == "m1":
                 self.remove_corresponding_atoms(["free", "grace"])
+            else:
+                self.remove_corresponding_atoms(["free", "grace"])
+                states += "free(grace)\n"
 
 
         if tag_data:
-            self.display_tag(tag_data, position)
+            row,col = self.getdimensions()
+            self.display_tag(tag_data, position , [row, col])
             arguments = ", ".join([str(tag_data), position])
             states += "NUM(" + str(tag_data) + ")\n"
             states += "uniqueTagCount(grace, " + arguments + ")\n"
 
             #get adjacent position
-            states = self.get_adjacent_position_tags(position, states)
+            states = self.get_adjacent_position_tags(position, states , [row,col])
 
             print (states)
 
         else:
-            self.display_tag()
-            self.display_est_tag()
+            row,col = self.getdimensions()
+            self.display_tag(dim = [row,col])
+            self.display_est_tag(dim = [row,col])
 
-        if tag_data > 235:
+        if tag_data > 40:
             states += "hotspot-detected(grace, " + position + ")\n"
-            #import sys
-            #sys.exit()
+            #self.kill_simulator()
+
+        world = self.observe()
+        if not world:
+            raise Exception("World observation failed.")
+
 
         if states:
             print ("  States Added  ")
@@ -547,7 +576,7 @@ class AsyncGraceObserver(base.BaseModule):
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
-        if len(states) > 400:
+        if len(states) > 40:
             #print "trimmed off 200 old stale states"
             states = states[2:]
             self.mem.set(self.mem.STATES, states)
@@ -560,6 +589,200 @@ class AsyncGraceObserver(base.BaseModule):
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("WORLD",copy.deepcopy(world))
+
+
+class RecieveRequests(base.BaseModule):
+
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+    def __init__(self, publish, subscribe, name , other_agent_name):
+        self.name = name
+        self.other_agent_name = other_agent_name
+
+        context = zmq.Context()
+        self.publisher = context.socket(zmq.PUB)
+        self.publisher.bind(publish)
+
+        context = zmq.Context()
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.setsockopt(zmq.RCVTIMEO, 5)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber.connect(subscribe)
+
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+        self.mem.set(self.mem.CONNECTIONS, {"publish" : self.publisher,
+                                                        "subscribe": self.subscriber})
+
+    def goal_to_parsable_construct(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # convert commas in goal to ":" because of problem in parsing predicates by stateread
+        goal = str(goal).replace(",",";")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("(","[")
+        goal = goal.replace(")","]")
+
+        return goal
+
+    def run(self, cycle, verbose = 2):
+        states = ""
+        # get the message from the ip address
+        try:
+            message = self.subscriber.recv()
+            message = message.split(":")
+            performative = message[0]
+            goaltext = message[1]
+
+            if performative == "achieve":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "reject":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "commit":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+            elif performative == "tell":
+                print "Request Recieved."
+                goal = self.goal_to_parsable_construct(goaltext)
+                states += "GOAL(" +goal + ")\n"
+                states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                states += "achieved(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+
+
+                    # this is to update the world into memory
+            if not states == "":
+                if verbose >= 1:
+                    print ("Updated States \n")
+                    print(states)
+                stateread.apply_state_str(self.world, states)
+                self.mem.add(self.mem.STATES, self.world)
+
+            # trace
+            trace = self.mem.trace
+            if trace:
+                trace.add_module(cycle, self.__class__.__name__)
+                trace.add_data("WORLD",copy.deepcopy(self.world))
+
+        except zmq.ZMQError as e:
+            if e.errno == zmq.EAGAIN:
+                pass # no message was ready (yet!)
+
+class HumanGoalInput(base.BaseModule):
+
+    '''
+    MIDCA module that allows users to input goals in a predicate representation.
+    These will be stored in MIDCA state
+    Note that this class only allows for simple goals with only predicate and argument information.
+    It does not currently check to see whether the type or number of arguments is appropriate.
+    '''
+    def __init__(self, name):
+        self.name = name
+        self.completed = False
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    def goal_to_parsable_construct(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # convert commas in goal to ":" because of problem in parsing predicates by stateread
+        goal = str(goal).replace(",",";")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("(","[")
+        goal = goal.replace(")","]")
+
+        return goal
+
+    def run(self, cycle, verbose = 2):
+        if self.completed:
+           return
+
+        states = ""
+        human_goals = [[
+            goals.Goal(*["grace", "Tx0y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y1"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y2"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y3"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y4"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx1y4"], predicate='surveyed'),
+            goals.Goal(*["grace",  "Tx1y3"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx1y2"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx1y1"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx1y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx2y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx2y1"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx2y2"], predicate='surveyed'),
+            ],
+            [goals.Goal(*["grace", "Tx2y3"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx2y4"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx3y4"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx3y3"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx3y2"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx3y1"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx3y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx4y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx4y1"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx4y2"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx4y3"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx4y4"], predicate='surveyed')
+            ]]
+
+        if self.name == "grace":
+            human_goals = human_goals[0]
+        else:
+            human_goals = human_goals[1]
+
+        for goal in human_goals:
+            #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            #print "Goal Recieved."
+            arguments = ",".join(goal.args)
+            predicate = goal["predicate"]
+            goaltext = predicate + "(" + arguments + ")"
+            goal = self.goal_to_parsable_construct(goaltext)
+            states += "exists(human)\n"
+            states += "GOAL(" +goal + ")\n"
+            states += "requested(human," +self.name+ "," +goal+")\n"
+
+        # this is to update the world into memory
+        if not states == "":
+            if verbose >= 1:
+                print ("Updated States \n")
+                print(states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, self.world)
+
+        self.completed = True
+        # trace
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD",copy.deepcopy(self.world))
 
 class PerfectObserver(base.BaseModule):
 

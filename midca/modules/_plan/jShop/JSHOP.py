@@ -1,5 +1,6 @@
 import inspect, os
 import subprocess
+import time
 
 from subprocess import Popen, PIPE, STDOUT
 
@@ -25,6 +26,7 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE, verbose=1):
 
     for line in p.stdout:
         if verbose > 1:
+            #time.sleep(1)
             print line
         if(line.startswith(" ( (!")):
             plan = line
@@ -68,7 +70,7 @@ def graceParse(plan):
             each.append(tile1)
             plan[i] = each
 
-        elif each[0].startswith("collect"):
+        elif each[0].startswith("collect") or each[0].startswith("deepcollect"):
             try:
                 tile2 = Tile(each[3:])
                 each = each[:3]
@@ -113,5 +115,5 @@ def parse(str):
     return plan
 
 if __name__ == "__main__":
-    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/metacog/plan/metacog.shp",
-    "/home/sampath/Documents/git/midca/midca/domains/metacog/plan/metacogproblem.shp", 2)
+    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/grace/plan/midcaNsf.shp",
+    "/home/sampath/Documents/git/midca/midca/domains/grace/plan/midcansfproblem.shp", 2)

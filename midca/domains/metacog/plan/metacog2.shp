@@ -243,7 +243,7 @@
     ; add list
     ((committed ?agent plan66 ?goal)
      (active-plan ?agent plan66)
-     (at pickup[a] 0 plan66)
+     (at action1 0 plan66)
      )
   )
 

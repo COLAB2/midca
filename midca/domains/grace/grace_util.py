@@ -67,10 +67,11 @@ class NBeaconGrid():
         
     
     def generate(self,width=10,height=10,num_beacons=10,num_quicksand_spots=5):
-        if width != height:
-            raise Exception("Sorry but only square environments are valid: width must equal height")
-        self.DIM = width
+        #if width != height:
+        #    raise Exception("Sorry but only square environments are valid: width must equal height")
+        self.DIM = [width, height]
         self.TILE_GRID = self.generate_tiles(width,height)
+        pass
         #self.BEACONS = self.generate_beacons(num_beacons)
         #self.QUICKSAND = self.generate_quicksand(num__quicksand_spots=num_quicksand_spots)
         
@@ -179,8 +180,9 @@ class NBeaconGrid():
     
         strips_result_str = ""
     
-        # add dimension
-        strips_result_str += "DIM("+str(self.DIM)+")\n"
+        # add dimensions
+        strips_result_str += "ROWDIM("+str(self.DIM[0])+")\n"
+        strips_result_str += "COLDIM("+str(self.DIM[1])+")\n"
         
         # First, place all the tiles
         for t_row in self.TILE_GRID:
@@ -377,7 +379,7 @@ def convert(midca_tile_str):
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
     s.agents={'grace':'0,0'} # put beacons here too? and mud tiles?
-    s.dim={'dim':5}
+    s.dim={'dim':[5,5]}
     s.agents = {}
     s.beaconlocs = {} # key is beacon id (e.g. b1), val is tile str like Tx3y4 
     s.beacontypes = {} # key is beacon id (e.g. b1), val is a number representing the type
@@ -392,8 +394,10 @@ def pyhop_state_from_world(world, name = "state"):
             beacons.append(objname)
         elif world.objects[objname].type.name == "AGENT" and not agent: # if agent already set, means multi-agent
             agent = objname
-        elif world.objects[objname].type.name == "DIM":
-            s.dim['dim'] = int(objname)
+        elif world.objects[objname].type.name == "ROWDIM":
+            s.dim['dim'][0] = int(objname)
+        elif world.objects[objname].type.name == "COLDIM":
+            s.dim['dim'][1] = int(objname)
             
     # by default, make all beacons deactivated (if they are activated, will be changed below)        
     for bcn in beacons:
@@ -479,19 +483,20 @@ def jshop2_state_from_world(world, STATE_FILE, name = "state"):
 
     for atom in world.atoms:
         predicate = atom.predicate.name
-        args = []
-        for arg in atom.args:
-            if arg.type.name == "TILE":
-                args.append(parse_tile(arg.name))
-            else:
-                args.append(arg.name)
+        if not predicate == "committed" and not predicate == "informed" and not predicate == "achieved":
+            args = []
+            for arg in atom.args:
+                if arg.type.name == "TILE":
+                    args.append(parse_tile(arg.name))
+                else:
+                    args.append(arg.name)
 
-        arguments = ""
-        # iterate through arguments and make them as strings
-        for each in args:
-            arguments += " " + each
+            arguments = ""
+            # iterate through arguments and make them as strings
+            for each in args:
+                arguments += " " + each
 
-        f.write("("+predicate + arguments +")\n")
+            f.write("("+predicate + arguments +")\n")
 
     f.write(")\n")
     f.close()
@@ -584,9 +589,9 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
     # initialize the map with dirt
     dim = pyhopState.dim['dim']
     grid = []
-    for c in range(dim):
+    for c in range(dim[0]):
         row = []
-        for r in range(dim):
+        for r in range(dim[1]):
                 row.append(DIRT)
         grid.append(row)
     
@@ -595,7 +600,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
     agentstr = pyhopState.agents['grace']
     agent_x = int(agentstr.split(',')[0]) 
     agent_y = int(agentstr.split(',')[1])
-    grid[4-agent_y][agent_x] = AGENT
+    grid[(dim[0]-1)-agent_y][agent_x] = AGENT
      
     # now go through each attribute of the state, changing the grid
     # ADD ALL BEACONS
@@ -690,6 +695,26 @@ def preferFree(goal1, goal2):
         return -1
     elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
         return 1
+    elif goal1['predicate'] == 'committed' and goal2['predicate'] != 'committed':
+        return -1
+    elif goal1['predicate'] != 'committed' and goal2['predicate'] == 'committed':
+        return 1
+    elif goal1['predicate'] == 'rejected' and goal2['predicate'] != 'rejected':
+        return -1
+    elif goal1['predicate'] != 'rejected' and goal2['predicate'] == 'rejected':
+        return 1
+    elif goal1['predicate'] == 'requested' and goal2['predicate'] != 'requested':
+        return -1
+    elif goal1['predicate'] != 'requested' and goal2['predicate'] == 'requested':
+        return 1
+    elif goal1['predicate'] == 'achieved' and goal2['predicate'] != 'achieved':
+        return -1
+    elif goal1['predicate'] != 'achieved' and goal2['predicate'] == 'achieved':
+        return 1
+    elif goal1['predicate'] == 'Deepsurveyed' and goal2['predicate'] != 'Deepsurveyed':
+        return -1
+    elif goal1['predicate'] != 'Deepsurveyed' and goal2['predicate'] == 'Deepsurveyed':
+        return 1
 
     return 0
 
@@ -738,7 +763,7 @@ def monitor(world, mem, plan, verbose=2):
                 if check_agent_loc(world, atom.args[1].name) and \
                     not check_if_communicated(world, atom.args[1].name) and \
                         not actions[0].op == "communicate" and \
-                        not atom.args[1].name == actions[0].args[2]:
+                        not actions[0].op == "ascend":
                     # generate an action and insert in the plan
                     addedActions = [plans.Action("ascend", "grace", atom.args[1].name),
                                     plans.Action("communicate", "grace", "fumin", atom.args[1].name),

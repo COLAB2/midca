@@ -97,16 +97,12 @@ class Grid:
     #def abstractPosToRange(self,s):
     #    return (s%len(self.x_bins))*self.x_range*1.0/len(self.x_bins),((s-s%len(self.x_bins))*1.0/len(self.x_bins))%len(self.y_bins)*self.y_range/len(self.y_bins),20
 
-    def abstractPosToRange(self,s):
-        start_x = -141
-        start_y = 76 - 80*5
-        side = 80
+    def abstractPosToRange(self,s, start_x=0, start_y=0, side=800, grid_m=8, grid_n=11):
+        start_y = start_y - side*grid_m
         tags = []
-        grid_n = 5
-        grid_m = 5
-        for i in range(grid_n):
-            for j in range(grid_m):
-                tags.append([start_x + j*80, start_y + i*80])
+        for i in range(grid_m):
+            for j in range(grid_n):
+                tags.append([start_x + j*side, start_y + i*side])
 
         return tags[s][0], tags[s][1], 20
 
@@ -128,8 +124,9 @@ class Grid:
             to_add = add_prob<self.p
             for i in range(self.p.size):
                 if to_add[i] and count<N:
-                    xr,yr,zr = self.abstractPosToRange(i)
-                    mpx,mpy = 80,80
+                    #xr,yr,zr = self.abstractPosToRange(i)
+                    xr,yr,zr = self.abstractPosToRange(i, -141, 76, 80, 5, 5)
+                    mpx,mpy = 80,80#800,800
                     self.taglist[count].pos=np.array([xr+mpx*np.random.rand(),yr+mpy*np.random.rand(),zr*np.random.rand()])
                     self.taglist[count].bin=i
                     self.tag_count[i]+=1

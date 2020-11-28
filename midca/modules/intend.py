@@ -2,6 +2,9 @@ from midca import base,midcatime
 import copy,itertools,operator
 import random
 import time as ctime
+import numpy as np
+import math
+
 
 class SimpleIntend(base.BaseModule):
 
@@ -1693,6 +1696,25 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             if str(each) == str(goal):
                 return each
 
+    def min_distance_goal(self, goals, atom):
+        """
+        :param goals: goals
+        :param atom: agent-at(grace, "")
+        :return: a goal which is minimum distance from the agent
+        """
+        agent_location = self.parse_tile(atom.args[1].name)
+        agent_location = np.array((agent_location[0],agent_location[1]))
+        min_dist_goal = None
+        distance = float('inf')
+        for goal in goals:
+            dest_location = self.parse_tile(goal.args[1])
+            goal_location = np.array((dest_location[0], dest_location[1]))
+            dist_goal_agent = np.linalg.norm(agent_location - goal_location)
+            if distance > dist_goal_agent:
+                distance = dist_goal_agent
+                min_dist_goal = goal
+        return min_dist_goal
+
 
     def sortbyscores(self, previous_goals, score_graph):
         sorted_goals = []
@@ -1719,8 +1741,6 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
         # if there are no previous trajectory
         if not previous_goals:
             goal = self.get_max_neighbor(graph, score_graph, start_goal)
-            #update previous goal
-            self.previous_goal.append(copy.deepcopy(goal))
             return goal
 
         # if there is a trajectory
@@ -1764,20 +1784,45 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
         :param world: object of the worldsim.world
         :return: list of goals in dfs
         """
-
+        if not goals:
+            return [None]
+        """"   
         # get the current state of the agent
         [atom] = world.get_atoms(["agent-at", "grace"])
         start_goal = None
+
+        # if there is only one goal then make it the start goal
+        if len(goals) == 1:
+            start_goal = goals[0]
+
         # get the start goal from where the agent is in
         for goal in goals:
-
             if goal.args[1] == atom.args[1].name:
                 start_goal = goal
                 break
+
         if start_goal:
             self.previous_goal.append(copy.deepcopy(start_goal))
             return [start_goal]
+
+        elif not start_goal and not self.previous_goal:
+            start_goal = goals[0]
+            self.previous_goal.append(copy.deepcopy(start_goal))
+            return [start_goal]
+        
+        if len(goals) == 1:
+            start_goal = goals[0]
+            self.previous_goal.append(copy.deepcopy(start_goal))
+            return [start_goal]
+        """
+        if not self.previous_goal:
+            [atom] = world.get_atoms(["agent-at", "grace"])
+            start_goal = self.min_distance_goal(goals, atom)
+            self.previous_goal.append(copy.deepcopy(start_goal))
+            return [start_goal]
         else:
+            original_goals = goals[:]
+
             # create a dummy goal where the agent is
             # so that you will have better connected graph
             # since that goal is dummy add it in visited
@@ -1785,13 +1830,16 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
             # for connected graph
             for each in previous_goals:
-                goals.append(each)
+                    goals.append(each)
 
             # previously achieved goal
             start_goal = previous_goals.pop()
 
             # create graph
             graph = self.createGraph(goals)
+
+            # if there are no neighbours then return the
+
 
             # create estimated score graph
             score_graph = self.createScoreGraph(goals, world)
@@ -1805,7 +1853,12 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
             goal = self.hillclimbing(graph, score_graph, actual_score_graph, previous_goals, start_goal)
 
-            self.previous_goal.append(copy.deepcopy(goal))
+            if goal == None:
+                [atom] = world.get_atoms(["agent-at", "grace"])
+                goal = self.min_distance_goal(original_goals, atom)
+                self.previous_goal.append(copy.deepcopy(goal))
+            else:
+                self.previous_goal.append(copy.deepcopy(goal))
 
             return [goal]
 
@@ -1830,20 +1883,48 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 print "Goal graph not initialized. Intend will do nothing."
             return
         # get all the goals from the goal graph
-        goals = goalGraph.getAllGoals()
+        goals = goalGraph.getUnrestrictedGoals()
+        goals = self.filter(goals, "surveyed")
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print "No Survey goals. Intend will not select goals via hillclimbing."
             return
 
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+
+        need_for_hillclimbing_flag = True
+        if current_goals:
+            #get the top of the stack goals
+            current_goals = current_goals[-1]
+            #check if it is a surveyed goal and if the agent is in the same cell
+            exec_goals = self.filter(current_goals, "surveyed")
+            if exec_goals:
+                #check if any of it is in the same agent location
+                [atom] = world.get_atoms(["agent-at", "grace"])
+                for goal in exec_goals:
+                    if goal.args[1] == atom.args[1].name:
+                        need_for_hillclimbing_flag = False
+                        break
+            else:
+                need_for_hillclimbing_flag = False
+
+            if exec_goals and need_for_hillclimbing_flag:
+                for goal in exec_goals:
+                    if goal in self.previous_goal:
+                        self.previous_goal.remove(goal)
+
         # current goals as a stack
-        if self.mem.get(self.mem.CURRENT_GOALS):
-            goals = None
+        if not need_for_hillclimbing_flag:
+            goals = current_goals
         else:
             goals = self.filter(goals, "surveyed")
             goals = self.Searchinhillclimbing(goals, world)
-            goals = [goals[0]]
-            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+            if goals and not goals[0] == None:
+                goals = [goals[0]]
+                self.mem.set(self.mem.CURRENT_GOALS, [goals])
+            else:
+                if verbose >= 1:
+                    print "Intend could not select a goal."
 
         if trace:
             trace.add_data("GOALS", goals)
@@ -1853,7 +1934,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 print "No goals selected."
         else:
             # add it to goaltrajectory for representation
-            world = self.mem.get(self.mem.STATES)[-1]
+            #world = self.mem.get(self.mem.STATES)[-1]
             # get_atoms = [atom for atom in world.atoms]
             # self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
             # self.displayGoalTrajectory()
@@ -1862,3 +1943,139 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 for goal in goals:
                     print goal,
                 print
+
+class PriorityIntend(base.BaseModule):
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("GOALGRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getUnrestrictedGoals()
+
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+
+        if not current_goals:
+            # take the first goal
+            pass
+            # add it to the current goal in memory
+        elif not current_goals[-1]:
+            pass
+        else:
+            current_goals = current_goals[-1]
+            # prioritize the goals with highest priority
+            priority_goals = []
+            for goal in goals:
+                if goalGraph.cmp(goal, current_goals[0]) < 0:
+                    priority_goals.append(goal)
+
+            if priority_goals:
+                goals = priority_goals
+            else:
+                goals = current_goals
+
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
+class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
+
+    def run(self, cycle, verbose = 2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOALGRAPH",copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getUnrestrictedGoals()
+
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        world = self.mem.get(self.mem.STATES)[-1]
+        emergency = world.get_atoms(["agent-mode","grace", "m3"])
+        if emergency:
+            # take the first goal
+            #goals = [goals[0]]
+            # add it to the current goal in memory
+            predicates = ["committed", "rejected", "requested"]
+            suspended_goal = self.mem.get(self.mem.SUSPENDED_GOALS)
+            if not suspended_goal:
+                copy_goals = copy.deepcopy(goals)
+                suspended_goals = []
+                for goal in copy_goals:
+                    if not goal['predicate'] in predicates:
+                        suspended_goals.append(goal)
+                        if verbose >= 2:
+                            print "The goal " + str(goal) + " is suspended due to lack of resources"
+                        goals.remove(goal)
+                self.mem.set(self.mem.SUSPENDED_GOALS, suspended_goals)
+            else:
+                copy_goals = copy.deepcopy(suspended_goal)
+                for goal in copy_goals:
+                    if goal in goals:
+                        goals.remove(goal)
+
+            # current goals as a stack
+            if self.mem.get(self.mem.CURRENT_GOALS) :
+                current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+                if not current_goals[-1] == goals:
+                    current_goals = [goals]
+                    self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+                else:
+                    goals = []
+            else:
+                self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+            if trace:
+                trace.add_data("GOALS",goals)
+
+            if not goals:
+                if verbose >= 2:
+                    print "No goals selected."
+            else:
+                if verbose >= 2:
+                    print "Selecting goal(s):",
+                    for goal in goals:
+                        print goal,
+                    print

@@ -50,6 +50,31 @@
 
     )
 
+   (:method (deep-control-collect ?agent fishtag ?destX ?destY)
+     ((agent-at ?agent ?destX ?destY)
+     (not(certainblocRadius ?agent ?destX ?destY)))
+
+     (;(!ascend ?agent ?destX ?destY)
+     ;(!descend ?agent ?destX ?destY)
+     (!deepcollectdata ?agent fishtag ?destX ?destY))
+
+     ((agent-at ?agent ?destX ?destY)
+     (certainblocRadius ?agent ?destX ?destY))
+     ((!deepcollectdata ?agent fishtag ?destX ?destY))
+
+    )
+
+
+  (:method (achieve-goal (Deepsurveyed ?agent ?destX ?destY))
+      ((Deepsurveyed ?agent ?destX ?destY))
+      ()
+
+      ((not(Deepsurveyed ?agent ?destX ?destY)))
+      (
+      (achieve-goal (agent-at ?agent ?destX ?destY))
+      (deep-control-collect ?agent fishtag ?destX ?destY)
+      ))
+
 
  (:method (achieve-goal (surveyed ?agent ?destX ?destY))
       ((surveyed ?agent ?destX ?destY))
@@ -158,6 +183,14 @@
  ()
  ((collecteddata ?agent ?sensordata ?destX ?destY)
   (surveyed ?agent ?destX ?destY)))
+
+ (:operator (!deepcollectdata ?agent ?sensordata ?destX ?destY)
+ ((agent-at ?agent ?destX ?destY)
+  (atBottom ?agent))
+ ()
+ ((collecteddata ?agent ?sensordata ?destX ?destY)
+  (surveyed ?agent ?destX ?destY)
+  (Deepsurveyed ?agent ?destX ?destY)))
 
  (:operator (!communicate ?agent ?fumin ?destX ?destY)
  ((collecteddata ?agent ?sensordata ?destX ?destY))

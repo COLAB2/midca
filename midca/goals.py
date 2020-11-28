@@ -127,6 +127,10 @@ class GoalGraph:
     def add(self, goal):
         self.insert(goal)
 
+    def change(self, goal, *args, **kwargs):
+        goal.args = args
+        goal.kwargs = kwargs
+
     #inserts a goal into the graph using the graph's comparator
     def insert(self, goal):
         if goal in self:

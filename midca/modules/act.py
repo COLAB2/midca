@@ -179,6 +179,15 @@ class SimpleAct(base.BaseModule):
     MIDCA module that selects the plan, if any, that achieves the most current goals, then selects the next action from that plan. The selected action is stored in a two-dimensional array in mem[mem.ACTIONS], where mem[mem.ACTIONS][x][y] returns the yth action to be taken at time step x. So mem[mem.ACTIONS][-1][0] is the last action selected. Note that this will throw an index error if no action was selected.
     To have MIDCA perform multiple actions in one cycle, simple add several actions to mem[mem.ACTIONS][-1]. So mem[mem.ACTIONS][-1][0] is the first action taken, mem[mem.ACTIONS][-1][1] is the second, etc.
     '''
+    def __init__(self, asynch_actions=None):
+        self.asynch_actions = asynch_actions
+        self.current_asynch_action = []
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
 
     #returns the plan that achieves the most current goals, based on simulation.
     def get_best_plan(self, world, goals, verbose):
@@ -208,6 +217,49 @@ class SimpleAct(base.BaseModule):
                 print "Goals achieved:", [str(goal) for goal in goalsAchieved]
         return plan
 
+    def manage_asynch_action(self, plan, asynchAction, midcaaction, verbose=1):
+        """
+
+        :param plan: midcaplan
+        :param action: corresponding action to midcaaction
+        :return:
+        """
+        #asynchAction = self.asynch_actions.asynch_action(self.mem, action)
+        # there exists a corresponding asynchronous action
+        if asynchAction:
+            asynchAction = asynchAction[-1]
+            # check if the action has started or not
+            if asynchAction.status == self.asynch_actions.NOT_STARTED:
+                asynchAction.execute()
+                self.mem.add(self.mem.ACTIONS, [midcaaction])
+                """
+                # print statements
+                if verbose == 1:
+                    print "Action selected:", action
+                elif verbose >= 2:
+                    if len(plan) > 5:
+                        # print just the next 3 actions of the plan
+                        print "Selected action", action, "from plan:\n"
+                        if verbose >= 3:
+                            for a in plan:
+                                print "  "+str(a)
+                    else:
+                        # print the whole plan
+                        print "Selected action", action, "from plan:\n", plan
+
+                """
+            if asynchAction.status == self.asynch_actions.IN_PROGRESS:
+                asynchAction.check_complete()
+
+                #print statements
+            if asynchAction.status == self.asynch_actions.COMPLETE:
+                #self.mem.add(self.mem.ACTIONS, [midcaaction])
+                actions = self.mem.get(self.mem.ACTIONS)
+                self.mem.set(self.mem.ACTIONS, actions[:-1])
+                self.current_asynch_action.remove(asynchAction)
+                self.world.apply_midca_action(midcaaction)
+                plan.advance()
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         max_plan_print_size = 5
@@ -231,6 +283,15 @@ class SimpleAct(base.BaseModule):
                     print "Plan to achieve goals has already been completed. Taking no action."
                 self.mem.add(self.mem.ACTIONS, [])
             else:
+                # actions that need to do some functionality
+                if self.asynch_actions:
+                    if not str(action) in [str(act) for act in self.current_asynch_action]:
+                        self.current_asynch_action.append(self.asynch_actions.asynch_action(self.mem, action))
+
+                    if self.current_asynch_action:
+                        self.manage_asynch_action(plan, self.current_asynch_action, action, verbose)
+                        return
+
                 if verbose == 1:
                     print "Action selected:", action
                 elif verbose >= 2:
@@ -256,11 +317,12 @@ class SimpleAct(base.BaseModule):
             if verbose >= 1:
                 print "MIDCA will not select an action this cycle."
             self.mem.add(self.mem.ACTIONS, [])
-            if goals:
-                for g in goals:
-                    self.mem.get(self.mem.GOAL_GRAPH).remove(g)
+            #if goals:
+            #    for g in goals:
+            #        self.mem.get(self.mem.GOAL_GRAPH).remove(g)
 
             if trace: trace.add_data("ACTION", None)
+
 
 
 class SimpleAct_temporary(base.BaseModule):

@@ -2,51 +2,110 @@ from __future__ import division
 import zmq
 import time
 from simulator import Simulator
+import threading
+import numpy as np
+
+np.random.seed(555)
 
 class TagWorld():
 
-    def __init__(self):
+    def __init__(self, sub_ip = "tcp://127.0.0.1:4999",
+                 pub_ip = "tcp://127.0.0.1:5999",
+                 sub_mine_ip = "tcp://127.0.0.1:4998" , name="grace" ):
         context = zmq.Context()
         self.subscriber_remus = context.socket(zmq.SUB)
         self.subscriber_remus.setsockopt(zmq.SUBSCRIBE, "")
         self.subscriber_remus.setsockopt(zmq.RCVTIMEO, -1)
         self.subscriber_remus.setsockopt(zmq.CONFLATE, 1)
-        self.subscriber_remus.connect("tcp://127.0.0.1:4999")
+        self.subscriber_remus.connect(sub_ip)
 
         context = zmq.Context()
         self.subscriber_mine = context.socket(zmq.SUB)
         self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, "")
         self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 3)
-        self.subscriber_mine.connect("tcp://127.0.0.1:4998")
+        self.subscriber_mine.connect(sub_mine_ip)
 
 
         self.publisher = context.socket(zmq.PUB)
-        self.publisher.connect("tcp://127.0.0.1:5999")
+        self.publisher.connect(pub_ip)
 
         # initialize simulator
-        self.simulator = Simulator()
+        self.name = name
+        if name == "grace" or name == "franklin":
+            self.simulator = Simulator(start_x=-141, start_y=76, side=80, size_m=5, size_n = 5)
+        else:
+            self.simulator = Simulator(start_x=0, start_y=0, side=800, size_m=8, size_n = 11)
 
         #search complete
         self.searching = "false"
-
-        #time
-        self.time = 0
-        self.start_time = self.set_initial_time()
+        self.speed = 0
 
         #mines
         self.mines = {}
         self.mines_history = []
 
+        # lock for threading
+        self.lock = threading.Lock()
+        self.Recvlock = threading.Lock()
+
+        # initialize anomaly chance
+        self.anomalies = True
+        if self.anomalies:
+            self.simulate_anomalies = threading.Thread(target=self.attacks)
+            self.simulate_anomalies.start()
+
+        #time
+        self.time = 0
+        self.start_time = self.set_initial_time()
+
+        #hack
+        self.timeElapsed = False
+        self.timeElapsedM3 = False
+
+        self.mode = "m1"
+        #self.startsim()
+
     def TagWorld(self):
         return self
+
+    def startsim(self):
+        # construct the message
+        loc = self.get_cell()
+        loc = loc.split(",")
+        self.move_cell([0,0], [int(loc[0]) , int(loc[1])])
 
     def endSim(self):
         pass
 
     def get_mode(self):
-        return "m1"
+        if self.mode == "m3":
+            return "m3"
+
+        if self.searchComplete() == str(False) and self.speed < 0.7 and self.speed >0.1:
+            if self.timeElapsed:
+                wait_time = time.time() - self.timeElapsed
+                if (wait_time) > 5:
+                    self.timeElapsedM3 = False
+                    return "m2"
+            else:
+                self.timeElapsed = time.time()
+
+        elif self.speed < 0.1:
+            if self.timeElapsedM3:
+                wait_time = time.time() - self.timeElapsedM3
+                if (wait_time) > 30:
+                    self.mode = "m3"
+                    return "m3"
+            else:
+                self.timeElapsedM3 = time.time()
+        else:
+            self.timeElapsed = False
+            self.timeElapsedM3 = False
+            return "m1"
 
     def move_cell(self, initial_position, final_destination):
+        self.lock.acquire()
+
         time.sleep(0.25)
 
         #get the real moos coordinate equivalent of cell coordinates
@@ -58,7 +117,10 @@ class TagWorld():
         # send the message
         self.publisher.send_multipart(message)
 
+        self.lock.release()
+
     def search(self, position, speed=1):
+        self.lock.acquire()
         time.sleep(0.25)
 
         x, y = self.simulator.grid_to_sim(position[0], position[1])
@@ -85,6 +147,25 @@ class TagWorld():
         self.publisher.send_multipart(message)
 
         time.sleep(0.25)
+
+        self.lock.release()
+
+    def deepsearch(self, position, speed = 0.8):
+        self.lock.acquire()
+
+        time.sleep(0.25)
+
+        x, y = self.simulator.grid_to_sim(position[0], position[1])
+
+        # create message
+        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 70,lane_width=10, rows=north-south,degs=0 # speed =0.8"]
+
+        self.publisher.send_multipart(message)
+
+        time.sleep(0.25)
+
+        self.lock.release()
+
 
     def check_if_new_mine(self, mine, verbose=1):
         """
@@ -177,7 +258,9 @@ class TagWorld():
             return str(False)
 
     def get_cell(self):
+
         try:
+            self.Recvlock.acquire()
             # get the message from the ip address
             position = self.subscriber_remus.recv()
             x, y, speed, direction,status,mission,time = position.split(",")
@@ -188,14 +271,23 @@ class TagWorld():
             y = float(y.split(":")[1])
             self.searching = mission.split(":")[1]
             self.time = float(time.split(":")[1])
+            self.speed = float(speed.split(":")[1])
 
             # get the grid coordinates
             x, y = self.simulator.sim_to_grid(x,y)
-
+            self.Recvlock.release()
             return str(x)+","+str(y)
 
         except Exception as e:
+            self.Recvlock.release()
             print(e)
+
+    def kill_simulator(self):
+        try:
+            self.simulate_anomalies.kill()
+        except:
+            import sys
+            sys.exit()
 
     def lambda_rate(self, time):
         """
@@ -268,6 +360,94 @@ class TagWorld():
         self.get_cell()
         return self.time - self.start_time
 
+    def attacks(self):
+        stop = False
+        wreck = False
+        speed = 1.0
+        count = 0
+        #switchprob = 1/100.0
+        switchprob = 4/100
+        if self.name == "franklin":
+            breakprob = 0.1/100
+        else:
+            breakprob = 0
+        while True:
+            self.lock.acquire()
+            temp = np.random.rand()
+            if wreck:
+                speed = 0.0
+                if not stop:
+                    # construct the message
+                    message = [b"Vehicle", b"speed= "+str(speed)]
+
+                    # send the message
+                    self.publisher.send_multipart(message)
+
+                    stop = True
+
+
+            if self.anomalies:
+                    if temp < switchprob:
+                            count += 1
+                            speed -= count * 0.2
+                            #speed = 0.5
+                            if speed < 0.2:
+                                speed = 0.2
+
+                    if temp < breakprob:
+                            wreck = True
+
+                    if self.searchComplete() == str(False):
+
+                        # construct the message
+                        message = [b"Vehicle", b"speed= "+str(speed)]
+
+                        # send the message
+                        self.publisher.send_multipart(message)
+
+
+
+
+            else:
+                if temp < switchprob:
+                    self.anomalies = True
+                count = 0
+                speed = 1.0
+            self.lock.release()
+            time.sleep(1)
+
+    def remove_remora(self):
+        self.lock.acquire()
+
+                # construct the message
+        message = [b"Vehicle", b"speed= 0"]
+        # send the message
+        self.publisher.send_multipart(message)
+
+        time.sleep(2)
+
+        self.lock.release()
+        return True
+
+    def remove_remora_status(self):
+        self.lock.acquire()
+        self.anomalies = False
+        speed = 1.0
+        self.timeElapsed = False
+
+        if self.searchComplete() == str(False):
+            # construct the message
+            message = [b"Vehicle", b"speed= "+str(speed)]
+
+            # send the message
+            self.publisher.send_multipart(message)
+
+        self.lock.release()
+
+        return str(True)
+
+    def UpdateSurfstatus(self, status):
+        return
 
 
 if __name__ == "__main__":
@@ -276,9 +456,9 @@ if __name__ == "__main__":
         #tag.move_cell([0,0], [0,1])
         tag.get_cell()
         #print (tag.get_time())
-        print(tag.search([0,0]))
-        while (tag.searchComplete() == "false"):
-            print(tag.get_tags([0,0]))
-            #tag.getAdjacent([0,0])
-        print(tag.getAdjacent([0,0]))
+        print(tag.deepsearch([0,0]))
+        #while (tag.searchComplete() == "false"):
+        #    print(tag.get_tags([0,0]))
+        #    #tag.getAdjacent([0,0])
+        #print(tag.getAdjacent([0,0]))
         #print (tag.get_tags([0,0]))

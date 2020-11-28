@@ -1065,6 +1065,320 @@ class GraceGoalInputNSF(UserGoalInput):
                 tagworld.endSim()
                 sys.exit()
 
+class GraceAnomalyDetection(UserGoalInput):
+    '''
+    Todo: This class should make use of explanation patterns
+    '''
+
+    def run(self, cycle, verbose=2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        observation = world.get_atoms(["agent-mode", "grace"])
+
+        if observation:
+            if not observation[0].args[1].name == "m1" \
+                    and not observation[0].args[1].name == "m3":
+                g = goals.Goal(*["grace"], predicate='free')
+                # if the goal is not in goal graph
+                if not g in self.mem.get(self.mem.GOAL_GRAPH):
+                    print("An anomaly is detected regarding the mode of operation : ")
+                    self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                    print("Midca generated a goal : " + str(g))
+
+class GraceChangeDetection(UserGoalInput):
+    '''
+    Todo: This class should make use of explanation patterns
+    '''
+    def __init__(self):
+        self.threshold = 14
+
+    def run(self, cycle, verbose=2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        observation = world.get_atoms(["agent-at", "grace"])
+        delegated_goals = world.get_atoms(["requested", "grace", "franklin"])
+        if delegated_goals:
+            self.threshold = 20
+        if observation:
+            position = observation[0].args[1].name
+            observation = world.get_atoms(["uniqueTagCount", "grace", position])
+            observation = [atom for atom in observation if atom.predicate.name == "uniqueTagCount"]
+            if observation:
+                tags = int(observation[0].args[1].name)
+                if tags > self.threshold:
+                    for goal in self.mem.get(self.mem.GOAL_GRAPH).getAllGoals():
+                        if goal["predicate"] == "surveyed" and \
+                            goal.args[1] == position:
+                            print("Midca changed the goal : " + str(goal)),
+                            self.mem.get(self.mem.GOAL_GRAPH).change(goal,*["grace", position], predicate='Deepsurveyed')
+                            self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                            print(" to : " + str(goal))
+
+class InterpretRequests(base.BaseModule):
+
+    '''
+    Interpret requests in the state and decides to pursue a goal
+    also generates a responsive goal
+    '''
+    def __init__(self, name):
+        self.name = name
+
+    def init(self, world, mem):
+        self.mem = mem
+
+    def parseGoal(self, txt):
+        if not txt.endswith(")"):
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+        try:
+            if txt.startswith('!'):
+                negate = True
+                txt = txt[1:]
+            else:
+                negate = False
+            predicateName = txt[:txt.index("(")]
+            args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+            #use on-table predicate
+            if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
+                predicateName = 'on-table'
+                args = args[:1]
+            if negate:
+                goal = goals.Goal(*args, predicate = predicateName, negate = True)
+            else:
+                goal = goals.Goal(*args, predicate = predicateName)
+            return goal
+        except Exception:
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+
+    def check_requests(self, world):
+        """
+        :param world: uses world to look for predicates requested, informed etc.
+        :return: atoms that are the new requests
+        """
+        relavent_requests = []
+        atoms = world.get_atoms(["requested", self.name])
+        if not atoms:
+            return False
+
+        for atom in atoms:
+            if atom.args[1].name == self.name:
+                relavent_requests.append(atom)
+
+        return relavent_requests
+
+    def parsable_construct_to_goal(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # in percieve we replaced the "," with "." to be used as a predicate
+        # so to generate a goal we need to reverse it
+        # for example Goal[A_. B_. predicate: on] will be Goal(A_, B_, predicate: on)
+        goal = str(goal).replace(";",",")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("[","(")
+        goal = goal.replace("]",")")
+
+        return goal
+
+    def generate_goals(self, requests):
+        """
+
+        :param requests: requested atoms
+        :return: generated goals
+        """
+        goals_generated  = []
+        for atom in requests:
+            # generate a goal to acknowledge user about its commitment
+            goal = goals.Goal(*[atom.args[1].name, atom.args[0].name, atom.args[2].name], predicate = 'committed')
+            #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+            goals_generated.append(goal)
+            # actual goal requested by another agent
+            # atom.args[2].name contains the requested goal in the format Goal[A_. B_. predicate: on]
+            goal = self.parseGoal(self.parsable_construct_to_goal(atom.args[2].name))
+            goals_generated.append(goal)
+            #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+        return goals_generated
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        if not world:
+            raise Exception("World is not initialized.")
+
+        requests = self.check_requests(world)
+        if requests:
+            # generate goals and add it to goalgraph
+            goals_generated = self.generate_goals(requests)
+            if goals_generated:
+                # check if they are in goalgraph
+                goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+                goals_to_goalGraph = [goal for goal in goals_generated if not goal in goalGraph]
+                for goal in goals_to_goalGraph:
+                    goalGraph.insert(goal)
+                    if verbose > 1:
+                        print("\nMidca generated a goal : " + str(goal))
+                self.mem.set(self.mem.GOAL_GRAPH, goalGraph)
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+class GenerateRequests(base.BaseModule):
+
+    '''
+    Interpret requests in the state and decides to pursue a goal
+    also generates a responsive goal
+    '''
+    def __init__(self, name, other_agent_name):
+        self.name = name
+        self.other_agent_name = other_agent_name
+
+    def init(self, world, mem):
+        self.mem = mem
+
+    def parse(self, goal):
+        args = ";".join([arg for arg in goal.args])
+        negative = ""
+        if "negate" in goal.kwargs:
+            negative = "!"
+        return negative + goal["predicate"] + "[" +args+ "]"
+
+    def parse_goal(self, goal):
+        """
+
+        :param goal: convert goal to predicate and arguments
+                     on[A;B] to on , A , B
+        :return: predicate, arguments
+        """
+        atom_str =  goal.replace("[", ";").replace("]", "").split(";")
+        predicate = atom_str[0]
+        arguments = atom_str[1:]
+        return predicate, arguments
+
+    def check_commited_state(self, world, name, other_agent_name, goal):
+
+        predicate, args = self.parse_goal(goal)
+        if world.is_true(predicate, args):
+            return True
+
+        #atoms = world.get_atoms(["committed", other_agent_name, name, goal]) + \
+        #        world.get_atoms(["rejected", other_agent_name, name, goal]) + \
+        #        world.get_atoms(["achieved", other_agent_name, name, goal])
+
+        if world.is_true("committed", [other_agent_name, name, goal]) or \
+            world.is_true("rejected", [other_agent_name, name, goal]) or \
+            world.is_true("achieved", [other_agent_name, name, goal]) :
+            return True
+        else:
+            return False
+
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        if not world:
+            raise Exception("World is not initialized.")
+
+        suspended_goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+        goals_generated  = []
+        if suspended_goals:
+            for goal in suspended_goals:
+                # generate a goal to acknowledge user about its commitment
+                goal_str = self.parse(goal)
+
+                # if the agent has not committed or rejected the goal send it to the agent
+                if not self.check_commited_state(world, self.name, self.other_agent_name, goal_str):
+                    goal = goals.Goal(*[self.name, self.other_agent_name, goal_str], predicate = 'requested')
+                    #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                    goals_generated.append(goal)
+
+            if goals_generated:
+                # check if they are in goalgraph
+                goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+                goals_to_goalGraph = [goal for goal in goals_generated if not goal in goalGraph]
+                for goal in goals_to_goalGraph:
+                    goalGraph.insert(goal)
+                    if verbose > 1:
+                        print("\nMidca generated a goal : " + str(goal))
+                self.mem.set(self.mem.GOAL_GRAPH, goalGraph)
+
+        else:
+            return
+
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+class EvaluateRequests(base.BaseModule):
+
+    '''
+    Interpret requests in the state and decides to pursue a goal
+    also generates a responsive goal
+    '''
+    def __init__(self, name, other_agent_name):
+        self.name = name
+        self.other_agent_name = other_agent_name
+
+    def init(self, world, mem):
+        self.mem = mem
+
+    def parse(self, goal):
+        """
+
+        :param goal: convert goal to predicate and arguments
+                     on[A;B] to on , A , B
+        :return: predicate, arguments
+        """
+        atom_str =  goal.replace("[", ";").replace("]", "").split(";")
+        predicate = atom_str[0]
+        arguments = atom_str[1:]
+        return predicate, arguments
+
+
+    def commited_states(self, world, name):
+        atoms = world.get_atoms(["committed", name])
+        return atoms
+
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        if not world:
+            raise Exception("World is not initialized.")
+
+        goals_generated  = []
+        commited_states = self.commited_states(world, self.name)
+        if commited_states:
+            # go to each atom and check if the goal is achieved
+            for atom in commited_states:
+                if atom.args[0].name == self.name:
+                    # atom.args[2] is the goal
+                    goal = atom.args[2].name
+                    predicate, args = self.parse(goal)
+                    if world.is_true(predicate, args):
+                        goal = goals.Goal(*[atom.args[0].name, atom.args[1].name, atom.args[2].name], predicate = 'committed', negate = True)
+                        goals_generated.append(goal)
+
+            if goals_generated:
+                # check if they are in goalgraph
+                goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+                goals_to_goalGraph = [goal for goal in goals_generated if not goal in goalGraph]
+                for goal in goals_to_goalGraph:
+                    goalGraph.insert(goal)
+                    if verbose > 1:
+                        print("\nMidca generated a goal : " + str(goal))
+                self.mem.set(self.mem.GOAL_GRAPH, goalGraph)
+
+
+        else:
+            return
+
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOAL GRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
 
 class TFStack(base.BaseModule):
 

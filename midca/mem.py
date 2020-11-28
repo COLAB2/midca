@@ -52,6 +52,10 @@ class Memory:
 	DISCREPANCY = "__discrepancy"
 	EXPLANATION = "__explanation"
 	EXPLANATION_VAL = "__explanation_val"
+	SUSPENDED_GOALS = "__suspended_goals"
+
+	#multi-agent
+	CONNECTIONS = "__connections"
 
 	#GRACE
 	INTERFACE = "__interface"

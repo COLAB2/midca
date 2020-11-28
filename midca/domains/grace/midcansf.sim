@@ -9,15 +9,27 @@ type(SENSOR)
 type(CONFIDENCE)
 type(DISTANCE)
 type(NUM)
-type(DIM)
+type(ROWDIM)
+type(COLDIM)
 type(BEACON)
 type(BEACON-TYPE)
 type(NUM)
 type(RADIUS)
 type(MODE)
+type(GOAL)
+type(STATUS)
+
+# for communication
+predicate(exists, [agent], [AGENT])
+predicate(requested, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(committed, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(rejected, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(informed, [agent, agent1, goal, status], [AGENT, AGENT, GOAL, STATUS])
+predicate(achieved, [agent, agent1, goal], [AGENT, AGENT, GOAL])
 
 #location of the agent
 predicate(surveyed,[agnt, loc], [AGENT, TILE])
+predicate(Deepsurveyed,[agnt, loc], [AGENT, TILE])
 predicate(atSurface,[agnt], [AGENT])
 predicate(atBottom,[agnt], [AGENT])
 
@@ -127,6 +139,17 @@ results = [
 	condition(collecteddata, [agnt, info, loc]),
 	condition(surveyed, [agnt, loc])])
 
+operator(deepcollectdata,
+args = [(agnt, AGENT), (info, SENSOR), (loc, TILE)],
+preconditions = [
+	condition(atBottom, [agnt]),
+	#condition(certainblocRadius, [agnt, loc]),
+	condition(agent-at, [agnt, loc])],
+results = [
+	condition(collecteddata, [agnt, info, loc]),
+	condition(surveyed, [agnt, loc]),
+	condition(Deepsurveyed, [agnt, loc])])
+
 operator(ascend,
 args = [(agnt, AGENT), (loc, TILE)],
 preconditions = [condition(atSurface, [agnt], negate = True)],
@@ -146,3 +169,53 @@ args = [(agnt, AGENT)],
 preconditions = [
 	condition(free, [agnt], negate = True)],
 results = [condition(free, [agnt])])
+
+operator(inform,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+	condition(exists, [other_agent])],
+results = [
+	condition(informed, [agent, other_agent, goal, status])])
+
+operator(ask,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+	condition(exists, [other_agent])],
+results = [
+	condition(informed, [agent, other_agent, goal, status])])
+
+operator(commit,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(requested, [other_agent, agent, goal])],
+results = [
+	condition(requested, [other_agent, agent, goal], negate = True),
+	condition(committed, [agent, other_agent,  goal])])
+
+operator(reject,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(requested, [other_agent, agent, goal])],
+results = [
+	condition(requested, [other_agent, agent, goal], negate = True),
+	condition(rejected, [agent, other_agent, goal])])
+
+operator(wait,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status])],
+results = [
+	condition(requested, [agent, other_agent, goal])])
+
+operator(uncommit,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(committed, [agent, other_agent, goal])],
+results = [
+	condition(committed, [agent, other_agent,  goal], negate = True)])
+
+
+

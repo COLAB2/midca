@@ -116,7 +116,8 @@ if __name__ == "__main__":
     DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/logistics/logistics"
 #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/problem"
-    jshop("tasks", DOMAIN_FIILE, STATE_FILE)
-            
+    #jshop("tasks", DOMAIN_FIILE, STATE_FILE)
+    jshop("tasks", "/home/sampath/Documents/git/midca/midca/domains/metacog/plan/metacog.shp",
+    "/home/sampath/Documents/git/midca/midca/domains/metacog/plan/metacogproblem.shp")
             
             
