@@ -1,0 +1,11 @@
+type,utensil,entity
+attribute,id,X
+attribute,color,blue
+attribute,color,yellow
+attribute,block,id
+attribute,utensil,color
+type,fork,utensil
+type,spoon,utensil
+type,robot,player
+relation,on,flatware,table
+assignAttribute,utensil,color,yellow                    

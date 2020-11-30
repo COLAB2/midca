@@ -3,16 +3,20 @@ This is the start of the script for users to easily create domains from their .P
 Based on the file PDDL_util.py from Zoreh
 '''
 
+from __future__ import print_function
 import sys
 import inspect
 import shutil  # copy file
 import os
 import re
+import argparse
+import fileinput  # supports inplace editing
+
 
 # Setup for directory navigation
 newDomainName = ""
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-MIDCA_ROOT = thisDir + "/../"
+MIDCA_ROOT = thisDir + "/../../"
 newDirectoryRoot = ""
 
 
@@ -117,34 +121,42 @@ def create_init(location):
     f = open(location + "/__init__.py", "w")
 
 
-# Function for creating the runnable file in the examples folder and update the readme
-def update_examples_directory():
-    # uses the example_template.txt
-    shutil.copy(thisDir + "/Domain_Parsing/templates/examples_template.txt",
-                MIDCA_ROOT + "/examples/" + newDomainName + "_run.py")
-
-    # TODO: regex replace "<domain-name>" within the template with the new domain name
-    # print("New Domain Name: " + newDomainName)
-
-
 # Function regex replaces "<domain-name>" within the file specified with the new domain name
-def regex_filename(file):
-    pass
+def regex_filename(filename):
+    file = fileinput.FileInput(filename, inplace=True)
+
+    for line in file:
+        print(line.replace('<domain-name>', newDomainName), end='')
+
+    file.close()
 
 
 if __name__ == "__main__":
-    # get <domain-name>/.pddl file to convert and pull the domain name from
-    PDDL_file = sys.argv[1]
-    newDomainName = re.split('/', PDDL_file)[0]  # TODO: get domain name with either / or \ file scheme, only does /
+    # manage args
+    parser = argparse.ArgumentParser()
+    parser.add_argument("domain", help="name of new domain")
+    parser.add_argument("pddl", help="name of .pddl file to create domain with")
+
+    # get and validate args
+    args = parser.parse_args()
+    newDomainName = args.domain
+    pddl_file = args.pddl
+    if not pddl_file.endswith('.pddl'):  # ensure pddl_file name includes '.pddl'
+        pddl_file = pddl_file + '.pddl'
 
     newDirectoryRoot = thisDir + "/" + newDomainName
+    
+    # create desired directory structure
+    if not os.path.exists(newDirectoryRoot):
+        os.makedirs(newDirectoryRoot)  # create the new domain directory
+        
+    if not os.path.exists(newDirectoryRoot + "/plan"):
+        os.makedirs(newDirectoryRoot + "/plan")  # create the new plan sub-directory
 
     if not os.path.exists(newDirectoryRoot + "/problems"):
         os.makedirs(newDirectoryRoot + "/problems")  # create the new problems sub-directory
 
     create_init(newDirectoryRoot)  # create the empty __init__.py file needed in the new domain directory
-    update_examples_directory()
 
     # TODO: pass the .ppdl filename to the function to open the correct one
-    # TODO: reopen the below function call
-    PDDL_to_MIDCA_DOMAIN(PDDL_file, newDirectoryRoot + "/" + newDomainName + ".sim")
+    PDDL_to_MIDCA_DOMAIN(pddl_file, newDirectoryRoot + "/" + newDomainName + ".sim")

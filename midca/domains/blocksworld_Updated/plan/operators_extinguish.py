@@ -46,8 +46,6 @@ def putdown(state,b):
     else: return False
 
 def stack(state,b,c):
-    print(state.pos[b])
-    print(state.clear[c])
     if state.pos[b] == 'hand' and state.clear[c] == True:
         state.pos[b] = c
         state.clear[b] = True
@@ -56,26 +54,42 @@ def stack(state,b,c):
         return state
     else: return False
 
-def putoutfire(state, b):    if state.fire[b] == True:
-        state.fire[b] = False
-        return state
-    else: 
-        return False
+def putoutfire(state, b, ext):
+	if state.fire[b] == True and state.holdingfireext == ext:
+		state.fire[b] == False
+		return state
+	else: 
+		return False
+
+def pickup_extinguisher(state, extinguisher):
+	if extinguisher in state.fire_ext_avail and not state.holdingfireext:
+		state.holdingfireext = extinguisher
+		state.fire_ext_avail.remove(extinguisher)
+		return state
+	else:
+		return False
+
+def putdown_extinguisher(state, extinguisher):
+	if state.holdingfireext == extinguisher:
+		state.holdingfireext = None
+		state.fire_ext_avail.add(extinguisher)
+		return state
+	else:
+		return False
 
 def apprehend(state, perp):
-    if state.free[perp] == True:
-        state.free[perp] = False
-        return state
-    else:
-        return False
+	if state.free[perp] == True:
+		state.free[perp] = False
+		return state
+	else:
+		return False
 
 def searchfor(state, perp):
-    return state
+	return state
 
 """
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.
 """
-
 def declare_ops():
-	pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor)
+	pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor, pickup_extinguisher, putdown_extinguisher)

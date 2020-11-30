@@ -1,0 +1,12 @@
+
+(defproblem bw-ran-5-1 blocks-normal ((arm-empty)
+(clear d)
+(on-table a)
+(on-table c)
+(on b a)
+(on d b)
+(clear c)
+)
+ ((achieve-goals ( list
+(on c b)
+ ))))
