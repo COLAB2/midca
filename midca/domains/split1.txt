@@ -6,7 +6,7 @@ type,knife,utensil
 type,salad,fork
 type,dinner,fork
 type,robot,player
-attribute,id,X
-attribute,color,blue
-attribute,color,yellow
-attribute,block,id                        
+attribute,utensil,color
+attribute,utensil,price
+attribute,fork,prongs
+attribute,knife,sharpness

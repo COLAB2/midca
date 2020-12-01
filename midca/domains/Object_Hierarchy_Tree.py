@@ -37,6 +37,7 @@ import fileinput #for command line file name
 
 from collections import defaultdict
 
+
 directedGraph = defaultdict(list)
 attributesAndValues = defaultdict(list)
 enumerationList = []
@@ -114,19 +115,23 @@ def printPDDL(directedGraph):
     
     
 # prints tree with DFS
-def printTree(directedGraph, node): 
+def printTree(directedGraph, node, printAttributesBool): 
     visited = set() # Set to keep track of visited nodes.
-    
-    dfs(visited, directedGraph, node, 0) 
-            
-def dfs(visited, graph, node, depth):
+    attributes = attributesAndValues[node]
+        
+    dfs(visited, directedGraph, node, 0, printAttributesBool, attributes) 
+        
+        
+def dfs(visited, graph, node, depth, printAttributesBool, attributes):
     if node not in visited:
         print('\t' * depth + '+-- ' + node)
+        attributes = attributes + attributesAndValues[node]
+        if printAttributesBool:
+            #print('\t' * depth + '      ' + (str)(attributes))  # print all accumulated attributes
+            print('\t' * depth + '      ' + (str)(attributesAndValues[node]))  # print only specific attributes
         visited.add(node)
-        for neighbour in graph[node]:
-            dfs(visited, graph, neighbour, depth + 1)
-  
-
+        for child in graph[node]:
+            dfs(visited, graph, child, depth + 1, printAttributesBool, attributes)
 
 
 objectInput(directedGraph, enumerationList, fileinput.input()) #fileinput.input() is for passed cmd line files
@@ -135,8 +140,7 @@ objectInput(directedGraph, enumerationList, fileinput.input()) #fileinput.input(
 #print("Edges of type tree: " + str(generate_edges(directedGraph)))
 #print ("Type Tree: " + (str)(directedGraph))
 #print("Edges of attribute tree: " + str (generate_edges(attributesAndValues)))
-stringAttributeAndValues = (str)(attributesAndValues)
-#print ("Attribute Tree: " + stringAttributeAndValues)
+#print ("Attribute Tree: " + (str)(attributesAndValues))
 #printEnumerationList(enumerationList)
 
 # test type values from input
@@ -144,5 +148,6 @@ printPDDL(directedGraph)
 
 
 #API ENFORCES ENTITY PARENT
-printTree(directedGraph, 'entity')
+printAttributesBool = True
+printTree(directedGraph, 'entity', printAttributesBool)
 
