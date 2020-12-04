@@ -3,7 +3,7 @@ import midca
 from midca import base
 from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
 from midca.worldsim import domainread, stateread
-from midca.modules._plan.asynch import asynch_grace
+from midca.modules._plan.asynch import asynch_genios
 import inspect, os
 import threading
 
@@ -13,7 +13,7 @@ from midca.domains.grace import grace_util as nbeacons_util
 from midca.domains.grace.interface import tagworld
 
 #initialize simulator
-interface = tagworld.TagWorld()
+interface = tagworld.TagWorld(name="genios")
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -31,8 +31,9 @@ DOMAIN_FILE = DOMAIN_ROOT + "midcansf.sim"
 STATE_FILE = DOMAIN_ROOT + "states/midcansf.sim" # state file is generated dynamically
 DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
-DIMENSION_X = 5
-DIMENSION_Y = 5
+DECLARE_ACTIONS = asynch_genios
+DIMENSION_X = 8
+DIMENSION_Y = 11
 
 
 
@@ -75,14 +76,23 @@ myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())
 myMidca.append_module("Intend", intend.PriorityIntend())
 #myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
+#myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
+#                                                        nbeacons_util.jshop2_tasks_from_goals,
+#                                                        JSHOP_DOMAIN_FILE,
+#                                                        JSHOP_STATE_FILE,
+#                                                        asynch_grace,
+#                                                        monitors= nbeacons_util.monitor
+#                                                    ))
+myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,
                                                         JSHOP_STATE_FILE,
-                                                        asynch_grace,
                                                         monitors= nbeacons_util.monitor
                                                     ))
-myMidca.append_module("Act", act.AsynchronousGraceAct())
+
+myMidca.append_module("Act", act.SimpleAct(DECLARE_ACTIONS))
+
+#myMidca.append_module("Act", act.AsynchronousGraceAct())
 
 
 # Set world viewer to output text

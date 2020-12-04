@@ -1,0 +1,331 @@
+.001481 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001852 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.002058 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.002244 - [cognitive] Initializing Interpret module 2 GraceAnomalyDetection...done.
+
+.002427 - [cognitive] Initializing Interpret module 3 GraceChangeDetection...done.
+
+.002613 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.002799 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.002976 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.003192 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.003422 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.003646 - Goal Graph initialized.
+
+.003801 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.003996 - Goal Graph initialized.
+
+.004187 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.004356 - Starting cycle 0
+
+.004514 - ****** Starting Simulate Phase ******
+
+.005670 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+a . . . . . . . . . .
+
+.005964 - ****** Starting Perceive Phase ******
+
+.274525 - ---------------Tag Data------------
+
+.274774 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . .
+
+.274897 - -----------------------------------
+
+.275200 - ---------------Estimated Tag Data------------
+
+.275393 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+.275487 - -----------------------------------
+
+.276061 -   States Added  
+
+.276166 - agent-at(grace,Tx0y0)
+QblocRadius(grace,Tx0y0, HIGH)
+
+.304678 - World observed.
+
+.355435 - ****** Starting Interpret Phase ******
+
+.355839 - Midca generated a goal : Goal(grace, Tx0y0, predicate: surveyed)
+
+.356077 - Midca generated a goal : Goal(grace, Tx0y1, predicate: surveyed)
+
+.356353 - Midca generated a goal : Goal(grace, Tx0y2, predicate: surveyed)
+
+.356698 - Midca generated a goal : Goal(grace, Tx0y3, predicate: surveyed)
+
+.357100 - Midca generated a goal : Goal(grace, Tx0y4, predicate: surveyed)
+
+.357546 - Midca generated a goal : Goal(grace, Tx1y4, predicate: surveyed)
+
+.358042 - Midca generated a goal : Goal(grace, Tx1y3, predicate: surveyed)
+
+.358619 - Midca generated a goal : Goal(grace, Tx1y2, predicate: surveyed)
+
+.359244 - Midca generated a goal : Goal(grace, Tx1y1, predicate: surveyed)
+
+.359928 - Midca generated a goal : Goal(grace, Tx1y0, predicate: surveyed)
+
+.360910 - Midca generated a goal : Goal(grace, Tx2y0, predicate: surveyed)
+
+.361842 - Midca generated a goal : Goal(grace, Tx2y1, predicate: surveyed)
+
+.362814 - Midca generated a goal : Goal(grace, Tx2y2, predicate: surveyed)
+
+.363868 - Midca generated a goal : Goal(grace, Tx2y3, predicate: surveyed)
+
+.364837 - Midca generated a goal : Goal(grace, Tx2y4, predicate: surveyed)
+
+.365845 - Midca generated a goal : Goal(grace, Tx3y4, predicate: surveyed)
+
+.366908 - Midca generated a goal : Goal(grace, Tx3y3, predicate: surveyed)
+
+.368027 - Midca generated a goal : Goal(grace, Tx3y2, predicate: surveyed)
+
+.369509 - Midca generated a goal : Goal(grace, Tx3y1, predicate: surveyed)
+
+.372122 - Midca generated a goal : Goal(grace, Tx3y0, predicate: surveyed)
+
+.373759 - Midca generated a goal : Goal(grace, Tx4y0, predicate: surveyed)
+
+.375606 - Midca generated a goal : Goal(grace, Tx4y1, predicate: surveyed)
+
+.377087 - Midca generated a goal : Goal(grace, Tx4y2, predicate: surveyed)
+
+.378595 - Midca generated a goal : Goal(grace, Tx4y3, predicate: surveyed)
+
+.380185 - Midca generated a goal : Goal(grace, Tx4y4, predicate: surveyed)
+
+.388202 - ****** Starting Eval Phase ******
+
+.438794 - No current goals. Skipping eval
+
+.439040 - ****** Starting Intend Phase ******
+
+.442981 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+.445125 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+.445399 - ****** Starting Plan Phase ******
+
+.500997 - Planning...
+
+.699953 - Planning complete.
+
+.700185 - Plan: 
+
+.700364 -   collectdata(grace, fishtag, Tx0y0)
+
+.700709 - ****** Starting Act Phase ******
+
+3:34.873765 - Error executing action collectdata(grace, fishtag, Tx0y0) :
+
+3:34.875156 - Traceback (most recent call last):
+  File "/home/sampath/Documents/git/midca/midca/modules/_plan/asynch/asynch_genios.py", line 108, in execute
+    self.executeFunc(self.mem, self.midcaAction, self.status)
+  File "/home/sampath/Documents/git/midca/midca/modules/_plan/asynch/asynch_genios.py", line 656, in <lambda>
+    executeAction = lambda mem, midcaAction, status: self.implement_action()
+  File "/home/sampath/Documents/git/midca/midca/modules/_plan/asynch/asynch_genios.py", line 673, in implement_action
+    tagworld.searchGenios(go_to_location)
+  File "/home/sampath/Documents/git/midca/midca/domains/grace/interface/tagworld.py", line 234, in searchGenios
+    genios_interface.write_to_file(points)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/_pydevd_bundle/pydevd_trace_dispatch_regular.py", line 208, in trace_dispatch
+    return thread_trace_func(frame, event, arg)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/_pydevd_bundle/pydevd_trace_dispatch_regular.py", line 470, in __call__
+    ).trace_dispatch(frame, event, arg)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/_pydevd_bundle/pydevd_frame.py", line 747, in trace_dispatch
+    self.do_wait_suspend(thread, frame, event, arg)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/_pydevd_bundle/pydevd_frame.py", line 144, in do_wait_suspend
+    self._args[0].do_wait_suspend(*args, **kwargs)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/pydevd.py", line 1112, in do_wait_suspend
+    self._do_wait_suspend(thread, frame, event, arg, suspend_type, from_this_thread)
+  File "/snap/pycharm-educational/32/plugins/python-ce/helpers/pydev/pydevd.py", line 1127, in _do_wait_suspend
+    time.sleep(0.01)
+KeyboardInterrupt
+
+3:34.875422 - Starting cycle 1
+
+3:34.875502 - ****** Starting Simulate Phase ******
+
+3:34.875865 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+a . . . . . . . . . .
+
+3:34.875967 - ****** Starting Perceive Phase ******
+
+3:34.967765 - ---------------Tag Data------------
+
+3:34.967913 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . .
+
+3:34.967968 - -----------------------------------
+
+3:34.968030 - ---------------Estimated Tag Data------------
+
+3:34.968120 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3:34.968176 - -----------------------------------
+
+3:34.969777 -   States Added  
+
+3:34.969854 - agent-at(grace,Tx0y0)
+QblocRadius(grace,Tx0y0, HIGH)
+MODE(m3)
+agent-mode(grace,m3)
+
+3:34.977184 - World observed.
+
+3:34.986338 - ****** Starting Interpret Phase ******
+
+3:34.990319 - ****** Starting Eval Phase ******
+
+3:34.999918 - Not all goals achieved; Goal(grace, Tx0y0, predicate: surveyed) is not true.
+
+3:35.000095 - ****** Starting Intend Phase ******
+
+3:35.000836 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+3:35.001172 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+3:35.001255 - ****** Starting Plan Phase ******
+
+3:35.013595 - Old plan retrieved. Checking validity... valid.
+
+3:35.014152 - checking to see if all goals are achieved... yes
+
+3:35.014284 - ****** Starting Act Phase ******
+
+3:35.024361 - Starting cycle 2
+
+3:35.024478 - ****** Starting Simulate Phase ******
+
+3:35.024864 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+a . . . . . . . . . .
+
+3:35.024982 - ****** Starting Perceive Phase ******
+
+3:35.113879 - ---------------Tag Data------------
+
+3:35.114025 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . .
+
+3:35.114099 - -----------------------------------
+
+3:35.114172 - ---------------Estimated Tag Data------------
+
+3:35.114260 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3:35.114332 - -----------------------------------
+
+3:35.114589 -   States Added  
+
+3:35.114645 - agent-at(grace,Tx0y0)
+QblocRadius(grace,Tx0y0, HIGH)
+MODE(m3)
+agent-mode(grace,m3)
+
+3:35.120120 - World observed.
+
+3:35.133121 - ****** Starting Interpret Phase ******
+
+3:35.135987 - ****** Starting Eval Phase ******
+
+3:35.169975 - Not all goals achieved; Goal(grace, Tx0y0, predicate: surveyed) is not true.
+
+3:35.170143 - ****** Starting Intend Phase ******
+
+3:35.171138 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+3:35.171666 - Selecting goal(s): Goal(grace, Tx0y0, predicate: surveyed)
+
+3:35.171768 - ****** Starting Plan Phase ******
+
+3:35.182195 - Old plan retrieved. Checking validity... valid.
+
+3:35.182663 - checking to see if all goals are achieved... yes
+
+3:35.182781 - ****** Starting Act Phase ******
+
+3:35.194444 - Starting cycle 3
+
+3:35.194561 - ****** Starting Simulate Phase ******
+
+3:35.194901 - . . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+a . . . . . . . . . .
+
+3:35.195002 - ****** Starting Perceive Phase ******
+

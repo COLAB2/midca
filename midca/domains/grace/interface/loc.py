@@ -9,19 +9,19 @@ def LocalGrid2LatLong(dfEast, dfNorth):
     dfb = 6356752
     LatOrig = 31.421064
     LongOrig = -80.921200
-    dftanlat2 = pow(math.tan( np.deg2rad(LatOrig) ), 2 );
-    dfRadius = dfb*math.sqrt(1+dftanlat2) / math.sqrt( ( pow(dfb,2)/pow(dfa,2) )+dftanlat2);
+    dftanlat2 = pow(math.tan( np.deg2rad(LatOrig) ), 2 )
+    dfRadius = dfb*math.sqrt(1+dftanlat2) / math.sqrt( ( pow(dfb,2)/pow(dfa,2) )+dftanlat2)
 
 
     dfYArcRad = math.asin( dfNorth/dfRadius )
     dfYArcDeg = np.rad2deg(dfYArcRad)
 
-    dfXArcRad = math.asin( dfEast/( dfRadius* math.cos( np.deg2rad(LatOrig) ) ) );
-    dfXArcDeg = np.rad2deg(dfXArcRad);
+    dfXArcRad = math.asin( dfEast/( dfRadius* math.cos( np.deg2rad(LatOrig) ) ) )
+    dfXArcDeg = np.rad2deg(dfXArcRad)
 
 
-    dfLat = dfYArcDeg + LatOrig;
-    dfLon = dfXArcDeg + LongOrig;
+    dfLat = dfYArcDeg + LatOrig
+    dfLon = dfXArcDeg + LongOrig
 
     return dfLat, dfLon
 
@@ -39,13 +39,21 @@ def LatLong2LocalGrid(lat, lon):
     dX = dfRadius * math.sin(dXArcDeg)*math.cos(np.deg2rad(lat))
 
     dYArcDeg  = np.deg2rad((lat - LatOrig))
-    dY = dfRadius * math.sin(dYArcDeg);
+    dY = dfRadius * math.sin(dYArcDeg)
 
 
     #This is the total distance traveled thus far, either North or East
-    MetersNorth = dY;
-    MetersEast  = dX;
+    MetersNorth = dY
+    MetersEast  = dX
     return dX, dY
+
+
+def ConvertMultipleLatLongToWaypoints(points):
+    way_points = []
+    for point in points:
+        x, y = LatLong2LocalGrid(point[0], point[1])
+        way_points.append([x,y])
+    return way_points
 
 if __name__ == "__main__":
     lat, long = LocalGrid2LatLong(1200,-6000)

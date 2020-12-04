@@ -4,6 +4,9 @@ import time
 from simulator import Simulator
 import threading
 import numpy as np
+import loc
+import send_email, receive_email
+import genios_interface
 
 np.random.seed(555)
 
@@ -119,6 +122,59 @@ class TagWorld():
 
         self.lock.release()
 
+    def move_cell_genios(self, initial_position, final_destination, speed = 1):
+
+        self.lock.acquire()
+
+        time.sleep(0.25)
+
+        #get the real moos coordinate equivalent of cell coordinates
+        dest_x,dest_y = self.simulator.grid_to_sim(final_destination[0], final_destination[1])
+
+        points = {}
+        # initial coordinates
+        # agent location
+        x,y = self.get_agent_actual_location()
+        lat, long = loc.LocalGrid2LatLong(x,y)
+        points["InitialCoordinates"] = [lat, long]
+        lat, long = loc.LocalGrid2LatLong(dest_x,dest_y)
+        points["DestCoordinates"] = [[lat, long]]
+
+        # write to a json file to send via email
+        genios_interface.write_to_file(points)
+        # send it via email
+        send_email.send()
+
+        #recieve it via email
+        # get the points
+        way_points = None
+        while (not way_points):
+            receive_email.receive()
+            way_points = genios_interface.read_json()
+
+        # convert the way_points in latitude and longitude to moos local coordinates
+        way_points = loc.ConvertMultipleLatLongToWaypoints(way_points)
+
+
+        points = b"points = pts={"
+
+        for point in way_points:
+            points = points + str(point[0]) + "," + str(point[1]) + ":"
+
+        # remove the column(:) from the end of the points string and add flower braces
+        points = points[:-1] + "}"
+
+        # create message
+        message = [b"Vehicle", points + "# speed= "+str(speed)]
+
+        self.publisher.send_multipart(message)
+
+        time.sleep(0.25)
+
+        self.lock.release()
+
+
+
     def search(self, position, speed=1):
         self.lock.acquire()
         time.sleep(0.25)
@@ -149,6 +205,64 @@ class TagWorld():
         time.sleep(0.25)
 
         self.lock.release()
+
+    def searchGenios(self, position, speed=1):
+        self.lock.acquire()
+        time.sleep(0.25)
+        x, y = self.simulator.grid_to_sim(position[0], position[1])
+        side = self.simulator.side
+        factor = side - side*0.3
+        way_points = [ [x-factor/2, y+factor/2],
+                       [x+factor/2, y+factor/2],
+                       [x+factor/2, y-factor/2],
+                       [x-factor/2, y-factor/2],
+                       [x-factor/2, y+factor/2]
+                     ]
+
+        points = {}
+        # initial coordinates
+        # agent location
+        x,y = self.get_agent_actual_location()
+        lat, long = loc.LocalGrid2LatLong(x,y)
+        points["InitialCoordinates"] = [lat, long]
+        points["DestCoordinates"] = []
+        for point in way_points:
+            lat, long = loc.LocalGrid2LatLong(point[0],point[1])
+            points["DestCoordinates"].append([lat, long])
+
+        # write to a json file to send via email
+        genios_interface.write_to_file(points)
+        # send it via email
+        send_email.send()
+
+        #recieve it via email
+        # get the points
+        way_points = None
+        while (not way_points):
+            receive_email.receive()
+            way_points = genios_interface.read_json()
+
+        # convert the way_points in latitude and longitude to moos local coordinates
+        way_points = loc.ConvertMultipleLatLongToWaypoints(way_points)
+
+
+        points = b"points = pts={"
+
+        for point in way_points:
+            points = points + str(point[0]) + "," + str(point[1]) + ":"
+
+        # remove the column(:) from the end of the points string and add flower braces
+        points = points[:-1] + "}"
+
+        # create message
+        message = [b"Vehicle", points + "# speed= "+str(speed)]
+
+        self.publisher.send_multipart(message)
+
+        time.sleep(0.25)
+
+        self.lock.release()
+
 
     def deepsearch(self, position, speed = 0.8):
         self.lock.acquire()
@@ -277,6 +391,29 @@ class TagWorld():
             x, y = self.simulator.sim_to_grid(x,y)
             self.Recvlock.release()
             return str(x)+","+str(y)
+
+        except Exception as e:
+            self.Recvlock.release()
+            print(e)
+
+    def get_agent_actual_location(self):
+
+        try:
+            self.Recvlock.acquire()
+            # get the message from the ip address
+            position = self.subscriber_remus.recv()
+            x, y, speed, direction,status,mission,time = position.split(",")
+
+            # convert to midca coordinates
+            # the content is of the form "X:-101.008305,Y:-44.089216,SPEED:0.000000,HEADING:4.079004,STATUS:NothingToDo"
+            x = float(x.split(":")[1])
+            y = float(y.split(":")[1])
+            self.searching = mission.split(":")[1]
+            self.time = float(time.split(":")[1])
+            self.speed = float(speed.split(":")[1])
+
+            self.Recvlock.release()
+            return x,y
 
         except Exception as e:
             self.Recvlock.release()
