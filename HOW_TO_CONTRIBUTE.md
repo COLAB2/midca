@@ -1,4 +1,6 @@
-We heartily welcome anyone to help contribute to the MIDCA Project! Please use the following guidelines when contributing to the project:
+We heartily welcome anyone to help contribute to the MIDCA Project! 
+
+Please use the following guidelines when contributing to the project:
 
 * Use Pep8 code style
 * Python 3.*
