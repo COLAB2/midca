@@ -1,4 +1,4 @@
-Need to deprecate. CONTRIBUTE.md is the correct file.
+Need to deprecate. CONTRIBUTING.md is the correct file.
 
 We heartily welcome anyone to help contribute to the MIDCA Project! Please use the following guidelines when contributing to the project:
 
