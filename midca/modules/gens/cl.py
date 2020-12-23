@@ -14,7 +14,7 @@ class Tree:
 
 			if not root.predicate in printed:
 				printed.append(root.predicate)
-				print(space + root.predicate)
+				print((space + root.predicate))
 				space =  space[0:4] + space
 			else:
 				space = space[0:-4]
@@ -51,7 +51,7 @@ class ObjectTree:
 
 			if not root.predicate in printed:
 				printed.append(root.predicate)
-				print(space + root.predicate)
+				print((space + root.predicate))
 				space =  space[0:4] + space
 			else:
 				space = space[0:-4]

@@ -46,8 +46,8 @@ def putdown(state,b):
     else: return False
 
 def stack(state,b,c):
-    print(state.pos[b])
-    print(state.clear[c])
+    print((state.pos[b]))
+    print((state.clear[c]))
     if state.pos[b] == 'hand' and state.clear[c] == True:
         state.pos[b] = c
         state.clear[b] = True

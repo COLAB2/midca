@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-from Window import Window 
+from .Window import Window 
 
 
 #

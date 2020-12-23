@@ -91,7 +91,7 @@ for script_file in script_files:
             
             script.stdin.write('skip 100 \n')
             DELAY = DEFAULT_RUN_DELAY 
-            for k,v in CUSTOM_RUN_DELAYS.items():
+            for k,v in list(CUSTOM_RUN_DELAYS.items()):
                 if k in script_name:
                     DELAY = v
             for i in range(DELAY):

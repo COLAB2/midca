@@ -4,7 +4,7 @@ from _dbus_bindings import String
 import math
 
 cap = cv2.VideoCapture(0)
-from baxter import *
+from .baxter import *
 import time
 baxter = Baxter()
 
@@ -121,7 +121,7 @@ def publish(msg, topic):
 
     if not rospy.is_shutdown():
        
-        print("Sending point command:", "monitor fires")
+        print(("Sending point command:", "monitor fires"))
         pub.publish(msg)
         time.sleep(2)
     
@@ -129,7 +129,7 @@ def publish(msg, topic):
        
     
 def monitor_pos_block(block_name='green block', pos='table'):
-    print 'monitoring pos'
+    print('monitoring pos')
     
     #rospy.init_node('clear_block_monitor', anonymous=True)
     baxter.enable()
@@ -164,7 +164,7 @@ def monitor_pos_block(block_name='green block', pos='table'):
             pos_red = 'table'
             clear_green = 'clear'
             clear_red = 'clear'
-            for obj in color_location.keys():
+            for obj in list(color_location.keys()):
                 if obj != block_name:
                     if math.fabs(color_location[block_name][0] - color_location[obj][0]) < 12:
                         if color_location[block_name][1] < color_location[obj][1]:

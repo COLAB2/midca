@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
 
-from WindowPair import WindowPair
-from Interval import Interval
-from OnlineDist import OnlineDist
-from ChangeFinder import ChangeFinder
+from .WindowPair import WindowPair
+from .Interval import Interval
+from .OnlineDist import OnlineDist
+from .ChangeFinder import ChangeFinder
 import random
 
 
@@ -29,6 +29,6 @@ for item in f.readlines():
     cf.addData(float(item))
     i = i + 1
     if cf.detectChange():
-        print 'Change detected at sample ' + str(i)
+        print('Change detected at sample ' + str(i))
 
 f.close()

@@ -1,5 +1,5 @@
 
-from goalgen import *
+from .goalgen import *
 
 class NewGuide:
 	
@@ -43,28 +43,28 @@ class NewGuide:
 		if self.tfBase:
 			newgoals = self.get_goals(world, verbose, self.tfGen)
 			if verbose >= 2:
-				print "TF tree stacking goal generator activated. Goals:"
+				print("TF tree stacking goal generator activated. Goals:")
 				for goal in newgoals:
-					print "\t", goal, "  ",
-				print
+					print("\t", goal, "  ", end=' ')
+				print()
 			if newgoals:
 				self.mem._update(self.memKeys.MEM_GOALS, newgoals)
 		else:
 			newgoals = self.get_goals(world, verbose, self.predefGen)
 			if verbose >= 2:
-				print "Loading from predefined goals. Goals:"
+				print("Loading from predefined goals. Goals:")
 				for goal in newgoals:
-					print "\t", goal, "  ",
-				print
+					print("\t", goal, "  ", end=' ')
+				print()
 			if newgoals:
 				self.mem._update(self.memKeys.MEM_GOALS, newgoals)
 		if self.tfFire:
 			newgoals = self.get_goals(world, verbose, self.fireGen)
 			if verbose >= 2:
-				print "TF tree fire goal generator activated. Goals:"
+				print("TF tree fire goal generator activated. Goals:")
 				for goal in newgoals:
-					print "\t", goal, "  ",
-				print
+					print("\t", goal, "  ", end=' ')
+				print()
 			if newgoals:
 				self.mem._update(self.memKeys.MEM_GOALS, newgoals)
 		if self.catchArsonist:
@@ -73,11 +73,11 @@ class NewGuide:
 				self.prioritize(newgoals)
 			if verbose >= 2:
 				if not self.useMA:
-					print "Simulated ",
-				print "GDA K-track goal generation activated. Goals:"
+					print("Simulated ", end=' ')
+				print("GDA K-track goal generation activated. Goals:")
 				for goal in newgoals:
-					print "\t", goal, "  ",
-				print
+					print("\t", goal, "  ", end=' ')
+				print()
 			if newgoals:
 				self.mem._update(self.memKeys.MEM_GOALS, newgoals)
 		self.step += 1

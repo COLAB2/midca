@@ -31,7 +31,7 @@ def status(b1,state,goal):
         return 'waiting'
 
 def all_blocks(state):
-    return state.clear.keys()
+    return list(state.clear.keys())
 
 
 """

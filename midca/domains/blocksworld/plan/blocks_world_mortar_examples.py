@@ -6,17 +6,17 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-from __future__ import print_function
+
 from pyhop import *
 
 import time
 
-import operators_mortar
+from . import operators_mortar
 print('')
 operators_mortar.declare_ops()
 print_operators()
 
-import methods_mortar
+from . import methods_mortar
 print('')
 methods_mortar.declare_methods()
 #methods_broken.declare_methods()
@@ -46,7 +46,7 @@ state1.holding=False
 # make sure no blocks have mortar on them; start with initial quantity
 # of mortar
 state1.hasmortar = {}
-for blockid in state1.pos.keys():
+for blockid in list(state1.pos.keys()):
     state1.hasmortar[blockid] = False
 
 state1.mortaravailable = {} # key is id, value is Available/Used

@@ -10,7 +10,7 @@ import inspect, os
 
 def asqiiDisplay(world):
     blocks = blockstate.get_block_list(world)
-    print str(scene.Scene(blocks))
+    print(str(scene.Scene(blocks)))
 
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

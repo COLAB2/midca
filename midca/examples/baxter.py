@@ -91,7 +91,7 @@ class Baxter:
         try:
             rospy.wait_for_service(ns, 5.0)
             resp = iksvc(ikreq)
-        except (rospy.ServiceException, rospy.ROSException), e:
+        except (rospy.ServiceException, rospy.ROSException) as e:
             rospy.logerr("Service call failed: %s" % (e,))
             return 1
     
@@ -99,7 +99,7 @@ class Baxter:
         if (resp.isValid[0]):
             print("SUCCESS - Valid Joint Solution Found:")
                 # Format solution into Limb API-compatible dictionary
-            limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
+            limb_joints = dict(list(zip(resp.joints[0].name, resp.joints[0].position)))
             
             return limb_joints
         else:
@@ -120,10 +120,10 @@ class Baxter:
     def moveLeftArm(self, point, orientation):
         angles = self.inverseKinematics('left', point, orientation)
         if not angles:
-            print 'none'
+            print('none')
             return None
         else: 
-            print angles
+            print(angles)
         
             
         self.leftArm.move_to_joint_positions(angles) # 15 secs timeout default.

@@ -6,8 +6,8 @@ from Tree_Fire.Tree import Tree as TreeFire
 from Tree_3_Scen.Tree import Tree as TreeStack
 from goals import Goal
 from domains.blocksworld import blockstate
-from XP_Goal.parser import *
-from XP_Goal.traverser import *
+from .XP_Goal.parser import *
+from .XP_Goal.traverser import *
 from datetime import datetime
 
 readSize = 100000
@@ -74,14 +74,14 @@ class MAGoalGen:
 		if self.readSocket:
 			data = self.readSocket.recv(size)
 			if verbose >= 2:
-				print "This was given by Meta-AQUA: ", data
+				print("This was given by Meta-AQUA: ", data)
 
 			pos1 = data.find("(BURNING (DOMAIN (VALUE ")
 			pos2 = data.find("CONTROLS")
 			if pos1 != -1:
 				blockname = data[pos1+24:pos1+26]
 				if verbose >= 2:
-					print "The block to extinguish is: " + blockname
+					print("The block to extinguish is: " + blockname)
 				block = None
 				for b in blockset:
 					if b.id == blockname:
@@ -91,11 +91,11 @@ class MAGoalGen:
 				if block:
 					return Goal(Goal.GOAL_NO_FIRE, [block])
 				else:
-					print "No such block!!!"
+					print("No such block!!!")
 			elif pos2 != -1:
 				return Goal(Goal.GOAL_APPREHEND, ["Gui Montag"])
 		else:
-			print "No socket open to read Meta-AQUA data from."
+			print("No socket open to read Meta-AQUA data from.")
 
 class FireGen:
 
@@ -169,7 +169,7 @@ class XPGoalGen:
 		s = self.mem.get(self.memKeys.SOCKET_R)
 
 		if verbose >= 2:
-			print "In gengoal_fire.py"
+			print("In gengoal_fire.py")
 
 		if s:
 			text = s.recv(self.bufferSize)
@@ -180,7 +180,7 @@ class XPGoalGen:
 
 			if text != "None\n":
 				if verbose >= 2:
-					print "HERE IS TEXT: " + text
+					print("HERE IS TEXT: " + text)
 
 				# parse text
 				p = Parser()
@@ -199,7 +199,7 @@ class XPGoalGen:
 				if operator == "apprehend":
 					return Goal(Goal.GOAL_APPREHEND, ["Gui Montag"])
 				else:
-					print "Unrecognized operator(!): " + str(operator) + ", now producing standard extinguish goal."
+					print("Unrecognized operator(!): " + str(operator) + ", now producing standard extinguish goal.")
 					for block in blockset:
 						if block.onfire:
 							return Goal(Goal.GOAL_NO_FIRE, [block])

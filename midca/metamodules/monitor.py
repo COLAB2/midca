@@ -10,7 +10,7 @@ class MRSimpleMonitor(base.BaseModule):
         self.mem.set(self.mem.TRACE_SEGMENT, [self.mem.trace.get_current_phase(),self.get_last_phase()])
         
         if self.verbose >= 1: print("    Retrieved last segment of trace") #+str(self.mem.get(self.mem.TRACE_SEGMENT)))
-        if self.verbose >= 1: print "  "+str(self.mem.get(self.mem.TRACE_SEGMENT))
+        if self.verbose >= 1: print("  "+str(self.mem.get(self.mem.TRACE_SEGMENT)))
 
     def get_last_phase(self):
         """ Return a small part of the trace """
