@@ -176,7 +176,7 @@ class CogTrace:
                     curr_node_label += str(self.data_str(datum[0],datum[1]))+"\n"
                     dotfilestr += curr_node_id +" [shape=rect label=\""+curr_node_label+" \"]\n"
                 # generate string for dependency graph
-                if prev_node_id is "":
+                if prev_node_id == "":
                     # this is first iteration, no dependency added
                     prev_node_id = curr_node_id
                 else:
