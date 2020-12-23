@@ -54,30 +54,30 @@ class Memory:
 	EXPLANATION_VAL = "__explanation_val"
 
 
-    	#Goal Tranformation
-    	CL_TREE = "__class heirarchy tree"
-    	OB_TREE = "__object heirarchy tree"
+	#Goal Tranformation
+	CL_TREE = "__class heirarchy tree"
+	OB_TREE = "__object heirarchy tree"
 
-    	#Construction 
-    	TIME_CONSTRUCTION = "__Construction Time"
-    	ACTUAL_TIME_CONSTRUCTION = "__Actual Time"
-    	EXPECTED_TIME_CONSTRUCTION = "__Expected Time"
-    	SELECTED_BUILDING_LIST = "__Buildings Selected"
-    	COMPLETE_BUILDING_LIST = "__Buildings"
-    	EXECUTED_BUILDING_LIST = "__Executed Buildings"
-    	REJECTED_GOALS = "__rejected goals"
-    	ACTUAL_SCORES ="__Expected Scores"
-    	P = "__ list of scores"
-    	t = "__list of times"
+	#Construction 
+	TIME_CONSTRUCTION = "__Construction Time"
+	ACTUAL_TIME_CONSTRUCTION = "__Actual Time"
+	EXPECTED_TIME_CONSTRUCTION = "__Expected Time"
+	SELECTED_BUILDING_LIST = "__Buildings Selected"
+	COMPLETE_BUILDING_LIST = "__Buildings"
+	EXECUTED_BUILDING_LIST = "__Executed Buildings"
+	REJECTED_GOALS = "__rejected goals"
+	ACTUAL_SCORES ="__Expected Scores"
+	P = "__ list of scores"
+	t = "__list of times"
 
-    	# Restaurant
-    	MONEY = "__money limit"
-    	SELECTED_ORDERS = "__selected orders"
-    	COMPLETED_ORDERS = "__completed orders"
-    	EXPECTED_SCORE = "__expected score"
-    	ACTUAL_SCORE = "__actual score"
-    	EXPECTED_COST= "__expected cost"
-    	ACTUAL_COST= "__actual cost"
+	# Restaurant
+	MONEY = "__money limit"
+	SELECTED_ORDERS = "__selected orders"
+	COMPLETED_ORDERS = "__completed orders"
+	EXPECTED_SCORE = "__expected score"
+	ACTUAL_SCORE = "__actual score"
+	EXPECTED_COST= "__expected cost"
+	ACTUAL_COST= "__actual cost"
 
 	def __init__(self, args = {}):
 		self.knowledge = {}
@@ -138,7 +138,7 @@ class Memory:
 			self.logAccess(structname)
 
 	def update(self, args):
-		for structname, val in args.items():
+		for structname, val in list(args.items()):
 			self._update(structname, val)
 
 	def update_all(self, structname, val):
@@ -146,7 +146,7 @@ class Memory:
 			if structname not in self.locks:
 				self.locks[structname] = threading.Lock()
 		with self.locks[structname]:
-			if structname in self.knowledge and (not isinstance(self.knowledge[structname], basestring)):
+			if structname in self.knowledge and (not isinstance(self.knowledge[structname], str)):
 				struct = self.knowledge[structname]
 				if hasattr(struct, "__getitem__") or hasattr(struct, "__iter__"):
 					for item in struct:

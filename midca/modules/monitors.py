@@ -23,7 +23,7 @@ class Monitor():
     def monitor_state(self, id, location, predicate):
         world = self.mem.get(self.mem.STATES)[-1]
 #         print world
-        print('goal monitor to check '+ id +' in' + location+' is running... ')
+        print(('goal monitor to check '+ id +' in' + location+' is running... '))
         cheatcount = 0
         
         while(True):
@@ -31,7 +31,7 @@ class Monitor():
             flag = 0
             cheatcount = cheatcount + 1
             
-            current_atom =  filter(lambda a: a.predicate.name == predicate and a.args[0].name == id, world.atoms)
+            current_atom =  [a for a in world.atoms if a.predicate.name == predicate and a.args[0].name == id]
             if current_atom:
                 flag = 1
                      
@@ -39,7 +39,7 @@ class Monitor():
                 self.mem.get(self.mem.GOAL_GRAPH).remove(self.goal)
 #                 goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
 #                 goals = goalGraph.getUnrestrictedGoals()       
-                print('monitor fires, '+ id +' is lost; goal should be removed(' + self.goal.args[0]+")")
+                print(('monitor fires, '+ id +' is lost; goal should be removed(' + self.goal.args[0]+")"))
 #                 warehouse = self.goal.args[2]
 #                 for g in goals:
 #                     if g.args[2] == warehouse:

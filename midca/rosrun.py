@@ -36,7 +36,7 @@ def next_id():
 
 def dict_as_msg(d):
     s = ""
-    for key, value in d.items():
+    for key, value in list(d.items()):
         s += str(key) + ": " + str(value) + " | "
     if s:
         s = s[:-3] #remove last ' | '
@@ -104,7 +104,7 @@ class RosMidca:
         also be possible to have one handler implement both behaviors, but this might not
         be desirable.
         '''
-        print "trying to send message on topic", topic
+        print("trying to send message on topic", topic)
         sent = False
         for handler in self.outgoingMsgHandlers:
             if handler.topic == topic:
@@ -213,7 +213,7 @@ class ObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
         loc = p))
         
-        if color_location_dic and ('red block' in color_location_dic.keys()) and ('green block' in color_location_dic.keys()):
+        if color_location_dic and ('red block' in list(color_location_dic.keys())) and ('green block' in list(color_location_dic.keys())):
             pos_green = 'table'
             pos_red = 'table'
             clear_green = 'clear'
@@ -230,7 +230,7 @@ class ObjectsLocationHandler(IncomingMsgHandler):
                 self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green)) 
         
         elif len(color_location) == 1:
-            color_block = color_location_dic.keys()[0]
+            color_block = list(color_location_dic.keys())[0]
             pos = 'table'
             clear = 'clear'
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = color_block, position = pos, isclear = clear))
@@ -301,7 +301,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
         This is the three stacking condition , the idea is checking the distance between the coordinates of the three blocks
         '''
         
-        if color_location_dic and ('red block' in color_location_dic.keys()) and ('green block' in color_location_dic.keys()) and ('blue block' in color_location_dic.keys()):
+        if color_location_dic and ('red block' in list(color_location_dic.keys())) and ('green block' in list(color_location_dic.keys())) and ('blue block' in list(color_location_dic.keys())):
             
             pos_green = 'table'
             pos_red = 'table'
@@ -479,7 +479,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             '''
             This is the two stacking condition , the idea is checking the distance between the coordinates of two  blocks
             '''
-        elif color_location_dic and ('red block' in color_location_dic.keys()) and ('green block' in color_location_dic.keys()):        
+        elif color_location_dic and ('red block' in list(color_location_dic.keys())) and ('green block' in list(color_location_dic.keys())):        
             pos_green = 'table'
             pos_red = 'table'
             clear_green = 'clear'
@@ -528,7 +528,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "green block", position = pos_green, isclear = clear_green)) 
         
-        elif color_location_dic and ('red block' in color_location_dic.keys()) and ('blue block' in color_location_dic.keys()): 
+        elif color_location_dic and ('red block' in list(color_location_dic.keys())) and ('blue block' in list(color_location_dic.keys())): 
             pos_blue = 'table'
             pos_red = 'table'
             clear_blue = 'clear'
@@ -580,7 +580,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "red block", position = pos_red, isclear = clear_red))
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = "blue block", position = pos_blue, isclear = clear_blue))
 
-        elif color_location_dic and ('green block' in color_location_dic.keys()) and ('blue block' in color_location_dic.keys()): 
+        elif color_location_dic and ('green block' in list(color_location_dic.keys())) and ('blue block' in list(color_location_dic.keys())): 
             pos_blue = 'table'
             pos_green = 'table'
             clear_blue = 'clear'
@@ -636,7 +636,7 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
 
         
         elif len(color_location) == 1:
-            color_block = color_location_dic.keys()[0]
+            color_block = list(color_location_dic.keys())[0]
             pos = 'table'
             clear = 'clear'
             self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = color_block, position = pos, isclear = clear))
@@ -671,7 +671,7 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
     def __init__(self, topic, midcaObject, memKey = None, history = None):
         callback = lambda strMsg: self.store_locations(strMsg)
         msgType = String
-	self.left = None
+        self.left = None
         super(MultipleObjectsLocationHandler, self).__init__(topic, msgType, callback,
         midcaObject)
         #self.objID = objID
@@ -679,69 +679,69 @@ class MultipleObjectsLocationHandler(IncomingMsgHandler):
             self.memKey = memKey
         else:
             self.memKey = self.mem.ROS_OBJS_DETECTED
-	if history:
-	    self.history = history
-	else:
-	    self.history = self.mem.STATE_HISTORY
+        if history:
+            self.history = history
+        else:
+            self.history = self.mem.STATE_HISTORY
         
     def store_locations(self, data):
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
-	if not self.left:
-		rospy.sleep(0.1)
-		self.left = baxter_interface.Gripper('left')
-        
-        strMsg = str(data.data).strip()
-        color_locations = strMsg.split(";")
-	color_locations.pop() # remove last unwanted ;
-        color_location_dic = {}
-        for msg in color_locations:
+        if not self.left:
+            rospy.sleep(0.1)
+            self.left = baxter_interface.Gripper('left')
             
-            color_location = msg.split(":");
-            pointstr = color_location[1].split(",")
-            p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
-            color_location_dic.update({color_location[0]: p})
-            
+            strMsg = str(data.data).strip()
+            color_locations = strMsg.split(";")
+            color_locations.pop() # remove last unwanted ;
+            color_location_dic = {}
+            for msg in color_locations:
                 
-            self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
-        loc = p))
+                color_location = msg.split(":");
+                pointstr = color_location[1].split(",")
+                p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
+                color_location_dic.update({color_location[0]: p})
+                
+                    
+                self.mem.add(self.memKey, world_repr.DetectionEvent(id = color_location[0], 
+            loc = p))
 
-	# complexity of this code is O(n2) will probably reduce some time
-	# take each block and compare with all the blocks with certain thresholds
-	# initially assume the block is on table and clear
-	if color_location_dic :
-		for each_block in color_location_dic:
-			pos = 'table'
-			clear = 'clear'
-			for cmp_block in color_location_dic:
-				if not each_block == cmp_block:
-					# check stack condition
-					x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
-					y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
-					z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
-					if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
-						if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
-							clear = 'not clear'
-						else:
-							pos = cmp_block;
-			# add it to the state
-			self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_block, position = pos, isclear = clear))
-			#if you want to know the position of the block, uncomment this
-			#print ( each_block + ":  " +  pos + clear)
-	# check if there is something in the baxter's hand
-	found  = 0
-	if self.left._state.position < 70:
-		print(self.left._state.position)
-		if self.mem.get(self.history):
-			for each_history in self.mem.get(self.history):
-				objects  = each_history
-				for each_object in objects:
-					if not each_object in color_location_dic:
-						self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_object, position = 'holding', isclear = 'not clear'))
-						found = 1						
-						break
-				if found == 1:
-					break
+        # complexity of this code is O(n2) will probably reduce some time
+        # take each block and compare with all the blocks with certain thresholds
+        # initially assume the block is on table and clear
+        if color_location_dic :
+            for each_block in color_location_dic:
+                pos = 'table'
+                clear = 'clear'
+                for cmp_block in color_location_dic:
+                    if not each_block == cmp_block:
+                        # check stack condition
+                        x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
+                        y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
+                        z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
+                        if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
+                            if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
+                                clear = 'not clear'
+                            else:
+                                pos = cmp_block;
+                # add it to the state
+                self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_block, position = pos, isclear = clear))
+                #if you want to know the position of the block, uncomment this
+                #print ( each_block + ":  " +  pos + clear)
+        # check if there is something in the baxter's hand
+        found  = 0
+        if self.left._state.position < 70:
+            print((self.left._state.position))
+            if self.mem.get(self.history):
+                for each_history in self.mem.get(self.history):
+                    objects  = each_history
+                    for each_object in objects:
+                        if not each_object in color_location_dic:
+                            self.mem.add(self.mem.ROS_OBJS_STATE, world_repr.pos_block(id = each_object, position = 'holding', isclear = 'not clear'))
+                            found = 1						
+                            break
+                    if found == 1:
+                        break
 
 
 class CalibrationHandler(IncomingMsgHandler):
@@ -783,7 +783,7 @@ class UtteranceHandler(IncomingMsgHandler):
             self.memKey = self.mem.ROS_WORDS_HEARD
 
     def store_utterance(self, utterance):
-        print "storing utterance:", utterance
+        print("storing utterance:", utterance)
         if not self.mem:
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
         self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
@@ -816,8 +816,8 @@ class FeedbackHandler(IncomingMsgHandler):
         try:
             self.mem.add(self.memKey, s)
         except:
-            print "Error reading feedback: ", s, " - format should be key: value | key : \
-             value..."
+            print("Error reading feedback: ", s, " - format should be key: value | key : \
+             value...")
 
 class OutgoingMsgHandler(object):
 

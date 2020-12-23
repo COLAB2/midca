@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from midca import base
 from midca.modules import simulator, perceive, guide, evaluate, intend, planning, act
 from midca.worldsim import domainread, stateread

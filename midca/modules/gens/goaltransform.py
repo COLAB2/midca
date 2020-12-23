@@ -64,23 +64,23 @@ def choose(mem,goal):
 	temp_parameter = goal
 	resitem = list()
 	res = goal
-	print("Delta contains functions: " + str(item))
+	print(("Delta contains functions: " + str(item)))
 	print("Checking each function in Delta: ")
 	for i in item:
 		if delta[i](mem,goal,canexec = 0) is False:
 			continue
 		else:
 			temp_parameter = delta[i](mem,goal,canexec = 0)
-			print(str(i)  + ": " + str(temp_parameter))
+			print((str(i)  + ": " + str(temp_parameter)))
 			deltahat[i] = i
 			resitem.append(i)
 	resitem.reverse()
-	print("\nDeltahat contains functions: " + str(resitem) )
+	print(("\nDeltahat contains functions: " + str(resitem) ))
 	resitem.reverse()
 	print("\nExecuting each function in Deltahat: ")
 	for i in resitem:
 		res = delta[i](mem,res,canexec = 1)
-		print(str(i)  + ": " + str(res))	
+		print((str(i)  + ": " + str(res)))	
 
 	if resources.num_available_mortar <= 0:
 		resources.num_available_mortar = 0
@@ -88,7 +88,7 @@ def choose(mem,goal):
 		if "stable-on" == res["predicate"]:
 			resources.num_available_mortar -=1
 	
-	print("\nThe Final Transformed Goal is : " + str(res))
+	print(("\nThe Final Transformed Goal is : " + str(res)))
 	print("\n*************** GOAL TRANSFORMATION CHOOSE ENDS *********************\n")
 	return res
 
@@ -156,9 +156,9 @@ class preconditions_all:
 
 	def __init__(self,mem):
 		world = mem.myMidca.midca.world
-		for a in world.objects.values():
+		for a in list(world.objects.values()):
 			self.objs.append(a.name)
-		for a in world.predicates.values():
+		for a in list(world.predicates.values()):
 			self.predicates.append(a.name)
 
 	def identity_conditions(self,world):

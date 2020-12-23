@@ -86,7 +86,7 @@ def perimeterize(state, agent, beacon_locs):
     
     # first check all the given beacon locs to make sure they are not already a
     unactivated_beacon_locs = [] 
-    for (b_id,b_loc) in state.beaconlocs.items():
+    for (b_id,b_loc) in list(state.beaconlocs.items()):
         if b_loc in beacon_locs:
             if not state.activated[b_id]:
                 unactivated_beacon_locs.append(b_loc)
@@ -109,7 +109,7 @@ def perimeterize(state, agent, beacon_locs):
         #print("about to get beacon_id")
         
         #print("state.beacon_locs.items() = "+str(state.beaconlocs.items())+" and beacon_locs[0] = "+str(beacon_locs[0]))
-        beacon_id = [k for (k,v) in state.beaconlocs.items() if v == beacon_locs[0]][0]
+        beacon_id = [k for (k,v) in list(state.beaconlocs.items()) if v == beacon_locs[0]][0]
         #print("beacon_id ="+str(beacon_id))
         
         # get the first beacon loc

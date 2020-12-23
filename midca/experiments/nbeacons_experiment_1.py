@@ -71,7 +71,7 @@ def singlerun_output_str(run_id, num_cycles, curr_midca, agent_type, wind_dir, w
               + str(wind_dir) + ","
               + str(wind_strength) + ","
               + "\""+str(goals_actions_achieved) + "\"\n")
-    print "result = " + str(result)
+    print("result = " + str(result))
     return result
     
 def singlerun(args):
@@ -91,16 +91,16 @@ def singlerun(args):
     curr_midca = midca_inst.getMIDCAObj()
     curr_midca.init()
     if agent_type == 'm':
-        print "Running Meta agent for "+str(META_NUM_CYCLES)+" cycles"
+        print("Running Meta agent for "+str(META_NUM_CYCLES)+" cycles")
         midca_inst.run_cycles(META_NUM_CYCLES,meta=True)
         # prepare data for writing output string
         result_str = singlerun_output_str(run_id,META_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'g':
-        print "Running GDA agent for "+str(GDA_NUM_CYCLES)+" cycles"
+        print("Running GDA agent for "+str(GDA_NUM_CYCLES)+" cycles")
         midca_inst.run_cycles(GDA_NUM_CYCLES)
         result_str = singlerun_output_str(run_id,GDA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
     elif agent_type == 'v':
-        print "Running Vanilla agent for "+str(VANILLA_NUM_CYCLES)+" cycles"
+        print("Running Vanilla agent for "+str(VANILLA_NUM_CYCLES)+" cycles")
         midca_inst.run_cycles(VANILLA_NUM_CYCLES)
         result_str = singlerun_output_str(run_id,VANILLA_NUM_CYCLES,curr_midca,agent_type,wind_dir,wind_strength)
 
@@ -120,7 +120,7 @@ def runexperiment():
     num_goals = 1000
     goal_list = []
     i = 0
-    possible_goals = range(10)
+    possible_goals = list(range(10))
     last_chosen_goal = -1
     while i < num_goals:
         if last_chosen_goal == -1:
@@ -134,7 +134,7 @@ def runexperiment():
             last_chosen_goal = curr_goal
         i+=1
             
-    goal_list = map(lambda x: goals.Goal('B'+str(x), predicate = "activated"), goal_list)
+    goal_list = [goals.Goal('B'+str(x), predicate = "activated") for x in goal_list]
     #print("goal list is ")
     #for g in goal_list:
     #    print("  "+str(g))
@@ -154,7 +154,7 @@ def runexperiment():
     runs = individual_runs
     
     # Uses multiprocessing to give each run its own python process
-    print("-- Starting experiment using "+str(NUM_PROCESSES)+" processes...")
+    print(("-- Starting experiment using "+str(NUM_PROCESSES)+" processes..."))
     t0 = time.time()
     # **** NOTE: it is very important chunksize is 1 and maxtasksperchild is 1
     # **** (each MIDCA must use its own python process)
@@ -162,13 +162,13 @@ def runexperiment():
     results = pool.map(singlerun, runs, chunksize=1)
     t1 = time.time()
     timestr = '%.2f' % (t1-t0)
-    print("-- Experiment finished! Took "+timestr+"s, generated "+str(len(results))+" data points")
+    print(("-- Experiment finished! Took "+timestr+"s, generated "+str(len(results))+" data points"))
     print("-- Writing data to file...")
     f = open(DATA_FILENAME, 'w')
     f.write(DATA_FILE_HEADER_STR)
     for r in results:
         f.write(r)
-    print("-- Data written to file "+str(DATA_FILENAME))
+    print(("-- Data written to file "+str(DATA_FILENAME)))
     print("-- Experiment complete!")
     
     # if you have pyttsx installed, a voice will tell you your experiments are finished
@@ -442,7 +442,7 @@ def multiple_goalsperaction(n_files):
     DATADIR = "C:\\Users\\Dustin\\Desktop\\first_average_ten_runs_data\\"
 
     files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
-    datafiles = map(lambda f: DATADIR+f, files[-(n_files):])
+    datafiles = [DATADIR+f for f in files[-(n_files):]]
 
     goal_action_sums_vanilla = collections.OrderedDict()
     goal_action_sums_gda = collections.OrderedDict()
@@ -454,19 +454,19 @@ def multiple_goalsperaction(n_files):
     def process_data_into_dicts(agent_type,goals_achieved,actions_executed):
         if agent_type == 'v':
             for g_i in range(len(goals_achieved)):
-                if g_i in goal_action_sums_vanilla.keys():
+                if g_i in list(goal_action_sums_vanilla.keys()):
                     goal_action_sums_vanilla[g_i].append(actions_executed_data[g_i])
                 else:
                     goal_action_sums_vanilla[g_i] = [actions_executed_data[g_i]]
         elif agent_type == 'g':
             for g_i in range(len(goals_achieved)):
-                if g_i in goal_action_sums_gda.keys():
+                if g_i in list(goal_action_sums_gda.keys()):
                     goal_action_sums_gda[g_i].append(actions_executed_data[g_i])
                 else:
                     goal_action_sums_gda[g_i] = [actions_executed_data[g_i]]
         elif agent_type == 'm':
             for g_i in range(len(goals_achieved)):
-                if g_i in goal_action_sums_meta.keys():
+                if g_i in list(goal_action_sums_meta.keys()):
                     goal_action_sums_meta[g_i].append(actions_executed_data[g_i])
                 else:
                     goal_action_sums_meta[g_i] = [actions_executed_data[g_i]]
@@ -477,7 +477,7 @@ def multiple_goalsperaction(n_files):
     # in the dict
     for df in datafiles:
         header = True
-        print "Getting data from file "+str(df)
+        print("Getting data from file "+str(df))
         with open(df,'r') as f:
             for line in f.readlines():
                 if header: 
@@ -497,8 +497,8 @@ def multiple_goalsperaction(n_files):
                     #run_id = row[0]
                     
                     goals_action_data = eval('list('+goals_achieved_str+')')
-                    goals_achieved_data = map(lambda t: t[0], goals_action_data)
-                    actions_executed_data = map(lambda t: t[2], goals_action_data)
+                    goals_achieved_data = [t[0] for t in goals_action_data]
+                    actions_executed_data = [t[2] for t in goals_action_data]
 
                     process_data_into_dicts(agent_type,goals_achieved_data,actions_executed_data)
                     
@@ -506,13 +506,13 @@ def multiple_goalsperaction(n_files):
 
                     if agent_type == 'v':
                         agent_name = 'Vanilla'
-                        print "  Finished processing vanilla data"
+                        print("  Finished processing vanilla data")
                     elif agent_type == 'g':
                         agent_name = 'GDA'
-                        print "  Finished processing gda data"
+                        print("  Finished processing gda data")
                     elif agent_type == 'm':
                         agent_name = 'Meta'
-                        print "  Finished processing meta data"
+                        print("  Finished processing meta data")
             
     min_of_all_the_maxes = min(all_max_goal_values)
 
@@ -521,11 +521,11 @@ def multiple_goalsperaction(n_files):
     goal_action_final_val_meta = collections.OrderedDict()
 
     # now that we have all the sums, compute the averages per goal
-    for k in goal_action_sums_vanilla.keys():
+    for k in list(goal_action_sums_vanilla.keys()):
         goal_action_final_val_vanilla[k] = sum(goal_action_sums_vanilla[k]) / float(len(goal_action_sums_vanilla[k]))
-    for k in goal_action_sums_gda.keys():
+    for k in list(goal_action_sums_gda.keys()):
         goal_action_final_val_gda[k] = sum(goal_action_sums_gda[k]) / float(len(goal_action_sums_gda[k]))
-    for k in goal_action_sums_meta.keys():
+    for k in list(goal_action_sums_meta.keys()):
         goal_action_final_val_meta[k] = sum(goal_action_sums_meta[k]) / float(len(goal_action_sums_meta[k]))
 
 
@@ -534,8 +534,8 @@ def multiple_goalsperaction(n_files):
 
     linestyles = ['r--','g-.','b:']#,'b--','b+','g--','g+','c--','c+']
 
-    for k,v in goal_action_final_val_vanilla.items():
-        print "  Goal #"+str(k)+" has average execution cost "+str(v) 
+    for k,v in list(goal_action_final_val_vanilla.items()):
+        print("  Goal #"+str(k)+" has average execution cost "+str(v)) 
 
     #x_vals = , goal)
 
@@ -547,9 +547,9 @@ def multiple_goalsperaction(n_files):
     matplotlib.rc('font', **font)
 
     # now plot the three lines
-    ax.plot(goal_action_final_val_vanilla.keys(),goal_action_final_val_vanilla.values(),'r--', label='Replanning',lw=4)
-    ax.plot(goal_action_final_val_gda.keys(),goal_action_final_val_gda.values(),'g-.', label='GDA',lw=4)
-    ax.plot(goal_action_final_val_meta.keys(),goal_action_final_val_meta.values(),'b:', label='Meta',lw=4)
+    ax.plot(list(goal_action_final_val_vanilla.keys()),list(goal_action_final_val_vanilla.values()),'r--', label='Replanning',lw=4)
+    ax.plot(list(goal_action_final_val_gda.keys()),list(goal_action_final_val_gda.values()),'g-.', label='GDA',lw=4)
+    ax.plot(list(goal_action_final_val_meta.keys()),list(goal_action_final_val_meta.values()),'b:', label='Meta',lw=4)
     ax.set_xlim(0,550)
     ax.set_ylim(0,8000)
 
@@ -567,7 +567,7 @@ def graph_each(n_files):
     import matplotlib.pyplot as plt
 
     files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
-    datafiles = map(lambda f: DATADIR+f, files[-(n_files):])
+    datafiles = [DATADIR+f for f in files[-(n_files):]]
 
     linestyles = {'v':'r--','g':'g-.','m':'b:'}
 
@@ -576,7 +576,7 @@ def graph_each(n_files):
     file_count = 0
     for df in datafiles:
         header = True
-        print "Getting data from file "+str(df)
+        print("Getting data from file "+str(df))
         with open(df,'r') as f:
             for line in f.readlines():
                 if header: 
@@ -596,18 +596,18 @@ def graph_each(n_files):
                     #run_id = row[0]
                     
                     goals_action_data = eval('list('+goals_achieved_str+')')
-                    goals_achieved_data = map(lambda t: t[0], goals_action_data)
-                    actions_executed_data = map(lambda t: t[2], goals_action_data)
+                    goals_achieved_data = [t[0] for t in goals_action_data]
+                    actions_executed_data = [t[2] for t in goals_action_data]
 
                     if agent_type == 'v':
                         agent_name = 'Vanilla'
-                        print "  Finished processing vanilla data"
+                        print("  Finished processing vanilla data")
                     elif agent_type == 'g':
                         agent_name = 'GDA'
-                        print "  Finished processing gda data"
+                        print("  Finished processing gda data")
                     elif agent_type == 'm':
                         agent_name = 'Meta'
-                        print "  Finished processing meta data"
+                        print("  Finished processing meta data")
 
                     ax.plot(goals_achieved_data,actions_executed_data,linestyles[agent_type], label=agent_name+str(file_count),lw=2)
 
@@ -626,7 +626,7 @@ def goalsperactionslinegraph(prev_file):
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
     datafile = DATADIR + files[-(prev_file+1)]
-    print("-- About to graph data from "+str(datafile))
+    print(("-- About to graph data from "+str(datafile)))
     header = True
     goals_achieved = []
     actions_executed = []
@@ -654,8 +654,8 @@ def goalsperactionslinegraph(prev_file):
                 #run_id = row[0]
                 
                 goals_action_data = eval('list('+goals_achieved_str+')')
-                goals_achieved_data = map(lambda t: t[0], goals_action_data)
-                actions_executed_data = map(lambda t: t[2], goals_action_data)
+                goals_achieved_data = [t[0] for t in goals_action_data]
+                actions_executed_data = [t[2] for t in goals_action_data]
                 if agent_type == 'v':
                     agent_name = 'Re-planning'
                     ax.set_xlim(0,max(goals_achieved_data))
@@ -692,7 +692,7 @@ def bargraph(prev_file):
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-(prev_file+1)]
-    print("-- About to graph data from "+str(datafile))
+    print(("-- About to graph data from "+str(datafile)))
     header = True
     goals_achieved = []
     actions_executed = []
@@ -732,7 +732,7 @@ def graph(prev_file):
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-(prev_file+1)]
-    print("-- About to graph data from "+str(datafile))
+    print(("-- About to graph data from "+str(datafile)))
     header = True
     mortar_ys = []
     cycles_xs = []
@@ -778,7 +778,7 @@ def graph_slices_hardcoded():
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile_goal_trans = DATADIR + files[-(prev_file_goal_trans+1)]
     datafile_no_goal_trans = DATADIR + files[-(prev_file_no_goal_trans+1)]
-    print("-- About to read in goal transform data from "+str(datafile_goal_trans))
+    print(("-- About to read in goal transform data from "+str(datafile_goal_trans)))
     header = True
     gt_mortar_ys = []
     gt_cycles_xs = []
@@ -797,8 +797,8 @@ def graph_slices_hardcoded():
                 score = (score*1.0) / get_max_score_for_cycles(num_cycles)
                 gt_score_zs.append(score)
                 gt_cycles_xs.append(num_cycles)
-        print("There were "+str(count)+" data points collected that will be used for this graph")
-    print("-- About to read in non-goal transform data from "+str(datafile_goal_trans))
+        print(("There were "+str(count)+" data points collected that will be used for this graph"))
+    print(("-- About to read in non-goal transform data from "+str(datafile_goal_trans)))
     
     no_gt_mortar_ys = []
     no_gt_cycles_xs = []
@@ -906,10 +906,10 @@ if __name__ == "__main__":
         if len(sys.argv) > 2:
             if len(sys.argv) > 3:
                 if str(sys.argv[2]) == 'multiple':
-                    print "graphing an average of the last "+sys.argv[2]+" runs"
+                    print("graphing an average of the last "+sys.argv[2]+" runs")
                     multiple_goalsperaction(int(sys.argv[3]))
                 elif str(sys.argv[2]) == 'each':
-                    print "graphing each of the last "+sys.argv[3]+" runs"
+                    print("graphing each of the last "+sys.argv[3]+" runs")
                     graph_each(int(sys.argv[3]))
             else:
                 goalsperactionslinegraph(int(sys.argv[2]))

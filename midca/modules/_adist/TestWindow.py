@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-from Window import Window
+from .Window import Window
 
 
 #
@@ -15,11 +15,11 @@ w = Window(10)
 for i in range(20):
     w.add(i)
 
-print w
-print w.isFull()
-print w.getItem(5)
-print w.lastOut
+print(w)
+print(w.isFull())
+print(w.getItem(5))
+print(w.lastOut)
 w.clear()
-print w
-print w.isFull()
-print w.lastOut
+print(w)
+print(w.isFull())
+print(w.lastOut)

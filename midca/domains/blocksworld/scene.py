@@ -8,7 +8,7 @@ class Scene:
         self.blocks = blocks
 
     def draw(self):
-        print self.layers_to_s(self._makelayers())
+        print(self.layers_to_s(self._makelayers()))
     
     def __str__(self):
         return self.layers_to_s(self._makelayers())

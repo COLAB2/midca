@@ -53,7 +53,7 @@ class Atom:
 		
 		self.predicate = predicate
 		self.args = args
-		self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
+		self.hash = hash(predicate.name + str(list(map(str,args)))) # little expensive because of map, but only
 															  # happens at initialization
 		
 	def __getitem__(self, item):
@@ -285,13 +285,13 @@ class Tree:
 		checked is something which is usefull in goaltransforms , 
 		to check whether the result is not as same as what to be transformed.
 		'''
-                self.rootnode = rootnode
-                self.allnodes = allnodes
-                self.checked = checked
+		self.rootnode = rootnode
+		self.allnodes = allnodes
+		self.checked = checked
 		if not args == 0:
 			self.insert(args)
 
-        def printall(self,space,printed,root):
+	def printall(self,space,printed,root):
 		'''
 		Print the predicates in the heirarchy of spaces. 
 		for example rootnode should contain no space while the following children 
@@ -301,7 +301,7 @@ class Tree:
 			return 0
 		if not root.predicate in printed:
 			printed.append(root.predicate)
-			print(space + root.predicate)
+			print((space + root.predicate))
 			space =  space[0:4] + space
 		else:
 			space = space[0:-4]
@@ -311,18 +311,18 @@ class Tree:
 			for s in root.children:
 				self.printall(space, printed,s)
 
-        def printtree(self):
+	def printtree(self):
 		'''
 		Start from the root node and print all the predicates by parsing through the children.
 		'''
-                root = copy.deepcopy(self.rootnode)
-                printed = list()
-                space = "  "
-                print("--------- Class Hierarchy Predicate Tree ----------")
-                self.printall(space,printed,root)
-                print("")
-                print("--------- Class Hierarchy Predicate Tree Ends ----------")
-                print("")
+		root = copy.deepcopy(self.rootnode)
+		printed = list()
+		space = "  "
+		print("--------- Class Hierarchy Predicate Tree ----------")
+		self.printall(space,printed,root)
+		print("")
+		print("--------- Class Hierarchy Predicate Tree Ends ----------")
+		print("")
 
 	def insert(self,content):
 		'''
@@ -330,7 +330,7 @@ class Tree:
 		if there is no root node initialize root node 
 		else check the node to add a branch for and add a branch to it.
 		'''
-	     	for i in range(0,len(content)):
+		for i in range(0,len(content)):
 			newnode = Node()
 			temp_string = content
 			newnode = newnode.insert(temp_string[len(temp_string)-1])
@@ -358,13 +358,13 @@ class ObjectTree:
 	'''
 
 	def __init__(self,rootnode,allnodes,checked,args):
-                self.rootnode = rootnode
-                self.allnodes = allnodes
-                self.checked = checked
+		self.rootnode = rootnode
+		self.allnodes = allnodes
+		self.checked = checked
 		if not args == 0:
 			self.objectinsert(args)
 
-        def printall(self,space,printed,root):
+	def printall(self,space,printed,root):
 		'''
 		Print the predicates in the heirarchy of spaces. for example rootnode 		
 		should contain no space while the following children 			
@@ -376,7 +376,7 @@ class ObjectTree:
 
 		if not root.predicate in printed:
 			printed.append(root.predicate)
-			print(space + root.predicate)
+			print((space + root.predicate))
 			space =  space[0:4] + space
 		else:
 				
@@ -389,18 +389,18 @@ class ObjectTree:
 				self.printall(space, printed,s)
 
         
-        def printtree(self):
+	def printtree(self):
 		'''
 		Start from the root node and print all the predicates by parsing through the children.
 		'''
-                root = copy.deepcopy(self.rootnode)
-                printed = list()
-                space = "  "
-                print("--------- Class Hierarchy Object Tree ----------")
-                self.printall(space,printed,root)
-                print("")
-                print("--------- Class Hierarchy Object Tree Ends ----------")
-                print("")
+		root = copy.deepcopy(self.rootnode)
+		printed = list()
+		space = "  "
+		print("--------- Class Hierarchy Object Tree ----------")
+		self.printall(space,printed,root)
+		print("")
+		print("--------- Class Hierarchy Object Tree Ends ----------")
+		print("")
 
 	def objectinsert(self,content):
 		'''
@@ -408,7 +408,7 @@ class ObjectTree:
 		if there is no root node initialize root node 
 		else check the node to add a branch for and add a branch to it.
 		'''
-	   	for i in range(0,len(content)):
+		for i in range(0,len(content)):
 			temp_string = content
 			newnode = Node()
 			newnode = newnode.insert(temp_string[len(temp_string)-1])
@@ -433,23 +433,23 @@ class Node:
 	Node for creating a tree which contains predicate as name , 
 	parents and children as data members.
 	'''
-        def __init__(self):
-                self.predicate = ""
-                self.parents = list()
-                self.children = list()
+	def __init__(self):
+			self.predicate = ""
+			self.parents = list()
+			self.children = list()
 
-        def insert(self,predicate):
-                self.predicate = predicate
-                return self
-                       
-                                       
-        def insertbranch(self,s,tree):
-                self.parents.append(s)
-                s.children.append(self)
-                for a in range(0,len(tree.allnodes)):
-                        if tree.allnodes[a].predicate is s.predicate:
-                                tree.allnodes[a] = s                         
-                return self
+	def insert(self,predicate):
+			self.predicate = predicate
+			return self
+					
+									
+	def insertbranch(self,s,tree):
+			self.parents.append(s)
+			s.children.append(self)
+			for a in range(0,len(tree.allnodes)):
+					if tree.allnodes[a].predicate is s.predicate:
+							tree.allnodes[a] = s                         
+			return self
 
 		
 class World:
@@ -495,7 +495,7 @@ class World:
 						if (not filter_matches[filter_str]) and filter_str in part.name:
 							filter_matches[filter_str] = True
 							
-				if not (False in filter_matches.values()): # check to see they are all True
+				if not (False in list(filter_matches.values())): # check to see they are all True
 					relevant_atoms.append(atom)
 					#print("Just added "+str(atom)+" to relevant atoms")
 				# reset filter matches
@@ -505,7 +505,7 @@ class World:
 
 	def get_objects_names_by_type(self, typename):
 		objs = []
-		for each_obj in self.objects.keys():
+		for each_obj in list(self.objects.keys()):
 			if(str(self.obj_type(each_obj)) == str(typename)):
 				objs.append(each_obj)
 		return objs
@@ -543,7 +543,7 @@ class World:
 		if not type(self.atoms) is set:
 			self.atoms = set(self.atoms)
 			
-		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
+		return World(list(self.operators.values()), list(self.predicates.values()), self.atoms.copy(), self.types.copy(), list(self.objects.values()))
 	
 	def is_true(self, predname, argnames = []):
 		for atom in self.atoms:
@@ -613,7 +613,7 @@ class World:
 		return False
 	
 	def get_possible_objects(self, predicate, arg):
-		return self.objects.values() #not, obviously, a good implementation
+		return list(self.objects.values()) #not, obviously, a good implementation
 	
 	def get_objects_by_type(self, some_type):
 		if type(some_type) is str:
@@ -624,7 +624,7 @@ class World:
 				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
 			
 		objs = []
-		for obj in self.objects.values():
+		for obj in list(self.objects.values()):
 			if obj.is_a(some_type):
 				objs.append(obj)
 		
@@ -766,7 +766,7 @@ class World:
 		return self.operators
 	
 	def remove_operator(self, opname):
-		if opname in self.operators.keys():
+		if opname in list(self.operators.keys()):
 			del self.operators[opname]
 			return True
 		return False

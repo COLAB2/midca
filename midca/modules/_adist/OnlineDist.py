@@ -2,10 +2,10 @@
 
 
 
-from Window import Window
-from WindowPair import WindowPair
-from OnlineNormal import OnlineNormal
-import SameDist
+from .Window import Window
+from .WindowPair import WindowPair
+from .OnlineNormal import OnlineNormal
+from . import SameDist
 
 
 
@@ -54,9 +54,9 @@ class OnlineDist:
             for x in wp.w2.getData():
                 rightNormal.update(x)
 
-            print leftNormal
-            print rightNormal
-            print ' '
+            print(leftNormal)
+            print(rightNormal)
+            print(' ')
 
             p = SameDist.sameDist(leftNormal.getNormalizer(), leftNormal.getMean(), leftNormal.getVariance() ** 0.5, rightNormal.getNormalizer(), rightNormal.getMean(), rightNormal.getVariance() ** 0.5)
 

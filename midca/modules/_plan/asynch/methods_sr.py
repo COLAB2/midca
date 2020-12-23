@@ -73,7 +73,7 @@ def get_max_height_position_block(state , objectOrID):
 	print(objectOrID)
 
 	print("the top status is ")
-	print(get_top_status(state, objectOrID))
+	print((get_top_status(state, objectOrID)))
 
 
 	if (get_last_clear_status(state, objectOrID) == 'clear'):
@@ -107,7 +107,7 @@ def achieve_goals_m(state, goals):
 		goal = goals[0]
 		get_goal_pos(goal)
 		object = goal["directObject"]
-		print("goal objective is " + goal["objective"] )
+		print(("goal objective is " + goal["objective"] ))
 		#print(object + " is " + get_last_clear_status(state, object))
 		if goal["objective"] == "show-loc":
 			return [("point_at", goal["directObject"]), ("achieve_goals", goals[1:])]
@@ -235,7 +235,7 @@ def is_done(b1,state,goal):
 	if b1 == 'table': return True
 	
 	if b1 in goal_pos_dic:
-		print(goal_pos_dic[b1])
+		print((goal_pos_dic[b1]))
 	else:
 		print("no!")
 	
@@ -243,7 +243,7 @@ def is_done(b1,state,goal):
 		#print("return false")
 		return False
 	if get_last_position(state, b1)== 'table': return True
-	if get_last_position(state, b1) in goal_pos_dic.values() and (b1 not in goal_pos_dic or goal_pos_dic[b1] != get_last_position(state, b1)):
+	if get_last_position(state, b1) in list(goal_pos_dic.values()) and (b1 not in goal_pos_dic or goal_pos_dic[b1] != get_last_position(state, b1)):
 		return False
 	#raw_input('Enter ...')
 	return is_done(get_last_position(state, b1),state,goal)

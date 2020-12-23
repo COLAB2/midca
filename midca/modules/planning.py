@@ -1,5 +1,5 @@
-from _plan import pyhop
-from _plan import modified_pyhop
+from ._plan import pyhop
+from ._plan import modified_pyhop
 from midca import plans, base
 from midca.modules._plan.asynch import asynch
 from midca.modules._plan.jShop import JSHOP, JSHOP2
@@ -32,8 +32,8 @@ class GenericPyhopPlanner(base.BaseModule):
                 declare_monitors()
             self.working = True
         except:
-            print "Error declaring pyhop methods and operators. This planner will be \
-            disabled"
+            print("Error declaring pyhop methods and operators. This planner will be \
+            disabled")
             traceback.print_exc()
             self.working = False
         self.validate_plan = plan_validator
@@ -50,21 +50,21 @@ class GenericPyhopPlanner(base.BaseModule):
                     valid = self.validate_plan(state, plan)
                     if valid:
                         if verbose >= 2:
-                            print "Old plan found that tests as valid:", plan
+                            print("Old plan found that tests as valid:", plan)
                     else:
                         if verbose >= 2:
-                            print "Old plan found that tests as invalid:", plan, ". removing from stored plans."
+                            print("Old plan found that tests as invalid:", plan, ". removing from stored plans.")
                         self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
                 else:
                     if verbose >= 2:
-                        print "no validity check specified. assuming old plan is valid."
+                        print("no validity check specified. assuming old plan is valid.")
                         valid = True
             except:
                 if verbose >= 2:
-                    print "Error validating plan:", plan
+                    print("Error validating plan:", plan)
                 valid = False
         except:
-            print "Error checking for old plans"
+            print("Error checking for old plans")
             plan = None
             valid = False
         if valid:
@@ -77,7 +77,7 @@ class GenericPyhopPlanner(base.BaseModule):
         '''
 
         if verbose >= 2:
-            print "Planning..."
+            print("Planning...")
         try:
             plan = pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
             #note: MIDCA does not convert its state and goals to pyhop state and
@@ -85,7 +85,7 @@ class GenericPyhopPlanner(base.BaseModule):
             #set to other than 0.
         except:
             if verbose >= 1:
-                print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
+                print("Error in planning:", traceback.format_exc(), "\n-Planning failed.")
             return None
         return plan
 
@@ -95,7 +95,7 @@ class GenericPyhopPlanner(base.BaseModule):
         '''
 
         if verbose >= 2:
-            print "Planning..."
+            print("Planning...")
         try:
             plan = modified_pyhop.pyhop(state, [("achieve_goals", goals)], verbose = 0)
             #note: MIDCA does not convert its state and goals to pyhop state and
@@ -103,7 +103,7 @@ class GenericPyhopPlanner(base.BaseModule):
             #set to other than 0.
         except:
             if verbose >= 1:
-                print "Error in planning:", traceback.format_exc(), "\n-Planning failed."
+                print("Error in planning:", traceback.format_exc(), "\n-Planning failed.")
             return None
         return plan
 
@@ -115,7 +115,7 @@ class GenericPyhopPlanner(base.BaseModule):
                 state = states[-1]
             else:
                 if verbose >= 1:
-                    print "No world state loaded. Skipping planning."
+                    print("No world state loaded. Skipping planning.")
                 return
         #now state is the most recent (or only) state and is non-null
         try:
@@ -124,14 +124,14 @@ class GenericPyhopPlanner(base.BaseModule):
             goals = []
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         plan = self.get_old_plan(state, goals, verbose)
         if verbose >= 2:
             if plan:
-                print "Will not replan"
+                print("Will not replan")
             else:
-                print "Planning from scratch"
+                print("Planning from scratch")
         if not plan:
             plan = self.get_new_plan(state, goals, verbose)
             if not plan and plan != []:
@@ -141,9 +141,9 @@ class GenericPyhopPlanner(base.BaseModule):
                               [plans.Action(action[0], *action[1:]) for
                                action in plan], goals)
             if verbose >= 1:
-                print "Planning complete."
+                print("Planning complete.")
         if verbose >= 2:
-            print "Plan: ", plan
+            print("Plan: ", plan)
         #save new plan
         if plan != None:
             self.mem.get(self.mem.GOAL_GRAPH).addPlan(plan)
@@ -167,7 +167,7 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
                 state = states[-1]
             else:
                 if verbose >= 1:
-                    print "No world state loaded. Skipping planning."
+                    print("No world state loaded. Skipping planning.")
                 return
         #now state is the most recent (or only) state and is non-null
         try:
@@ -176,14 +176,14 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
             goals = []
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         plan = self.get_old_plan(state, goals, verbose)
         if verbose > 2:
             if plan:
-                print "Will not replan"
+                print("Will not replan")
             else:
-                print "Will replan"
+                print("Will replan")
         if plan:
             return
         if not plan:
@@ -194,9 +194,9 @@ class AsynchPyhopPlanner(GenericPyhopPlanner):
         midcaPlan = plans.Plan(plan, goals)
         asynchPlan = asynch.asynch_plan(self.mem, midcaPlan)
         if verbose >= 1:
-            print "Planning complete."
+            print("Planning complete.")
             if verbose >= 2:
-                print "Plan: ", asynchPlan
+                print("Plan: ", asynchPlan)
         #save new plan
         if asynchPlan != None:
             self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
@@ -221,7 +221,7 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
                 state = states[-1]
             else:
                 if verbose >= 1:
-                    print "No world state loaded. Skipping planning."
+                    print("No world state loaded. Skipping planning.")
                 return
         #now state is the most recent (or only) state and is non-null
 
@@ -231,14 +231,14 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
             goals = []
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         plan = self.get_old_plan(state, goals, verbose)
         if verbose > 2:
             if plan:
-                print "Will not replan"
+                print("Will not replan")
             else:
-                print "Will replan"
+                print("Will replan")
         if plan:
             return
         if not plan:
@@ -248,9 +248,9 @@ class AsynchPyhopPlanner_3d_camera(GenericPyhopPlanner):
         midcaPlan = plans.Plan(plan, goals)
         asynchPlan = asynch_3d.asynch_plan(self.mem, midcaPlan)
         if verbose >= 1:
-            print "Planning complete."
+            print("Planning complete.")
             if verbose >= 2:
-                print "Plan: ", asynchPlan
+                print("Plan: ", asynchPlan)
         #save new plan
         if asynchPlan != None:
             self.mem.get(self.mem.GOAL_GRAPH).addPlan(asynchPlan)
@@ -284,8 +284,8 @@ class JSHOP2Planner(base.BaseModule):
         try:
             self.working = True
         except:
-            print "Error declaring pyhop methods and operators. This planner will be \
-            disabled"
+            print("Error declaring pyhop methods and operators. This planner will be \
+            disabled")
             traceback.print_exc()
             self.working = False
 
@@ -309,7 +309,7 @@ class JSHOP2Planner(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -317,24 +317,24 @@ class JSHOP2Planner(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print "Old plan retrieved. Checking validity...",
+                print("Old plan retrieved. Checking validity...", end=' ')
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
                 #if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
-                    print "checking to see if all goals are achieved...",
+                    print("checking to see if all goals are achieved...", end=' ')
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
-                        print "yes"
+                        print("yes")
                     else:
-                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                        print("no. Goals achieved: " + str({str(goal) for goal in achieved}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None #triggers replanning.
 
@@ -345,7 +345,7 @@ class JSHOP2Planner(base.BaseModule):
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:
-                print "Planning..."
+                print("Planning...")
 #             try:
             jshopState = self.jshop_state_from_world(world, self.state_file)
 #             except Exception:
@@ -361,21 +361,21 @@ class JSHOP2Planner(base.BaseModule):
                 jshopPlan = None
             if not jshopPlan and jshopPlan != []:
                 if verbose >= 1:
-                    print "Planning failed for ",
+                    print("Planning failed for ", end=' ')
                     for goal in goals:
-                        print goal, " ",
-                    print
+                        print(goal, " ", end=' ')
+                    print()
                 if trace: trace.add_data("PLAN", jshopPlan)
                 return
             #change from jshop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
 
             if verbose >= 1:
-                print "Planning complete."
+                print("Planning complete.")
             if verbose >= 2:
-                print "Plan: "#, midcaPlan
+                print("Plan: ")#, midcaPlan
                 for a in midcaPlan:
-                    print("  "+str(a))
+                    print(("  "+str(a)))
             #save new plan
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
@@ -409,8 +409,8 @@ class JSHOPPlanner(base.BaseModule):
         try:
             self.working = True
         except:
-            print "Error declaring pyhop methods and operators. This planner will be \
-            disabled"
+            print("Error declaring pyhop methods and operators. This planner will be \
+            disabled")
             traceback.print_exc()
             self.working = False
 
@@ -434,7 +434,7 @@ class JSHOPPlanner(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -442,24 +442,24 @@ class JSHOPPlanner(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print "Old plan retrieved. Checking validity...",
+                print("Old plan retrieved. Checking validity...", end=' ')
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
                 #if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
-                    print "checking to see if all goals are achieved...",
+                    print("checking to see if all goals are achieved...", end=' ')
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
-                        print "yes"
+                        print("yes")
                     else:
-                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                        print("no. Goals achieved: " + str({str(goal) for goal in achieved}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None #triggers replanning.
 
@@ -470,15 +470,15 @@ class JSHOPPlanner(base.BaseModule):
         if not midcaPlan:
             #use jshop to generate new plan
             if verbose >= 2:
-                print "Planning..."
+                print("Planning...")
             try:
                 jshopState = self.jshop_state_from_world(world, self.state_file)
             except Exception:
-                print "Could not generate a valid jshop state from current world state. Skipping planning"
+                print("Could not generate a valid jshop state from current world state. Skipping planning")
             try:
                 jshopTasks = self.jshop_tasks_from_goals(goals,jshopState, self.state_file)
             except Exception:
-                print "Could not generate a valid jshop task from current goal set. Skipping planning"
+                print("Could not generate a valid jshop task from current goal set. Skipping planning")
             try:
                 self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
                 jshopPlan = JSHOP.jshop(jshopTasks, self.domain_file, self.state_file)
@@ -486,21 +486,21 @@ class JSHOPPlanner(base.BaseModule):
                 jshopPlan = None
             if not jshopPlan and jshopPlan != []:
                 if verbose >= 1:
-                    print "Planning failed for ",
+                    print("Planning failed for ", end=' ')
                     for goal in goals:
-                        print goal, " ",
-                    print
+                        print(goal, " ", end=' ')
+                    print()
                 if trace: trace.add_data("PLAN", jshopPlan)
                 return
             #change from jshop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
 
             if verbose >= 1:
-                print "Planning complete."
+                print("Planning complete.")
             if verbose >= 2:
-                print "Plan: "#, midcaPlan
+                print("Plan: ")#, midcaPlan
                 for a in midcaPlan:
-                    print("  "+str(a))
+                    print(("  "+str(a)))
             #save new plan
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
@@ -533,8 +533,8 @@ class PyHopPlanner(base.BaseModule):
             declare_operators()
             self.working = True
         except:
-            print "Error declaring pyhop methods and operators. This planner will be \
-            disabled"
+            print("Error declaring pyhop methods and operators. This planner will be \
+            disabled")
             traceback.print_exc()
             self.working = False
 
@@ -559,7 +559,7 @@ class PyHopPlanner(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -567,24 +567,24 @@ class PyHopPlanner(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print "Old plan retrieved. Checking validity...",
+                print("Old plan retrieved. Checking validity...", end=' ')
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
                 #if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
-                    print "checking to see if all goals are achieved...",
+                    print("checking to see if all goals are achieved...", end=' ')
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
-                        print "yes"
+                        print("yes")
                     else:
-                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                        print("no. Goals achieved: " + str({str(goal) for goal in achieved}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None #triggers replanning.
 
@@ -595,16 +595,16 @@ class PyHopPlanner(base.BaseModule):
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:
-                print "Planning..."
+                print("Planning...")
             try:
                 pyhopState = self.pyhop_state_from_world(world)
             except Exception:
-                print "Could not generate a valid pyhop state from current world state. Skipping planning"
+                print("Could not generate a valid pyhop state from current world state. Skipping planning")
 
             try:
                 pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             except Exception:
-                print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+                print("Could not generate a valid pyhop task from current goal set. Skipping planning")
             try:
                 #print_state(pyhopState)
                 # record attempt to replann
@@ -615,10 +615,10 @@ class PyHopPlanner(base.BaseModule):
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:
-                    print "Planning failed for ",
+                    print("Planning failed for ", end=' ')
                     for goal in goals:
-                        print goal, " ",
-                    print
+                        print(goal, " ", end=' ')
+                    print()
 
                 if trace: trace.add_data("PLAN", None) # planning failed, record NONE for plan
                 return
@@ -626,11 +626,11 @@ class PyHopPlanner(base.BaseModule):
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
 
             if verbose >= 1:
-                print "Planning complete."
+                print("Planning complete.")
             if verbose >= 2:
-                print "Plan: "#, midcaPlan
+                print("Plan: ")#, midcaPlan
                 for a in midcaPlan:
-                    print("  "+str(a))
+                    print(("  "+str(a)))
             #save new plan
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
@@ -663,8 +663,8 @@ class PyHopPlanner_temporary(base.BaseModule):
             declare_operators()
             self.working = True
         except:
-            print "Error declaring pyhop methods and operators. This planner will be \
-            disabled"
+            print("Error declaring pyhop methods and operators. This planner will be \
+            disabled")
             traceback.print_exc()
             self.working = False
 
@@ -689,7 +689,7 @@ class PyHopPlanner_temporary(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -697,24 +697,24 @@ class PyHopPlanner_temporary(base.BaseModule):
             midcaPlan = None
         if midcaPlan:
             if verbose >= 2:
-                print "Old plan retrieved. Checking validity...",
+                print("Old plan retrieved. Checking validity...", end=' ')
             valid = world.plan_correct(midcaPlan)
             if not valid:
                 midcaPlan = None
                 #if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:
-                    print "invalid."
+                    print("invalid.")
             elif verbose >= 2:
-                print "valid."
+                print("valid.")
             if valid:
                 if verbose >= 2:
-                    print "checking to see if all goals are achieved...",
+                    print("checking to see if all goals are achieved...", end=' ')
                 achieved = world.plan_goals_achieved(midcaPlan)
                 if verbose >= 2:
                     if len(achieved) == len(midcaPlan.goals):
-                        print "yes"
+                        print("yes")
                     else:
-                        print "no. Goals achieved: " + str({str(goal) for goal in achieved})
+                        print("no. Goals achieved: " + str({str(goal) for goal in achieved}))
                 if len(achieved) != len(midcaPlan.goals):
                     midcaPlan = None #triggers replanning.
 
@@ -725,16 +725,16 @@ class PyHopPlanner_temporary(base.BaseModule):
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:
-                print "Planning..."
+                print("Planning...")
             try:
                 pyhopState = self.pyhop_state_from_world(world)
             except Exception:
-                print "Could not generate a valid pyhop state from current world state. Skipping planning"
+                print("Could not generate a valid pyhop state from current world state. Skipping planning")
 
             try:
                 pyhopTasks = self.pyhop_tasks_from_goals(goals,pyhopState)
             except Exception:
-                print "Could not generate a valid pyhop task from current goal set. Skipping planning"
+                print("Could not generate a valid pyhop task from current goal set. Skipping planning")
             try:
                 #print_state(pyhopState)
                 # record attempt to replann
@@ -745,10 +745,10 @@ class PyHopPlanner_temporary(base.BaseModule):
                 pyhopPlan = None
             if not pyhopPlan and pyhopPlan != []:
                 if verbose >= 1:
-                    print "Planning failed for ",
+                    print("Planning failed for ", end=' ')
                     for goal in goals:
-                        print goal, " ",
-                    print
+                        print(goal, " ", end=' ')
+                    print()
 
                 if trace: trace.add_data("PLAN", None) # planning failed, record NONE for plan
                 return
@@ -756,11 +756,11 @@ class PyHopPlanner_temporary(base.BaseModule):
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in pyhopPlan], goals)
 
             if verbose >= 1:
-                print "Planning complete."
+                print("Planning complete.")
             if verbose >= 2:
-                print "Plan: "#, midcaPlan
+                print("Plan: ")#, midcaPlan
                 for a in midcaPlan:
-                    print("  "+str(a))
+                    print(("  "+str(a)))
             #save new plan
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)
@@ -821,7 +821,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         # find the correct types
         for precond in operator.preconditions:
-            args = map(str,precond.atom.args)
+            args = list(map(str,precond.atom.args))
             for i in range(len(args)):
                 arg_names_i = arg_names.index(args[i])
                 if arg_types[arg_names_i] is None:
@@ -831,7 +831,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             return world.get_objects_by_type(t)
 
         # get all objects that match each type
-        possible_bindings = map(get_type,arg_types)
+        possible_bindings = list(map(get_type,arg_types))
 
         # generate all possible arrangements
         permutations = itertools.product(*possible_bindings)
@@ -955,7 +955,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                                         valid_tiles.append(ca.args[1])
 
             # uncomment next 5 lines to make quicksand visible
-            quicksand_tiles = map(lambda atom: atom.args[0], world.get_atoms(filters=["quicksand"]))
+            quicksand_tiles = [atom.args[0] for atom in world.get_atoms(filters=["quicksand"])]
             # if the agent's location is in quicksand, remove it
             quicksand_tiles = [t for t in quicksand_tiles if str(t) != agent_loc]
             valid_tiles = set(valid_tiles) - set(quicksand_tiles)
@@ -982,7 +982,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         if 'beacon' in operator.name:
             beacon_atoms = world.get_atoms(filters=["beacon-at"])
-            beacon_tiles = map(lambda b: b.args[1],beacon_atoms)
+            beacon_tiles = [b.args[1] for b in beacon_atoms]
             valid_tiles = beacon_tiles
 
         for o in operator.objnames:
@@ -993,7 +993,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         for precond in operator.preconditions:
             #print "precond is "+str(precond)
             #print "precond atom is "+str(precond.atom)
-            args = map(str,precond.atom.args)
+            args = list(map(str,precond.atom.args))
             #print "args are "+str(map(str,args))
             for i in range(len(args)):
                 arg_names_i = arg_names.index(args[i])
@@ -1013,7 +1013,7 @@ class HeuristicSearchPlanner(base.BaseModule):
         def old_mapping_func(t):
             return world.get_objects_by_type(t)
 
-        possible_bindings = map(better_mapping_func,arg_types)
+        possible_bindings = list(map(better_mapping_func,arg_types))
         #possible_bindings = map(old_mapping_func,arg_types)
         #print "here"
 #         if operator.name in ['moveeast2','moveeast3','moveeast4']:
@@ -1068,7 +1068,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         child_nodes = []
 
-        available_operators = node.world.operators.values()
+        available_operators = list(node.world.operators.values())
 
         for op in available_operators:
             inst_operators = self.get_all_instantiations(node.world,op)
@@ -1080,14 +1080,14 @@ class HeuristicSearchPlanner(base.BaseModule):
                     new_world.apply(inst_op)
                 except:
                     print("====== Tried to apply action:")
-                    print str(inst_op)
+                    print(str(inst_op))
                     print("====== On world:")
-                    print str(new_world)
+                    print(str(new_world))
                     print("====== But Failed:")
 
                 already_visited = False
 
-                for w in map(lambda n: n.world, visited):
+                for w in [n.world for n in visited]:
                     if new_world.equal(w):
                         already_visited = True
 
@@ -1107,11 +1107,11 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         child_nodes = []
 
-        available_operators = node.world.operators.values()
+        available_operators = list(node.world.operators.values())
 
         is_stuck = len(node.world.get_atoms(filters=['stuck'])) > 0
         if is_stuck:
-            available_operators = filter(lambda op: 'push' in str(op), node.world.operators.values())
+            available_operators = [op for op in list(node.world.operators.values()) if 'push' in str(op)]
 
         for op in available_operators:
             inst_operators = self.get_instantiations_nbeacons(node.world,op)
@@ -1128,9 +1128,9 @@ class HeuristicSearchPlanner(base.BaseModule):
                     new_world.apply(inst_op)
                 except:
                     print("====== Tried to apply action:")
-                    print str(inst_op)
+                    print(str(inst_op))
                     print("====== On world:")
-                    print str(new_world)
+                    print(str(new_world))
                     print("====== But Failed:")
                 # check to make sure its not
                 already_visited = False
@@ -1138,7 +1138,7 @@ class HeuristicSearchPlanner(base.BaseModule):
                 #print "diffs with current world = "
                 #for i in map(lambda n: new_world.diff(n.world),visited):
                 #    print "  ("+str(map(str,i[0]))+","+str(map(str,i[1]))+")"
-                for w in map(lambda n: n.world, visited):
+                for w in [n.world for n in visited]:
                     if new_world.equal(w):
                         already_visited = True
                 #print "Already Visited is "+str(already_visited)
@@ -1341,7 +1341,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             # take the first node off the queue
             curr_node = Q[0]
             if self.verbose >=2:# or we_learned_an_op:
-                print "-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str(map(lambda a:a.operator.name,curr_node.actions_taken)) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node))
+                print("-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str([a.operator.name for a in curr_node.actions_taken]) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node)))
 
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
@@ -1357,25 +1357,25 @@ class HeuristicSearchPlanner(base.BaseModule):
             Q += decompose(curr_node, visited)
             Q = sorted(Q,key=self.nbeacons_heuristic(goals,infinity=INFINITY))
             # now remove any node has a score >= infinity (because it's not relevant
-            Q = filter(lambda s: self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY, Q)
+            Q = [s for s in Q if self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY]
             # also remove any node that has an activate beacon action that is not the last action
             def bad_activate(n):
                 try:
-                    activate_index = map(lambda a:a.operator.name,n.actions_taken).index('activatebeacon')
+                    activate_index = [a.operator.name for a in n.actions_taken].index('activatebeacon')
                     last_element_index = len(n.actions_taken) - 1
                     return activate_index == last_element_index
                 except ValueError:
                     return True
 
-            Q = filter(lambda n: bad_activate(n), Q)
+            Q = [n for n in Q if bad_activate(n)]
 
         if goal_reached_node:
             t1 = time.time()
             timestr = '%.5f' % (t1-t0)
-            if self.verbose >= 1: print "Heuristic Search Planning took "+timestr+"s"
+            if self.verbose >= 1: print("Heuristic Search Planning took "+timestr+"s")
             return goal_reached_node.actions_taken
         else:
-            if self.verbose >= 1: print "Heuristic Search failed to produce a plan"
+            if self.verbose >= 1: print("Heuristic Search failed to produce a plan")
             return []
 
     def run(self, cycle, verbose = 2):
@@ -1390,7 +1390,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals received by planner. Skipping planning."
+                print("No goals received by planner. Skipping planning.")
             return
         try:
             midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
@@ -1399,41 +1399,41 @@ class HeuristicSearchPlanner(base.BaseModule):
             if midcaPlan.finished():
                 # remove from goals and trigger replanning
                 self.mem.get(self.mem.GOALGRAPH).removePlan(midcaPlan)
-                if self.verbose >= 1: print "Old plan finished, will re-plan"
+                if self.verbose >= 1: print("Old plan finished, will re-plan")
                 midcaPlan = None
         except AttributeError:
             midcaPlan = None
             if verbose >= 2:
-                print "Did not retrieve plan, will plan from scratch"
+                print("Did not retrieve plan, will plan from scratch")
 
         # ensure goals is a collection to simplify things later.
         if not isinstance(goals, collections.Iterable):
             goals = [goals]
 
         if midcaPlan:
-            if self.verbose >= 1: print "Retrieved current plan. Skipping planning."
+            if self.verbose >= 1: print("Retrieved current plan. Skipping planning.")
             return
 
         if not midcaPlan:
             #use pyhop to generate new plan
             if verbose >= 2:
-                print "Planning..."
+                print("Planning...")
             #try:
             self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
             #print "Goals are "+str(map(str,goals))
 
             hsp_plan = self.heuristic_search(goals, decompose=self.brute_force_decompose_nbeacons)
             if self.verbose >= 1:
-                print "planning finished: "
+                print("planning finished: ")
                 for p in hsp_plan:
-                    print "  "+str(p.operator.name)+"("+str(map(lambda o:o.name,p.args))+")"
+                    print("  "+str(p.operator.name)+"("+str([o.name for o in p.args])+")")
 
-            midcaPlan = plans.Plan([plans.Action(action.operator.name, *map(lambda o:o.name,action.args)) for action in hsp_plan], goals)
+            midcaPlan = plans.Plan([plans.Action(action.operator.name, *[o.name for o in action.args]) for action in hsp_plan], goals)
 
             if verbose >= 2:
-                print "Plan: "#, midcaPlan
+                print("Plan: ")#, midcaPlan
                 for a in midcaPlan:
-                    print("  "+str(a))
+                    print(("  "+str(a)))
 
             if midcaPlan != None:
                 self.mem.get(self.mem.GOAL_GRAPH).addPlan(midcaPlan)

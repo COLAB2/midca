@@ -15,28 +15,28 @@ def is_done(b1,state,goal):
     if b1 == 'table': return True
     if b1 in goal.pos and not state.is_true("on", [b1, goal.pos[b1]]):
         return False
-    if b1 in goal.pos.values() and not state.is_true("clear", [b1]):
+    if b1 in list(goal.pos.values()) and not state.is_true("clear", [b1]):
     	return False
-    print b1, state.is_true("on-table", [b1])
+    print(b1, state.is_true("on-table", [b1]))
     if state.is_true("on-table", [b1]): return True
     for atom in state.atoms:
     	if atom.predicate.name == "on" and atom.args[0].name == b1:
     		return is_done(atom.args[1].name, state, goal)
     if state.is_true("holding", [b1]): 
     	return True
-    print b1, state
+    print(b1, state)
     for atom in state.atoms:
-    	print atom
+    	print(atom)
     raise Exception("Block is neither on anything or being held")
 
 def status(b1,state,goal):
     if is_done(b1,state,goal):
         return 'done'
     elif not (state.is_true("clear", [b1]) or state.is_true("holding", [b1])):
-        print "inaccessible", b1, state.is_true("clear", [b1])
+        print("inaccessible", b1, state.is_true("clear", [b1]))
         for atom in state.atoms:
         	if atom.predicate.name == "clear":
-        		print atom
+        		print(atom)
         return 'inaccessible'
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
         return 'move-to-table'
@@ -46,7 +46,7 @@ def status(b1,state,goal):
         return 'waiting'
 
 def all_blocks(state):
-    return [name for name, object in state.objects.items() if object.type.name.lower() == "block"]
+    return [name for name, object in list(state.objects.items()) if object.type.name.lower() == "block"]
 
 
 """
@@ -64,10 +64,10 @@ def moveb_m(state,goal):
 	do so and call move_blocks recursively. Otherwise, no blocks need
 	to be moved.
 	"""
-	print state
+	print(state)
 	for b1 in all_blocks(state):
 		s = status(b1,state,goal)
-		print b1, "stat:", s
+		print(b1, "stat:", s)
 		if s == 'move-to-table':
 			return [('move_one',b1,'table'),('move_blocks',goal)]
 		elif s == 'move-to-block':

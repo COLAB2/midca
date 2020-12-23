@@ -13,8 +13,8 @@ import time
 import  cv2
 import numpy as np
 from sys import argv
-from homography import *
-from baxter import *
+from .homography import *
+from .baxter import *
 from geometry_msgs.msg import Point, PointStamped
 # Global variables:
 
@@ -37,7 +37,7 @@ def initial_setup_baxter():
 
     """
     
-    print 'Initializing node...'
+    print('Initializing node...')
     rospy.init_node('baxter_or')
     baxter.enable()
     baxter.calibrateLeftGripper()
@@ -62,29 +62,29 @@ def get_floor_reference_points():
     global floor_reference_points # Maybe erase.
     global floor_reference_orientations # Maybe erase.
     
-    raw_input('Move the LEFT arm to point 1 and press enter.')
+    input('Move the LEFT arm to point 1 and press enter.')
     p1 = baxter.getLeftArmPosition()
     o1 = baxter.getLeftArmOrientation()
-    print o1
+    print(o1)
     #[-0.04504873726153096, 0.9983659324956183, 0.020392051958720396, -0.028639837992011533]
-    print 'Point 1 =', p1
-    raw_input('Move the LEFT arm to point 2 and press enter.')
+    print('Point 1 =', p1)
+    input('Move the LEFT arm to point 2 and press enter.')
     p2 = baxter.getLeftArmPosition()
     o2 = baxter.getLeftArmOrientation()
-    print 'Point 2 =', p2
-    raw_input('Move the LEFT arm to point 3 and press enter.')
+    print('Point 2 =', p2)
+    input('Move the LEFT arm to point 3 and press enter.')
     p3 = baxter.getLeftArmPosition()
     o3 = baxter.getLeftArmOrientation()
-    print 'Point 3 =', p3
-    raw_input('Move the LEFT arm to point 4 and press enter.')
+    print('Point 3 =', p3)
+    input('Move the LEFT arm to point 4 and press enter.')
     p4 = baxter.getLeftArmPosition()
     o4 = baxter.getLeftArmOrientation()
-    print 'Point 4 =', p4
+    print('Point 4 =', p4)
       
 
     Z = (p1[2] + p2[2] + p3[2] + p4[2]) / 4
 
-    print Z
+    print(Z)
 
     
     filename = "/home/baxter/git/midca/examples/_baxter/calibration.txt"
