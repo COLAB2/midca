@@ -1,0 +1,321 @@
+.000680 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.000943 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.001045 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.001131 - [cognitive] Initializing Interpret module 2 GraceAnomalyDetection...done.
+
+.001218 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.001305 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.001388 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.001475 - [cognitive] Initializing Intend module 3 HGNSelection...done.
+
+.001576 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.001673 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.001781 - Goal Graph initialized.
+
+.001853 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.001945 - Goal Graph initialized.
+
+.002033 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.002114 - Starting cycle 0
+
+.002190 - ****** Starting Simulate Phase ******
+
+.002450 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+a . . . .
+
+.002601 - ****** Starting Perceive Phase ******
+
+.734968 - ---------------Tag Data------------
+
+.735354 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+.735515 - -----------------------------------
+
+.735887 - ---------------Estimated Tag Data------------
+
+.736113 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+.736266 - -----------------------------------
+
+.736801 -   States Added  
+
+.736942 - agent-at(grace,Tx3y1)
+NUM(598.5)
+timeRemaining(598.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+.752209 - World observed.
+
+.787325 - ****** Starting Interpret Phase ******
+
+.787696 - Midca generated a goal : Goal(grace, Tx0y0, predicate: surveyed)
+
+.787889 - Midca generated a goal : Goal(grace, Tx0y1, predicate: surveyed)
+
+.788110 - Midca generated a goal : Goal(grace, Tx0y2, predicate: surveyed)
+
+.788415 - Midca generated a goal : Goal(grace, Tx0y3, predicate: surveyed)
+
+.788807 - Midca generated a goal : Goal(grace, Tx0y4, predicate: surveyed)
+
+.789139 - Midca generated a goal : Goal(grace, Tx1y4, predicate: surveyed)
+
+.789505 - Midca generated a goal : Goal(grace, Tx1y3, predicate: surveyed)
+
+.789901 - Midca generated a goal : Goal(grace, Tx1y2, predicate: surveyed)
+
+.790332 - Midca generated a goal : Goal(grace, Tx1y1, predicate: surveyed)
+
+.790950 - Midca generated a goal : Goal(grace, Tx1y0, predicate: surveyed)
+
+.791482 - Midca generated a goal : Goal(grace, Tx2y0, predicate: surveyed)
+
+.792136 - Midca generated a goal : Goal(grace, Tx2y1, predicate: surveyed)
+
+.792796 - Midca generated a goal : Goal(grace, Tx2y2, predicate: surveyed)
+
+.793481 - Midca generated a goal : Goal(grace, Tx2y3, predicate: surveyed)
+
+.794141 - Midca generated a goal : Goal(grace, Tx2y4, predicate: surveyed)
+
+.794851 - Midca generated a goal : Goal(grace, Tx3y4, predicate: surveyed)
+
+.795767 - Midca generated a goal : Goal(grace, Tx3y3, predicate: surveyed)
+
+.796569 - Midca generated a goal : Goal(grace, Tx3y2, predicate: surveyed)
+
+.797505 - Midca generated a goal : Goal(grace, Tx3y1, predicate: surveyed)
+
+.798347 - Midca generated a goal : Goal(grace, Tx3y0, predicate: surveyed)
+
+.799344 - Midca generated a goal : Goal(grace, Tx4y0, predicate: surveyed)
+
+.800475 - Midca generated a goal : Goal(grace, Tx4y1, predicate: surveyed)
+
+.801463 - Midca generated a goal : Goal(grace, Tx4y2, predicate: surveyed)
+
+.802456 - Midca generated a goal : Goal(grace, Tx4y3, predicate: surveyed)
+
+.803532 - Midca generated a goal : Goal(grace, Tx4y4, predicate: surveyed)
+
+.804180 - An anomaly is detected regarding the mode of operation : 
+
+.804785 - Midca generated a goal : Goal(grace, predicate: free)
+
+.804926 - ****** Starting Eval Phase ******
+
+.824602 - No current goals. Skipping eval
+
+.824778 - ****** Starting Intend Phase ******
+
+.825024 - No Survey goals. Intend will not select goals via hillclimbing.
+
+.825236 - Selecting goal(s): Goal(grace, predicate: free)
+
+.825572 - --------- Class Hierarchy Predicate Tree ----------
+
+.825655 -   root
+
+.825726 -     surveyed
+
+.825794 -         surveyed-structured
+
+.825865 -         surveyed-singleCellErgodic
+
+.825941 -     surveyed-ergodic
+
+.826018 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+7.064521 - Selecting goal(s): Goal(grace, predicate: free)
+
+7.064730 - ****** Starting Plan Phase ******
+
+7.095912 - Planning...
+
+7.228785 - Planning complete.
+
+7.228914 - Plan: 
+
+7.229044 -   glideback(grace)
+
+7.229223 - ****** Starting Act Phase ******
+
+7.247714 - Action glideback(grace) not complete.
+
+7.247843 - Starting cycle 1
+
+7.247904 - ****** Starting Simulate Phase ******
+
+7.248197 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+7.248292 - ****** Starting Perceive Phase ******
+
+7.456197 - ---------------Tag Data------------
+
+7.456419 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+7.456536 - -----------------------------------
+
+7.456645 - ---------------Estimated Tag Data------------
+
+7.456807 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.456941 - -----------------------------------
+
+7.457214 -   States Added  
+
+7.457322 - agent-at(grace,Tx3y1)
+NUM(596.5)
+timeRemaining(596.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+7.465123 - World observed.
+
+7.491499 - ****** Starting Interpret Phase ******
+
+7.492394 - ****** Starting Eval Phase ******
+
+7.521168 - Not all goals achieved; Goal(grace, predicate: free) is not true.
+
+7.521479 - ****** Starting Intend Phase ******
+
+7.521970 - No Survey goals. Intend will not select goals via hillclimbing.
+
+7.522325 - Selecting goal(s): Goal(grace, predicate: free)
+
+7.522779 - --------- Class Hierarchy Predicate Tree ----------
+
+7.522891 -   root
+
+7.522966 -     surveyed
+
+7.523062 -         surveyed-structured
+
+7.523165 -         surveyed-singleCellErgodic
+
+7.523247 -     surveyed-ergodic
+
+7.523359 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+11.150283 - Selecting goal(s): Goal(grace, predicate: free)
+
+11.193143 - ****** Starting Plan Phase ******
+
+11.226934 - Old plan retrieved. Checking validity... valid.
+
+11.227444 - checking to see if all goals are achieved... yes
+
+11.227639 - ****** Starting Act Phase ******
+
+11.254963 - Action glideback(grace) not complete.
+
+11.255167 - Starting cycle 2
+
+11.255272 - ****** Starting Simulate Phase ******
+
+11.255621 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+11.255767 - ****** Starting Perceive Phase ******
+
+11.534680 - ---------------Tag Data------------
+
+11.534948 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+11.535095 - -----------------------------------
+
+11.535286 - ---------------Estimated Tag Data------------
+
+11.535475 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+11.535660 - -----------------------------------
+
+11.536066 -   States Added  
+
+11.536250 - agent-at(grace,Tx3y1)
+NUM(594.5)
+timeRemaining(594.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+11.548651 - World observed.
+
+11.585685 - ****** Starting Interpret Phase ******
+
+11.586522 - ****** Starting Eval Phase ******
+
+11.612766 - All current goals achieved. Removing them from goal graph
+
+11.613294 - removing 1 plans that no longer apply.
+
+11.613435 - ****** Starting Intend Phase ******
+
+11.614736 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+11.616215 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+11.616620 - --------- Class Hierarchy Predicate Tree ----------
+
+11.616700 -   root
+
+11.616772 -     surveyed
+
+11.616840 -         surveyed-structured
+
+11.616913 -         surveyed-singleCellErgodic
+
+11.616991 -     surveyed-ergodic
+
+11.617076 - --------- Class Hierarchy Predicate Tree Ends ----------
+

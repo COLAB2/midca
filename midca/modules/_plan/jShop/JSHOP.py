@@ -70,7 +70,11 @@ def graceParse(plan):
             each.append(tile1)
             plan[i] = each
 
-        elif each[0].startswith("collect") or each[0].startswith("deepcollect"):
+        elif each[0] == "ergodicsearch":
+            pass
+
+        elif each[0].startswith("collect") or each[0].startswith("deepcollect")\
+                or each[0].endswith("search"):
             try:
                 tile2 = Tile(each[3:])
                 each = each[:3]

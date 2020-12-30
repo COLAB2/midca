@@ -355,6 +355,11 @@ class AsyncGraceObserver(base.BaseModule):
         mode = tag.get_mode()
         return mode
 
+    def get_remaining_time(self):
+        tag = self.sim.TagWorld()
+        time = tag.timeRemaining()
+        return time
+
     def kill_simulator(self):
         tag = self.sim.TagWorld()
         mode = tag.kill_simulator()
@@ -491,12 +496,19 @@ class AsyncGraceObserver(base.BaseModule):
         if position:
             states += "agent-at(grace," + position + ")\n"
 
+        #get the remaining simulation time
+        time = self.get_remaining_time()
+        if time:
+            states += "NUM("+ str(time) + ")\n"
+            states += "timeRemaining(" + str(time) + ")\n"
+            self.remove_corresponding_atoms(["timeRemaining"])
+
         #calculate atoms related to bloc radius
         #states = self.blocRadius(position, states)
         states += "QblocRadius(grace," + position + ", HIGH)\n"
 
         # get the tag data
-        tag_data = self.get_fish_tags(self.parse_tile(position))
+        tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
 
         #get the operational mode of the grace
         mode = self.get_mode()

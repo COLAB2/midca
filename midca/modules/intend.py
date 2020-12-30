@@ -1983,7 +1983,7 @@ class PriorityIntend(base.BaseModule):
                     priority_goals.append(goal)
 
             if priority_goals:
-                goals = priority_goals
+                goals = [priority_goals[-1]]
             else:
                 goals = current_goals
 
@@ -2009,6 +2009,198 @@ class PriorityIntend(base.BaseModule):
                 for goal in goals:
                     print goal,
                 print
+
+class HGNSelection(base.BaseModule):
+
+    def __init__(self):
+        random.seed(100)
+
+    def subgoals(self, world, goal):
+        """
+        :param world: world object
+        :param goal: current goal
+        :return: return possible sub goals
+        """
+
+        predicate = goal["predicate"]
+        node = world.cltree.check_in_all_tree_nodes(predicate)
+        if node:
+            return [str(children) for children in node.children]
+        else:
+            return None
+
+    def hasHGN(self, world, goal):
+        """
+        :param world: world object
+        :param goal: current goal
+        :return: return whether the goal has an associated HGN or not
+        """
+        predicate = goal["predicate"]
+        node = world.cltree.check_in_all_tree_nodes(predicate)
+        if node:
+            return True
+        else:
+            return False
+
+    def get_time_remaining(self, world):
+        """
+
+        :param world: current states
+        :return: return time from the states
+        """
+
+        time_atom = world.get_atoms(["timeRemaining"])
+        # returns the time atom in a list
+        if time_atom:
+            time = float( time_atom[0].args[0].name)
+            return time
+
+    def resource_estimator(self, time, goals):
+        """
+        :param time: time required to achieve the goals in the goal graph
+        :param goals: goals in the goal graph
+        :return: a boolean: if there are enough resources to achieve the goals or not
+        """
+
+        number_of_goals = len(goals)
+        # assume each goal might take around 18 sec
+        if time > number_of_goals * 10:
+            return True
+        else:
+            return False
+
+
+    def check_corner_cells(self, goal):
+        """
+        :param goal: goal
+        :return: if the goals is to survey corner cell
+        """
+
+        # survey goal is of the format surveyed(agent, Tx0y0)
+        # To be a corner cell agent should be at Tx0y0, Tx0y4, Tx4y0, Tx4,y4
+        corner_cells = ["Tx0y0", "Tx0y4", "Tx4y0", "Tx4y4"]
+        position = goal.args[1]
+        if position in corner_cells:
+            return True
+        else:
+            return False
+
+
+    def check_inner_cells(self, goal):
+        """
+        :param goal: goal
+        :return: if the goals is to survey inner cell
+        """
+
+        # survey goal is of the format surveyed(agent, Tx0y0)
+        # To be a inner cell agent should be at
+        # Tx1y3, Tx2y3, Tx3y3,
+        # Tx1y2, Tx2y2, Tx3y2,
+        # Tx1y1, Tx2y1, Tx3y1,
+        inner_cells = ["Tx1y3", "Tx2y3", "Tx3y3",
+                       "Tx1y2", "Tx2y2", "Tx3y2",
+                       "Tx1y1", "Tx2y1", "Tx3y1"]
+
+        position = goal.args[1]
+        if position in inner_cells:
+            return True
+        else:
+            return False
+
+
+    def rules(self, resources_flag, current_goals, world):
+        """
+        :param resources_flag: indicates if there are enough resources or not
+        :param current_goals: current goals agent should pursue
+        :param world: current states
+        :return: the goal an agent should pursue
+        """
+        # Rules: if there are enough resources, then get the subgoals
+        #           1. if it is the corner cell then use surveyed_structured
+        #           2. If it is an inner cell then use surveyed-singleCellErgodic
+        #           3. for remaining use any cell
+        #       if there are not enough resources, then get its quivalent goal and
+        #           1. perform surveyed-ergodic
+
+        modified_goals = []
+
+        for goal in current_goals:
+            # check if the goal has an associated HGN
+            if self.hasHGN(world, goal):
+                if resources_flag:
+                    # if it is the corner cell goal
+                    if self.check_corner_cells(goal):
+                        if not goal["predicate"] == "surveyed-structured":
+                            goal["predicate"] = "surveyed-structured"
+                    elif self.check_inner_cells(goal):
+                        if not goal["predicate"] == "surveyed-singleCellErgodic":
+                            goal["predicate"] = "surveyed-singleCellErgodic"
+                    else:
+                        sub_goals = self.subgoals(world, goal)
+                        if sub_goals:
+                            if not goal["predicate"] in sub_goals:
+                                goal["predicate"] = random.choice(sub_goals)
+                else:
+                    goal["predicate"] = "surveyed-ergodic"
+                    if len(goal.args) >  1:
+                        goal.args = goal.args[:-1]
+
+            modified_goals.append(goal)
+
+        return modified_goals
+
+
+    def run(self, cycle, verbose=2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        world.cltree.printtree()
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("GOALGRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+
+        if not current_goals:
+            return
+        else:
+            # get all the goals from the root of the goal graph
+            goals = goalGraph.getUnrestrictedGoals()
+
+            # calculate resources
+            timeRemaining = self.get_time_remaining(world)
+            sufficient_resources = self.resource_estimator(timeRemaining, goals)
+            # find sub goals and replace them with the rules
+            modified_current_goals = self.rules(sufficient_resources, current_goals, world)
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == modified_current_goals:
+                current_goals[-1] = modified_current_goals
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [modified_current_goals])
+
+        if trace:
+            trace.add_data("GOALS", modified_current_goals)
+
+        if not modified_current_goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in modified_current_goals:
+                    print goal,
+                print
+
 
 class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
 

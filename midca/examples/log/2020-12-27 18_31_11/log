@@ -1,0 +1,5346 @@
+.000219 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.000327 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.000371 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.000408 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.000444 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.000479 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.000518 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.000555 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.000595 - Goal Graph initialized.
+
+.000627 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.000663 - Goal Graph initialized.
+
+.000697 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.000732 - Starting cycle 0
+
+.000767 - ****** Starting Simulate Phase ******
+
+.000861 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+a . . . .
+
+.000914 - ****** Starting Perceive Phase ******
+
+.529455 - ---------------Tag Data------------
+
+.529564 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+.529608 - -----------------------------------
+
+.529685 - ---------------Estimated Tag Data------------
+
+.529738 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+.529777 - -----------------------------------
+
+.529883 -   States Added  
+
+.529926 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+.531186 - World observed.
+
+.535317 - ****** Starting Interpret Phase ******
+
+.535438 - Midca generated a goal : Goal(grace, Tx0y0, predicate: surveyed)
+
+.535514 - Midca generated a goal : Goal(grace, Tx0y1, predicate: surveyed)
+
+.535600 - Midca generated a goal : Goal(grace, Tx0y2, predicate: surveyed)
+
+.535692 - Midca generated a goal : Goal(grace, Tx0y3, predicate: surveyed)
+
+.535792 - Midca generated a goal : Goal(grace, Tx0y4, predicate: surveyed)
+
+.535903 - Midca generated a goal : Goal(grace, Tx1y4, predicate: surveyed)
+
+.536026 - Midca generated a goal : Goal(grace, Tx1y3, predicate: surveyed)
+
+.536167 - Midca generated a goal : Goal(grace, Tx1y2, predicate: surveyed)
+
+.536312 - Midca generated a goal : Goal(grace, Tx1y1, predicate: surveyed)
+
+.536464 - Midca generated a goal : Goal(grace, Tx1y0, predicate: surveyed)
+
+.536630 - Midca generated a goal : Goal(grace, Tx2y0, predicate: surveyed)
+
+.536804 - Midca generated a goal : Goal(grace, Tx2y1, predicate: surveyed)
+
+.536985 - Midca generated a goal : Goal(grace, Tx2y2, predicate: surveyed)
+
+.537204 - Midca generated a goal : Goal(grace, Tx2y3, predicate: surveyed)
+
+.537453 - Midca generated a goal : Goal(grace, Tx2y4, predicate: surveyed)
+
+.537690 - Midca generated a goal : Goal(grace, Tx3y4, predicate: surveyed)
+
+.537931 - Midca generated a goal : Goal(grace, Tx3y3, predicate: surveyed)
+
+.538196 - Midca generated a goal : Goal(grace, Tx3y2, predicate: surveyed)
+
+.538454 - Midca generated a goal : Goal(grace, Tx3y1, predicate: surveyed)
+
+.538730 - Midca generated a goal : Goal(grace, Tx3y0, predicate: surveyed)
+
+.539006 - Midca generated a goal : Goal(grace, Tx4y0, predicate: surveyed)
+
+.539293 - Midca generated a goal : Goal(grace, Tx4y1, predicate: surveyed)
+
+.539593 - Midca generated a goal : Goal(grace, Tx4y2, predicate: surveyed)
+
+.539905 - Midca generated a goal : Goal(grace, Tx4y3, predicate: surveyed)
+
+.540233 - Midca generated a goal : Goal(grace, Tx4y4, predicate: surveyed)
+
+.540300 - ****** Starting Eval Phase ******
+
+.544931 - No current goals. Skipping eval
+
+.545046 - ****** Starting Intend Phase ******
+
+.545544 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+.545807 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+.545871 - ****** Starting Plan Phase ******
+
+.551165 - Planning...
+
+.719331 - Planning complete.
+
+.719426 - Plan: 
+
+.719496 -   collectdata(grace, fishtag, Tx3y1)
+
+.719626 - ****** Starting Act Phase ******
+
+.723785 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+.723865 - Starting cycle 1
+
+.723904 - ****** Starting Simulate Phase ******
+
+.724017 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+.724072 - ****** Starting Perceive Phase ******
+
+.909969 - ---------------Tag Data------------
+
+.910122 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 1 . 
+. . . . .
+
+.910186 - -----------------------------------
+
+1.163645 - ---------------Estimated Tag Data------------
+
+1.163761 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.428571428571, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+1.163803 - -----------------------------------
+
+1.163845 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(1)
+uniqueTagCount(grace, 1, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx4y1)
+
+1.163945 -   States Added  
+
+1.163985 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(1)
+uniqueTagCount(grace, 1, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx4y1)
+
+1.165325 - World observed.
+
+1.169593 - ****** Starting Interpret Phase ******
+
+1.169810 - ****** Starting Eval Phase ******
+
+1.173889 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+1.173970 - ****** Starting Intend Phase ******
+
+1.174232 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.174482 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.174545 - ****** Starting Plan Phase ******
+
+1.179526 - Old plan retrieved. Checking validity... valid.
+
+1.179767 - checking to see if all goals are achieved... yes
+
+1.179852 - ****** Starting Act Phase ******
+
+1.184307 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+1.184400 - Starting cycle 2
+
+1.184447 - ****** Starting Simulate Phase ******
+
+1.184566 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+1.184630 - ****** Starting Perceive Phase ******
+
+1.331480 - ---------------Tag Data------------
+
+1.331775 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 4 . 
+. . . . .
+
+1.331874 - -----------------------------------
+
+1.574927 - ---------------Estimated Tag Data------------
+
+1.575104 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.857142857143, 0.0, 0.428571428571, 0.857142857143] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+1.575161 - -----------------------------------
+
+1.575224 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(4)
+uniqueTagCount(grace, 4, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx3y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx4y1)
+
+1.575331 -   States Added  
+
+1.575366 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(4)
+uniqueTagCount(grace, 4, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx3y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx4y1)
+
+1.576848 - World observed.
+
+1.580713 - ****** Starting Interpret Phase ******
+
+1.580902 - ****** Starting Eval Phase ******
+
+1.584889 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+1.584968 - ****** Starting Intend Phase ******
+
+1.585201 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.585437 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.585496 - ****** Starting Plan Phase ******
+
+1.589299 - Old plan retrieved. Checking validity... valid.
+
+1.589506 - checking to see if all goals are achieved... yes
+
+1.589581 - ****** Starting Act Phase ******
+
+1.594180 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+1.594255 - Starting cycle 3
+
+1.594295 - ****** Starting Simulate Phase ******
+
+1.594399 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+1.594459 - ****** Starting Perceive Phase ******
+
+1.762875 - ---------------Tag Data------------
+
+1.762990 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 12 . 
+. . . . .
+
+1.763040 - -----------------------------------
+
+1.994268 - ---------------Estimated Tag Data------------
+
+1.994585 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 0.0, 0.714285714286, 0.857142857143] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+1.994697 - -----------------------------------
+
+1.994829 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(12)
+uniqueTagCount(grace, 12, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx4y1)
+
+1.995083 -   States Added  
+
+1.995178 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(12)
+uniqueTagCount(grace, 12, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx4y1)
+
+1.999067 - World observed.
+
+2.009551 - ****** Starting Interpret Phase ******
+
+2.010039 - ****** Starting Eval Phase ******
+
+2.020901 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+2.021135 - ****** Starting Intend Phase ******
+
+2.021782 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.022435 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.022567 - ****** Starting Plan Phase ******
+
+2.033282 - Old plan retrieved. Checking validity... valid.
+
+2.033830 - checking to see if all goals are achieved... yes
+
+2.033985 - ****** Starting Act Phase ******
+
+2.044212 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+2.044377 - Starting cycle 4
+
+2.044456 - ****** Starting Simulate Phase ******
+
+2.044749 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.044872 - ****** Starting Perceive Phase ******
+
+2.172508 - ---------------Tag Data------------
+
+2.172688 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 14 . 
+. . . . .
+
+2.172800 - -----------------------------------
+
+2.398567 - ---------------Estimated Tag Data------------
+
+2.398717 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 0.428571428571, 1.0, 0.857142857143] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.398768 - -----------------------------------
+
+2.398815 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(14)
+uniqueTagCount(grace, 14, Tx3y1)
+NUM(0.285714285714)
+estuniqueTagCount(grace, 0.285714285714, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+2.398914 -   States Added  
+
+2.398957 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(14)
+uniqueTagCount(grace, 14, Tx3y1)
+NUM(0.285714285714)
+estuniqueTagCount(grace, 0.285714285714, Tx3y0)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+2.400329 - World observed.
+
+2.405198 - ****** Starting Interpret Phase ******
+
+2.405401 - ****** Starting Eval Phase ******
+
+2.409481 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+2.409565 - ****** Starting Intend Phase ******
+
+2.409807 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.410066 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.410131 - ****** Starting Plan Phase ******
+
+2.414319 - Old plan retrieved. Checking validity... valid.
+
+2.414547 - checking to see if all goals are achieved... yes
+
+2.414631 - ****** Starting Act Phase ******
+
+2.419190 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+2.419305 - Starting cycle 5
+
+2.419352 - ****** Starting Simulate Phase ******
+
+2.419475 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.419541 - ****** Starting Perceive Phase ******
+
+2.580658 - ---------------Tag Data------------
+
+2.580819 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 18 . 
+. . . . .
+
+2.580908 - -----------------------------------
+
+2.806101 - ---------------Estimated Tag Data------------
+
+2.806228 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 1.0, 1.0, 1.57142857143] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.806277 - -----------------------------------
+
+2.806321 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(18)
+uniqueTagCount(grace, 18, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+2.806421 -   States Added  
+
+2.806463 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(18)
+uniqueTagCount(grace, 18, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+2.807808 - World observed.
+
+2.812141 - ****** Starting Interpret Phase ******
+
+2.812393 - ****** Starting Eval Phase ******
+
+2.817557 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+2.817661 - ****** Starting Intend Phase ******
+
+2.817905 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.818186 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+2.818256 - ****** Starting Plan Phase ******
+
+2.822703 - Old plan retrieved. Checking validity... valid.
+
+2.822940 - checking to see if all goals are achieved... yes
+
+2.823026 - ****** Starting Act Phase ******
+
+2.874595 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+2.874741 - Starting cycle 6
+
+2.874803 - ****** Starting Simulate Phase ******
+
+2.874990 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.875080 - ****** Starting Perceive Phase ******
+
+3.041742 - ---------------Tag Data------------
+
+3.041900 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 24 . 
+. . . . .
+
+3.041980 - -----------------------------------
+
+3.296201 - ---------------Estimated Tag Data------------
+
+3.296317 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 1.0, 1.0, 1.71428571429] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3.296374 - -----------------------------------
+
+3.296439 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(24)
+uniqueTagCount(grace, 24, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+3.296541 -   States Added  
+
+3.296584 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(24)
+uniqueTagCount(grace, 24, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+3.297958 - World observed.
+
+3.302320 - ****** Starting Interpret Phase ******
+
+3.302506 - ****** Starting Eval Phase ******
+
+3.307126 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+3.307272 - ****** Starting Intend Phase ******
+
+3.307539 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+3.307814 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+3.307882 - ****** Starting Plan Phase ******
+
+3.313979 - Old plan retrieved. Checking validity... valid.
+
+3.314247 - checking to see if all goals are achieved... yes
+
+3.314342 - ****** Starting Act Phase ******
+
+3.356688 - Action collectdata(grace, fishtag, Tx3y1) not complete.
+
+3.356814 - Starting cycle 7
+
+3.356859 - ****** Starting Simulate Phase ******
+
+3.357005 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+3.357070 - ****** Starting Perceive Phase ******
+
+3.520808 - ---------------Tag Data------------
+
+3.520919 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 24 . 
+. . . . .
+
+3.520965 - -----------------------------------
+
+3.762121 - ---------------Estimated Tag Data------------
+
+3.762254 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 1.0, 1.0, 1.71428571429] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3.762308 - -----------------------------------
+
+3.762364 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(24)
+uniqueTagCount(grace, 24, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+3.762468 -   States Added  
+
+3.762509 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(24)
+uniqueTagCount(grace, 24, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+3.763819 - World observed.
+
+3.768061 - ****** Starting Interpret Phase ******
+
+3.768293 - ****** Starting Eval Phase ******
+
+3.773457 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed) is not true.
+
+3.773584 - ****** Starting Intend Phase ******
+
+3.773844 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+3.774103 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+3.774169 - ****** Starting Plan Phase ******
+
+3.779173 - Old plan retrieved. Checking validity... valid.
+
+3.779432 - checking to see if all goals are achieved... yes
+
+3.779521 - ****** Starting Act Phase ******
+
+3.826902 - Action collectdata(grace, fishtag, Tx3y1) complete.
+
+3.827120 - Starting cycle 8
+
+3.827171 - ****** Starting Simulate Phase ******
+
+3.827319 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+3.827392 - ****** Starting Perceive Phase ******
+
+4.021889 - ---------------Tag Data------------
+
+4.022133 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 27 . 
+. . . . .
+
+4.022241 - -----------------------------------
+
+4.270442 - ---------------Estimated Tag Data------------
+
+4.270741 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.14285714286, 1.0, 1.0, 1.71428571429] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+4.270854 - -----------------------------------
+
+4.270956 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(27)
+uniqueTagCount(grace, 27, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+4.271232 -   States Added  
+
+4.271365 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(27)
+uniqueTagCount(grace, 27, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx4y1)
+
+4.275766 - World observed.
+
+4.288463 - ****** Starting Interpret Phase ******
+
+4.288989 - ****** Starting Eval Phase ******
+
+4.301074 - All current goals achieved. Removing them from goal graph
+
+4.301814 - removing 1 plans that no longer apply.
+
+4.302012 - ****** Starting Intend Phase ******
+
+4.326568 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+4.327554 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+4.327831 - ****** Starting Plan Phase ******
+
+4.339205 - Planning...
+
+4.492688 - Planning complete.
+
+4.492823 - Plan: 
+
+4.492924 -   movewest(grace, Tx3y1, Tx2y1)
+
+4.492974 -   collectdata(grace, fishtag, Tx2y1)
+
+4.493119 - ****** Starting Act Phase ******
+
+4.497734 - Action movewest(grace, Tx3y1, Tx2y1) not complete.
+
+4.497872 - Starting cycle 9
+
+4.497948 - ****** Starting Simulate Phase ******
+
+4.498198 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+4.498404 - ****** Starting Perceive Phase ******
+
+4.672419 - ---------------Tag Data------------
+
+4.672601 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 29 . 
+. . . . .
+
+4.672689 - -----------------------------------
+
+4.915861 - ---------------Estimated Tag Data------------
+
+4.916035 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+4.916115 - -----------------------------------
+
+4.916211 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(29)
+uniqueTagCount(grace, 29, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.85714285714)
+estuniqueTagCount(grace, 1.85714285714, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx4y1)
+
+4.916346 -   States Added  
+
+4.916402 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(29)
+uniqueTagCount(grace, 29, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y0)
+NUM(1.85714285714)
+estuniqueTagCount(grace, 1.85714285714, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx4y1)
+
+4.918672 - World observed.
+
+4.927714 - ****** Starting Interpret Phase ******
+
+4.928047 - ****** Starting Eval Phase ******
+
+4.935205 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+4.935334 - ****** Starting Intend Phase ******
+
+4.950159 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+4.950645 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+4.950751 - ****** Starting Plan Phase ******
+
+4.958304 - Old plan retrieved. Checking validity... valid.
+
+4.958874 - checking to see if all goals are achieved... yes
+
+4.958993 - ****** Starting Act Phase ******
+
+4.966461 - Action movewest(grace, Tx3y1, Tx2y1) not complete.
+
+4.966606 - Starting cycle 10
+
+4.966673 - ****** Starting Simulate Phase ******
+
+4.966868 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+4.966963 - ****** Starting Perceive Phase ******
+
+5.102558 - ---------------Tag Data------------
+
+5.102708 - . . . . . 
+. . . . . 
+. . . . . 
+. . 4 29 . 
+. . . . .
+
+5.102759 - -----------------------------------
+
+5.332483 - ---------------Estimated Tag Data------------
+
+5.332594 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.142857142857, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+5.332636 - -----------------------------------
+
+5.332677 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(4)
+uniqueTagCount(grace, 4, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+5.332802 -   States Added  
+
+5.332848 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(4)
+uniqueTagCount(grace, 4, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+5.334296 - World observed.
+
+5.339492 - ****** Starting Interpret Phase ******
+
+5.339685 - ****** Starting Eval Phase ******
+
+5.344232 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+5.344349 - ****** Starting Intend Phase ******
+
+5.344600 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+5.344837 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+5.344898 - ****** Starting Plan Phase ******
+
+5.349871 - Old plan retrieved. Checking validity... invalid.
+
+5.349979 - Planning...
+
+5.490475 - Planning complete.
+
+5.490610 - Plan: 
+
+5.490684 -   collectdata(grace, fishtag, Tx2y1)
+
+5.490825 - ****** Starting Act Phase ******
+
+5.495718 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+5.495790 - Starting cycle 11
+
+5.495832 - ****** Starting Simulate Phase ******
+
+5.495968 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+5.496039 - ****** Starting Perceive Phase ******
+
+5.671411 - ---------------Tag Data------------
+
+5.671659 - . . . . . 
+. . . . . 
+. . . . . 
+. . 13 29 . 
+. . . . .
+
+5.671768 - -----------------------------------
+
+5.893770 - ---------------Estimated Tag Data------------
+
+5.894072 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.142857142857, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+5.894185 - -----------------------------------
+
+5.894290 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(13)
+uniqueTagCount(grace, 13, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+5.894579 -   States Added  
+
+5.894697 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(13)
+uniqueTagCount(grace, 13, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+5.899545 - World observed.
+
+5.911744 - ****** Starting Interpret Phase ******
+
+5.912307 - ****** Starting Eval Phase ******
+
+5.929354 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+5.929606 - ****** Starting Intend Phase ******
+
+5.930362 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+5.930964 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+5.931095 - ****** Starting Plan Phase ******
+
+5.944018 - Old plan retrieved. Checking validity... valid.
+
+5.944472 - checking to see if all goals are achieved... yes
+
+5.944588 - ****** Starting Act Phase ******
+
+5.949857 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+5.949968 - Starting cycle 12
+
+5.950013 - ****** Starting Simulate Phase ******
+
+5.950135 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+5.950213 - ****** Starting Perceive Phase ******
+
+6.071163 - ---------------Tag Data------------
+
+6.071271 - . . . . . 
+. . . . . 
+. . . . . 
+. . 21 29 . 
+. . . . .
+
+6.071313 - -----------------------------------
+
+6.330787 - ---------------Estimated Tag Data------------
+
+6.330914 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.142857142857, 0.714285714286] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+6.330996 - -----------------------------------
+
+6.331064 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(21)
+uniqueTagCount(grace, 21, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+6.331196 -   States Added  
+
+6.331240 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(21)
+uniqueTagCount(grace, 21, Tx2y1)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx3y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+6.333302 - World observed.
+
+6.337981 - ****** Starting Interpret Phase ******
+
+6.338207 - ****** Starting Eval Phase ******
+
+6.342478 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+6.342562 - ****** Starting Intend Phase ******
+
+6.342814 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.343068 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.343132 - ****** Starting Plan Phase ******
+
+6.348551 - Old plan retrieved. Checking validity... valid.
+
+6.348870 - checking to see if all goals are achieved... yes
+
+6.348964 - ****** Starting Act Phase ******
+
+6.353388 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+6.353467 - Starting cycle 13
+
+6.353524 - ****** Starting Simulate Phase ******
+
+6.353658 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+6.353724 - ****** Starting Perceive Phase ******
+
+6.501486 - ---------------Tag Data------------
+
+6.501618 - . . . . . 
+. . . . . 
+. . . . . 
+. . 29 29 . 
+. . . . .
+
+6.501677 - -----------------------------------
+
+6.737973 - ---------------Estimated Tag Data------------
+
+6.738139 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 0.0, 1.28571428571, 0.714285714286] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+6.738224 - -----------------------------------
+
+6.738299 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(29)
+uniqueTagCount(grace, 29, Tx2y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+6.738464 -   States Added  
+
+6.738522 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(29)
+uniqueTagCount(grace, 29, Tx2y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+6.741022 - World observed.
+
+6.748588 - ****** Starting Interpret Phase ******
+
+6.748939 - ****** Starting Eval Phase ******
+
+6.756243 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+6.756356 - ****** Starting Intend Phase ******
+
+6.756739 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.757132 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.757249 - ****** Starting Plan Phase ******
+
+6.764679 - Old plan retrieved. Checking validity... valid.
+
+6.765058 - checking to see if all goals are achieved... yes
+
+6.765176 - ****** Starting Act Phase ******
+
+6.773152 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+6.773253 - Starting cycle 14
+
+6.773297 - ****** Starting Simulate Phase ******
+
+6.773479 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+6.773555 - ****** Starting Perceive Phase ******
+
+6.915839 - ---------------Tag Data------------
+
+6.915964 - . . . . . 
+. . . . . 
+. . . . . 
+. . 37 29 . 
+. . . . .
+
+6.916019 - -----------------------------------
+
+7.150913 - ---------------Estimated Tag Data------------
+
+7.151045 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 1.0, 1.28571428571, 0.857142857143] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.151090 - -----------------------------------
+
+7.151134 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(37)
+uniqueTagCount(grace, 37, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y0)
+
+7.151237 -   States Added  
+
+7.151277 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(37)
+uniqueTagCount(grace, 37, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx1y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y0)
+
+7.152991 - World observed.
+
+7.157470 - ****** Starting Interpret Phase ******
+
+7.157697 - ****** Starting Eval Phase ******
+
+7.162313 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+7.162439 - ****** Starting Intend Phase ******
+
+7.162711 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+7.162969 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+7.163039 - ****** Starting Plan Phase ******
+
+7.167926 - Old plan retrieved. Checking validity... valid.
+
+7.168215 - checking to see if all goals are achieved... yes
+
+7.168300 - ****** Starting Act Phase ******
+
+7.172808 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+7.172889 - Starting cycle 15
+
+7.172935 - ****** Starting Simulate Phase ******
+
+7.173062 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+7.173127 - ****** Starting Perceive Phase ******
+
+7.315587 - ---------------Tag Data------------
+
+7.315712 - . . . . . 
+. . . . . 
+. . . . . 
+. . 43 29 . 
+. . . . .
+
+7.315771 - -----------------------------------
+
+7.552981 - ---------------Estimated Tag Data------------
+
+7.553202 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 1.14285714286, 1.28571428571, 1.28571428571] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.553295 - -----------------------------------
+
+7.553357 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(43)
+uniqueTagCount(grace, 43, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+
+7.553489 -   States Added  
+
+7.553532 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+NUM(43)
+uniqueTagCount(grace, 43, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+7.556241 - World observed.
+
+7.561161 - ****** Starting Interpret Phase ******
+
+7.561401 - ****** Starting Eval Phase ******
+
+7.566179 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+7.566284 - ****** Starting Intend Phase ******
+
+7.566552 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+7.566806 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+7.566884 - ****** Starting Plan Phase ******
+
+7.571404 - Old plan retrieved. Checking validity... valid.
+
+7.571660 - checking to see if all goals are achieved... yes
+
+7.571742 - ****** Starting Act Phase ******
+
+7.612686 - Action collectdata(grace, fishtag, Tx2y1) not complete.
+
+7.612813 - Starting cycle 16
+
+7.612862 - ****** Starting Simulate Phase ******
+
+7.613026 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+7.613091 - ****** Starting Perceive Phase ******
+
+7.777993 - ---------------Tag Data------------
+
+7.778164 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 29 . 
+. . . . .
+
+7.778228 - -----------------------------------
+
+8.012252 - ---------------Estimated Tag Data------------
+
+8.012396 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 1.14285714286, 1.28571428571, 1.28571428571] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+8.012448 - -----------------------------------
+
+8.012492 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(47)
+uniqueTagCount(grace, 47, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+
+8.012635 -   States Added  
+
+8.012679 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(47)
+uniqueTagCount(grace, 47, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+8.014474 - World observed.
+
+8.020091 - ****** Starting Interpret Phase ******
+
+8.020359 - ****** Starting Eval Phase ******
+
+8.025024 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed) is not true.
+
+8.025158 - ****** Starting Intend Phase ******
+
+8.025660 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+8.026143 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+8.026255 - ****** Starting Plan Phase ******
+
+8.032088 - Old plan retrieved. Checking validity... valid.
+
+8.032387 - checking to see if all goals are achieved... yes
+
+8.032472 - ****** Starting Act Phase ******
+
+8.076349 - Action collectdata(grace, fishtag, Tx2y1) complete.
+
+8.076572 - Starting cycle 17
+
+8.076622 - ****** Starting Simulate Phase ******
+
+8.076780 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.076843 - ****** Starting Perceive Phase ******
+
+8.245056 - ---------------Tag Data------------
+
+8.245184 - . . . . . 
+. . . . . 
+. . . . . 
+. . 50 29 . 
+. . . . .
+
+8.245231 - -----------------------------------
+
+8.473439 - ---------------Estimated Tag Data------------
+
+8.473603 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 1.14285714286, 1.28571428571, 1.28571428571] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+8.473663 - -----------------------------------
+
+8.473707 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(50)
+uniqueTagCount(grace, 50, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+
+8.473820 -   States Added  
+
+8.473863 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(50)
+uniqueTagCount(grace, 50, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+8.475392 - World observed.
+
+8.487444 - ****** Starting Interpret Phase ******
+
+8.488002 - ****** Starting Eval Phase ******
+
+8.504902 - All current goals achieved. Removing them from goal graph
+
+8.505953 - removing 2 plans that no longer apply.
+
+8.506185 - ****** Starting Intend Phase ******
+
+8.531824 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+8.532627 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+8.532774 - ****** Starting Plan Phase ******
+
+8.544398 - Planning...
+
+8.697251 - Planning complete.
+
+8.697361 - Plan: 
+
+8.697420 -   movesouth(grace, Tx2y1, Tx2y2)
+
+8.697467 -   collectdata(grace, fishtag, Tx2y2)
+
+8.697597 - ****** Starting Act Phase ******
+
+8.703150 - Action movesouth(grace, Tx2y1, Tx2y2) not complete.
+
+8.703240 - Starting cycle 18
+
+8.703286 - ****** Starting Simulate Phase ******
+
+8.703449 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.703515 - ****** Starting Perceive Phase ******
+
+8.914430 - ---------------Tag Data------------
+
+8.914552 - . . . . . 
+. . . . . 
+. . . . . 
+. . 56 29 . 
+. . . . .
+
+8.914601 - -----------------------------------
+
+9.172027 - ---------------Estimated Tag Data------------
+
+9.172159 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.42857142857, 1.14285714286, 1.28571428571, 1.28571428571] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+9.172210 - -----------------------------------
+
+9.172254 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(56)
+uniqueTagCount(grace, 56, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+
+9.172373 -   States Added  
+
+9.172415 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(56)
+uniqueTagCount(grace, 56, Tx2y1)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx3y1)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx2y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y1)
+NUM(1.14285714286)
+estuniqueTagCount(grace, 1.14285714286, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+9.174031 - World observed.
+
+9.178974 - ****** Starting Interpret Phase ******
+
+9.179218 - ****** Starting Eval Phase ******
+
+9.184552 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+9.184670 - ****** Starting Intend Phase ******
+
+9.194032 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+9.194367 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+9.194445 - ****** Starting Plan Phase ******
+
+9.200617 - Old plan retrieved. Checking validity... valid.
+
+9.201028 - checking to see if all goals are achieved... yes
+
+9.201124 - ****** Starting Act Phase ******
+
+9.205887 - Action movesouth(grace, Tx2y1, Tx2y2) not complete.
+
+9.206007 - Starting cycle 19
+
+9.206084 - ****** Starting Simulate Phase ******
+
+9.206313 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+9.206432 - ****** Starting Perceive Phase ******
+
+9.350924 - ---------------Tag Data------------
+
+9.351037 - . . . . . 
+. . . . . 
+. . . . . 
+. . 63 29 . 
+. . . . .
+
+9.351081 - -----------------------------------
+
+9.601373 - ---------------Estimated Tag Data------------
+
+9.601535 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+9.601588 - -----------------------------------
+
+9.601635 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(63)
+uniqueTagCount(grace, 63, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y1)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+
+9.601752 -   States Added  
+
+9.601796 - agent-at(grace,Tx2y1)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(63)
+uniqueTagCount(grace, 63, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y1)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+9.603679 - World observed.
+
+9.608119 - ****** Starting Interpret Phase ******
+
+9.608392 - ****** Starting Eval Phase ******
+
+9.613796 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+9.613911 - ****** Starting Intend Phase ******
+
+9.622695 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+9.622993 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+9.623067 - ****** Starting Plan Phase ******
+
+9.627952 - Old plan retrieved. Checking validity... valid.
+
+9.628344 - checking to see if all goals are achieved... yes
+
+9.628432 - ****** Starting Act Phase ******
+
+9.634151 - Action movesouth(grace, Tx2y1, Tx2y2) not complete.
+
+9.634262 - Starting cycle 20
+
+9.634313 - ****** Starting Simulate Phase ******
+
+9.634469 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+9.634539 - ****** Starting Perceive Phase ******
+
+9.772943 - ---------------Tag Data------------
+
+9.773085 - . . . . . 
+. . . . . 
+. . 11 . . 
+. . 63 29 . 
+. . . . .
+
+9.773151 - -----------------------------------
+
+10.009186 - ---------------Estimated Tag Data------------
+
+10.009379 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.714285714286, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+10.009485 - -----------------------------------
+
+10.009550 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(11)
+uniqueTagCount(grace, 11, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+10.009701 -   States Added  
+
+10.009799 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(11)
+uniqueTagCount(grace, 11, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+10.012723 - World observed.
+
+10.020440 - ****** Starting Interpret Phase ******
+
+10.020746 - ****** Starting Eval Phase ******
+
+10.028163 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+10.028285 - ****** Starting Intend Phase ******
+
+10.028710 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+10.029101 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+10.029199 - ****** Starting Plan Phase ******
+
+10.036962 - Old plan retrieved. Checking validity... invalid.
+
+10.037085 - Planning...
+
+10.175033 - Planning complete.
+
+10.175155 - Plan: 
+
+10.175226 -   collectdata(grace, fishtag, Tx2y2)
+
+10.175364 - ****** Starting Act Phase ******
+
+10.181411 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+10.181483 - Starting cycle 21
+
+10.181525 - ****** Starting Simulate Phase ******
+
+10.181667 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+10.181730 - ****** Starting Perceive Phase ******
+
+10.420955 - ---------------Tag Data------------
+
+10.421155 - . . . . . 
+. . . . . 
+. . 15 . . 
+. . 63 29 . 
+. . . . .
+
+10.421241 - -----------------------------------
+
+10.721514 - ---------------Estimated Tag Data------------
+
+10.721696 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.714285714286, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+10.721761 - -----------------------------------
+
+10.721821 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(15)
+uniqueTagCount(grace, 15, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+10.721971 -   States Added  
+
+10.722029 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(15)
+uniqueTagCount(grace, 15, Tx2y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+10.775829 - World observed.
+
+10.782185 - ****** Starting Interpret Phase ******
+
+10.782500 - ****** Starting Eval Phase ******
+
+10.789021 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+10.789157 - ****** Starting Intend Phase ******
+
+10.789537 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+10.789890 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+10.789981 - ****** Starting Plan Phase ******
+
+10.797483 - Old plan retrieved. Checking validity... valid.
+
+10.797929 - checking to see if all goals are achieved... yes
+
+10.798065 - ****** Starting Act Phase ******
+
+10.805451 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+10.805604 - Starting cycle 22
+
+10.805672 - ****** Starting Simulate Phase ******
+
+10.805875 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+10.805990 - ****** Starting Perceive Phase ******
+
+11.007000 - ---------------Tag Data------------
+
+11.007211 - . . . . . 
+. . . . . 
+. . 28 . . 
+. . 63 29 . 
+. . . . .
+
+11.007316 - -----------------------------------
+
+11.395608 - ---------------Estimated Tag Data------------
+
+11.395786 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.714285714286, 0.0, 1.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+11.395860 - -----------------------------------
+
+11.395929 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(28)
+uniqueTagCount(grace, 28, Tx2y2)
+NUM(0.285714285714)
+estuniqueTagCount(grace, 0.285714285714, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+11.396097 -   States Added  
+
+11.396185 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(28)
+uniqueTagCount(grace, 28, Tx2y2)
+NUM(0.285714285714)
+estuniqueTagCount(grace, 0.285714285714, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+11.398821 - World observed.
+
+11.406863 - ****** Starting Interpret Phase ******
+
+11.407176 - ****** Starting Eval Phase ******
+
+11.413743 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+11.413865 - ****** Starting Intend Phase ******
+
+11.414261 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+11.414635 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+11.414732 - ****** Starting Plan Phase ******
+
+11.421811 - Old plan retrieved. Checking validity... valid.
+
+11.422190 - checking to see if all goals are achieved... yes
+
+11.422321 - ****** Starting Act Phase ******
+
+11.429379 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+11.429501 - Starting cycle 23
+
+11.429572 - ****** Starting Simulate Phase ******
+
+11.429776 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+11.429879 - ****** Starting Perceive Phase ******
+
+11.676914 - ---------------Tag Data------------
+
+11.677145 - . . . . . 
+. . . . . 
+. . 36 . . 
+. . 63 29 . 
+. . . . .
+
+11.677264 - -----------------------------------
+
+12.036499 - ---------------Estimated Tag Data------------
+
+12.036881 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.0, 0.714285714286, 0.0, 1.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+12.037012 - -----------------------------------
+
+12.037100 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(36)
+uniqueTagCount(grace, 36, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+12.037518 -   States Added  
+
+12.037662 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(36)
+uniqueTagCount(grace, 36, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+12.040344 - World observed.
+
+12.049130 - ****** Starting Interpret Phase ******
+
+12.049453 - ****** Starting Eval Phase ******
+
+12.056418 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+12.056558 - ****** Starting Intend Phase ******
+
+12.056960 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+12.057329 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+12.057434 - ****** Starting Plan Phase ******
+
+12.064454 - Old plan retrieved. Checking validity... valid.
+
+12.064835 - checking to see if all goals are achieved... yes
+
+12.064959 - ****** Starting Act Phase ******
+
+12.072439 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+12.072572 - Starting cycle 24
+
+12.072644 - ****** Starting Simulate Phase ******
+
+12.072851 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+12.072952 - ****** Starting Perceive Phase ******
+
+12.307083 - ---------------Tag Data------------
+
+12.307303 - . . . . . 
+. . . . . 
+. . 42 . . 
+. . 63 29 . 
+. . . . .
+
+12.307423 - -----------------------------------
+
+12.688213 - ---------------Estimated Tag Data------------
+
+12.688455 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 0.714285714286, 0.428571428571, 1.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+12.688579 - -----------------------------------
+
+12.688693 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(42)
+uniqueTagCount(grace, 42, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+12.688971 -   States Added  
+
+12.689086 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(42)
+uniqueTagCount(grace, 42, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+12.693731 - World observed.
+
+12.707731 - ****** Starting Interpret Phase ******
+
+12.708239 - ****** Starting Eval Phase ******
+
+12.719991 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+12.720229 - ****** Starting Intend Phase ******
+
+12.720898 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+12.721533 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+12.721697 - ****** Starting Plan Phase ******
+
+12.733764 - Old plan retrieved. Checking validity... valid.
+
+12.734380 - checking to see if all goals are achieved... yes
+
+12.734566 - ****** Starting Act Phase ******
+
+12.746698 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+12.746864 - Starting cycle 25
+
+12.746977 - ****** Starting Simulate Phase ******
+
+12.747306 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+12.747471 - ****** Starting Perceive Phase ******
+
+12.964753 - ---------------Tag Data------------
+
+12.964966 - . . . . . 
+. . . . . 
+. . 44 . . 
+. . 63 29 . 
+. . . . .
+
+12.965111 - -----------------------------------
+
+13.323400 - ---------------Estimated Tag Data------------
+
+13.323570 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 0.714285714286, 1.42857142857, 1.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+13.323657 - -----------------------------------
+
+13.323726 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(44)
+uniqueTagCount(grace, 44, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+
+13.323906 -   States Added  
+
+13.323981 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(44)
+uniqueTagCount(grace, 44, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+13.327200 - World observed.
+
+13.340811 - ****** Starting Interpret Phase ******
+
+13.341150 - ****** Starting Eval Phase ******
+
+13.349438 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+13.349591 - ****** Starting Intend Phase ******
+
+13.350002 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+13.350377 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+13.350477 - ****** Starting Plan Phase ******
+
+13.357558 - Old plan retrieved. Checking validity... valid.
+
+13.357934 - checking to see if all goals are achieved... yes
+
+13.358056 - ****** Starting Act Phase ******
+
+13.409789 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+13.409964 - Starting cycle 26
+
+13.410039 - ****** Starting Simulate Phase ******
+
+13.410344 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+13.410459 - ****** Starting Perceive Phase ******
+
+13.680504 - ---------------Tag Data------------
+
+13.680662 - . . . . . 
+. . . . . 
+. . 53 . . 
+. . 63 29 . 
+. . . . .
+
+13.680731 - -----------------------------------
+
+14.028469 - ---------------Estimated Tag Data------------
+
+14.028662 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 1.28571428571, 1.71428571429, 1.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+14.028738 - -----------------------------------
+
+14.028805 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(53)
+uniqueTagCount(grace, 53, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx2y1)
+
+14.028981 -   States Added  
+
+14.029077 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(53)
+uniqueTagCount(grace, 53, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+14.031904 - World observed.
+
+14.038516 - ****** Starting Interpret Phase ******
+
+14.038807 - ****** Starting Eval Phase ******
+
+14.046446 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+14.046604 - ****** Starting Intend Phase ******
+
+14.047043 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+14.047445 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+14.047584 - ****** Starting Plan Phase ******
+
+14.054655 - Old plan retrieved. Checking validity... valid.
+
+14.055043 - checking to see if all goals are achieved... yes
+
+14.055169 - ****** Starting Act Phase ******
+
+14.112889 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+14.113230 - Starting cycle 27
+
+14.113384 - ****** Starting Simulate Phase ******
+
+14.113965 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+14.114191 - ****** Starting Perceive Phase ******
+
+14.384618 - ---------------Tag Data------------
+
+14.384795 - . . . . . 
+. . . . . 
+. . 58 . . 
+. . 63 29 . 
+. . . . .
+
+14.384867 - -----------------------------------
+
+14.728828 - ---------------Estimated Tag Data------------
+
+14.729029 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 1.85714285714, 1.71428571429, 1.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+14.729137 - -----------------------------------
+
+14.729241 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(58)
+uniqueTagCount(grace, 58, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(1.85714285714)
+estuniqueTagCount(grace, 1.85714285714, Tx2y1)
+
+14.729427 -   States Added  
+
+14.729511 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(58)
+uniqueTagCount(grace, 58, Tx2y2)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(1.85714285714)
+estuniqueTagCount(grace, 1.85714285714, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+14.732281 - World observed.
+
+14.739060 - ****** Starting Interpret Phase ******
+
+14.739377 - ****** Starting Eval Phase ******
+
+14.745811 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+14.745934 - ****** Starting Intend Phase ******
+
+14.746310 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+14.746692 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+14.746789 - ****** Starting Plan Phase ******
+
+14.754872 - Old plan retrieved. Checking validity... valid.
+
+14.755253 - checking to see if all goals are achieved... yes
+
+14.755376 - ****** Starting Act Phase ******
+
+14.823141 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+14.823375 - Starting cycle 28
+
+14.823500 - ****** Starting Simulate Phase ******
+
+14.823894 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+14.824072 - ****** Starting Perceive Phase ******
+
+15.562511 - ---------------Tag Data------------
+
+15.562685 - . . . . . 
+. . . . . 
+. . 67 . . 
+. . 63 29 . 
+. . . . .
+
+15.562779 - -----------------------------------
+
+15.951697 - ---------------Estimated Tag Data------------
+
+15.951876 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.14285714286] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+15.951950 - -----------------------------------
+
+15.952020 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(67)
+uniqueTagCount(grace, 67, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+15.952284 -   States Added  
+
+15.952362 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(67)
+uniqueTagCount(grace, 67, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+15.955076 - World observed.
+
+15.961991 - ****** Starting Interpret Phase ******
+
+15.962314 - ****** Starting Eval Phase ******
+
+15.969268 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+15.969408 - ****** Starting Intend Phase ******
+
+15.969812 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+15.970186 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+15.970284 - ****** Starting Plan Phase ******
+
+15.978536 - Old plan retrieved. Checking validity... valid.
+
+15.978939 - checking to see if all goals are achieved... yes
+
+15.979069 - ****** Starting Act Phase ******
+
+16.041969 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+16.042138 - Starting cycle 29
+
+16.042211 - ****** Starting Simulate Phase ******
+
+16.042619 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+16.042832 - ****** Starting Perceive Phase ******
+
+16.332476 - ---------------Tag Data------------
+
+16.332798 - . . . . . 
+. . . . . 
+. . 72 . . 
+. . 63 29 . 
+. . . . .
+
+16.332945 - -----------------------------------
+
+16.698746 - ---------------Estimated Tag Data------------
+
+16.698937 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.14285714286] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+16.699022 - -----------------------------------
+
+16.699090 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(72)
+uniqueTagCount(grace, 72, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+16.699274 -   States Added  
+
+16.699366 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(72)
+uniqueTagCount(grace, 72, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+16.701787 - World observed.
+
+16.708377 - ****** Starting Interpret Phase ******
+
+16.708657 - ****** Starting Eval Phase ******
+
+16.715134 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+16.715254 - ****** Starting Intend Phase ******
+
+16.715630 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+16.715990 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+16.716084 - ****** Starting Plan Phase ******
+
+16.724314 - Old plan retrieved. Checking validity... valid.
+
+16.724693 - checking to see if all goals are achieved... yes
+
+16.724816 - ****** Starting Act Phase ******
+
+16.785344 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+16.785523 - Starting cycle 30
+
+16.785608 - ****** Starting Simulate Phase ******
+
+16.785880 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+16.785995 - ****** Starting Perceive Phase ******
+
+17.083022 - ---------------Tag Data------------
+
+17.083231 - . . . . . 
+. . . . . 
+. . 80 . . 
+. . 63 29 . 
+. . . . .
+
+17.083298 - -----------------------------------
+
+17.499682 - ---------------Estimated Tag Data------------
+
+17.499919 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+17.500037 - -----------------------------------
+
+17.500165 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(80)
+uniqueTagCount(grace, 80, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+17.500451 -   States Added  
+
+17.500566 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(80)
+uniqueTagCount(grace, 80, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+17.504764 - World observed.
+
+17.517060 - ****** Starting Interpret Phase ******
+
+17.517535 - ****** Starting Eval Phase ******
+
+17.529351 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+17.529529 - ****** Starting Intend Phase ******
+
+17.530176 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+17.530803 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+17.530962 - ****** Starting Plan Phase ******
+
+17.543255 - Old plan retrieved. Checking validity... valid.
+
+17.543885 - checking to see if all goals are achieved... yes
+
+17.544071 - ****** Starting Act Phase ******
+
+17.606852 - Action collectdata(grace, fishtag, Tx2y2) not complete.
+
+17.607070 - Starting cycle 31
+
+17.607181 - ****** Starting Simulate Phase ******
+
+17.607557 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+17.607717 - ****** Starting Perceive Phase ******
+
+17.898702 - ---------------Tag Data------------
+
+17.898865 - . . . . . 
+. . . . . 
+. . 82 . . 
+. . 63 29 . 
+. . . . .
+
+17.898940 - -----------------------------------
+
+18.369720 - ---------------Estimated Tag Data------------
+
+18.369949 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+18.370057 - -----------------------------------
+
+18.370160 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(82)
+uniqueTagCount(grace, 82, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+18.370467 -   States Added  
+
+18.370574 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(82)
+uniqueTagCount(grace, 82, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+18.374499 - World observed.
+
+18.385573 - ****** Starting Interpret Phase ******
+
+18.386026 - ****** Starting Eval Phase ******
+
+18.396807 - Not all goals achieved; Goal(grace, Tx2y2, predicate: surveyed) is not true.
+
+18.396971 - ****** Starting Intend Phase ******
+
+18.397563 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+18.398134 - Selecting goal(s): Goal(grace, Tx2y2, predicate: surveyed)
+
+18.398280 - ****** Starting Plan Phase ******
+
+18.409482 - Old plan retrieved. Checking validity... valid.
+
+18.410070 - checking to see if all goals are achieved... yes
+
+18.410239 - ****** Starting Act Phase ******
+
+18.471549 - Action collectdata(grace, fishtag, Tx2y2) complete.
+
+18.471988 - Starting cycle 32
+
+18.472114 - ****** Starting Simulate Phase ******
+
+18.472491 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+18.472644 - ****** Starting Perceive Phase ******
+
+18.736124 - ---------------Tag Data------------
+
+18.736368 - . . . . . 
+. . . . . 
+. . 82 . . 
+. . 63 29 . 
+. . . . .
+
+18.736495 - -----------------------------------
+
+19.098323 - ---------------Estimated Tag Data------------
+
+19.098531 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+19.098612 - -----------------------------------
+
+19.098680 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(82)
+uniqueTagCount(grace, 82, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+19.098877 -   States Added  
+
+19.098949 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(82)
+uniqueTagCount(grace, 82, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+19.101476 - World observed.
+
+19.108144 - ****** Starting Interpret Phase ******
+
+19.108427 - ****** Starting Eval Phase ******
+
+19.115020 - All current goals achieved. Removing them from goal graph
+
+19.115652 - removing 2 plans that no longer apply.
+
+19.115792 - ****** Starting Intend Phase ******
+
+19.128580 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+19.128989 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+19.129097 - ****** Starting Plan Phase ******
+
+19.136192 - Planning...
+
+19.342305 - Planning complete.
+
+19.342481 - Plan: 
+
+19.342570 -   movewest(grace, Tx2y2, Tx1y2)
+
+19.342672 -   collectdata(grace, fishtag, Tx1y2)
+
+19.342866 - ****** Starting Act Phase ******
+
+19.354477 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+19.354647 - Starting cycle 33
+
+19.354728 - ****** Starting Simulate Phase ******
+
+19.355054 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+19.355166 - ****** Starting Perceive Phase ******
+
+19.638376 - ---------------Tag Data------------
+
+19.638544 - . . . . . 
+. . . . . 
+. . 83 . . 
+. . 63 29 . 
+. . . . .
+
+19.638618 - -----------------------------------
+
+20.030662 - ---------------Estimated Tag Data------------
+
+20.030941 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+20.031093 - -----------------------------------
+
+20.031209 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(83)
+uniqueTagCount(grace, 83, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+20.031489 -   States Added  
+
+20.031599 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(83)
+uniqueTagCount(grace, 83, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+20.035874 - World observed.
+
+20.128286 - ****** Starting Interpret Phase ******
+
+20.128634 - ****** Starting Eval Phase ******
+
+20.135981 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+20.136153 - ****** Starting Intend Phase ******
+
+20.149428 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+20.150331 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+20.150471 - ****** Starting Plan Phase ******
+
+20.157872 - Old plan retrieved. Checking validity... valid.
+
+20.158446 - checking to see if all goals are achieved... yes
+
+20.158569 - ****** Starting Act Phase ******
+
+20.166018 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+20.166134 - Starting cycle 34
+
+20.166204 - ****** Starting Simulate Phase ******
+
+20.166431 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+20.166560 - ****** Starting Perceive Phase ******
+
+20.358747 - ---------------Tag Data------------
+
+20.358925 - . . . . . 
+. . . . . 
+. . 83 . . 
+. . 63 29 . 
+. . . . .
+
+20.358998 - -----------------------------------
+
+20.721585 - ---------------Estimated Tag Data------------
+
+20.722154 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+20.722275 - -----------------------------------
+
+20.722347 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(83)
+uniqueTagCount(grace, 83, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+20.722680 -   States Added  
+
+20.722757 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(83)
+uniqueTagCount(grace, 83, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+20.725240 - World observed.
+
+20.734117 - ****** Starting Interpret Phase ******
+
+20.734420 - ****** Starting Eval Phase ******
+
+20.740915 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+20.741052 - ****** Starting Intend Phase ******
+
+20.753703 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+20.754092 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+20.754192 - ****** Starting Plan Phase ******
+
+20.761286 - Old plan retrieved. Checking validity... valid.
+
+20.761830 - checking to see if all goals are achieved... yes
+
+20.761961 - ****** Starting Act Phase ******
+
+20.769485 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+20.769678 - Starting cycle 35
+
+20.769775 - ****** Starting Simulate Phase ******
+
+20.770005 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+20.770105 - ****** Starting Perceive Phase ******
+
+20.994730 - ---------------Tag Data------------
+
+20.994963 - . . . . . 
+. . . . . 
+. . 84 . . 
+. . 63 29 . 
+. . . . .
+
+20.995067 - -----------------------------------
+
+21.400869 - ---------------Estimated Tag Data------------
+
+21.401056 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+21.401131 - -----------------------------------
+
+21.401200 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(84)
+uniqueTagCount(grace, 84, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+21.401379 -   States Added  
+
+21.401447 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(84)
+uniqueTagCount(grace, 84, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+21.403908 - World observed.
+
+21.412185 - ****** Starting Interpret Phase ******
+
+21.412480 - ****** Starting Eval Phase ******
+
+21.419471 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+21.419611 - ****** Starting Intend Phase ******
+
+21.432642 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+21.433074 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+21.433191 - ****** Starting Plan Phase ******
+
+21.440660 - Old plan retrieved. Checking validity... valid.
+
+21.441265 - checking to see if all goals are achieved... yes
+
+21.441393 - ****** Starting Act Phase ******
+
+21.449014 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+21.449172 - Starting cycle 36
+
+21.449244 - ****** Starting Simulate Phase ******
+
+21.449476 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+21.449591 - ****** Starting Perceive Phase ******
+
+21.721073 - ---------------Tag Data------------
+
+21.721244 - . . . . . 
+. . . . . 
+. . 85 . . 
+. . 63 29 . 
+. . . . .
+
+21.721315 - -----------------------------------
+
+22.083018 - ---------------Estimated Tag Data------------
+
+22.083213 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [2.14285714286, 2.0, 1.71428571429, 2.42857142857] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+22.083305 - -----------------------------------
+
+22.083375 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(85)
+uniqueTagCount(grace, 85, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+
+22.083550 -   States Added  
+
+22.083617 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(85)
+uniqueTagCount(grace, 85, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(1.71428571429)
+estuniqueTagCount(grace, 1.71428571429, Tx3y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y3)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+22.086017 - World observed.
+
+22.092639 - ****** Starting Interpret Phase ******
+
+22.092910 - ****** Starting Eval Phase ******
+
+22.100869 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+22.101017 - ****** Starting Intend Phase ******
+
+22.113399 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+22.113774 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+22.113893 - ****** Starting Plan Phase ******
+
+22.121395 - Old plan retrieved. Checking validity... valid.
+
+22.121959 - checking to see if all goals are achieved... yes
+
+22.122083 - ****** Starting Act Phase ******
+
+22.129284 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+22.129465 - Starting cycle 37
+
+22.129577 - ****** Starting Simulate Phase ******
+
+22.129847 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+22.129954 - ****** Starting Perceive Phase ******
+
+22.346973 - ---------------Tag Data------------
+
+22.347216 - . . . . . 
+. . . . . 
+. . 85 . . 
+. . 63 29 . 
+. . . . .
+
+22.347327 - -----------------------------------
+
+22.720153 - ---------------Estimated Tag Data------------
+
+22.720363 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+22.720465 - -----------------------------------
+
+22.720580 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(85)
+uniqueTagCount(grace, 85, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y1)
+
+22.720890 -   States Added  
+
+22.721010 - agent-at(grace,Tx2y2)
+QblocRadius(grace,Tx2y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(85)
+uniqueTagCount(grace, 85, Tx2y2)
+NUM(2.42857142857)
+estuniqueTagCount(grace, 2.42857142857, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y1)
+hotspot-detected(grace, Tx2y2)
+
+22.723681 - World observed.
+
+22.730782 - ****** Starting Interpret Phase ******
+
+22.731090 - ****** Starting Eval Phase ******
+
+22.739350 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+22.739497 - ****** Starting Intend Phase ******
+
+22.752273 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+22.752678 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+22.752783 - ****** Starting Plan Phase ******
+
+22.759934 - Old plan retrieved. Checking validity... valid.
+
+22.760500 - checking to see if all goals are achieved... yes
+
+22.760624 - ****** Starting Act Phase ******
+
+22.808516 - Action movewest(grace, Tx2y2, Tx1y2) not complete.
+
+22.808683 - Starting cycle 38
+
+22.808776 - ****** Starting Simulate Phase ******
+
+22.809041 - . . . . . 
+. . . . . 
+. . a . . 
+. . . . . 
+. . . . .
+
+22.809149 - ****** Starting Perceive Phase ******
+
+23.086597 - ---------------Tag Data------------
+
+23.086757 - . . . . . 
+. . . . . 
+. 6 85 . . 
+. . 63 29 . 
+. . . . .
+
+23.086825 - -----------------------------------
+
+23.467282 - ---------------Estimated Tag Data------------
+
+23.467450 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.0, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+23.467521 - -----------------------------------
+
+23.467588 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(6)
+uniqueTagCount(grace, 6, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y2)
+
+23.467759 -   States Added  
+
+23.467823 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(6)
+uniqueTagCount(grace, 6, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y2)
+
+23.470366 - World observed.
+
+23.477194 - ****** Starting Interpret Phase ******
+
+23.477501 - ****** Starting Eval Phase ******
+
+23.484227 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+23.484361 - ****** Starting Intend Phase ******
+
+23.484789 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+23.485145 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+23.485239 - ****** Starting Plan Phase ******
+
+23.493212 - Old plan retrieved. Checking validity... invalid.
+
+23.493329 - Planning...
+
+23.675494 - Planning complete.
+
+23.675668 - Plan: 
+
+23.675756 -   collectdata(grace, fishtag, Tx1y2)
+
+23.675957 - ****** Starting Act Phase ******
+
+23.684484 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+23.684600 - Starting cycle 39
+
+23.684668 - ****** Starting Simulate Phase ******
+
+23.684911 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+23.685009 - ****** Starting Perceive Phase ******
+
+24.046199 - ---------------Tag Data------------
+
+24.046361 - . . . . . 
+. . . . . 
+. 20 85 . . 
+. . 63 29 . 
+. . . . .
+
+24.046438 - -----------------------------------
+
+24.430174 - ---------------Estimated Tag Data------------
+
+24.430372 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.14285714286, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+24.430474 - -----------------------------------
+
+24.430546 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(20)
+uniqueTagCount(grace, 20, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y2)
+
+24.430745 -   States Added  
+
+24.430821 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(20)
+uniqueTagCount(grace, 20, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx2y2)
+
+24.433472 - World observed.
+
+24.440276 - ****** Starting Interpret Phase ******
+
+24.440569 - ****** Starting Eval Phase ******
+
+24.447239 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+24.447363 - ****** Starting Intend Phase ******
+
+24.447799 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+24.448164 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+24.448263 - ****** Starting Plan Phase ******
+
+24.457038 - Old plan retrieved. Checking validity... valid.
+
+24.457474 - checking to see if all goals are achieved... yes
+
+24.457616 - ****** Starting Act Phase ******
+
+24.464693 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+24.464810 - Starting cycle 40
+
+24.464880 - ****** Starting Simulate Phase ******
+
+24.465088 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+24.465188 - ****** Starting Perceive Phase ******
+
+24.694821 - ---------------Tag Data------------
+
+24.694998 - . . . . . 
+. . . . . 
+. 28 85 . . 
+. . 63 29 . 
+. . . . .
+
+24.695068 - -----------------------------------
+
+25.198138 - ---------------Estimated Tag Data------------
+
+25.198496 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+25.198657 - -----------------------------------
+
+25.198805 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(28)
+uniqueTagCount(grace, 28, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+25.199223 -   States Added  
+
+25.199364 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(28)
+uniqueTagCount(grace, 28, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+25.206305 - World observed.
+
+25.225535 - ****** Starting Interpret Phase ******
+
+25.226278 - ****** Starting Eval Phase ******
+
+25.245325 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+25.245636 - ****** Starting Intend Phase ******
+
+25.246724 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+25.247680 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+25.247891 - ****** Starting Plan Phase ******
+
+25.264322 - Old plan retrieved. Checking validity... valid.
+
+25.264731 - checking to see if all goals are achieved... yes
+
+25.264857 - ****** Starting Act Phase ******
+
+25.272207 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+25.272381 - Starting cycle 41
+
+25.272453 - ****** Starting Simulate Phase ******
+
+25.272673 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+25.272772 - ****** Starting Perceive Phase ******
+
+25.478037 - ---------------Tag Data------------
+
+25.478201 - . . . . . 
+. . . . . 
+. 34 85 . . 
+. . 63 29 . 
+. . . . .
+
+25.478270 - -----------------------------------
+
+25.845840 - ---------------Estimated Tag Data------------
+
+25.853537 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+25.853700 - -----------------------------------
+
+25.853816 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(34)
+uniqueTagCount(grace, 34, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+25.854136 -   States Added  
+
+25.854259 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(34)
+uniqueTagCount(grace, 34, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+25.858413 - World observed.
+
+25.870258 - ****** Starting Interpret Phase ******
+
+25.870714 - ****** Starting Eval Phase ******
+
+25.882246 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+25.882437 - ****** Starting Intend Phase ******
+
+25.883105 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+25.883692 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+25.883847 - ****** Starting Plan Phase ******
+
+25.894405 - Old plan retrieved. Checking validity... valid.
+
+25.894764 - checking to see if all goals are achieved... yes
+
+25.894895 - ****** Starting Act Phase ******
+
+25.904059 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+25.904223 - Starting cycle 42
+
+25.904294 - ****** Starting Simulate Phase ******
+
+25.904519 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+25.904618 - ****** Starting Perceive Phase ******
+
+26.158160 - ---------------Tag Data------------
+
+26.158316 - . . . . . 
+. . . . . 
+. 42 85 . . 
+. . 63 29 . 
+. . . . .
+
+26.158382 - -----------------------------------
+
+26.521281 - ---------------Estimated Tag Data------------
+
+26.521739 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+26.521896 - -----------------------------------
+
+26.522051 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(42)
+uniqueTagCount(grace, 42, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+26.522554 -   States Added  
+
+26.522708 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(42)
+uniqueTagCount(grace, 42, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+26.526708 - World observed.
+
+26.534615 - ****** Starting Interpret Phase ******
+
+26.534944 - ****** Starting Eval Phase ******
+
+26.542067 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+26.542198 - ****** Starting Intend Phase ******
+
+26.542616 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+26.542978 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+26.543077 - ****** Starting Plan Phase ******
+
+26.551049 - Old plan retrieved. Checking validity... valid.
+
+26.551451 - checking to see if all goals are achieved... yes
+
+26.551579 - ****** Starting Act Phase ******
+
+26.560641 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+26.560855 - Starting cycle 43
+
+26.560968 - ****** Starting Simulate Phase ******
+
+26.561296 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+26.561462 - ****** Starting Perceive Phase ******
+
+26.794565 - ---------------Tag Data------------
+
+26.794859 - . . . . . 
+. . . . . 
+. 48 85 . . 
+. . 63 29 . 
+. . . . .
+
+26.795011 - -----------------------------------
+
+27.150101 - ---------------Estimated Tag Data------------
+
+27.150285 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+27.150383 - -----------------------------------
+
+27.150491 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(48)
+uniqueTagCount(grace, 48, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+27.150711 -   States Added  
+
+27.150783 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(48)
+uniqueTagCount(grace, 48, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+27.153313 - World observed.
+
+27.160182 - ****** Starting Interpret Phase ******
+
+27.160458 - ****** Starting Eval Phase ******
+
+27.167353 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+27.167487 - ****** Starting Intend Phase ******
+
+27.167897 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+27.168264 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+27.168362 - ****** Starting Plan Phase ******
+
+27.175512 - Old plan retrieved. Checking validity... valid.
+
+27.175936 - checking to see if all goals are achieved... yes
+
+27.176066 - ****** Starting Act Phase ******
+
+27.237213 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+27.237500 - Starting cycle 44
+
+27.237577 - ****** Starting Simulate Phase ******
+
+27.238019 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+27.238141 - ****** Starting Perceive Phase ******
+
+27.519274 - ---------------Tag Data------------
+
+27.519597 - . . . . . 
+. . . . . 
+. 52 85 . . 
+. . 63 29 . 
+. . . . .
+
+27.519740 - -----------------------------------
+
+27.871123 - ---------------Estimated Tag Data------------
+
+27.871554 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+27.871737 - -----------------------------------
+
+27.871885 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(52)
+uniqueTagCount(grace, 52, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+27.872397 -   States Added  
+
+27.872550 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(52)
+uniqueTagCount(grace, 52, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+27.879942 - World observed.
+
+27.899369 - ****** Starting Interpret Phase ******
+
+27.900124 - ****** Starting Eval Phase ******
+
+27.919632 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+27.919967 - ****** Starting Intend Phase ******
+
+27.921078 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+27.922025 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+27.922227 - ****** Starting Plan Phase ******
+
+27.942425 - Old plan retrieved. Checking validity... valid.
+
+27.943456 - checking to see if all goals are achieved... yes
+
+27.943742 - ****** Starting Act Phase ******
+
+27.968482 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+27.968778 - Starting cycle 45
+
+27.968923 - ****** Starting Simulate Phase ******
+
+27.969474 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+27.969689 - ****** Starting Perceive Phase ******
+
+28.238102 - ---------------Tag Data------------
+
+28.238414 - . . . . . 
+. . . . . 
+. 52 85 . . 
+. . 63 29 . 
+. . . . .
+
+28.238514 - -----------------------------------
+
+28.594241 - ---------------Estimated Tag Data------------
+
+28.594441 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+28.594528 - -----------------------------------
+
+28.594596 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(52)
+uniqueTagCount(grace, 52, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+28.594778 -   States Added  
+
+28.594843 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(52)
+uniqueTagCount(grace, 52, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+28.597565 - World observed.
+
+28.712351 - ****** Starting Interpret Phase ******
+
+28.712691 - ****** Starting Eval Phase ******
+
+28.719690 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+28.719814 - ****** Starting Intend Phase ******
+
+28.720222 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+28.720580 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+28.720675 - ****** Starting Plan Phase ******
+
+28.727592 - Old plan retrieved. Checking validity... valid.
+
+28.727954 - checking to see if all goals are achieved... yes
+
+28.728084 - ****** Starting Act Phase ******
+
+28.735536 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+28.735658 - Starting cycle 46
+
+28.735726 - ****** Starting Simulate Phase ******
+
+28.735945 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+28.736042 - ****** Starting Perceive Phase ******
+
+29.016322 - ---------------Tag Data------------
+
+29.016643 - . . . . . 
+. . . . . 
+. 57 85 . . 
+. . 63 29 . 
+. . . . .
+
+29.016786 - -----------------------------------
+
+29.359078 - ---------------Estimated Tag Data------------
+
+29.359451 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+29.359642 - -----------------------------------
+
+29.359796 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(57)
+uniqueTagCount(grace, 57, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+29.360311 -   States Added  
+
+29.360472 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(57)
+uniqueTagCount(grace, 57, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+29.367626 - World observed.
+
+29.389162 - ****** Starting Interpret Phase ******
+
+29.389897 - ****** Starting Eval Phase ******
+
+29.409335 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+29.409678 - ****** Starting Intend Phase ******
+
+29.410796 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+29.411733 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+29.411938 - ****** Starting Plan Phase ******
+
+29.432057 - Old plan retrieved. Checking validity... valid.
+
+29.433128 - checking to see if all goals are achieved... yes
+
+29.433429 - ****** Starting Act Phase ******
+
+29.454958 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+29.455266 - Starting cycle 47
+
+29.455422 - ****** Starting Simulate Phase ******
+
+29.456000 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+29.456281 - ****** Starting Perceive Phase ******
+
+29.737842 - ---------------Tag Data------------
+
+29.738192 - . . . . . 
+. . . . . 
+. 61 85 . . 
+. . 63 29 . 
+. . . . .
+
+29.738333 - -----------------------------------
+
+30.124110 - ---------------Estimated Tag Data------------
+
+30.124509 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+30.124667 - -----------------------------------
+
+30.124820 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(61)
+uniqueTagCount(grace, 61, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+30.125287 -   States Added  
+
+30.125436 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(61)
+uniqueTagCount(grace, 61, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+30.132870 - World observed.
+
+30.155523 - ****** Starting Interpret Phase ******
+
+30.156313 - ****** Starting Eval Phase ******
+
+30.176750 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+30.177106 - ****** Starting Intend Phase ******
+
+30.178251 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+30.179213 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+30.179421 - ****** Starting Plan Phase ******
+
+30.200576 - Old plan retrieved. Checking validity... valid.
+
+30.201370 - checking to see if all goals are achieved... yes
+
+30.201549 - ****** Starting Act Phase ******
+
+30.214539 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+30.214710 - Starting cycle 48
+
+30.214783 - ****** Starting Simulate Phase ******
+
+30.215105 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+30.215268 - ****** Starting Perceive Phase ******
+
+30.493438 - ---------------Tag Data------------
+
+30.493651 - . . . . . 
+. . . . . 
+. 67 85 . . 
+. . 63 29 . 
+. . . . .
+
+30.493768 - -----------------------------------
+
+30.888392 - ---------------Estimated Tag Data------------
+
+30.888570 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+30.888639 - -----------------------------------
+
+30.888703 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(67)
+uniqueTagCount(grace, 67, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+30.888884 -   States Added  
+
+30.888947 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(67)
+uniqueTagCount(grace, 67, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+30.891324 - World observed.
+
+30.900195 - ****** Starting Interpret Phase ******
+
+30.900487 - ****** Starting Eval Phase ******
+
+30.907043 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+30.907164 - ****** Starting Intend Phase ******
+
+30.907541 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+30.907881 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+30.907971 - ****** Starting Plan Phase ******
+
+30.914732 - Old plan retrieved. Checking validity... valid.
+
+30.915152 - checking to see if all goals are achieved... yes
+
+30.915297 - ****** Starting Act Phase ******
+
+30.972636 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+30.972787 - Starting cycle 49
+
+30.972853 - ****** Starting Simulate Phase ******
+
+30.973123 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+30.973224 - ****** Starting Perceive Phase ******
+
+31.236754 - ---------------Tag Data------------
+
+31.236927 - . . . . . 
+. . . . . 
+. 74 85 . . 
+. . 63 29 . 
+. . . . .
+
+31.237004 - -----------------------------------
+
+31.591032 - ---------------Estimated Tag Data------------
+
+31.591218 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+31.591296 - -----------------------------------
+
+31.591364 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(74)
+uniqueTagCount(grace, 74, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+31.591548 -   States Added  
+
+31.591629 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(74)
+uniqueTagCount(grace, 74, Tx1y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+31.594215 - World observed.
+
+31.602733 - ****** Starting Interpret Phase ******
+
+31.603036 - ****** Starting Eval Phase ******
+
+31.609769 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+31.609888 - ****** Starting Intend Phase ******
+
+31.610274 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+31.610618 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+31.610710 - ****** Starting Plan Phase ******
+
+31.617930 - Old plan retrieved. Checking validity... valid.
+
+31.618323 - checking to see if all goals are achieved... yes
+
+31.618444 - ****** Starting Act Phase ******
+
+31.679712 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+31.679873 - Starting cycle 50
+
+31.679944 - ****** Starting Simulate Phase ******
+
+31.680258 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+31.680369 - ****** Starting Perceive Phase ******
+
+32.004347 - ---------------Tag Data------------
+
+32.004538 - . . . . . 
+. . . . . 
+. 78 85 . . 
+. . 63 29 . 
+. . . . .
+
+32.004624 - -----------------------------------
+
+32.526071 - ---------------Estimated Tag Data------------
+
+32.526277 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.428571428571, 0.0, 2.28571428571, 0.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+32.526369 - -----------------------------------
+
+32.526442 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(78)
+uniqueTagCount(grace, 78, Tx1y2)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+32.526645 -   States Added  
+
+32.526742 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(78)
+uniqueTagCount(grace, 78, Tx1y2)
+NUM(0.142857142857)
+estuniqueTagCount(grace, 0.142857142857, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+32.529972 - World observed.
+
+32.539776 - ****** Starting Interpret Phase ******
+
+32.540115 - ****** Starting Eval Phase ******
+
+32.549074 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+32.549323 - ****** Starting Intend Phase ******
+
+32.550022 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+32.550514 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+32.550681 - ****** Starting Plan Phase ******
+
+32.559472 - Old plan retrieved. Checking validity... valid.
+
+32.559899 - checking to see if all goals are achieved... yes
+
+32.560031 - ****** Starting Act Phase ******
+
+32.661253 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+32.661522 - Starting cycle 51
+
+32.661656 - ****** Starting Simulate Phase ******
+
+32.662088 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+32.662234 - ****** Starting Perceive Phase ******
+
+33.043679 - ---------------Tag Data------------
+
+33.044082 - . . . . . 
+. . . . . 
+. 88 85 . . 
+. . 63 29 . 
+. . . . .
+
+33.044281 - -----------------------------------
+
+33.422873 - ---------------Estimated Tag Data------------
+
+33.423093 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 0.142857142857] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+33.423188 - -----------------------------------
+
+33.423260 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(88)
+uniqueTagCount(grace, 88, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+33.423452 -   States Added  
+
+33.423521 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(88)
+uniqueTagCount(grace, 88, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+33.426131 - World observed.
+
+33.435825 - ****** Starting Interpret Phase ******
+
+33.436155 - ****** Starting Eval Phase ******
+
+33.443351 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+33.443482 - ****** Starting Intend Phase ******
+
+33.443885 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+33.444270 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+33.444378 - ****** Starting Plan Phase ******
+
+33.452647 - Old plan retrieved. Checking validity... valid.
+
+33.453199 - checking to see if all goals are achieved... yes
+
+33.453339 - ****** Starting Act Phase ******
+
+33.530679 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+33.530875 - Starting cycle 52
+
+33.530949 - ****** Starting Simulate Phase ******
+
+33.531213 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+33.531363 - ****** Starting Perceive Phase ******
+
+33.801952 - ---------------Tag Data------------
+
+33.802113 - . . . . . 
+. . . . . 
+. 93 85 . . 
+. . 63 29 . 
+. . . . .
+
+33.802186 - -----------------------------------
+
+34.242834 - ---------------Estimated Tag Data------------
+
+34.243038 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 0.428571428571] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+34.243124 - -----------------------------------
+
+34.243194 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(93)
+uniqueTagCount(grace, 93, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+34.243387 -   States Added  
+
+34.243454 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(93)
+uniqueTagCount(grace, 93, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.428571428571)
+estuniqueTagCount(grace, 0.428571428571, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+34.246727 - World observed.
+
+34.257829 - ****** Starting Interpret Phase ******
+
+34.258157 - ****** Starting Eval Phase ******
+
+34.267557 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+34.267738 - ****** Starting Intend Phase ******
+
+34.268199 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+34.268600 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+34.268706 - ****** Starting Plan Phase ******
+
+34.276643 - Old plan retrieved. Checking validity... valid.
+
+34.277070 - checking to see if all goals are achieved... yes
+
+34.277201 - ****** Starting Act Phase ******
+
+34.369279 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+34.369778 - Starting cycle 53
+
+34.369965 - ****** Starting Simulate Phase ******
+
+34.370968 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+34.371269 - ****** Starting Perceive Phase ******
+
+34.678851 - ---------------Tag Data------------
+
+34.679007 - . . . . . 
+. . . . . 
+. 96 85 . . 
+. . 63 29 . 
+. . . . .
+
+34.679084 - -----------------------------------
+
+35.130603 - ---------------Estimated Tag Data------------
+
+35.130783 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 0.857142857143] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+35.130857 - -----------------------------------
+
+35.130926 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(96)
+uniqueTagCount(grace, 96, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+35.131109 -   States Added  
+
+35.131177 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(96)
+uniqueTagCount(grace, 96, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(0.857142857143)
+estuniqueTagCount(grace, 0.857142857143, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+35.134136 - World observed.
+
+35.142504 - ****** Starting Interpret Phase ******
+
+35.142802 - ****** Starting Eval Phase ******
+
+35.150319 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+35.150462 - ****** Starting Intend Phase ******
+
+35.150886 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+35.151249 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+35.151348 - ****** Starting Plan Phase ******
+
+35.158659 - Old plan retrieved. Checking validity... valid.
+
+35.159067 - checking to see if all goals are achieved... yes
+
+35.159194 - ****** Starting Act Phase ******
+
+35.222853 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+35.223060 - Starting cycle 54
+
+35.223145 - ****** Starting Simulate Phase ******
+
+35.223428 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+35.223531 - ****** Starting Perceive Phase ******
+
+35.541994 - ---------------Tag Data------------
+
+35.542204 - . . . . . 
+. . . . . 
+. 99 85 . . 
+. . 63 29 . 
+. . . . .
+
+35.542320 - -----------------------------------
+
+35.894044 - ---------------Estimated Tag Data------------
+
+35.894279 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 1.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+35.894414 - -----------------------------------
+
+35.894522 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+35.894799 -   States Added  
+
+35.894909 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+35.899273 - World observed.
+
+35.912666 - ****** Starting Interpret Phase ******
+
+35.913129 - ****** Starting Eval Phase ******
+
+35.924938 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+35.925125 - ****** Starting Intend Phase ******
+
+35.925774 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+35.926359 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+35.926513 - ****** Starting Plan Phase ******
+
+35.938750 - Old plan retrieved. Checking validity... valid.
+
+35.939402 - checking to see if all goals are achieved... yes
+
+35.939598 - ****** Starting Act Phase ******
+
+36.026945 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+36.027118 - Starting cycle 55
+
+36.027190 - ****** Starting Simulate Phase ******
+
+36.027463 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+36.027573 - ****** Starting Perceive Phase ******
+
+36.293097 - ---------------Tag Data------------
+
+36.293289 - . . . . . 
+. . . . . 
+. 99 85 . . 
+. . 63 29 . 
+. . . . .
+
+36.293358 - -----------------------------------
+
+36.646987 - ---------------Estimated Tag Data------------
+
+36.647199 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 1.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+36.647273 - -----------------------------------
+
+36.647345 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+36.647563 -   States Added  
+
+36.647629 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+36.650662 - World observed.
+
+36.659846 - ****** Starting Interpret Phase ******
+
+36.660175 - ****** Starting Eval Phase ******
+
+36.669153 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+36.669381 - ****** Starting Intend Phase ******
+
+36.669978 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+36.670403 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+36.670511 - ****** Starting Plan Phase ******
+
+36.678772 - Old plan retrieved. Checking validity... valid.
+
+36.679516 - checking to see if all goals are achieved... yes
+
+36.679754 - ****** Starting Act Phase ******
+
+36.753534 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+36.753718 - Starting cycle 56
+
+36.753794 - ****** Starting Simulate Phase ******
+
+36.754107 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+36.754226 - ****** Starting Perceive Phase ******
+
+37.027391 - ---------------Tag Data------------
+
+37.027551 - . . . . . 
+. . . . . 
+. 99 85 . . 
+. . 63 29 . 
+. . . . .
+
+37.027617 - -----------------------------------
+
+37.392012 - ---------------Estimated Tag Data------------
+
+37.416729 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 1.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+37.416864 - -----------------------------------
+
+37.416984 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+37.417353 -   States Added  
+
+37.417464 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(99)
+uniqueTagCount(grace, 99, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+37.421795 - World observed.
+
+37.550927 - ****** Starting Interpret Phase ******
+
+37.551269 - ****** Starting Eval Phase ******
+
+37.558014 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+37.558132 - ****** Starting Intend Phase ******
+
+37.558519 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+37.558867 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+37.558960 - ****** Starting Plan Phase ******
+
+37.566044 - Old plan retrieved. Checking validity... valid.
+
+37.566413 - checking to see if all goals are achieved... yes
+
+37.566529 - ****** Starting Act Phase ******
+
+37.573890 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+37.574009 - Starting cycle 57
+
+37.574076 - ****** Starting Simulate Phase ******
+
+37.574305 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+37.574403 - ****** Starting Perceive Phase ******
+
+37.829302 - ---------------Tag Data------------
+
+37.829463 - . . . . . 
+. . . . . 
+. 100 85 . . 
+. . 63 29 . 
+. . . . .
+
+37.829552 - -----------------------------------
+
+38.176958 - ---------------Estimated Tag Data------------
+
+38.177141 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.28571428571, 0.0, 2.28571428571, 1.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+38.177212 - -----------------------------------
+
+38.177282 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(100)
+uniqueTagCount(grace, 100, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+38.177463 -   States Added  
+
+38.177528 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(100)
+uniqueTagCount(grace, 100, Tx1y2)
+NUM(1.28571428571)
+estuniqueTagCount(grace, 1.28571428571, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+38.180090 - World observed.
+
+38.188530 - ****** Starting Interpret Phase ******
+
+38.188826 - ****** Starting Eval Phase ******
+
+38.195653 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+38.195775 - ****** Starting Intend Phase ******
+
+38.196184 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+38.196558 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+38.196662 - ****** Starting Plan Phase ******
+
+38.203831 - Old plan retrieved. Checking validity... valid.
+
+38.204279 - checking to see if all goals are achieved... yes
+
+38.204413 - ****** Starting Act Phase ******
+
+38.267354 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+38.267523 - Starting cycle 58
+
+38.267593 - ****** Starting Simulate Phase ******
+
+38.267860 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+38.267967 - ****** Starting Perceive Phase ******
+
+38.576411 - ---------------Tag Data------------
+
+38.576577 - . . . . . 
+. . . . . 
+. 102 85 . . 
+. . 63 29 . 
+. . . . .
+
+38.576645 - -----------------------------------
+
+38.949087 - ---------------Estimated Tag Data------------
+
+38.949271 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [1.42857142857, 0.0, 2.28571428571, 1.0] [0.0, 0.0, 0.0, 0.428571428571] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [1.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.142857142857] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+38.949341 - -----------------------------------
+
+38.949407 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(102)
+uniqueTagCount(grace, 102, Tx1y2)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+
+38.949579 -   States Added  
+
+38.949643 - agent-at(grace,Tx1y2)
+QblocRadius(grace,Tx1y2, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+NUM(102)
+uniqueTagCount(grace, 102, Tx1y2)
+NUM(1.42857142857)
+estuniqueTagCount(grace, 1.42857142857, Tx1y3)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx0y2)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx1y1)
+NUM(2.28571428571)
+estuniqueTagCount(grace, 2.28571428571, Tx2y2)
+hotspot-detected(grace, Tx1y2)
+
+38.952486 - World observed.
+
+38.960604 - ****** Starting Interpret Phase ******
+
+38.960888 - ****** Starting Eval Phase ******
+
+38.968052 - Not all goals achieved; Goal(grace, Tx1y2, predicate: surveyed) is not true.
+
+38.968208 - ****** Starting Intend Phase ******
+
+38.968609 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+38.969155 - Selecting goal(s): Goal(grace, Tx1y2, predicate: surveyed)
+
+38.969264 - ****** Starting Plan Phase ******
+
+38.976414 - Old plan retrieved. Checking validity... valid.
+
+38.976831 - checking to see if all goals are achieved... yes
+
+38.976977 - ****** Starting Act Phase ******
+
+39.062164 - Action collectdata(grace, fishtag, Tx1y2) not complete.
+
+39.062386 - Starting cycle 59
+
+39.062474 - ****** Starting Simulate Phase ******
+
+39.062784 - . . . . . 
+. . . . . 
+. a . . . 
+. . . . . 
+. . . . .
+
+39.062886 - ****** Starting Perceive Phase ******
+
+39.313911 - ---------------Tag Data------------
+
+39.314070 - . . . . . 
+. . . . . 
+. 104 85 . . 
+. . 63 29 . 
+. . . . .
+
+39.314141 - -----------------------------------
+

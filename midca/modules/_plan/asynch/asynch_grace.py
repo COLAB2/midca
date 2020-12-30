@@ -46,6 +46,18 @@ def asynch_action(mem, midcaAction):
         #actions.append(SurveyCellErgodic(mem, midcaAction))
         return SurveyCell(mem, midcaAction)
 
+    elif midcaAction.op == "structuresearch":
+        #actions.append(SurveyCellErgodic(mem, midcaAction))
+        return SurveyCell(mem, midcaAction)
+
+    elif midcaAction.op == "ergodicsearch":
+        #actions.append(SurveyCellErgodic(mem, midcaAction))
+        return SurveyErgodic(mem, midcaAction)
+
+    elif midcaAction.op == "singlecellergodicsearch":
+        #actions.append(SurveyCellErgodic(mem, midcaAction))
+        return SurveyCellErgodic(mem, midcaAction)
+
     elif midcaAction.op == "deepcollectdata":
         #actions.append(SurveyCellErgodic(mem, midcaAction))
         return DeepSurveyCell(mem, midcaAction)
@@ -592,7 +604,7 @@ class MoveToCell(AsynchAction):
 
         tagworld = self.interface.TagWorld()
         tagworld.move_cell([0,0], go_to_location)
-    """
+
     def check_confirmation(self):
         world = self.mem.get(self.mem.STATES)[-1]
         #argnames = [str(arg) for arg in self.action.args]
@@ -638,7 +650,7 @@ class MoveToCell(AsynchAction):
             #time.sleep(1)
             return True
         return False
-
+    """
 
 class SurveyCell(AsynchAction):
     '''
@@ -813,6 +825,52 @@ class SurveyCellErgodic(AsynchAction):
             return True
         return False
 
+class SurveyErgodic(AsynchAction):
+    '''
+    Action to make grace reach surface
+    '''
+
+    def __init__(self, mem, midcaAction):
+        self.action = midcaAction
+        self.mem = mem
+        self.interface = self.mem.get(self.mem.INTERFACE)
+        self.time = None
+        self.complete = False
+        self.skip = 5
+        self.skiponce = 1
+        executeAction = lambda mem, midcaAction, status: self.implement_action()
+        completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+        AsynchAction.__init__(self, mem, midcaAction, executeAction,
+                              completionCheck, True)
+
+    def parse_tile(self, input):
+        output = []
+        y_index = input.index('y')
+        output = [int(input[2:y_index]) , int(input[y_index+1:])]
+        return output
+
+    def implement_action(self):
+        self.time = midcatime.now()
+        tagworld = self.interface.TagWorld()
+        tagworld.searchErgodic("fullgrid")
+        self.mem.set(self.mem.GETDATA, True)
+
+    def check_confirmation(self):
+        # skip 5 cells
+        if self.skip:
+            self.skip -= 1
+            return False
+
+        #world = self.mem.get(self.mem.STATES)[-1]
+        #argnames = [str(arg) for arg in self.action.args]
+        #atoms = world.get_atoms(filters=["certainblocRadius", "grace", argnames[2]])
+        #if not atoms:
+        #    self.status = FAILED
+        #    return False
+
+        tagworld = self.interface.TagWorld()
+        self.mem.set(self.mem.GETDATA, True)
+        return False
 
 class GraceGlide(AsynchAction):
     '''

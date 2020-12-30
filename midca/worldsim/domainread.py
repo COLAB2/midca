@@ -5,10 +5,11 @@ objects = {}
 predicates = {}
 atoms = []
 operators = {}
-cltree = {"rootnode": "" , "allnodes" : [] , "checked" : [] } 
-obtree = {"rootnode": "" , "allnodes" : [] , "checked" : [] }
+cltree = None
+obtree = None
 
 def type(name, parentnames = ["obj"]):
+	global obtree
 	temp = [name]
 	if not parentnames == ["obj"]:
 		temp.append(parentnames)
@@ -19,14 +20,14 @@ def type(name, parentnames = ["obj"]):
 		if parent not in types:
 			raise Exception("parent type DNE.")
 		parents.append(types[parent])
-	types[name] = worldsim.Type(name, parents)	
-	otree = worldsim.ObjectTree(obtree['rootnode'] , 
-				    obtree['allnodes'], 
-				    obtree['checked'] , 
+	types[name] = worldsim.Type(name, parents)
+	if obtree:
+		obtree = worldsim.ObjectTree(obtree.rootnode ,
+				    obtree.allnodes,
+				    obtree.checked,
 				    temp)
-	obtree['rootnode'] = otree.rootnode
-	obtree['allnodes'] = otree.allnodes
-	obtree['checked'] = otree.checked
+	else:
+		obtree = worldsim.ObjectTree([] ,[], [], temp)
 
 
 def ptype(*args):
@@ -34,12 +35,12 @@ def ptype(*args):
 	Create a class hierarchy tree and get the result into cltree,
         which is a global variable inorder to store previous nodes of tree.
 	'''
-	temp = list(args)
-	tree = worldsim.Tree(cltree['rootnode'] , cltree['allnodes'], cltree['checked'] , temp)
-	cltree['rootnode'] = tree.rootnode
-	cltree['allnodes'] = tree.allnodes
-	cltree['checked'] = tree.checked
-
+	global cltree
+	arguments = list(args)
+	if cltree:
+		cltree = worldsim.Tree(cltree.rootnode , cltree.allnodes, cltree.checked , arguments)
+	else:
+		cltree = worldsim.Tree([] , [], [], arguments)
 
 def instance(name, typename):
 	if typename not in types:

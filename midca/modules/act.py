@@ -217,6 +217,17 @@ class SimpleAct(base.BaseModule):
                 print "Goals achieved:", [str(goal) for goal in goalsAchieved]
         return plan
 
+    def retrieve_the_current_action(self, asynchactions, midcaaction):
+        """
+
+        :param asynchactions: translated midca actions
+        :param midcaaction: midca actions
+        :return: the corresponding translated action
+        """
+        for async_action in asynchactions:
+            if id(async_action.action) == id(midcaaction):
+                return async_action
+
     def manage_asynch_action(self, plan, asynchAction, midcaaction, verbose=1):
         """
 
@@ -227,7 +238,9 @@ class SimpleAct(base.BaseModule):
         #asynchAction = self.asynch_actions.asynch_action(self.mem, action)
         # there exists a corresponding asynchronous action
         if asynchAction:
-            asynchAction = asynchAction[-1]
+
+            # get the action in the asynch action
+            asynchAction = self.retrieve_the_current_action(asynchAction, midcaaction)
             # check if the action has started or not
             if asynchAction.status == self.asynch_actions.NOT_STARTED:
                 asynchAction.execute()
@@ -285,7 +298,11 @@ class SimpleAct(base.BaseModule):
             else:
                 # actions that need to do some functionality
                 if self.asynch_actions:
-                    if not str(action) in [str(act) for act in self.current_asynch_action]:
+
+                    # if the action is suspended then continue the action
+                    # to see if the action is suspended check if the object is in the current_asynch_action
+                    # if it is not suspended then translate the action to asynchronous action
+                    if not id(action) in [id(act.action) for act in self.current_asynch_action]:
                         self.current_asynch_action.append(self.asynch_actions.asynch_action(self.mem, action))
 
                     if self.current_asynch_action:

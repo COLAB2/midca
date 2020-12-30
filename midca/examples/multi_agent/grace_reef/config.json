@@ -1,0 +1,22 @@
+{
+  "connection_type": "zmq",
+  "publish_interface": "tcp://127.0.0.1:5999",
+    "agents": {
+      "grace": {
+        "script": "midca_structured_search_grace.py",
+        "address": {"agent": "tcp://127.0.0.1:3000",
+                    "mine": "tcp://127.0.0.1:3001" },
+        "publish_simulator": {"agent": "tcp://127.0.0.1:5999"},
+        "subscribe_simulator": {"agent": "tcp://127.0.0.1:4999",
+                                "mine": "tcp://127.0.0.1:4998" }
+      },
+      "franklin": {
+        "script": "midca_structured_search_franklin.py",
+        "address": {"agent": "tcp://127.0.0.1:3002",
+                    "mine": "tcp://127.0.0.1:3003" },
+        "publish_simulator": {"simulator": "tcp://127.0.0.1:5999"},
+        "subscribe_simulator": {"agent": "tcp://127.0.0.1:5999",
+                                "mine": "tcp://127.0.0.1:5999" }
+      }
+  }
+  }

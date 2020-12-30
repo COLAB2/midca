@@ -1,0 +1,41 @@
+.000205 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.000306 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.000356 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.000398 - [cognitive] Initializing Interpret module 2 GraceAnomalyDetection...done.
+
+.000439 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.000479 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.000517 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.000561 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.000603 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.000647 - Goal Graph initialized.
+
+.000682 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.000723 - Goal Graph initialized.
+
+.000762 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.000800 - Starting cycle 0
+
+.000837 - ****** Starting Simulate Phase ******
+
+.000949 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+a . . . .
+
+.001009 - ****** Starting Perceive Phase ******
+
+.001135 - [Errno 111] Connection refused
+

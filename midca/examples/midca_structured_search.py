@@ -10,10 +10,15 @@ import threading
 # Domain Specific Imports
 from midca.domains.grace import grace_util as nbeacons_util
 # simulator
-from midca.domains.grace.interface import tagworld
+from midca.domains.grace.tagsim import TagWorldDemo as interface
 
 #initialize simulator
-interface = tagworld.TagWorld()
+sim = interface.TagWorld()
+sim.runSim()
+
+# just duplicate
+sim = interface.TagWorld()
+sim.runSim()
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -69,20 +74,21 @@ myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface))
 #myMidca.append_module("Perceive", perceive.GraceObserver())
 myMidca.append_module("Interpret", guide.GraceGoalInputNSF(interface))
 myMidca.append_module("Interpret", guide.GraceAnomalyDetection())
-myMidca.append_module("Interpret", guide.GraceChangeDetection())
+
+#myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 #myMidca.append_module("Intend", intend.DfsIntendGraceNSF())
 myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())
 myMidca.append_module("Intend", intend.PriorityIntend())
+myMidca.append_module("Intend", intend.HGNSelection())
 #myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
+myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,
                                                         JSHOP_STATE_FILE,
-                                                        asynch_grace,
                                                         monitors= nbeacons_util.monitor
                                                     ))
-myMidca.append_module("Act", act.AsynchronousGraceAct())
+myMidca.append_module("Act",  act.SimpleAct(asynch_grace))
 
 
 # Set world viewer to output text

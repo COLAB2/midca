@@ -1,0 +1,3824 @@
+.000248 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.000344 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.000392 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.000431 - [cognitive] Initializing Interpret module 2 GraceAnomalyDetection...done.
+
+.000469 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.000506 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.000542 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.000577 - [cognitive] Initializing Intend module 3 HGNSelection...done.
+
+.000617 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.000657 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.000702 - Goal Graph initialized.
+
+.000736 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.000774 - Goal Graph initialized.
+
+.000811 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.000847 - Starting cycle 0
+
+.000885 - ****** Starting Simulate Phase ******
+
+.000983 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+a . . . .
+
+.001039 - ****** Starting Perceive Phase ******
+
+.730654 - ---------------Tag Data------------
+
+.730921 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+.731026 - -----------------------------------
+
+.731213 - ---------------Estimated Tag Data------------
+
+.731348 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+.731431 - -----------------------------------
+
+.731770 -   States Added  
+
+.731858 - agent-at(grace,Tx3y1)
+NUM(498.5)
+timeRemaining(498.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+.735234 - World observed.
+
+.747406 - ****** Starting Interpret Phase ******
+
+.747706 - Midca generated a goal : Goal(grace, Tx0y0, predicate: surveyed)
+
+.747875 - Midca generated a goal : Goal(grace, Tx0y1, predicate: surveyed)
+
+.748060 - Midca generated a goal : Goal(grace, Tx0y2, predicate: surveyed)
+
+.748292 - Midca generated a goal : Goal(grace, Tx0y3, predicate: surveyed)
+
+.748540 - Midca generated a goal : Goal(grace, Tx0y4, predicate: surveyed)
+
+.748814 - Midca generated a goal : Goal(grace, Tx1y4, predicate: surveyed)
+
+.749119 - Midca generated a goal : Goal(grace, Tx1y3, predicate: surveyed)
+
+.749455 - Midca generated a goal : Goal(grace, Tx1y2, predicate: surveyed)
+
+.749825 - Midca generated a goal : Goal(grace, Tx1y1, predicate: surveyed)
+
+.750241 - Midca generated a goal : Goal(grace, Tx1y0, predicate: surveyed)
+
+.750654 - Midca generated a goal : Goal(grace, Tx2y0, predicate: surveyed)
+
+.751094 - Midca generated a goal : Goal(grace, Tx2y1, predicate: surveyed)
+
+.751599 - Midca generated a goal : Goal(grace, Tx2y2, predicate: surveyed)
+
+.752126 - Midca generated a goal : Goal(grace, Tx2y3, predicate: surveyed)
+
+.752681 - Midca generated a goal : Goal(grace, Tx2y4, predicate: surveyed)
+
+.753256 - Midca generated a goal : Goal(grace, Tx3y4, predicate: surveyed)
+
+.753882 - Midca generated a goal : Goal(grace, Tx3y3, predicate: surveyed)
+
+.754544 - Midca generated a goal : Goal(grace, Tx3y2, predicate: surveyed)
+
+.755202 - Midca generated a goal : Goal(grace, Tx3y1, predicate: surveyed)
+
+.755904 - Midca generated a goal : Goal(grace, Tx3y0, predicate: surveyed)
+
+.756630 - Midca generated a goal : Goal(grace, Tx4y0, predicate: surveyed)
+
+.757385 - Midca generated a goal : Goal(grace, Tx4y1, predicate: surveyed)
+
+.758228 - Midca generated a goal : Goal(grace, Tx4y2, predicate: surveyed)
+
+.759101 - Midca generated a goal : Goal(grace, Tx4y3, predicate: surveyed)
+
+.760050 - Midca generated a goal : Goal(grace, Tx4y4, predicate: surveyed)
+
+.760738 - An anomaly is detected regarding the mode of operation : 
+
+.761438 - Midca generated a goal : Goal(grace, predicate: free)
+
+.761575 - ****** Starting Eval Phase ******
+
+.775696 - No current goals. Skipping eval
+
+.775967 - ****** Starting Intend Phase ******
+
+.776170 - No Survey goals. Intend will not select goals via hillclimbing.
+
+.776379 - Selecting goal(s): Goal(grace, predicate: free)
+
+.776630 - --------- Class Hierarchy Predicate Tree ----------
+
+.776720 -   root
+
+.776828 -     surveyed
+
+.776925 -         surveyed-structured
+
+.777006 -         surveyed-singleCellErgodic
+
+.777089 -     surveyed-ergodic
+
+.777175 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+.777579 - Selecting goal(s): Goal(grace, predicate: free)
+
+.777695 - ****** Starting Plan Phase ******
+
+.789551 - Planning...
+
+.898101 - Planning complete.
+
+.898218 - Plan: 
+
+.898269 -   glideback(grace)
+
+.898416 - ****** Starting Act Phase ******
+
+.903401 - Action glideback(grace) not complete.
+
+.903526 - Starting cycle 1
+
+.903590 - ****** Starting Simulate Phase ******
+
+.903776 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+.903873 - ****** Starting Perceive Phase ******
+
+1.137691 - ---------------Tag Data------------
+
+1.137835 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+1.137921 - -----------------------------------
+
+1.137980 - ---------------Estimated Tag Data------------
+
+1.138071 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+1.138135 - -----------------------------------
+
+1.138270 -   States Added  
+
+1.138350 - agent-at(grace,Tx3y1)
+NUM(496.5)
+timeRemaining(496.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+1.140005 - World observed.
+
+1.145155 - ****** Starting Interpret Phase ******
+
+1.145775 - ****** Starting Eval Phase ******
+
+1.151943 - Not all goals achieved; Goal(grace, predicate: free) is not true.
+
+1.152074 - ****** Starting Intend Phase ******
+
+1.152195 - No Survey goals. Intend will not select goals via hillclimbing.
+
+1.152307 - Selecting goal(s): Goal(grace, predicate: free)
+
+1.152430 - --------- Class Hierarchy Predicate Tree ----------
+
+1.152480 -   root
+
+1.152525 -     surveyed
+
+1.152568 -         surveyed-structured
+
+1.152617 -         surveyed-singleCellErgodic
+
+1.152662 -     surveyed-ergodic
+
+1.152707 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+1.152886 - Selecting goal(s): Goal(grace, predicate: free)
+
+1.152950 - ****** Starting Plan Phase ******
+
+1.158109 - Old plan retrieved. Checking validity... valid.
+
+1.158327 - checking to see if all goals are achieved... yes
+
+1.158423 - ****** Starting Act Phase ******
+
+1.196626 - Action glideback(grace) not complete.
+
+1.196890 - Starting cycle 2
+
+1.196946 - ****** Starting Simulate Phase ******
+
+1.197165 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+1.197242 - ****** Starting Perceive Phase ******
+
+1.366618 - ---------------Tag Data------------
+
+1.366777 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+1.366841 - -----------------------------------
+
+1.366898 - ---------------Estimated Tag Data------------
+
+1.366967 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+1.367042 - -----------------------------------
+
+1.367180 -   States Added  
+
+1.367252 - agent-at(grace,Tx3y1)
+NUM(494.5)
+timeRemaining(494.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+1.368796 - World observed.
+
+1.376222 - ****** Starting Interpret Phase ******
+
+1.376836 - ****** Starting Eval Phase ******
+
+1.385960 - All current goals achieved. Removing them from goal graph
+
+1.386566 - removing 1 plans that no longer apply.
+
+1.386723 - ****** Starting Intend Phase ******
+
+1.387719 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.388193 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed)
+
+1.388397 - --------- Class Hierarchy Predicate Tree ----------
+
+1.388505 -   root
+
+1.388605 -     surveyed
+
+1.388659 -         surveyed-structured
+
+1.388753 -         surveyed-singleCellErgodic
+
+1.388860 -     surveyed-ergodic
+
+1.388934 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+1.389296 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+1.389400 - ****** Starting Plan Phase ******
+
+1.397662 - Planning...
+
+1.559358 - Planning complete.
+
+1.559465 - Plan: 
+
+1.559532 -   singlecellergodicsearch(grace, fishtag, Tx3y1)
+
+1.559658 - ****** Starting Act Phase ******
+
+1.564552 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+1.564621 - Starting cycle 3
+
+1.564663 - ****** Starting Simulate Phase ******
+
+1.564780 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+1.564840 - ****** Starting Perceive Phase ******
+
+2.073586 - ---------------Tag Data------------
+
+2.073720 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+2.073774 - -----------------------------------
+
+2.073836 - ---------------Estimated Tag Data------------
+
+2.073918 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.073969 - -----------------------------------
+
+2.074097 -   States Added  
+
+2.074151 - agent-at(grace,Tx3y1)
+NUM(493.0)
+timeRemaining(493.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+2.075514 - World observed.
+
+2.080160 - ****** Starting Interpret Phase ******
+
+2.080522 - ****** Starting Eval Phase ******
+
+2.084850 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+2.084923 - ****** Starting Intend Phase ******
+
+2.085062 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.085317 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.085430 - --------- Class Hierarchy Predicate Tree ----------
+
+2.085477 -   root
+
+2.085518 -     surveyed
+
+2.085556 -         surveyed-structured
+
+2.085596 -         surveyed-singleCellErgodic
+
+2.085636 -     surveyed-ergodic
+
+2.085677 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+2.085849 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.085909 - ****** Starting Plan Phase ******
+
+2.090820 - Old plan retrieved. Checking validity... valid.
+
+2.091050 - checking to see if all goals are achieved... yes
+
+2.091134 - ****** Starting Act Phase ******
+
+2.095225 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+2.095301 - Starting cycle 4
+
+2.095362 - ****** Starting Simulate Phase ******
+
+2.095470 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.095541 - ****** Starting Perceive Phase ******
+
+2.363638 - ---------------Tag Data------------
+
+2.363795 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+2.363870 - -----------------------------------
+
+2.363939 - ---------------Estimated Tag Data------------
+
+2.364012 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.364063 - -----------------------------------
+
+2.364204 -   States Added  
+
+2.364268 - agent-at(grace,Tx3y1)
+NUM(491.5)
+timeRemaining(491.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+2.365809 - World observed.
+
+2.371327 - ****** Starting Interpret Phase ******
+
+2.371768 - ****** Starting Eval Phase ******
+
+2.377333 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+2.377453 - ****** Starting Intend Phase ******
+
+2.377644 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.377952 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.378113 - --------- Class Hierarchy Predicate Tree ----------
+
+2.378184 -   root
+
+2.378229 -     surveyed
+
+2.378292 -         surveyed-structured
+
+2.378343 -         surveyed-singleCellErgodic
+
+2.378425 -     surveyed-ergodic
+
+2.378477 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+2.378725 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.378817 - ****** Starting Plan Phase ******
+
+2.385658 - Old plan retrieved. Checking validity... valid.
+
+2.385974 - checking to see if all goals are achieved... yes
+
+2.386064 - ****** Starting Act Phase ******
+
+2.391955 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+2.392072 - Starting cycle 5
+
+2.392145 - ****** Starting Simulate Phase ******
+
+2.392279 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.392362 - ****** Starting Perceive Phase ******
+
+2.691895 - ---------------Tag Data------------
+
+2.692042 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+2.692096 - -----------------------------------
+
+2.692165 - ---------------Estimated Tag Data------------
+
+2.692231 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.692278 - -----------------------------------
+
+2.692410 -   States Added  
+
+2.692463 - agent-at(grace,Tx3y1)
+NUM(490.0)
+timeRemaining(490.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+2.693905 - World observed.
+
+2.699152 - ****** Starting Interpret Phase ******
+
+2.699546 - ****** Starting Eval Phase ******
+
+2.706062 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+2.706233 - ****** Starting Intend Phase ******
+
+2.706468 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.706903 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.707123 - --------- Class Hierarchy Predicate Tree ----------
+
+2.707212 -   root
+
+2.707297 -     surveyed
+
+2.707379 -         surveyed-structured
+
+2.707462 -         surveyed-singleCellErgodic
+
+2.707570 -     surveyed-ergodic
+
+2.707663 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+2.707999 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+2.708112 - ****** Starting Plan Phase ******
+
+2.716149 - Old plan retrieved. Checking validity... valid.
+
+2.716507 - checking to see if all goals are achieved... yes
+
+2.716618 - ****** Starting Act Phase ******
+
+2.721769 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+2.721965 - Starting cycle 6
+
+2.722060 - ****** Starting Simulate Phase ******
+
+2.722297 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+2.722395 - ****** Starting Perceive Phase ******
+
+2.996051 - ---------------Tag Data------------
+
+2.996422 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+2.996550 - -----------------------------------
+
+2.996699 - ---------------Estimated Tag Data------------
+
+2.996844 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+2.996955 - -----------------------------------
+
+2.997289 -   States Added  
+
+2.997427 - agent-at(grace,Tx3y1)
+NUM(488.5)
+timeRemaining(488.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+3.001886 - World observed.
+
+3.017591 - ****** Starting Interpret Phase ******
+
+3.018766 - ****** Starting Eval Phase ******
+
+3.034617 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+3.034953 - ****** Starting Intend Phase ******
+
+3.035335 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.036250 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.036677 - --------- Class Hierarchy Predicate Tree ----------
+
+3.036811 -   root
+
+3.036942 -     surveyed
+
+3.037076 -         surveyed-structured
+
+3.037220 -         surveyed-singleCellErgodic
+
+3.037364 -     surveyed-ergodic
+
+3.037493 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+3.038172 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.038364 - ****** Starting Plan Phase ******
+
+3.055981 - Old plan retrieved. Checking validity... valid.
+
+3.056707 - checking to see if all goals are achieved... yes
+
+3.056917 - ****** Starting Act Phase ******
+
+3.112818 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+3.113043 - Starting cycle 7
+
+3.113130 - ****** Starting Simulate Phase ******
+
+3.113447 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+3.113604 - ****** Starting Perceive Phase ******
+
+3.317764 - ---------------Tag Data------------
+
+3.318336 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+3.318513 - -----------------------------------
+
+3.318855 - ---------------Estimated Tag Data------------
+
+3.319139 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3.319325 - -----------------------------------
+
+3.319880 -   States Added  
+
+3.320133 - agent-at(grace,Tx3y1)
+NUM(487.0)
+timeRemaining(487.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+3.327436 - World observed.
+
+3.346912 - ****** Starting Interpret Phase ******
+
+3.348009 - ****** Starting Eval Phase ******
+
+3.369248 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+3.369744 - ****** Starting Intend Phase ******
+
+3.370408 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.371686 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.372341 - --------- Class Hierarchy Predicate Tree ----------
+
+3.372530 -   root
+
+3.372696 -     surveyed
+
+3.372914 -         surveyed-structured
+
+3.373110 -         surveyed-singleCellErgodic
+
+3.373260 -     surveyed-ergodic
+
+3.373492 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+3.374546 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.374815 - ****** Starting Plan Phase ******
+
+3.398410 - Old plan retrieved. Checking validity... valid.
+
+3.399939 - checking to see if all goals are achieved... yes
+
+3.400394 - ****** Starting Act Phase ******
+
+3.421033 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+3.421208 - Starting cycle 8
+
+3.421296 - ****** Starting Simulate Phase ******
+
+3.421529 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+3.421661 - ****** Starting Perceive Phase ******
+
+3.718022 - ---------------Tag Data------------
+
+3.718183 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+3.718247 - -----------------------------------
+
+3.718311 - ---------------Estimated Tag Data------------
+
+3.718395 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+3.718463 - -----------------------------------
+
+3.718605 -   States Added  
+
+3.718681 - agent-at(grace,Tx3y1)
+NUM(485.0)
+timeRemaining(485.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+3.720341 - World observed.
+
+3.726855 - ****** Starting Interpret Phase ******
+
+3.727330 - ****** Starting Eval Phase ******
+
+3.733446 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+3.733544 - ****** Starting Intend Phase ******
+
+3.733782 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.734200 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.734430 - --------- Class Hierarchy Predicate Tree ----------
+
+3.734539 -   root
+
+3.734608 -     surveyed
+
+3.734675 -         surveyed-structured
+
+3.734769 -         surveyed-singleCellErgodic
+
+3.734827 -     surveyed-ergodic
+
+3.734911 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+3.735178 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+3.735280 - ****** Starting Plan Phase ******
+
+3.741296 - Old plan retrieved. Checking validity... valid.
+
+3.741578 - checking to see if all goals are achieved... yes
+
+3.741671 - ****** Starting Act Phase ******
+
+3.793608 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+3.793722 - Starting cycle 9
+
+3.793766 - ****** Starting Simulate Phase ******
+
+3.793900 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+3.793960 - ****** Starting Perceive Phase ******
+
+4.046199 - ---------------Tag Data------------
+
+4.046358 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+4.046424 - -----------------------------------
+
+4.046501 - ---------------Estimated Tag Data------------
+
+4.046605 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+4.046663 - -----------------------------------
+
+4.046831 -   States Added  
+
+4.046878 - agent-at(grace,Tx3y1)
+NUM(483.0)
+timeRemaining(483.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+4.048584 - World observed.
+
+4.054598 - ****** Starting Interpret Phase ******
+
+4.054916 - ****** Starting Eval Phase ******
+
+4.059902 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+4.060028 - ****** Starting Intend Phase ******
+
+4.060194 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.060437 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.060561 - --------- Class Hierarchy Predicate Tree ----------
+
+4.060610 -   root
+
+4.060653 -     surveyed
+
+4.060694 -         surveyed-structured
+
+4.060737 -         surveyed-singleCellErgodic
+
+4.060780 -     surveyed-ergodic
+
+4.060825 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+4.061023 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.061089 - ****** Starting Plan Phase ******
+
+4.067703 - Old plan retrieved. Checking validity... valid.
+
+4.068173 - checking to see if all goals are achieved... yes
+
+4.068304 - ****** Starting Act Phase ******
+
+4.138920 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+4.139068 - Starting cycle 10
+
+4.139115 - ****** Starting Simulate Phase ******
+
+4.139292 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+4.139355 - ****** Starting Perceive Phase ******
+
+4.387967 - ---------------Tag Data------------
+
+4.388367 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+4.388534 - -----------------------------------
+
+4.388710 - ---------------Estimated Tag Data------------
+
+4.388881 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+4.388993 - -----------------------------------
+
+4.389344 -   States Added  
+
+4.389466 - agent-at(grace,Tx3y1)
+NUM(481.0)
+timeRemaining(481.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+4.394128 - World observed.
+
+4.411428 - ****** Starting Interpret Phase ******
+
+4.412624 - ****** Starting Eval Phase ******
+
+4.428385 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+4.428645 - ****** Starting Intend Phase ******
+
+4.429008 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.429778 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.430114 - --------- Class Hierarchy Predicate Tree ----------
+
+4.430239 -   root
+
+4.430352 -     surveyed
+
+4.430462 -         surveyed-structured
+
+4.430574 -         surveyed-singleCellErgodic
+
+4.430688 -     surveyed-ergodic
+
+4.430807 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+4.431376 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.431547 - ****** Starting Plan Phase ******
+
+4.448812 - Old plan retrieved. Checking validity... valid.
+
+4.449672 - checking to see if all goals are achieved... yes
+
+4.449906 - ****** Starting Act Phase ******
+
+4.497459 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+4.497735 - Starting cycle 11
+
+4.497853 - ****** Starting Simulate Phase ******
+
+4.498184 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+4.498332 - ****** Starting Perceive Phase ******
+
+4.765658 - ---------------Tag Data------------
+
+4.765881 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+4.765970 - -----------------------------------
+
+4.766068 - ---------------Estimated Tag Data------------
+
+4.766179 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+4.766284 - -----------------------------------
+
+4.766523 -   States Added  
+
+4.766613 - agent-at(grace,Tx3y1)
+NUM(479.0)
+timeRemaining(479.0)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+4.770622 - World observed.
+
+4.790668 - ****** Starting Interpret Phase ******
+
+4.791902 - ****** Starting Eval Phase ******
+
+4.807400 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+4.807779 - ****** Starting Intend Phase ******
+
+4.808196 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.809069 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.809449 - --------- Class Hierarchy Predicate Tree ----------
+
+4.809598 -   root
+
+4.809724 -     surveyed
+
+4.809841 -         surveyed-structured
+
+4.809965 -         surveyed-singleCellErgodic
+
+4.810187 -     surveyed-ergodic
+
+4.810320 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+4.810960 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+4.811199 - ****** Starting Plan Phase ******
+
+4.826026 - Old plan retrieved. Checking validity... valid.
+
+4.826633 - checking to see if all goals are achieved... yes
+
+4.826828 - ****** Starting Act Phase ******
+
+4.859560 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+4.859773 - Starting cycle 12
+
+4.859864 - ****** Starting Simulate Phase ******
+
+4.860158 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+4.860284 - ****** Starting Perceive Phase ******
+
+5.222618 - ---------------Tag Data------------
+
+5.222825 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+5.222912 - -----------------------------------
+
+5.222986 - ---------------Estimated Tag Data------------
+
+5.223067 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+5.223152 - -----------------------------------
+
+5.223372 -   States Added  
+
+5.223460 - agent-at(grace,Tx2y1)
+NUM(477.0)
+timeRemaining(477.0)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+5.225585 - World observed.
+
+5.231557 - ****** Starting Interpret Phase ******
+
+5.231993 - ****** Starting Eval Phase ******
+
+5.239174 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+5.239325 - ****** Starting Intend Phase ******
+
+5.239534 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.239899 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.240062 - --------- Class Hierarchy Predicate Tree ----------
+
+5.240152 -   root
+
+5.240199 -     surveyed
+
+5.240262 -         surveyed-structured
+
+5.240328 -         surveyed-singleCellErgodic
+
+5.240412 -     surveyed-ergodic
+
+5.240461 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+5.240726 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.240833 - ****** Starting Plan Phase ******
+
+5.247109 - Old plan retrieved. Checking validity... invalid.
+
+5.247207 - Planning...
+
+5.396331 - Planning complete.
+
+5.396566 - Plan: 
+
+5.396637 -   moveeast(grace, Tx2y1, Tx3y1)
+
+5.396675 -   singlecellergodicsearch(grace, fishtag, Tx3y1)
+
+5.396796 - ****** Starting Act Phase ******
+
+5.397146 - Retrieved plan does not achieve all goals. Trying to retrieve a different plan...
+
+5.476642 - Action moveeast(grace, Tx2y1, Tx3y1) not complete.
+
+5.477088 - Starting cycle 13
+
+5.477300 - ****** Starting Simulate Phase ******
+
+5.477965 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+5.478277 - ****** Starting Perceive Phase ******
+
+5.839312 - ---------------Tag Data------------
+
+5.840185 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+5.840415 - -----------------------------------
+
+5.840654 - ---------------Estimated Tag Data------------
+
+5.840963 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+5.841180 - -----------------------------------
+
+5.841607 -   States Added  
+
+5.841829 - agent-at(grace,Tx3y1)
+NUM(474.5)
+timeRemaining(474.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+5.847874 - World observed.
+
+5.870335 - ****** Starting Interpret Phase ******
+
+5.872109 - ****** Starting Eval Phase ******
+
+5.889941 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+5.890164 - ****** Starting Intend Phase ******
+
+5.890531 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.891191 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.891454 - --------- Class Hierarchy Predicate Tree ----------
+
+5.891568 -   root
+
+5.891656 -     surveyed
+
+5.891739 -         surveyed-structured
+
+5.891827 -         surveyed-singleCellErgodic
+
+5.891913 -     surveyed-ergodic
+
+5.892005 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+5.892467 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+5.892598 - ****** Starting Plan Phase ******
+
+5.906130 - Old plan retrieved. Checking validity... valid.
+
+5.906738 - checking to see if all goals are achieved... yes
+
+5.906920 - ****** Starting Act Phase ******
+
+5.914577 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) not complete.
+
+5.914696 - Starting cycle 14
+
+5.914744 - ****** Starting Simulate Phase ******
+
+5.914893 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+5.914965 - ****** Starting Perceive Phase ******
+
+6.130493 - ---------------Tag Data------------
+
+6.130614 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+6.130660 - -----------------------------------
+
+6.130712 - ---------------Estimated Tag Data------------
+
+6.130765 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+6.130811 - -----------------------------------
+
+6.130930 -   States Added  
+
+6.130974 - agent-at(grace,Tx3y1)
+NUM(472.5)
+timeRemaining(472.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+6.132207 - World observed.
+
+6.137829 - ****** Starting Interpret Phase ******
+
+6.138394 - ****** Starting Eval Phase ******
+
+6.144412 - Not all goals achieved; Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic) is not true.
+
+6.144504 - ****** Starting Intend Phase ******
+
+6.144698 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+6.145421 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+6.145607 - --------- Class Hierarchy Predicate Tree ----------
+
+6.145681 -   root
+
+6.145738 -     surveyed
+
+6.145804 -         surveyed-structured
+
+6.145845 -         surveyed-singleCellErgodic
+
+6.145904 -     surveyed-ergodic
+
+6.145963 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+6.146219 - Selecting goal(s): Goal(grace, Tx3y1, predicate: surveyed-singleCellErgodic)
+
+6.146319 - ****** Starting Plan Phase ******
+
+6.153626 - Old plan retrieved. Checking validity... valid.
+
+6.153949 - checking to see if all goals are achieved... yes
+
+6.154070 - ****** Starting Act Phase ******
+
+6.208626 - Action singlecellergodicsearch(grace, fishtag, Tx3y1) complete.
+
+6.208999 - Starting cycle 15
+
+6.209083 - ****** Starting Simulate Phase ******
+
+6.209359 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+6.209498 - ****** Starting Perceive Phase ******
+
+6.564021 - ---------------Tag Data------------
+
+6.564207 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+6.564295 - -----------------------------------
+
+6.780347 - ---------------Estimated Tag Data------------
+
+6.780472 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+6.780524 - -----------------------------------
+
+6.780573 - agent-at(grace,Tx3y1)
+NUM(470.5)
+timeRemaining(470.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+NUM(30)
+uniqueTagCount(grace, 30, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx4y1)
+
+6.780688 -   States Added  
+
+6.780735 - agent-at(grace,Tx3y1)
+NUM(470.5)
+timeRemaining(470.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+NUM(30)
+uniqueTagCount(grace, 30, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y0)
+NUM(2.0)
+estuniqueTagCount(grace, 2.0, Tx2y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx3y2)
+NUM(0.714285714286)
+estuniqueTagCount(grace, 0.714285714286, Tx4y1)
+
+6.782165 - World observed.
+
+6.789367 - ****** Starting Interpret Phase ******
+
+6.789918 - ****** Starting Eval Phase ******
+
+6.798033 - All current goals achieved. Removing them from goal graph
+
+6.798685 - removing 2 plans that no longer apply.
+
+6.798868 - ****** Starting Intend Phase ******
+
+6.813526 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.813906 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed)
+
+6.814081 - --------- Class Hierarchy Predicate Tree ----------
+
+6.814129 -   root
+
+6.814191 -     surveyed
+
+6.814246 -         surveyed-structured
+
+6.814328 -         surveyed-singleCellErgodic
+
+6.814371 -     surveyed-ergodic
+
+6.814431 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+6.814668 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+6.814777 - ****** Starting Plan Phase ******
+
+6.822158 - Planning...
+
+7.010375 - Planning complete.
+
+7.010516 - Plan: 
+
+7.010587 -   movewest(grace, Tx3y1, Tx2y1)
+
+7.010644 -   singlecellergodicsearch(grace, fishtag, Tx2y1)
+
+7.010812 - ****** Starting Act Phase ******
+
+7.101879 - Action movewest(grace, Tx3y1, Tx2y1) not complete.
+
+7.102011 - Starting cycle 16
+
+7.102067 - ****** Starting Simulate Phase ******
+
+7.102262 - . . . . . 
+. . . . . 
+. . . . . 
+. . . a . 
+. . . . .
+
+7.102338 - ****** Starting Perceive Phase ******
+
+7.331689 - ---------------Tag Data------------
+
+7.331933 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+7.332025 - -----------------------------------
+
+7.332128 - ---------------Estimated Tag Data------------
+
+7.332260 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.332374 - -----------------------------------
+
+7.332658 -   States Added  
+
+7.332749 - agent-at(grace,Tx3y1)
+NUM(465.5)
+timeRemaining(465.5)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+7.336472 - World observed.
+
+7.361767 - ****** Starting Interpret Phase ******
+
+7.362838 - ****** Starting Eval Phase ******
+
+7.376890 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+7.377068 - ****** Starting Intend Phase ******
+
+7.377344 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.377813 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.378048 - --------- Class Hierarchy Predicate Tree ----------
+
+7.378140 -   root
+
+7.378225 -     surveyed
+
+7.378495 -         surveyed-structured
+
+7.378577 -         surveyed-singleCellErgodic
+
+7.378689 -     surveyed-ergodic
+
+7.378760 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+7.379168 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.379313 - ****** Starting Plan Phase ******
+
+7.390242 - Old plan retrieved. Checking validity... valid.
+
+7.390999 - checking to see if all goals are achieved... yes
+
+7.391154 - ****** Starting Act Phase ******
+
+7.406066 - Action movewest(grace, Tx3y1, Tx2y1) complete.
+
+7.406493 - Starting cycle 17
+
+7.406604 - ****** Starting Simulate Phase ******
+
+7.406877 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+7.406985 - ****** Starting Perceive Phase ******
+
+7.636419 - ---------------Tag Data------------
+
+7.636605 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+7.636691 - -----------------------------------
+
+7.636784 - ---------------Estimated Tag Data------------
+
+7.636899 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.636981 - -----------------------------------
+
+7.637195 -   States Added  
+
+7.637282 - agent-at(grace,Tx2y1)
+NUM(463.5)
+timeRemaining(463.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+7.640191 - World observed.
+
+7.651342 - ****** Starting Interpret Phase ******
+
+7.652166 - ****** Starting Eval Phase ******
+
+7.663424 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+7.663607 - ****** Starting Intend Phase ******
+
+7.663903 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.664449 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.664742 - --------- Class Hierarchy Predicate Tree ----------
+
+7.664846 -   root
+
+7.664949 -     surveyed
+
+7.665044 -         surveyed-structured
+
+7.665135 -         surveyed-singleCellErgodic
+
+7.665228 -     surveyed-ergodic
+
+7.665329 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+7.665766 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.665904 - ****** Starting Plan Phase ******
+
+7.676760 - Old plan retrieved. Checking validity... valid.
+
+7.677223 - checking to see if all goals are achieved... yes
+
+7.677364 - ****** Starting Act Phase ******
+
+7.688546 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+7.688713 - Starting cycle 18
+
+7.688824 - ****** Starting Simulate Phase ******
+
+7.689115 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+7.689250 - ****** Starting Perceive Phase ******
+
+7.919085 - ---------------Tag Data------------
+
+7.919237 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+7.919292 - -----------------------------------
+
+7.919350 - ---------------Estimated Tag Data------------
+
+7.919416 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+7.919465 - -----------------------------------
+
+7.919619 -   States Added  
+
+7.919671 - agent-at(grace,Tx2y1)
+NUM(462.0)
+timeRemaining(462.0)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+7.921287 - World observed.
+
+7.927537 - ****** Starting Interpret Phase ******
+
+7.927978 - ****** Starting Eval Phase ******
+
+7.933525 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+7.933643 - ****** Starting Intend Phase ******
+
+7.933774 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.933995 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.934107 - --------- Class Hierarchy Predicate Tree ----------
+
+7.934151 -   root
+
+7.934190 -     surveyed
+
+7.934227 -         surveyed-structured
+
+7.934267 -         surveyed-singleCellErgodic
+
+7.934306 -     surveyed-ergodic
+
+7.934346 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+7.934639 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+7.934725 - ****** Starting Plan Phase ******
+
+8.017696 - Old plan retrieved. Checking validity... valid.
+
+8.018154 - checking to see if all goals are achieved... yes
+
+8.018278 - ****** Starting Act Phase ******
+
+8.026853 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+8.026987 - Starting cycle 19
+
+8.027060 - ****** Starting Simulate Phase ******
+
+8.027220 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.027310 - ****** Starting Perceive Phase ******
+
+8.337042 - ---------------Tag Data------------
+
+8.337312 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+8.337425 - -----------------------------------
+
+8.337551 - ---------------Estimated Tag Data------------
+
+8.337692 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+8.337795 - -----------------------------------
+
+8.338114 -   States Added  
+
+8.338229 - agent-at(grace,Tx2y1)
+NUM(460.5)
+timeRemaining(460.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+8.342931 - World observed.
+
+8.358070 - ****** Starting Interpret Phase ******
+
+8.359123 - ****** Starting Eval Phase ******
+
+8.373150 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+8.373403 - ****** Starting Intend Phase ******
+
+8.373733 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.374417 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.374686 - --------- Class Hierarchy Predicate Tree ----------
+
+8.374812 -   root
+
+8.374899 -     surveyed
+
+8.374982 -         surveyed-structured
+
+8.375069 -         surveyed-singleCellErgodic
+
+8.375157 -     surveyed-ergodic
+
+8.375248 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+8.375733 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.375865 - ****** Starting Plan Phase ******
+
+8.390635 - Old plan retrieved. Checking validity... valid.
+
+8.391212 - checking to see if all goals are achieved... yes
+
+8.391367 - ****** Starting Act Phase ******
+
+8.405476 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+8.405697 - Starting cycle 20
+
+8.405794 - ****** Starting Simulate Phase ******
+
+8.406107 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.406257 - ****** Starting Perceive Phase ******
+
+8.557132 - ---------------Tag Data------------
+
+8.557442 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+8.557568 - -----------------------------------
+
+8.557759 - ---------------Estimated Tag Data------------
+
+8.557904 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+8.558043 - -----------------------------------
+
+8.558445 -   States Added  
+
+8.558564 - agent-at(grace,Tx2y1)
+NUM(459.0)
+timeRemaining(459.0)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+8.563604 - World observed.
+
+8.581026 - ****** Starting Interpret Phase ******
+
+8.582326 - ****** Starting Eval Phase ******
+
+8.599652 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+8.599918 - ****** Starting Intend Phase ******
+
+8.600241 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.601162 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.601559 - --------- Class Hierarchy Predicate Tree ----------
+
+8.601685 -   root
+
+8.601796 -     surveyed
+
+8.601905 -         surveyed-structured
+
+8.602031 -         surveyed-singleCellErgodic
+
+8.602140 -     surveyed-ergodic
+
+8.602272 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+8.602974 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.603174 - ****** Starting Plan Phase ******
+
+8.623937 - Old plan retrieved. Checking validity... valid.
+
+8.624830 - checking to see if all goals are achieved... yes
+
+8.625065 - ****** Starting Act Phase ******
+
+8.643845 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+8.644179 - Starting cycle 21
+
+8.644305 - ****** Starting Simulate Phase ******
+
+8.644839 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.645052 - ****** Starting Perceive Phase ******
+
+8.938804 - ---------------Tag Data------------
+
+8.939002 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+8.939082 - -----------------------------------
+
+8.939152 - ---------------Estimated Tag Data------------
+
+8.939266 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+8.939342 - -----------------------------------
+
+8.939532 -   States Added  
+
+8.939629 - agent-at(grace,Tx2y1)
+NUM(457.5)
+timeRemaining(457.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+8.941778 - World observed.
+
+8.949845 - ****** Starting Interpret Phase ******
+
+8.950376 - ****** Starting Eval Phase ******
+
+8.958911 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+8.959066 - ****** Starting Intend Phase ******
+
+8.959326 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.959789 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.960017 - --------- Class Hierarchy Predicate Tree ----------
+
+8.960104 -   root
+
+8.960196 -     surveyed
+
+8.960269 -         surveyed-structured
+
+8.960347 -         surveyed-singleCellErgodic
+
+8.960447 -     surveyed-ergodic
+
+8.960508 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+8.961269 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+8.961414 - ****** Starting Plan Phase ******
+
+8.970461 - Old plan retrieved. Checking validity... valid.
+
+8.970767 - checking to see if all goals are achieved... yes
+
+8.970868 - ****** Starting Act Phase ******
+
+8.976742 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+8.976887 - Starting cycle 22
+
+8.976945 - ****** Starting Simulate Phase ******
+
+8.977101 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+8.977182 - ****** Starting Perceive Phase ******
+
+9.238564 - ---------------Tag Data------------
+
+9.238851 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+9.238975 - -----------------------------------
+
+9.239102 - ---------------Estimated Tag Data------------
+
+9.239275 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+9.239386 - -----------------------------------
+
+9.239742 -   States Added  
+
+9.239877 - agent-at(grace,Tx2y1)
+NUM(456.0)
+timeRemaining(456.0)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+9.244637 - World observed.
+
+9.261234 - ****** Starting Interpret Phase ******
+
+9.262538 - ****** Starting Eval Phase ******
+
+9.278706 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+9.279126 - ****** Starting Intend Phase ******
+
+9.279884 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.280625 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.280949 - --------- Class Hierarchy Predicate Tree ----------
+
+9.281067 -   root
+
+9.281165 -     surveyed
+
+9.281259 -         surveyed-structured
+
+9.281356 -         surveyed-singleCellErgodic
+
+9.281454 -     surveyed-ergodic
+
+9.281558 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+9.282113 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.282266 - ****** Starting Plan Phase ******
+
+9.300959 - Old plan retrieved. Checking validity... valid.
+
+9.301602 - checking to see if all goals are achieved... yes
+
+9.301781 - ****** Starting Act Phase ******
+
+9.341427 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+9.341761 - Starting cycle 23
+
+9.341893 - ****** Starting Simulate Phase ******
+
+9.342412 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+9.342610 - ****** Starting Perceive Phase ******
+
+9.702984 - ---------------Tag Data------------
+
+9.703129 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+9.703199 - -----------------------------------
+
+9.703243 - ---------------Estimated Tag Data------------
+
+9.703293 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+9.703341 - -----------------------------------
+
+9.703453 -   States Added  
+
+9.703540 - agent-at(grace,Tx1y1)
+NUM(454.0)
+timeRemaining(454.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+9.704854 - World observed.
+
+9.709262 - ****** Starting Interpret Phase ******
+
+9.709589 - ****** Starting Eval Phase ******
+
+9.714749 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+9.714857 - ****** Starting Intend Phase ******
+
+9.715011 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.715246 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.715439 - --------- Class Hierarchy Predicate Tree ----------
+
+9.715523 -   root
+
+9.715572 -     surveyed
+
+9.715616 -         surveyed-structured
+
+9.715662 -         surveyed-singleCellErgodic
+
+9.715713 -     surveyed-ergodic
+
+9.715762 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+9.715997 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+9.716071 - ****** Starting Plan Phase ******
+
+9.722799 - Old plan retrieved. Checking validity... invalid.
+
+9.722898 - Planning...
+
+9.885096 - Planning complete.
+
+9.885235 - Plan: 
+
+9.885297 -   moveeast(grace, Tx1y1, Tx2y1)
+
+9.885345 -   singlecellergodicsearch(grace, fishtag, Tx2y1)
+
+9.885494 - ****** Starting Act Phase ******
+
+9.885887 - Retrieved plan does not achieve all goals. Trying to retrieve a different plan...
+
+10.005598 - Action moveeast(grace, Tx1y1, Tx2y1) not complete.
+
+10.005781 - Starting cycle 24
+
+10.005885 - ****** Starting Simulate Phase ******
+
+10.006215 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+10.006376 - ****** Starting Perceive Phase ******
+
+10.318531 - ---------------Tag Data------------
+
+10.318693 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+10.318755 - -----------------------------------
+
+10.318802 - ---------------Estimated Tag Data------------
+
+10.318891 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+10.318946 - -----------------------------------
+
+10.319119 -   States Added  
+
+10.319174 - agent-at(grace,Tx2y1)
+NUM(451.5)
+timeRemaining(451.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+10.320961 - World observed.
+
+10.326886 - ****** Starting Interpret Phase ******
+
+10.327350 - ****** Starting Eval Phase ******
+
+10.332934 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+10.333064 - ****** Starting Intend Phase ******
+
+10.333257 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.333560 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.333709 - --------- Class Hierarchy Predicate Tree ----------
+
+10.333770 -   root
+
+10.333821 -     surveyed
+
+10.333869 -         surveyed-structured
+
+10.333919 -         surveyed-singleCellErgodic
+
+10.333969 -     surveyed-ergodic
+
+10.334023 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+10.334301 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.334432 - ****** Starting Plan Phase ******
+
+10.341982 - Old plan retrieved. Checking validity... valid.
+
+10.342338 - checking to see if all goals are achieved... yes
+
+10.342467 - ****** Starting Act Phase ******
+
+10.411640 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+10.411757 - Starting cycle 25
+
+10.411803 - ****** Starting Simulate Phase ******
+
+10.411990 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+10.412058 - ****** Starting Perceive Phase ******
+
+10.682199 - ---------------Tag Data------------
+
+10.682409 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+10.682476 - -----------------------------------
+
+10.682564 - ---------------Estimated Tag Data------------
+
+10.682682 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+10.682755 - -----------------------------------
+
+10.682964 -   States Added  
+
+10.683048 - agent-at(grace,Tx2y1)
+NUM(449.5)
+timeRemaining(449.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+10.685438 - World observed.
+
+10.691884 - ****** Starting Interpret Phase ******
+
+10.692289 - ****** Starting Eval Phase ******
+
+10.697531 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+10.697706 - ****** Starting Intend Phase ******
+
+10.697866 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.698207 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.698437 - --------- Class Hierarchy Predicate Tree ----------
+
+10.698553 -   root
+
+10.698647 -     surveyed
+
+10.698715 -         surveyed-structured
+
+10.698792 -         surveyed-singleCellErgodic
+
+10.698883 -     surveyed-ergodic
+
+10.698954 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+10.699327 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+10.699454 - ****** Starting Plan Phase ******
+
+10.706220 - Old plan retrieved. Checking validity... valid.
+
+10.706671 - checking to see if all goals are achieved... yes
+
+10.706769 - ****** Starting Act Phase ******
+
+10.776467 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+10.776652 - Starting cycle 26
+
+10.776730 - ****** Starting Simulate Phase ******
+
+10.776986 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+10.777101 - ****** Starting Perceive Phase ******
+
+11.092004 - ---------------Tag Data------------
+
+11.099554 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+11.099641 - -----------------------------------
+
+11.099708 - ---------------Estimated Tag Data------------
+
+11.099774 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+11.099823 - -----------------------------------
+
+11.099982 -   States Added  
+
+11.100038 - agent-at(grace,Tx2y1)
+NUM(447.5)
+timeRemaining(447.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+11.101746 - World observed.
+
+11.108287 - ****** Starting Interpret Phase ******
+
+11.108739 - ****** Starting Eval Phase ******
+
+11.115205 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+11.115354 - ****** Starting Intend Phase ******
+
+11.115537 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.115838 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.115984 - --------- Class Hierarchy Predicate Tree ----------
+
+11.116043 -   root
+
+11.116094 -     surveyed
+
+11.116143 -         surveyed-structured
+
+11.116194 -         surveyed-singleCellErgodic
+
+11.116245 -     surveyed-ergodic
+
+11.116298 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+11.116542 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.116620 - ****** Starting Plan Phase ******
+
+11.124334 - Old plan retrieved. Checking validity... valid.
+
+11.124733 - checking to see if all goals are achieved... yes
+
+11.124842 - ****** Starting Act Phase ******
+
+11.174885 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+11.175142 - Starting cycle 27
+
+11.175266 - ****** Starting Simulate Phase ******
+
+11.175650 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+11.175791 - ****** Starting Perceive Phase ******
+
+11.427648 - ---------------Tag Data------------
+
+11.428039 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+11.428228 - -----------------------------------
+
+11.428510 - ---------------Estimated Tag Data------------
+
+11.428754 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+11.428947 - -----------------------------------
+
+11.429539 -   States Added  
+
+11.429756 - agent-at(grace,Tx2y1)
+NUM(445.5)
+timeRemaining(445.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+11.437252 - World observed.
+
+11.456298 - ****** Starting Interpret Phase ******
+
+11.457948 - ****** Starting Eval Phase ******
+
+11.475944 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+11.476484 - ****** Starting Intend Phase ******
+
+11.477149 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.478327 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.478936 - --------- Class Hierarchy Predicate Tree ----------
+
+11.479118 -   root
+
+11.479299 -     surveyed
+
+11.479548 -         surveyed-structured
+
+11.479851 -         surveyed-singleCellErgodic
+
+11.480125 -     surveyed-ergodic
+
+11.480262 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+11.481010 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.481228 - ****** Starting Plan Phase ******
+
+11.503136 - Old plan retrieved. Checking validity... valid.
+
+11.503574 - checking to see if all goals are achieved... yes
+
+11.503703 - ****** Starting Act Phase ******
+
+11.549278 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+11.549394 - Starting cycle 28
+
+11.549440 - ****** Starting Simulate Phase ******
+
+11.549603 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+11.549664 - ****** Starting Perceive Phase ******
+
+11.797052 - ---------------Tag Data------------
+
+11.797196 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+11.797252 - -----------------------------------
+
+11.797310 - ---------------Estimated Tag Data------------
+
+11.797374 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+11.797437 - -----------------------------------
+
+11.797593 -   States Added  
+
+11.797649 - agent-at(grace,Tx2y1)
+NUM(443.5)
+timeRemaining(443.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+11.800086 - World observed.
+
+11.807067 - ****** Starting Interpret Phase ******
+
+11.807516 - ****** Starting Eval Phase ******
+
+11.813853 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+11.813981 - ****** Starting Intend Phase ******
+
+11.814174 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.814479 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.814631 - --------- Class Hierarchy Predicate Tree ----------
+
+11.814709 -   root
+
+11.814756 -     surveyed
+
+11.814800 -         surveyed-structured
+
+11.814864 -         surveyed-singleCellErgodic
+
+11.814921 -     surveyed-ergodic
+
+11.814992 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+11.815250 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+11.815319 - ****** Starting Plan Phase ******
+
+11.823189 - Old plan retrieved. Checking validity... valid.
+
+11.823530 - checking to see if all goals are achieved... yes
+
+11.823640 - ****** Starting Act Phase ******
+
+11.880257 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) not complete.
+
+11.880375 - Starting cycle 29
+
+11.880422 - ****** Starting Simulate Phase ******
+
+11.880591 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+11.880661 - ****** Starting Perceive Phase ******
+
+12.066171 - ---------------Tag Data------------
+
+12.066365 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+12.066458 - -----------------------------------
+
+12.066534 - ---------------Estimated Tag Data------------
+
+12.066648 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+12.066739 - -----------------------------------
+
+12.066947 -   States Added  
+
+12.067036 - agent-at(grace,Tx2y1)
+NUM(441.5)
+timeRemaining(441.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+
+12.069981 - World observed.
+
+12.080174 - ****** Starting Interpret Phase ******
+
+12.080954 - An anomaly is detected regarding the mode of operation : 
+
+12.081437 - Midca generated a goal : Goal(grace, predicate: free)
+
+12.081552 - ****** Starting Eval Phase ******
+
+12.095306 - Not all goals achieved; Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic) is not true.
+
+12.095621 - ****** Starting Intend Phase ******
+
+12.095931 - No Survey goals. Intend will not select goals via hillclimbing.
+
+12.096271 - Selecting goal(s): Goal(grace, predicate: free)
+
+12.096647 - --------- Class Hierarchy Predicate Tree ----------
+
+12.096774 -   root
+
+12.096904 -     surveyed
+
+12.097028 -         surveyed-structured
+
+12.097156 -         surveyed-singleCellErgodic
+
+12.097273 -     surveyed-ergodic
+
+12.097408 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+12.097999 - Selecting goal(s): Goal(grace, predicate: free)
+
+12.098189 - ****** Starting Plan Phase ******
+
+12.214028 - Planning...
+
+12.344038 - Planning complete.
+
+12.344175 - Plan: 
+
+12.344258 -   glideback(grace)
+
+12.344426 - ****** Starting Act Phase ******
+
+12.353426 - Action glideback(grace) not complete.
+
+12.353546 - Starting cycle 30
+
+12.353632 - ****** Starting Simulate Phase ******
+
+12.353867 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+12.353988 - ****** Starting Perceive Phase ******
+
+12.569584 - ---------------Tag Data------------
+
+12.569781 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+12.569874 - -----------------------------------
+
+12.569982 - ---------------Estimated Tag Data------------
+
+12.570114 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+12.570210 - -----------------------------------
+
+12.570433 -   States Added  
+
+12.570537 - agent-at(grace,Tx2y1)
+NUM(439.5)
+timeRemaining(439.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m4)
+agent-mode(grace,m4)
+
+12.573172 - World observed.
+
+12.582202 - ****** Starting Interpret Phase ******
+
+12.582959 - ****** Starting Eval Phase ******
+
+12.591621 - Not all goals achieved; Goal(grace, predicate: free) is not true.
+
+12.591796 - ****** Starting Intend Phase ******
+
+12.591978 - No Survey goals. Intend will not select goals via hillclimbing.
+
+12.592209 - Selecting goal(s): Goal(grace, predicate: free)
+
+12.592445 - --------- Class Hierarchy Predicate Tree ----------
+
+12.592532 -   root
+
+12.592649 -     surveyed
+
+12.592713 -         surveyed-structured
+
+12.592788 -         surveyed-singleCellErgodic
+
+12.592895 -     surveyed-ergodic
+
+12.592962 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+12.593312 - Selecting goal(s): Goal(grace, predicate: free)
+
+12.593432 - ****** Starting Plan Phase ******
+
+12.603870 - Old plan retrieved. Checking validity... valid.
+
+12.604268 - checking to see if all goals are achieved... yes
+
+12.604423 - ****** Starting Act Phase ******
+
+12.651560 - Action glideback(grace) not complete.
+
+12.651773 - Starting cycle 31
+
+12.651858 - ****** Starting Simulate Phase ******
+
+12.652153 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+12.652325 - ****** Starting Perceive Phase ******
+
+12.953744 - ---------------Tag Data------------
+
+12.953896 - . . . . . 
+. . . . . 
+. . . . . 
+. . . 30 . 
+. . . . .
+
+12.953987 - -----------------------------------
+
+12.954043 - ---------------Estimated Tag Data------------
+
+12.954124 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+12.954184 - -----------------------------------
+
+12.954356 -   States Added  
+
+12.954425 - agent-at(grace,Tx2y1)
+NUM(437.5)
+timeRemaining(437.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+12.956446 - World observed.
+
+12.962332 - ****** Starting Interpret Phase ******
+
+12.962752 - ****** Starting Eval Phase ******
+
+12.968234 - All current goals achieved. Removing them from goal graph
+
+12.968687 - removing 1 plans that no longer apply.
+
+12.968798 - ****** Starting Intend Phase ******
+
+12.968912 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+12.969192 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+12.969346 - --------- Class Hierarchy Predicate Tree ----------
+
+12.969410 -   root
+
+12.969449 -     surveyed
+
+12.969486 -         surveyed-structured
+
+12.969548 -         surveyed-singleCellErgodic
+
+12.969598 -     surveyed-ergodic
+
+12.969667 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+12.969882 - Selecting goal(s): Goal(grace, Tx2y1, predicate: surveyed-singleCellErgodic)
+
+12.969971 - ****** Starting Plan Phase ******
+
+12.976583 - Old plan retrieved. Checking validity... valid.
+
+12.976888 - checking to see if all goals are achieved... yes
+
+12.977008 - ****** Starting Act Phase ******
+
+13.021439 - Action singlecellergodicsearch(grace, fishtag, Tx2y1) complete.
+
+13.021656 - Starting cycle 32
+
+13.021709 - ****** Starting Simulate Phase ******
+
+13.021891 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+13.021961 - ****** Starting Perceive Phase ******
+
+13.278423 - ---------------Tag Data------------
+
+13.278583 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+13.278657 - -----------------------------------
+
+13.563663 - ---------------Estimated Tag Data------------
+
+13.563775 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+13.563821 - -----------------------------------
+
+13.563864 - agent-at(grace,Tx2y1)
+NUM(435.5)
+timeRemaining(435.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+NUM(47)
+uniqueTagCount(grace, 47, Tx2y1)
+NUM(0.571428571429)
+estuniqueTagCount(grace, 0.571428571429, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y0)
+
+13.563973 -   States Added  
+
+13.564014 - agent-at(grace,Tx2y1)
+NUM(435.5)
+timeRemaining(435.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+NUM(47)
+uniqueTagCount(grace, 47, Tx2y1)
+NUM(0.571428571429)
+estuniqueTagCount(grace, 0.571428571429, Tx3y1)
+NUM(0.0)
+estuniqueTagCount(grace, 0.0, Tx2y2)
+NUM(2.14285714286)
+estuniqueTagCount(grace, 2.14285714286, Tx1y1)
+NUM(1.0)
+estuniqueTagCount(grace, 1.0, Tx2y0)
+hotspot-detected(grace, Tx2y1)
+
+13.565471 - World observed.
+
+13.571918 - ****** Starting Interpret Phase ******
+
+13.572608 - ****** Starting Eval Phase ******
+
+13.579059 - All current goals achieved. Removing them from goal graph
+
+13.579501 - removing 2 plans that no longer apply.
+
+13.579627 - ****** Starting Intend Phase ******
+
+13.590261 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed)
+
+13.590648 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed)
+
+13.590826 - --------- Class Hierarchy Predicate Tree ----------
+
+13.590900 -   root
+
+13.590960 -     surveyed
+
+13.591026 -         surveyed-structured
+
+13.591070 -         surveyed-singleCellErgodic
+
+13.591115 -     surveyed-ergodic
+
+13.591185 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+13.591456 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+13.591587 - ****** Starting Plan Phase ******
+
+13.599045 - Planning...
+
+13.805746 - Planning complete.
+
+13.805899 - Plan: 
+
+13.805990 -   movewest(grace, Tx2y1, Tx1y1)
+
+13.806045 -   singlecellergodicsearch(grace, fishtag, Tx1y1)
+
+13.806270 - ****** Starting Act Phase ******
+
+13.892714 - Action movewest(grace, Tx2y1, Tx1y1) not complete.
+
+13.892917 - Starting cycle 33
+
+13.893005 - ****** Starting Simulate Phase ******
+
+13.893334 - . . . . . 
+. . . . . 
+. . . . . 
+. . a . . 
+. . . . .
+
+13.893460 - ****** Starting Perceive Phase ******
+
+14.109284 - ---------------Tag Data------------
+
+14.109618 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+14.109765 - -----------------------------------
+
+14.109899 - ---------------Estimated Tag Data------------
+
+14.110084 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+14.110245 - -----------------------------------
+
+14.110645 -   States Added  
+
+14.110772 - agent-at(grace,Tx2y1)
+NUM(430.5)
+timeRemaining(430.5)
+QblocRadius(grace,Tx2y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+14.116164 - World observed.
+
+14.134098 - ****** Starting Interpret Phase ******
+
+14.135428 - ****** Starting Eval Phase ******
+
+14.154941 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+14.155196 - ****** Starting Intend Phase ******
+
+14.155560 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.156232 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.156703 - --------- Class Hierarchy Predicate Tree ----------
+
+14.156871 -   root
+
+14.157012 -     surveyed
+
+14.157134 -         surveyed-structured
+
+14.157262 -         surveyed-singleCellErgodic
+
+14.157416 -     surveyed-ergodic
+
+14.157548 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+14.158414 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.158646 - ****** Starting Plan Phase ******
+
+14.177509 - Old plan retrieved. Checking validity... valid.
+
+14.179448 - checking to see if all goals are achieved... yes
+
+14.179713 - ****** Starting Act Phase ******
+
+14.186863 - Action movewest(grace, Tx2y1, Tx1y1) complete.
+
+14.187224 - Starting cycle 34
+
+14.187302 - ****** Starting Simulate Phase ******
+
+14.187527 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+14.187644 - ****** Starting Perceive Phase ******
+
+14.422777 - ---------------Tag Data------------
+
+14.422976 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+14.423051 - -----------------------------------
+
+14.423118 - ---------------Estimated Tag Data------------
+
+14.423208 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+14.423298 - -----------------------------------
+
+14.423500 -   States Added  
+
+14.423604 - agent-at(grace,Tx1y1)
+NUM(428.5)
+timeRemaining(428.5)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+14.425991 - World observed.
+
+14.434297 - ****** Starting Interpret Phase ******
+
+14.434891 - ****** Starting Eval Phase ******
+
+14.446319 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+14.446558 - ****** Starting Intend Phase ******
+
+14.446870 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.447442 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.447735 - --------- Class Hierarchy Predicate Tree ----------
+
+14.447866 -   root
+
+14.447963 -     surveyed
+
+14.448073 -         surveyed-structured
+
+14.448171 -         surveyed-singleCellErgodic
+
+14.448264 -     surveyed-ergodic
+
+14.448384 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+14.448860 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.448998 - ****** Starting Plan Phase ******
+
+14.456642 - Old plan retrieved. Checking validity... valid.
+
+14.457226 - checking to see if all goals are achieved... yes
+
+14.457403 - ****** Starting Act Phase ******
+
+14.466540 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+14.466674 - Starting cycle 35
+
+14.466742 - ****** Starting Simulate Phase ******
+
+14.466952 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+14.467047 - ****** Starting Perceive Phase ******
+
+14.816577 - ---------------Tag Data------------
+
+14.816771 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+14.816868 - -----------------------------------
+
+14.816945 - ---------------Estimated Tag Data------------
+
+14.817031 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+14.817095 - -----------------------------------
+
+14.817326 -   States Added  
+
+14.817406 - agent-at(grace,Tx1y1)
+NUM(427.0)
+timeRemaining(427.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+14.821082 - World observed.
+
+14.834623 - ****** Starting Interpret Phase ******
+
+14.835503 - ****** Starting Eval Phase ******
+
+14.850075 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+14.850318 - ****** Starting Intend Phase ******
+
+14.850614 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.851047 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.851292 - --------- Class Hierarchy Predicate Tree ----------
+
+14.851372 -   root
+
+14.851442 -     surveyed
+
+14.851543 -         surveyed-structured
+
+14.851631 -         surveyed-singleCellErgodic
+
+14.851714 -     surveyed-ergodic
+
+14.851786 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+14.852155 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+14.852279 - ****** Starting Plan Phase ******
+
+14.861974 - Old plan retrieved. Checking validity... valid.
+
+14.862417 - checking to see if all goals are achieved... yes
+
+14.862559 - ****** Starting Act Phase ******
+
+14.872387 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+14.872561 - Starting cycle 36
+
+14.872641 - ****** Starting Simulate Phase ******
+
+14.872880 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+14.872991 - ****** Starting Perceive Phase ******
+
+15.280578 - ---------------Tag Data------------
+
+15.280840 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+15.280978 - -----------------------------------
+
+15.281109 - ---------------Estimated Tag Data------------
+
+15.281289 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+15.281405 - -----------------------------------
+
+15.281765 -   States Added  
+
+15.281925 - agent-at(grace,Tx1y1)
+NUM(425.5)
+timeRemaining(425.5)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+15.286842 - World observed.
+
+15.305658 - ****** Starting Interpret Phase ******
+
+15.306744 - ****** Starting Eval Phase ******
+
+15.319916 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+15.320123 - ****** Starting Intend Phase ******
+
+15.320357 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.320747 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.320950 - --------- Class Hierarchy Predicate Tree ----------
+
+15.321035 -   root
+
+15.321107 -     surveyed
+
+15.321208 -         surveyed-structured
+
+15.321289 -         surveyed-singleCellErgodic
+
+15.321363 -     surveyed-ergodic
+
+15.321461 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+15.321822 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.321935 - ****** Starting Plan Phase ******
+
+15.331503 - Old plan retrieved. Checking validity... valid.
+
+15.331989 - checking to see if all goals are achieved... yes
+
+15.332136 - ****** Starting Act Phase ******
+
+15.341559 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+15.341726 - Starting cycle 37
+
+15.341807 - ****** Starting Simulate Phase ******
+
+15.342045 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+15.342182 - ****** Starting Perceive Phase ******
+
+15.668899 - ---------------Tag Data------------
+
+15.669148 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+15.669274 - -----------------------------------
+
+15.669407 - ---------------Estimated Tag Data------------
+
+15.669553 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+15.669673 - -----------------------------------
+
+15.670000 -   States Added  
+
+15.670125 - agent-at(grace,Tx1y1)
+NUM(424.0)
+timeRemaining(424.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+15.674462 - World observed.
+
+15.691746 - ****** Starting Interpret Phase ******
+
+15.692768 - ****** Starting Eval Phase ******
+
+15.708270 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+15.708524 - ****** Starting Intend Phase ******
+
+15.708880 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.709553 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.709910 - --------- Class Hierarchy Predicate Tree ----------
+
+15.710057 -   root
+
+15.710186 -     surveyed
+
+15.710322 -         surveyed-structured
+
+15.710459 -         surveyed-singleCellErgodic
+
+15.710586 -     surveyed-ergodic
+
+15.710740 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+15.711390 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+15.711630 - ****** Starting Plan Phase ******
+
+15.727357 - Old plan retrieved. Checking validity... valid.
+
+15.728104 - checking to see if all goals are achieved... yes
+
+15.728320 - ****** Starting Act Phase ******
+
+15.745809 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+15.746090 - Starting cycle 38
+
+15.746265 - ****** Starting Simulate Phase ******
+
+15.746731 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+15.746942 - ****** Starting Perceive Phase ******
+
+16.101172 - ---------------Tag Data------------
+
+16.108886 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+16.109057 - -----------------------------------
+
+16.109218 - ---------------Estimated Tag Data------------
+
+16.109386 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+16.109516 - -----------------------------------
+
+16.109894 -   States Added  
+
+16.110034 - agent-at(grace,Tx1y1)
+NUM(422.5)
+timeRemaining(422.5)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+16.113531 - World observed.
+
+16.123712 - ****** Starting Interpret Phase ******
+
+16.124338 - ****** Starting Eval Phase ******
+
+16.132619 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+16.132786 - ****** Starting Intend Phase ******
+
+16.133006 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.133390 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.133591 - --------- Class Hierarchy Predicate Tree ----------
+
+16.133674 -   root
+
+16.133746 -     surveyed
+
+16.133816 -         surveyed-structured
+
+16.133888 -         surveyed-singleCellErgodic
+
+16.133961 -     surveyed-ergodic
+
+16.134039 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+16.134412 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.134525 - ****** Starting Plan Phase ******
+
+16.142857 - Old plan retrieved. Checking validity... valid.
+
+16.143267 - checking to see if all goals are achieved... yes
+
+16.143403 - ****** Starting Act Phase ******
+
+16.151761 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+16.151901 - Starting cycle 39
+
+16.151978 - ****** Starting Simulate Phase ******
+
+16.152215 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+16.152327 - ****** Starting Perceive Phase ******
+
+16.521072 - ---------------Tag Data------------
+
+16.521446 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+16.521617 - -----------------------------------
+
+16.521804 - ---------------Estimated Tag Data------------
+
+16.522024 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+16.522197 - -----------------------------------
+
+16.522697 -   States Added  
+
+16.522871 - agent-at(grace,Tx1y1)
+NUM(421.0)
+timeRemaining(421.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+16.529828 - World observed.
+
+16.556004 - ****** Starting Interpret Phase ******
+
+16.557586 - ****** Starting Eval Phase ******
+
+16.573769 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+16.573951 - ****** Starting Intend Phase ******
+
+16.574185 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.574598 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.574812 - --------- Class Hierarchy Predicate Tree ----------
+
+16.574899 -   root
+
+16.574976 -     surveyed
+
+16.575055 -         surveyed-structured
+
+16.575132 -         surveyed-singleCellErgodic
+
+16.575212 -     surveyed-ergodic
+
+16.575292 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+16.575688 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+16.575829 - ****** Starting Plan Phase ******
+
+16.594078 - Old plan retrieved. Checking validity... valid.
+
+16.595180 - checking to see if all goals are achieved... yes
+
+16.595490 - ****** Starting Act Phase ******
+
+16.640193 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+16.640390 - Starting cycle 40
+
+16.640474 - ****** Starting Simulate Phase ******
+
+16.640792 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+16.640912 - ****** Starting Perceive Phase ******
+
+17.059025 - ---------------Tag Data------------
+
+17.059209 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+17.059284 - -----------------------------------
+
+17.059363 - ---------------Estimated Tag Data------------
+
+17.059452 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+17.059567 - -----------------------------------
+
+17.059776 -   States Added  
+
+17.059852 - agent-at(grace,Tx1y1)
+NUM(419.0)
+timeRemaining(419.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+17.062371 - World observed.
+
+17.183246 - ****** Starting Interpret Phase ******
+
+17.183888 - ****** Starting Eval Phase ******
+
+17.191778 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+17.191955 - ****** Starting Intend Phase ******
+
+17.192170 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.192641 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.192850 - --------- Class Hierarchy Predicate Tree ----------
+
+17.192930 -   root
+
+17.193000 -     surveyed
+
+17.193067 -         surveyed-structured
+
+17.193136 -         surveyed-singleCellErgodic
+
+17.193206 -     surveyed-ergodic
+
+17.193278 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+17.193625 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.193738 - ****** Starting Plan Phase ******
+
+17.201513 - Old plan retrieved. Checking validity... valid.
+
+17.201892 - checking to see if all goals are achieved... yes
+
+17.202017 - ****** Starting Act Phase ******
+
+17.222927 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+17.223074 - Starting cycle 41
+
+17.223149 - ****** Starting Simulate Phase ******
+
+17.223384 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+17.223502 - ****** Starting Perceive Phase ******
+
+17.627828 - ---------------Tag Data------------
+
+17.628190 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+17.628356 - -----------------------------------
+
+17.628534 - ---------------Estimated Tag Data------------
+
+17.628732 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+17.628879 - -----------------------------------
+
+17.629349 -   States Added  
+
+17.629509 - agent-at(grace,Tx1y1)
+NUM(417.0)
+timeRemaining(417.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+17.636140 - World observed.
+
+17.660058 - ****** Starting Interpret Phase ******
+
+17.661615 - ****** Starting Eval Phase ******
+
+17.684874 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+17.685264 - ****** Starting Intend Phase ******
+
+17.685758 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.686809 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.687298 - --------- Class Hierarchy Predicate Tree ----------
+
+17.687481 -   root
+
+17.687664 -     surveyed
+
+17.687822 -         surveyed-structured
+
+17.687982 -         surveyed-singleCellErgodic
+
+17.688144 -     surveyed-ergodic
+
+17.688313 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+17.689223 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+17.689464 - ****** Starting Plan Phase ******
+
+17.713029 - Old plan retrieved. Checking validity... valid.
+
+17.714525 - checking to see if all goals are achieved... yes
+
+17.714911 - ****** Starting Act Phase ******
+
+17.748400 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+17.748780 - Starting cycle 42
+
+17.748948 - ****** Starting Simulate Phase ******
+
+17.749556 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+17.749802 - ****** Starting Perceive Phase ******
+
+18.138401 - ---------------Tag Data------------
+
+18.138658 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+18.138792 - -----------------------------------
+
+18.138935 - ---------------Estimated Tag Data------------
+
+18.139108 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+18.139238 - -----------------------------------
+
+18.139588 -   States Added  
+
+18.139727 - agent-at(grace,Tx1y1)
+NUM(415.0)
+timeRemaining(415.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+18.144049 - World observed.
+
+18.152780 - ****** Starting Interpret Phase ******
+
+18.154623 - ****** Starting Eval Phase ******
+
+18.165485 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+18.165684 - ****** Starting Intend Phase ******
+
+18.165917 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+18.166329 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+18.166552 - --------- Class Hierarchy Predicate Tree ----------
+
+18.166642 -   root
+
+18.166720 -     surveyed
+
+18.166795 -         surveyed-structured
+
+18.166871 -         surveyed-singleCellErgodic
+
+18.166947 -     surveyed-ergodic
+
+18.167027 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+18.167399 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+18.167533 - ****** Starting Plan Phase ******
+
+18.177463 - Old plan retrieved. Checking validity... valid.
+
+18.178115 - checking to see if all goals are achieved... yes
+
+18.178336 - ****** Starting Act Phase ******
+
+18.270863 - Action singlecellergodicsearch(grace, fishtag, Tx1y1) not complete.
+
+18.271095 - Starting cycle 43
+
+18.271185 - ****** Starting Simulate Phase ******
+
+18.271512 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+18.271638 - ****** Starting Perceive Phase ******
+
+18.656906 - ---------------Tag Data------------
+
+18.657083 - . . . . . 
+. . . . . 
+. . . . . 
+. . 47 30 . 
+. . . . .
+
+18.657157 - -----------------------------------
+
+18.657237 - ---------------Estimated Tag Data------------
+
+18.657327 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 1.0, 0.571428571429, 2.14285714286] [0.0, 0.0, 0.714285714286, 2.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+18.657396 - -----------------------------------
+
+18.657600 -   States Added  
+
+18.657674 - agent-at(grace,Tx1y1)
+NUM(413.0)
+timeRemaining(413.0)
+QblocRadius(grace,Tx1y1, HIGH)
+MODE(m1)
+agent-mode(grace,m1)
+free(grace)
+
+18.660167 - World observed.
+
+18.668839 - ****** Starting Interpret Phase ******
+
+18.669408 - ****** Starting Eval Phase ******
+
+18.679031 - Not all goals achieved; Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic) is not true.
+
+18.679236 - ****** Starting Intend Phase ******
+
+18.679460 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+18.679898 - Selecting goal(s): Goal(grace, Tx1y1, predicate: surveyed-singleCellErgodic)
+
+18.680205 - --------- Class Hierarchy Predicate Tree ----------
+
+18.680316 -   root
+
+18.680398 -     surveyed
+
+18.680471 -         surveyed-structured
+
+18.680549 -         surveyed-singleCellErgodic
+
+18.680656 -     surveyed-ergodic
+
+18.680736 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+18.681144 - Selecting goal(s): Goal(grace, predicate: surveyed-ergodic)
+
+18.681268 - ****** Starting Plan Phase ******
+
+18.693278 - Old plan retrieved. Checking validity... valid.
+
+18.693947 - checking to see if all goals are achieved... no. Goals achieved: set([])
+
+18.694095 - Planning...
+
+18.913875 - Planning complete.
+
+18.914102 - Plan: 
+
+18.914214 -   ergodicsearch(grace, fishtag)
+
+18.914477 - ****** Starting Act Phase ******
+
+18.927704 - Action ergodicsearch(grace, fishtag) not complete.
+
+18.927847 - Starting cycle 44
+
+18.927940 - ****** Starting Simulate Phase ******
+
+18.928243 - . . . . . 
+. . . . . 
+. . . . . 
+. a . . . 
+. . . . .
+
+18.928362 - ****** Starting Perceive Phase ******
+
+18.990054 - [Errno 104] Connection reset by peer
+
+18.990321 - [Errno 111] Connection refused
+

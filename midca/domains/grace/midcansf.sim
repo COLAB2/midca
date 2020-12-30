@@ -1,5 +1,4 @@
 # GraysReef domain (adapted from nbeacons domain)
-
 type(DEPTH)
 type(TILE)
 type(AGENT)
@@ -19,6 +18,14 @@ type(MODE)
 type(GOAL)
 type(STATUS)
 
+# predicate heirarchy tree
+ptype(root)
+ptype(surveyed,root)
+ptype(surveyed-ergodic, root)
+ptype(surveyed-structured,surveyed)
+ptype(surveyed-singleCellErgodic, surveyed)
+
+
 # for communication
 predicate(exists, [agent], [AGENT])
 predicate(requested, [agent, agent1, goal], [AGENT, AGENT, GOAL])
@@ -29,12 +36,19 @@ predicate(achieved, [agent, agent1, goal], [AGENT, AGENT, GOAL])
 
 #location of the agent
 predicate(surveyed,[agnt, loc], [AGENT, TILE])
+predicate(surveyed-ergodic,[agnt], [AGENT])
+predicate(surveyed-structured,[agnt, loc], [AGENT, TILE])
+predicate(surveyed-singleCellErgodic,[agnt, loc], [AGENT, TILE])
 predicate(Deepsurveyed,[agnt, loc], [AGENT, TILE])
 predicate(atSurface,[agnt], [AGENT])
 predicate(atBottom,[agnt], [AGENT])
 
 #agent mode
 predicate(agent-mode,[agnt, mode], [AGENT, MODE])
+
+#simtime
+predicate(timeRemaining,[number], [NUM])
+
 
 # uncertainity
 predicate(QblocRadius, [agnt, loc, rad], [AGENT, TILE, RADIUS])
@@ -150,6 +164,31 @@ results = [
 	condition(surveyed, [agnt, loc]),
 	condition(Deepsurveyed, [agnt, loc])])
 
+operator(structuresearch,
+args = [(agnt, AGENT), (info, SENSOR), (loc, TILE)],
+preconditions = [
+	condition(atBottom, [agnt]),
+	#condition(certainblocRadius, [agnt, loc]),
+	condition(agent-at, [agnt, loc])],
+results = [
+	condition(collecteddata, [agnt, info, loc]),
+	condition(surveyed-structured, [agnt, loc])])
+
+operator(ergodicsearch,
+args = [(agnt, AGENT), (info, SENSOR)],
+preconditions = [condition(atBottom, [agnt])],
+results = [condition(surveyed-ergodic, [agnt])])
+
+operator(singlecellergodicsearch,
+args = [(agnt, AGENT), (info, SENSOR), (loc, TILE)],
+preconditions = [
+	condition(atBottom, [agnt]),
+	#condition(certainblocRadius, [agnt, loc]),
+	condition(agent-at, [agnt, loc])],
+results = [
+	condition(collecteddata, [agnt, info, loc]),
+	condition(surveyed-singleCellErgodic, [agnt, loc])])
+
 operator(ascend,
 args = [(agnt, AGENT), (loc, TILE)],
 preconditions = [condition(atSurface, [agnt], negate = True)],
@@ -171,51 +210,51 @@ preconditions = [
 results = [condition(free, [agnt])])
 
 operator(inform,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-	condition(exists, [other_agent])],
+	condition(exists, [other-agent])],
 results = [
-	condition(informed, [agent, other_agent, goal, status])])
+	condition(informed, [agent, other-agent, goal, status])])
 
 operator(ask,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-	condition(exists, [other_agent])],
+	condition(exists, [other-agent])],
 results = [
-	condition(informed, [agent, other_agent, goal, status])])
+	condition(informed, [agent, other-agent, goal, status])])
 
 operator(commit,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-    condition(informed, [agent, other_agent, goal, status]),
-	condition(requested, [other_agent, agent, goal])],
+    condition(informed, [agent, other-agent, goal, status]),
+	condition(requested, [other-agent, agent, goal])],
 results = [
-	condition(requested, [other_agent, agent, goal], negate = True),
-	condition(committed, [agent, other_agent,  goal])])
+	condition(requested, [other-agent, agent, goal], negate = True),
+	condition(committed, [agent, other-agent,  goal])])
 
 operator(reject,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-    condition(informed, [agent, other_agent, goal, status]),
-	condition(requested, [other_agent, agent, goal])],
+    condition(informed, [agent, other-agent, goal, status]),
+	condition(requested, [other-agent, agent, goal])],
 results = [
-	condition(requested, [other_agent, agent, goal], negate = True),
-	condition(rejected, [agent, other_agent, goal])])
+	condition(requested, [other-agent, agent, goal], negate = True),
+	condition(rejected, [agent, other-agent, goal])])
 
 operator(wait,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-    condition(informed, [agent, other_agent, goal, status])],
+    condition(informed, [agent, other-agent, goal, status])],
 results = [
-	condition(requested, [agent, other_agent, goal])])
+	condition(requested, [agent, other-agent, goal])])
 
 operator(uncommit,
-args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],
 preconditions = [
-    condition(informed, [agent, other_agent, goal, status]),
-	condition(committed, [agent, other_agent, goal])],
+    condition(informed, [agent, other-agent, goal, status]),
+	condition(committed, [agent, other-agent, goal])],
 results = [
-	condition(committed, [agent, other_agent,  goal], negate = True)])
+	condition(committed, [agent, other-agent,  goal], negate = True)])
 
 
 

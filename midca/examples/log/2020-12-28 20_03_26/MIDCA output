@@ -1,0 +1,116 @@
+.000916 - [cognitive] Initializing Simulate module 1 ASCIIWorldViewer...done.
+
+.001154 - [cognitive] Initializing Perceive module 1 AsyncGraceObserver...done.
+
+.001281 - [cognitive] Initializing Interpret module 1 GraceGoalInputNSF...done.
+
+.001395 - [cognitive] Initializing Interpret module 2 GraceAnomalyDetection...done.
+
+.001511 - [cognitive] Initializing Eval module 1 SimpleEvalAsync...done.
+
+.001714 - [cognitive] Initializing Intend module 1 BestHillClimbingIntendGraceNSF...done.
+
+.001843 - [cognitive] Initializing Intend module 2 PriorityIntend...done.
+
+.001954 - [cognitive] Initializing Intend module 3 HGNSelection...done.
+
+.002090 - [cognitive] Initializing Plan module 1 JSHOPPlanner...done.
+
+.002223 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.002360 - Goal Graph initialized.
+
+.002455 - To use goal ordering, call initGoalGraph manually with a custom goal comparator
+
+.002582 - Goal Graph initialized.
+
+.002698 - 
+MIDCA is starting. Please enter commands, or '?' + enter for help. Pressing enter with no input will advance the simulation by one phase.
+
+.002804 - Starting cycle 0
+
+.002899 - ****** Starting Simulate Phase ******
+
+.003266 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+a . . . .
+
+.003435 - ****** Starting Perceive Phase ******
+
+.660997 - ---------------Tag Data------------
+
+.661181 - . . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . .
+
+.661269 - -----------------------------------
+
+.661470 - ---------------Estimated Tag Data------------
+
+.661594 - [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] 
+[0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0] [0.0, 0.0, 0.0, 0.0]
+
+.661702 - -----------------------------------
+
+.662155 -   States Added  
+
+.662298 - agent-at(grace,Tx3y1)
+QblocRadius(grace,Tx3y1, HIGH)
+MODE(None)
+agent-mode(grace,None)
+
+.671076 - World observed.
+
+.724281 - ****** Starting Interpret Phase ******
+
+.724776 - Midca generated a goal : Goal(grace, predicate: surveyed-ergodic)
+
+.725824 - An anomaly is detected regarding the mode of operation : 
+
+.726173 - Midca generated a goal : Goal(grace, predicate: free)
+
+.726410 - ****** Starting Eval Phase ******
+
+.756660 - No current goals. Skipping eval
+
+.756863 - ****** Starting Intend Phase ******
+
+.757151 - No Survey goals. Intend will not select goals via hillclimbing.
+
+.757465 - Selecting goal(s): Goal(grace, predicate: free)
+
+.757836 - --------- Class Hierarchy Predicate Tree ----------
+
+.757927 -   root
+
+.758001 -     surveyed
+
+.758070 -         surveyed-structured
+
+.758179 -         surveyed-singleCellErgodic
+
+.758328 -     surveyed-ergodic
+
+.758481 - --------- Class Hierarchy Predicate Tree Ends ----------
+
+5.131237 - --------- Class Hierarchy Predicate Tree ----------
+
+5.131678 -   root
+
+5.131927 -     surveyed
+
+5.132119 -         surveyed-structured
+
+5.132314 -         surveyed-singleCellErgodic
+
+5.132510 -     surveyed-ergodic
+
+5.132713 - --------- Class Hierarchy Predicate Tree Ends ----------
+

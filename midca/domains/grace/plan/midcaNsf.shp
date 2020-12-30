@@ -47,7 +47,38 @@
      ((agent-at ?agent ?destX ?destY)
      (certainblocRadius ?agent ?destX ?destY))
      ((!collectdata ?agent fishtag ?destX ?destY))
+    )
 
+  (:method (control-collect-structured ?agent fishtag ?destX ?destY)
+     ((agent-at ?agent ?destX ?destY)
+     (not(certainblocRadius ?agent ?destX ?destY)))
+
+     (;(!ascend ?agent ?destX ?destY)
+     ;(!descend ?agent ?destX ?destY)
+     (!structuresearch ?agent fishtag ?destX ?destY))
+
+     ((agent-at ?agent ?destX ?destY)
+     (certainblocRadius ?agent ?destX ?destY))
+     ((!structuresearch ?agent fishtag ?destX ?destY))
+    )
+
+  (:method (control-collect-ergodic ?agent fishtag)
+     ()
+     ((!ergodicsearch ?agent fishtag))
+    )
+
+
+  (:method (control-collect-singleCellErgodic ?agent fishtag ?destX ?destY)
+     ((agent-at ?agent ?destX ?destY)
+     (not(certainblocRadius ?agent ?destX ?destY)))
+
+     (;(!ascend ?agent ?destX ?destY)
+     ;(!descend ?agent ?destX ?destY)
+     (!singlecellergodicsearch ?agent fishtag ?destX ?destY))
+
+     ((agent-at ?agent ?destX ?destY)
+     (certainblocRadius ?agent ?destX ?destY))
+     ((!singlecellergodicsearch ?agent fishtag ?destX ?destY))
     )
 
    (:method (deep-control-collect ?agent fishtag ?destX ?destY)
@@ -61,7 +92,6 @@
      ((agent-at ?agent ?destX ?destY)
      (certainblocRadius ?agent ?destX ?destY))
      ((!deepcollectdata ?agent fishtag ?destX ?destY))
-
     )
 
 
@@ -84,6 +114,36 @@
       (
       (achieve-goal (agent-at ?agent ?destX ?destY))
       (control-collect ?agent fishtag ?destX ?destY)
+      ))
+
+
+  (:method (achieve-goal (surveyed-structured ?agent ?destX ?destY))
+      ((surveyed-structured ?agent ?destX ?destY))
+      ()
+
+      ((not(surveyed-structured ?agent ?destX ?destY)))
+      (
+      (achieve-goal (agent-at ?agent ?destX ?destY))
+      (control-collect-structured ?agent fishtag ?destX ?destY)
+      ))
+
+  (:method (achieve-goal (surveyed-singleCellErgodic ?agent ?destX ?destY))
+      ((surveyed-singleCellErgodic ?agent ?destX ?destY))
+      ()
+
+      ((not(surveyed-singleCellErgodic ?agent ?destX ?destY)))
+      (
+      (achieve-goal (agent-at ?agent ?destX ?destY))
+      (control-collect-singleCellErgodic ?agent fishtag ?destX ?destY)
+      ))
+
+  (:method (achieve-goal (surveyed-ergodic ?agent))
+      ((surveyed-ergodic ?agent))
+      ()
+
+      ((not(surveyed-ergodic ?agent)))
+      (
+      (control-collect-ergodic ?agent fishtag)
       ))
 
 
@@ -183,6 +243,28 @@
  ()
  ((collecteddata ?agent ?sensordata ?destX ?destY)
   (surveyed ?agent ?destX ?destY)))
+
+ (:operator (!structuresearch ?agent ?sensordata ?destX ?destY)
+ ((agent-at ?agent ?destX ?destY)
+  (atBottom ?agent))
+ ()
+ ((collecteddata ?agent ?sensordata ?destX ?destY)
+  (surveyed-structured ?agent ?destX ?destY)))
+
+ (:operator (!ergodicsearch ?agent ?sensordata)
+ ((agent-at ?agent ?destX ?destY)
+  (atBottom ?agent))
+ ()
+ ((collecteddata ?agent ?sensordata ?destX ?destY)
+  (surveyed-ergodic ?agent)))
+
+ (:operator (!singlecellergodicsearch ?agent ?sensordata ?destX ?destY)
+ ((agent-at ?agent ?destX ?destY)
+  (atBottom ?agent))
+ ()
+ ((collecteddata ?agent ?sensordata ?destX ?destY)
+  (surveyed-singleCellErgodic ?agent ?destX ?destY)))
+
 
  (:operator (!deepcollectdata ?agent ?sensordata ?destX ?destY)
  ((agent-at ?agent ?destX ?destY)

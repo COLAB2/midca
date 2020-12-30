@@ -8,6 +8,7 @@ import copy,csv
 import random
 from midca.modules.monitors import Monitor
 from threading import Thread
+import sys
 
 class UserGoalInput(base.BaseModule):
 
@@ -978,16 +979,12 @@ class GraceGoalInputNSF(UserGoalInput):
             g = goals.Goal(*["grace", "Tx0y0"], predicate='surveyed')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
-
-
             g = goals.Goal(*["grace", "Tx0y1"], predicate='surveyed')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
-
             g = goals.Goal(*["grace", "Tx0y2"], predicate='surveyed')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
-
             g = goals.Goal(*["grace", "Tx0y3"], predicate='surveyed')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
@@ -1063,7 +1060,7 @@ class GraceGoalInputNSF(UserGoalInput):
                 print ("Experiment Completed")
                 tagworld = self.interface.TagWorld()
                 tagworld.endSim()
-                sys.exit()
+                #sys.exit()
 
 class GraceAnomalyDetection(UserGoalInput):
     '''
