@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from datetime import datetime
 import os, sys, copy
 import platform, string
@@ -80,7 +80,7 @@ class Logger:
             else:
                 if self.verbose > 0: print("Logger: logging this run in " + self.thisRunDir, file = sys.stderr)
             if not self.filesStayOpen:
-                for file in self.files.values():
+                for file in list(self.files.values()):
                     file.close()
 
     def openFile(self, key):
@@ -101,7 +101,7 @@ class Logger:
                 keys = [self.defaultKey]
             elif event.keys == 'all':
                 if self.files:
-                    keys = self.files.keys()
+                    keys = list(self.files.keys())
                 else:
                     keys = [self.defaultKey]
             else:
@@ -113,7 +113,7 @@ class Logger:
         self.events.append(event)
 
     def log(self, val, keys = []):
-        if isinstance(val, basestring):
+        if isinstance(val, str):
             self._user_log(val, keys)
         elif isinstance(val, Event):
             self.logEvent(val)
@@ -139,7 +139,7 @@ class Logger:
         if self.verbose > 0: print("Logger: trying to write " + txt + " to file " + filename + "; got error " + str(e), file = sys.stderr)
 
     def close(self):
-        for f in self.files.values():
+        for f in list(self.files.values()):
             f.close()
 
     def logOutput(self):

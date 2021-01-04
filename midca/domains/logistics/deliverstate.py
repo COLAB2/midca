@@ -14,7 +14,7 @@ def get_order_list(world):
 			package1 = atom.args[0].name
 			order = Order(package1)
 			order.destination = atom.args[1].name
-			if package1 in  packages.keys():
+			if package1 in  list(packages.keys()):
 				order.location = packages[package1]
 				orders.append(order)
 				
@@ -26,7 +26,7 @@ def get_warehouse_list(orders):
 	w = {}
 	
 	for order in orders:
-		if order.location in w.keys():
+		if order.location in list(w.keys()):
 			w[order.location].add(order)
 			
 		else:

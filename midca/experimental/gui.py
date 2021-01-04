@@ -1,5 +1,5 @@
-import Tkinter as tk
-import tkFont
+import tkinter as tk
+import tkinter.font
 import sys
 
 class StdoutDirector:
@@ -37,7 +37,7 @@ class MidcaDisplay(tk.Frame):
 		self.skipButton = tk.Button(self, text = "Skip Cycles", command = self.skipCycles)
 		self.skipButton.grid(row = 0, column = 1)
 		self.numSkipEntry.grid(row = 1, column = 1)
-		self.errorLabel = tk.Label(self, font = tkFont.Font(family = "helvetica", size = 9), width = 30)
+		self.errorLabel = tk.Label(self, font = tkinter.font.Font(family = "helvetica", size = 9), width = 30)
 		self.errorLabel.grid(row = 1, column = 2)
 		
 		sys.stdout = StdoutDirector(self.textArea)

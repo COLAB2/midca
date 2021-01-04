@@ -10,7 +10,7 @@ def asqiiDisplay(world):
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
-    print(str(scene.Scene(blocks)))
+    print((str(scene.Scene(blocks))))
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -56,7 +56,7 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
         f.close()
         
     except Exception:
-        print "could not read the state file. Check the path..."
+        print("could not read the state file. Check the path...")
         
         
 def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
@@ -66,7 +66,7 @@ def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
     try:
         f = open(STATE_FILE, 'a')
     except Exception:
-        print "could not read the state file. Check the path..."
+        print("could not read the state file. Check the path...")
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
@@ -144,11 +144,11 @@ def pyhop_state_from_world(world, name = "state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
-        if block not in s.hasmortar.keys():
+        if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
     
     for mblock in mortarblocks:
-        if mblock not in s.mortaravailable.keys():
+        if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
 
     return s
@@ -244,11 +244,11 @@ def mortar_pyhop_state_from_world(world, name = "state"):
             s.fire[block] = False
         if block not in s.pos:
             s.pos[block] = "in-arm"
-        if block not in s.hasmortar.keys():
+        if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
     
     for mblock in mortarblocks:
-        if mblock not in s.mortaravailable.keys():
+        if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
 
     return s

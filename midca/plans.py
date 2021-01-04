@@ -38,12 +38,12 @@ class Operator:
 	'''
 	
 	def __init__(self, name, args):
-		if not isinstance(name, basestring):
+		if not isinstance(name, str):
 			raise ValueError("Operator name must be a string, got " + str(type(name)))
 		self.name = name
 		self.args = []
 		for arg in args:
-			if isinstance(arg, basestring):
+			if isinstance(arg, str):
 				self.args.append(Argument(arg))
 			elif isinstance(arg, Argument):
 				self.args.append(arg)
@@ -156,7 +156,10 @@ class Plan:
 				if os.name == 'nt': # we're on windows, don't use color codes
 					s += '[' + str(self.actions[i]) + ']'
 				else:
-					s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+					# text with change in color
+					#s += '\033[94m' + str(self.actions[i]) + '\033]0m'
+				    # color not needed
+				    s += str(self.actions[i])
 			else:
 				s += str(self.actions[i])
 			s += " "

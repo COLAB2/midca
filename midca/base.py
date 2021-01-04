@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import copy, datetime, sys
 import time
 from midca.mem import Memory
@@ -490,8 +490,8 @@ class PhaseManager:
         while 1:
             if usingInterface:
                 print("Next MIDCA command:  ", file = sys.stderr, end = "")
-                val = raw_input()
-                print
+                val = input()
+                print()
                 if val == "q":
                     break
                 elif val == "skip":
@@ -527,7 +527,7 @@ class PhaseManager:
                         print("No display function set. See PhaseManager.set_display_function()"    )
                 elif val == "log":
                     print("Input the text to add to MIDCA's log file. Leave empty and press enter to cancel\n", file = sys.stderr)
-                    txt = raw_input()
+                    txt = input()
                     if txt:
                         self.logger.log(txt)
                 elif val == "toggle meta verbose":
@@ -539,7 +539,7 @@ class PhaseManager:
                         print("Turning ON metacognitive phase outputs")
                 elif val == "drawgoalgraph":
                     print("Input file name ending in .pdf or press enter to use default filename: goalgraph.pdf")
-                    txt = raw_input()
+                    txt = input()
                     if txt:
                         self.mem.get(self.mem.GOAL_GRAPH).writeToPDF(txt)
                     else:
@@ -548,26 +548,26 @@ class PhaseManager:
                     self.mem.trace.printtrace()
                 elif val == "drawtrace":
                     print("Input file name ending in .pdf or press enter to use default filename: trace.pdf")
-                    txt = raw_input()
+                    txt = input()
                     if txt:
                         self.mem.trace.writeToPDF(txt)
                     else:
                         self.mem.trace.writeToPDF()
                 elif val == "memorydump":
                     print("Please enter the variable you wish to see the values of, or hit enter to see all of them ")
-                    txt = raw_input()
+                    txt = input()
                     if txt:
                         keyfound = False
-                        for key in self.mem.knowledge.keys():
+                        for key in list(self.mem.knowledge.keys()):
                             if str(key) == txt:
                                 keyfound = True
                                 print("    ["+str(key)+"] = "+str(self.mem.get(key))+"\n")
                         if not keyfound:
                             print("  Error: Key "+txt+" not found in MIDCA's memory")
-                            print("  [Available Keys] "+str(self.mem.knowledge.keys()))
+                            print("  [Available Keys] "+str(list(self.mem.knowledge.keys())))
                     else:
                         print("  Current memory is: \n")
-                        for key in self.mem.knowledge.keys():
+                        for key in list(self.mem.knowledge.keys()):
                             print("    ["+key+"] = "+str(self.mem.get(key)))
                         print("")
                 elif val == "worldstate":
@@ -584,15 +584,15 @@ class PhaseManager:
                 elif val == "change":
                     print("Enter 'clear' to clear the world state, 'file' to input a state file name, or nothing to finish. Otherwise, enter changes to the world state. Use ! to negate atoms or remove objects, e.g. !on(A,B). Note that syntax is shared with state files in midca/worldsim/states, and each command must be on it's own line.")
                     while True:
-                        input = raw_input("Next change:  ")
-                        if not input:
+                        input_str = input("Next change:  ")
+                        if not input_str:
                             break
-                        elif input == "clear":
+                        elif input_str == "clear":
                             self.clearWorldState()
                             print("World state cleared")
-                        elif input == "file":
+                        elif input_str == "file":
                             print("Enter the name of a valid state file, or leave blank to cancel.")
-                            filename = raw_input()
+                            filename = input()
                             if filename == "":
                                 print("File load cancelled")
                                 continue
@@ -608,7 +608,7 @@ class PhaseManager:
                                 print("Error loading state. State may be partially loaded: ", str(e))
                         else:
                             try:
-                                self.applyStateChange(input)
+                                self.applyStateChange(input_str)
                                 print("Change applied")
                             except Exception as e:
                                 print(e)
@@ -628,7 +628,7 @@ class PhaseManager:
                         if metaval == "continue":
                             self.next_meta_phase() # TODO - not sure when this gets called
             else: # not using interface - TODO # duplicate code, clean this code up
-		time.sleep(phaseDelay)
+                time.sleep(phaseDelay)
                 val = self.next_phase()
                 if self.mem.metaEnabled:
                     metaval = self.one_cycle(verbose = 2, pause=0.01, meta=True)

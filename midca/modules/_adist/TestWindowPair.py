@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-from WindowPair import WindowPair
+from .WindowPair import WindowPair
 
 
 #

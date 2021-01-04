@@ -1,4 +1,4 @@
-import worldsim as plan, domainread as domain_read
+from . import worldsim as plan, domainread as domain_read
 
 #Note: this algorithm does not handle many potential user errors.
 def _apply_state(world, lines):

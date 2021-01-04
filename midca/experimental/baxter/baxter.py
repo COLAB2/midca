@@ -9,7 +9,7 @@ def enable_robot(nodeEnabled = False):
 	rs = baxter_interface.RobotEnable(CHECK_VERSION)
 	try:
 		rs.enable()
-	except Exception, e:
+	except Exception as e:
 		rospy.logerr(e.strerror)
 
 def disable_robot(nodeEnabled = False):
@@ -18,7 +18,7 @@ def disable_robot(nodeEnabled = False):
 	rs = baxter_interface.RobotEnable(CHECK_VERSION)
 	try:
 		rs.disable()
-	except Exception, e:
+	except Exception as e:
 		rospy.logerr(e.strerror)
 
 def stop_robot(nodeEnabled = False):
@@ -27,5 +27,5 @@ def stop_robot(nodeEnabled = False):
 	rs = baxter_interface.RobotEnable(CHECK_VERSION)
 	try:
 		rs.stop()
-	except Exception, e:
+	except Exception as e:
 		rospy.logerr(e.strerror)
