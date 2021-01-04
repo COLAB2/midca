@@ -1,6 +1,6 @@
-from frame import Frame
-from parser import Parser
-from settings import *
+from .frame import Frame
+from .parser import Parser
+from .settings import *
 
 
 class Traverser:
@@ -17,7 +17,7 @@ class Traverser:
 
         # Find anomaly center
         center = None
-        for f in self.frames.values():
+        for f in list(self.frames.values()):
             if f.iscenter:
                 center = f
 
@@ -26,7 +26,7 @@ class Traverser:
         while len(queue) > 0:
             node = queue.pop(0)
             covered.append(node)
-            for role in node.roles.values():
+            for role in list(node.roles.values()):
                 for rn in set(role.facetvalue + role.facetrelation):
                     if self.frames[rn] not in covered and self.frames[rn] not in queue:
                         queue.append(self.frames[rn])
@@ -39,7 +39,7 @@ class Traverser:
             else:
                 check_name = node.name
 
-            if check_name in self.mapping.keys():
+            if check_name in list(self.mapping.keys()):
                 for [operator, effect] in self.mapping[check_name]:
                     if self.evaluate(node, effect):
                         return (node, operator, effect)
@@ -58,9 +58,9 @@ class Traverser:
             expanded = True
             while expanded:
                 expanded = False
-                for frame in self.frames.values():
+                for frame in list(self.frames.values()):
                     if not frame in negated:
-                        for role in frame.roles.values():
+                        for role in list(frame.roles.values()):
                             for rn in set(role.facetvalue + role.facetrelation):
                                 if self.frames[rn] in negated and not frame in negated:
                                     if frame.iscenter:  
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     t = Traverser(frames, noem)
     (frame, operator, effect) = t.traverse()
 
-    print "Frame: " + frame.name
-    print "Operator: " + operator
-    print "Effect: " + str(effect)
+    print("Frame: " + frame.name)
+    print("Operator: " + operator)
+    print("Effect: " + str(effect))
 

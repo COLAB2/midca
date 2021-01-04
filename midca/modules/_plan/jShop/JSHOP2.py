@@ -23,7 +23,7 @@ def execute_java(java_file, stdin):
     cmd = ['java', java_class]
     proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
     stdout,stderr = proc.communicate(stdin)
-    print ('This was "' + stdout + '"')
+    print(('This was "' + stdout + '"'))
 
 
 def jshop(tasks, DOMAIN_FIILE,STATE_FILE):

@@ -23,7 +23,7 @@ wind_schedule = [[10,1],[50,2],[120,3],[200,4]]
 num_goals = 100
 goal_list = []
 i = 0
-possible_goals = range(10)
+possible_goals = list(range(10))
 last_chosen_goal = -1
 while i < num_goals:
     if last_chosen_goal == -1:
@@ -37,7 +37,7 @@ while i < num_goals:
         last_chosen_goal = curr_goal
     i+=1
         
-goal_list = map(lambda x: goals.Goal('B'+str(x), predicate = "activated"), goal_list)
+goal_list = [goals.Goal('B'+str(x), predicate = "activated") for x in goal_list]
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

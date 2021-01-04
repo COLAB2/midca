@@ -56,7 +56,7 @@ class Goal:
         return self.kwargs['predicate']
 
     def __str__(self):
-        s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in self.kwargs.items()])
+        s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in list(self.kwargs.items())])
         if self.args or self.kwargs:
             return s[:-2] + ")"
         else:
@@ -105,7 +105,7 @@ class GoalGraph:
         for i in range(len(first.args)):
             if first.args[i] != "?" and (len(second.args) <= i or first.args[i] != second.args[i]):
                 return False
-        for key, val in first.kwargs.items():
+        for key, val in list(first.kwargs.items()):
             if key not in second.kwargs or second.kwargs[key] != val:
                 return False
         return True
@@ -320,16 +320,16 @@ class GoalGraph:
         return "Goals: " + str([str(goal) + " " for goal in self.getAllGoals()])
 
     def getUnrestrictedGoals(self):
-	'''
-	sort the nodes according to the node.id and return node.goal accordingly
-	'''
-	nodes_list = []
-	# get all the nodes of root into a list for sorting
+        '''
+        sort the nodes according to the node.id and return node.goal accordingly
+        '''
+        nodes_list = []
+        # get all the nodes of root into a list for sorting
         for node in self.roots:
-	     nodes_list.append(node)
-	# sort according to the node id
-	nodes_list.sort(key = lambda x: x.id)
-	return [node.goal for node in nodes_list]
+            nodes_list.append(node)
+        # sort according to the node id
+        nodes_list.sort(key = lambda x: x.id)
+        return [node.goal for node in nodes_list]
 
     def writeToPDF(self, pdf_filename="goalgraph.pdf"):
         """ Requires the 'dot' command be installed on the current system. To
@@ -362,7 +362,7 @@ class GoalGraph:
         dotfilestr = "digraph\n{\n"
 
         for node in self._getAllNodes():
-            print("  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]")
+            print(("  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]"))
             dotfilestr += "  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]\n"
 
         dotfilestr += "\n"
@@ -380,5 +380,5 @@ class GoalGraph:
         #dot_output = subprocess.check_output(shlex.split(genPDFCommand))
         #print "dot_output = " + str(dot_output)
         #subprocess.call(shlex.split("del "+dotfilename))
-        print "Drawing of current goal graph written to " + pdf_filename
+        print("Drawing of current goal graph written to " + pdf_filename)
 

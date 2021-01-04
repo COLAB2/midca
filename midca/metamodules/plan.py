@@ -19,11 +19,11 @@ class MRSimplePlanner(base.BaseModule):
             if plan:
                 self.mem.set(self.mem.META_PLAN, plan)
 
-                if self.verbose >= 1: print("    Selected plan: "+str(plan))
+                if self.verbose >= 1: print(("    Selected plan: "+str(plan)))
 
 
     def plan_for_goal(self, goal):
-        print("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans))
+        print(("-*-*- plan_for_goal(): goal = "+str(goal)+", self.goals_to_plans = "+str(self.goals_to_plans)))
         plan = self.goals_to_plans[goal[0]]
         if goal[0] == "SWAP-MODULE":
             if self.mem.trace.module == "PyHopPlannerBroken":
@@ -33,7 +33,7 @@ class MRSimplePlanner(base.BaseModule):
                 old_component = self.mem.trace.module
                 new_component = self.mem.trace.module
                 for operator in plan:
-                    print("operator is "+str(operator))
+                    print(("operator is "+str(operator)))
                     for item in operator:
                         item.replace("?x", self.mem.trace.module)
         elif goal[0] == "ACHIEVEABLE-GOAL":

@@ -3,7 +3,7 @@ import numpy as np
 from _dbus_bindings import String
 
 cap = cv2.VideoCapture(0)
-from baxter import *
+from .baxter import *
 import time
 baxter = Baxter()
 
@@ -140,7 +140,7 @@ def publish(color_location):
         
     if not rospy.is_shutdown():
        
-        print("Sending point command:", msg[1:])
+        print(("Sending point command:", msg[1:]))
         pub.publish(msg[1:])
         time.sleep(2)
     
@@ -155,7 +155,7 @@ def main():
     #dark red:
     #RGB: 87 0 0
     #[  0 255  87]
-    print 'Initializing node...'
+    print('Initializing node...')
     
     rospy.init_node('rsdk_xdisplay_image', anonymous=True)
     baxter.enable()

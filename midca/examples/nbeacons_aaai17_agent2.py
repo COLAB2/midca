@@ -17,12 +17,12 @@ THIS IS THE START SCRIPT FOR THE GDA AGENT (no meta)
 '''
 wind_schedule = [[20,1],[40,2]]
 
-goal_list = range(10)*10 # give 100 goals 
+goal_list = list(range(10))*10 # give 100 goals 
 random.shuffle(goal_list)
-goal_list = map(lambda x: goals.Goal('B'+str(x), predicate = "activated"), goal_list)
-print "goal list is "
+goal_list = [goals.Goal('B'+str(x), predicate = "activated") for x in goal_list]
+print("goal list is ")
 for g in goal_list:
-    print "  "+str(g)
+    print("  "+str(g))
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

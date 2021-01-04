@@ -63,7 +63,7 @@ def reach_to_unstack(state,b,c):
 
 def stack(state,b,c):
     #if get_last_position(state, b) == 'in-arm' and get_last_clear_status(state, b) == 'clear':
-    raw_input('Enter ...')
+    input('Enter ...')
     if get_last_clear_status(state, c) == 'clear':
     	print("yes it is clear")
         set_position(state, b, c)

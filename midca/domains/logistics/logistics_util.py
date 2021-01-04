@@ -16,7 +16,7 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
     f.write('(defproblem log-ran-10-1 logistics')
     f.write(' (')
     
-    for obj in world.objects.keys():
+    for obj in list(world.objects.keys()):
         if  world.objects[obj].type.name == "SAIRPLANE":
             f.write("(SAIRPLANE " + obj + ")\n")
         elif world.objects[obj].type.name == "AIRPLANE":
@@ -110,7 +110,7 @@ def jshop2_state_from_world(world, STATE_FILE, name = "state"):
     f.write("(defproblem problem logistics\n")
     f.write("(\n")
     
-    for obj in world.objects.keys():
+    for obj in list(world.objects.keys()):
 
         
         if world.objects[obj].type.name == "AIRPORT":

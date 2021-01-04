@@ -90,7 +90,7 @@ class NBeaconGrid():
             #print "inner grid has "+str(total_tile_count) +" tiles"
             return inner_tiles
         else:
-            print "please call generate_tiles() first"
+            print("please call generate_tiles() first")
             return False
     
     
@@ -159,7 +159,7 @@ class NBeaconGrid():
                 
                 ran_tile = random.choice(self.get_inner_tile_grid())
                  
-                if ran_tile not in map(lambda b: b.tile, self.BEACONS) and ran_tile not in QUICKSAND_TILES:
+                if ran_tile not in [b.tile for b in self.BEACONS] and ran_tile not in QUICKSAND_TILES:
                     QUICKSAND_TILES.append(ran_tile)
                     
         return QUICKSAND_TILES
@@ -412,7 +412,7 @@ def pyhop_state_from_world(world, name = "state"):
         
             
     # convert tile names to pyhop operators
-    for (k,v) in s.beaconlocs.items():
+    for (k,v) in list(s.beaconlocs.items()):
         s.beaconlocs[k] = convert(v)
             
     #print("at the end of nbeacons_pyhop_state_from_world:")
@@ -449,10 +449,10 @@ def pyhop_tasks_from_goals(goals,pyhopState):
 
     # important, only one goal for all activated beacons
     if perimeter_goal_locs:
-        alltasks.append(("make_perimeter",pyhopState.agents.keys()[0],perimeter_goal_locs))
+        alltasks.append(("make_perimeter",list(pyhopState.agents.keys())[0],perimeter_goal_locs))
         
     if agent_at_goal_locs:
-        alltasks.append(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs))
+        alltasks.append(("navigate",list(pyhopState.agents.keys())[0],agent_at_goal_locs))
     
     return alltasks
 
@@ -524,7 +524,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
      
     # now go through each attribute of the state, changing the grid
     # ADD ALL BEACONS
-    for beaconkey in pyhopState.activated.keys():
+    for beaconkey in list(pyhopState.activated.keys()):
         beaconstr = pyhopState.beaconlocs[beaconkey]
         x = int(beaconstr.split(",")[0]) 
         y = int(beaconstr.split(",")[1]) 
@@ -544,7 +544,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
                 # Beacon is unactivated, no agent
                 beacon_id = ""
                 #pyhop.print_state(pyhopState)
-                for (k,v) in pyhopState.beaconlocs.items():
+                for (k,v) in list(pyhopState.beaconlocs.items()):
                     if v == str(x)+","+str(y):
                         beacon_id = k[1:] # remove the 'B'
                 
@@ -565,7 +565,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
     if rtn_str:
         return asciiframestr(grid) 
     else:
-        print(asciiframestr(grid))
+        print((asciiframestr(grid)))
 
 
 def preferFree(goal1, goal2):
@@ -601,4 +601,4 @@ if __name__ == "__main__":
     
     drawNBeaconsScene(world)
     
-    print(env1.get_STRIPS_str())
+    print((env1.get_STRIPS_str()))

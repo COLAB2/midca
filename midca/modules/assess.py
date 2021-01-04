@@ -38,26 +38,26 @@ class MAQuery(base.BaseModule):
                                               negate = True)
                    inserted = self.mem.get(self.mem.GOAL_GRAPH).insert(apprehendGoal)
                    if verbose >= 2:
-                       print "Meta-AQUA goal generated:", apprehendGoal,
+                       print("Meta-AQUA goal generated:", apprehendGoal, end=' ')
                        if inserted:
-                           print
+                           print()
                        else:
-                           print ". This goal was already in the graph."
+                           print(". This goal was already in the graph.")
                else:
                    if verbose >= 2:
-                       print "Meta-AQUA output unrecognized. No goal generated. Output:\n",
+                       print("Meta-AQUA output unrecognized. No goal generated. Output:\n", end=' ')
                        text
         except socket.timeout:
             if verbose >= 1:
-                print "Error: no data received from Meta-AQUA before timeout."
+                print("Error: no data received from Meta-AQUA before timeout.")
         except:
             if verbose >= 1:
-                print "Error reading from Meta-AQUA.", + str(text)
+                print("Error reading from Meta-AQUA.", + str(text))
                 try:
                     #print " Got:\n" + text
                     pass
                 except NameError:
-                    print " Unable to read from socket."
+                    print(" Unable to read from socket.")
                
 
     def __del__(self):
@@ -99,12 +99,12 @@ class SimpleNBeaconsExplain(base.BaseModule):
             actual = discrepancy[1]
             
             if len(expected) > 0 or len(actual) > 0:
-                if self.verbose >= 1: print "Explaining discrepancy of expected "+str(map(str,expected))+" vs. actual "+str(map(str,actual))+"..."
+                if self.verbose >= 1: print("Explaining discrepancy of expected "+str(list(map(str,expected)))+" vs. actual "+str(list(map(str,actual)))+"...")
                 
                 # first check to see if the agent got stuck
                 for actual_atom in actual:
                     if 'stuck' in str(actual_atom):
-                        if self.verbose >= 1: print "Explanation is that the agent is stuck"
+                        if self.verbose >= 1: print("Explanation is that the agent is stuck")
                         explanation = True
                         self.mem.set(self.mem.EXPLANATION, explanation)
                         self.mem.set(self.mem.EXPLANATION_VAL, 'stuck')
@@ -126,7 +126,7 @@ class SimpleNBeaconsExplain(base.BaseModule):
                 
                 explanation = False
                 #print "Explanation is that the agent was blown "+str(exp_x-act_x)+" tile(s) to the west"
-                if self.verbose >= 1: print "Could not generate an explanation"
+                if self.verbose >= 1: print("Could not generate an explanation")
                 self.mem.set(self.mem.EXPLANATION, explanation)
                 self.mem.set(self.mem.EXPLANATION_VAL, None)
                 if trace:
@@ -168,7 +168,7 @@ class SimpleNBeaconsExplain(base.BaseModule):
 
         else:
             # no discrepancy, so no need to explain
-            if self.verbose >= 1: print "No Discrepancy, not running explanation"
+            if self.verbose >= 1: print("No Discrepancy, not running explanation")
         
         return
     
