@@ -84,6 +84,12 @@ def graceParse(plan):
             each.append(tile2)
             plan[i] = each
 
+        elif each[0] == "communicate":
+            tile2 = Tile(each[3:])
+            each = each[:3]
+            each.append(tile2)
+            plan[i] = each
+
         elif each[0].startswith("communicate"):
             try:
                 tile2 = Tile(each[4:])

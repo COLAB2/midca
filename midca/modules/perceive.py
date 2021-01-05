@@ -350,6 +350,15 @@ class AsyncGraceObserver(base.BaseModule):
         else:
             return False
 
+    def get_hotspot_data(self, position):
+        """
+        :param position: agent position
+        :return: number:of times hotspot detected
+        """
+        tag = self.sim.TagWorld()
+        hotspot_count = tag.get_hotspot(position)
+        return hotspot_count
+
     def get_mode(self):
         tag = self.sim.TagWorld()
         mode = tag.get_mode()
@@ -544,9 +553,17 @@ class AsyncGraceObserver(base.BaseModule):
             self.display_tag(dim = [row,col])
             self.display_est_tag(dim = [row,col])
 
-        if tag_data > 40:
+        hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+        if hotspot_data:
             states += "hotspot-detected(grace, " + position + ")\n"
-            #self.kill_simulator()
+            states += "NUM(" + str(hotspot_data) + ")\n"
+            states += "hotspot-detected-count(grace, " + str(hotspot_data) + ", " + position +")\n"
+            self.remove_corresponding_atoms(["hotspot-detected-count", "grace", position])
+            self.remove_corresponding_atoms(["hotspot-detected", "grace", position])
+
+        #if tag_data > 40:
+        #    states += "hotspot-detected(grace, " + position + ")\n"
+        #    #self.kill_simulator()
 
         world = self.observe()
         if not world:

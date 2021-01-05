@@ -1062,6 +1062,19 @@ class GraceGoalInputNSF(UserGoalInput):
                 tagworld.endSim()
                 #sys.exit()
 
+        else:
+            world = self.mem.get(self.mem.STATES)[-1]
+            agent_location = world.get_atoms(["agent-at", "grace"])[0]
+            observation = world.get_atoms(["hotspot-detected-count", "grace", agent_location.args[1].name])
+            if observation:
+                communicated_goal = world.get_atoms(["communicated-hotspot", agent_location.args[1].name])
+                if not communicated_goal:
+                    if int(observation[0].args[1].name) >= 3:
+                            g = goals.Goal(*["grace", "fumin", agent_location.args[1].name], predicate='communicated-hotspot')
+                            if not g in self.mem.get(self.mem.GOAL_GRAPH):
+                                self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                                print("Midca generated a goal : " + str(g))
+
 class GraceAnomalyDetection(UserGoalInput):
     '''
     Todo: This class should make use of explanation patterns

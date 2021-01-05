@@ -491,15 +491,18 @@ class GraceCommunicate(AsynchAction):
         AsynchAction.__init__(self, mem, midcaAction, executeAction,
                               completionCheck, True)
 
+    def parse_tile(self, input):
+        output = []
+        y_index = input.index('y')
+        output = [int(input[2:y_index]) , int(input[y_index+1:])]
+        return output
+
     def implement_action(self):
+        argnames = [str(arg) for arg in self.action.args]
+        # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
+        location = self.parse_tile(argnames[2])
         tagworld = self.interface.TagWorld()
-        time = tagworld.simtime()
-        tagworld = self.interface.TagWorld()
-        tagworld.endSim()
-        #time = tagworld.simtime()
-        print ("Experiment Completed : Hotspot found at time : " + str(time))
-        raise SystemExit
-        pass
+        tagworld.sendHotspot(location)
 
     def check_confirmation(self):# read a file output by program chechinkg for surface and return true or false
         if self.skip:

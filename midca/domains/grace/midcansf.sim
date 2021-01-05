@@ -57,6 +57,7 @@ predicate(priorblocRadius, [agnt, cnt], [AGENT, NUM])
 
 #hotspot detected
 predicate(hotspot-detected,[agnt, loc], [AGENT, TILE])
+predicate(hotspot-detected-count,[agnt, num, loc], [AGENT, NUM, TILE])
 
 #tag count
 predicate(uniqueTagCount,[agnt, cnt, loc], [AGENT, NUM, TILE])

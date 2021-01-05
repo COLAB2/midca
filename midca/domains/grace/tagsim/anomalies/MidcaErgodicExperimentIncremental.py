@@ -32,6 +32,8 @@ anomaly_history = []
 anomaly_time_history = []
 hotspots_detected = []
 hotspot_detected_bin = []
+hotspots_detected_count = {}
+midca_hotspots = []
 
 def find_max_5_values_avg(time):
     a = {}
@@ -176,6 +178,19 @@ def MidcaIntegrator(agent,update):
                 count = count + 1
                 unique.append(data[0])
         clientsocket.send(str.encode(str(count)))
+
+    elif cmd[0] == 'midcaHotspot':
+        agent = agentList[0]
+        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1]))
+        midca_hotspots.append(bin)
+
+    elif cmd[0] == 'get_hotspot_data':
+        agent = agentList[0]
+        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1]))
+        if bin in hotspots_detected_count:
+            clientsocket.send(str.encode(str(hotspots_detected_count[bin])))
+        else:
+            clientsocket.send(str.encode(str(0)))
 
     elif cmd[0] == 'get_measurement':
         # allMeasurementData.append([latestMeas, [pos[0], pos[1]], bin])
@@ -750,6 +765,9 @@ while t<=simtime:#or running:
                 if not bin in hotspot_detected_bin:
                     hotspots_detected.append([t, agent.getPos(), latestMeas, bin])
                     hotspot_detected_bin.append(bin)
+                    hotspots_detected_count[bin] = 1
+                else:
+                    hotspots_detected_count[bin] +=1
                 #endSim = True
             print(t,latestMeas)
             # to stop in cell
@@ -828,11 +846,14 @@ if cfg.logData:
     times = ";".join(str(row[0]) for row in hotspots_detected)
     position = ";".join(str(row[1]) for row in hotspots_detected)
     bin_pos = ";".join(str(row[3]) for row in hotspots_detected)
+    hotspots_count = ";".join(str(hotspots_detected_count[row[3]]) for row in hotspots_detected)
     latestMeas = ";".join(str(row[2]) for row in hotspots_detected)
     anomaly_history = ";".join(str(row) for row in anomaly_history)
     anomaly_time_history = ";".join(str(row) for row in anomaly_time_history)
+    midca_hotspots = ";".join(str(row) for row in midca_hotspots)
     #f.write(str(t) + "," + str(agent.getPos()) + "," + str(latestMeas) + "," + str(anomaly_count) + "," + str(anomaly_history) + "," + str(anomaly_time_history) +"\n")
-    f.write(str(len(hotspots_detected))+"," +str(times) + "," + str(position) + "," + str(bin_pos) + "," + str(latestMeas) + "," + str(anomaly_count) + "," + str(anomaly_history) + "," + str(anomaly_time_history) +"\n")
+    #f.write("Number of hotspots, Detected time, postion, bin pos, fieldmax, anomaly_count, anomaly_history, anomaly_time_history, hotspots_each_count\n"  )
+    f.write(str(len(hotspots_detected))+"," +str(times) + "," + str(position) + "," + str(bin_pos) + "," + str(latestMeas) + "," + str(anomaly_count) + "," + str(anomaly_history) + "," + str(anomaly_time_history) + "," + str(hotspots_count) + ", " + str(midca_hotspots) +"\n")
     f.close()
 print(str(len(hotspots_detected))+"," +str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas)
 print('done')

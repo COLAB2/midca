@@ -2,214 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec528ca9-bcab-4575-a434-3a4af6efea29" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/AcousticReciever.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/AcousticTag.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/Agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/GPplotter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/actions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/plot_control.m" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/plots_matlab.m" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/settings.m" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/states.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/data/temp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/doubleIntegrator.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/doubleIntegratorCellByCell.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cg.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_factory.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_linear_ard.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_linear_one.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_matern3_iso.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_matern5_iso.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_noise.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_periodic.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_periodic_matern3_iso.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_prod.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_rq_iso.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_se_ard.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_se_iso.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/cov_sum.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/gp.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/gp_sparse.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/gp_utils.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/input_dim_filter.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/libgp.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/libgp.pc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/rprop.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/sampleset.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/include/test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/server.cpp.save" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/singleIntegrator" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/singleIntegrator.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/singleIntegratorCellByCell.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/b_control.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cg.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/ck.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_factory.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_linear_ard.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_linear_one.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_matern3_iso.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_matern5_iso.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_noise.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_periodic.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_periodic_matern3_iso.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_prod.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_rq_iso.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_se_ard.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_se_iso.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/cov_sum.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/def_actions.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/erg_cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/gp.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/gp_sparse.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/gp_utils.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/input_dim_filter.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/isac_step.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/master.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/mode_insert_grad.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/phik_hk.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/rprop.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/sampleset.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/state_intp.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/u2_cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/src/u2_optimal.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test2.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/test3.cpp.save" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/adjoint.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/erg_settings.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/inc_cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/isac_settings.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/sys_dynam.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user/sys_lin.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/adjoint.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/erg_settings.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/inc_cost.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/isac_settings.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/sys_dynam.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/SAS_simulation/user2/sys_lin.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/TagWorldDemo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/TagWorldDemov1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/AcousticReciever.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/AcousticTag.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/Agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/MidcaErgodicExperiment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/MidcaErgodicExperimentIncremental.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/TagWorldDemo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/TagWorldDemo2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/gridworld.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/simSettings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/simSettings100x100.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/tags_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField1_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField1_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField1_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField2_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField2_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField2_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField3_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField3_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/20x20/testField3_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/generate_plot_and_save_tag_field.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField1_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField1_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField1_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField2_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField2_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField2_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField3_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField3_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/testField3_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf1100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf11000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf1500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf2100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf21000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf2500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf3100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf31000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/testFields/tf3500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/barebonesDemo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/distance_calculator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/ergodicDemo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/ergodicDemoCellByCell.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/barebonesDemo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/generate_plot_and_save_tag_field.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/load_tag_field.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/making_agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/run_MultiAgent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/testField.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/examples/usage_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/fieldComparison.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/fieldComparisonMidca.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/fieldComparisonv1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/gridworld.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/run_MultiAgent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/start_positions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/tags_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/tags_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/tags_200.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/tags_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField1_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField1_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField1_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField2_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField2_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField2_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField3_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField3_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/100x100/testField3_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField1_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField1_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField1_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField2_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField2_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField2_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField3_100.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField3_1000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/20x20/testField3_500.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/generate_plot_and_save_tag_field.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf1100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf11000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf1500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf2100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf21000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf2500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf3100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf31000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/testFields/tf3500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/grace/tagsim/usage_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/multi_agent/grace_reef/midca_structured_search_franklin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/multi_agent/grace_reef/midca_structured_search_grace.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/grace/grace_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/grace_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/grace/midcansf.sim" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/midcansf.sim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/grace/plan/midcaNsf.shp" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/plan/midcaNsf.shp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/grace/plan/midcansfproblem.shp" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/plan/midcansfproblem.shp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/midca_structured_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/midca_structured_search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/grace/tagsim/TagWorldDemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/tagsim/TagWorldDemo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/ERGODIClog.csv" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/ERGODIClog.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/MidcaErgodicExperimentIncremental.py" beforeDir="false" afterPath="$PROJECT_DIR$/domains/grace/tagsim/anomalies/MidcaErgodicExperimentIncremental.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals.py" beforeDir="false" afterPath="$PROJECT_DIR$/goals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/_plan/asynch/asynch_grace.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/_plan/asynch/asynch_grace.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/_plan/jShop/JSHOP.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/_plan/jShop/JSHOP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/act.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/act.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/guide.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/guide.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/intend.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/intend.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/perceive.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/perceive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldsim/domainread.py" beforeDir="false" afterPath="$PROJECT_DIR$/worldsim/domainread.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldsim/worldsim.py" beforeDir="false" afterPath="$PROJECT_DIR$/worldsim/worldsim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/planning.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/planning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/2gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/3gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/4gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/5gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/6gp.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/ERGODIClog.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/terminal_output/SAS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/terminal_output/SAS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/terminal_output/SASC.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/terminal_output/SASC.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/terminal_output/field_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/terminal_output/field_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/terminal_output/midca_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/terminal_output/midca_output.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -452,9 +269,6 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -473,7 +287,19 @@
           <line>383</line>
           <option name="timeStamp" value="180" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/domains/grace/tagsim/anomalies/MidcaErgodicExperimentIncremental.py</url>
+          <line>630</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

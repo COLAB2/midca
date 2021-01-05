@@ -154,8 +154,12 @@
       (!glideback ?agent)
       ))
 
+   (:method (achieve-goal (communicated-hotspot ?agent ?agent1 ?destx ?desty))
 
-
+      ((hotspot-detected ?agent ?destx ?desty))
+      (
+      (!communicate ?agent ?agent1 ?destx ?desty)
+      ))
 
  (:method (achieve-goal (agent-at ?agent ?destX ?destY))
 
@@ -275,7 +279,7 @@
   (Deepsurveyed ?agent ?destX ?destY)))
 
  (:operator (!communicate ?agent ?fumin ?destX ?destY)
- ((collecteddata ?agent ?sensordata ?destX ?destY))
+ ((hotspot-detected ?agent ?destX ?destY))
  ()
  ((communicated-hotspot ?agent ?fumin ?destX ?destY)))
 

@@ -695,6 +695,10 @@ def preferFree(goal1, goal2):
         return -1
     elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
         return 1
+    elif goal1['predicate'] == 'communicated-hotspot' and goal2['predicate'] != 'communicated-hotspot':
+        return -1
+    elif goal1['predicate'] != 'communicated-hotspot' and goal2['predicate'] == 'communicated-hotspot':
+        return 1
     elif goal1['predicate'] == 'committed' and goal2['predicate'] != 'committed':
         return -1
     elif goal1['predicate'] != 'committed' and goal2['predicate'] == 'committed':

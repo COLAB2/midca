@@ -447,6 +447,7 @@ class JSHOPPlanner(base.BaseModule):
                 print "Old plan retrieved. Checking validity...",
             valid = world.plan_correct(midcaPlan)
             if not valid:
+                self.mem.get(self.mem.GOAL_GRAPH).removePlan(midcaPlan)
                 midcaPlan = None
                 #if plan modification is added to MIDCA, do it here.
                 if verbose >= 2:

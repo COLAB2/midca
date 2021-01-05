@@ -239,6 +239,8 @@ class GoalGraph:
                     bestChoice = plan
                 elif len(bestChoice.goals) > len(plan.goals):
                     bestChoice = plan
+                else:
+                    bestChoice = plan
         return bestChoice
 
     #returns the plan, if any is available, that achieves the most goals in the given goalset. If more than one does, tries to achieve the fewest extraneous goals. Ties are broken arbitrarily. Returns None if no plan is found that achieves any of the given goals.

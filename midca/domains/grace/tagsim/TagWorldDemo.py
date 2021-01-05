@@ -208,6 +208,22 @@ class TagWorld():
         except Exception as e:
             print(e)
 
+    def get_hotspot(self, position):
+        try:
+            msg = "get_hotspot_data," + str(position[0]+1) + "," + str(position[1]+1)
+            self.sock.send(str.encode(str(msg)))
+            # collect tags
+            msg = self.sock.recv(2048)
+            msg = msg.decode('utf-8')
+            if not msg == "0":
+                return int(msg)
+        except:
+            return False
+
+    def sendHotspot(self, position):
+        msg = "midcaHotspot,"  + str(position[0]+1) + "," + str(position[1]+1)
+        self.sock.send(str.encode(str(msg)))
+
     def close(self):
         self.sock.shutdown(1)
         self.sock.close()
@@ -284,7 +300,7 @@ if __name__ == "__main__":
         tag.runSim()
 
         tag = TagWorld()
-        print (tag.get_mode())
+        print (tag.get_hotspot([0,0]))
 
 
 
