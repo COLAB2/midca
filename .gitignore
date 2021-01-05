@@ -44,3 +44,6 @@ examples/log/**
 .pydevproject
 .idea/*
 midca/.idea/*
+
+#ignore results folder
+results/*
