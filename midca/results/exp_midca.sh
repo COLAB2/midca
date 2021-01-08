@@ -6,7 +6,7 @@
 #         only then it goes for another run
 
 
-Experiments=19
+Experiments=99
 midcapath=/home/sampath/Documents/git/midca/midca/examples/midca_structured_search.py #path of the python program
 fieldpath=/home/sampath/Documents/git/midca/midca/domains/grace/tagsim/anomalies/MidcaErgodicExperimentIncremental.py
 
@@ -26,8 +26,8 @@ do
   sleep 2
   printf "Launching The field demo and midca\n"
 
-  ./bin/singleIntegrator >& ./terminal_output/SAS.txt & sleep 1
-  ./bin/singleIntegratorCellByCell >& ./terminal_output/SASC.txt & sleep 1
+  ./bin/singleIntegrator >& ./terminal_output/SAS.txt & sleep 2
+  ./bin/singleIntegratorCellByCell >& ./terminal_output/SASC.txt & sleep 2
   python $fieldpath $counter >& ./terminal_output/field_output.txt & sleep 1
   python $midcapath >& ./terminal_output/midca_output.txt & wait
   #printf "Killing the process ... \n"

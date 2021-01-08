@@ -299,8 +299,9 @@ if __name__ == "__main__":
         tag = TagWorld()
         tag.runSim()
 
-        tag = TagWorld()
-        print (tag.get_hotspot([0,0]))
+
+        #tag = TagWorld()
+        #print (tag.get_hotspot([0,0]))
 
 
 

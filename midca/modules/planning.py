@@ -596,8 +596,8 @@ class JSHOPPlannerAsync(base.BaseModule):
                 if self.validate_plan:
                     valid = self.validate_plan(plan) or self.world.async_plan_correct(self.converttomidcaplan(plan))
                     # check monitors
-                    if valid and self.monitors:
-                        self.monitors(self.world, self.mem, plan)
+                    #if valid and self.monitors:
+                    #    self.monitors(self.world, self.mem, plan)
                     """
                     if valid:
                         valid, changed = self.monitor(self.world, plan, self.mem, plans)   

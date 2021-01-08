@@ -3,7 +3,7 @@ import midca
 from midca import base
 from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
 from midca.worldsim import domainread, stateread
-from midca.modules._plan.asynch import asynch_grace
+from midca.modules._plan.asynch import asynch_grace, asynch_grace_nsf
 import inspect, os
 import threading
 
@@ -82,13 +82,20 @@ myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())
 myMidca.append_module("Intend", intend.PriorityIntend())
 myMidca.append_module("Intend", intend.HGNSelection())
 #myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
+#myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
+#                                                        nbeacons_util.jshop2_tasks_from_goals,
+#                                                        JSHOP_DOMAIN_FILE,
+#                                                        JSHOP_STATE_FILE,
+#                                                        monitors= nbeacons_util.monitor
+#                                                    ))
+myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,
                                                         JSHOP_STATE_FILE,
+                                                        asynch_grace_nsf,
                                                         monitors= nbeacons_util.monitor
                                                     ))
-myMidca.append_module("Act",  act.SimpleAct(asynch_grace))
+myMidca.append_module("Act",  act.AsynchronousGraceAct())
 
 
 # Set world viewer to output text

@@ -505,13 +505,6 @@ class AsyncGraceObserver(base.BaseModule):
         if position:
             states += "agent-at(grace," + position + ")\n"
 
-        #get the remaining simulation time
-        time = self.get_remaining_time()
-        if time:
-            states += "NUM("+ str(time) + ")\n"
-            states += "timeRemaining(" + str(time) + ")\n"
-            self.remove_corresponding_atoms(["timeRemaining"])
-
         #calculate atoms related to bloc radius
         #states = self.blocRadius(position, states)
         states += "QblocRadius(grace," + position + ", HIGH)\n"
@@ -535,7 +528,7 @@ class AsyncGraceObserver(base.BaseModule):
                 self.remove_corresponding_atoms(["free", "grace"])
                 states += "free(grace)\n"
 
-
+        hotspot_data = None
         if tag_data:
             row,col = self.getdimensions()
             self.display_tag(tag_data, position , [row, col])
@@ -546,6 +539,15 @@ class AsyncGraceObserver(base.BaseModule):
             #get adjacent position
             states = self.get_adjacent_position_tags(position, states , [row,col])
 
+            # get if it is a hotspot or not
+            #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+            #get the remaining simulation time
+            time = self.get_remaining_time()
+            if time:
+                states += "NUM("+ str(time) + ")\n"
+                states += "timeRemaining(" + str(time) + ")\n"
+                self.remove_corresponding_atoms(["timeRemaining"])
+
             print (states)
 
         else:
@@ -553,7 +555,8 @@ class AsyncGraceObserver(base.BaseModule):
             self.display_tag(dim = [row,col])
             self.display_est_tag(dim = [row,col])
 
-        hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+        #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+
         if hotspot_data:
             states += "hotspot-detected(grace, " + position + ")\n"
             states += "NUM(" + str(hotspot_data) + ")\n"
