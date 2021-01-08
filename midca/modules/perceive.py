@@ -512,6 +512,33 @@ class AsyncGraceObserver(base.BaseModule):
         # get the tag data
         tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
 
+        hotspot_data = None
+        if tag_data:
+            row,col = self.getdimensions()
+            self.display_tag(tag_data, position , [row, col])
+            arguments = ", ".join([str(tag_data), position])
+            states += "NUM(" + str(tag_data) + ")\n"
+            states += "uniqueTagCount(grace, " + arguments + ")\n"
+
+            #get adjacent position
+            states = self.get_adjacent_position_tags(position, states , [row,col])
+
+            # get if it is a hotspot or not
+            hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+            #get the remaining simulation time
+            time = self.get_remaining_time()
+            if time:
+                states += "NUM("+ str(time) + ")\n"
+                states += "timeRemaining(" + str(time) + ")\n"
+                self.remove_corresponding_atoms(["timeRemaining"])
+
+            print (states)
+
+        else:
+            row,col = self.getdimensions()
+            self.display_tag(dim = [row,col])
+            self.display_est_tag(dim = [row,col])
+
         #get the operational mode of the grace
         mode = self.get_mode()
         if mode:
@@ -527,33 +554,6 @@ class AsyncGraceObserver(base.BaseModule):
             else:
                 self.remove_corresponding_atoms(["free", "grace"])
                 states += "free(grace)\n"
-
-        hotspot_data = None
-        if tag_data:
-            row,col = self.getdimensions()
-            self.display_tag(tag_data, position , [row, col])
-            arguments = ", ".join([str(tag_data), position])
-            states += "NUM(" + str(tag_data) + ")\n"
-            states += "uniqueTagCount(grace, " + arguments + ")\n"
-
-            #get adjacent position
-            states = self.get_adjacent_position_tags(position, states , [row,col])
-
-            # get if it is a hotspot or not
-            #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
-            #get the remaining simulation time
-            time = self.get_remaining_time()
-            if time:
-                states += "NUM("+ str(time) + ")\n"
-                states += "timeRemaining(" + str(time) + ")\n"
-                self.remove_corresponding_atoms(["timeRemaining"])
-
-            print (states)
-
-        else:
-            row,col = self.getdimensions()
-            self.display_tag(dim = [row,col])
-            self.display_est_tag(dim = [row,col])
 
         #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
 

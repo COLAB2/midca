@@ -562,7 +562,6 @@ class GraceCommunicate(AsynchAction):
             self.skip = False
             return False
 
-
         return True
 
 class GraceAscend(AsynchAction):

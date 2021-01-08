@@ -2589,7 +2589,7 @@ class HGNSelection(base.BaseModule):
                     goal["predicate"] = "surveyed-ergodic"
                     if len(goal.args) >  1:
                         goal.args = goal.args[:-1]
-
+                
             modified_goals.append(goal)
 
         return modified_goals
