@@ -121,6 +121,7 @@ class AsyncGraceObserver(base.BaseModule):
             raise ValueError("world is None!")
         self.world = world
         self.mem.set(self.mem.INTERFACE, self.sim)
+        self.mem.set(self.mem.INTERFACE_WORLD, self.world)
 
 
 
@@ -502,26 +503,9 @@ class AsyncGraceObserver(base.BaseModule):
 
         position = self.get_agent_position()
 
+        hotspot_data = None
         if position:
             states += "agent-at(grace," + position + ")\n"
-
-        #calculate atoms related to bloc radius
-        #states = self.blocRadius(position, states)
-        states += "QblocRadius(grace," + position + ", HIGH)\n"
-
-        # get the tag data
-        tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
-
-        hotspot_data = None
-        if tag_data:
-            row,col = self.getdimensions()
-            self.display_tag(tag_data, position , [row, col])
-            arguments = ", ".join([str(tag_data), position])
-            states += "NUM(" + str(tag_data) + ")\n"
-            states += "uniqueTagCount(grace, " + arguments + ")\n"
-
-            #get adjacent position
-            states = self.get_adjacent_position_tags(position, states , [row,col])
 
             # get if it is a hotspot or not
             hotspot_data = self.get_hotspot_data(self.parse_tile(position))
@@ -531,6 +515,23 @@ class AsyncGraceObserver(base.BaseModule):
                 states += "NUM("+ str(time) + ")\n"
                 states += "timeRemaining(" + str(time) + ")\n"
                 self.remove_corresponding_atoms(["timeRemaining"])
+
+        #calculate atoms related to bloc radius
+        #states = self.blocRadius(position, states)
+        states += "QblocRadius(grace," + position + ", HIGH)\n"
+
+        # get the tag data
+        tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
+
+        if tag_data:
+            row,col = self.getdimensions()
+            self.display_tag(tag_data, position , [row, col])
+            arguments = ", ".join([str(tag_data), position])
+            states += "NUM(" + str(tag_data) + ")\n"
+            states += "uniqueTagCount(grace, " + arguments + ")\n"
+
+            #get adjacent position
+            states = self.get_adjacent_position_tags(position, states , [row,col])
 
             print (states)
 
@@ -608,7 +609,7 @@ class AsyncGraceObserver(base.BaseModule):
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
-        if len(states) > 40:
+        if len(states) > 5:
             #print "trimmed off 200 old stale states"
             states = states[2:]
             self.mem.set(self.mem.STATES, states)

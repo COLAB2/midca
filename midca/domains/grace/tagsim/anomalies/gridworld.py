@@ -135,7 +135,7 @@ class Grid:
     def getAbstractPos(self,x,y):
         idx = np.digitize(x, self.x_bins)
         idy = np.digitize(y, self.y_bins)
-        return 5*(idy-1) + (idx)
+        return 5*(idy-1) + (idx) -1
 		
 		
     def abstractPosToRange(self,s):

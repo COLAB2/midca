@@ -68,6 +68,10 @@ predicate(toDisplayuniqueTagCount,[agnt, cnt, fromloc, loc], [AGENT, NUM, TILE, 
 predicate(collecteddata, [agnt, info, loc], [AGENT, SENSOR, TILE])
 predicate(communicated-hotspot, [agnt, agnt1, loc], [AGENT, AGENT, TILE])
 
+# inspect blockade between two cells
+predicate(inspected, [agnt, loc1, loc2], [AGENT, TILE, TILE])
+
+
 predicate(agent-at, [agnt, loc], [AGENT, TILE])
 predicate(adjacent-north, [loc1, loc2], [TILE, TILE])
 predicate(adjacent-south, [loc1, loc2], [TILE, TILE])
@@ -209,6 +213,13 @@ args = [(agnt, AGENT)],
 preconditions = [
 	condition(free, [agnt], negate = True)],
 results = [condition(free, [agnt])])
+
+operator(inspect,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	condition(atBottom, [agnt])],
+results = [
+	condition(inspected, [agnt, start, dest])])
 
 operator(inform,
 args = [(agent, AGENT), (other-agent, AGENT), (goal, GOAL), (status, STATUS)],

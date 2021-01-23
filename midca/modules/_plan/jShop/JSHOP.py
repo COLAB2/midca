@@ -32,6 +32,7 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE, verbose=1):
             plan = line
             break
 
+
     if(plan):
         Jshop_plan = graceParse(parse(plan))
 
@@ -46,7 +47,7 @@ def graceParse(plan):
     :return: convert grid coordinates to tile co-ordinates
     """
     for i,each in enumerate(plan):
-        if each[0].startswith("move") and not each[0] == "moveto":
+        if each[0].startswith("move") or each[0].startswith("inspect") and not each[0] == "moveto":
             tile1 = Tile(each[2:4])
             tile2 = Tile(each[4:])
             remaining = each[6:]

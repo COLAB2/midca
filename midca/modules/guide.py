@@ -1052,7 +1052,6 @@ class GraceGoalInputNSF(UserGoalInput):
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
 
-
             self.stopexperimentflag = True
 
         elif len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0 and \
@@ -1063,15 +1062,37 @@ class GraceGoalInputNSF(UserGoalInput):
                 #sys.exit()
 
         else:
+            # get hotspot information from observations
+            # get communicated hotspots from state
+            # generate goals for hotspots that are not communicated
             world = self.mem.get(self.mem.STATES)[-1]
-            agent_location = world.get_atoms(["agent-at", "grace"])[0]
-            observation = world.get_atoms(["hotspot-detected-count", "grace", agent_location.args[1].name])
+
+            # get hotspot detection count
+            observation = world.get_atoms(["hotspot-detected-count"])
+
+            # get the communicated hotspots
+            communicated_hotspots = world.get_atoms(["communicated-hotspot"])
+
+            # make the locations of the hotspot as a dictionary of location:count
             if observation:
-                communicated_goal = world.get_atoms(["communicated-hotspot", agent_location.args[1].name])
-                if not communicated_goal:
-                    if int(observation[0].args[1].name) >= 3:
-                            g = goals.Goal(*["grace", "fumin", agent_location.args[1].name], predicate='communicated-hotspot')
-                            if not g in self.mem.get(self.mem.GOAL_GRAPH):
+                observed_positions = {atom.args[2].name:atom.args[1].name for atom in observation}
+            else:
+                return None
+
+            # make the communicated hotspots as a set
+            if communicated_hotspots:
+                communicated_hotspots = {atom.args[2].name for atom in communicated_hotspots}
+                # make the keys of dictionary as a set
+                hotspot_locations = set(observed_positions.keys())
+                hotspot_unreported_locations = hotspot_locations - hotspot_locations.intersection(communicated_hotspots)
+            else:
+                hotspot_unreported_locations = observed_positions.keys()
+
+            # for every hotspot detected generate a goal
+            for hotspot_location in hotspot_unreported_locations:
+                if int(observed_positions[hotspot_location]) >= 3:
+                        g = goals.Goal(*["grace", "fumin", hotspot_location], predicate='communicated-hotspot')
+                        if not g in self.mem.get(self.mem.GOAL_GRAPH):
                                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                                 print("Midca generated a goal : " + str(g))
 
@@ -1079,6 +1100,14 @@ class GraceAnomalyDetection(UserGoalInput):
     '''
     Todo: This class should make use of explanation patterns
     '''
+    def __init__(self, interface, experiment="None"):
+        self.interface = interface
+        self.experiment = experiment
+
+    def get_anomaly(self):
+        tag = self.interface.TagWorld()
+        anomaly = tag.get_anomaly()
+        return anomaly
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1093,6 +1122,42 @@ class GraceAnomalyDetection(UserGoalInput):
                     print("An anomaly is detected regarding the mode of operation : ")
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                     print("Midca generated a goal : " + str(g))
+
+        # detect block anomaly
+        if self.experiment == "formulation" or self.experiment == "smart":
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if current_goals:
+                position = world.get_atoms(["agent-at", "grace"])[0].args[1].name
+                current_goals = current_goals[-1]
+                for goal in current_goals:
+                    if goal.status == False:
+                        if self.experiment == "formulation":
+                            goal.status = True
+                        actions = self.mem.get(self.mem.ACTIONS)
+                        if actions:
+                            if actions[-1]:
+                                actions = actions[-1][0]
+                        arguments = list(actions.args)
+                        if len(arguments) == 3 and position == arguments[1]:
+                            if self.get_anomaly() == "block":
+                                g = goals.Goal(*arguments, predicate='inspected')
+                                if not g in self.mem.get(self.mem.GOAL_GRAPH):
+                                    self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
+                                    self.mem.set(self.mem.SUSPENDED_GOALS, [[goal]])
+                                    print("A block anomaly is detected regarding the mode of operation : ")
+                                    self.mem.get(self.mem.GOAL_GRAPH).insert(g)
+                                    print("Midca generated a goal : " + str(g))
+                                else:
+                                    for anomaly_goal in self.mem.get(self.mem.GOAL_GRAPH).getAllGoals():
+                                        if g == anomaly_goal:
+                                            self.mem.set(self.mem.FORMULATED_GOALS, [[anomaly_goal]])
+                                            self.mem.set(self.mem.SUSPENDED_GOALS, [[goal]])
+                                            break
+                        if self.get_anomaly() == "flow":
+                                self.mem.set(self.mem.FORMULATED_GOALS, [[goal]])
+                                self.mem.set(self.mem.SUSPENDED_GOALS, [[goal]])
+
+
 
 class GraceChangeDetection(UserGoalInput):
     '''

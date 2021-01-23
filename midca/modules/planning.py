@@ -400,13 +400,15 @@ class JSHOPPlanner(base.BaseModule):
                  state_file,
                  monitors = False,
                  extinguishers = False,
-                 mortar = False):
+                 mortar = False,
+                 helper = False):
 
         self.jshop_state_from_world = jshop_state_from_world
         self.jshop_tasks_from_goals = jshop_tasks_from_goals
         self.domain_file = domain_file
         self.state_file= state_file
         self.monitors = monitors
+        self.helper = helper
 
         try:
             self.working = True
@@ -420,6 +422,34 @@ class JSHOPPlanner(base.BaseModule):
         self.world = world
         self.mem = mem
         self.mem.set(self.mem.PLANNING_COUNT, 0)
+
+    def get_best_plan(self, world, goals, verbose=2):
+        plan = None
+        goalsAchieved = set()
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        for nextPlan in goalGraph.allMatchingPlans(goals):
+            achieved = world.goals_achieved(nextPlan, goals)
+            if len(achieved) > len(goalsAchieved):
+                goalsAchieved = achieved
+                plan = nextPlan
+            if len(achieved) == len(goals):
+                break
+            elif verbose >= 2:
+                print "Retrieved plan does not achieve all goals. Trying to retrieve a different plan..."
+                if verbose >= 3:
+                    print "  Retrieved Plan:"
+                    for a in nextPlan:
+                        print "  "+str(a)
+                    print "Goals achieved:", [str(goal) for goal in achieved]
+        if plan == None and verbose >= 1:
+            print "No valid plan found that achieves any current goals."
+        elif len(goalsAchieved) < len(goals) and verbose >= 1:
+            print "Best plan does not achieve all goals."
+            if verbose >= 2:
+                print "Plan:", str(plan)
+                print "Goals achieved:", [str(goal) for goal in goalsAchieved]
+        return plan
+
     #this will require a lot more error handling, but ignoring now for debugging.
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -439,7 +469,7 @@ class JSHOPPlanner(base.BaseModule):
                 print "No goals received by planner. Skipping planning."
             return
         try:
-            midcaPlan = self.mem.get(self.mem.GOAL_GRAPH).getMatchingPlan(goals)
+            midcaPlan = self.get_best_plan(world, goals)
         except AttributeError:
             midcaPlan = None
         if midcaPlan:
@@ -464,7 +494,9 @@ class JSHOPPlanner(base.BaseModule):
                     else:
                         print "no. Goals achieved: " + str({str(goal) for goal in achieved})
                 if len(achieved) != len(midcaPlan.goals):
+                    self.mem.get(self.mem.GOAL_GRAPH).removePlan(midcaPlan)
                     midcaPlan = None #triggers replanning.
+
 
         #ensure goals is a collection to simplify things later.
         if not isinstance(goals, collections.Iterable):
@@ -487,6 +519,9 @@ class JSHOPPlanner(base.BaseModule):
                 jshopPlan = JSHOP.jshop(jshopTasks, self.domain_file, self.state_file)
             except Exception:
                 jshopPlan = None
+                if self.helper:
+                    jshopPlan = self.helper(world, goals, jshopPlan)
+
             if not jshopPlan and jshopPlan != []:
                 if verbose >= 1:
                     print "Planning failed for ",
@@ -495,9 +530,10 @@ class JSHOPPlanner(base.BaseModule):
                     print
                 if trace: trace.add_data("PLAN", jshopPlan)
                 return
+            if self.helper:
+                jshopPlan = self.helper(world, goals, jshopPlan)
             #change from jshop plan to MIDCA plan
             midcaPlan = plans.Plan([plans.Action(action[0], *list(action[1:])) for action in jshopPlan], goals)
-
             if verbose >= 1:
                 print "Planning complete."
             if verbose >= 2:

@@ -1422,11 +1422,12 @@ class SimpleIntend_construction(base.BaseModule):
                 '''
                 print("")
 
-class BestHillClimbingIntendGraceNSFNew(base.BaseModule):
+class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
-    def __init__(self):
+    def __init__(self, experiment="None"):
         # for hill climbing
         self.previous_goal = []
+        self.experiment = experiment
 
     def displayEachGoalTrajectory(self, GoalTrajectory):
         print ("*******************STATES*******************")
@@ -1865,9 +1866,25 @@ class BestHillClimbingIntendGraceNSFNew(base.BaseModule):
     def filter(self, goals, predicatename):
         filtered_goals = []
         for goal in goals:
-            if goal['predicate'] == predicatename:
-                filtered_goals.append(goal)
+            if self.experiment == "selection" or self.experiment == "smart":
+                if goal['predicate'].startswith(predicatename)\
+                        and not (goal['predicate'] == "surveyed-ergodic"):
+                    filtered_goals.append(goal)
+            else:
+                if goal['predicate'] == predicatename\
+                        and not (goal['predicate'] == "surveyed-ergodic"):
+                    filtered_goals.append(goal)
         return filtered_goals
+
+    def check_failed_goals(self, current_goals):
+
+        if current_goals:
+            current_goals_copy = copy.deepcopy(current_goals[-1])
+            for goal in current_goals_copy:
+                if goal.status == False:
+                    current_goals = None
+
+        return current_goals
 
     def run(self, cycle, verbose=2):
         trace = self.mem.trace
@@ -1884,7 +1901,13 @@ class BestHillClimbingIntendGraceNSFNew(base.BaseModule):
             return
         # get all the goals from the goal graph
         goals = goalGraph.getUnrestrictedGoals()
-        goals = self.filter(goals, "surveyed")
+        filtered_goals = self.filter(goals, "surveyed")
+        suspended_goals = []
+        if self.experiment == "selection" or self.experiment == "smart":
+            goals  = [goal for goal in filtered_goals if goal.status == True]
+            suspended_goals = [goal for goal in filtered_goals if goal.status == False]
+            if not goals and suspended_goals:
+                goals = suspended_goals
         if not goals:
             if verbose >= 1:
                 print "No Survey goals. Intend will not select goals via hillclimbing."
@@ -1892,10 +1915,15 @@ class BestHillClimbingIntendGraceNSFNew(base.BaseModule):
 
         current_goals = self.mem.get(self.mem.CURRENT_GOALS)
 
+        if self.experiment == "selection" or self.experiment == "smart":
+            current_goals = self.check_failed_goals(current_goals)
+
         need_for_hillclimbing_flag = True
         if current_goals:
             #get the top of the stack goals
             current_goals = current_goals[-1]
+            if current_goals[0]["predicate"] == "inspected":
+                need_for_hillclimbing_flag = False
             #check if it is a surveyed goal and if the agent is in the same cell
             exec_goals = self.filter(current_goals, "surveyed")
             if exec_goals:
@@ -1944,7 +1972,7 @@ class BestHillClimbingIntendGraceNSFNew(base.BaseModule):
                     print goal,
                 print
 
-class BestHillClimbingIntendGraceNSF(base.BaseModule):
+class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
 
     def __init__(self):
         # for hill climbing
@@ -2377,8 +2405,9 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             if verbose >= 2:
                 print "No goals selected."
         else:
+            pass
             # add it to goaltrajectory for representation
-            world = self.mem.get(self.mem.STATES)[-1]
+            #world = self.mem.get(self.mem.STATES)[-1]
             # get_atoms = [atom for atom in world.atoms]
             # self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
             # self.displayGoalTrajectory()
@@ -2453,6 +2482,173 @@ class PriorityIntend(base.BaseModule):
                 for goal in goals:
                     print goal,
                 print
+
+class MetaIntend(base.BaseModule):
+
+    def __init__(self):
+        self.previous_anomolous_goals = []
+        self.previous_goal = None
+
+    def set_anomolous_goals(self, current_goal):
+
+        if len(self.previous_anomolous_goals) >= 3:
+            self.previous_anomolous_goals[0].status = True
+            self.previous_anomolous_goals.pop(0)
+
+        if not current_goal in self.previous_anomolous_goals:
+            self.previous_anomolous_goals.append(current_goal)
+
+    def remove_anomolous_goals(self):
+       removed_goals = []
+       for goal in self.previous_anomolous_goals:
+           if not goal in self.mem.get(self.mem.GOAL_GRAPH):
+               removed_goals.append(goal)
+
+       for goal in removed_goals:
+            self.previous_anomolous_goals.remove(goal)
+
+    def parse_tile_to_x_y(self, tile):
+        y_index = tile.index('y')
+        return int(tile[2:y_index]) , int(tile[y_index+1:])
+
+    def find_direction(self, agent_pos, previous_goal):
+        """
+        :param agent_pos: Tx1y1
+        :param previous_goal: surveyed(something)
+        :return:
+        """
+        agent_pos = self.parse_tile_to_x_y(agent_pos)
+        dest_pos = self.parse_tile_to_x_y(previous_goal.args[1])
+        if agent_pos[1] > dest_pos[1]:
+            return "south"
+        elif agent_pos[1] < dest_pos[1]:
+            return "north"
+        elif agent_pos[0] > dest_pos[0]:
+            return "west"
+        elif agent_pos[0] < dest_pos[0]:
+            return "east"
+        else:
+            return None
+
+    def find_better(self, direction, agent_pos, reselected_goal):
+        """
+
+        :param direction: "north" , "south", "east", "west"
+        :param agent_pos: Tx1y1
+        :param reselected_goal: surveyed(grace, Tx2y2)
+        :return: goal (if reselected goal is not affected by anomaly) or None
+        """
+        pos = self.parse_tile_to_x_y(agent_pos)
+        dest_pos = self.parse_tile_to_x_y(reselected_goal.args[1])
+
+        if direction == "north":
+            if dest_pos[1] > pos[1]:
+                return None
+        elif direction == "south":
+            if dest_pos[1] < pos[1]:
+                return None
+        elif direction == "east":
+            if dest_pos[0] > pos[0] and  (dest_pos[1] == pos[1]):
+                return None
+        elif direction == "west":
+            if dest_pos[0] < pos[0] and (dest_pos[1] == pos[1]):
+                return None
+
+        return reselected_goal
+
+
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        # reselected goals
+        goals = None
+        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
+        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
+        current_goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+        reselected_goal = None
+        formulated_goal = None
+        current_goal = None
+        if not (reselected_goals and formulated_goals):
+            return
+        else:
+            reselected_goal = reselected_goals[-1][0]
+            formulated_goal = formulated_goals[-1][0]
+            current_goal = current_goals[-1][0]
+
+            self.mem.set(self.mem.FORMULATED_GOALS, [])
+            self.mem.set(self.mem.SUSPENDED_GOALS, [])
+
+        # if anomaly occurs when free and survey ergodic ignore
+        if not reselected_goal["predicate"].startswith("surveyed") or \
+            reselected_goal["predicate"] == "surveyed-ergodic":
+            return
+
+        if current_goal["predicate"] == "surveyed-ergodic":
+            return
+
+        # add current goals to previous anomolous goals
+        self.remove_anomolous_goals()
+        self.set_anomolous_goals(current_goal)
+        # find agent position
+        world = self.mem.get(self.mem.STATES)[-1]
+        agent_position = world.get_atoms(["agent-at", "grace"])[0].args[1].name
+
+        # find anomolous direction
+        direction = self.find_direction(agent_position, current_goal)
+
+        # if it's the same cell there is no anomaly; we captured it when it is over
+        if direction == None:
+            if self.previous_goal:
+                self.previous_goal = None
+                return None
+            else:
+                goals = [current_goal]
+                self.previous_goal = current_goal
+        else:
+
+            # check if reselcted goal is suitable for last 3 directions
+            goal = None
+            for anamolous_goal in self.previous_anomolous_goals:
+                direction = self.find_direction(agent_position, anamolous_goal)
+                goal = self.find_better(direction, agent_position, reselected_goal)
+                if not goal:
+                    break
+            # give priority to reselected goal
+            if goal:
+                #current_goal.status = True
+                return None
+
+            #give priority to formulated goal
+            else:
+                goals = [formulated_goal]
+                if not formulated_goal == current_goal:
+                    current_goal.status = True
+
+        self.mem.set(self.mem.FORMULATED_GOALS, [])
+        self.mem.set(self.mem.SUSPENDED_GOALS, [])
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
 
 class HGNSelection(base.BaseModule):
 
@@ -2584,12 +2780,12 @@ class HGNSelection(base.BaseModule):
                         sub_goals = self.subgoals(world, goal)
                         if sub_goals:
                             if not goal["predicate"] in sub_goals:
-                                goal["predicate"] = random.choice(sub_goals)
+                                goal["predicate"] = "surveyed-structured"
                 else:
                     goal["predicate"] = "surveyed-ergodic"
                     if len(goal.args) >  1:
                         goal.args = goal.args[:-1]
-                
+
             modified_goals.append(goal)
 
         return modified_goals
@@ -2610,11 +2806,12 @@ class HGNSelection(base.BaseModule):
                 print "Goal graph not initialized. Intend will do nothing."
             return
 
-        current_goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)
 
         if not current_goals:
             return
         else:
+            current_goals = current_goals[-1]
             # get all the goals from the root of the goal graph
             goals = goalGraph.getUnrestrictedGoals()
 

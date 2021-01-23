@@ -10,6 +10,7 @@ class Goal:
             self.id = hash(self)
         self.args = args
         self.kwargs = kwargs
+        self.status= True
 
     def __getitem__(self, val):
         if val in self.kwargs:
@@ -239,6 +240,8 @@ class GoalGraph:
                     bestChoice = plan
                 elif len(bestChoice.goals) > len(plan.goals):
                     bestChoice = plan
+                else:
+                    bestchoice = plan
         return bestChoice
 
     #returns the plan, if any is available, that achieves the most goals in the given goalset. If more than one does, tries to achieve the fewest extraneous goals. Ties are broken arbitrarily. Returns None if no plan is found that achieves any of the given goals.

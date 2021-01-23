@@ -72,6 +72,9 @@ def asynch_action(mem, midcaAction):
     elif midcaAction.op == "glideback":
         return GraceGlide(mem, midcaAction)
 
+    elif midcaAction.op == "inspect":
+        return GraceInspect(mem, midcaAction)
+
     elif midcaAction.op == "commit":
         return Commit(mem, midcaAction)
 
@@ -482,7 +485,7 @@ class GraceCommunicate(AsynchAction):
         self.mem = mem
         self.interface = self.mem.get(self.mem.INTERFACE)
         self.time = None
-        self.skip = True
+        self.skip = False
         self.depth = None
         self.action = midcaAction
         self.complete = False
@@ -615,6 +618,7 @@ class MoveToCell(AsynchAction):
         #if not atoms:
         #    self.status = FAILED
         #    return False
+        timediff = midcatime.now() - self.time
         argnames = [str(arg) for arg in self.action.args]
         go_to_location = self.parse_tile(argnames[2])
         tagworld = self.interface.TagWorld()
@@ -624,6 +628,16 @@ class MoveToCell(AsynchAction):
             current_position = [int(position) for position in current_position]
             if current_position == go_to_location:
                 return True
+
+        tagworld = self.interface.TagWorld()
+        confirmation = tagworld.searchComplete()
+        if confirmation == "Failed":
+            self.status = FAILED
+        else:
+            if timediff > 7:
+                self.implement_action()
+            #else:
+            #self.implement_action()
             #else:
             #   self.implement_action()
 
@@ -702,6 +716,9 @@ class SurveyCell(AsynchAction):
 
         tagworld = self.interface.TagWorld()
         confirmation = tagworld.searchComplete()
+        if confirmation == "Failed":
+            self.status = FAILED
+            return False
         if confirmation == str(True) and self.skiponce:
             #time.sleep(7)
             self.skiponce += -1
@@ -759,6 +776,10 @@ class DeepSurveyCell(AsynchAction):
 
         tagworld = self.interface.TagWorld()
         confirmation = tagworld.searchComplete()
+        if confirmation == "Failed":
+            self.status = FAILED
+            return False
+
         if confirmation == str(True) and self.skiponce:
             #time.sleep(7)
             self.skiponce += -1
@@ -817,6 +838,9 @@ class SurveyCellErgodic(AsynchAction):
 
         tagworld = self.interface.TagWorld()
         confirmation = tagworld.searchErgodicComplete()
+        if confirmation == "Failed":
+            self.status = FAILED
+            return False
         if confirmation == str(True) and self.skiponce:
             #time.sleep(7)
             self.skiponce += -1
@@ -911,4 +935,55 @@ class GraceGlide(AsynchAction):
 
         #self.implement_action()
 
+        return False
+
+class GraceInspect(AsynchAction):
+    '''
+    Action that communicates it's depth to fumin
+    '''
+
+    def __init__(self, mem, midcaAction):
+        self.mem = mem
+        self.interface = self.mem.get(self.mem.INTERFACE)
+        self.time = None
+        self.skip = True
+        self.depth = None
+        self.action = midcaAction
+        self.complete = False
+        executeAction = lambda mem, midcaAction, status: self.implement_action()
+        completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+        AsynchAction.__init__(self, mem, midcaAction, executeAction,
+                              completionCheck, True)
+
+    def parse_tile(self, input):
+        output = []
+        y_index = input.index('y')
+        output = [int(input[2:y_index]) , int(input[y_index+1:])]
+        return output
+
+    def implement_action(self):
+        tagworld = self.interface.TagWorld()
+        argnames = [str(arg) for arg in self.action.args]
+        start = self.parse_tile(argnames[1])
+        end =   self.parse_tile(argnames[2])
+        tagworld.inspect(start, end)
+        #time.sleep(0.2)
+        pass
+
+    def check_confirmation(self):
+        tagworld = self.interface.TagWorld()
+        status = tagworld.searchComplete()
+        if status == "True":
+            world = self.mem.get(self.mem.INTERFACE_WORLD)
+            argnames = [str(arg) for arg in self.action.args]
+            start = argnames[1]
+            end =   argnames[2]
+            atoms = world.get_atoms([start, end])
+            if atoms:
+                for atom in atoms:
+                    if atom.predicate.name.startswith("adjacent") \
+                        and atom.args[0].name == start \
+                        and atom.args[1].name == end:
+                        world.remove_atom(atom)
+            return True
         return False

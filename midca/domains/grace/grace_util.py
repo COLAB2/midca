@@ -345,9 +345,9 @@ class Tile():
         '''
         result_str = ""
         if self.northTile:
-            result_str += "adjacent-south("+str(self)+","+str(self.northTile)+")\n"
+            result_str += "adjacent-north("+str(self)+","+str(self.northTile)+")\n"
         if self.southTile:
-            result_str += "adjacent-north("+str(self)+","+str(self.southTile)+")\n"
+            result_str += "adjacent-south("+str(self)+","+str(self.southTile)+")\n"
         if self.eastTile:
             result_str += "adjacent-east("+str(self)+","+str(self.eastTile)+")\n"
         if self.westTile:
@@ -699,6 +699,10 @@ def preferFree(goal1, goal2):
         return -1
     elif goal1['predicate'] != 'communicated-hotspot' and goal2['predicate'] == 'communicated-hotspot':
         return 1
+    #elif goal1['predicate'] == 'inspected' and goal2['predicate'] != 'inspected':
+    #    return -1
+    #elif goal1['predicate'] != 'inspected' and goal2['predicate'] == 'inspected':
+    #    return 1
     elif goal1['predicate'] == 'committed' and goal2['predicate'] != 'committed':
         return -1
     elif goal1['predicate'] != 'committed' and goal2['predicate'] == 'committed':
@@ -818,5 +822,116 @@ if __name__ == "__main__":
 
     print(asciiframestr(grid))
 
+def filter(goals):
+    for goal in goals:
+        if goal["predicate"].startswith("surveyed") and \
+            not goal["predicate"] == "surveyed-ergodic":
+                return True
+
+def get_tile_value(atoms, tile):
+    if atoms:
+        for atom in atoms:
+            if atom.args[0].name == tile:
+                return [atom.args[1].name]
+
+    return []
+
+def create_graph(world):
+    graph = {}
+    # get tiles from the world objects
+    tiles = world.get_objects_names_by_type("TILE")
+    for tile in tiles:
+        north_tile = get_tile_value(world.get_atoms(["adjacent-north", tile]), tile)
+        south_tile = get_tile_value(world.get_atoms(["adjacent-south", tile]), tile)
+        west_tile = get_tile_value(world.get_atoms(["adjacent-west", tile]), tile)
+        east_tile = get_tile_value(world.get_atoms(["adjacent-east", tile]), tile)
+        graph[tile] = north_tile + south_tile +west_tile + east_tile
+
+    return graph
+
+
+def bfs(graph, start, end):
+    # maintain a queue of paths
+    queue = []
+    # push the first path into the queue
+    queue.append([start])
+    while queue:
+        # get the first path from the queue
+        path = queue.pop(0)
+        # get the last node from the path
+        node = path[-1]
+        # path found
+        if node == end:
+            return path
+        # enumerate all adjacent nodes, construct a new path and push it into the queue
+        for adjacent in graph.get(node, []):
+            new_path = list(path)
+            new_path.append(adjacent)
+            queue.append(new_path)
+
+def parse_tile_to_x_y(tile):
+    output = ""
+    y_index = tile.index('y')
+    return int(tile[2:y_index]) , int(tile[y_index+1:])
+
+def get_action(tile1, tile2):
+    x1, y1 = parse_tile_to_x_y(tile1)
+    x2, y2 = parse_tile_to_x_y(tile2)
+
+    if x2 > x1:
+        return ["moveeast", "grace", tile1, tile2]
+    elif x2 < x1:
+        return ["movewest", "grace", tile1, tile2]
+    elif y2>y1:
+         return ["movenorth", "grace", tile1, tile2]
+    else:
+        return ["movesouth", "grace", tile1, tile2]
+
+def convert_to_actions(plan):
+    actions = []
+    for i in range(len(plan)-1):
+        actions.append(get_action(plan[i], plan[i+1]))
+    return actions
+
+def make_plan(world, goal):
+    #create the graph and apply dfs to get the plan
+    graph = create_graph(world)
+
+    # get agent position
+    agent_pos = world.get_atoms(["agent-at", "grace"])[0].args[1].name
+
+    plan = bfs(graph, agent_pos, goal.args[1])
+
+    if plan == [agent_pos]:
+        return []
+    else:
+        plan = convert_to_actions(plan)
+        if goal["predicate"] == "surveyed-structured":
+            return plan + [["structuresearch", "grace", "fishtag", goal.args[1]]]
+        if goal["predicate"] == "surveyed-singleCellErgodic":
+            return plan + [["singlecellergodicsearch", "grace", "fishtag", goal.args[1]]]
+
+    return plan
+
+
+def get_plan(world, goals, jshopPlan):
+
+    #check if the goals start with surveyed
+    if not filter(goals):
+        return jshopPlan
+
+    try:
+        plan = []
+        # for every goal make a plan
+        for goal in goals:
+            plan = plan + make_plan(world, goal)
+
+        if not plan:
+            return jshopPlan
+        else:
+            return plan
+    except:
+        # if there is no path
+        return []
 
 

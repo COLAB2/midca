@@ -105,6 +105,10 @@ class TagWorld():
         msg = "search," + str(position[0]+1) + "," + str(position[1]+1)
         self.sock.send(str.encode(str(msg)))
 
+    def inspect(self, start, end):
+        msg = "inspect," + str(start[0]+1) + "," + str(start[1]+1) + "," + str(end[0]+1) + "," + str(end[1]+1)
+        self.sock.send(str.encode(str(msg)))
+
     def stopErgodic(self):
         msg = "quitSearchErgodic"
         self.sock.send(str.encode(str(msg)))
@@ -223,6 +227,17 @@ class TagWorld():
     def sendHotspot(self, position):
         msg = "midcaHotspot,"  + str(position[0]+1) + "," + str(position[1]+1)
         self.sock.send(str.encode(str(msg)))
+
+    def get_anomaly(self):
+        try:
+            msg = "get_anomaly,"
+            self.sock.send(str.encode(str(msg)))
+            # collect tags
+            msg = self.sock.recv(2048)
+            msg = msg.decode('utf-8')
+            return msg
+        except:
+            return False
 
     def close(self):
         self.sock.shutdown(1)

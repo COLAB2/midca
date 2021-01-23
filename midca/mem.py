@@ -53,12 +53,14 @@ class Memory:
 	EXPLANATION = "__explanation"
 	EXPLANATION_VAL = "__explanation_val"
 	SUSPENDED_GOALS = "__suspended_goals"
+	FORMULATED_GOALS = "__formulated_goals"
 
 	#multi-agent
 	CONNECTIONS = "__connections"
 
 	#GRACE
 	INTERFACE = "__interface"
+	INTERFACE_WORLD = "__interfaceworld"
 	GETDATA = "__getdata"
 	GRID = "__grid"
 	ESTGRID = "__estgrid"

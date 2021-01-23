@@ -11,6 +11,7 @@ import socket
 import threading
 import simSettings as cfg
 import time as midcatime
+import anomaly
 #import simSettings100x100 as cfg
 
 import traceback
@@ -35,6 +36,8 @@ hotspots_detected = []
 hotspot_detected_bin = []
 hotspots_detected_count = {}
 midca_hotspots = []
+global_anomaly = np.empty([1,2])
+global_anomaly_type = None
 
 def find_max_5_values_avg(time):
     a = {}
@@ -74,7 +77,7 @@ def find_max_7_values_avg_measurement(time, data):
       
       
 def MidcaIntegrator(agent,update):
-    global sock, simtime, t, running, method, searchComplete, wp_list, E, det_count, agentList, off, sc, searchMIDCAErgodic, start_ergodic_time, removeRemoraAction
+    global global_anomaly_type, sock, simtime, t, running, method, searchComplete, wp_list, E, det_count, agentList, off, sc, searchMIDCAErgodic, start_ergodic_time, removeRemoraAction
     run = True
     continuation = False
     # accept connections from outside
@@ -95,6 +98,9 @@ def MidcaIntegrator(agent,update):
         center = np.array([x * x_range / 5.0, y * y_range / 5.0]) + np.array(
             [.5 * x_range / 5.0, .5 * y_range / 5.0])
         wp_list[0] = [center]
+        searchMIDCAErgodic = False
+        searchComplete = False
+
     elif cmd[0] == 'moveToPhysicalPosition':
         x = int(cmd[1]) - 1
         y = int(cmd[2]) - 1
@@ -107,7 +113,7 @@ def MidcaIntegrator(agent,update):
         x = int(cmd[1])
         y = int(cmd[2])
         myx, myy = E.getCellXY(pos[0], pos[1])
-        bin2 = 5 * (y - 1) + (x - 1)
+        bin2 = 5 * (y - 1) + (x - 1) - 1
         clientsocket.send(str.encode(str(x == myx and y == myy)))
         # print(bin, bin2)
 
@@ -132,8 +138,21 @@ def MidcaIntegrator(agent,update):
         y = int(cmd[2]) - 1
         center = np.array([x * x_range / 5.0, y * y_range / 5.0]) + np.array(
             [.5 * x_range / 5.0, .5 * y_range / 5.0])
+
         wp_list[0] = search(wp_list[0], center)
         searchComplete = False
+        searchMIDCAErgodic = False
+
+    elif cmd[0] == 'inspect':
+        x = int(cmd[1]) - 1
+        y = int(cmd[2]) - 1
+        x1 = int(cmd[3]) - 1
+        y1 = int(cmd[4]) - 1
+        center = np.array([x * x_range / 5.0, y * y_range / 5.0]) + np.array(
+            [.5 * x_range / 5.0, .5 * y_range / 5.0])
+        wp_list[0] = searchInspect(wp_list[0], center)
+        searchComplete = False
+        searchMIDCAErgodic = False
 
     elif cmd[0] == 'searchErgodic':
         print (cmd)
@@ -142,17 +161,25 @@ def MidcaIntegrator(agent,update):
         if cmd[1] == 'fullgrid':
             method = searchMethods[2]
             searchMIDCAErgodic = False
+            current_scale = None
         else:
             x = int(cmd[1]) - 1
             y = int(cmd[2]) - 1
-            off = np.array([x * x_range / 5.0, y * y_range / 5.0])
-            sc = x_range / 5.0
+            off = np.array([ (x * x_range / 5.0) , (y * y_range / 5.0) ]) \
+                  + np.array([ (0.5) , (0.5) ])
+            sc = (x_range / 5.0) - 0.7
             searchMIDCAErgodic = True
             start_ergodic_time = t
             # searchComplete = False
 
     elif cmd[0] == 'searchErgodicComplete':
-        clientsocket.send(str.encode(str(not(searchMIDCAErgodic))))
+        if searchComplete == "Failed":
+            clientsocket.send(str.encode(searchComplete))
+        else:
+            clientsocket.send(str.encode(str(not(searchMIDCAErgodic))))
+
+    elif cmd[0] == 'get_anomaly':
+        clientsocket.send(str.encode(global_anomaly_type))
 
     elif cmd[0] == 'quitSearchErgodic':
         searchMIDCAErgodic = False
@@ -173,10 +200,9 @@ def MidcaIntegrator(agent,update):
         else:
             clientsocket.send(str.encode(str(True)))
 
-
     elif cmd[0] == 'get_tags':
         agent = agentList[0]
-        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1]))
+        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1])) - 1
         # print (bin)
         count = 0
         unique = []
@@ -189,13 +215,12 @@ def MidcaIntegrator(agent,update):
 
     elif cmd[0] == 'midcaHotspot':
         agent = agentList[0]
-        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1]))
+        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1])) -1
         midca_hotspots.append(bin)
-        continuation = True
 
     elif cmd[0] == 'get_hotspot_data':
         agent = agentList[0]
-        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1]))
+        bin = 5 * (int(cmd[2]) - 1) + (int(cmd[1])) - 1
         if bin in hotspots_detected_count:
             clientsocket.send(str.encode(str(hotspots_detected_count[bin])))
         else:
@@ -221,7 +246,7 @@ def MidcaIntegrator(agent,update):
         xll = (int(cmd[1]) - 1) * factor * 2
         yll = (int(cmd[2]) - 1) * factor * 2
         pos = agent.getPos()
-        bin = E.getAbstractPos(pos[0], pos[1]) - 1
+        bin = E.getAbstractPos(pos[0], pos[1])
         unique = []
         count = [0, 0, 0, 0]
         time = [[], [], [], []]
@@ -419,18 +444,18 @@ def MidcaIntegrator(agent,update):
         agent = agentList[0]
         if len(cmd) < 2:
             pos = agent.getPos()
-            bin = E.getAbstractPos(pos[0], pos[1]) - 1
+            bin = E.getAbstractPos(pos[0], pos[1])
             clientsocket.send(str.encode(str(agent.belief_map[bin])))
         else:
             # bin = E.getAbstractPos(int(cmd[1]), int(cmd[2])) - 1
-            bin = 5 * (int(cmd[1]) - 1) + (int(cmd[2])) - 1
+            bin = 5 * (int(cmd[1]) - 1) + (int(cmd[2])) -1
             clientsocket.send(str.encode(str(agent.belief_map[bin])))
         det_count[0] = 0
 
     clientsocket.close()
 
-    if continuation:
-        MidcaIntegrator(agent,update)
+    #if continuation:
+    #    MidcaIntegrator(agent,update)
 
     if len(cmd)>=1:
         return
@@ -531,15 +556,41 @@ def search(wp_list,X):
     wp_list.append(np.array(X))
     return wp_list
 
+def searchInspect(wp_list,X):
+    #X is the center position of one of the 25 cells
+    offset=.375*x_range/5
+    wp_list.append(np.array(X))
+    wp_list.append(np.array(X)+np.array([-offset,offset]))
+    wp_list.append(np.array(X)+np.array([offset,offset]))
+    return wp_list
+
+
 def wp_track(x,wp_list):
-    global  searchComplete
+    global  searchComplete, t, global_anomaly, global_anomaly_type
+    anomaly, anomaly_type = discrepency.identify_anomaly(x[0],x[1],wp_list[0][0], wp_list[0][1], t)
+    #anomaly = None
+    if type(anomaly) == float:
+        t = anomaly
+    if type(anomaly) == list:
+        if not (wp_list[0][0] == anomaly[0] and wp_list[0][1] == anomaly[1]):
+            wp_list[0] = np.array(anomaly)
+            global_anomaly = np.array(anomaly)
+            global_anomaly_type = anomaly_type
+
     e = np.array(wp_list[0])-x
-    if np.linalg.norm(e) < x_range/50.0 and len(wp_list) > 1:
-        #print(wp_list)
+    if np.linalg.norm(e) < x_range/50.0 and len(wp_list) > 1 and not type(anomaly) == list:
         del wp_list[0]
 
-    if len(wp_list) == 1:
-        searchComplete=True
+    if len(wp_list) == 1 and not type(anomaly) == list:
+        if (global_anomaly==wp_list[0]).all():
+            searchComplete = "Failed"
+        else:
+            searchComplete=True
+
+    if type(anomaly) == list:
+         searchComplete = "Failed"
+         return wp_list, 1*np.arctan2(e[1],e[0])
+
     return wp_list, 1*np.arctan2(e[1],e[0])
 
 ########################   motion models  ###################################                  
@@ -601,6 +652,9 @@ tagData=np.genfromtxt(fieldname+".csv",delimiter=",")
 tagx=tagData[:,1]
 tagy=tagData[:,2]
 N=len(taglist)
+
+#anomalies
+discrepency = anomaly.Anomalies( simtime, time_step, cfg.rng_seed, E)
 #speedMultiplier=[]
 #removalSuccessMultiplier=[]
 for i in range(numAgents):
@@ -739,7 +793,9 @@ while t<=simtime:#or running:
             if u[0]==0 and u[1]==0:
                 _,u=wp_track(agent.getPos(),[np.array([(off[0]+sc)/2,(off[1]+sc)/2])])
             else:
-                u=np.arctan2(u[1],u[0])
+                temp_list = agent.getPos() + u
+                _,u = wp_track(agent.getPos(), [np.array([(temp_list[0]),(temp_list[1])])])
+                #u=np.arctan2(u[1],u[0])
             if updateGP:
                 updateGP=False
 
@@ -751,9 +807,11 @@ while t<=simtime:#or running:
             u=singleIntegratorErgodicControl(cell_sock, agent,updateGP,scale=sc,offsets=off)
             MidcaIntegrator(agent, updateGP)
             if u[0]==0 and u[1]==0:
-                _,u=wp_track(agent.getPos(),[np.array([(off[0]+sc)/2,(off[1]+sc)/2])])
+                _,u=wp_track(agent.getPos(),[np.array([(off[0]),(off[1])])])
             else:
-                u=np.arctan2(u[1],u[0])
+                temp_list = agent.getPos() + u
+                _,u = wp_track(agent.getPos(), [np.array([(temp_list[0]),(temp_list[1])])])
+                #u=np.arctan2(u[1],u[0])
                 if updateGP:
                     updateGP=False
         #if faultyMode and not removeRemoraAction:
@@ -771,7 +829,7 @@ while t<=simtime:#or running:
         det_count[i]+=dets
         if last_meas+measurement_time<=t:
             updateGP = True
-            bin=E.getAbstractPos(pos[0],pos[1])-1
+            bin=E.getAbstractPos(pos[0],pos[1])
             dtSet=agent.sensor.detectionSet
             rate_meas = len(dtSet)*1.0/measurement_time
             latestMeas=rate_meas
@@ -856,7 +914,7 @@ plt.draw()
 plt.pause(0.00001)
 
 if cfg.logData:
-    f = open(method + "log.csv", 'a')
+    f = open( "log.csv", 'a')
     times = ";".join(str(row[0]) for row in hotspots_detected)
     position = ";".join(str(row[1]) for row in hotspots_detected)
     bin_pos = ";".join(str(row[3]) for row in hotspots_detected)

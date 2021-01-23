@@ -116,6 +116,9 @@
       (control-collect ?agent fishtag ?destX ?destY)
       ))
 
+ (:method (achieve-goal (inspected ?agent ?startX ?startY ?destX ?destY))
+      ()
+      ((!inspect ?agent ?startX ?startY ?destX ?destY)))
 
   (:method (achieve-goal (surveyed-structured ?agent ?destX ?destY))
       ((surveyed-structured ?agent ?destX ?destY))
@@ -193,47 +196,48 @@
  ((agent-at ?agent ?origX ?origY)
  (call equal ?destX ?origX)
  (call < ?destY ?origY))
- ((!movenorth ?agent ?origX ?origY ?origX (call - ?origY 1) )
+ ((!movesouth ?agent ?origX ?origY ?origX (call - ?origY 1) )
  (achieve-goal (agent-at ?agent ?destX ?destY)))
 
- ((agent-at ?agent ?origX ?origY)
+((agent-at ?agent ?origX ?origY)
  (call equal ?destX ?origX)
- (call > ?destY ?origY))
- ((!movesouth ?agent ?origX ?origY ?origX (call + ?origY 1) )
- (achieve-goal (agent-at ?agent ?destX ?destY)))
+ (call > ?destY ?origY)
  )
+ ((!movenorth ?agent ?origX ?origY ?origX (call + ?origY 1) )
+ (achieve-goal (agent-at ?agent ?destX ?destY)))
+
+ )
+
 
 
  (:operator (!moveeast ?agent ?startX ?startY ?destX ?destY)
  ( (agent-at ?agent ?startX ?startY) (adjacent-east ?startX ?startY ?destX ?destY) (atBottom ?agent))
- ((agent-at ?agent ?startX ?startY)
-  (agent-at ?agent ?startX ?startY)
-  )
+ ((agent-at ?agent ?startX ?startY))
  ((agent-at ?agent ?destX ?destY)
  (certainblocRadius ?agent ?destX ?destY)))
 
  (:operator (!movewest ?agent ?startX ?startY ?destX ?destY )
  ( (agent-at ?agent ?startX ?startY) (adjacent-west ?startX ?startY ?destX ?destY) (atBottom ?agent))
- ((agent-at ?agent ?startX ?startY)
-  (agent-at ?agent ?startX ?startY)
-  )
+ ((agent-at ?agent ?startX ?startY))
  ((agent-at ?agent ?destX ?destY)
  (certainblocRadius ?agent ?destX ?destY)))
 
  (:operator (!movenorth ?agent ?startX ?startY ?destX ?destY )
  ( (agent-at ?agent ?startX ?startY) (adjacent-north ?startX ?startY ?destX ?destY) (atBottom ?agent))
- ((agent-at ?agent ?startX ?startY)
- (agent-at ?agent ?startX ?startY)
- )
+ ((agent-at ?agent ?startX ?startY))
  ((agent-at ?agent ?destX ?destY)
  (certainblocRadius ?agent ?destX ?destY)))
 
  (:operator (!movesouth ?agent ?startX ?startY ?destX ?destY )
  ( (agent-at ?agent ?startX ?startY) (adjacent-south ?startX ?startY ?destX ?destY) (atBottom ?agent))
- ((agent-at ?agent ?startX ?startY)
- (agent-at ?agent ?startX ?startY))
+ ((agent-at ?agent ?startX ?startY))
  ((agent-at ?agent ?destX ?destY)
  (certainblocRadius ?agent ?destX ?destY)))
+
+ (:operator (!inspect ?agent ?startX ?startY ?destX ?destY )
+ ((agent-at ?agent ?startX ?startY))
+ ()
+ ((inspected ?agent ?startX ?startY ?destX ?destY)))
 
  (:operator (!moveto ?agent ?startX ?startY)
  ( (agent-at ?agent ?startX ?startY) (not(agent-at ?agent ?startX ?startY)))
@@ -300,7 +304,15 @@
  ()
  ((agent-mode ?agent m1) (free ?agent)))
 
+  (:operator (!inspect ?agent ?startX ?startY ?destX ?destY)
+ ()
+ ()
+ ((inspected ?grace ?startX ?startY ?destX ?destY)))
+
 
  (:- (same ?x ?x) ((call equal 1 1)))
+
+
+
 
  ))

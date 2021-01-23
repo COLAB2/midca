@@ -20,6 +20,8 @@ sim.runSim()
 sim = interface.TagWorld()
 sim.runSim()
 
+experiment_mode = "selection" #"smart"  #"smart" # "regular" # "selection" # "formulation"
+
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 
@@ -73,29 +75,34 @@ myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface))
 #myMidca.append_module("Perceive", perceive.GraceObserver())
 myMidca.append_module("Interpret", guide.GraceGoalInputNSF(interface))
-myMidca.append_module("Interpret", guide.GraceAnomalyDetection())
-
+myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface, experiment_mode))
+#myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface))
 #myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 #myMidca.append_module("Intend", intend.DfsIntendGraceNSF())
-myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())
+#myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF("selection"))
+myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF(experiment_mode))
 myMidca.append_module("Intend", intend.PriorityIntend())
+if experiment_mode == "smart":
+    myMidca.append_module("Intend", intend.MetaIntend())
 myMidca.append_module("Intend", intend.HGNSelection())
 #myMidca.append_module("Intend", intend.SimpleIntend())
-#myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
-#                                                        nbeacons_util.jshop2_tasks_from_goals,
-#                                                        JSHOP_DOMAIN_FILE,
-#                                                        JSHOP_STATE_FILE,
-#                                                        monitors= nbeacons_util.monitor
-#                                                    ))
-myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
+myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,
                                                         JSHOP_STATE_FILE,
-                                                        asynch_grace_nsf,
-                                                        monitors= nbeacons_util.monitor
+                                                        monitors= nbeacons_util.monitor,
+                                                        helper = nbeacons_util.get_plan,
                                                     ))
-myMidca.append_module("Act",  act.AsynchronousGraceAct())
+#myMidca.append_module("Plan", planning.JSHOPPlannerAsync(nbeacons_util.jshop2_state_from_world,
+#                                                        nbeacons_util.jshop2_tasks_from_goals,
+#                                                        JSHOP_DOMAIN_FILE,
+#                                                        JSHOP_STATE_FILE,
+#                                                        asynch_grace_nsf,
+#                                                        monitors= nbeacons_util.monitor
+#                                                    ))
+#myMidca.append_module("Act",  act.AsynchronousGraceAct())
+myMidca.append_module("Act",  act.SimpleAct(asynch_grace))
 
 
 # Set world viewer to output text

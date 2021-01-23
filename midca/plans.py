@@ -64,6 +64,12 @@ class Action:
 			s += str(arg) + ", "
 		s = s[:-2] + ")"
 		return s
+
+	def __eq__(self, other):
+		if self.op == other.op and self.args == other.args:
+			return True
+		else:
+			return False
 		
 class Action_Old:
 	
@@ -128,7 +134,11 @@ class Plan:
 	
 	def finished(self):
 		return self.step > len(self)
-	
+
+	def remove(self, action):
+		if action in self.actions:
+			self.actions.remove(action)
+
 	def __len__(self):
 		return len(self.actions)
 	
@@ -161,3 +171,5 @@ class Plan:
 				s += str(self.actions[i])
 			s += " "
 		return s[:-1]
+
+

@@ -923,9 +923,9 @@ class SurveyErgodic(AsynchAction):
         #    self.status = FAILED
         #    return False
 
-        tagworld = self.interface.TagWorld()
+        #tagworld = self.interface.TagWorld()
         self.mem.set(self.mem.GETDATA, True)
-        self.skip = 5
+        #self.skip = 1
         return False
 
 class GraceGlide(AsynchAction):

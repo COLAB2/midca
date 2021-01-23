@@ -264,6 +264,15 @@ class SimpleAct(base.BaseModule):
             if asynchAction.status == self.asynch_actions.IN_PROGRESS:
                 asynchAction.check_complete()
 
+            if asynchAction.status == self.asynch_actions.FAILED:
+                #plan.remove(midcaaction)
+                self.mem.get(self.mem.GOAL_GRAPH).removePlan(plan)
+                self.current_asynch_action.remove(asynchAction)
+                print ("Action failed " +str(midcaaction) )
+                for goal in plan.goals:
+                    goal.status = False
+
+
                 #print statements
             if asynchAction.status == self.asynch_actions.COMPLETE:
                 #self.mem.add(self.mem.ACTIONS, [midcaaction])
