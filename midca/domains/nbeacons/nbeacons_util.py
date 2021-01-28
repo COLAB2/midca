@@ -199,8 +199,8 @@ class NBeaconGrid():
             strips_result_str += b.get_all_STRIPS_str()
 
         # add agent's location
-        x = self.DIM / 2
-        y = self.DIM / 2
+        x = int(self.DIM / 2)
+        y = int(self.DIM / 2)
         strips_result_str += "AGENT("+str(self.AGENT_NAME)+")\n"
         strips_result_str += "agent-at("+str(self.AGENT_NAME)+","+str("Tx"+str(x)+"y"+str(y))+")\n"
         strips_result_str += "free("+str(self.AGENT_NAME)+")\n"
