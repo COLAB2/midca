@@ -12,7 +12,12 @@ from midca.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 
-Notes: I will generate a state file instead of reading in from a file
+Some examples of goals to give during the interpret phase, when prompted for a goal:
+
+agent-at(Curiosity, Tx3y7)
+...
+agent-at(Curiosity, Tx15y2)
+
 '''
 
 # Setup
