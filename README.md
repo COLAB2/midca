@@ -13,13 +13,13 @@ MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dua
    Make sure to `source .env/bin/activate` whenever you open a new terminal to run MIDCA. If you are running MIDCA from PyCharm it should automatically detect the environment and use that version of python.
 
 
-1. To install MIDCA, run the setup.py file in this folder using python 2.7. 
+1. To install MIDCA, run the setup.py file: 
 
     ```
     python setup.py install
     ```
     
-    If you will be making changes to MIDCA's code, use the `develop` option, like the following (assuming 2.7 is your default python).
+    If you will be making changes to MIDCA's code, use the `develop` option, like the following:
 
      ```
     python setup.py develop
