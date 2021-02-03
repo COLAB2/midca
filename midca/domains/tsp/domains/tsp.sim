@@ -1,0 +1,36 @@
+type(CITY)
+type(AGENT)
+
+predicate(in, [cty], [CITY])
+predicate(visited, [cty], [CITY])
+predicate(notvisited, [cty], [CITY])
+predicate(starting, [cty], [CITY])
+predicate(connected, [cty1, cty2], [CITY, CITY])
+predicate(complete, [], [])
+predicate(notcomplete, [], [])
+
+operator(goalong,
+args = [(cty1, CITY), (cty2, CITY)],
+preconditions = [
+    condition(in, [cty1]),
+    condition(connected, [cty1, cty2]),
+    condition(notvisited, [cty2]),
+    condition(notcomplete, [])],
+results = [
+    condition(in, [cty1], negate = True),
+    condition(in, [cty2]),
+    condition(visited, [cty2]),
+    condition(notvisited, [cty2], negate = True)])
+
+operator(returnalong,
+args = [(cty1, CITY), (cty2, CITY)],
+preconditions = [
+    condition(in, [cty1]),
+    condition(starting, [cty2]),
+    condition(notcomplete, []),
+    condition(connected, [cty1, cty2])],
+results = [
+    condition(in, [cty1], negate = True),
+    condition(in, [cty2]),
+    condition(notcomplete, [], negate = True),
+    condition(complete, [])])

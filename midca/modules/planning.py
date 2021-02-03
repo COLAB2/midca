@@ -785,6 +785,9 @@ class HSPNode():
             self.depth = 0
         self.actions_taken = actions_taken
 
+    def get_depth(self):
+        return self.depth
+
 class HeuristicSearchPlanner(base.BaseModule):
     '''
     Heuristic Search Planner.
@@ -1317,7 +1320,7 @@ class HeuristicSearchPlanner(base.BaseModule):
 
         return new_heuristic # now return the internal function
 
-    def heuristic_search(self, goals, decompose):
+    def heuristic_search(self, goals, decompose=None):
         INFINITY = 10000
         #print "decompose is "+str(decompose)
         t0 = time.time()
@@ -1341,7 +1344,7 @@ class HeuristicSearchPlanner(base.BaseModule):
             # take the first node off the queue
             curr_node = Q[0]
             if self.verbose >=2:# or we_learned_an_op:
-                print("-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str([a.operator.name for a in curr_node.actions_taken]) + " h(n) = "+str(self.nbeacons_heuristic(goals)(curr_node)))
+                print("-- len(Q): "+str(len(Q))+", "+str(nodes_expanded)+" n, a = "+str([a.operator.name for a in curr_node.actions_taken]) + " h(n) = "+str(self.hn(curr_node)))
 
             #print "expanding node "+str(id(curr_node))+" with depth "+str(curr_node.depth)
             #print "Expanding node with plan "+str(map(lambda a: str(a.operator.name),curr_node.actions_taken))+" and depth "+str(curr_node.depth)
@@ -1355,9 +1358,13 @@ class HeuristicSearchPlanner(base.BaseModule):
 
             # if not, get child nodes
             Q += decompose(curr_node, visited)
-            Q = sorted(Q,key=self.nbeacons_heuristic(goals,infinity=INFINITY))
+            # TODO FIX THIS BECAUSE IT BREAKS IF NOT Nbeacons domain
+            #Q = sorted(Q,key=self.nbeacons_heuristic(goals,infinity=INFINITY))
+            #Q = sorted(Q)
             # now remove any node has a score >= infinity (because it's not relevant
-            Q = [s for s in Q if self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY]
+            # TODO FIX THIS BECAUSE IT BREAKS IF NOT Nbeacons domain
+            #Q = [s for s in Q if self.nbeacons_heuristic(goals,infinity=INFINITY)(s) < INFINITY]
+
             # also remove any node that has an activate beacon action that is not the last action
             def bad_activate(n):
                 try:
@@ -1367,7 +1374,8 @@ class HeuristicSearchPlanner(base.BaseModule):
                 except ValueError:
                     return True
 
-            Q = [n for n in Q if bad_activate(n)]
+            # TODO FIX THIS - ONLY RELEVANT TO NBEACONS
+            #Q = [n for n in Q if bad_activate(n)]
 
         if goal_reached_node:
             t1 = time.time()
@@ -1422,7 +1430,10 @@ class HeuristicSearchPlanner(base.BaseModule):
             self.mem.set(self.mem.PLANNING_COUNT, 1+self.mem.get(self.mem.PLANNING_COUNT))
             #print "Goals are "+str(map(str,goals))
 
-            hsp_plan = self.heuristic_search(goals, decompose=self.brute_force_decompose_nbeacons)
+            # TODO FIX THIS for Nbeacons so that it takes an argument, otherwise
+            # TODO no one else can use the heuristic search planner
+            #hsp_plan = self.heuristic_search(goals, decompose=self.brute_force_decompose_nbeacons)
+            hsp_plan = self.heuristic_search(goals)
             if self.verbose >= 1:
                 print("planning finished: ")
                 for p in hsp_plan:
