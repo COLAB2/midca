@@ -5,6 +5,16 @@ import time as ctime
 
 class SimpleIntend(base.BaseModule):
 
+    def __init__(self, goal_selection_policy="unrestricted"):
+        """
+        Goal selection policies:
+        - 'single' : selects a single goal from the goal graph
+        - 'unrestricted' : selects all goals that are root nodes of the goal graph
+        - 'all': selects all goals from the goal graph
+        """
+
+        self.goal_selection_policy = goal_selection_policy
+
     def run(self, cycle, verbose = 2):
         trace = self.mem.trace
         if trace:
@@ -18,7 +28,13 @@ class SimpleIntend(base.BaseModule):
                 print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
-        goals = goalGraph.getUnrestrictedGoals()
+        goals = []
+        if self.goal_selection_policy in ['unrestricted', 'single']:
+            goals = goalGraph.getUnrestrictedGoals()
+        elif self.goal_selection_policy in ['all']:
+            goals = goalGraph.getAllGoals()
+        else:
+            print("WARNING: Goal selection policy {} is not defined!!!!".format(self.goal_selection_policy))
 
         if not goals:
             if verbose >= 1:
@@ -26,7 +42,9 @@ class SimpleIntend(base.BaseModule):
             return
 
         # take the first goal
-        goals = [goals[0]]
+        if self.goal_selection_policy == 'single':
+            goals = [goals[0]]
+
         # add it to the current goal in memory
 
         # current goals as a stack

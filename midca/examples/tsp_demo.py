@@ -65,7 +65,7 @@ myMidca.append_module("Perceive", perceive.PerfectObserver())
 
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
+myMidca.append_module("Intend", intend.SimpleIntend(goal_selection_policy='all'))
 myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
 
 myMidca.append_module("Act", act.SimpleAct())
