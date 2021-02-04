@@ -697,26 +697,27 @@ class World:
 		
 		args = [] #args for new atom
 		#check if predicate took first spot in arg list
-		if goal.args[0] != "predicate":
-			nextArgI = 0
-		else:
-			nextArgI = 1
-		for i in range(len(predicate.argnames)):
-			if nextArgI < len(goal.args):
-				try:
-					args.append(self.objects[str(goal.args[nextArgI])])
-					nextArgI += 1
-				except KeyError:
-					raise ValueError("Object " + str(goal.args[nextArgI]) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
+		if len(goal.args) > 0:
+			if goal.args[0] != "predicate":
+				nextArgI = 0
 			else:
-				if predicate.argnames[i] in goal.kwargs:
+				nextArgI = 1
+			for i in range(len(predicate.argnames)):
+				if nextArgI < len(goal.args):
 					try:
-						value = goal.kwargs[predicate.argnames[i]]
-						args.append(self.objects[str(value)])
+						args.append(self.objects[str(goal.args[nextArgI])])
+						nextArgI += 1
 					except KeyError:
-						raise ValueError("Object " + str(value) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
+						raise ValueError("Object " + str(goal.args[nextArgI]) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
 				else:
-					raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a value for argument " + predicate.argnames[i])
+					if predicate.argnames[i] in goal.kwargs:
+						try:
+							value = goal.kwargs[predicate.argnames[i]]
+							args.append(self.objects[str(value)])
+						except KeyError:
+							raise ValueError("Object " + str(value) + " not found; goal " + str(goal) + " does not encode a valid predicate representation.")
+					else:
+						raise ValueError("Trying to interpret " + str(goal) + " as a predicate atom, but cannot find a value for argument " + predicate.argnames[i])
 		assert len(args) == len(predicate.argnames) #sanity check
 		try:
 			return Atom(predicate, args)

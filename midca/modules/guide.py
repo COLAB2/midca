@@ -26,7 +26,10 @@ class UserGoalInput(base.BaseModule):
             else:
                 negate = False
             predicateName = txt[:txt.index("(")]
-            args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+            args = []
+            if not txt.strip().endswith("()"):
+                args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+
             #use on-table predicate
             if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
                 predicateName = 'on-table'
