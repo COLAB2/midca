@@ -1,0 +1,13 @@
+type,block,entity
+attribute,block,color
+attribute,block,x
+attribute,block,y
+attribute,block,z
+attributeValue,color,red
+attributeValue,color,green
+attributeValue,color,blue
+attributeValue,x,INT
+attributeValue,y,INT
+attributeValue,z,INT
+relation,on,block,block
+relation,clear,block
