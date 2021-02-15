@@ -1,6 +1,7 @@
 from multiprocessing import Process
 import json, time
 import zmq
+from filter import Filter
 
 class RosConnection:
     pass
@@ -14,7 +15,7 @@ class ZmqConnection:
         self.config = config
         self.establish_connections()
 
-    def subscriber_connection(self, ip_address):
+    def subscriber_connection(self, ip_address, connection="connect"):
         """
         :param ip_address: address to connect
         :return: subscriber object
@@ -25,7 +26,10 @@ class ZmqConnection:
         subscriber.setsockopt(zmq.SUBSCRIBE, "")
         subscriber.setsockopt(zmq.RCVTIMEO, 3)
         #subscriber.setsockopt(zmq.CONFLATE, 1)
-        subscriber.connect(ip_address)
+        if connection == "connect":
+            subscriber.connect(ip_address)
+        else:
+            subscriber.bind(ip_address)
 
         return subscriber
 
@@ -46,7 +50,7 @@ class ZmqConnection:
         :return: modify self.config
         """
         # agent to interface subscribtion
-        self.config["publish_interface"] = self.subscriber_connection(self.config["publish_interface"])
+        self.config["publish_interface"] = self.subscriber_connection(self.config["publish_interface"], "bind")
 
         for agent in self.config["agents"]:
 
@@ -62,14 +66,14 @@ class ZmqConnection:
             for topic in self.config["agents"][agent]["subscribe_simulator"]:
                 self.config["agents"][agent]["subscribe_simulator"][topic] = self.subscriber_connection(self.config["agents"][agent]["subscribe_simulator"][topic])
 
-        print self.config
+        #print (self.config)
 
     def publish_messages(self, msg, publisher_object):
         """
         :param publisher_object: zmq publisher object
         :return:
         """
-        publisher_object.send_multipart(message)
+        publisher_object.send_string(msg)
 
     def recieve_messages(self, subscriber_object):
         """
@@ -80,7 +84,7 @@ class ZmqConnection:
             message = subscriber_object.recv()
             return message
         except Exception as e:
-            print e
+            #print e
             time.sleep(0.1)
             return None
 
@@ -95,17 +99,21 @@ class ZmqConnection:
 
         return all_messages
 
-    def start(self):
-
+    def start(self, filter):
+        """
+        param: filter: an object of python class from filter.py to
+                       filter messages and send it to appropriate agent
+        """
         while (True):
             # get messages from agents
             agents_messages =  self.get_all_messages(self.config["publish_interface"])
+            print(agents_messages)
 
             # get all messages from the simulator
             for agent in self.config["agents"]:
                 for topic in self.config["agents"][agent]["subscribe_simulator"]:
                     simulator_messages = self.get_all_messages(self.config["agents"][agent]["subscribe_simulator"][topic])
-                    print (simulator_messages)
+                    filter.filterSimulatorMsgs(simulator_messages)
 
 
 
@@ -139,26 +147,28 @@ class Interface:
         """
         agents = config['agents']
         for agent in agents:
-            agent_process = Process(target=run_script, args=(agent['script'],))
+            agent_process = Process(target=self.run_script, args=(agent['script'],))
             agent_process.start()
             #agent_process.join()
 
-    def run_simulator(self, config):
+    def run_simulator(self, config, filter):
         """
-        :param filter: filter functionality
+        :param filter: an object of python class from filter.py to
+                       filter messages and send it to appropriate agent
                config:
         :return:
         """
         connection_type = ""
         if config["connection_type"] == "zmq":
             message_service = ZmqConnection(config)
-            message_service.start()
+            filter = Filter(config, message_service)
+            message_service.start(filter)
 
 
 if __name__ == '__main__':
     interface = Interface()
     config = interface.read_config()
-    interface.run_simulator(config)
+    interface.run_simulator(config, filter)
     #run_agent_scripts(config)
     #run_simulator(config, filter)
 

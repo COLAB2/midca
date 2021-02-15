@@ -638,7 +638,7 @@ class RecieveRequests(base.BaseModule):
 
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
-        self.publisher.bind(publish)
+        self.publisher.connect(publish)
 
         context = zmq.Context()
         self.subscriber = context.socket(zmq.SUB)

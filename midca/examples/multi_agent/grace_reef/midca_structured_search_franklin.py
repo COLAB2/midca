@@ -18,17 +18,17 @@ from midca.domains.blocksworld.plan import methods_multiAgent as methods, operat
 
 
 #initialize simulator
-interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:4997",
-                              pub_ip = "tcp://127.0.0.1:5998",
-                              sub_mine_ip = "tcp://127.0.0.1:4996" ,
+interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:3002",
+                              pub_ip = "tcp://127.0.0.1:7999",
+                              sub_mine_ip = "tcp://127.0.0.1:3003" ,
                               name="franklin" )
 
 
 agent_name = "franklin"
 other_agent_name = "grace"
 
-publish = "tcp://127.0.0.1:4000"
-subscribe = "tcp://127.0.0.1:5000"
+publish = "tcp://127.0.0.1:7999"
+subscribe = "tcp://127.0.0.1:3000"
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).

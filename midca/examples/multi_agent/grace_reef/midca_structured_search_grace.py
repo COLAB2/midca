@@ -18,13 +18,16 @@ from midca.domains.blocksworld.plan import methods_multiAgent as methods, operat
 
 
 #initialize simulator
-interface = tagworld.TagWorld(name = "grace")
+interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:3000",
+                              pub_ip = "tcp://127.0.0.1:7999",
+                              sub_mine_ip = "tcp://127.0.0.1:3001" ,
+                              name="grace" )
 
 agent_name = "grace"
 other_agent_name = "franklin"
 
-publish = "tcp://127.0.0.1:5000"
-subscribe = "tcp://127.0.0.1:4000"
+publish = "tcp://127.0.0.1:7999"
+subscribe = "tcp://127.0.0.1:3000"
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -35,7 +38,7 @@ Notes: I will generate a state file instead of reading in from a file
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-MIDCA_ROOT = thisDir + "/../"
+MIDCA_ROOT = thisDir + "/../" + "/../" + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/grace/"
@@ -89,8 +92,8 @@ myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
 myMidca.append_module("Interpret", guide.GenerateRequests(agent_name, other_agent_name))
 myMidca.append_module("Interpret", guide.EvaluateRequests(agent_name, other_agent_name))
 
-myMidca.append_module("Interpret", guide.GraceAnomalyDetection())
-myMidca.append_module("Interpret", guide.GraceChangeDetection())
+#myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface))
+#myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 myMidca.append_module("Eval", evaluate.SimpleEvalSuspend())
 myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())

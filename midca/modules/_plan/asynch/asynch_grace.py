@@ -105,7 +105,7 @@ class AsynchAction:
     def __init__(self, mem, midcaAction, executeFunc, isComplete, blocks):
         self.status = NOT_STARTED
         self.mem = mem
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.executeFunc = executeFunc
         self.isComplete = isComplete
         self.blocks = blocks
@@ -120,7 +120,7 @@ class AsynchAction:
         if not self.executeFunc:
             return
         try:
-            self.executeFunc(self.mem, self.midcaAction, self.status)
+            self.executeFunc(self.mem, self.action, self.status)
         except:
             if verbose >= 2:
                 print "Error executing action", self, ":\n", traceback.format_exc(),
@@ -134,7 +134,7 @@ class AsynchAction:
         if not self.check_complete:
             return
         try:
-            complete = self.isComplete(self.mem, self.midcaAction, self.status)
+            complete = self.isComplete(self.mem, self.action, self.status)
             if verbose >= 2 and not complete:
                 print "Action", self, "not complete."
             if verbose >= 1 and complete:
@@ -149,7 +149,7 @@ class AsynchAction:
             self.status = FAILED
 
     def __str__(self):
-        return str(self.midcaAction)
+        return str(self.action)
 
 
 class Commit(AsynchAction):
@@ -161,7 +161,7 @@ class Commit(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -187,7 +187,7 @@ class Commit(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is committed to achieve ")
+        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is committed to achieve ")
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -203,7 +203,7 @@ class uncommit(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -229,7 +229,7 @@ class uncommit(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is achieved and the agent is no longer committed to the goal")
+        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved and the agent is no longer committed to the goal")
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -245,7 +245,7 @@ class Reject(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -271,7 +271,7 @@ class Reject(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is rejected ")
+        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected ")
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -288,7 +288,7 @@ class Inform(AsynchAction):
         # initialize memory
         self.mem = mem
         self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -351,33 +351,33 @@ class Inform(AsynchAction):
 
     def implement_action(self):
         world = self.mem.get(self.mem.STATES)[-1]
-        goal = self.parseGoal(self.parsable_construct_to_goal(self.midcaAction.args[2]))
+        goal = self.parseGoal(self.parsable_construct_to_goal(self.action.args[2]))
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         if goal in goalGraph:
-            if self.midcaAction.args[1] == "human":
+            if self.action.args[1] == "human":
                 print ("------------------------------------------------------------------------------------")
-                print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is accepted ")
+                print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is accepted ")
                 print ("------------------------------------------------------------------------------------")
             else:
-                self.publisher.send_string("commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                self.publisher.send_string("commit: " +  self.parsable_construct_to_goal(self.action.args[2]))
         else:
             # if the world is achieved
-            predicate, args = self.parse_to_atom(self.midcaAction.args[2])
+            predicate, args = self.parse_to_atom(self.action.args[2])
             if world.is_true(predicate, args):
-                if self.midcaAction.args[1] == "human":
+                if self.action.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
-                    print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is achieved ")
+                    print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    self.publisher.send_string("tell: " +  self.parsable_construct_to_goal(self.action.args[2]))
 
             else:
-                if self.midcaAction.args[1] == "human":
+                if self.action.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
-                    print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is rejected ")
+                    print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    self.publisher.send_string("reject: " +  self.parsable_construct_to_goal(self.action.args[2]))
         pass
 
     def check_confirmation(self):
@@ -393,7 +393,7 @@ class Request(AsynchAction):
         # initialize memory
         self.mem = mem
         self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -418,9 +418,9 @@ class Request(AsynchAction):
 
 
     def implement_action(self):
-        self.publisher.send_string("achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2]))
+        self.publisher.send_string("achieve: " + self.parsable_construct_to_goal(self.action.args[2]))
         print ("------------------------------------------------------------------------------------")
-        print (self.midcaAction.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " to " +self.midcaAction.args[1] )
+        print (self.action.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.action.args[2])+ " to " +self.action.args[1] )
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -436,7 +436,7 @@ class wait(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.midcaAction = midcaAction
+        self.action = midcaAction
         self.skip = True
         self.complete = False
         executeAction = lambda mem, midcaAction, status: self.implement_action()
@@ -462,15 +462,15 @@ class wait(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The agent is waiting for : " + self.midcaAction.args[1])
+        print ("The agent is waiting for : " + self.action.args[1])
         print ("------------------------------------------------------------------------------------")
 
     def check_confirmation(self):
         world = self.mem.get(self.mem.STATES)[-1]
-        atoms = world.get_atoms([self.midcaAction.args[1], self.midcaAction.args[0]])
+        atoms = world.get_atoms([self.action.args[1], self.action.args[0]])
         for atom in atoms:
-            if atom.args[0].name == self.midcaAction.args[1] and atom.args[1].name == self.midcaAction.args[0]\
-                    and atom.args[2].name == self.midcaAction.args[2]:
+            if atom.args[0].name == self.action.args[1] and atom.args[1].name == self.action.args[0]\
+                    and atom.args[2].name == self.action.args[2]:
                 return True
         return False
 

@@ -89,7 +89,7 @@ myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
 myMidca.append_module("Interpret", guide.GenerateRequests(agent_name, other_agent_name))
 myMidca.append_module("Interpret", guide.EvaluateRequests(agent_name, other_agent_name))
 
-myMidca.append_module("Interpret", guide.GraceAnomalyDetection())
+myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface))
 myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 myMidca.append_module("Eval", evaluate.SimpleEvalSuspend())
