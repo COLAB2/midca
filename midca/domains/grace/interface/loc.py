@@ -39,25 +39,26 @@ def LatLong2LocalGrid(lat, lon):
     dX = dfRadius * math.sin(dXArcDeg)*math.cos(np.deg2rad(lat))
 
     dYArcDeg  = np.deg2rad((lat - LatOrig))
-    dY = dfRadius * math.sin(dYArcDeg);
+    dY = dfRadius * math.sin(dYArcDeg)
 
 
     #This is the total distance traveled thus far, either North or East
-    MetersNorth = dY;
-    MetersEast  = dX;
+    MetersNorth = dY
+    MetersEast  = dX
     return dX, dY
 
 if __name__ == "__main__":
-    lat, long = LocalGrid2LatLong(1200,-6000)
+    #lat, long = LocalGrid2LatLong(1200,-6000)
+    lat, long = 31.400319, -80.920531
     x, y = LatLong2LocalGrid(lat, long)
     print ("latitude :" +str(lat) + " longitude :" +str(long))
     print ("x :" +str(x) + "y :" +str(y))
 
-    data = {}
-    lat, long = LocalGrid2LatLong(10,-6272)
-    data["InitialCoordinates"] = [lat, long]
-    lat, long = LocalGrid2LatLong(1200,-6000)
-    data["DestCoordinates"] = [lat, long]
+    #data = {}
+    #lat, long = LocalGrid2LatLong(10,-6272)
+    #data["InitialCoordinates"] = [lat, long]
+    #lat, long = LocalGrid2LatLong(1200,-6000)
+    #data["DestCoordinates"] = [lat, long]
 
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
+    #with open('data.json', 'w') as outfile:
+    #    json.dump(data, outfile)

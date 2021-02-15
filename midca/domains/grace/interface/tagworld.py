@@ -4,6 +4,7 @@ import time
 from simulator import Simulator
 import threading
 import numpy as np
+import geniosDataProcess
 
 np.random.seed(555)
 
@@ -14,14 +15,14 @@ class TagWorld():
                  sub_mine_ip = "tcp://127.0.0.1:4998" , name="grace" ):
         context = zmq.Context()
         self.subscriber_remus = context.socket(zmq.SUB)
-        self.subscriber_remus.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber_remus.setsockopt(zmq.SUBSCRIBE,  b'')
         self.subscriber_remus.setsockopt(zmq.RCVTIMEO, -1)
         self.subscriber_remus.setsockopt(zmq.CONFLATE, 1)
-        self.subscriber_remus.connect(sub_ip)
+        self.subscriber_remus.bind(sub_ip)
 
         context = zmq.Context()
         self.subscriber_mine = context.socket(zmq.SUB)
-        self.subscriber_mine.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber_mine.setsockopt(zmq.SUBSCRIBE,  b'')
         self.subscriber_mine.setsockopt(zmq.RCVTIMEO, 3)
         self.subscriber_mine.connect(sub_mine_ip)
 
@@ -49,14 +50,14 @@ class TagWorld():
         self.Recvlock = threading.Lock()
 
         # initialize anomaly chance
-        self.anomalies = True
+        self.anomalies = False#True
         if self.anomalies:
             self.simulate_anomalies = threading.Thread(target=self.attacks)
             self.simulate_anomalies.start()
 
         #time
         self.time = 0
-        self.start_time = self.set_initial_time()
+        #self.start_time = self.set_initial_time()
 
         #hack
         self.timeElapsed = False
@@ -150,6 +151,27 @@ class TagWorld():
 
         self.lock.release()
 
+    def send(self, way_points, speed=1):
+        self.lock.acquire()
+        time.sleep(0.25)
+
+        points = b"points = pts={"
+
+        for point in way_points:
+            points = points + str(point[0]).encode('ascii') + b"," + str(point[1]).encode('ascii') + b":"
+
+        # remove the column(:) from the end of the points string and add flower braces
+        points = points[:-1] + b"}"
+
+        # create message
+        message = [b"Vehicle", points + b"# speed= "+str(speed).encode('ascii')]
+
+        self.publisher.send_multipart(message)
+
+        time.sleep(0.25)
+
+        self.lock.release()
+
     def deepsearch(self, position, speed = 0.8):
         self.lock.acquire()
 
@@ -224,7 +246,7 @@ class TagWorld():
             # value should be 1 because we should try again even if we hit
             # duplicate mine -- maybe sim returns duplicate mines in this
             # for unknown technical reasons
-            print 'hit duplicate mine return...'
+            print ('hit duplicate mine return...')
             return 1
         except Exception as e:
             #begin added code DO
@@ -263,7 +285,7 @@ class TagWorld():
             self.Recvlock.acquire()
             # get the message from the ip address
             position = self.subscriber_remus.recv()
-            x, y, speed, direction,status,mission,time = position.split(",")
+            x, y, speed, direction,status,mission,time,name = position.split(",")
 
             # convert to midca coordinates
             # the content is of the form "X:-101.008305,Y:-44.089216,SPEED:0.000000,HEADING:4.079004,STATUS:NothingToDo"
@@ -446,17 +468,27 @@ class TagWorld():
 
         return str(True)
 
+    def get_hotspot(self, position):
+        return 0
+
     def UpdateSurfstatus(self, status):
         return
+
+    def timeRemaining(self):
+        return 600
 
 
 if __name__ == "__main__":
 
-        tag = TagWorld()
+        tag = TagWorld(name="genios")
+        way_points = geniosDataProcess.process()
+        #print (way_points)
+        #print (way_points)
+        tag.send(way_points)
         #tag.move_cell([0,0], [0,1])
-        tag.get_cell()
+        #tag.get_cell()
         #print (tag.get_time())
-        print(tag.deepsearch([0,0]))
+        #print(tag.deepsearch([0,0]))
         #while (tag.searchComplete() == "false"):
         #    print(tag.get_tags([0,0]))
         #    #tag.getAdjacent([0,0])
