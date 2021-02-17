@@ -85,9 +85,9 @@ std::string detect_grass()
 
 int main(int argc, char** argv)
 {
-	ROS_INFO_STREAM("Starting minecraft/minecraft Entity Detectors node");
+	ROS_INFO_STREAM("Starting minecraft/ros/minecraft Entity Detectors node");
 
-	ros::init(argc, argv, "minecraft/minecraft_entity_detectors");
+	ros::init(argc, argv, "minecraft/ros/minecraft_entity_detectors");
 	ros::NodeHandle n;
 
 	ros::Publisher stone_pub = n.advertise<std_msgs::String>("stone_attr", 1);
