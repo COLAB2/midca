@@ -300,7 +300,7 @@ class Inform(AsynchAction):
                 print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is accepted ")
                 print ("------------------------------------------------------------------------------------")
             else:
-                self.publisher.send_string("commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                self.publisher.send_string(self.midcaAction.args[1]+";commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
         else:
             # if the world is achieved
             predicate, args = self.parse_to_atom(self.midcaAction.args[2])
@@ -310,7 +310,8 @@ class Inform(AsynchAction):
                     print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is achieved ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    time.sleep(0.5)
+                    self.publisher.send_string(self.midcaAction.args[1]+";tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
 
             else:
                 if self.midcaAction.args[1] == "human":
@@ -318,7 +319,7 @@ class Inform(AsynchAction):
                     print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is rejected ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    self.publisher.send_string(self.midcaAction.args[1]+";reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
         pass
 
     def check_confirmation(self):
@@ -359,7 +360,7 @@ class Request(AsynchAction):
 
 
     def implement_action(self):
-        self.publisher.send_string("achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2]))
+        self.publisher.send_string(self.midcaAction.args[1]+";achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2]))
         print ("------------------------------------------------------------------------------------")
         print (self.midcaAction.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " to " +self.midcaAction.args[1] )
         print ("------------------------------------------------------------------------------------")

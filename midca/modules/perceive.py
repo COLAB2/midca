@@ -125,7 +125,7 @@ class PerfectObserver(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         world = self.observe()
-        print (world)
+        #print (world)
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
@@ -162,7 +162,7 @@ class RecieveRequests(base.BaseModule):
 
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
-        self.publisher.bind(publish)
+        self.publisher.connect(publish)
 
         context = zmq.Context()
         self.subscriber = context.socket(zmq.SUB)
@@ -195,6 +195,7 @@ class RecieveRequests(base.BaseModule):
     def run(self, cycle, verbose = 2):
         states = ""
         # get the message from the ip address
+
         try:
             message = self.subscriber.recv()
             message = message.split(":")
@@ -245,6 +246,7 @@ class RecieveRequests(base.BaseModule):
             if e.errno == zmq.EAGAIN:
                 pass # no message was ready (yet!)
 
+
 class RecieveRemoteMidcaWorld(base.BaseModule):
 
     '''
@@ -256,10 +258,10 @@ class RecieveRemoteMidcaWorld(base.BaseModule):
     def __init__(self, publish, subscribe):
 
         context = zmq.Context()
-        self.subscriber = context.socket(zmq.PULL)
-        self.subscriber.setsockopt(zmq.RCVTIMEO, -1)
-        self.subscriber.setsockopt(zmq.CONFLATE, 1)
-        self.subscriber.connect(subscribe)
+        self.subscriber = context.socket(zmq.SUB)
+        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
+        self.subscriber.setsockopt(zmq.RCVTIMEO, 5)
+        self.subscriber.bind(subscribe)
 
 
 
@@ -436,6 +438,110 @@ class UserGoalInput(base.BaseModule):
                 break
             elif val == 'q':
                 break
+            goaltext = val.strip()
+            goal = self.parseGoal(val.strip())
+            if goal:
+                if not self.validGoal(goal, self.world):
+                    print str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world)
+                else:
+                    #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
+                    print "Goal Recieved."
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "exists(human)\n"
+                    states += "GOAL(" +goal + ")\n"
+                    states += "requested(human," +self.name+ "," +goal+")\n"
+
+        # this is to update the world into memory
+        if not states == "":
+            if verbose >= 1:
+                print ("Updated States \n")
+                print(states)
+            stateread.apply_state_str(self.world, states)
+            self.mem.add(self.mem.STATES, self.world)
+
+        # trace
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD",copy.deepcopy(self.world))
+
+class AutomaticGoalInput(base.BaseModule):
+
+    '''
+    MIDCA module that allows users to input goals in a predicate representation.
+    These will be stored in MIDCA state
+    Note that this class only allows for simple goals with only predicate and argument information.
+    It does not currently check to see whether the type or number of arguments is appropriate.
+    '''
+    def __init__(self, name):
+        self.name = name
+        self.goals_entered = ["on(A_,B_)"]
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    def parseGoal(self, txt):
+        if not txt.endswith(")"):
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+        try:
+            if txt.startswith('!'):
+                negate = True
+                txt = txt[1:]
+            else:
+                negate = False
+            predicateName = txt[:txt.index("(")]
+            args = [arg.strip() for arg in txt[txt.index("(") + 1:-1].split(",")]
+            #use on-table predicate
+            if predicateName == 'on' and len(args) == 2 and 'table' == args[1]:
+                predicateName = 'on-table'
+                args = args[:1]
+            if negate:
+                goal = goals.Goal(*args, predicate = predicateName, negate = True)
+            else:
+                goal = goals.Goal(*args, predicate = predicateName)
+            return goal
+        except Exception:
+            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            return None
+
+    def objectNames(self, world):
+        return world.objects.keys()
+
+    def predicateNames(self, world):
+        return world.predicates.keys()
+
+    def validGoal(self, goal, world):
+        try:
+            for arg in goal.args:
+                if arg not in self.objectNames(world):
+                    return False
+            return goal['predicate'] in self.predicateNames(world)
+        except Exception:
+            return False
+
+    def goal_to_parsable_construct(self, goal):
+        """
+        :param goal: goal
+        :return: to a string that can be read by stateread
+        """
+        # convert commas in goal to ":" because of problem in parsing predicates by stateread
+        goal = str(goal).replace(",",";")
+        # convert round braces to square braces because of problem in parsing predicates by stateread
+        goal = goal.replace("(","[")
+        goal = goal.replace(")","]")
+
+        return goal
+
+    def run(self, cycle, verbose = 2):
+        if verbose == 0:
+            return #if skipping, no user input
+        states = ""
+        if self.goals_entered:
+            val = self.goals_entered.pop()#raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
             goaltext = val.strip()
             goal = self.parseGoal(val.strip())
             if goal:

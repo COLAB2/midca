@@ -107,11 +107,6 @@ class SendRemoteMidcaActionSimulator:
         self.publisher = context.socket(zmq.PUB)
         self.publisher.connect(publish)
 
-        context = zmq.Context()
-        self.subscriber = context.socket(zmq.SUB)
-        self.subscriber.connect(subscribe)
-        self.subscriber.setsockopt(zmq.RCVTIMEO, -1)
-        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
 
     def init(self, world, mem):
         self.mem = mem
@@ -144,8 +139,9 @@ class SendRemoteMidcaActionSimulator:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
                         print "simulating MIDCA action:", action
-                    self.publisher.send_string(str(action))
-                    time.sleep(1)
+                    time.sleep(0.5)
+                    self.publisher.send_string("simulator:"+str(action))
+                    time.sleep(0.5)
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"
