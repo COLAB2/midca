@@ -42,8 +42,6 @@ DISPLAY_FUNC = None
 GOAL_GRAPH_CMP_FUNC = None
 DIMENSION = 20
 
-# percent chance each beacon will fail each tick
-BEACON_FAIL_RATE = 0
 
 # Load domain
 world = domainread.load_domain(DOMAIN_FILE)

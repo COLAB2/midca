@@ -1,0 +1,99 @@
+
+<html>
+    <head>
+        <title>LMCP / Python Code Package Readme</title>
+    </head>
+    <body>
+        <h1>Using the LMCP Python Code Package</h1>
+        <h3 align=center>Created on Wednesday, February 24, 2021</h3>
+
+        <h2>Introduction</h2>
+
+        <P ALIGN=LEFT>
+            This document describes how to use Python classes generated for the
+            Lightweight Message Construction Protocol (LMCP) system. The Python
+            source code is produced using the LmcpGen utility, part of the
+            LMCP package available from the AVTAS laboratory at AFRL.
+        </P>
+
+        <P ALIGN=LEFT>The LMCP Python source package includes classes to handle
+            the creation, recognition, serialization, and de-serialization of
+            LMCP objects.  The source package contains two top-level directories.
+            The <code>lmcp</code> directory contains base classes from which all LMCP
+            classes are derived.  These files enable interface-style access to
+            LMCP objects regardless of the MDM namespace.  When implementing
+            tools to handle LMCP classes, it is recommended that one uses these
+            base-classes in methods.  The namespace directory contains
+            classes that are specific to the MDM used when the code was
+            generated.
+        </P>
+
+        <H2 ALIGN=LEFT>Creating LMCP Objects</H2>
+
+        <P ALIGN=LEFT>Every LMCP struct listed in the MDM file has a
+            corresponding class found in the namespace directory. Each class is
+            listed in its own module (file).
+            These classes are based on <I>LMCPObject</I> found in the lmcp
+            directory. LMCP objects can be used in Python code in the same manner as
+            any other Python class.  They are data containers, including access
+            methods that allow programmers to use get and set fields.
+        </P>
+
+        <H2 ALIGN=LEFT>Serializing</H2>
+
+        <P ALIGN=LEFT>LMCP-Python allows serialization of objects.
+            Objects are serialized using the <code>pack()</code> method. calling
+            <code>pack()</code> does not apply the necessary header or checksum for
+            transmission, or unpacking.  The contruction of LMCP <I>messages</I> are
+            described next.
+        </P>
+
+        <H2 ALIGN=LEFT>Creating LMCP Messages</H2>
+
+        <P ALIGN=LEFT>An LMCP message is an LMCP object that is encapsulated
+            with a header and a checksum.  In the Python package, use the method
+            <I>packMessage()</I> in the <I>lmcp/LMCPFactory</I> module to create a message.
+            This method takes a single <I>LMCPObject</I> as an input, as well as header items.  The object is set as the root object
+            for the message.
+        </P>
+
+        <H2 ALIGN=LEFT>Unpacking Messages</H2>
+
+        <P ALIGN=LEFT>Unpacking messages requires knowledge of the message
+            root object type in order to instantiate the proper Python object type.
+            The SeriesFactory class, located in <I>namespace</I> enables a
+            user to convert bytes into LMCP messages and objects.  Using the
+            <code>getObject()</code> method, the user can get the root object that is contained in a
+            set of message bytes. The returned object is an <code>LMCPObject</code>
+            type that can be used in the application.  Note that the stream-based
+            getObjFromStream() method is blocking;  it will read until the
+            number of bytes read from the header value is reached.
+        </P>
+
+        <H2 ALIGN=LEFT>Identifying Message Types</H2>
+
+        <P ALIGN=LEFT>The python language keyword, <code>isinstance</code>, can be used for
+            on any LMCP object to determine its type.  This is useful
+            when creating handlers for messages that arrive through a data
+            source.  Alternatively, <I>LMCPObject</I>s from the namespace
+            package can be created using the <code>createObject()</code> method in the
+            <I>SeriesFactory.</I>  This allows users to instantiate objects based on a
+            type number.  Use the <I>SeriesFactory.</I> enumerations to relate series names and type
+            numbers.
+        </P>
+
+        <H2 ALIGN=LEFT>A Note Regarding Types</H2>
+
+        <P ALIGN=LEFT>LMCP defines unsigned types.  While this is common in
+            many programming languages, python does not implement unsigned integers.
+            The Python LMCP package handles this by using the next-largest type available in
+            Java.  For instance, an unsigned byte is represented internally as an
+            int in Python; an unsigned int is a long.  When unpacking these values,
+            the unpack() methods bit-mask the Python value so that the proper value
+            is passed to the LMCP byte buffer. Setting an unsigned field to a number
+            less than zero or greater than the maximum value allowed by the
+            unsigned type will result in an a &ldquo;wrapped&rdquo; value in the
+            byte buffer.
+        </P>
+    </body>
+</html>
