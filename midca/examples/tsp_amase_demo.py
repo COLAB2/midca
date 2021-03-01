@@ -37,6 +37,148 @@ complete()
 '''
 
 
+def create_sample_UAV1(lmcp_factory, name="UnnamedUAV"):
+    ###################################################################################################################
+    # Create an AirVehicleConfiguration message object from 'scratch'. This requires several sub-message objects:
+    #
+    # FlightProfile       -- at least one FlightProfile that describes the basic dynamics of the aircraft
+    # GimbalConfiguration -- information about the aircraft's gimbal (can be more than one)
+    # CameraConfiguration -- information about the aircraft's camera (can be more than one per gimbal)
+    #
+    # LMCP should default to sane values for unset parameters.
+    # -----------------------------------------------------------------------------------------------------------------
+
+    fp_obj = lmcp_factory.createObjectByName("CMASI", "FlightProfile")
+    fp_obj.set_Name("Cruise")
+    fp_obj.set_Airspeed(27.5)
+    fp_obj.set_PitchAngle(0.0)
+    fp_obj.set_VerticalSpeed(0.0)
+    fp_obj.set_MaxBankAngle(30.0)
+    fp_obj.set_EnergyRate(0.02)
+
+    cc_obj = lmcp_factory.createObjectByName("CMASI", "CameraConfiguration")
+    cc_obj.set_SupportedWavelengthBand(WavelengthBand.WavelengthBand.AllAny)
+    cc_obj.set_FieldOfViewMode(FOVOperationMode.FOVOperationMode.Discrete)
+    cc_obj.set_MinHorizontalFieldOfView(0.11)
+    cc_obj.set_MaxHorizontalFieldOfView(45.0)
+    cc_obj.DiscreteHorizontalFieldOfViewList = [45.0, 22.0, 7.6, 3.7, 0.63, 0.11]
+    cc_obj.set_VideoStreamHorizontalResolution(1024)
+    cc_obj.set_VideoStreamVerticalResolution(768)
+    # Camera PayloadIDs do not have to be unique across different vehicles, since AMASE and UxAS reason about payloads
+    # on a per vehicle basis. However, it is good practice to give each payload a unique ID, even across vehicles.
+    cc_obj.set_PayloadID(10001)
+
+    gc_obj = lmcp_factory.createObjectByName("CMASI", "GimbalConfiguration")
+    gc_obj.SupportedPointingModes = [GimbalPointingMode.GimbalPointingMode.AirVehicleRelativeAngle]
+    gc_obj.set_MinAzimuth(-180.0)
+    gc_obj.set_MaxAzimuth(180.0)
+    gc_obj.set_MinElevation(-180.0)
+    gc_obj.set_MaxElevation(180.0)
+    gc_obj.set_MinRotation(-180.0)
+    gc_obj.set_MaxRotation(180.0)
+    gc_obj.set_IsAzimuthClamped(False)
+    gc_obj.set_IsElevationClamped(False)
+    gc_obj.set_IsRotationClamped(False)
+    gc_obj.set_MaxAzimuthSlewRate(30.0)
+    gc_obj.set_MaxElevationSlewRate(30.0)
+    gc_obj.set_MaxRotationRate(30.0)
+    # Gimbal PayloadIDs do not have to be unique across different vehicles, since AMASE and UxAS reason about payloads
+    # on a per vehicle basis. However, it is good practice to give each payload a unique ID, even across vehicles.
+    gc_obj.set_PayloadID(1001)
+    gc_obj.ContainedPayloadList = [10001]
+
+    avc_obj = lmcp_factory.createObjectByName("CMASI", "AirVehicleConfiguration")
+    avc_obj.set_ID(1)
+    avc_obj.set_Label(name)
+    avc_obj.set_MinimumSpeed(15.0)
+    avc_obj.set_MaximumSpeed(35.0)
+    avc_obj.set_NominalSpeed(27.5)
+    avc_obj.set_MinimumAltitude(0.0)
+    avc_obj.set_MaximumAltitude(1000000.0)
+    avc_obj.set_NominalAltitude(700.0)
+    avc_obj.set_NominalFlightProfile(fp_obj)
+    # Lists do not have 'set' methods; they are accessed directly. This is consistent in concept with LMCP in C++,
+    # where the 'get' method returns a reference that is used to directly set values.
+    avc_obj.PayloadConfigurationList = [cc_obj, gc_obj]
+
+    return avc_obj
+
+
+def create_sample_air_vehicle_config_1(lmcp_factory):
+    ###################################################################################################################
+    # Create an AirVehicleState message object from 'scratch' for the AirVehicleConfiguration above.
+    # This requires several sub-message objects:
+    #
+    # Location3D -- the initial location of the vehicle
+    # GimbalState -- one for each GimbalConfiguration
+    # CameraState -- one for each CameraConfiguration
+    #
+    # LMCP should default to sane values for unset parameters.
+    # -----------------------------------------------------------------------------------------------------------------
+
+    loc_obj = lmcp_factory.createObjectByName("CMASI", "Location3D")
+    loc_obj.set_Altitude(700.0)
+    loc_obj.set_Latitude(1.5152)
+    loc_obj.set_Longitude(-132.5299)
+
+    cs_obj = lmcp_factory.createObjectByName("CMASI", "CameraState")
+    cs_obj.set_HorizontalFieldOfView(20.0)
+    cs_obj.set_PayloadID(10001)
+
+    gs_obj = lmcp_factory.createObjectByName("CMASI", "GimbalState")
+    gs_obj.set_PointingMode(GimbalPointingMode.GimbalPointingMode.AirVehicleRelativeAngle)
+    gs_obj.set_Azimuth(0.0)
+    gs_obj.set_Elevation(-45.0)
+    gs_obj.set_Rotation(0.0)
+    gs_obj.set_PayloadID(1001)
+
+    avs_obj = lmcp_factory.createObjectByName("CMASI", "AirVehicleState")
+    avs_obj.set_ID(1)
+    avs_obj.set_Airspeed(27.5)
+    avs_obj.set_EnergyAvailable(100.0)
+    avs_obj.set_Location(loc_obj)
+    avs_obj.PayloadStateList = [cs_obj, gs_obj]
+
+    return avs_obj
+
+def create_sample_air_vehicle_config_2(lmcp_factory):
+    ###################################################################################################################
+    # Create an AirVehicleState message object from 'scratch' for the AirVehicleConfiguration above.
+    # This requires several sub-message objects:
+    #
+    # Location3D -- the initial location of the vehicle
+    # GimbalState -- one for each GimbalConfiguration
+    # CameraState -- one for each CameraConfiguration
+    #
+    # LMCP should default to sane values for unset parameters.
+    # -----------------------------------------------------------------------------------------------------------------
+
+    loc_obj = lmcp_factory.createObjectByName("CMASI", "Location3D")
+    loc_obj.set_Altitude(700.0)
+    loc_obj.set_Latitude(1.7152)
+    loc_obj.set_Longitude(-132.7299)
+
+    cs_obj = lmcp_factory.createObjectByName("CMASI", "CameraState")
+    cs_obj.set_HorizontalFieldOfView(20.0)
+    cs_obj.set_PayloadID(10001)
+
+    gs_obj = lmcp_factory.createObjectByName("CMASI", "GimbalState")
+    gs_obj.set_PointingMode(GimbalPointingMode.GimbalPointingMode.AirVehicleRelativeAngle)
+    gs_obj.set_Azimuth(0.0)
+    gs_obj.set_Elevation(-45.0)
+    gs_obj.set_Rotation(0.0)
+    gs_obj.set_PayloadID(1001)
+
+    avs_obj = lmcp_factory.createObjectByName("CMASI", "AirVehicleState")
+    avs_obj.set_ID(1)
+    avs_obj.set_Airspeed(27.5)
+    avs_obj.set_EnergyAvailable(100.0)
+    avs_obj.set_Location(loc_obj)
+    avs_obj.PayloadStateList = [cs_obj, gs_obj]
+
+    return avs_obj
+
+
 def create_and_run_amase_scenario():
     ###################################################################################################################
     # Prepare a ZeroMQ context and socket, then connect to 5555. This is the port AMASE uses by convention.
@@ -60,103 +202,14 @@ def create_and_run_amase_scenario():
     factory = LMCPFactory.LMCPFactory()
 
     ###################################################################################################################
-    # Create an AirVehicleConfiguration message object from 'scratch'. This requires several sub-message objects:
-    #
-    # FlightProfile       -- at least one FlightProfile that describes the basic dynamics of the aircraft
-    # GimbalConfiguration -- information about the aircraft's gimbal (can be more than one)
-    # CameraConfiguration -- information about the aircraft's camera (can be more than one per gimbal)
-    #
-    # LMCP should default to sane values for unset parameters.
+    # Create a sample UAV1
     # -----------------------------------------------------------------------------------------------------------------
 
-    fp_obj = factory.createObjectByName("CMASI", "FlightProfile")
-    fp_obj.set_Name("Cruise")
-    fp_obj.set_Airspeed(27.5)
-    fp_obj.set_PitchAngle(0.0)
-    fp_obj.set_VerticalSpeed(0.0)
-    fp_obj.set_MaxBankAngle(30.0)
-    fp_obj.set_EnergyRate(0.02)
-
-    cc_obj = factory.createObjectByName("CMASI", "CameraConfiguration")
-    cc_obj.set_SupportedWavelengthBand(WavelengthBand.WavelengthBand.AllAny)
-    cc_obj.set_FieldOfViewMode(FOVOperationMode.FOVOperationMode.Discrete)
-    cc_obj.set_MinHorizontalFieldOfView(0.11)
-    cc_obj.set_MaxHorizontalFieldOfView(45.0)
-    cc_obj.DiscreteHorizontalFieldOfViewList = [45.0, 22.0, 7.6, 3.7, 0.63, 0.11]
-    cc_obj.set_VideoStreamHorizontalResolution(1024)
-    cc_obj.set_VideoStreamVerticalResolution(768)
-    # Camera PayloadIDs do not have to be unique across different vehicles, since AMASE and UxAS reason about payloads
-    # on a per vehicle basis. However, it is good practice to give each payload a unique ID, even across vehicles.
-    cc_obj.set_PayloadID(10001)
-
-    gc_obj = factory.createObjectByName("CMASI", "GimbalConfiguration")
-    gc_obj.SupportedPointingModes = [GimbalPointingMode.GimbalPointingMode.AirVehicleRelativeAngle]
-    gc_obj.set_MinAzimuth(-180.0)
-    gc_obj.set_MaxAzimuth(180.0)
-    gc_obj.set_MinElevation(-180.0)
-    gc_obj.set_MaxElevation(180.0)
-    gc_obj.set_MinRotation(-180.0)
-    gc_obj.set_MaxRotation(180.0)
-    gc_obj.set_IsAzimuthClamped(False)
-    gc_obj.set_IsElevationClamped(False)
-    gc_obj.set_IsRotationClamped(False)
-    gc_obj.set_MaxAzimuthSlewRate(30.0)
-    gc_obj.set_MaxElevationSlewRate(30.0)
-    gc_obj.set_MaxRotationRate(30.0)
-    # Gimbal PayloadIDs do not have to be unique across different vehicles, since AMASE and UxAS reason about payloads
-    # on a per vehicle basis. However, it is good practice to give each payload a unique ID, even across vehicles.
-    gc_obj.set_PayloadID(1001)
-    gc_obj.ContainedPayloadList = [10001]
-
-    avc_obj = factory.createObjectByName("CMASI", "AirVehicleConfiguration")
-    avc_obj.set_ID(1)
-    avc_obj.set_Label("UAV1")
-    avc_obj.set_MinimumSpeed(15.0)
-    avc_obj.set_MaximumSpeed(35.0)
-    avc_obj.set_NominalSpeed(27.5)
-    avc_obj.set_MinimumAltitude(0.0)
-    avc_obj.set_MaximumAltitude(1000000.0)
-    avc_obj.set_NominalAltitude(700.0)
-    avc_obj.set_NominalFlightProfile(fp_obj)
-    # Lists do not have 'set' methods; they are accessed directly. This is consistent in concept with LMCP in C++,
-    # where the 'get' method returns a reference that is used to directly set values.
-    avc_obj.PayloadConfigurationList = [cc_obj, gc_obj]
+    avc_obj = create_sample_UAV1(lmcp_factory=factory, name="UAV_MIDCA1")
 
     send_to_amase(avc_obj, socket, client_id)
 
-    ###################################################################################################################
-    # Create an AirVehicleState message object from 'scratch' for the AirVehicleConfiguration above.
-    # This requires several sub-message objects:
-    #
-    # Location3D -- the initial location of the vehicle
-    # GimbalState -- one for each GimbalConfiguration
-    # CameraState -- one for each CameraConfiguration
-    #
-    # LMCP should default to sane values for unset parameters.
-    # -----------------------------------------------------------------------------------------------------------------
-
-    loc_obj = factory.createObjectByName("CMASI", "Location3D")
-    loc_obj.set_Altitude(700.0)
-    loc_obj.set_Latitude(1.5152)
-    loc_obj.set_Longitude(-132.5299)
-
-    cs_obj = factory.createObjectByName("CMASI", "CameraState")
-    cs_obj.set_HorizontalFieldOfView(20.0)
-    cs_obj.set_PayloadID(10001)
-
-    gs_obj = factory.createObjectByName("CMASI", "GimbalState")
-    gs_obj.set_PointingMode(GimbalPointingMode.GimbalPointingMode.AirVehicleRelativeAngle)
-    gs_obj.set_Azimuth(0.0)
-    gs_obj.set_Elevation(-45.0)
-    gs_obj.set_Rotation(0.0)
-    gs_obj.set_PayloadID(1001)
-
-    avs_obj = factory.createObjectByName("CMASI", "AirVehicleState")
-    avs_obj.set_ID(1)
-    avs_obj.set_Airspeed(27.5)
-    avs_obj.set_EnergyAvailable(100.0)
-    avs_obj.set_Location(loc_obj)
-    avs_obj.PayloadStateList = [cs_obj, gs_obj]
+    avs_obj = create_sample_air_vehicle_config_1(lmcp_factory=factory)
 
     send_to_amase(avs_obj, socket, client_id)
 
@@ -446,11 +499,31 @@ def create_and_run_amase_scenario():
         msg_obj = get_from_amase(socket, factory)
         if msg_obj.FULL_LMCP_TYPE_NAME == 'afrl.cmasi.AirVehicleState':
             msg_time = msg_obj.get_Time()
+            print("msg_time is {}".format(msg_time))
 
     id_list = list(range(1, 4))
 
     print('')
-    while len(id_list) > 0:
+    # while len(id_list) > 0:
+    #     msg_obj = get_from_amase(socket, factory)
+    #     if msg_obj.FULL_LMCP_TYPE_NAME == 'afrl.cmasi.AirVehicleState':
+    #         if msg_obj.get_ID() in id_list:
+    #             print('Vehicle ' + str(msg_obj.get_ID()) + ' state information at Time='
+    #                   + str(msg_obj.get_Time()) + ' ms')
+    #             print('\tLat: ' + str(msg_obj.get_Location().get_Latitude()))
+    #             print('\tLon: ' + str(msg_obj.get_Location().get_Longitude()))
+    #             print('\tAlt: ' + str(msg_obj.get_Location().get_Altitude()) + ' m')
+    #             print('\tEnergy: ' + str(msg_obj.get_EnergyAvailable()) + '%\n')
+    #             id_list.remove(msg_obj.get_ID())
+
+    print('Done!')
+
+    # continuously get air vehicle state every second
+    i = 0
+    while True:
+        print("Listening to AMASE, i = {}".format(i))
+        print('')
+
         msg_obj = get_from_amase(socket, factory)
         if msg_obj.FULL_LMCP_TYPE_NAME == 'afrl.cmasi.AirVehicleState':
             if msg_obj.get_ID() in id_list:
@@ -460,9 +533,11 @@ def create_and_run_amase_scenario():
                 print('\tLon: ' + str(msg_obj.get_Location().get_Longitude()))
                 print('\tAlt: ' + str(msg_obj.get_Location().get_Altitude()) + ' m')
                 print('\tEnergy: ' + str(msg_obj.get_EnergyAvailable()) + '%\n')
-                id_list.remove(msg_obj.get_ID())
+                #id_list.remove(msg_obj.get_ID())
 
-    print('Done!')
+        time.sleep(2)
+        i += 1
+        print("---------------------------------------------------------------------------------")
 
 
 def send_to_amase(obj, socket, client_id):
@@ -512,7 +587,15 @@ def get_from_amase(socket, factory):
     """
 
     client_id, message = socket.recv_multipart()
-    address, attributes, msg = message.split(bytearray('$', 'ascii'), 2)
+    raw_msg_parts = message.split(bytearray('$', 'ascii'), 2)
+
+    if len(raw_msg_parts) == 3:
+        address, attributes, msg = raw_msg_parts
+        #print("Received message from AMASE: {}".format(msg))
+    else:
+        print("Received a message from AMASE with {} parts after split".format(len(raw_msg_parts)))
+        return None
+
     # msg_format, msg_type, msg_group, entityid, serviceid = attributes.split(bytearray('|', 'ascii'), 4)
     return factory.getObject(msg)
 

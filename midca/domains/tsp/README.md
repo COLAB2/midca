@@ -17,6 +17,8 @@ Quickstart
 3. Run the MIDCA TSP Demo Script
 
 
+    cd midca/
+    source .env/bin/activate
     python midca/examples/tsp_amase_demo.py
 
 You should notice that AMASE now shows two uavs and two new paths.
