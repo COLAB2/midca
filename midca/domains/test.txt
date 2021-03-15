@@ -1,8 +1,0 @@
-type,utensil,entity
-attribute,id,X
-attribute,block,id
-attribute,utensil,color
-type,fork,utensil
-type,spoon,utensil
-type,robot,player
-relation,on,flatware,table                  

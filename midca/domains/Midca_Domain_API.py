@@ -45,6 +45,7 @@ enumerationList = []
 attributeValues = defaultdict(list)
 relations = defaultdict(list)
 entityRelations = defaultdict(list)  # associates relations to the key of entity
+actions = defaultdict(list)
 
 # all inherited values for each entity
 inheritedAttributes = defaultdict(list)
@@ -100,6 +101,9 @@ def objectInput(directedGraph, enumerationList, config):
             for type in row[2:]:  # for each type in the relationship
                 relations[row[1]].insert(index, type)
             entityRelations[row[2]].append(row[1])  # add relation as a child of the first entity
+        elif row[0] == "action":
+            for topic in row[2:]:  # for each topic in the action
+                actions[row[1]].insert(index, topic)
 
     configFile.close()
         
@@ -256,6 +260,9 @@ if __name__ == "__main__":
         print("\nEdges of relations tree: " + str (generate_edges(relations)))
         if args.verbosity >= 2:
             print("Relations Tree: " + (str)(relations))
+            
+        if args.verbosity >= 2:
+            print("\nActions Tree: " + (str)(actions))
 
         # test type values from input
         # printPDDL(directedGraph)
