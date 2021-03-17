@@ -96,7 +96,8 @@ def objectInput(directedGraph, enumerationList, config):
             tempTupple = (row[2], row[1])
             enumerationList.append(tempTupple)
         elif row[0] == "attributeValue":
-            attributeValues[row[1]].insert(index, row[2])
+            for value in row[2:]:  # for each value in the action
+                attributeValues[row[1]].insert(index, value)
         elif row[0] == "relation":
             for type in row[2:]:  # for each type in the relationship
                 relations[row[1]].insert(index, type)
@@ -220,6 +221,40 @@ def modifyHandler(filename):
         else:
             print(line, end='')
 
+    file.close()  
+
+def modifyAsync(filename):
+    file = fileinput.FileInput(filename, inplace=True) 
+    #file = fileinput.FileInput(filename)  # test output
+
+    for line in file: 
+        # Add topics for each operator in domain
+        if '<topics>' in line:
+            mergedTopics = []
+            for operator in actions:
+                mergedTopics = mergedTopics + actions[operator]
+            for topic in set(mergedTopics):
+                print(topic.upper() + '_TOPIC = \"' + topic + '_cmd\"')
+                
+        # Add doOperator for each operator in domain
+        elif '<doOperator>' in line:
+            for operator in actions:
+                operatorText = fileinput.FileInput('templates/doOperatorTemplate.txt')
+                for text in operatorText:
+                    if '<operator>' in text: 
+                        print(text.replace('<operator>', operator), end='')
+           
+                    # Add topics formats for each entity in domain
+                    elif '<topicFormats>' in text:
+                        formats = ''
+                        for topic in actions[operator]:
+                            formats = formats + ('\'' + topic + '\': {},')
+                        print(text.replace('<topicFormats>', formats), end='')
+                    else:
+                        print(text, end='')
+        else:
+            print(line, end='')
+
     file.close()    
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -295,7 +330,12 @@ if __name__ == "__main__":
     
     modifyHandler(dst)
 
-
+    # templates for each action and their associated topics
+    src='templates/asyncTemplate.txt'
+    dst= domain + '/ros/' + domain + '_async.py'
+    shutil.copy(src,dst)  # copy template to modify
+    
+    modifyAsync(dst)
 
 
 
