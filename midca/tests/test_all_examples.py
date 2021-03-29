@@ -63,7 +63,7 @@ for script_file in script_files:
         i = 0
         while script.poll():
             output_line = script.stderr.readline()
-            if "Error" in output_line or "Traceback" in output_line or "Exception" in output_line:
+            if b"Error" in output_line or b"Traceback" in output_line or b"Exception" in output_line:
                 found_exception = True
                 break
             if i >= NUM_STDERR_LINES_TO_READ:
@@ -89,7 +89,7 @@ for script_file in script_files:
             sys.stdout.write('{:.<5}'.format('run'))            
             #sys.stdout.write("........init....run")
             
-            script.stdin.write('skip 100 \n')
+            script.stdin.write(b'skip 100 \n')
             DELAY = DEFAULT_RUN_DELAY 
             for k,v in list(CUSTOM_RUN_DELAYS.items()):
                 if k in script_name:
@@ -120,7 +120,7 @@ for script_file in script_files:
             #    pass
             #print ".........ran 100 cycles",
             if not found_exception:
-                stdout_value, stderr_value = script.communicate('q') # to quit MIDCA
+                stdout_value, stderr_value = script.communicate(b'q') # to quit MIDCA
         
 
         #script_name = str(i)+". "+script_file+" Exceptions:\n"
