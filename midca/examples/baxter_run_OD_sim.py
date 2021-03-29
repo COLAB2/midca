@@ -1,6 +1,10 @@
 #!/usr/bin/env python 
 from midca import base, rosrun
-from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from midca.modules.perceive import ROSObserver
+from midca.modules.plan import AsynchPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import AsynchronousAct
+from midca.modules import simulator, note, guide, evaluate
 from midca.modules._plan.asynch import asynch, operators_sr, methods_sr
 from midca.logging import Logger
 import inspect, os
@@ -14,15 +18,15 @@ def ros_style_midca():
 	for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)
 
-	myMidca.append_module("Perceive", perceive.ROSObserver())
+	myMidca.append_module("Perceive", ROSObserver.ROSObserver())
 	myMidca.append_module("Interpret", guide.InstructionReceiver_sr())
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
-	myMidca.append_module("Intend", intend.SimpleIntend())
-	myMidca.append_module("Plan", planning.AsynchPyhopPlanner(methods_sr.declare_methods, 
+	myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+	myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(methods_sr.declare_methods,
 	operators_sr.declare_ops
 	
 	))
-	myMidca.append_module("Act", act.AsynchronousAct())
+	myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
 	return myMidca
 	
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
