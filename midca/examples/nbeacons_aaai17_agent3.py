@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 import midca
 from midca import base, goals
-from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import HeuristicSearchPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import NBeaconsSimpleAct
+from midca.modules import simulator, guide, evaluate, note, assess
 from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -85,7 +89,7 @@ myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=WIND_EN
 
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 
-myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 
 myMidca.append_module("Interpret1", note.StateDiscrepancyDetector())
 myMidca.append_module("Interpret2", assess.SimpleNBeaconsExplain())
@@ -97,13 +101,13 @@ myMidca.append_module("Interpret3", guide.SimpleNBeaconsGoalManager())
 myMidca.append_module("Interpret3", guide.NBeaconsGoalGenerator(numbeacons=2,goalList=goal_list))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Cleanup", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", HeuristicSearchPlanner.HeuristicSearchPlanner())
 #myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
 #                                                    nbeacons_util.pyhop_tasks_from_goals,
 #                                                    DECLARE_METHODS_FUNC,
 #                                                    DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.NBeaconsSimpleAct())
+myMidca.append_module("Act", NBeaconsSimpleAct.NBeaconsSimpleAct())
 
 for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
             myMidca.append_meta_phase(phase)

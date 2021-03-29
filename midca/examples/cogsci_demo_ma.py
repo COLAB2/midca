@@ -1,7 +1,8 @@
 #!/usr/bin/env python 
 import midca
 from midca.examples import predicateworld
-from midca.modules import simulator, guide, evaluate, perceive, assess 
+from midca.modules.perceive import MAReporter
+from midca.modules import simulator, guide, evaluate, assess
 import inspect, os
 
 # Domain Specific Imports
@@ -31,7 +32,7 @@ argsPyHopPlanner = [util.pyhop_state_from_world,
 					DECLARE_OPERATORS_FUNC]
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate.sim", display = DISPLAY_FUNC, argsPyHopPlanner=argsPyHopPlanner)
 
-myMidca.append_module('Perceive', perceive.MAReporter(writePort))
+myMidca.append_module('Perceive', MAReporter.MAReporter(writePort))
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 2), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', guide.TFStack(), 1)

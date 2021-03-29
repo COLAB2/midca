@@ -1,7 +1,11 @@
 from midca import base
 from midca.worldsim import domainread, stateread, worldsim
 from midca.domains.blocksworld import blockstate, scene
-from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act, planningbroken
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner, PyHopPlannerBroken
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules import simulator, note, guide, evaluate
 from midca.metamodules import monitor, control, interpret, metaintend,  plan
 
 def asqiiDisplay(world):
@@ -20,13 +24,13 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     # add cognitive layer modules
     myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
     myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-    myMidca.append_module("Perceive", perceive.PerfectObserver())
+    myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
     myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
     myMidca.append_module("Interpret", guide.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
-    myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(extinguish))
-    myMidca.append_module("Act", act.SimpleAct())
+    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+    myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(extinguish))
+    myMidca.append_module("Act", SimpleAct.SimpleAct())
 
     # add meta layer phases
     #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
@@ -52,11 +56,11 @@ def guiMidca(domainFile, stateFile, goalsFile = None):
 
     myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
     myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-    myMidca.append_module("Perceive", perceive.PerfectObserver())
+    myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
     myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
     myMidca.append_module("Eval", evaluate.SimpleEval())
-    myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planning.PyHopPlanner())
-    myMidca.append_module("Act", act.SimpleAct())
+    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+    myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner())
+    myMidca.append_module("Act", SimpleAct.SimpleAct())
     return myMidca
 

@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 import midca
-from midca.modules import simulator, guide, perceive, note, evaluate, intend, planningbroken, planning, act
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlannerBroken
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules import simulator, guide, note, evaluate
 from midca.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from midca.worldsim import domainread, stateread
 from midca.domains.blocksworld import blockstate, scene, util
@@ -37,17 +41,17 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 # add cognitive layer modules
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(util.pyhop_state_from_world,
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(util.pyhop_state_from_world,
                                                                 util.pyhop_tasks_from_goals,
                                                                 DECLARE_METHODS_FUNC,
                                                                 DECLARE_OPERATORS_FUNC,
                                                                 extinguishers=False))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 # add meta layer phases
 #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:

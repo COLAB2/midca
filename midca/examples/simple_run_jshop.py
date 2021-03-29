@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 from midca import base
-from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import JSHOPPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules import simulator, guide, evaluate, note
 
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -55,17 +59,17 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 #add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.JSHOPPlanner(util.jshop_state_from_world,
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", JSHOPPlanner.JSHOPPlanner(util.jshop_state_from_world,
                                                     util.jshop_tasks_from_goals,
                                                     JSHOP_DOMAIN_FILE,
                                                     JSHOP_STATE_FILE
                                                     ))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
 myMidca.insert_module('Simulate', simulator.FireReset(), 0)

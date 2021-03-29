@@ -1,6 +1,10 @@
 #!/usr/bin/env python 
 from MIDCA import base, rosrun
-from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planningbroken, planning, act
+from midca.modules.perceive import ROSObserver
+from midca.modules.plan import PyHopPlannerBroken
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import AsynchronousAct
+from MIDCA.modules import simulator, note, guide, evaluate
 from MIDCA.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
 from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from MIDCA.logging import Logger
@@ -20,19 +24,19 @@ def ros_style_midca():
 	for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)
 
-	myMidca.append_module("Perceive", perceive.ROSObserver())
+	myMidca.append_module("Perceive", ROSObserver.ROSObserver())
 	myMidca.append_module("Interpret", guide.InstructionReceiver())
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
-	myMidca.append_module("Intend", intend.SimpleIntend())
+	myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 	#myMidca.append_module("Plan", planning.AsynchPyhopPlanner(DECLARE_METHODS_FUNC, 
 	#														 DECLARE_OPERATORS_FUNC))
 	
-	myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(util.pyhop_state_from_world,
+	myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(util.pyhop_state_from_world,
                                                                 util.pyhop_tasks_from_goals,
                                                                 DECLARE_METHODS_FUNC,
                                                                 DECLARE_OPERATORS_FUNC,
                                                                 extinguishers=False))
-	myMidca.append_module("Act", act.AsynchronousAct())
+	myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
 	
 	# add meta layer phases
 	#for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
