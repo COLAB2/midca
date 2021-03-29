@@ -20,6 +20,9 @@ lib64
 # Installer logs
 pip-log.txt
 
+# ignore pycharm folders
+**/__pycache__
+
 # Unit test / coverage reports
 .coverage
 .tox
@@ -42,4 +45,5 @@ examples/log/**
 # ignore development settings
 .project
 .pydevproject
-.idea/*
+**/.idea
+**/venv
