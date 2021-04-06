@@ -67,52 +67,8 @@ def asynch_plan(mem, midcaPlan):
         if midcaAction[0] == "block_until_seen":
             actions.append(AwaitCurrentLocation(mem, midcaAction, midcaAction[1], 
             allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
-        elif midcaAction[0] == "point_to":
-            cmdID = rosrun.next_id()
-            actions.append(DoPoint(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            POINT_TOPIC, cmdID))
-        
-        elif midcaAction[0] == "reach_to_pickup":
-            cmdID = rosrun.next_id()
-            actions.append(DoReach(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "reach_to_unstack":
-            cmdID = rosrun.next_id()
-            actions.append(DoUnstack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "grab":
-            cmdID = rosrun.next_id()
-            actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            GRAB_TOPIC, cmdID))
-        elif midcaAction[0] == "release":
-            cmdID = rosrun.next_id()
-            actions.append(DoRelease(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RELEASE_TOPIC, cmdID))    
-        elif midcaAction[0] == "raising":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "raising_arm":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, ' ', 
-            allowed_sighting_lag(' '), allowed_sighting_wait(' '),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "putdown":
-            cmdID = rosrun.next_id()
-            actions.append(DoPut(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))
-        elif midcaAction[0] == "stack":
-            cmdID = rosrun.next_id()
-            actions.append(DoStack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))    
+        <planOperators>
+   
         else:
             if verbose >= 1:
                 print "MIDCA action", midcaAction, "does not correspond to an asynch",

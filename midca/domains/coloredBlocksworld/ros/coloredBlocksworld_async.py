@@ -29,10 +29,9 @@ F_COLOR_CODE = '\033[91m'
 FEEDBACK_KEY = "code"
 CMD_ID_KEY = "cmd_id"
 
-RELEASE_TOPIC = "release_cmd"
-LOC_TOPIC = "loc_cmd"
-GRABBING_TOPIC = "grabbing_cmd"
-RAISE_TOPIC = "raise_cmd"
+LOC_TOPIC = "loc"
+LOWER_TOPIC = "lower"
+RAISE_TOPIC = "raise"
 
 #set this to change output for all asynch actions.
 verbose = 2
@@ -70,52 +69,27 @@ def asynch_plan(mem, midcaPlan):
         if midcaAction[0] == "block_until_seen":
             actions.append(AwaitCurrentLocation(mem, midcaAction, midcaAction[1], 
             allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
-        elif midcaAction[0] == "point_to":
-            cmdID = rosrun.next_id()
-            actions.append(DoPoint(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            POINT_TOPIC, cmdID))
-        
-        elif midcaAction[0] == "reach_to_pickup":
-            cmdID = rosrun.next_id()
-            actions.append(DoReach(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "reach_to_unstack":
-            cmdID = rosrun.next_id()
-            actions.append(DoUnstack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "grab":
-            cmdID = rosrun.next_id()
-            actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            GRAB_TOPIC, cmdID))
-        elif midcaAction[0] == "release":
-            cmdID = rosrun.next_id()
-            actions.append(DoRelease(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RELEASE_TOPIC, cmdID))    
-        elif midcaAction[0] == "raising":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "raising_arm":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, ' ', 
-            allowed_sighting_lag(' '), allowed_sighting_wait(' '),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "putdown":
-            cmdID = rosrun.next_id()
-            actions.append(DoPut(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))
-        elif midcaAction[0] == "stack":
-            cmdID = rosrun.next_id()
-            actions.append(DoStack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))    
+		elif midcaAction[0] == "unstack": 
+			cmdID = rosrun.next_id()
+			actions.append(unstack(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['loc', 'lower', 'raise'], cmdID))
+		elif midcaAction[0] == "pickup": 
+			cmdID = rosrun.next_id()
+			actions.append(pickup(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['loc'], cmdID))
+		elif midcaAction[0] == "putdown": 
+			cmdID = rosrun.next_id()
+			actions.append(putdown(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['loc'], cmdID))
+		elif midcaAction[0] == "stack": 
+			cmdID = rosrun.next_id()
+			actions.append(stack(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['raise'], cmdID))
+   
         else:
             if verbose >= 1:
                 print "MIDCA action", midcaAction, "does not correspond to an asynch",
@@ -288,7 +262,7 @@ class AwaitCurrentLocation(AsynchAction):
         return t - lastLocReport[1] <= self.maxAllowedLag
 
 
-class Dounstack(AsynchAction):
+class unstack(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -300,7 +274,8 @@ class Dounstack(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
-		self.topicFormats = {'loc': {},'release': {},'raise': {},'grabbing': {},}
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {'loc': {},'lower': {},'raise': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
@@ -314,7 +289,6 @@ class Dounstack(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -348,7 +322,7 @@ class Dounstack(AsynchAction):
                     return False
         return False
 		
-class Dopickup(AsynchAction):
+class pickup(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -360,7 +334,8 @@ class Dopickup(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
-		self.topicFormats = {'loc': {},'raise': {},'grabbing': {},}
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {'loc': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
@@ -374,7 +349,6 @@ class Dopickup(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -408,7 +382,7 @@ class Dopickup(AsynchAction):
                     return False
         return False
 		
-class Doputdown(AsynchAction):
+class putdown(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -420,7 +394,8 @@ class Doputdown(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
-		self.topicFormats = {'loc': {},'release': {},'grabbing': {},}
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {'loc': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
@@ -434,7 +409,6 @@ class Doputdown(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -468,7 +442,7 @@ class Doputdown(AsynchAction):
                     return False
         return False
 		
-class Dostack(AsynchAction):
+class stack(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -480,7 +454,8 @@ class Dostack(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
-		self.topicFormats = {'loc': {},'release': {},'raise': {},'grabbing': {},}
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {'raise': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
@@ -494,7 +469,6 @@ class Dostack(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         

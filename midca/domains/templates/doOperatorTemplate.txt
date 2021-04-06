@@ -1,4 +1,4 @@
-class Do<operator>(AsynchAction):
+class <operator>(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -10,6 +10,7 @@ class Do<operator>(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		self.topicFormats = {<topicFormats>}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
@@ -24,7 +25,6 @@ class Do<operator>(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         

@@ -234,7 +234,7 @@ def modifyAsync(filename):
             for operator in actions:
                 mergedTopics = mergedTopics + actions[operator]
             for topic in set(mergedTopics):
-                print(topic.upper() + '_TOPIC = \"' + topic + '_cmd\"')
+                print(topic.upper() + '_TOPIC = \"' + topic + '\"')
                 
         # Add doOperator for each operator in domain
         elif '<doOperator>' in line:
@@ -252,6 +252,12 @@ def modifyAsync(filename):
                         print(text.replace('<topicFormats>', formats), end='')
                     else:
                         print(text, end='')
+        elif '<planOperators>' in line:
+            for operator in actions:
+                text = '\t\telif midcaAction[0] == \"<operator>\": \n\t\t\tcmdID = rosrun.next_id()\n\t\t\tactions.append(<operator>(mem, midcaAction, midcaAction[1], \n\t\t\tallowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),\n\t\t\t<topics>, cmdID))'
+                text = text.replace('<operator>', operator)
+                text = text.replace('<topics>', (str)(actions[operator]))
+                print(text)
         else:
             print(line, end='')
 
@@ -299,7 +305,6 @@ if __name__ == "__main__":
         if args.verbosity >= 2:
             print("\nActions Tree: " + (str)(actions))
 
-        # test type values from input
         # printPDDL(directedGraph)
     if args.verbosity == 3:
         #TODO: API ENFORCES ENTITY PARENT
