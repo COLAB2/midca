@@ -1,0 +1,68 @@
+type(SAIRPLANE)
+type(AIRPLANE)
+type(CITY)
+type(TRUCK)
+type(LOCATION)
+type(PACKAGE)
+type(AIRPORT)
+
+predicate(airplane-at, [plane1,aport1], [AIRPLANE,AIRPORT])
+predicate(in-truck, [obj,truck], [PACKAGE,TRUCK])
+predicate(in-airplane, [obj,plane], [PACKAGE,AIRPLANE])
+predicate(sairplane-at, [splane1,aport1], [SAIRPLANE,AIRPORT])
+predicate(NearBy, [city1,city2], [CITY,CITY])
+predicate(truck-at, [truck1, loc1], [TRUCK, LOCATION])
+predicate(IN-CITY, [loc,city], [LOCATION,CITY])
+predicate(IN-CITY-A, [loc,city], [AIRPORT,CITY])
+predicate(obj-at, [obj,loc3], [PACKAGE,LOCATION])
+predicate(obj-at-a, [obj,loc2], [PACKAGE,AIRPORT])
+predicate(deliver, [obj,loc1], [PACKAGE,LOCATION])
+
+operator(load-truck, 
+args = [(obj, PACKAGE), (truck, TRUCK), (loc, LOCATION)], 
+preconditions = [
+	condition(obj-at, [obj,loc]),
+	condition(truck-at, [truck,loc])], 
+results = [
+	condition(in-truck, [obj, truck])])
+
+operator(unload-truck, 
+args = [(obj, PACKAGE), (truck, TRUCK), (loc, LOCATION)], 
+preconditions = [
+	condition(in-truck, [obj, truck]),
+	condition(truck-at, [truck,loc])], 
+results = [
+	condition(obj-at, [obj,loc])])
+
+
+operator(load-airplane, 
+args = [(obj, PACKAGE), (plane, AIRPLANE), (ap1, AIRPORT)], 
+preconditions = [
+	condition(obj-at-a, [obj, ap1]),
+	condition(airplane-at, [plane,ap1])], 
+results = [
+	condition(in-airplane, [obj, plane])])
+
+
+operator(unload-airplane, 
+args = [(obj, PACKAGE), (plane, AIRPLANE), (ap1, AIRPORT)], 
+preconditions = [
+	condition(in-airplane, [obj, plane]),
+	condition(airplane-at, [plane,ap1])], 
+results = [
+	condition(obj-at-a, [obj,ap1])])
+
+
+operator(drive-truck, 
+args = [(truck, TRUCK), (loc1, LOCATION), (loc2, LOCATION)], 
+preconditions = [
+	condition(truck-at, [truck,loc1])], 
+results = [
+	condition(truck-at, [truck, loc2])])
+
+operator(fly-airplane, 
+args = [(plane, AIRPLANE), (ap1, AIRPORT), (ap2, AIRPORT)], 
+preconditions = [
+	condition(airplane-at, [plane,ap1])], 
+results = [
+	condition(airplane-at, [plane, ap2])])
