@@ -68,7 +68,6 @@ def asynch_plan(mem, midcaPlan):
             actions.append(AwaitCurrentLocation(mem, midcaAction, midcaAction[1], 
             allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
         <planOperators>
-   
         else:
             if verbose >= 1:
                 print "MIDCA action", midcaAction, "does not correspond to an asynch",

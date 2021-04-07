@@ -273,14 +273,28 @@ if __name__ == "__main__":
     parser.add_argument("-v","--verbosity",action="count",default=0,help="increase output verbosity")
     args = parser.parse_args()
 	
+    # parse all possible formats for .cfg path name
+    domainPathAppend = '../domains/'
+    domainPath = ''
+    
+    if '../' not in args.config:  # if cmd line arg does not include ../
+        domainPath = domainPath + '../'
+ 
+    if 'domains/' not in args.config:  # if cmd line arg does not include domains/
+        domainPath = domainPath + 'domains/'
+        
+    domainPath = domainPath + args.config  # add at least domainName/ and .cfg filename
+     
     #determine domain name from passed filepath for arg
-    if not len(args.config.split('/')) == 2:
+    if not len(domainPath.split('/')) == 4:
         print('Error: Config file must be located directly within domain directory')
         sys.exit()
     
-    domain = (args.config.split('/'))[0]
+    domainName = (domainPath.split('/'))[2]
+    #print(domainPath)
+    #print(domainName)
     
-    objectInput(directedGraph, enumerationList, args.config) #generate config from passed file 
+    objectInput(directedGraph, enumerationList, domainPath) #generate config from passed file 
     
     # add output based on verbosity
     if args.verbosity >= 1:
@@ -318,26 +332,28 @@ if __name__ == "__main__":
 
     accumulateAttributes(directedGraph, 'entity')  # get all leaf nodes' inherited attributes
     
-    if not os.path.exists(domain + "/ros"):
-        os.makedirs(domain + "/ros")  # create the new ros sub-directory
+    domainPath = domainPath.split('/')[0] +'/'+ domainPath.split('/')[1] +'/'+ domainPath.split('/')[2]  # remove .cfg from this path
+
+    if not os.path.exists(domainPath + "/ros"):
+        os.makedirs(domainPath + "/ros")  # create the new ros sub-directory
     
     # templates for each entity with their attributes for object detection code stubs and helpers
     src='templates/detectorsTemplate.txt'
-    dst= domain + '/ros/' + domain + 'Detectors.cpp'
+    dst= domainPath + '/ros/' + domainName + 'Detectors.cpp'
     shutil.copy(src,dst)  # copy template to modify
     
     modifyDetectors(dst)
     
     # templates for each entity and their predicates for perception to determine relations
     src='templates/entitiesHandlerTemplate.txt'
-    dst= domain + '/ros/' + domain + 'EntitiesHandler.py'
+    dst= domainPath + '/ros/' + domainName + 'EntitiesHandler.py'
     shutil.copy(src,dst)  # copy template to modify
     
     modifyHandler(dst)
 
     # templates for each action and their associated topics
     src='templates/asyncTemplate.txt'
-    dst= domain + '/ros/' + domain + '_async.py'
+    dst= domainPath + '/ros/' + domainName + '_async.py'
     shutil.copy(src,dst)  # copy template to modify
     
     modifyAsync(dst)

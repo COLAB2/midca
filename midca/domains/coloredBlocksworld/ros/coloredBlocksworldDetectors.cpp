@@ -21,9 +21,9 @@ std::string detect_block()
 
 int main(int argc, char** argv)
 {
-	ROS_INFO_STREAM("Starting coloredBlocksworld/ros/coloredBlocksworld Entity Detectors node");
+	ROS_INFO_STREAM("Starting ../domains/coloredBlocksworld/ros/coloredBlocksworld Entity Detectors node");
 
-	ros::init(argc, argv, "coloredBlocksworld/ros/coloredBlocksworld_entity_detectors");
+	ros::init(argc, argv, "../domains/coloredBlocksworld/ros/coloredBlocksworld_entity_detectors");
 	ros::NodeHandle n;
 
 	ros::Publisher block_pub = n.advertise<std_msgs::String>("block_attr", 1);

@@ -30,7 +30,6 @@ FEEDBACK_KEY = "code"
 CMD_ID_KEY = "cmd_id"
 
 LOC_TOPIC = "loc"
-LOWER_TOPIC = "lower"
 RAISE_TOPIC = "raise"
 
 #set this to change output for all asynch actions.
@@ -73,7 +72,7 @@ def asynch_plan(mem, midcaPlan):
 			cmdID = rosrun.next_id()
 			actions.append(unstack(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-			['loc', 'lower', 'raise'], cmdID))
+			['loc'], cmdID))
 		elif midcaAction[0] == "pickup": 
 			cmdID = rosrun.next_id()
 			actions.append(pickup(mem, midcaAction, midcaAction[1], 
@@ -89,7 +88,6 @@ def asynch_plan(mem, midcaPlan):
 			actions.append(stack(mem, midcaAction, midcaAction[1], 
 			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
 			['raise'], cmdID))
-   
         else:
             if verbose >= 1:
                 print "MIDCA action", midcaAction, "does not correspond to an asynch",
@@ -275,7 +273,7 @@ class unstack(AsynchAction):
         self.msgID = msgID
 		# TODO: fill in formats for each topic
 		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
-		self.topicFormats = {'loc': {},'lower': {},'raise': {},}
+		self.topicFormats = {'loc': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
