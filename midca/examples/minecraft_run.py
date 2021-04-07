@@ -20,7 +20,7 @@ MIDCA_ROOT = thisDir + "/../"
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/minecraft/"
 # TODO: Next 2 lines will have to be reworked when the file system is updated. I do not have access to my office and whiteboard drawings
-DOMAIN_FILE = DOMAIN_ROOT + "domains/domain.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "domain.sim"
 STATE_FILE = DOMAIN_ROOT + "states/state.sim"
 DISPLAY_FUNC = print
 DECLARE_METHODS_FUNC = methods.declare_methods  # TODO: add your domain methods to midca/domains/minecraft/plan/methods.py

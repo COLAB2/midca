@@ -19,7 +19,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/sample_domain.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "sample_domain.sim"
 STATE_FILE = DOMAIN_ROOT + "states/sample_state.sim"
 DISPLAY_FUNC = print
 DECLARE_METHODS_FUNC = sample_methods.declare_methods
