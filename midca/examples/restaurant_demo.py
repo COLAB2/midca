@@ -7,7 +7,8 @@ from midca.modules.plan import PyHopPlanner
 from midca.modules.intend import SimpleIntend_Restaurant
 from midca.modules.act import SimpleAct
 from midca.modules.interpret import ADistanceAnomalyNoter, SimpleMortarGoalGen
-from midca.modules import simulator, evaluate
+from midca.modules import simulator
+from midca.modules.evaluate import SimpleEval
 from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca.modules.gens import goaltransform
 from midca import base
@@ -60,7 +61,7 @@ myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
 myMidca.append_module("Interpret", SimpleMortarGoalGen.SimpleMortarGoalGen_Restaurant(STATE_FILE,state_str,Money))
-myMidca.append_module("Eval", evaluate.SimpleEval_Restaurant())
+myMidca.append_module("Eval", SimpleEval.SimpleEval_Restaurant())
 myMidca.append_module("Intend", SimpleIntend_Restaurant.SimpleIntend_Restaurant())
 myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner_temporary(util.pyhop_state_from_world_restaurant,
                                                     util.pyhop_tasks_from_goals_restaurant,

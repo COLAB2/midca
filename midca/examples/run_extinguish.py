@@ -6,7 +6,8 @@ from midca.modules.plan import PyHopPlanner
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
 from midca.modules.interpret import ADistanceAnomalyNoter, TFStack, TFFire
-from midca.modules import simulator, evaluate, simulator
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 from midca import base
 import inspect, os
 
@@ -45,7 +46,7 @@ myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
 myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner(*argsPyHopPlanner))
 myMidca.append_module("Act", SimpleAct.SimpleAct())

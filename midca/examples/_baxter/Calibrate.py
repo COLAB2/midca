@@ -13,8 +13,8 @@ import time
 import  cv2
 import numpy as np
 
-from .homography import *
-from .baxter import *
+from midca.examples.homography import *
+from midca.examples._baxter.baxter import *
 from geometry_msgs.msg import Point, PointStamped
 from _dbus_bindings import String
 from sys import argv

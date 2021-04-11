@@ -6,7 +6,8 @@ from midca.modules.plan import PyHopPlanner, PyHopPlannerBroken
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
 from midca.modules.interpret import ADistanceAnomalyNoter, UserGoalInput
-from midca.modules import simulator, evaluate
+from midca.modules.evaluate import SimpleEval, Scorer
+from midca.modules import simulator
 from midca.metamodules import monitor, control, interpret, metaintend,  plan
 
 def asqiiDisplay(world):
@@ -28,7 +29,7 @@ def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):
     myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
     myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
     myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
-    myMidca.append_module("Eval", evaluate.SimpleEval())
+    myMidca.append_module("Eval", SimpleEval.SimpleEval())
     myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
     myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(extinguish))
     myMidca.append_module("Act", SimpleAct.SimpleAct())
@@ -59,7 +60,7 @@ def guiMidca(domainFile, stateFile, goalsFile = None):
     myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
     myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
     myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
-    myMidca.append_module("Eval", evaluate.SimpleEval())
+    myMidca.append_module("Eval", SimpleEval.SimpleEval())
     myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
     myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner())
     myMidca.append_module("Act", SimpleAct.SimpleAct())

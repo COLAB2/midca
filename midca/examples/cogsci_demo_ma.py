@@ -3,7 +3,8 @@ import midca
 from midca.examples import predicateworld
 from midca.modules.perceive import MAReporter
 from midca.modules.interpret import TFStack, TFFire, MAQuery
-from midca.modules import simulator, evaluate
+from midca.modules.evaluate import SimpleEval, Scorer
+from midca.modules import simulator
 import inspect, os
 
 # Domain Specific Imports
@@ -40,7 +41,7 @@ myMidca.insert_module('Simulate', simulator.FireReset(), 0)
 myMidca.insert_module('Interpret', TFStack.TFStack(), 1)
 myMidca.insert_module('Interpret', TFFire.TFFire(), 2)
 myMidca.insert_module('Interpret', MAQuery.MAQuery(readPort), 3)
-myMidca.insert_module('Eval', evaluate.Scorer(), 0)
+myMidca.insert_module('Eval', Scorer.Scorer(), 0)
 
 
 def preferApprehend(goal1, goal2):
