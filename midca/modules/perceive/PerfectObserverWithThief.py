@@ -1,5 +1,5 @@
 from midca import base
-import copy
+import copy, os
 
 class PerfectObserverWithThief(base.BaseModule):
 

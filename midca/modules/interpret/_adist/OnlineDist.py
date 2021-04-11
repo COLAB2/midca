@@ -1,9 +1,6 @@
 #!/usr/bin/python
 
 
-
-from .Window import Window
-from .WindowPair import WindowPair
 from .OnlineNormal import OnlineNormal
 from . import SameDist
 

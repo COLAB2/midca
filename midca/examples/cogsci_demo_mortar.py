@@ -4,7 +4,9 @@ from midca.modules.perceive import PerfectObserver
 from midca.modules.plan import PyHopPlanner
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
-from midca.modules import simulator, note, guide, evaluate
+from midca.modules.interpret import TFFire,\
+    SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
+from midca.modules import simulator, evaluate
 from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca import base
 
@@ -60,8 +62,8 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
-myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
+myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval())
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner(util.mortar_pyhop_state_from_world,
@@ -73,9 +75,9 @@ myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner(util.mortar_pyhop_state_
 myMidca.append_module("Act", SimpleAct.SimpleAct())
 #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
 #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen(), 1)
-#myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
+myMidca.insert_module('Interpret', SimpleMortarGoalGen.SimpleMortarGoalGen(), 1)
+#myMidca.insert_module('Interpret', TFFire.TFFire(), 2)
+myMidca.insert_module('Interpret', ReactiveApprehend.ReactiveApprehend(), 3)
 myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.

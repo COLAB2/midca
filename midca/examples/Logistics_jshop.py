@@ -4,7 +4,8 @@ from midca.modules.perceive import PerfectObserverWithThief
 from midca.modules.plan import JSHOP2Planner
 from midca.modules.intend import WarehouseIntend
 from midca.modules.act import SimpleAct
-from midca.modules import simulator, guide, evaluate, perceive, note
+from midca.modules.interpret import DeliverGoal, UserGoalInput
+from midca.modules import simulator, evaluate, perceive
 
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -47,8 +48,8 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 #myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", PerfectObserverWithThief.PerfectObserverWithThief())
-myMidca.append_module("Interpret", guide.DeliverGoal())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
+myMidca.append_module("Interpret", DeliverGoal.DeliverGoal())
+#myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
 myMidca.append_module("Eval", evaluate.SimpleEval2())
 myMidca.append_module("Intend", WarehouseIntend.WarehouseIntend())
 myMidca.append_module("Plan", JSHOP2Planner.JSHOP2Planner(logistics_util.jshop2_state_from_world,

@@ -1,7 +1,8 @@
 #!/usr/bin/env python 
 import midca
 from midca.examples import predicateworld
-from midca.modules import simulator, guide
+from midca.modules.interpret import ADistanceAnomalyNoter, TFStack, TFFire, UserGoalInput
+from midca.modules import simulator
 import inspect, os
 
 # Domain Specific Imports
@@ -22,8 +23,8 @@ argsPyHopPlanner = [util.pyhop_state_from_world,
 myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate_fire.sim", argsPyHopPlanner=argsPyHopPlanner)
 
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.3, arsonStart = 2), 1)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
-myMidca.insert_module('Interpret', guide.TFFire(), 2)
+myMidca.insert_module('Interpret', TFStack.TFStack(), 1)
+myMidca.insert_module('Interpret', TFFire.TFFire(), 2)
 
 def preferFire(goal1, goal2):
 	if 'predicate' not in goal1 or 'predicate' not in goal2:
