@@ -7,7 +7,8 @@ from midca.modules.intend import SimpleIntend
 from midca.modules.act import NBeaconsSimpleAct
 from midca.modules.interpret import NBeaconsGoalGenerator, SimpleNBeaconsExplain, UserGoalInput, \
     StateDiscrepancyDetector
-from midca.modules import simulator, evaluate
+from midca.modules.evaluate import NBeaconsDataRecorder
+from midca.modules import simulator
 from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -101,7 +102,7 @@ myMidca.append_module("Interpret3", NBeaconsGoalGenerator.SimpleNBeaconsGoalMana
 
 #myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
 myMidca.append_module("Interpret3", NBeaconsGoalGenerator.NBeaconsGoalGenerator(numbeacons=2,goalList=goal_list))
-myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
+myMidca.append_module("Eval", NBeaconsDataRecorder.NBeaconsDataRecorder())
 myMidca.append_module("Cleanup", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 myMidca.append_module("Plan", HeuristicSearchPlanner.HeuristicSearchPlanner())

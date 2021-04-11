@@ -5,13 +5,14 @@ from midca.modules.plan import PyHopPlannerBroken
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import AsynchronousAct
 from midca.modules.interpret import InstructionReceiver
-from MIDCA.modules import simulator, evaluate
+from midca.modules.evaluate import EvalPointingFromFeedback
+from MIDCA.modules import simulator
 from MIDCA.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
 from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from MIDCA.logging import Logger
 import inspect, os
 from std_msgs.msg import String
-from MIDCA.examples import Calibrate
+from MIDCA.examples._baxter import Calibrate
 from geometry_msgs.msg import Point, PointStamped
 from MIDCA.domains.blocksworld.plan import methods_broken, operators
 from MIDCA.domains.blocksworld import util
@@ -27,9 +28,9 @@ def ros_style_midca():
 
 	myMidca.append_module("Perceive", ROSObserver.ROSObserver())
 	myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
-	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
+	myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
 	myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
-	#myMidca.append_module("Plan", planning.AsynchPyhopPlanner(DECLARE_METHODS_FUNC, 
+	#myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(DECLARE_METHODS_FUNC,
 	#														 DECLARE_OPERATORS_FUNC))
 	
 	myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(util.pyhop_state_from_world,

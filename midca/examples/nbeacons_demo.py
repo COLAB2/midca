@@ -7,7 +7,8 @@ from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
 from midca.modules.interpret import NBeaconsGoalGenerator, SimpleNBeaconsExplain, UserGoalInput, \
     StateDiscrepancyDetector
-from midca.modules import simulator, evaluate
+from midca.modules.evaluate import NBeaconsDataRecorder
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 import inspect, os
 
@@ -71,7 +72,7 @@ myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", StateDiscrepancyDetector.StateDiscrepancyDetector())
 myMidca.append_module("Interpret", SimpleNBeaconsExplain.SimpleNBeaconsExplain())
 myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
-myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
+myMidca.append_module("Eval", NBeaconsDataRecorder.NBeaconsDataRecorder())
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 myMidca.append_module("Plan", HeuristicSearchPlanner.HeuristicSearchPlanner())
 #myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,

@@ -4,7 +4,8 @@ from midca.modules.plan import GenericPyhopPlanner
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
 from midca.modules.interpret import UserGoalInput
-from midca.modules import simulator, evaluate
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 
 # domain specific imports
@@ -45,7 +46,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 myMidca.append_module("Plan", GenericPyhopPlanner.GenericPyhopPlanner(
     DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
