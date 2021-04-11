@@ -1,7 +1,7 @@
 # This file contains helpful functions for the nbeacons domain
 
 import random
-import midca.modules.planning
+import midca.modules.plan
 from midca.modules._plan import pyhop
 
 class NBeaconGrid():

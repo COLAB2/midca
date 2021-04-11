@@ -4,7 +4,8 @@ from midca.modules.perceive import ROSObserver
 from midca.modules.plan import PyHopPlannerBroken
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import AsynchronousAct
-from MIDCA.modules import simulator, note, guide, evaluate
+from midca.modules.interpret import InstructionReceiver
+from MIDCA.modules import simulator, evaluate
 from MIDCA.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
 from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from MIDCA.logging import Logger
@@ -25,7 +26,7 @@ def ros_style_midca():
 		myMidca.append_phase(phase)
 
 	myMidca.append_module("Perceive", ROSObserver.ROSObserver())
-	myMidca.append_module("Interpret", guide.InstructionReceiver())
+	myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
 	myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
 	myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
 	#myMidca.append_module("Plan", planning.AsynchPyhopPlanner(DECLARE_METHODS_FUNC, 

@@ -5,7 +5,9 @@ from midca.modules.perceive import PerfectObserver
 from midca.modules.plan import HeuristicSearchPlanner
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import NBeaconsSimpleAct
-from midca.modules import simulator, guide, evaluate, note, assess
+from midca.modules.interpret import NBeaconsGoalGenerator, SimpleNBeaconsExplain, UserGoalInput, \
+    StateDiscrepancyDetector
+from midca.modules import simulator, evaluate
 from midca.metamodules import monitor, control, interpret, metaintend, plan
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -91,14 +93,14 @@ myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 
 myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 
-myMidca.append_module("Interpret1", note.StateDiscrepancyDetector())
-myMidca.append_module("Interpret2", assess.SimpleNBeaconsExplain())
-myMidca.append_module("Interpret3", guide.SimpleNBeaconsGoalManager())
-#myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
-#myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
+myMidca.append_module("Interpret1", StateDiscrepancyDetector.StateDiscrepancyDetector())
+myMidca.append_module("Interpret2", SimpleNBeaconsExplain.SimpleNBeaconsExplain())
+myMidca.append_module("Interpret3", NBeaconsGoalGenerator.SimpleNBeaconsGoalManager())
+#myMidca.append_module("Interpret", SimpleNBeaconsExplain.SimpleNBeaconsExplain())
+#myMidca.append_module("Interpret", SimpleNBeaconsExplain.SimpleNBeaconsExplain())
 
-#myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Interpret3", guide.NBeaconsGoalGenerator(numbeacons=2,goalList=goal_list))
+#myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Interpret3", NBeaconsGoalGenerator.NBeaconsGoalGenerator(numbeacons=2,goalList=goal_list))
 myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
 myMidca.append_module("Cleanup", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Intend", SimpleIntend.SimpleIntend())

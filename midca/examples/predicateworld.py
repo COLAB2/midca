@@ -5,7 +5,8 @@ from midca.modules.perceive import PerfectObserver
 from midca.modules.plan import PyHopPlanner
 from midca.modules.intend import SimpleIntend
 from midca.modules.act import SimpleAct
-from midca.modules import simulator, note, guide, evaluate
+from midca.modules.interpret import  UserGoalInput, ADistanceAnomalyNoter
+from midca.modules import simulator, evaluate
 
 
 def UserGoalsMidca(domainFile, stateFile, display=print, goalsFile = None, argsPyHopPlanner=[]):
@@ -21,8 +22,8 @@ def UserGoalsMidca(domainFile, stateFile, display=print, goalsFile = None, argsP
     myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
     myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display))
     myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
-    myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-    #myMidca.append_module("Interpret", guide.UserGoalInput())
+    myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
+    #myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
     myMidca.append_module("Eval", evaluate.SimpleEval())
     myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
     myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner(*argsPyHopPlanner))
