@@ -1,33 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-#MIDCA  DOMAIN API
-#Reads in a file of the format specification,object2,object1
-#Specification can be a type, i.e. a spoon (object2) is a utensil (object1)
-#or specification can be an attribute, i.e., a utensil (object2) can be a color (object1)
-#Requirement: Be able to take in input and add it to the object hierarchy tree
-#Requirement: Act as an interface between ros and MIDCA for objects
-
-#Detector -> type, xblock, isablock
-#then it is passed to MIDCA from interface
-#All objects have types and possibly attributes. Attributes have values (ie type color has values
-#green, red, etc)
-#uniform naming via the type system and simple attributes
-#Each action has a piece of code to handle and determine when its over
-#define predicate formulation
-#Be Able to ultimately define a new domain
-#  detect object types, what are predicates in domain, do actions, when is action done, and
-#  naming of objects and handling of attributes
-#  Naming -> type + unique identifier, decrement unique identifier if item disappears so
-#  block2 doesn't become block3 when it reappears
-
-#robot -> be able to list objects, then the robot detects objects, and can click to assign objects?
-
-#TODO: Attribute and AttributeValue need to be separate things
-
 from __future__ import print_function
 import sys
 import os
@@ -205,14 +175,14 @@ def modifyDetectors(filename):
 
     file.close()
     
-def modifyHandler(filename):
+def modifyHandler(filename, domainName):
     file = fileinput.FileInput(filename, inplace=True) 
     #file = fileinput.FileInput(filename)  # test output
     #print(' ')
 
     for line in file: 
         if '<domain>' in line: 
-            print(line.replace('<domain>', filename.replace('EntitiesHandler.py', '')), end='')
+            print(line.replace('<domain>', domainName), end='')
             
         # Add relations for each entity in domain
         elif '<relations>' in line:
@@ -321,11 +291,11 @@ if __name__ == "__main__":
 
         # printPDDL(directedGraph)
     if args.verbosity == 3:
-        #TODO: API ENFORCES ENTITY PARENT
+        #Future work: HAVE API ENFORCE ENTITY AS PARENT NODE
         print('')
         printTree(directedGraph, 'entity', False)  # print entity tree without attributes
     elif args.verbosity >= 4:
-        #TODO: API ENFORCES ENTITY PARENT
+        #Future work: HAVE API ENFORCE ENTITY AS PARENT NODE
         print('')
         printTree(directedGraph, 'entity', True)  # print entity tree with attributes
 
@@ -349,7 +319,7 @@ if __name__ == "__main__":
     dst= domainPath + '/ros/' + domainName + 'EntitiesHandler.py'
     shutil.copy(src,dst)  # copy template to modify
     
-    modifyHandler(dst)
+    modifyHandler(dst, domainName)
 
     # templates for each action and their associated topics
     src='templates/asyncTemplate.txt'
@@ -357,17 +327,3 @@ if __name__ == "__main__":
     shutil.copy(src,dst)  # copy template to modify
     
     modifyAsync(dst)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
