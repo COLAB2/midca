@@ -30,7 +30,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "nbeacons.sim"
 #STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
 DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods

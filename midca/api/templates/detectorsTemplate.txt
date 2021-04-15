@@ -1,0 +1,33 @@
+/*********************************************************************
+ * 
+ * 
+ * For example, consider using PointCloudLab
+ * (https://github.com/COLAB2/baxter_pcl/blob/master/src/detect_objects.cpp)
+ * 
+ * 
+ *********************************************************************/
+
+#include <ros/ros.h>
+
+
+<methods>
+
+int main(int argc, char** argv)
+{
+	ROS_INFO_STREAM("Starting <domain> Entity Detectors node");
+
+	ros::init(argc, argv, "<domain>_entity_detectors");
+	ros::NodeHandle n;
+
+    <topic>
+  
+	while (ros::ok())
+	{
+        <publish>
+	
+		ros::spinOnce();
+	}
+
+	ros::spin();
+	return 0;
+}

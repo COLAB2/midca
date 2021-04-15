@@ -16,7 +16,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 
 MIDCA_ROOT = thisDir + "/../"
 
-domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist_extinguish.sim"
+domainFile = MIDCA_ROOT + "domains/blocksworld/arsonist_extinguish.sim"
 stateFile = MIDCA_ROOT + "domains/blocksworld/states/extinguisher_state.sim"
 extinguish = True
 

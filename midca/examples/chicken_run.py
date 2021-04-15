@@ -18,9 +18,11 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
+
 DOMAIN_ROOT = MIDCA_ROOT + "domains/chicken/"
 DOMAIN_FILE = DOMAIN_ROOT + "domain.sim"
 STATE_FILE = DOMAIN_ROOT + "states/initial_state.sim"
+
 DISPLAY_FUNC = print
 DECLARE_METHODS_FUNC = methods.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
