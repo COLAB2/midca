@@ -9,7 +9,7 @@ from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 
 # domain specific imports
-from midca.domains.blocksworld.plan import sample_methods, sample_operators
+from midca.domains.chicken.plan import methods, operators
 
 import inspect, os
 '''
@@ -23,12 +23,14 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
-DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/sample_domain.sim"
-STATE_FILE = DOMAIN_ROOT + "states/sample_state.sim"
+
+DOMAIN_ROOT = MIDCA_ROOT + "domains/chicken/"
+DOMAIN_FILE = DOMAIN_ROOT + "domain.sim"
+STATE_FILE = DOMAIN_ROOT + "states/initial_state.sim"
+
 DISPLAY_FUNC = print
-DECLARE_METHODS_FUNC = sample_methods.declare_methods
-DECLARE_OPERATORS_FUNC = sample_operators.declare_ops
+DECLARE_METHODS_FUNC = methods.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
 GOAL_GRAPH_CMP_FUNC = None # not used in this example
 
 # Load Domain Files  

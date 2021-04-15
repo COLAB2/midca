@@ -39,7 +39,7 @@ MIDCA_ROOT = thisDir + "/../"
 print(MIDCA_ROOT)
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_jshop.sim"
 
 ### Domain Specific Variables for JSHOP planner

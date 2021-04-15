@@ -32,7 +32,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 DOMAIN_ROOT = MIDCA_ROOT + "domains/construction_domain/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist_mortar_construction.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist_mortar_construction.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_construction.sim"
 
 DISPLAY_FUNC = util.asqiiDisplay
