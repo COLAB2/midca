@@ -1,0 +1,87 @@
+type(resource)
+type(mapgrid)
+type(player)
+type(resource)
+type(material)
+type(tool)
+type(craftgrid)
+type(mapgrid)
+type(direction)
+type(player)
+type(monster)
+type(weapon)
+type(food)
+type(potion)
+type(Helmet)
+type(chestplates)
+
+ predicate(is-trap,[loc], [mapgrid])
+ predicate(looking-for,[res], [resource])
+ predicate(know-where,[res,loc], [resource,mapgrid])
+ predicate(player-at,[loc], [mapgrid])
+ predicate(in-shelter,[], [])
+ predicate(look-at,[direction], [direction])
+ predicate(monster-at,[zombie,loc], [monster,mapgrid])
+ predicate(thing-at-map,[obj,loc], [resource,mapgrid])
+ predicate(thing-at-loc,[obj,loc], [resource,mapgrid])
+ predicate(known-loc,[obj], [resource])
+ predicate(placed-thing-at-map,[obj,loc], [material,mapgrid])
+ predicate(resource-at-craft,[res,loc], [thing,craftgrid])
+ predicate(craft-empty,[loc], [craftgrid])
+ predicate(connect,[from,to], [mapgrid,mapgrid])
+ predicate(next-to,[from,to], [direction,direction])
+ predicate(crafting,[], [])
+ predicate(survive,[], [])
+ predicate(eat,[food], [food])
+ predicate(is-attacked,[], [])
+ predicate(is-trapped,[], [])
+ predicate(is-dead,[player], [player])
+ predicate(is-alive,[player], [player])
+ predicate(head-armed,[], [])
+ predicate(chest-armed,[], [])
+ operator (move
+,args = [(from,mapgrid ), (to,mapgrid )],preconditions = [condition(player-at [?from]),
+condition(connect [?from, ?to]),
+],results=[condition(player-at, [?to]),
+condition(not, [(player-at, ?from)]),
+])
+ operator (,args = [(loc1,mapgrid ), (loc,mapgrid )],preconditions = [condition(player-at [?loc1]),
+condition(connect [?loc1, ?loc]),
+condition(thing-at-loc [arrow_trap, ?loc]),
+condition(not [(is-trapped)]),
+condition(neq [(player-current-health), 0]),
+],results=[condition(decrease, [(player-current-health), 5]),
+condition(thing-at-map, [arrow, ?loc1]),
+condition(is-trapped, []),
+])
+ operator (event-skeleton-attacked
+,args = [(loc1,mapgrid ), (loc,mapgrid )],preconditions = [condition(player-at [?loc1]),
+condition(connect [?loc1, ?loc]),
+condition(thing-at-loc [skeleton, ?loc]),
+condition(not [(is-attacked)]),
+condition(neq [(player-current-health), 0]),
+],results=[condition(decrease, [(player-current-health), 5]),
+condition(thing-at-map, [arrow, ?loc1]),
+condition(is-attacked, []),
+])
+ operator (event-monster-explosion
+,args = [(loc1,mapgrid ), (loc,mapgrid )],preconditions = [condition(player-at [?loc1]),
+condition(connect [?loc1, ?loc]),
+condition(thing-at-loc [monster, ?loc]),
+condition(not [(is-attacked)]),
+condition(neq [(player-current-health), 0]),
+],results=[condition(decrease, [(player-current-health), 5]),
+condition(thing-at-map, [monster-remains, ?loc1]),
+condition(is-attacked, []),
+])
+ operator (event-die
+,args = [(player,player )],preconditions = [condition(is-alive [?player]),
+condition(eq [(player-current-health), 0]),
+],results=[condition(is-dead, [?player]),
+])
+ operator (event-find
+		,args = [(res,resource ), (loc,mapgrid ), (player,loc )],preconditions = [condition(looking-for [?res]),
+condition(connected [?loc, ?player-loc]),
+condition(thing-at-loc [?res, ?loc]),
+],results=[condition(know-where, [?res, ?loc]),
+])

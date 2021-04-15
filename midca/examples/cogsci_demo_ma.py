@@ -29,7 +29,7 @@ argsPyHopPlanner = [util.pyhop_state_from_world,
 					util.pyhop_tasks_from_goals,
 					DECLARE_METHODS_FUNC,
 					DECLARE_OPERATORS_FUNC]
-myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/domains/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate.sim", display = DISPLAY_FUNC, argsPyHopPlanner=argsPyHopPlanner)
+myMidca = predicateworld.UserGoalsMidca(domainFile = MIDCA_ROOT + "domains/blocksworld/arsonist.sim", stateFile = MIDCA_ROOT + "domains/blocksworld/states/defstate.sim", display = DISPLAY_FUNC, argsPyHopPlanner=argsPyHopPlanner)
 
 myMidca.append_module('Perceive', perceive.MAReporter(writePort))
 myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 2), 1)
