@@ -30,7 +30,7 @@ print(MIDCA_ROOT)
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "domain2.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
 
 ### Domain Specific Variables for JSHOP planner

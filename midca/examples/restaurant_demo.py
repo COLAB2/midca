@@ -31,7 +31,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 DOMAIN_ROOT = MIDCA_ROOT + "domains/restaurant_domain/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/restaurant.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "restaurant.sim"
 STATE_FILE = DOMAIN_ROOT + "states/restaurant_state.sim"
 
 DISPLAY_FUNC = util.shopping_display

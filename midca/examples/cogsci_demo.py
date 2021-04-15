@@ -26,7 +26,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods.declare_methods
