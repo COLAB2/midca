@@ -1,3 +1,4 @@
+[![Documentation Status](https://readthedocs.org/projects/midca/badge/?version=latest)](https://midca.readthedocs.io/en/latest/?badge=latest)
 # MIDCA: The Metacognitive Integrated Dual-Cycle Architecture.
 
 MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dual-Cycle Architecture (https://tinyurl.com/midcadoc)
