@@ -1,6 +1,6 @@
 # https://github.com/COLAB2/midca/blob/c3e4cc9fab5683f44435816d90a7a2eb591c4ce4/midca/rosrun.py
 
-class minecraft/ros/minecraftEntitiesHandler(IncomingMsgHandler):
+class minecraftEntitiesHandler(IncomingMsgHandler):
 
     '''
     class that receives Point messages, where each message indicates that the given object
@@ -13,7 +13,7 @@ class minecraft/ros/minecraftEntitiesHandler(IncomingMsgHandler):
         callback = lambda strMsg: self.store(strMsg)
         msgType = String
 		self.left = None
-        super(minecraft/ros/minecraftEntitiesHandler, self).__init__(topic, msgType, callback, midcaObject)
+        super(minecraftEntitiesHandler, self).__init__(topic, msgType, callback, midcaObject)
         #self.objID = objID
         if memKey:
             self.memKey = memKey

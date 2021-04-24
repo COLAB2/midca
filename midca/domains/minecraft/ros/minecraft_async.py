@@ -29,11 +29,11 @@ F_COLOR_CODE = '\033[91m'
 FEEDBACK_KEY = "code"
 CMD_ID_KEY = "cmd_id"
 
-AIM_TOPIC = "aim_cmd"
-FOOD_TOPIC = "food_cmd"
-PICKUP_TOPIC = "pickup_cmd"
-POTION_TOPIC = "potion_cmd"
-SWING_TOPIC = "swing_cmd"
+AIM_TOPIC = "aim"
+FOOD_TOPIC = "food"
+PICKUP_TOPIC = "pickup"
+POTION_TOPIC = "potion"
+SWING_TOPIC = "swing"
 
 #set this to change output for all asynch actions.
 verbose = 2
@@ -71,52 +71,31 @@ def asynch_plan(mem, midcaPlan):
         if midcaAction[0] == "block_until_seen":
             actions.append(AwaitCurrentLocation(mem, midcaAction, midcaAction[1], 
             allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1])))
-        elif midcaAction[0] == "point_to":
-            cmdID = rosrun.next_id()
-            actions.append(DoPoint(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            POINT_TOPIC, cmdID))
-        
-        elif midcaAction[0] == "reach_to_pickup":
-            cmdID = rosrun.next_id()
-            actions.append(DoReach(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "reach_to_unstack":
-            cmdID = rosrun.next_id()
-            actions.append(DoUnstack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))    
-        elif midcaAction[0] == "grab":
-            cmdID = rosrun.next_id()
-            actions.append(DoGrab(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            GRAB_TOPIC, cmdID))
-        elif midcaAction[0] == "release":
-            cmdID = rosrun.next_id()
-            actions.append(DoRelease(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RELEASE_TOPIC, cmdID))    
-        elif midcaAction[0] == "raising":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "raising_arm":
-            cmdID = rosrun.next_id()
-            actions.append(DoRaise(mem, midcaAction, ' ', 
-            allowed_sighting_lag(' '), allowed_sighting_wait(' '),
-            RAISE_TOPIC, cmdID))
-        elif midcaAction[0] == "putdown":
-            cmdID = rosrun.next_id()
-            actions.append(DoPut(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            LOC_TOPIC, cmdID))
-        elif midcaAction[0] == "stack":
-            cmdID = rosrun.next_id()
-            actions.append(DoStack(mem, midcaAction, midcaAction[1], 
-            allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
-            RAISE_TOPIC, cmdID))    
+		elif midcaAction[0] == "drinkPotion": 
+			cmdID = rosrun.next_id()
+			actions.append(drinkPotion(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['swing', 'potion'], cmdID))
+		elif midcaAction[0] == "breakBlock": 
+			cmdID = rosrun.next_id()
+			actions.append(breakBlock(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['aim', 'swing', 'pickup'], cmdID))
+		elif midcaAction[0] == "useBlock": 
+			cmdID = rosrun.next_id()
+			actions.append(useBlock(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['aim', 'swing'], cmdID))
+		elif midcaAction[0] == "eat": 
+			cmdID = rosrun.next_id()
+			actions.append(eat(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['swing', 'food'], cmdID))
+		elif midcaAction[0] == "placeBlock": 
+			cmdID = rosrun.next_id()
+			actions.append(placeBlock(mem, midcaAction, midcaAction[1], 
+			allowed_sighting_lag(midcaAction[1]), allowed_sighting_wait(midcaAction[1]),
+			['aim', 'swing'], cmdID))
         else:
             if verbose >= 1:
                 print "MIDCA action", midcaAction, "does not correspond to an asynch",
@@ -289,7 +268,7 @@ class AwaitCurrentLocation(AsynchAction):
         return t - lastLocReport[1] <= self.maxAllowedLag
 
 
-class DodrinkPotion(AsynchAction):
+class drinkPotion(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -301,6 +280,7 @@ class DodrinkPotion(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		self.topicFormats = {'swing': {},'potion': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
@@ -315,7 +295,6 @@ class DodrinkPotion(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -349,7 +328,7 @@ class DodrinkPotion(AsynchAction):
                     return False
         return False
 		
-class DobreakBlock(AsynchAction):
+class breakBlock(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -361,6 +340,7 @@ class DobreakBlock(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		self.topicFormats = {'aim': {},'swing': {},'pickup': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
@@ -375,7 +355,6 @@ class DobreakBlock(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -409,7 +388,7 @@ class DobreakBlock(AsynchAction):
                     return False
         return False
 		
-class DouseBlock(AsynchAction):
+class useBlock(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -421,6 +400,7 @@ class DouseBlock(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		self.topicFormats = {'aim': {},'swing': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
@@ -435,7 +415,6 @@ class DouseBlock(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -469,7 +448,7 @@ class DouseBlock(AsynchAction):
                     return False
         return False
 		
-class Doeat(AsynchAction):
+class eat(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -481,6 +460,7 @@ class Doeat(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
 		self.topicFormats = {'swing': {},'food': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
@@ -495,7 +475,6 @@ class Doeat(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         
@@ -529,7 +508,7 @@ class Doeat(AsynchAction):
                     return False
         return False
 		
-class DoplaceBlock(AsynchAction):
+class placeBlock(AsynchAction):
     
     def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
     msgID):
@@ -541,7 +520,8 @@ class DoplaceBlock(AsynchAction):
         self.complete = False
         self.msgID = msgID
 		# TODO: fill in formats for each topic
-		self.topicFormats = {'aim': {},'swing': {}}
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {'aim': {},'swing': {},}
 		
         executeAction = lambda mem, midcaAction, status: self.send_point()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
@@ -555,7 +535,6 @@ class DoplaceBlock(AsynchAction):
 		for topic in self.topics:
 			# Handle <topic>
 			self.msgDict = topicFormats[topic]
-			# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
         
 			print self.msgDict
         

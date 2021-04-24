@@ -143,6 +143,7 @@ if __name__ == "__main__":
     pddl_file = args.pddl
     if not pddl_file.endswith('.pddl'):  # ensure pddl_file name includes '.pddl'
         pddl_file = pddl_file + '.pddl'
+        
 
     newDirectoryRoot = thisDir + "/" + newDomainName
     

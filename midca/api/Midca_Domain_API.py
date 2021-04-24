@@ -8,6 +8,7 @@ import shutil  # file copying
 
 from collections import defaultdict
 
+middleware = 'UNDEFINED'  # for generating middleware specific code
 
 directedGraph = defaultdict(list)
 attributes = defaultdict(list)
@@ -55,8 +56,11 @@ def objectInput(directedGraph, enumerationList, config):
     configFile = open(config)
     fileText = csv.reader(configFile, delimiter = ',')
     for row in fileText:
+        if row[0] == "middleware": 
+            global middleware
+            middleware = row[1].lower()  # auto lowercase
         #if it is a type it is added to the type tree
-        if row[0] == "type":
+        elif row[0] == "type":
              directedGraph[row[2]].insert(index, row[1])
              index += 1
          #if it is an attribute, then add it to the attribute tree
@@ -304,26 +308,36 @@ if __name__ == "__main__":
     
     domainPath = domainPath.split('/')[0] +'/'+ domainPath.split('/')[1] +'/'+ domainPath.split('/')[2]  # remove .cfg from this path
 
-    if not os.path.exists(domainPath + "/ros"):
-        os.makedirs(domainPath + "/ros")  # create the new ros sub-directory
-    
-    # templates for each entity with their attributes for object detection code stubs and helpers
-    src='templates/detectorsTemplate.txt'
-    dst= domainPath + '/ros/' + domainName + 'Detectors.cpp'
-    shutil.copy(src,dst)  # copy template to modify
-    
-    modifyDetectors(dst)
-    
-    # templates for each entity and their predicates for perception to determine relations
-    src='templates/entitiesHandlerTemplate.txt'
-    dst= domainPath + '/ros/' + domainName + 'EntitiesHandler.py'
-    shutil.copy(src,dst)  # copy template to modify
-    
-    modifyHandler(dst, domainName)
 
-    # templates for each action and their associated topics
-    src='templates/asyncTemplate.txt'
-    dst= domainPath + '/ros/' + domainName + '_async.py'
-    shutil.copy(src,dst)  # copy template to modify
+    print(middleware)
+
+    if middleware == "UNDEFINED": 
+        print("Error: no middleware defined")
+    elif middleware == "ros":
+        if not os.path.exists(domainPath + "/ros"):
+            os.makedirs(domainPath + "/ros")  # create the new ros sub-directory
     
-    modifyAsync(dst)
+        # templates for each entity with their attributes for object detection code stubs and helpers
+        src='templates/detectorsTemplate.txt'
+        dst= domainPath + '/ros/' + domainName + 'Detectors.cpp'
+        shutil.copy(src,dst)  # copy template to modify
+        
+        modifyDetectors(dst)
+        
+        # templates for each entity and their predicates for perception to determine relations
+        src='templates/entitiesHandlerTemplate.txt'
+        dst= domainPath + '/ros/' + domainName + 'EntitiesHandler.py'
+        shutil.copy(src,dst)  # copy template to modify
+        
+        modifyHandler(dst, domainName)
+
+        # templates for each action and their associated topics
+        src='templates/asyncTemplate.txt'
+        dst= domainPath + '/ros/' + domainName + '_async.py'
+        shutil.copy(src,dst)  # copy template to modify
+        
+        modifyAsync(dst)
+    else:
+        print("Error: no " + middleware + " implementation")
+
+    
