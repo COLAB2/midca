@@ -309,8 +309,6 @@ if __name__ == "__main__":
     domainPath = domainPath.split('/')[0] +'/'+ domainPath.split('/')[1] +'/'+ domainPath.split('/')[2]  # remove .cfg from this path
 
 
-    print(middleware)
-
     if middleware == "UNDEFINED": 
         print("Error: no middleware defined")
     elif middleware == "ros":
