@@ -18,7 +18,7 @@ class Filter:
                        using config variable get the publisher of the agent
         reutrn: agents publisher
         """
-        return self.config["agents"]["neo"]["publish_simulator"]["simulator"]
+        return self.config["agents"]["morpheus"]["publish_simulator"]["simulator"]
 
     def getAgentAddress(self, agent_name):
         """
@@ -26,6 +26,13 @@ class Filter:
         reutrn: agents publisher
         """
         return self.config["agents"][agent_name]["address"]["agent"]
+
+    def getAgentReqAddress(self, agent_name):
+        """
+        param msg: agent_name
+        reutrn: agents publisher
+        """
+        return self.config["agents"][agent_name]["address"]["requests"]
 
     def filterSimulatorMsgs(self, messages, agent):
         """
@@ -75,11 +82,9 @@ class Filter:
                 else:
                     msg = msg.split(";")
                     agent_name, msg = msg[0], msg[1]
-                    agent_address = self.getAgentAddress(agent_name)
+                    agent_address = self.getAgentReqAddress(agent_name)
                     print (agent_name, msg)
                     self.connection.publish_messages(msg, agent_address)
-
-
 
     def recieveAgentMsgs(self, messages):
         """

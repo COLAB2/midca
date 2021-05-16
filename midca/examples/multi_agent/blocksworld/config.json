@@ -4,13 +4,17 @@
     "agents": {
       "neo": {
         "script": "neo.py",
-        "address": {"agent": "tcp://127.0.0.1:4000"},
+        "address": {"agent": "tcp://127.0.0.1:4000",
+                    "requests": "tcp://127.0.0.1:3000"
+                    },
         "publish_simulator": {"simulator": "tcp://127.0.0.1:7000"},
         "subscribe_simulator": {"simulator": "tcp://127.0.0.1:6000"}
       },
       "morpheus": {
         "script": "morpheus.py",
-        "address": {"agent": "tcp://127.0.0.1:5000"},
+        "address": {"agent": "tcp://127.0.0.1:5000",
+                    "requests": "tcp://127.0.0.1:2000"
+                    },
         "publish_simulator": {"simulator": "tcp://127.0.0.1:7000"},
         "subscribe_simulator": {"simulator": "tcp://127.0.0.1:6000"}
       }

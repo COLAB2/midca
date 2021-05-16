@@ -64,9 +64,11 @@ class RemoteMidcaActionSimulator:
         actions = []
         try:
             message = self.subscriber.recv()
+            if "simulator" in message:
+                message = message.replace("simulator:", "")
             actions_text = message.split(";")
             for action_text in actions_text:
-                actions.append(self.create_action(message))
+                actions.append(self.create_action(action_text))
         except zmq.ZMQError as e:
             if e.errno == zmq.EAGAIN:
                 pass # no message was ready (yet!)
@@ -98,18 +100,17 @@ class SendWorld:
         self.world = world
 
     def run(self, cycle, verbose = 2):
-        self.publisher.send_pyobj(self.world)
+        world_str = self.world.convert_to_state_str()
+        #print (world_str)
+        self.publisher.send_string(world_str)
+        #print (world_str)
 
 class SendRemoteMidcaActionSimulator:
-
-    def __init__(self, publish, subscribe):
-        context = zmq.Context()
-        self.publisher = context.socket(zmq.PUB)
-        self.publisher.connect(publish)
 
 
     def init(self, world, mem):
         self.mem = mem
+        self.memkey = self.mem.ZMQ_OUTGOING_MSGS
         self.world = world
 
 
@@ -139,9 +140,11 @@ class SendRemoteMidcaActionSimulator:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
                         print "simulating MIDCA action:", action
-                    time.sleep(0.5)
-                    self.publisher.send_string("simulator:"+str(action))
-                    time.sleep(0.5)
+                    #time.sleep(0.5)
+                    #self.publisher.send_string("simulator:"+str(action))
+                    msg = "simulator:"+str(action)
+                    self.mem.add(self.memkey, msg)
+                    #time.sleep(0.5)
                 else:
                     if verbose >= 1:
                         print "MIDCA-selected action", action, "illegal in current world state. Skipping"

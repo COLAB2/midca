@@ -57,6 +57,14 @@ class Memory:
 	#multi-agent
 	CONNECTIONS = "__connections"
 
+	#ZMQ constants
+	ZMQ_OBJS_DETECTED = "__zmqdetectedobjects"
+	ZMQ_REQS_DETECTED = "__zmqAgentRequests"
+
+	ZMQ_OUTGOING_MSGS = "__zmqoutgoingmsgs"
+	ZMQ_OUTGOING_REQS = "__zmqOutgoingReqs"
+
+
 
     	#Goal Tranformation
     	CL_TREE = "__class heirarchy tree"

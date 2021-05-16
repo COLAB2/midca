@@ -228,7 +228,7 @@ class Inform(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
+        self.memkey = self.mem.ZMQ_OUTGOING_REQS
         self.midcaAction = midcaAction
         self.skip = True
         self.complete = False
@@ -300,7 +300,9 @@ class Inform(AsynchAction):
                 print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is accepted ")
                 print ("------------------------------------------------------------------------------------")
             else:
-                self.publisher.send_string(self.midcaAction.args[1]+";commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                #self.publisher.send_string(self.midcaAction.args[1]+";commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                msg = self.midcaAction.args[1]+";commit: " +  self.parsable_construct_to_goal(self.midcaAction.args[2])
+                self.mem.add(self.memkey, msg)
         else:
             # if the world is achieved
             predicate, args = self.parse_to_atom(self.midcaAction.args[2])
@@ -311,15 +313,18 @@ class Inform(AsynchAction):
                     print ("------------------------------------------------------------------------------------")
                 else:
                     time.sleep(0.5)
-                    self.publisher.send_string(self.midcaAction.args[1]+";tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
-
+                    #self.publisher.send_string(self.midcaAction.args[1]+";tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    msg = self.midcaAction.args[1]+";tell: " +  self.parsable_construct_to_goal(self.midcaAction.args[2])
+                    self.mem.add(self.memkey, msg)
             else:
                 if self.midcaAction.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
                     print ("The goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " is rejected ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string(self.midcaAction.args[1]+";reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    #self.publisher.send_string(self.midcaAction.args[1]+";reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2]))
+                    msg = self.midcaAction.args[1]+";reject: " +  self.parsable_construct_to_goal(self.midcaAction.args[2])
+                    self.mem.add(self.memkey, msg)
         pass
 
     def check_confirmation(self):
@@ -334,7 +339,7 @@ class Request(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
+        self.memkey = self.mem.ZMQ_OUTGOING_REQS
         self.midcaAction = midcaAction
         self.skip = True
         self.complete = False
@@ -360,7 +365,9 @@ class Request(AsynchAction):
 
 
     def implement_action(self):
-        self.publisher.send_string(self.midcaAction.args[1]+";achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2]))
+        msg = self.midcaAction.args[1]+";achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2])
+        self.mem.add(self.memkey, msg)
+        #self.publisher.send_string(self.midcaAction.args[1]+";achieve: " + self.parsable_construct_to_goal(self.midcaAction.args[2]))
         print ("------------------------------------------------------------------------------------")
         print (self.midcaAction.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.midcaAction.args[2])+ " to " +self.midcaAction.args[1] )
         print ("------------------------------------------------------------------------------------")

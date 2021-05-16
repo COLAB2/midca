@@ -770,6 +770,13 @@ class World:
 			del self.operators[opname]
 			return True
 		return False
+
+	def convert_to_state_str(self):
+		result = ""
+		for atom in self.atoms:
+			if atom:
+				result += str(atom) + "\n"
+		return result
 	
 	def __str__(self):
 		s = "[\n"
