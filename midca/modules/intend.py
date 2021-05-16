@@ -57,6 +57,114 @@ class SimpleIntend(base.BaseModule):
                     print goal,
                 print
 
+class SimpleIntendMultipleGoals(base.BaseModule):
+
+    def run(self, cycle, verbose = 2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOALGRAPH",copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getUnrestrictedGoals()
+
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS) :
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+            else:
+                goals = []
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS",goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
+class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
+
+    def run(self, cycle, verbose = 2):
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle,self.__class__.__name__)
+            trace.add_data("GOALGRAPH",copy.deepcopy(self.mem.GOAL_GRAPH))
+
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+
+        if not goalGraph:
+            if verbose >= 1:
+                print "Goal graph not initialized. Intend will do nothing."
+            return
+        # get all the goals from the root of the goal graph
+        goals = goalGraph.getUnrestrictedGoals()
+
+        if not goals:
+            if verbose >= 1:
+                print "No Goals in Goal graph. Intend will do nothing."
+            return
+
+        # take the first goal
+        #goals = [goals[0]]
+        # add it to the current goal in memory
+        predicates = ["committed", "rejected", "requested"]
+        suspended_goal = self.mem.get(self.mem.SUSPENDED_GOALS)
+        if not suspended_goal:
+            for goal in goals:
+                if not goal['predicate'] in predicates:
+                    self.mem.set(self.mem.SUSPENDED_GOALS, [goal])
+                    if verbose >= 2:
+                        print "The goal " + str(goal) + " is suspended due to lack of resources"
+                    goals.remove(goal)
+        else:
+            if suspended_goal[0] in goals:
+                goals.remove(suspended_goal[0])
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS) :
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+            else:
+                goals = []
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS",goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
 class WarehouseIntend(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
@@ -3146,3 +3254,4 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
                     for goal in goals:
                         print goal,
                     print
+

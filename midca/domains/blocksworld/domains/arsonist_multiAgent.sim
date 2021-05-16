@@ -1,0 +1,155 @@
+
+type(BLOCK)
+type(ARSONIST)
+type(AGENT)
+type(GOAL)
+type(STATUS)
+
+# for communication
+predicate(exists, [agent], [AGENT])
+predicate(requested, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(committed, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(rejected, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+predicate(informed, [agent, agent1, goal, status], [AGENT, AGENT, GOAL, STATUS])
+predicate(achieved, [agent, agent1, goal], [AGENT, AGENT, GOAL])
+
+predicate(clear, [blk], [BLOCK])
+predicate(holding, [blk], [BLOCK])
+predicate(arm-empty, [], [])
+predicate(on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(on-table, [blk], [BLOCK])
+predicate(block, [blk], [BLOCK])
+predicate(triangle, [blk], [BLOCK])
+predicate(table, [blk], [BLOCK])
+predicate(onfire, [blk], [BLOCK])
+predicate(arsonist, [ars], [ARSONIST])
+predicate(free, [ars], [ARSONIST])
+predicate(hasmortar, [blk], [BLOCK])
+
+operator(stack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [btmblk]), 
+	condition(holding, [topblk])], 
+results = [
+	condition(clear, [btmblk], negate = True), 
+	condition(holding, [topblk], negate = True), 
+	condition(clear, [topblk]), 
+	condition(on, [topblk, btmblk]), 
+	condition(arm-empty, [])])
+
+operator(unstack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [topblk]), 
+	condition(arm-empty), 
+	condition(on, [topblk, btmblk])],
+results = [
+	condition(clear, [topblk], negate = True), 
+	condition(holding, [topblk]), 
+	condition(arm-empty, [], negate = True), 
+	condition(on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False)])
+
+operator(putdown, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(holding, [blk])], 
+results = [
+	condition(holding, [blk], negate = True), 
+	condition(clear, [blk]), 
+	condition(on-table, [blk]),
+	condition(arm-empty, [])])
+
+operator(pickup, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(on-table, [blk]),
+	condition(clear, [blk]),
+	condition(arm-empty, [])],
+results = [
+	condition(holding, [blk]), 
+	condition(clear, [blk], negate = True),
+	condition(on-table, [blk], negate = True),
+	condition(arm-empty, [], negate = True)])
+
+operator(putoutfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk])],
+results = [
+	condition(onfire, [blk], negate = True)])
+
+operator(catchfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True)],
+results = [
+	condition(onfire, [blk])])
+
+operator(lightonfire,
+args = [(arsonist, ARSONIST), (blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True),
+	condition(free, [arsonist])],
+results = [
+	condition(onfire, [blk])])
+
+operator(apprehend,
+args = [(arsonist, ARSONIST)],
+preconditions = [
+	condition(free, [arsonist])],
+results = [
+	condition(free, [arsonist], negate = True)])
+	
+operator(searchfor,
+args = [(arsonist, ARSONIST)])
+
+operator(inform,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+	condition(exists, [other_agent])],
+results = [
+	condition(informed, [agent, other_agent, goal, status])])
+
+operator(ask,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+	condition(exists, [other_agent])],
+results = [
+	condition(informed, [agent, other_agent, goal, status])])
+
+operator(commit,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(requested, [other_agent, agent, goal])],
+results = [
+	condition(requested, [other_agent, agent, goal], negate = True),
+	condition(committed, [agent, other_agent,  goal])])
+
+operator(reject,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(requested, [other_agent, agent, goal])],
+results = [
+	condition(requested, [other_agent, agent, goal], negate = True),
+	condition(rejected, [agent, other_agent, goal])])
+
+operator(wait,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status])],
+results = [
+	condition(requested, [agent, other_agent, goal])])
+
+operator(uncommit,
+args = [(agent, AGENT), (other_agent, AGENT), (goal, GOAL), (status, STATUS)],
+preconditions = [
+    condition(informed, [agent, other_agent, goal, status]),
+	condition(committed, [agent, other_agent, goal])],
+results = [
+	condition(committed, [agent, other_agent,  goal], negate = True)])
+
+

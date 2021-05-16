@@ -313,7 +313,6 @@ class SimpleAct(base.BaseModule):
             else:
                 # actions that need to do some functionality
                 if self.asynch_actions:
-
                     # if the action is suspended then continue the action
                     # to see if the action is suspended check if the object is in the current_asynch_action
                     # if it is not suspended then translate the action to asynchronous action

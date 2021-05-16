@@ -67,6 +67,7 @@ class Memory:
 	ESTGRID = "__estgrid"
 
 
+
     	#Goal Tranformation
     	CL_TREE = "__class heirarchy tree"
     	OB_TREE = "__object heirarchy tree"
