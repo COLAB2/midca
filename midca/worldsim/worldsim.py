@@ -54,7 +54,7 @@ class Atom:
         self.predicate = predicate
         self.args = args
         self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
-                                                                                                                  # happens at initialization
+        self.id = id(self)                                                                                     # happens at initialization
 
     def __getitem__(self, item):
         if item in self.predicate.argnames:

@@ -50,12 +50,18 @@ def iterative_average(x,n,ave):
 
 
 class Grid:
-    def __init__(self,taglist,x_range=1000.0,y_range=1000.0):
+    def __init__(self,taglist,x_range=1000.0,y_range=1000.0,xbins=None,ybins=None):
         self.taglist=taglist
         self.x_range = x_range
         self.y_range = y_range
-        self.x_bins = np.array([0., 1., 2., 3., 4.])*self.x_range/5.0
-        self.y_bins = np.array([0., 1., 2., 3., 4.])*self.y_range/5.0
+        if xbins==None:
+            self.x_bins = np.array([0., 1., 2., 3., 4.])*self.x_range/5.0
+        else:
+            self.x_bins = np.array(range(xbins))*self.x_range/xbins
+        if ybins==None:
+            self.y_bins = np.array([0., 1., 2., 3., 4.])*self.y_range/5.0
+        else:
+            self.y_bins = np.array(range(ybins))*self.y_range/ybins
 
         # specifies tag density for each cell (hotspot probabilities?)
         self.p = np.array([0.1, 0.1, 0.4, 0.6, 0.2,
@@ -131,6 +137,7 @@ class Grid:
                     self.taglist[count].bin=i
                     self.tag_count[i]+=1
                     count+=1
+
 
 
 

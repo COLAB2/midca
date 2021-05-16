@@ -8,6 +8,10 @@ class Goal:
             self.id = kwargs['id']
         else:
             self.id = hash(self)
+        if 'type' in kwargs:
+            self.type = kwargs['type']
+        else:
+            self.type = "achievement"
         self.args = args
         self.kwargs = kwargs
         self.status= True

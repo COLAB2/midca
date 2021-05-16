@@ -48,10 +48,11 @@ def LatLong2LocalGrid(lat, lon):
     return dX, dY
 
 if __name__ == "__main__":
-    #lat, long = LocalGrid2LatLong(1200,-6000)
-    lat, long = 31.400319, -80.920531
-    x, y = LatLong2LocalGrid(lat, long)
-    print ("latitude :" +str(lat) + " longitude :" +str(long))
+    #lat, long = LocalGrid2LatLong(8000,-6400)
+    #lat, long = 31.400319, -80.920531
+    x, y = LatLong2LocalGrid(31.39229159500367, -80.88748335930771)
+
+    #print ("latitude :" +str(lat) + " longitude :" +str(long))
     print ("x :" +str(x) + "y :" +str(y))
 
     #data = {}

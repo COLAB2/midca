@@ -54,6 +54,7 @@ class Memory:
 	EXPLANATION_VAL = "__explanation_val"
 	SUSPENDED_GOALS = "__suspended_goals"
 	FORMULATED_GOALS = "__formulated_goals"
+	CHANGED_GOALS = "__changed_goals"
 
 	#multi-agent
 	CONNECTIONS = "__connections"

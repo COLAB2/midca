@@ -4,7 +4,7 @@ import math
 
 class Simulator:
 
-    def __init__(self, start_x=0, start_y=0, side=800, size_m=11, size_n = 8):
+    def __init__(self, start_x=0, start_y=0, side=1600, size_m=5, size_n = 4):
         """
         start_x : # starting x position in the moos Simulator
         start_y: # starting y position in the moos Simulator
@@ -21,10 +21,10 @@ class Simulator:
 
     def sim_to_grid(self, x, y):
 
-        cell_x = (self.start_x - x)/self.side
+        cell_x = -1 * ((self.start_x - x)/self.side)
         cell_y = (self.size_m -1) - ((self.start_y - y)/self.side)
-        x = abs(int(math.ceil(cell_x)))
-        y = abs(int(math.ceil(cell_y)))
+        x = int(math.floor(cell_x))
+        y = int(math.ceil(cell_y))
         if x >=5:
             x =4
         if y >=5:
@@ -48,6 +48,6 @@ class Simulator:
         return x,y
 
 if __name__ == "__main__":
-    sim = Simulator(start_x=0, start_y=0, side=800, size_m=8, size_n = 11)
-    print (sim.grid_to_sim(0,0))
-    print (sim.sim_to_grid(8335, -6039))
+    sim = Simulator(start_x=0, start_y=0, side=1600, size_m=4, size_n = 3)
+    print (sim.grid_to_sim(0,1))
+    #print (sim.sim_to_grid(2300, -5586))

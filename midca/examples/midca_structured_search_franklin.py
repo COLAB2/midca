@@ -18,10 +18,10 @@ from midca.domains.blocksworld.plan import methods_multiAgent as methods, operat
 
 
 #initialize simulator
-interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:4997",
-                              pub_ip = "tcp://127.0.0.1:5998",
-                              sub_mine_ip = "tcp://127.0.0.1:4996" ,
-                              name="franklin" )
+interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:7999",
+                              sub_mine_ip = "tcp://127.0.0.1:6999" ,
+                              pub_ip = "tcp://127.0.0.1:5999",
+                              name="franklin")
 
 
 agent_name = "franklin"
@@ -92,14 +92,14 @@ myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
 myMidca.append_module("Interpret", guide.GenerateRequests(agent_name, other_agent_name))
 myMidca.append_module("Interpret", guide.EvaluateRequests(agent_name, other_agent_name))
 
-myMidca.append_module("Interpret", guide.GraceAnomalyDetection())
-myMidca.append_module("Interpret", guide.GraceChangeDetection())
+myMidca.append_module("Interpret", guide.GraceAnomalyDetection("smart"))
+#myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 myMidca.append_module("Eval", evaluate.SimpleEvalSuspend())
 #myMidca.append_module("Intend", intend.DfsIntendGraceNSF())
 myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF())
 myMidca.append_module("Intend", intend.PriorityIntend())
-myMidca.append_module("Intend", intend.SimpleIntendMultipleGoalsSuspend())
+#myMidca.append_module("Intend", intend.SimpleIntendMultipleGoalsSuspend())
 #myMidca.append_module("Intend", intend.SimpleIntend())
 myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,

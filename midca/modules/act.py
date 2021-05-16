@@ -1,6 +1,6 @@
 from midca.modules._plan.asynch import asynch
 from midca import base
-import copy
+import copy, time
 
 
 class AsynchronousAct(base.BaseModule):
@@ -243,8 +243,13 @@ class SimpleAct(base.BaseModule):
             asynchAction = self.retrieve_the_current_action(asynchAction, midcaaction)
             # check if the action has started or not
             if asynchAction.status == self.asynch_actions.NOT_STARTED:
+                time.sleep(0.2)
                 asynchAction.execute()
-                self.mem.add(self.mem.ACTIONS, [midcaaction])
+                #time.sleep(0.01)
+                #asynchAction.execute()
+                #time.sleep(0.2)
+                #asynchAction.execute()
+                self.mem.add(self.mem.ACTIONS, midcaaction)
                 """
                 # print statements
                 if verbose == 1:
@@ -277,7 +282,8 @@ class SimpleAct(base.BaseModule):
             if asynchAction.status == self.asynch_actions.COMPLETE:
                 #self.mem.add(self.mem.ACTIONS, [midcaaction])
                 actions = self.mem.get(self.mem.ACTIONS)
-                self.mem.set(self.mem.ACTIONS, actions[:-1])
+                actions.pop()
+                self.mem.set(self.mem.ACTIONS, actions)
                 self.current_asynch_action.remove(asynchAction)
                 self.world.apply_midca_action(midcaaction)
                 plan.advance()
@@ -303,7 +309,7 @@ class SimpleAct(base.BaseModule):
             if not action:
                 if verbose >= 1:
                     print "Plan to achieve goals has already been completed. Taking no action."
-                self.mem.add(self.mem.ACTIONS, [])
+                #self.mem.add(self.mem.ACTIONS, [])
             else:
                 # actions that need to do some functionality
                 if self.asynch_actions:
@@ -330,7 +336,7 @@ class SimpleAct(base.BaseModule):
                     else:
                         # print the whole plan
                         print "Selected action", action, "from plan:\n", plan
-                self.mem.add(self.mem.ACTIONS, [action])
+                self.mem.add(self.mem.ACTIONS, action)
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
                     actions = actions[200:] # trim off old stale actions
@@ -342,7 +348,7 @@ class SimpleAct(base.BaseModule):
         else:
             if verbose >= 1:
                 print "MIDCA will not select an action this cycle."
-            self.mem.add(self.mem.ACTIONS, [])
+            #self.mem.add(self.mem.ACTIONS, [])
             #if goals:
             #    for g in goals:
             #        self.mem.get(self.mem.GOAL_GRAPH).remove(g)

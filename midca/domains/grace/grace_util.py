@@ -691,10 +691,10 @@ def drawFishTags(midcastate):
 def preferFree(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
-    elif goal1['predicate'] == 'free' and goal2['predicate'] != 'free':
-        return -1
-    elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
-        return 1
+    #elif goal1['predicate'] == 'free' and goal2['predicate'] != 'free':
+    #    return -1
+    #elif goal1['predicate'] != 'free' and goal2['predicate'] == 'free':
+    #    return 1
     elif goal1['predicate'] == 'communicated-hotspot' and goal2['predicate'] != 'communicated-hotspot':
         return -1
     elif goal1['predicate'] != 'communicated-hotspot' and goal2['predicate'] == 'communicated-hotspot':
@@ -906,6 +906,8 @@ def make_plan(world, goal):
         return []
     else:
         plan = convert_to_actions(plan)
+        if goal["predicate"] == "surveyed":
+            return plan + [["collectdata", "grace", "fishtag", goal.args[1]]]
         if goal["predicate"] == "surveyed-structured":
             return plan + [["structuresearch", "grace", "fishtag", goal.args[1]]]
         if goal["predicate"] == "surveyed-singleCellErgodic":

@@ -152,12 +152,10 @@ class AsyncGraceObserver(base.BaseModule):
         """
 
         while(True):
-            tag = self.sim.TagWorld()
-            position = tag.get_cell()
+            #tag = self.sim#.TagWorld()
+            position = self.sim.get_cell()
             if position:
                 [x, y] = position.split(",")
-                if int(x) < 0:
-                    x = "0"
                 if int(y) < 0:
                     y = "0"
                 position = "Tx" + x + "y" + y
@@ -221,7 +219,7 @@ class AsyncGraceObserver(base.BaseModule):
                     atom.args[0].name == position:
                 adj_position_tile = atom.args[1].name
                 adj_pos = self.parse_tile(position)
-                tag = self.sim.TagWorld()
+                tag = self.sim#.TagWorld()
                 tag_data = tag.getAdjacent(adj_pos)
                 display_tag_data = tag_data
                 if atom.predicate.name == "adjacent-south":
@@ -344,7 +342,7 @@ class AsyncGraceObserver(base.BaseModule):
         if self.mem.get(self.mem.GETDATA):
             self.mem.set(self.mem.GETDATA, False)
             #time.sleep(0.1)
-            tag = self.sim.TagWorld()
+            tag = self.sim#.TagWorld()
             tag_data = None
             tag_data = tag.get_tags(position)
             return tag_data
@@ -356,7 +354,7 @@ class AsyncGraceObserver(base.BaseModule):
         :param position: agent position
         :return: number:of times hotspot detected
         """
-        tag = self.sim.TagWorld()
+        tag = self.sim#.TagWorld()
         hotspot_count = tag.get_hotspot(position)
         return hotspot_count
 
@@ -366,7 +364,7 @@ class AsyncGraceObserver(base.BaseModule):
         return mode
 
     def get_remaining_time(self):
-        tag = self.sim.TagWorld()
+        tag = self.sim#.TagWorld()
         time = tag.timeRemaining()
         return time
 
@@ -638,7 +636,7 @@ class RecieveRequests(base.BaseModule):
 
         context = zmq.Context()
         self.publisher = context.socket(zmq.PUB)
-        self.publisher.connect(publish)
+        self.publisher.bind(publish)
 
         context = zmq.Context()
         self.subscriber = context.socket(zmq.SUB)
@@ -672,7 +670,7 @@ class RecieveRequests(base.BaseModule):
         states = ""
         # get the message from the ip address
         try:
-            message = self.subscriber.recv()
+            message = self.subscriber.recv_string()
             message = message.split(":")
             performative = message[0]
             goaltext = message[1]
@@ -758,38 +756,38 @@ class HumanGoalInput(base.BaseModule):
 
         states = ""
         human_goals = [[
-            goals.Goal(*["grace", "Tx0y0"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx0y1"], predicate='surveyed'),
             goals.Goal(*["grace", "Tx0y2"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx0y3"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx0y4"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx1y4"], predicate='surveyed'),
-            goals.Goal(*["grace",  "Tx1y3"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx1y2"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y1"], predicate='surveyed'),
+            #goals.Goal(*["grace", "Tx0y2"], predicate='surveyed')
+            ],
+            [
             goals.Goal(*["grace", "Tx1y1"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx1y0"], predicate='surveyed'),
+            #goals.Goal(*["grace", "Tx1y1"], predicate='surveyed'),
+            #goals.Goal(*["grace", "Tx1y2"], predicate='surveyed')
+            ],
+            [
             goals.Goal(*["grace", "Tx2y0"], predicate='surveyed'),
             goals.Goal(*["grace", "Tx2y1"], predicate='surveyed'),
             goals.Goal(*["grace", "Tx2y2"], predicate='surveyed'),
-            ],
-            [goals.Goal(*["grace", "Tx2y3"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx2y4"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx3y4"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx3y3"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx3y2"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx3y1"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx3y0"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx4y0"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx4y1"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx4y2"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx4y3"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx4y4"], predicate='surveyed')
+            goals.Goal(*["grace", "Tx1y0"], predicate='surveyed'),
+            goals.Goal(*["grace", "Tx0y0"], predicate='surveyed'),
             ]]
 
         if self.name == "grace":
             human_goals = human_goals[0]
-        else:
+        elif self.name == "franklin":
             human_goals = human_goals[1]
+        else:
+            human_goals = human_goals[2]
+            start= "Tx2y2"
+            end = "Tx1y2"
+            atoms = self.world.get_atoms([start, end])
+            if atoms:
+                for atom in atoms:
+                    if atom.predicate.name.startswith("adjacent") \
+                        and atom.args[0].name == start \
+                        and atom.args[1].name == end:
+                        self.world.remove_atom(atom)
 
         for goal in human_goals:
             #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)

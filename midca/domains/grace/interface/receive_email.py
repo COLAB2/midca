@@ -2,7 +2,7 @@ import imaplib, email, time, os
 
 def recieve():
   # setup email login info here
-  genios_email = "chattygenios@gmail.com"
+  genios_email = "metamidca@gmail.com"
   target_email = genios_email
 
   # login to gmail
@@ -14,30 +14,31 @@ def recieve():
   last_email_id = -1
   while True:
     server.select("inbox")
-    result, data = server.search(None, "ALL")
+    result, data = server.search(None, "UNSEEN")
 
     ids = data[0]
-    id_list = ids.split()
-    latest_email_id = id_list[-1]
-    if latest_email_id != last_email_id:
-      last_email_id = latest_email_id
+    if ids:
+      id_list = ids.split()
+      latest_email_id = id_list[-1]
+      if latest_email_id != last_email_id:
+        last_email_id = latest_email_id
 
-      # get/check for email attachment
-      result, data = server.fetch(latest_email_id, "(RFC822)")
-      raw_email = data[0][1]
-      msg = email.message_from_string(raw_email)
+        # get/check for email attachment
+        result, data = server.fetch(latest_email_id, "(RFC822)")
+        raw_email = data[0][1]
+        msg = email.message_from_string(raw_email)
 
-      for part in msg.walk():
-        if part.get_content_maintype() == 'multipart': continue
-        if part.get('Content-Disposition') is None: continue
-        fileName = part.get_filename()
+        for part in msg.walk():
+          if part.get_content_maintype() == 'multipart': continue
+          if part.get('Content-Disposition') is None: continue
+          fileName = part.get_filename().split("/")
 
-        if fileName is not None:
-          filePath = os.getcwd()+"/outputs/"+fileName
-          fp = open(filePath, 'wb')
-          fp.write(part.get_payload(decode=True))
-          fp.close()
-          print ("Downloaded attachment!")
-          return True
+          if fileName is not None:
+            filePath = "./genios_midca/"+fileName[-1]
+            fp = open(filePath, 'wb')
+            fp.write(part.get_payload(decode=True))
+            fp.close()
+            print ("Downloaded attachment!")
+            return True
 
-      time.sleep(1)
+        time.sleep(1)

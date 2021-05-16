@@ -295,7 +295,7 @@ class SimpleEvalSuspend(base.BaseModule):
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
         try:
-            goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+            goals = self.mem.get(self.mem.SUSPENDED_GOALS)[-1]
         except:
             goals = []
 

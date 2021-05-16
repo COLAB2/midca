@@ -1,0 +1,29 @@
+1. Flow rate for all the centers of the grid
+
+2. Actual trajectory as a response to the request location 
+
+
+----------------------------------------------------------
+
+1. midca will send the move action:
+	Genios responds with the file and tries to achieve the action
+
+	
+	When genios surfaces, it sends the surfacing postion and the actual trajectory, it waits for move action or search action.
+		midca could send the move action or search action or glide action* 	
+		
+
+Agreed Communication between Genios and MIDCA
+-----------------
+1. Midca gives move action, genios recieves it and sends the file
+
+2. Genios goes to destination and surfaces, 
+	Genios sends the file : file contains current position, actual trajectory (genios_out_loc)
+	Genios sends another file: genios_out_search_latest
+	
+3. Midca now acknowledges that the action is complete
+
+4. Midca gives another action, Genios sends another file: genios_out_move_latest or genios_out_search_latest
+
+5. Genios dives down, and tries to achieve the action.
+

@@ -504,7 +504,7 @@ class GraceCommunicate(AsynchAction):
         argnames = [str(arg) for arg in self.action.args]
         # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
         location = self.parse_tile(argnames[2])
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.sendHotspot(location)
 
     def check_confirmation(self):# read a file output by program chechinkg for surface and return true or false
@@ -534,7 +534,7 @@ class GraceAscend(AsynchAction):
                               completionCheck, True)
 
     def implement_action(self):
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.UpdateSurfstatus("ascend")
         time.sleep(0.2)
         pass
@@ -566,7 +566,7 @@ class GraceDescend(AsynchAction):
 
     def implement_action(self):
         time.sleep(0.2)
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.UpdateSurfstatus("descend")
         pass
 
@@ -607,9 +607,10 @@ class MoveToCell(AsynchAction):
         argnames = [str(arg) for arg in self.action.args]
         # which is the to go location for grace moveeast(grace, Tx3y3, Tx4y4)
         go_to_location = self.parse_tile(argnames[2])
+        initial_location = self.parse_tile(argnames[1])
 
-        tagworld = self.interface.TagWorld()
-        tagworld.move_cell([0,0], go_to_location)
+        tagworld = self.interface
+        tagworld.move_cell(initial_location, go_to_location)
 
     def check_confirmation(self):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -621,20 +622,23 @@ class MoveToCell(AsynchAction):
         timediff = midcatime.now() - self.time
         argnames = [str(arg) for arg in self.action.args]
         go_to_location = self.parse_tile(argnames[2])
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         current_position = tagworld.get_cell()
+
         if current_position:
             current_position = current_position.split(",")
             current_position = [int(position) for position in current_position]
             if current_position == go_to_location:
                 return True
 
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
+        elif confirmation == str(False):
+            return False
         else:
-            if timediff > 7:
+            if timediff > 1:
                 self.implement_action()
             #else:
             #self.implement_action()
@@ -681,7 +685,7 @@ class SurveyCell(AsynchAction):
         self.time = None
         self.complete = False
         self.skip = 5
-        self.skiponce = 1
+        self.skiponce = 2
         executeAction = lambda mem, midcaAction, status: self.implement_action()
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
         AsynchAction.__init__(self, mem, midcaAction, executeAction,
@@ -698,30 +702,20 @@ class SurveyCell(AsynchAction):
         argnames = [str(arg) for arg in self.action.args]
         # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
         go_to_location = self.parse_tile(argnames[2])
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.search(go_to_location)
 
     def check_confirmation(self):
-        # skip 5 cells
-        if self.skip:
-            self.skip -= 1
-            return False
-
-        #world = self.mem.get(self.mem.STATES)[-1]
-        #argnames = [str(arg) for arg in self.action.args]
-        #atoms = world.get_atoms(filters=["certainblocRadius", "grace", argnames[2]])
-        #if not atoms:
-        #    self.status = FAILED
-        #    return False
-
-        tagworld = self.interface.TagWorld()
+        timediff = midcatime.now() - self.time
+        tagworld = self.interface#.TagWorld()
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
             return False
-        if confirmation == str(True) and self.skiponce:
+        if confirmation == str(True) and timediff < 2:
+            self.implement_action()
             #time.sleep(7)
-            self.skiponce += -1
+            #self.skiponce += -1
             return False
         if confirmation == str(True):
             self.mem.set(self.mem.GETDATA, True)
@@ -758,7 +752,7 @@ class DeepSurveyCell(AsynchAction):
         argnames = [str(arg) for arg in self.action.args]
         # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
         go_to_location = self.parse_tile(argnames[2])
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.deepsearch(go_to_location)
 
     def check_confirmation(self):
@@ -774,7 +768,7 @@ class DeepSurveyCell(AsynchAction):
         #    self.status = FAILED
         #    return False
 
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
@@ -820,7 +814,7 @@ class SurveyCellErgodic(AsynchAction):
         argnames = [str(arg) for arg in self.action.args]
         # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
         go_to_location = self.parse_tile(argnames[2])
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.searchErgodic(go_to_location)
 
     def check_confirmation(self):
@@ -836,7 +830,7 @@ class SurveyCellErgodic(AsynchAction):
         #    self.status = FAILED
         #    return False
 
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         confirmation = tagworld.searchErgodicComplete()
         if confirmation == "Failed":
             self.status = FAILED
@@ -878,7 +872,7 @@ class SurveyErgodic(AsynchAction):
 
     def implement_action(self):
         self.time = midcatime.now()
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.searchErgodic("fullgrid")
         self.mem.set(self.mem.GETDATA, True)
 
@@ -895,7 +889,7 @@ class SurveyErgodic(AsynchAction):
         #    self.status = FAILED
         #    return False
 
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         self.mem.set(self.mem.GETDATA, True)
         return False
 
@@ -918,7 +912,7 @@ class GraceGlide(AsynchAction):
                               completionCheck, True)
 
     def implement_action(self):
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         tagworld.remove_remora()
         #time.sleep(0.2)
         pass
@@ -928,7 +922,7 @@ class GraceGlide(AsynchAction):
             self.skip = False
             return False
 
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         status = tagworld.remove_remora_status()
         if status == "True":
             return True
@@ -962,7 +956,7 @@ class GraceInspect(AsynchAction):
         return output
 
     def implement_action(self):
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         argnames = [str(arg) for arg in self.action.args]
         start = self.parse_tile(argnames[1])
         end =   self.parse_tile(argnames[2])
@@ -971,9 +965,9 @@ class GraceInspect(AsynchAction):
         pass
 
     def check_confirmation(self):
-        tagworld = self.interface.TagWorld()
+        tagworld = self.interface
         status = tagworld.searchComplete()
-        if status == "True":
+        if status == str("True"):
             world = self.mem.get(self.mem.INTERFACE_WORLD)
             argnames = [str(arg) for arg in self.action.args]
             start = argnames[1]

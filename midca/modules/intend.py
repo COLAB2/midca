@@ -3,6 +3,7 @@ import copy,itertools,operator
 import random
 import time as ctime
 import numpy as np
+from numpy.linalg import norm
 import math
 
 
@@ -1908,6 +1909,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             suspended_goals = [goal for goal in filtered_goals if goal.status == False]
             if not goals and suspended_goals:
                 goals = suspended_goals
+
         if not goals:
             if verbose >= 1:
                 print "No Survey goals. Intend will not select goals via hillclimbing."
@@ -1922,7 +1924,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
         if current_goals:
             #get the top of the stack goals
             current_goals = current_goals[-1]
-            if current_goals[0]["predicate"] == "inspected":
+            if current_goals and current_goals[0]["predicate"] == "inspected":
                 need_for_hillclimbing_flag = False
             #check if it is a surveyed goal and if the agent is in the same cell
             exec_goals = self.filter(current_goals, "surveyed")
@@ -1937,6 +1939,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 need_for_hillclimbing_flag = False
 
             if exec_goals and need_for_hillclimbing_flag:
+                exec_goals = self.filter(goals, "surveyed")
                 for goal in exec_goals:
                     if goal in self.previous_goal:
                         self.previous_goal.remove(goal)
@@ -2468,6 +2471,7 @@ class PriorityIntend(base.BaseModule):
                 current_goals.append(goals)
                 self.mem.set(self.mem.CURRENT_GOALS, current_goals)
         else:
+            goals = [goals[-1]]
             self.mem.set(self.mem.CURRENT_GOALS, [goals])
 
         if trace:
@@ -2626,6 +2630,235 @@ class MetaIntend(base.BaseModule):
 
         self.mem.set(self.mem.FORMULATED_GOALS, [])
         self.mem.set(self.mem.SUSPENDED_GOALS, [])
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
+class MetaIntendOps(base.BaseModule):
+
+    def __init__(self):
+        self.ontology = {
+                        "block" : {
+                        "agent_threat": 0,
+                        "mission_threat": 0,
+                        "repeat": [],
+                        },
+
+                        "remora" : {
+                        "agent_threat": 1,
+                        "mission_threat": 0,
+                        "repeat": [],
+                        },
+        }
+        self.time = midcatime.now()
+
+
+    def parse_tile_to_x_y(self, tile):
+        y_index = tile.index('y')
+        return [int(tile[2:y_index]) , int(tile[y_index+1:])]
+
+    def eucledian_distance(self, tile1, tile2):
+        tile1 = np.array(self.parse_tile_to_x_y(tile1))
+        tile2 = np.array(self.parse_tile_to_x_y(tile2))
+        return norm(tile1-tile2)
+
+    def computeSurveyedTime(self, goal, agent_location):
+        tile1 = goal.args[1]
+        tile2 = agent_location
+        factor = 1
+        speed = 2
+        distance = self.eucledian_distance(tile1, tile2)
+        time_taken =  (distance*factor/speed)
+        if goal["predicate"] == "surveyed":
+            search_time = 10
+            time_taken += search_time
+            return time_taken
+        elif goal["predicate"] == "deepsurveyed":
+            search_time = 30
+            time_taken += search_time
+            return time_taken
+
+    def compute_time(self, goal, knowledge_about_goals, agent_location):
+
+        if goal["predicate"] in knowledge_about_goals:
+            func = knowledge_about_goals[goal["predicate"]]
+            return int(func(goal, agent_location))
+        else:
+            return 1
+
+    def get_agent_location(self):
+
+        # get state
+        world = self.mem.get(self.mem.STATES)[-1]
+        agent_atom = world.get_atoms(["agent-at"])
+        if agent_atom:
+            return agent_atom[-1].args[1].name
+
+    def get_time_remaining(self):
+        # get state
+        world = self.mem.get(self.mem.STATES)[-1]
+        agent_atom = world.get_atoms(["timeRemaining"])
+        if agent_atom:
+            return int(float(agent_atom[-1].args[0].name))
+
+    def knapSack(self, W, wt):
+        n = len(wt)
+        val = [1] * (len(wt))
+        K = [[0 for w in range(W + 1)]
+                for i in range(n + 1)]
+
+        # Build table K[][] in bottom
+        # up manner
+        for i in range(n + 1):
+            for w in range(W + 1):
+                if i == 0 or w == 0:
+                    K[i][w] = 0
+                elif wt[i - 1] <= w:
+                    K[i][w] = max(val[i - 1]
+                      + K[i - 1][w - wt[i - 1]],
+                                   K[i - 1][w])
+                else:
+                    K[i][w] = K[i - 1][w]
+
+        # stores the result of Knapsack
+        res = K[n][W]
+        return(res)
+
+    def calculate_goals_estimate(self, eliminate_goal=None):
+
+        knowledge_about_goals = {"surveyed":self.computeSurveyedTime,
+                                 "deepsurveyed":self.computeSurveyedTime}
+        # how many goals are effected by the anomaly
+        # implement knapsack algorithm for it
+        # weights of the goals are same for nsf domain
+        agent_location = self.get_agent_location()
+        goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+        goals = goalGraph.getAllGoals()
+        time_to_complete = []
+        for goal in goals:
+            time = self.compute_time(goal, knowledge_about_goals, agent_location)
+            if not goal == eliminate_goal:
+                time_to_complete.append(time)
+
+        time = self.get_time_remaining()
+        goals_agent_can_complete = self.knapSack(time, time_to_complete)
+        percentage_goals = (float(goals_agent_can_complete)/float(len(goals))) * 100
+        return percentage_goals
+
+    def calculate_mission_threat(self, current_goal, threshold = 20):
+
+
+        percentage_goals_prior = self.calculate_goals_estimate()
+        percentage_goals_after = self.calculate_goals_estimate(current_goal)
+
+        if (percentage_goals_prior - percentage_goals_after) > threshold:
+            return 1
+        else:
+            return 0
+
+        #self.ontology[anomaly]["mission_threat"] += 1
+
+        #if self.ontology[anomaly]["mission_threat"] > threshold:
+        #    return 1
+        #else:
+        #    return 0
+
+
+
+    def calculate_anomaly_repeat(self, anomaly, threshold = 20):
+        time = midcatime.now() - self.time
+        self.ontology[anomaly]["repeat"].append(time)
+        repeat_times = self.ontology[anomaly]["repeat"]
+        if len(repeat_times) > 1:
+            time_diff = [(repeat_times[i] - repeat_times[i-1])
+                         for i in range(len(repeat_times)-1, 0, -1)]
+
+            time_diff = time_diff[-2:]
+            mean = sum(time_diff)/ len(time_diff)
+            if mean < threshold:
+                return 1
+
+        return 0
+
+    def IsGoalFormulationPriority(self, anomaly):
+        """
+        param : anomaly
+        functionality:
+            check if the agent is threat
+            check if the mission is threat
+            check if it is repeated
+        return : priority
+        """
+        #self.ontology[anomaly]["mission_threat"] += 1
+        agent_threat = self.ontology[anomaly]["agent_threat"]
+        mission_threat = self.calculate_mission_threat()
+        repeat_frequency = self.calculate_anomaly_repeat(anomaly)
+
+        return max(agent_threat, mission_threat, repeat_frequency)
+
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        # reselected goals
+        goals = []
+        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
+        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
+        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
+        if not (formulated_goals or changed_goals):
+            return
+        else:
+            if reselected_goals:
+                if len(reselected_goals) >= 2:
+                    current_goal = reselected_goals[-2][0]
+                else:
+                    current_goal = reselected_goals[-1][0]
+
+            self.mem.set(self.mem.FORMULATED_GOALS, [])
+            self.mem.set(self.mem.CHANGED_GOALS, [])
+
+            # priority to formulation
+            if formulated_goals:
+                formulated_goal = formulated_goals[-1][0]
+                # get the anomaly
+                anomaly = self.mem.get(self.mem.EXPLANATION)
+                if self.IsGoalFormulationPriority(anomaly):
+                    goals = [formulated_goal]
+                    if current_goal:
+                        current_goal.status = True
+                    self.ontology[anomaly]["mission_threat"] -= 1
+
+            # priority to change
+            if not goals and changed_goals:
+                changed_goal = changed_goals[-1][0]
+                if self.calculate_mission_threat():
+                    self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goal, changed_goal.args, predicate=changed_goal['Deepsurveyed'])
+                    self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                # current goals as a stack
+                #self.mem.set(self.mem.CURRENT_GOALS, [[current_goal]])
+
+            # priority to goal selection
+            if not goals and reselected_goals:
+                reselected_goal = reselected_goals[-1][0]
+                goals = [reselected_goal]
 
         # current goals as a stack
         if self.mem.get(self.mem.CURRENT_GOALS):
@@ -2867,7 +3100,7 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
             return
 
         world = self.mem.get(self.mem.STATES)[-1]
-        emergency = world.get_atoms(["agent-mode","grace", "m3"])
+        emergency = world.get_atoms(["agent-at","grace", "Tx-1y1"])
         if emergency:
             # take the first goal
             #goals = [goals[0]]
@@ -2878,7 +3111,7 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
                 copy_goals = copy.deepcopy(goals)
                 suspended_goals = []
                 for goal in copy_goals:
-                    if not goal['predicate'] in predicates:
+                    if not goal['predicate'] in predicates and not goal.args[1] == "Tx0y1":
                         suspended_goals.append(goal)
                         if verbose >= 2:
                             print "The goal " + str(goal) + " is suspended due to lack of resources"
