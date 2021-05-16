@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-from midca import base
+from midca import base, ZmqInterface
 from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
 from midca.modules._plan.asynch import asynch_communication
 from midca.worldsim import domainread, stateread
-import inspect, os
+import inspect, os, json
 
 # Domain Specific Imports
-from midca.domains.blocksworld import util
+from midca.domains.blocksworld import util, handlers
 from midca.domains.blocksworld.plan import methods_multiAgent as methods, operators_multiAgent as operators
 
 
@@ -40,15 +40,12 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 agent_name = "morpheus"
 other_agent_name = "neo"
 
-publish = "tcp://127.0.0.1:8000"
-subscribe = "tcp://127.0.0.1:5000"
-
 
 #add the modules which instantiate basic blocksworld operation
-myMidca.append_module("Simulate", simulator.SendRemoteMidcaActionSimulator(publish, subscribe))
-myMidca.append_module("Perceive", perceive.RecieveRemoteMidcaWorld(publish, subscribe))
+myMidca.append_module("Simulate", simulator.SendRemoteMidcaActionSimulator())
+myMidca.append_module("Perceive", perceive.URecieveRemoteMidcaWorld(world, stateread))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Perceive", perceive.RecieveRequests(publish, subscribe, agent_name, other_agent_name))
+myMidca.append_module("Perceive", perceive.RecieveRequests(agent_name, other_agent_name))
 myMidca.append_module("Perceive", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 #myMidca.append_module("Perceive", perceive.AutomaticGoalInput(agent_name))
 myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
@@ -60,32 +57,38 @@ myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
                                                     util.pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC))
-
 myMidca.append_module("Act", act.SimpleAct(DECLARE_ACTIONS))
-"""
-myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
-                                                    util.pyhop_tasks_from_goals,
-                                                    DECLARE_METHODS_FUNC,
-                                                    DECLARE_OPERATORS_FUNC))
-myMidca.append_module("Act", act.SimpleAct())
 
-myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.9, arsonStart = 10), 1)
-myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.TFStack(), 1)
-myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.Scorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
-"""
 
 #tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
-myMidca.init()
-myMidca.run(usingInterface=False, phaseDelay=1)
+#myMidca.init()
+#myMidca.run(usingInterface=False, phaseDelay=1)
+def read_config(filename = "config.json"):
+        """
+        input: filename
+        :return: json object
+        """
+        config = None
+        with open(filename) as f:
+            config = json.load(f)
+        return config
+
+config = read_config()
+world_topic = config["agents"]["morpheus"]["address"]["agent"]
+agent_topic = config["agents"]["morpheus"]["address"]["requests"]
+interface_topic = config["publish_interface"]
+zmqMidca = ZmqInterface.ZmqMidca(myMidca, incomingMsgHandlers = [
+                                 handlers.WorldHandler(world_topic, "bind", "pull", myMidca),
+                                 handlers.RequestHandler(agent_topic, "bind", "sub", myMidca)],
+                                 outgoingMsgHandlers = [
+                                 handlers.SimulationHandler(interface_topic, "connect", "pub", myMidca),
+                                 handlers.OutReqHandler(interface_topic, "connect", "pub", myMidca),
+                                 ])
+
+zmqMidca.connect()
+zmqMidca.run_midca()
 
 '''
 The code below would print out MIDCA's goal set for the first 20 phases of the run above. Note that any memory values can be accessed in this way, assuming that the storeHistory value was set to True during the run. This code is left as an example, but commented out because it will throw an error if fewer than 20 cycles were simulated.

@@ -30,7 +30,6 @@ class ZmqConnection:
             subscriber.setsockopt(zmq.RCVTIMEO, 1)
         elif connection_type == "pull":
             subscriber = context.socket(zmq.PULL)
-            subscriber = context.socket(zmq.PULL)
             subscriber.setsockopt(zmq.RCVTIMEO, -1)
             subscriber.setsockopt(zmq.CONFLATE, 1)
 
@@ -82,10 +81,8 @@ class ZmqConnection:
         :param publisher_object: zmq publisher object
         :return:
         """
-        if type(msg) == str:
-            publisher_object.send_string(msg)
-        else:
-            publisher_object.send_pyobj(msg)
+        publisher_object.send_string(msg)
+
 
     def recieve_messages(self, subscriber_object):
         """
@@ -93,24 +90,12 @@ class ZmqConnection:
         :return:
         """
         try:
-            message = subscriber_object.recv_pyobj()
-            return message
-        except Exception as e:
-            pass
-            #print e
-            time.sleep(0.1)
-
-        try:
             message = subscriber_object.recv()
             return message
         except Exception as e:
             pass
             #print e
             time.sleep(0.1)
-
-
-
-
 
     def get_all_messages(self, subscriber_object):
         msg = "True"
@@ -151,8 +136,6 @@ class ZmqConnection:
             for topic in self.config["agents"][agent]["subscribe_simulator"]:
                 subscriber =  self.config["agents"][agent]["subscribe_simulator"][topic]
                 threading.Thread(target=self.createSimulatorThreadReceiveMsgs, args=(subscriber,agent,filter,)).start()
-
-
 
 
 class Interface:

@@ -65,6 +65,12 @@ class Memory:
 	GETDATA = "__getdata"
 	GRID = "__grid"
 	ESTGRID = "__estgrid"
+	#ZMQ constants
+	ZMQ_OBJS_DETECTED = "__zmqdetectedobjects"
+	ZMQ_REQS_DETECTED = "__zmqAgentRequests"
+
+	ZMQ_OUTGOING_MSGS = "__zmqoutgoingmsgs"
+	ZMQ_OUTGOING_REQS = "__zmqOutgoingReqs"
 
 
 

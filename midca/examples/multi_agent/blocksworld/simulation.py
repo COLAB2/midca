@@ -16,7 +16,7 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-MIDCA_ROOT = thisDir + "/../"
+MIDCA_ROOT = thisDir + "/../" + "/../" + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
@@ -27,7 +27,7 @@ DISPLAY_FUNC = util.asqiiDisplay
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
 #creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
+myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=10)
 #add phases by name
 for phase in ["Simulate"]:
     myMidca.append_phase(phase)

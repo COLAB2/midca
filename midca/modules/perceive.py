@@ -3,7 +3,7 @@ from midca.worldsim import domainread, stateread
 from midca import rosrun, midcatime, base, goals
 import copy
 import os
-import socket, zmq
+import socket, zmq,cPickle
 
 try:
     # baxter robot requirements
@@ -832,11 +832,10 @@ class PerfectObserver(base.BaseModule):
 
     #perfect observation
     def observe(self):
-        return self.world.copy()
+        return self.world
 
     def run(self, cycle, verbose = 2):
         world = self.observe()
-        #print (world)
         if not world:
             raise Exception("World observation failed.")
         self.mem.add(self.mem.STATES, world)
@@ -867,19 +866,9 @@ class RecieveRequests(base.BaseModule):
     modify the observe method so that it returns an object representing the current known
     world state.
     '''
-    def __init__(self, publish, subscribe, name , other_agent_name):
+    def __init__(self, name , other_agent_name):
         self.name = name
         self.other_agent_name = other_agent_name
-
-        context = zmq.Context()
-        self.publisher = context.socket(zmq.PUB)
-        self.publisher.connect(publish)
-
-        context = zmq.Context()
-        self.subscriber = context.socket(zmq.SUB)
-        self.subscriber.setsockopt(zmq.RCVTIMEO, 5)
-        self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
-        self.subscriber.connect(subscribe)
 
 
     def init(self, world, mem):
@@ -887,8 +876,6 @@ class RecieveRequests(base.BaseModule):
         if not world:
             raise ValueError("world is None!")
         self.world = world
-        self.mem.set(self.mem.CONNECTIONS, {"publish" : self.publisher,
-                                                        "subscribe": self.subscriber})
 
     def goal_to_parsable_construct(self, goal):
         """
@@ -906,56 +893,98 @@ class RecieveRequests(base.BaseModule):
     def run(self, cycle, verbose = 2):
         states = ""
         # get the message from the ip address
+        detectionRequests = self.mem.get_and_clear(self.mem.ZMQ_REQS_DETECTED)
+        if detectionRequests:
+            for request in detectionRequests:
+                message = request
+                message = message.split(":")
+                performative = message[0]
+                goaltext = message[1]
 
-        try:
-            message = self.subscriber.recv()
-            message = message.split(":")
-            performative = message[0]
-            goaltext = message[1]
+                if performative == "achieve":
+                    print ("----------------------")
+                    print "Request Recieved."
+                    print ("----------------------")
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "GOAL(" +goal + ")\n"
+                    states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
-            if performative == "achieve":
-                print "Request Recieved."
-                goal = self.goal_to_parsable_construct(goaltext)
-                states += "GOAL(" +goal + ")\n"
-                states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                elif performative == "reject":
+                    print "Request Recieved."
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "GOAL(" +goal + ")\n"
+                    states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
-            elif performative == "reject":
-                print "Request Recieved."
-                goal = self.goal_to_parsable_construct(goaltext)
-                states += "GOAL(" +goal + ")\n"
-                states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                elif performative == "commit":
+                    print "Request Recieved."
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "GOAL(" +goal + ")\n"
+                    states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
-            elif performative == "commit":
-                print "Request Recieved."
-                goal = self.goal_to_parsable_construct(goaltext)
-                states += "GOAL(" +goal + ")\n"
-                states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
-
-            elif performative == "tell":
-                print "Request Recieved."
-                goal = self.goal_to_parsable_construct(goaltext)
-                states += "GOAL(" +goal + ")\n"
-                states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
-                states += "achieved(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                elif performative == "tell":
+                    print "Request Recieved."
+                    goal = self.goal_to_parsable_construct(goaltext)
+                    states += "GOAL(" +goal + ")\n"
+                    states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
+                    states += "achieved(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
 
-                    # this is to update the world into memory
-            if not states == "":
-                if verbose >= 1:
-                    print ("Updated States \n")
-                    print(states)
-                stateread.apply_state_str(self.world, states)
-                self.mem.add(self.mem.STATES, self.world)
+                        # this is to update the world into memory
+                if not states == "":
+                    if verbose >= 1:
+                        print ("Updated States \n")
+                        print(states)
+                    stateread.apply_state_str(self.world, states)
+                    self.mem.add(self.mem.STATES, self.world)
 
-            # trace
-            trace = self.mem.trace
-            if trace:
-                trace.add_module(cycle, self.__class__.__name__)
-                trace.add_data("WORLD",copy.deepcopy(self.world))
+                # trace
+                trace = self.mem.trace
+                if trace:
+                    trace.add_module(cycle, self.__class__.__name__)
+                    trace.add_data("WORLD",copy.deepcopy(self.world))
 
-        except zmq.ZMQError as e:
-            if e.errno == zmq.EAGAIN:
-                pass # no message was ready (yet!)
+
+class URecieveRemoteMidcaWorld(base.BaseModule):
+
+    '''
+    MIDCA Module which copies a complete world state. It is designed to interact with the
+    built-in MIDCA world simulator. To extend this to work with other representations,
+    modify the observe method so that it returns an object representing the current known
+    world state.
+    '''
+    def __init__(self, world, stateread):
+        self.stateread = stateread
+
+    def init(self, world, mem):
+        base.BaseModule.init(self, mem)
+        if not world:
+            raise ValueError("world is None!")
+        self.world = world
+
+    def run(self, cycle, verbose = 2):
+        detectionEvents = self.mem.get_and_clear(self.mem.ZMQ_OBJS_DETECTED)
+        if detectionEvents:
+            #self.world_start = copy.deepcopy(world)
+            state_str = detectionEvents[-1]
+            predicates = ["informed", "requested", "committed",
+                          "achieved", "exists", "rejected"]
+
+            atoms = [atom for atom in self.world.atoms]
+            for atom in atoms:
+                if not atom.predicate.name in predicates:
+                    self.world.remove_atom(atom)
+
+            stateread.apply_state_str(self.world, state_str)
+
+            #for atom in self.world_start.atoms:
+            #    if not atom.predicate.name in predicates:
+            #        if atom in self.world.atoms:
+            #            self.world.remove_atom(atom)
+
+            #for atom in self.world_start.atoms:
+            #    self.world.add_fact(atom.predicate.name, [arg.name for arg in atom.args])
+
+            print ("World Updated")
 
 
 class RecieveRemoteMidcaWorld(base.BaseModule):
@@ -972,7 +1001,7 @@ class RecieveRemoteMidcaWorld(base.BaseModule):
         self.subscriber = context.socket(zmq.SUB)
         self.subscriber.setsockopt(zmq.SUBSCRIBE, "")
         self.subscriber.setsockopt(zmq.RCVTIMEO, 5)
-        self.subscriber.bind(subscribe)
+        self.subscriber.connect(subscribe)
 
 
 
@@ -993,6 +1022,7 @@ class RecieveRemoteMidcaWorld(base.BaseModule):
             copy_world = self.world.copy()
             predicates = ["informed", "requested", "committed",
                           "achieved", "exists", "rejected"]
+
             for atom in copy_world.atoms:
                 if not atom.predicate.name in predicates:
                     self.world.remove_atom(atom)
@@ -1003,6 +1033,9 @@ class RecieveRemoteMidcaWorld(base.BaseModule):
         except zmq.ZMQError as e:
             if e.errno == zmq.EAGAIN:
                 pass # no message was ready (yet!)
+
+        except cPickle.UnpicklingError as e:
+            pass # not the intended message
 
 
 class PerfectObserverWithThief(base.BaseModule):
