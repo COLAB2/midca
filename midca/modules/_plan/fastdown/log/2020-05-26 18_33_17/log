@@ -1,0 +1,18 @@
+.001091 - length of objnames 17
+
+.003218 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+.004534 - invasive-at(pos3-1)
+
+.005770 - native-at(pos4-3)
+
+.007522 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+.007430 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+.408741 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+.010041 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+.411322 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+

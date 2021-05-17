@@ -1,0 +1,43 @@
+PACKAGE(pack1)
+PACKAGE(pack2)
+SAIRPLANE (splane)
+AIRPLANE (plane1)
+AIRPLANE (plane2)
+AIRPLANE (plane3)
+AIRPORT(ap1)
+AIRPORT(ap2)
+AIRPORT(ap3) 
+CITY(city1)
+CITY(city2)
+CITY(city3)
+TRUCK(t1)
+TRUCK(t2)
+TRUCK(t3)
+LOCATION (loc1)
+LOCATION (loc2)
+LOCATION (loc3)
+
+airplane-at (plane1,ap1)
+sairplane-at (splane,ap1)
+airplane-at (plane2,ap2)
+airplane-at(plane3,ap3)
+
+NearBy(city1,city2)
+NearBy(city2,city3)
+truck-at(t1,loc1)
+truck-at(t2,loc2)
+truck-at(t3,loc3)
+ 
+
+IN-CITY (loc1,city1)
+IN-CITY (loc2,city2)
+IN-CITY (loc3,city3)
+  
+IN-CITY-A (ap1,city1)
+IN-CITY-A (ap2,city2)
+IN-CITY-A (ap3,city3)
+
+obj-at(pack1,loc1)
+obj-at(pack2,loc2)
+ 
+deliver(pack1,loc3)

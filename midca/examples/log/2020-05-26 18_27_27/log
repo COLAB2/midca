@@ -1,0 +1,70 @@
+.045829 - Planning...
+
+.047104 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+.203548 - xaxa move
+
+.203991 - asxbsa ('noes', 'pos0-0', 'pos1-1')
+
+.204305 - xaxa move
+
+.204613 - asxbsa ('east', 'pos1-1', 'pos2-1')
+
+.204960 - xaxa move
+
+.205275 - asxbsa ('noes', 'pos2-1', 'pos3-2')
+
+.205589 - xaxa spray
+
+.205934 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+.206251 - xaxa move
+
+.206558 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+.206903 - xaxa move
+
+.207210 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+.207519 - xaxa spray
+
+.207852 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+.208131 - Planning complete.
+
+.208398 - Plan: 
+
+.208694 - move(noes, pos0-0, pos1-1)
+
+.208968 - move(east, pos1-1, pos2-1)
+
+.209078 - move(noes, pos2-1, pos3-2)
+
+.209252 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.209529 - move(nows, pos3-2, pos2-3)
+
+.209803 - move(west, pos2-3, pos1-3)
+
+.210064 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.210309 - <class 'midca.plans.Plan'>
+
+1.238555 - The Selected action move(noes, pos0-0, pos1-1) from plan:
+
+2.951742 - length of objnames 3
+
+2.952399 - simulating MIDCA action: move(noes, pos0-0, pos1-1)
+
+2.953143 - length of objnames 3
+
+2.953827 - Simulator: no events.
+
+3.648776 - World observed.
+
+4.086334 - length of objnames 3
+
+4.087920 - [] [<midca.worldsim.worldsim.Atom object at 0x7f4504954940>]
+
+4.088637 - <midca.modules.guide.ReactiveSurvive object at 0x7f4504f525c0>
+

@@ -1,0 +1,99 @@
+﻿Note: as with most files in this module, this one is intended to be read with word wrap enabled.
+Note #2: If you edit this document, please update the wiki page
+
+I. Using MIDCA with simulated worlds using a predicate representation
+
+1) Create a simple MIDCA version which allows text-based goals to be input at runtime
+
+#set locations of files defining domain and world state
+domainFilename = "myDomainFile"
+stateFileName = "myStateFile"
+
+from midca.examples import predicateworld
+
+myMIDCA = predicateworld.UserGoalsMidca(domainFilename, stateFileName)
+
+2) See all phases in a MIDCA instance
+
+print myMIDCA.get_phases()
+
+3) Add/remove phases
+
+myMidca.insert_phase(phaseName, i)
+myMidca.append_phase(phaseName)
+myMidca.remove_phase(phaseName) #throws ValueError if phase named phaseName not present
+
+4) See the classes that are implementing a phase
+
+print myMidca.get_modules(phaseName)
+
+5a) Create a custom phase implementation (module) - old style:
+
+-Create a python class with at least these two methods:
+
+	init(self, world, mem)
+	run(self, cycle, verbose)
+
+	-world is the initial world state
+	-mem is MIDCA’s central memory
+
+	-cycle is the cycle # (starting with 1)
+	-verbose is the level of output requested
+
+	-the init method should do any setup the module requires. It will be called once for each module during MIDCA's initialization. Init methods will be called in phase order.
+
+	-the run method will be called once per cycle in phase order. This method will define what the module actually does. Within a phase, modules will be called in the order listed, which can be modified as shown in 6.
+
+For examples, see midca/modules/*
+
+5b) Create a custom phase implementation (module) - new style:
+
+-create a subclass of the base.BaseModule class. To do this, you must implement the run(self, cycle, verbose) method, which defines the module's behavior. In this method, you can access MIDCA's memory through the self.mem field.
+
+6) Add/remove custom or predefined modules to/from MIDCA
+
+myModule = MyModule() #
+assert hasattr(myModule, 'run') and hasattr(myModule, 'init')
+
+myMidca.append_module(phaseName, myModule)
+myMidca.insert_module(phaseName, myModule, i) 
+#i is the index of where this module should be placed during the phase. This is for ordering when more than one module is used in a single phase.
+
+myMidca.clear_phase(phaseName) #removes all modules implementing the phase
+
+7) initalize
+
+myMidca.init()
+
+8) run in interactive mode
+
+myMidca.run()
+
+9) logging
+
+from 'outside' MIDCA:
+myMidca.logger.log(msg)
+
+from a new-style MIDCA module's run method:
+self.log(msg)
+
+from an old-style MIDCA module's run method:
+not enabled; see first note for a workaround.
+
+note:
+by default, MIDCA will automatically log everything sent to standard output. To
+turn this off, set the MIDCA constructor argument 'logOutput' to False.
+
+note:
+by default, MIDCA also logs each memory access. To turn this off, set the MIDCA
+constructor argument logMemory to False, or set myMidca.mem.logEachAccess to False.
+
+II. Understanding how MIDCA works from the code
+
+1) Start with the base.py file. The method PhaseManager.run() defines the behavior of MIDCA in interactive mode, and following the association between user inputs and associated function calls should give a good idea of what MIDCA is doing.
+
+2) Each module is defined independently and they interact only through memory. In the mem.py file, the Memory class has a list of constants that define keys for the default MIDCA memory structures (e.g. the goal graph, observed world states). The built-in MIDCA modules generally interact only through reading/writing to these keys.
+
+3) To understand MIDCA behavior at a more fine-grained level, it is necessary to look through module by module to see what each one is doing. Check the MIDCA object to see what modules it runs in each phase (see docs above - printing a module should show the file and class name of its implementation), then go to the file in the modules folder to see what it does. Note especially calls to the memory structure (self.mem), since these are the I/O.
+
+

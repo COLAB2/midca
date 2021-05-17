@@ -1,0 +1,23 @@
+mapgrid(m0_0)
+mapgrid(m1_0)
+mapgrid(m0_1)
+mapgrid(m1_1)
+mapgrid(m2_0)
+resource(bed)
+resource(tree)
+resource(wood)
+tool(hand)
+player-at(m0_0)
+thing-available(bed)
+tool-in-hand (hand)
+connect(m0_0, m0_1) 
+thing-at-map(tree, m0_1) 
+connect(m0_0, m1_0) 
+connect(m0_0, m0_1)
+connect(m0_0, m1_1) 
+connect(m0_1, m0_0) 
+connect(m0_1, m1_0) 
+connect(m0_1, m1_1) 
+
+
+		

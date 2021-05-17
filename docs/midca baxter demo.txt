@@ -1,0 +1,150 @@
+MIDCA Baxter demo:
+
+Names:
+    
+OBJ_LOC_TOPIC: the topic on which object detection messages are published
+    -must be changed in MIDCA run script(baxter_run.py) and object detection
+    node (e.g. drone_location_simulator.py)
+UTTERANCE_TOPIC: the topic on which utterances (e.g. commands) baxter hears are
+published
+    -must be changed in MIDCA run script(baxter_run.py) and utterance listener
+    node
+POINT_TOPIC: the topic on which point commands from MIDCA are published.
+    -must be changed in asynch.py and in point effector node (pointing.py
+    reads asynch's value)
+
+I. External steps (sensors and effectors)
+    -These can be started in any order, but must all be started for the demo
+    to work.
+
+1) Start an external object detection ROS node which publishes a PointStamped
+ROS msg on OBJ_LOC_TOPIC. Simulated Implementation: drone_location_simulator.py.
+
+2) Start an external voice recognition node which publishes utterances as string
+messages on UTTERANCE_TOPIC. Implementation is currently in the baxter_cog
+repository, to be added to MIDCA.
+
+3) Start an external pointing effector node which listens for point commands
+on POINT_TOPIC. A point command will be in the form of a String message encoding
+a Dictionary containing x,y,z cooridnates. rosrun.py contains methods for
+transforming between String and dict; see examples/_baxter/pointing.py for an
+implementation. This node should also publish feedback when it encounters an
+error or completes its task. This too is implemented in pointing.py.
+
+II. MIDCA setup: all steps from baxter_run.py
+
+1) Create a new MIDCA object and add robot domain-specific modules to it.
+
+2) Create a RosMidca object. This object is responsible for sending messages to
+ROS as requested by MIDCA, and for placing messages received in appropriate
+queues for MIDCA to process. At present, all topics which will be used for
+incoming or outgoing messages must be specified at creation.
+
+2.1) As arguments to the RosMidca constructor, pass in handlers for incoming
+and outgoing messages. In this demo, MIDCA uses 3 incomingMsgHandlers:
+    A) A FixedObjectLocationHandler which receives information about the
+    location of a single, prespecified object
+    B) An UtternanceHandler which receives utterances as Strings
+    C) A FeedbackHandler which receives MIDCA Feedback objects to report on
+    the success or failure of requested actions
+...and 1 outgoingMsgHandler:
+    A) A handler which sends out String messages representing point commands
+
+3) Call ros_connect() on the RosMidca object. Note that the ROS master node must
+have already been started or this method will fail.
+
+4) Call run_midca() on the RosMidca object. This will run MIDCA asynchronously.
+If certain rate (phases/second) is desired, it can be input as the cycleRate
+argument of this method (default 10)
+
+III. What MIDCA does while running
+
+1) Asynchronously to cyclical behavior, RosMidca's handlers listen for incoming
+messages. As they are received, handlers place them into appropriate queues in
+a partition of MIDCA's memory that could be thought of as the subconscious,
+or perhaps preconscious.
+
+    -Note: if external perception changes its output style or capabilities,
+    the handlers - defined in rosrun.py - are responsible for adjusting to
+    process the new input. Specficially, for each new input type or format,
+    a new handler should be created.
+
+2) In the perceive phase, MIDCA reads messages from all queues, processes them
+as necessary, adds a time stamp to indicate when each message was received, and
+stores the processed data in MIDCA's main memory. Note that only the perceive
+phase accesses the incoming message queues.
+
+3) In the interpret phase, MIDCA checks to see if it has received and verbal
+instructions. If it gets the message 'point to the quad', it will create the
+goal: Goal(objective = "show-loc", subject = "self", directObject = "quad",
+indirectObject = "observer"). Currently it also interprets the phrase "goodbye
+baxter" in the same way, simply because in testing it was sometimes difficult
+for the voice recognition software to understand "point to the quad". Once a
+goal is created it will be stored in the goal graph. In this demo, since all
+goals are identical and identical goals are only stored once, there will never
+be multiple goals in the goal graph, though the same goal may be added again
+after it is achieved and removed.
+
+4) In the Eval phase, MIDCA checks to see if its current plan is complete. If it
+is, it declares the goal of that plan completed and removes it and the plan from
+memory.
+
+5) In the intend phase, MIDCA selects all goals of maximal priority from the
+goal graph. In this demo, there is never more than one goal, so MIDCA will
+select that goal if it exists in the graph.
+
+6) In the planning phase, MIDCA checks to see if an old plan exists for the
+current goal. If not, it creates a high level plan by using the pyhop planner,
+then transforms it into an actionable plan using a mapping between high-level
+actions and methods to carry them out. For example, the high level action
+point_to(object) is instantiated in a method which sends out ROS messages to
+the pointing effector node, then repeatedly checks for feedback indicating
+success or failure. Once all actions in a plan are complete, the plan itself is
+considered complete. If any action fails, the plan is considered failed.
+
+7) In the Act phase, MIDCA attempts to load a plan for the current goal from
+memory. If there is one, it follows this pattern:
+
+    currentAction = plan.firstAction
+    while currentAction != None:
+        if currentAction.complete:
+            currentAction = plan.nextAction()
+            continue
+        else if currentAction.not_started:
+            currentAction.start()
+        if currentAction.failed or currentAction.isBlocking:
+            break
+
+In other words, actions are begun successively until either one fails or a
+blocking action is reached. Actions are assumed to be running asynchronously
+from when they are begun to when they are declared completed.
+
+8) Lower-level details of planning and action
+
+    -planning methods and operators for this demo are in the _planning/asynch
+    folder.
+
+    -low-level methods - see the point_to example in 6) - are defined in
+    _planning/asynch/asynch.py
+    
+    -Each Asynch[ronous]Action - a low-level method - defines an isComplete
+    python function and an executeFunc function, which are passed into the
+    constructor as arguments. These methods fully define the behavior of the
+    action. So, for example, the do_point() AsynchAction's isComplete function
+    checks MIDCA's memory for feedback indicating the actions's completion or
+    failure, then updates its status as appropriate. The execute function
+    searches memory for the last known location of the object given as an
+    argument (from the high-level plan), then creates a ROS message containing
+    that location and a command id - for later feedback - and requests that
+    RosMidca broadcast the message.
+
+    -This setup means that if external effectors change their input requirements,
+    MIDCA's high-level planning can stay the same, but the interface between
+    the two defined in asynch.py must change. Specifically, a new AsynchAction
+    must be created for each new behavior type, though this process could be
+    automated to some degree.
+
+    -As an aside, the mirror of the last point with respect to perception
+    rather than action is also true. See the note after 1).
+
+
