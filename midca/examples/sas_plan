@@ -1,2 +1,6 @@
-(run-foil spray state-i-plus-1)
-; cost = 1 (unit cost)
+(move east pos0-0 pos1-0)
+(move noes pos1-0 pos2-1)
+(move noes pos2-1 pos3-2)
+(move noes pos3-2 pos4-3)
+(spray pos4-3)
+; cost = 5 (unit cost)

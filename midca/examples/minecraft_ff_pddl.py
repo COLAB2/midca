@@ -210,7 +210,7 @@ myMidca2.init()
 for i in range(60):
     myMidca2.one_cycle()'''
 #print(myMidca.mem.Goal_initial[0])
-print("hi babu",myMidca.mem.Goal_final_achieved)
+#print("hi babu",myMidca.mem.Goal_final_achieved)
 
 f = open(results_file, 'a')
 f.write(str(b)+",")

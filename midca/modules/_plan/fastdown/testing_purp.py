@@ -28,4 +28,4 @@
 #print(A)
 import os,subprocess
 
-subprocess.run(["python3","fast_downward.py","plant-protection-modif.pddl","plant-pro_modif.pddl","--search","lazy_greedy([ff])"])
+subprocess.run(["python3","fast_downward.py","plant-protection-modif_2.pddl","plant-pro_modif_2.pddl","--search","lazy_greedy([ff])"])

@@ -4,40 +4,15 @@
     dummypoint
     mapgrid
     direction
-    ;directionnorth
-    ;directionsouth
-    ;directioneast
-    ;directionwest
-    ;directionnoes
-    ;directionnows
-    ;directionsoes
-    ;directionsows
     human
     agent
     goal
 )
-;(:constants
-;    east - direction
-;    west - direction
-;    south - direction
-;    north - direction
-;    noes - direction
-;    nows - direction
-;    soes - direction
-;    sows - direction
-;)
+
 
 
 (:predicates
     (ISADJ ?dir - direction ?x - mapgrid ?y - mapgrid)
-    ;(ISADJnoes ?dir - directionnoes ?x - mapgrid ?y - mapgrid)
-    ;(ISADJnows ?dir - directionnows ?x - mapgrid ?y - mapgrid)
-    ;(ISADJsoes ?dir - directionsoes ?x - mapgrid ?y - mapgrid)
-    ;(ISADJsows ?dir - directionsows ?x - mapgrid ?y - mapgrid)
-    ;(ISADJnor ?dir - directionnorth ?x - mapgrid ?y - mapgrid)
-    ;(ISADJsou ?dir - directionsouth ?x - mapgrid ?y - mapgrid)
-    ;(ISADJeas ?dir - directioneast ?x - mapgrid ?y - mapgrid)
-    ;(ISADJwes ?dir - directionwest ?x - mapgrid ?y - mapgrid)
     (invasive-at ?x - mapgrid)
     (knows ?hum - human ?g - goal ?x - mapgrid)
     (plant-at ?x - mapgrid)
@@ -70,19 +45,19 @@
 )
 )
 (:action spray
-    :parameters (?to - mapgrid ?so - mapgrid ?no - mapgrid ?ea - mapgrid ?we - mapgrid ?noes - mapgrid ?nows - mapgrid ?soes - mapgrid ?sows - mapgrid)
+    :parameters (?to - mapgrid)
     :precondition
     (and
             ;(invasive-at ?to)
             (agent-at ?to)
-            (ISADJ south ?to ?so)
-            (ISADJ north ?to ?no)
-            (ISADJ east ?to ?ea)
-            (ISADJ west ?to ?we) 
-            (ISADJ noes ?to ?noes)
-            (ISADJ nows ?to ?nows)
-            (ISADJ soes ?to ?soes)
-            (ISADJ sows ?to ?sows)
+            ;(ISADJ south ?to ?so)
+            ;(ISADJ north ?to ?no)
+            ;(ISADJ east ?to ?ea)
+            ;(ISADJ west ?to ?we) 
+            ;(ISADJ noes ?to ?noes)
+            ;(ISADJ nows ?to ?nows)
+            ;(ISADJ soes ?to ?soes)
+            ;(ISADJ sows ?to ?sows)
                     
     )
     :effect (and
@@ -93,7 +68,7 @@
 ;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ north ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
 ;(forall (?pos - mapgrid)(when (and (ISADJ east ?to ?ea)(ISADJ south ?ea ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
 ;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ soes ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
+(when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
         (not (invasive-at ?to))
         (not (native-at ?to)) 
 

@@ -429,6 +429,7 @@ class fastdownPlanner(base.BaseModule):
                     else:
                         pass
                 ffPlan= ffPlan1
+                print(ffPlan)
             except Exception as e:
                 ffPlan = None
             if  not ffPlan and ffPlan != []:

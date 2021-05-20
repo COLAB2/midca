@@ -57,7 +57,7 @@
     :parameters (?to - mapgrid ?so - mapgrid ?no - mapgrid ?ea - mapgrid ?we - mapgrid ?noes - mapgrid ?nows - mapgrid ?soes - mapgrid ?sows - mapgrid)
     :precondition
     (and
-            
+            ;(invasive-at ?to)
             (agent-at ?to)
             (ISADJ south ?to ?so)
             (ISADJ north ?to ?no)
