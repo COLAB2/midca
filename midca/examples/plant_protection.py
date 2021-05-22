@@ -173,11 +173,6 @@ def main():
         myMidca.append_module("Interpret", note.GoalDiscrepancyDetector(world))
         myMidca.append_module("Eval", evaluate.SimpleEval())
         myMidca.append_module("Intend", intend.SimpleIntend())
-        #myMidca.append_module("Plan", planning.MetricFFPlanner(
-           # minecraft_util.ff_goals_from_midca_goals,
-           #minecraft_util.ff_state_from_midca_world,
-            #DOMAIN_FILE,
-            #STATE_FILE))
         myMidca.append_module("Plan", planning.fastdownPlanner(
            minecraft_util.ff_goals_from_midca_goals,
             minecraft_util.ff_state_from_midca_world,
@@ -189,7 +184,7 @@ def main():
         # myMidca.insert_module('Interpret', guide.TFFire(), 2)
         #myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
 
-        for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
+        for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control","Evaluate"]:
             myMidca.append_meta_phase(phase)
 
         myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor(nat,inv))
@@ -198,6 +193,7 @@ def main():
         myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
         myMidca.append_meta_module("Plan", plan.MRfastdownPlanner(DOMAIN_FILE_M,STATE_FILE_M))
         myMidca.append_meta_module("Control", control.MRSimpleControl2())
+        myMidca.append_meta_module("Evaluate", metaeval.MRSimpleEval())
 
 
 

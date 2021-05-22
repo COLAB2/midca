@@ -534,6 +534,7 @@ class MRSimpleControl2(base.BaseModule):
             plan=[]
             self.mem.set(self.mem.META_PLAN, plan)
             self.mem.DISCREPANCY = False
+            self.mem.learning_evaluation = True
             #print("cdacac",self.world.get_operators().get('spray').results)
 
 

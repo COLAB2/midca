@@ -8,10 +8,12 @@ class MRSimpleEval(base.BaseModule):
         metagoals = self.mem.get(self.mem.META_GOALS)
         if metagoals and len(metagoals) > 0:
             for goal in metagoals:
-                pass
+                if self.mem.get(self.mem.learning_evaluation):
+                    metagoals.remove(goal)
+            print('all learning goals are achieved')
 
         else:
-            if self.verbose >= 1: print("No goals - eval doing nothing")
+            if verbose >= 1: print("No goals - eval doing nothing")
 
     def goal_achieved(self, goal):
         pass

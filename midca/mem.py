@@ -94,6 +94,7 @@ class Memory:
     invasive_loc = "__number"
     EVALUATION_REBEL = "__number"
     world_meta="__number"
+    learning_evaluation = "__number"
     PLAN=[]
     GOAL_GIVEN=[]
     GOAL_ACHIEVED=[]

@@ -45,19 +45,19 @@
 )
 )
 (:action spray
-    :parameters (?to - mapgrid)
+    :parameters (?to - mapgrid ?so - mapgrid ?no - mapgrid ?ea - mapgrid ?we - mapgrid ?noes - mapgrid ?nows - mapgrid ?soes - mapgrid ?sows - mapgrid)
     :precondition
     (and
             ;(invasive-at ?to)
             (agent-at ?to)
-            ;(ISADJ south ?to ?so)
-            ;(ISADJ north ?to ?no)
-            ;(ISADJ east ?to ?ea)
-            ;(ISADJ west ?to ?we) 
-            ;(ISADJ noes ?to ?noes)
-            ;(ISADJ nows ?to ?nows)
-            ;(ISADJ soes ?to ?soes)
-            ;(ISADJ sows ?to ?sows)
+            (ISADJ south ?to ?so)
+            (ISADJ north ?to ?no)
+            (ISADJ east ?to ?ea)
+            (ISADJ west ?to ?we) 
+            (ISADJ noes ?to ?noes)
+            (ISADJ nows ?to ?nows)
+            (ISADJ soes ?to ?soes)
+            (ISADJ sows ?to ?sows)
                     
     )
     :effect (and
@@ -68,7 +68,7 @@
 ;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ north ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
 ;(forall (?pos - mapgrid)(when (and (ISADJ east ?to ?ea)(ISADJ south ?ea ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
 ;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ soes ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-(when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
+;(when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
         (not (invasive-at ?to))
         (not (native-at ?to)) 
 
