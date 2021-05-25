@@ -19,11 +19,8 @@ class Goal:
             try:
                 return self.args[val]
             except TypeError:
-                # not an index
+                #not an index
                 raise KeyError(str(val) + " is not a valid key or index.")
-
-
-
     def __contains__(self, item):
         try:
             val = self[item]
@@ -48,7 +45,6 @@ class Goal:
         would return [A_,B_] as the args
         '''
         return self.args
-
     def get_pred(self):
         '''
         Return the predicate for this goal.
@@ -57,7 +53,6 @@ class Goal:
         would return 'on' as the args
         '''
         return self.kwargs['predicate']
-
     def get_func(self):
 
         return self.kwargs['func']
@@ -79,7 +74,6 @@ class Goal:
             return s[:-2] + ")"
         else:
             return s + ")"
-
 
 class GoalNode:
     id = 1
@@ -103,14 +97,13 @@ class GoalNode:
         """ Nice string format for labeling the graph in the pdf drawing """
         return str(self.goal)
 
-
 class GoalGraph:
     '''
     A graph that maintains a partial ordering of goals. Note that, at present, cycle checking is not complete, so partial orderings can be created that would never allow a goal to be accomplished.
     The single constructor argument gives a function that takes two goals as input and should return a +/- value indicating precedence. If goal1 should be achieved before goal2, goalCompareFunction(goal1, goal2) < 0.
     '''
 
-    def __init__(self, goalCompareFunction=None):
+    def __init__(self, goalCompareFunction = None):
         self.roots = set()
         self.cmp = goalCompareFunction
         if not self.cmp:
@@ -118,7 +111,7 @@ class GoalGraph:
         self.numGoals = 0
         self.plans = set()
 
-    # note not symmetrical - finds goals that are specifications of current goal, but not generalizations.
+    #note not symmetrical - finds goals that are specifications of current goal, but not generalizations.
     def consistentGoal(self, first, second):
         for i in range(len(first.args)):
             if first.args[i] != "?" and (len(second.args) <= i or first.args[i] != second.args[i]):
@@ -134,7 +127,8 @@ class GoalGraph:
     def add(self, goal):
         self.insert(goal)
 
-    # inserts a goal into the graph using the graph's comparator
+
+    #inserts a goal into the graph using the graph's comparator
     def insert(self, goal):
         if goal in self:
             return False
@@ -160,13 +154,13 @@ class GoalGraph:
         allNodes = self._getAllNodes()
         if delNode in self.roots:
             self.roots.remove(delNode)
-            for node in allNodes:
-                if delNode in node.parents:
-                    node.parents.remove(delNode)
-                    if not node.parents and node != delNode:
-                        self.roots.add(node)
-                if delNode in node.children:
-                    node.children.remove(delNode)
+        for node in allNodes:
+            if delNode in node.parents:
+                node.parents.remove(delNode)
+                if not node.parents and node != delNode:
+                    self.roots.add(node)
+            if delNode in node.children:
+                node.children.remove(delNode)
 
     def remove(self, goal):
         delNode = self._getGoalNode(goal)
@@ -181,15 +175,15 @@ class GoalGraph:
         self.plans.add(plan)
 
     # removes all goals associated with given plan. Not super efficient right now, but the expectation is that the number of goals will not be huge.
+
     def removePlanGoals(self, plan):
         for goal in plan.goals:
             self.remove(goal)
-
-    # will raise KeyError if plan is not in plan set.
+    #will raise KeyError if plan is not in plan set.
     def removePlan(self, plan):
         self.plans.remove(plan)
 
-    def planCurrent(self, plan, requireAllGoals=True):
+    def planCurrent(self, plan, requireAllGoals = True):
         numGoalsMissed = 0
         for goal in plan.goals:
             if not self._getGoalNode(goal):
@@ -201,7 +195,7 @@ class GoalGraph:
             return False
         return True
 
-    def removeOldPlans(self, requireAllGoals=True):
+    def removeOldPlans(self, requireAllGoals = True):
         self.plans = {plan for plan in self.plans if self.planCurrent(plan, requireAllGoals)}
 
     def numMatchingGoals(self, plan, goals):
@@ -216,16 +210,16 @@ class GoalGraph:
                 num += 1
         return num
 
-    # returns all plan whose goalset contains any of given goals. Will return them in order of how many given goals they achieve, ties broken by minimizing extra goals. Note that this ordering may break if a plan has more than a thousand goals.
+    #returns all plan whose goalset contains any of given goals. Will return them in order of how many given goals they achieve, ties broken by minimizing extra goals. Note that this ordering may break if a plan has more than a thousand goals.
     def allMatchingPlans(self, goals):
         matches = []
         for plan in self.plans:
             if self.numMatchingGoals(plan, goals) > 0:
                 matches.append(plan)
-        matches.sort(key=lambda plan: -self.numMatchingGoals(plan, goals) + len(plan.goals) * 0.001)
+        matches.sort(key = lambda plan: -self.numMatchingGoals(plan, goals) + len(plan.goals) * 0.001)
         return matches
 
-    # returns a plan whose goalset contains all given goals. If more than one plan does, returns one of those with minimum extraneous goals. Ties are broken arbitrarily. If there is no candidate, returns None.
+    #returns a plan whose goalset contains all given goals. If more than one plan does, returns one of those with minimum extraneous goals. Ties are broken arbitrarily. If there is no candidate, returns None.
     def getMatchingPlan(self, goals):
         bestChoice = None
         for plan in self.plans:
@@ -233,7 +227,7 @@ class GoalGraph:
             for goal in goals:
                 found = False
                 for planGoal in plan.goals:
-                    # print "goal is " + str([goal])
+                    #print "goal is " + str([goal])
                     if self.consistentGoal(goal, planGoal):
                         found = True
                         break
@@ -246,9 +240,8 @@ class GoalGraph:
                 elif len(bestChoice.goals) > len(plan.goals):
                     bestChoice = plan
         return bestChoice
-
-    # returns the plan, if any is available, that achieves the most goals in the given goalset. If more than one does, tries to achieve the fewest extraneous goals. Ties are broken arbitrarily. Returns None if no plan is found that achieves any of the given goals.
-    # note that this method is a generalization of getMatchingPlan() (i.e. will return a best matching plan if there is any), but is less efficient.
+    #returns the plan, if any is available, that achieves the most goals in the given goalset. If more than one does, tries to achieve the fewest extraneous goals. Ties are broken arbitrarily. Returns None if no plan is found that achieves any of the given goals.
+    #note that this method is a generalization of getMatchingPlan() (i.e. will return a best matching plan if there is any), but is less efficient.
     def getBestPlan(self, goals):
         bestChoice = None
         bestNumAchieved = 0
@@ -262,11 +255,11 @@ class GoalGraph:
                         break
                 if found:
                     numAchieved += 1
-            # check if the current plan achieves more goals than the best so far
+            #check if the current plan achieves more goals than the best so far
             if numAchieved > bestNumAchieved:
                 bestChoice = plan
                 bestNumAchieved = numAchieved
-            # break ties by minimizing total goals
+            #break ties by minimizing total goals
             elif numAchieved == bestNumAchieved and len(bestChoice.goals) > len(plan.goals):
                 bestChoice = plan
         return bestChoice
@@ -299,7 +292,7 @@ class GoalGraph:
                 nodes.append(child)
         return goals
 
-    # returns the first node such that self.consistentGoal(goal, node.goal) returns True.
+    #returns the first node such that self.consistentGoal(goal, node.goal) returns True.
     def _getGoalNode(self, goal):
         visited = set()
         nodes = list(self.roots)
@@ -313,7 +306,7 @@ class GoalGraph:
                 return next
             for child in next.children:
                 nodes.append(child)
-        return None  # not in graph
+        return None #not in graph
 
     def getGoalAncestors(self, goal):
         node = self._getGoalNode(goal)
@@ -348,10 +341,8 @@ class GoalGraph:
         # get all the nodes of root into a list for sorting
         for node in self.roots:
             nodes_list.append(node)
-        
         # sort according to the node id
-        nodes_list.sort(key=lambda x: x.id)
-        #print(nodes_list[0].goal,nodes_list[1].goal,nodes_list[2].goal)
+        nodes_list.sort(key = lambda x: x.id)
         return [node.goal for node in nodes_list]
 
     def writeToPDF(self, pdf_filename="goalgraph.pdf"):
@@ -378,15 +369,15 @@ class GoalGraph:
 
         """
 
-        assert (pdf_filename.endswith(".pdf"))
+        assert(pdf_filename.endswith(".pdf"))
 
         # get the filename for dot by removing '.pdf'
         dotfilename = copy.deepcopy(pdf_filename[0:-4]) + ".dot"
         dotfilestr = "digraph\n{\n"
 
         for node in self._getAllNodes():
-            print(("  Goal" + str(node.id) + " [label=\"" + node.dotStr() + " \"]"))
-            dotfilestr += "  Goal" + str(node.id) + " [label=\"" + node.dotStr() + " \"]\n"
+            print(("  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]"))
+            dotfilestr += "  Goal" + str(node.id) + " [label=\""+node.dotStr()+" \"]\n"
 
         dotfilestr += "\n"
 
@@ -396,11 +387,11 @@ class GoalGraph:
 
         dotfilestr += "\n}\n"
         f = open(dotfilename, 'w')
-        f.write(dotfilestr)
+        f. write(dotfilestr)
         f.close()
-        # print "Wrote dot file to " + dotfilename
-        genPDFCommand = "dot -Tpdf " + dotfilename + " -o " + pdf_filename
-        # dot_output = subprocess.check_output(shlex.split(genPDFCommand))
-        # print "dot_output = " + str(dot_output)
-        # subprocess.call(shlex.split("del "+dotfilename))
+        #print "Wrote dot file to " + dotfilename
+        genPDFCommand = "dot -Tpdf "+ dotfilename + " -o " + pdf_filename
+        #dot_output = subprocess.check_output(shlex.split(genPDFCommand))
+        #print "dot_output = " + str(dot_output)
+        #subprocess.call(shlex.split("del "+dotfilename))
         print("Drawing of current goal graph written to " + pdf_filename)

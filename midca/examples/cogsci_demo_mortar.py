@@ -2,6 +2,15 @@
 from midca.worldsim import domainread, stateread
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 from midca.metamodules import monitor, control, interpret, metaintend, plan
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import TFFire,\
+    SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
+from midca.modules.evaluate import SimpleEval, MortarScorer
+from midca.modules import simulator
+from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca import base
 
 import inspect, os
@@ -9,7 +18,6 @@ import inspect, os
 # domain specific imports
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods_mortar, operators_mortar
-
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
 TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
@@ -21,7 +29,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist_mortar.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist_mortar.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_mortar.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods_mortar.declare_methods

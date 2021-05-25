@@ -1,0 +1,59 @@
+#simple blocksworld domain with triangular blocks added.
+
+type(BLOCK)
+
+predicate(clear, [blk], [BLOCK])
+predicate(holding, [blk], [BLOCK])
+predicate(arm-empty, [], [])
+predicate(on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(on-table, [blk], [BLOCK])
+predicate(block, [blk], [BLOCK])
+predicate(triangle, [blk], [BLOCK])
+
+operator(stack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [btmblk]), 
+	condition(holding, [topblk])], 
+results = [
+	condition(clear, [btmblk], negate = True), 
+	condition(holding, [topblk], negate = True), 
+	condition(clear, [topblk]), 
+	condition(on, [topblk, btmblk]), 
+	condition(arm-empty, [])])
+
+operator(unstack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [topblk]), 
+	condition(arm-empty), 
+	condition(on, [topblk, btmblk])],
+results = [
+	condition(clear, [topblk], negate = True), 
+	condition(holding, [topblk]), 
+	condition(arm-empty, [], negate = True), 
+	condition(on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False)])
+
+operator(putdown, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(holding, [blk])], 
+results = [
+	condition(holding, [blk], negate = True), 
+	condition(clear, [blk]), 
+	condition(on-table, [blk]),
+	condition(arm-empty, [])])
+
+operator(pickup, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(on-table, [blk]),
+	condition(clear, [blk]),
+	condition(arm-empty, [])],
+results = [
+	condition(holding, [blk]), 
+	condition(clear, [blk], negate = True),
+	condition(on-table, [blk], negate = True),
+	condition(arm-empty, [], negate = True)])
+

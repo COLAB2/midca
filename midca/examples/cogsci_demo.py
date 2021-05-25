@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 from midca import base
 from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
-
+from midca.modules import simulator
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.interpret import ADistanceAnomalyNoter, TFStack, TFFire, ReactiveApprehend, UserGoalInput
+from midca.modules.act import SimpleAct
+from midca.modules.evaluate import SimpleEval, Scorer
 from midca.worldsim import domainread, stateread
 import inspect, os
 
 # Domain Specific Imports
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods, operators
+
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
@@ -20,7 +27,7 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods.declare_methods

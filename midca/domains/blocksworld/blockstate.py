@@ -1,7 +1,6 @@
 from midca.domains.blocksworld.block import Block
 from midca.worldsim import worldsim
 
-
 def b(name):
     return "b" + str(name)
 

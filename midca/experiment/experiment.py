@@ -6,8 +6,6 @@ Created on Jul 16, 2015
 
 import time
 from multiprocessing import Pool
-
-
 class Experiment():
     '''
     The Experiment object is used to set up and run experiments where
@@ -23,6 +21,8 @@ class Experiment():
 
     def __init__(self, name):
         self.runs = []
+        self.datawritefuncs = [] # TODO - change this to be a single element
+        self.destructfuncs = []
         self.name = name
         self.run_count = 0
 
@@ -34,7 +34,7 @@ class Experiment():
         if filename and filename.endswith(".csv"):
             self.filenames.append(filename)
         else:
-            raise Exception("Tried to use output data file that is NOT a .csv file: " + filename)
+            raise Exception("Tried to use output data file that is NOT a .csv file: "+filename)
 
     def appendRun(self, midca, num_cycles):
         '''
@@ -43,9 +43,9 @@ class Experiment():
         MIDCA will be passed to the data output function.
         '''
         # Note: these are the arguments passed to singlerun() defined inside run() below
-        this_run_args = [self.run_count, midca, num_cycles]
+        this_run_args = [self.run_count, midca, num_cycles, self.datawritefuncs[0]]
         self.runs.append(this_run_args)
-        self.run_count += 1
+        self.run_count+=1
 
     def addWriteDataFunc(self, func):
         '''
@@ -75,30 +75,27 @@ class Experiment():
         Executes all the runs from appendRun and sends the resulting midca
         objects to each data writing function added by addWriteDataFunc()
         '''
-
         # func for Pool.map() (there are some restrictions on the kinds of functions it can take)
         def singlerun(args):
             run_id = args[0]
             midca_inst = args[1].createMIDCAObj()
             num_cycles = args[2]
-            #data_write_func = args[3]
+            data_write_func = args[3]
             curr_midca = midca_inst.getMIDCAObj()
             curr_midca.init()
             midca_inst.run_cycles(num_cycles)
-
             result = data_write_func(run_id, num_cycles, curr_midca)
-            print(result)
+            print(result) 
             return result
 
+        
         # Uses multiprocessing to give each run its own python process
         pool = Pool(processes=1)
-
         # NOTE: it is very important chunksize is 1 (each MIDCA must use its own python process)
-        print(("self.run[0]=" + str(list(map(str, self.runs[0])))))
+        print(("self.run[0]="+str(list(map(str,self.runs[0])))))
         results = pool.map(singlerun, self.runs, chunksize=1)
-        print(("Experiment finished. We've obtained " + str(len(results)) + " data points"))
+        print(("Experiment finished. We've obtained "+str(len(results))+" data points"))
         return results
-
 #         
 #         print "Running experiment: " + self.name
 #         for run_id in range(len(self.runs)):

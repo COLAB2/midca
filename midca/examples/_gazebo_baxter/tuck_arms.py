@@ -262,7 +262,5 @@ def main():
     tucker.supervised_tuck()
     rospy.loginfo("Finished tuck")
     rospy.sleep(1)
-
-
 if __name__ == "__main__":
     main()

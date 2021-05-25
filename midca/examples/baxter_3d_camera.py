@@ -1,6 +1,13 @@
 #!/usr/bin/env python 
 from MIDCA import base, rosrun
 from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from midca.modules.perceive import ROSObserver
+from midca.modules.plan import AsynchPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import AsynchronousAct
+from midca.modules.interpret import InstructionReceiver
+from midca.modules.evaluate import EvalPointingFromFeedback
+from MIDCA.modules import simulator
 from MIDCA.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors_sr
 from MIDCA.logging import Logger
 import inspect, os
@@ -34,7 +41,6 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 myMidca = ros_style_midca()
-
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     # rosrun.CalibrationHandler("calibrate_done", myMidca),
     rosrun.MultipleObjectsLocationHandler("obj_pos", myMidca),
@@ -55,6 +61,5 @@ rosMidca.ros_connect()
 baxter = Baxter()
 baxter.enable()
 baxter.calibrateLeftGripper()
-
 input('Enter ...')
 rosMidca.run_midca()

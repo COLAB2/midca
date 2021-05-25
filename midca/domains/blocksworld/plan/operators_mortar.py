@@ -46,7 +46,6 @@ def unstack(state, b, c):
         # to undo mortar but doesn't increase quantity
         if hasattr(state, 'mortared') and state.mortared[b] == True:
             state.mortared[b] == False
-
         return state
     else:
         return False

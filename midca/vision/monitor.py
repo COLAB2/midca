@@ -6,15 +6,12 @@ import math
 cap = cv2.VideoCapture(0)
 from .baxter import *
 import time
-
 baxter = Baxter()
 
 import os
 import sys
 import argparse
-
 import rospy
-
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
 
@@ -149,10 +146,11 @@ def monitor_clear_block(block_name='green block', topic='clear_block'):
         for color_name in boundaries:
             (lower, upper) = boundaries[color_name]
             mask = Getmask(hsv, lower, upper)
-
+            
+                
             p = findContour(frame, mask)
-            if (p != None):
-                color_location.update({color_name: (p[0], p[1], 0)})
+            if(p != None):
+                color_location.update({color_name : (p[0], p[1], 0)})
         time.sleep(3)
         if len(color_location) == 2:
             pos_green = 'table'

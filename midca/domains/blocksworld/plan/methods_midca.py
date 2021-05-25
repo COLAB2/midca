@@ -100,99 +100,90 @@ declare_methods must be called once for each taskname. Below, 'declare_methods('
 
 ### methods for "move_one"
 
-def move1(state, b1, dest):
-    """
-    Generate subtasks to get b1 and put it at dest.
-    """
-    if state.is_true("holding", [b1]):
-        return [('put', b1, dest)]
-    if state.is_true("arm-empty"):
-        return [('get', b1), ('put', b1, dest)]
-    for atom in state.atoms:
-        if atom.predicate.name == "holding":
-            heldBlock = atoms.args[0].name
-    return [('put', heldBlock, 'table'), ('get', b1), ('put', b1, dest)]
-
+def move1(state,b1,dest):
+	"""
+	Generate subtasks to get b1 and put it at dest.
+	"""
+	if state.is_true("holding", [b1]):
+		return [('put', b1, dest)]
+	if state.is_true("arm-empty"):
+		return [('get', b1), ('put', b1,dest)]
+	for atom in state.atoms:
+		if atom.predicate.name == "holding":
+			heldBlock = atoms.args[0].name
+	return [('put', heldBlock, 'table'), ('get', b1), ('put', b1,dest)]
 
 ### methods for "get"
 
-def get_by_unstack(state, b1):
-    """Generate a pickup subtask."""
-    if state.is_true("clear", [b1]): return [('unstack_task', b1)]
-    return False
+def get_by_unstack(state,b1):
+	"""Generate a pickup subtask."""
+	if state.is_true("clear", [b1]): return [('unstack_task',b1)]
+	return False
 
-
-def get_by_pickup(state, b1):
-    """Generate a pickup subtask."""
-    if state.is_true("clear", [b1]): return [('pickup_task', b1)]
-    return False
-
-
+def get_by_pickup(state,b1):
+	"""Generate a pickup subtask."""
+	if state.is_true("clear", [b1]): return [('pickup_task',b1)]
+	return False
+	
 ### methods for "pickup_task"
 
-def pickup_m(state, b1):
-    """Generate a pickup subtask."""
-    if state.is_true("clear", [b1]): return [('pickup', b1)]
-    return False
-
+def pickup_m(state,b1):
+	"""Generate a pickup subtask."""
+	if state.is_true("clear", [b1]): return [('pickup',b1)]
+	return False
 
 ### methods for "unstack_task"
 
-def unstack_m(state, b1):
-    """Generate a pickup subtask."""
-    if state.is_true("clear", [b1]):
-        for atom in state.atoms:
-            if atom.predicate.name == "on" and atom.args[0].name == b1:
-                return [('unstack', b1, atom.args[1].name)]
-    return False
-
-
+def unstack_m(state,b1):
+	"""Generate a pickup subtask."""
+	if state.is_true("clear", [b1]): 
+		for atom in state.atoms:
+			if atom.predicate.name == "on" and atom.args[0].name == b1:
+				return [('unstack',b1,atom.args[1].name)]
+	return False
+	
 ### methods for "put"
 
-def put_m(state, b1, b2):
-    """
-    Generate either a putdown or a stack subtask for b1.
-    b2 is b1's destination: either the table or another block.
-    """
-    if state.is_true("holding", [b1]):
-        if b2 == 'table':
-            return [('putdown', b1)]
-        else:
-            return [('stack', b1, b2)]
-    else:
-        return False
-
+def put_m(state,b1,b2):
+	"""
+	Generate either a putdown or a stack subtask for b1.
+	b2 is b1's destination: either the table or another block.
+	"""
+	if state.is_true("holding", [b1]):
+		if b2 == 'table':
+				return [('putdown',b1)]
+		else:
+				return [('stack',b1,b2)]
+	else:
+		return False
 
 def put_out_m(state, b1):
-    if state.is_true("onfire", [b1]):
-        return [("putoutfire", b1)]
-    else:
-        return []
-
+	if state.is_true("onfire", [b1]):
+		return [("putoutfire", b1)]
+	else:
+		return []
 
 def quick_apprehend_m(state, perp):
-    if state.is_true("free", [perp]):
-        return [("apprehend", perp)]
-    else:
-        return []
-
+	if state.is_true("free", [perp]):
+		return [("apprehend", perp)]
+	else:
+		return []
 
 def long_apprehend_m(state, perp):
-    if state.is_true("free", [perp]):
-        return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
-    else:
-        return []
+	if state.is_true("free", [perp]):
+		return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
+	else:
+		return []
 
-
-def declare_methods(longApprehend=True):
-    if longApprehend:
-        pyhop.declare_methods("catch_arsonist", long_apprehend_m)
-    else:
-        pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
-    pyhop.declare_methods("put_out", put_out_m)
-    pyhop.declare_methods('put', put_m)
-    pyhop.declare_methods('unstack_task', unstack_m)
-    pyhop.declare_methods('pickup_task', pickup_m)
-    pyhop.declare_methods('get', get_by_pickup, get_by_unstack)
-    pyhop.declare_methods('move_one', move1)
-    pyhop.declare_methods('move_blocks', moveb_m)
+def declare_methods(longApprehend = True):
+	if longApprehend:
+		pyhop.declare_methods("catch_arsonist", long_apprehend_m)
+	else:
+		pyhop.declare_methods("catch_arsonist", quick_apprehend_m)
+	pyhop.declare_methods("put_out", put_out_m)
+	pyhop.declare_methods('put',put_m)
+	pyhop.declare_methods('unstack_task',unstack_m)
+	pyhop.declare_methods('pickup_task',pickup_m)
+	pyhop.declare_methods('get',get_by_pickup,get_by_unstack)
+	pyhop.declare_methods('move_one',move1)
+	pyhop.declare_methods('move_blocks',moveb_m)

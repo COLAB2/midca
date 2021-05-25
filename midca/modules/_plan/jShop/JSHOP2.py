@@ -2,8 +2,6 @@ import inspect, os
 import subprocess
 import sys
 from subprocess import Popen, PIPE, STDOUT
-
-
 ###Make sure that Java is installed fully on your computer.
 ###set the CLASSPATH
 ###environment variable to include (replacing JSHOP2_DIRECTORY with the directory
@@ -18,7 +16,6 @@ from subprocess import Popen, PIPE, STDOUT
 
 def compile_java(java_file):
     subprocess.check_call(['javac', java_file])
-
 
 def execute_java(java_file, stdin):
     java_class, ext = os.path.splitext(java_file)
@@ -84,8 +81,6 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
     print()
     midcaplan
     return midcaplan
-
-
 def parenthetic_contents(string):
     """Generate parenthesized contents in string as pairs (level, contents)."""
     stack = []
@@ -95,7 +90,6 @@ def parenthetic_contents(string):
         elif c == ')' and stack:
             start = stack.pop()
             yield (string[start + 1: i])
-
 
 def parse(str):
     elements = list(parenthetic_contents(str))

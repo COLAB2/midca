@@ -9,8 +9,6 @@ import rospy
 from std_msgs.msg import (UInt16, )
 import baxter_interface
 from baxter_interface import CHECK_VERSION
-
-
 class CameraPosition(object):
     def __init__(self):
         self._limb = baxter_interface.limb.Limb("right")
@@ -52,7 +50,5 @@ def main():
     cameraPos = CameraPosition()
     cameraPos.set_camera()
     rospy.sleep(1)
-
-
 if __name__ == '__main__':
     main()

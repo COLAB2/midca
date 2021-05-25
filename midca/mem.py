@@ -2,7 +2,6 @@ from midca.logging import Event
 from midca.trace import CogTrace
 import threading
 
-
 class Memory:
     '''
     To do: in theory, a lock could be deleted in between when its existence is checked
@@ -251,13 +250,13 @@ class Memory:
         if not self.trace:
             self.trace = CogTrace()
 
-
 class MemAccessEvent(Event):
 
-    def __init__(self, keyAccessed):
-        self.keys = ['log', 'Memory Access']
-        self.loggable = True
-        self.memKey = keyAccessed
+	def __init__(self, keyAccessed):
+		self.keys = ['log', 'Memory Access']
+		self.loggable = True
+		self.memKey = keyAccessed
 
-    def __str__(self):
-        return "Memory access at key " + str(self.memKey)
+	def __str__(self):
+		return "Memory access at key " + str(self.memKey)
+>>>>>>> 18d6b13e3d6b0d980cd3453196e82fad7302e79b

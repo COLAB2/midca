@@ -5,14 +5,12 @@ import os
 from midca.domains.blocksworld import scene, blockstate
 from midca.modules._plan import pyhop
 
-
 def asqiiDisplay(world):
     '''
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
     print((str(scene.Scene(blocks))))
-
 
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -40,7 +38,6 @@ def preferMaintain(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -49,7 +46,6 @@ def preferFire(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
 
 def jshop_state_from_world(world, STATE_FILE, name="state"):
     #     thisDir =  os.path.dirname(os.path.realpath(__file__))
@@ -112,8 +108,6 @@ def jshop_tasks_from_goals(goals, pyhopState, STATE_FILE):
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" ))))")
     f.close()
-
-
 def pyhop_state_from_world(world, name="state"):
     s = pyhop.State(name)
     s.pos = {}
@@ -189,7 +183,6 @@ def pyhop_state_from_world(world, name="state"):
     # for worker in workers:
     #     if worker in s.has_cigarette:
     #         s.has_cigarette[worker] = True
-
     for mblock in mortarblocks:
         if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
@@ -214,7 +207,6 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             predicate = str(goal.args[0])
         else:
             raise ValueError("Goal " + str(goal) + " does not translate to a valid pyhop task")
-
         args = [str(arg) for arg in goal.args]
         if args[0] == predicate:
             args.pop(0)
@@ -234,7 +226,6 @@ def pyhop_tasks_from_goals(goals, pyhopState):
         alltasks.append(("move_blocks", blkgoals))
     return alltasks
 
-
 def mortar_pyhop_state_from_world(world, name="state"):
     s = pyhop.State(name)
     s.pos = {}
@@ -244,7 +235,7 @@ def mortar_pyhop_state_from_world(world, name="state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.hasmortar = {}  # keys are 
+    s.hasmortar = {}  # keys are
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
@@ -292,13 +283,11 @@ def mortar_pyhop_state_from_world(world, name="state"):
             s.pos[block] = "in-arm"
         if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
-
     for mblock in mortarblocks:
         if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
 
     return s
-
 
 # note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.
 def mortar_pyhop_tasks_from_goals(goals, pyhopState):
@@ -307,7 +296,6 @@ def mortar_pyhop_tasks_from_goals(goals, pyhopState):
     blkgoals.pos = {}
     blkgoals.hasmortar = {}
     for goal in goals:
-        # extract predicate
         if 'predicate' in goal.kwargs:
             predicate = str(goal.kwargs['predicate'])
         elif 'Predicate' in goal.kwargs:

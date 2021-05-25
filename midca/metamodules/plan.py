@@ -76,12 +76,11 @@ class MRfastdownPlanner(base.BaseModule):
         if self.using_baxter and self.mem.trace.module == "PyHopPlannerBroken" and goal[0] == "SWAP-MODULE":
             phase = "Plan"
             old_component = self.mem.trace.module
-            new_component = "AsynchPyhopPlanner"  # TODO: for now this is hardcoded knowledge
+            new_component = "AsynchPyhopPlanner" # TODO: for now this is hardcoded knowledge
             if len(ungrounded_plan) == 2:
                 action1 = [ungrounded_plan[0][0], ungrounded_plan[0][1].replace("?x", old_component)]
                 grounded_plan.append(action1)
-                action2 = [ungrounded_plan[1][0], ungrounded_plan[1][1].replace("?p", phase),
-                           ungrounded_plan[1][2].replace("?x", new_component)]
+                action2 = [ungrounded_plan[1][0], ungrounded_plan[1][1].replace("?p", phase),ungrounded_plan[1][2].replace("?x", new_component)]
                 grounded_plan.append(action2)
         elif self.mem.trace.module == "PyHopPlannerBroken" and goal[0] == "SWAP-MODULE":
             phase = "Plan"

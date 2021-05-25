@@ -19,10 +19,8 @@ The blocks-world operators use three state variables:
 - holding = name of the block being held, or False if the hand is empty.
 """
 
-
-def pickup(state, b):
-    print()
-    "pickop_op", b
+def pickup(state,b):
+    print("pickop_op", b)
     if state.is_true("on-table", [b]) and state.is_true("clear", [b]) and state.is_true("arm-empty"):
         state.add_fact("holding", [b])
         state.remove_fact("clear", [b])
@@ -91,7 +89,6 @@ def searchfor(state, perp):
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.
 """
-
 
 def declare_ops():
     pyhop.declare_operators(pickup, unstack, putdown, stack, putoutfire, apprehend, searchfor)

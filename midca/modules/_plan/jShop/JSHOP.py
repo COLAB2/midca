@@ -3,6 +3,7 @@ import subprocess
 
 from subprocess import Popen, PIPE, STDOUT
 
+<<<<<<< HEAD
 
 def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
     thisDir = os.path.dirname(os.path.realpath(__file__))
@@ -12,11 +13,11 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
     #     DOMAIN_FIILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     #     STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/blocks_world/bw_ran_problems_5.shp"
-    #     
+    #
     #     f = open(STATE_FILE, 'r')
     #     a = f.read()
     #     print a
-    #   
+    #
 
     p = Popen(['java', '-jar', thisDir + '/jshop.jar', DOMAIN_FIILE,
                STATE_FILE, '1'], stdout=PIPE, stderr=STDOUT)
@@ -32,7 +33,6 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
 
     return Jshop_plan
 
-
 def parenthetic_contents(string):
     """Generate parenthesized contents in string as pairs (level, contents)."""
     stack = []
@@ -42,7 +42,6 @@ def parenthetic_contents(string):
         elif c == ')' and stack:
             start = stack.pop()
             yield (string[start + 1: i])
-
 
 def parse(str):
     elements = list(parenthetic_contents(str))

@@ -5,11 +5,9 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 from midca.modules._plan import pyhop
-
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
-
 
 def is_done(b1, state, goal):
     if b1 == 'table': return True
@@ -32,7 +30,6 @@ def status(b1, state, goal):
         return 'move-to-block'
     else:
         return 'waiting'
-
 
 def all_blocks(state):
     return list(state.clear.keys())
@@ -70,8 +67,6 @@ def moveb_m(state, goal):
     #
     # if we get here, there are no blocks that need moving
     return []
-
-
 """
 declare_methods must be called once for each taskname. Below, 'declare_methods('get',get_m)' tells Pyhop that 'get' has one method, get_m. Notice that 'get' is a quoted string, and get_m is the actual function.
 """
@@ -140,15 +135,11 @@ def put_out_m(state, b1):
         return [("putoutfire", b1)]
     else:
         return []
-
-
 def quick_apprehend_m(state, perp):
     if state.free[perp]:
         return [("apprehend", perp)]
     else:
         return []
-
-
 def long_apprehend_m(state, perp):
     if state.free[perp]:
         return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]

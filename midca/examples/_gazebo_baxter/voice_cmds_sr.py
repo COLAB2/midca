@@ -62,8 +62,6 @@ while not rospy.is_shutdown():
 # pub.publish("stack the blue block on the red block")
 # print("stack the blue block on the red block")
 # pub.publish("stack the green block on the blue block")
-
-
 # n = 0
 # while n < 20:
 # 	n += 1d

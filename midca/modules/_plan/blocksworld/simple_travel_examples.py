@@ -8,12 +8,10 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 import pyhop
 
 import simple_travel_operators
-
 print('')
 pyhop.print_operators()
 
 import simple_travel_methods
-
 print('')
 pyhop.print_methods()
 

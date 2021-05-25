@@ -103,49 +103,42 @@ Pyhop provides the following classes and functions:
 
 import copy, sys, pprint
 
-
 ############################################################
 # States and goals
 
 class State():
     """A state is just a collection of variable bindings."""
-
-    def __init__(self, name):
+    def __init__(self,name):
         self.__name__ = name
-
 
 class Goal():
     """A goal is just a collection of variable bindings."""
-
-    def __init__(self, name):
-        self.__name__ = name
-
-    ### print_state and print_goal are identical except for the name
+    def __init__(self,name):
+        self.__name__ = name        
 
 
-def print_state(state, indent=4):
+### print_state and print_goal are identical except for the name
+
+def print_state(state,indent=4):
     """Print each variable in state, indented by indent spaces."""
     if state != False:
-        for (name, val) in list(vars(state).items()):
+        for (name,val) in list(vars(state).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(state.__name__ + '.' + name)
                 print(' =', val)
-    else:
-        print('False')
+    else: print('False')
 
-
-def print_goal(goal, indent=4):
+def print_goal(goal,indent=4):
     """Print each variable in goal, indented by indent spaces."""
     if goal != False:
-        for (name, val) in list(vars(goal).items()):
+        for (name,val) in list(vars(goal).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(goal.__name__ + '.' + name)
                 print(' =', val)
     else:
         print('False')
-
 
 ############################################################
 # Helper functions that may be useful in domain models
@@ -156,7 +149,6 @@ def forall(seq, cond):
         if not cond(x): return False
     return True
 
-
 def find_if(cond, seq):
     """
     Return the first x in seq such that cond(x) holds, if there is one.
@@ -165,14 +157,11 @@ def find_if(cond, seq):
     for x in seq:
         if cond(x): return x
     return None
-
-
 ############################################################
 # Commands to tell Pyhop what the operators and methods are
 
 operators = {}
 methods = {}
-
 
 def declare_operators(*op_list):
     """
@@ -191,8 +180,6 @@ def declare_methods(task_name, *method_list):
     """
     methods.update({task_name: list(method_list)})
     return methods[task_name]
-
-
 ############################################################
 # Commands to find out what the operators and methods are
 
@@ -216,12 +203,10 @@ def pyhop(state, tasks, verbose=0):
     Try to find a plan that accomplishes tasks in state. 
     If successful, return the plan. Otherwise return False.
     """
-    if verbose > 0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__, tasks))
-    result = seek_plan(state, tasks, [], 0, verbose)
-    if verbose > 0: print('** result =', result, '\n')
+    if verbose>0: print('** pyhop:\n   state = {}\n   tasks = {}'.format(state.__name__,tasks))
+    result = seek_plan(state,tasks,[],0,verbose)
+    if verbose>0: print('** result =',result,'\n')
     return result
-
-
 def copy_state(state):
     try:
         return state.copy()

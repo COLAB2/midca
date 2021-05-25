@@ -4,7 +4,6 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 import sys
-
 sys.path.append("../")
 from midca.modules._plan import pyhop
 

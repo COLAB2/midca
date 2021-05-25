@@ -7,8 +7,6 @@ from midca.modules._plan import pyhop
 """
 
 """ move down """
-
-
 # start and dest are only to help conversion to MIDCA operators, they are not used in 
 # PyHop Planning
 def movesouth(state, agent, start, dest):
@@ -30,8 +28,6 @@ def movesouth(state, agent, start, dest):
 
 
 """ move up """
-
-
 def movenorth(state, agent, start, dest):
     if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
@@ -49,10 +45,7 @@ def movenorth(state, agent, start, dest):
     else:
         return False
 
-
 """ move left """
-
-
 def movewest(state, agent, start, dest):
     if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
@@ -72,8 +65,6 @@ def movewest(state, agent, start, dest):
 
 
 """ move right """
-
-
 def moveeast(state, agent, start, dest):
     if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
@@ -90,7 +81,6 @@ def moveeast(state, agent, start, dest):
         return state
     else:
         return False
-
 
 def activatebeacon(state, agent, loc, bcn_id):
     agent_at_beacon = False
@@ -115,7 +105,6 @@ def activatebeacon(state, agent, loc, bcn_id):
 
     # from IJCAI-15 work
 
-
 # def activatebeacon(state, agent):
 #     if state.agents[agent]:
 #         xy_str = state.agents[agent]
@@ -131,11 +120,9 @@ def activatebeacon(state, agent, loc, bcn_id):
 #         else:
 #             return False # there is no beacon here
 #     else:
-#         return False    
-
+#         return False
 def declare_operators():
     pyhop.declare_operators(movenorth, movesouth, moveeast, movewest, activatebeacon)
-
 # def loadtruck(state, obj, truck):
 #     if state.trucks[truck] == state.pkgs[obj]:
 #         state.pkgs[obj] = truck

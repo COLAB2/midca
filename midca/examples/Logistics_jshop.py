@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 from midca import base
 from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+from midca.modules.perceive import PerfectObserverWithThief
+from midca.modules.plan import JSHOP2Planner
+from midca.modules.intend import WarehouseIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import DeliverGoal, UserGoalInput
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -17,16 +24,14 @@ TF-trees and simulated Meta-AQUA connection to autonomously generate goals.
 '''
 
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-print()
-thisDir
+print(thisDir)
 
 MIDCA_ROOT = thisDir + "/../"
-print()
-MIDCA_ROOT
+print(MIDCA_ROOT)
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "domain2.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
 
 ### Domain Specific Variables for JSHOP planner

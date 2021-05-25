@@ -1,6 +1,5 @@
 from . import cl
 
-
 class preconditions:
     objs = []
     predicates = []

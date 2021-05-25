@@ -2,7 +2,6 @@ from midca.domains.logistics.orderpackage import Order
 from midca.worldsim import worldsim
 from threading import Thread
 
-
 def get_order_list(world):
     orders = []
     packages = {}

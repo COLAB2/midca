@@ -21,7 +21,6 @@ class NBeaconGrid():
 
     def __init__(self):
         pass
-
     def generate_good_test(self):
         '''
         Generates a 16 by 16 ideal scenario for testing vanilla and gda agents (used for debugging)
@@ -55,7 +54,6 @@ class NBeaconGrid():
         for b_xy in beacon_tiles:
             self.BEACONS.append(Beacon(i, self.TILE_GRID[b_xy[0]][b_xy[1]]))
             i += 1
-
         i = 0
         self.QUICKSAND = []
         for q_xy in quicksand_tiles:
@@ -70,7 +68,6 @@ class NBeaconGrid():
         self.TILE_GRID = self.generate_tiles(width, height)
         self.BEACONS = self.generate_beacons(num_beacons)
         self.QUICKSAND = self.generate_quicksand(num__quicksand_spots=num_quicksand_spots)
-
     def get_inner_tile_grid(self):
         inner_tiles = []
         total_tile_count = 0
@@ -78,21 +75,21 @@ class NBeaconGrid():
             for col in self.TILE_GRID:
                 inner_col = []
                 for tile in col:
-                    if ((not (tile.getX() == (self.DIM / 2) and (tile.getY() == self.DIM / 2))) and
-                            (tile.getX() >= self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
-                             tile.getY() >= self.BORDER and tile.getY() < (self.DIM - self.BORDER))):
+                    if ((not (tile.getX() == (self.DIM / 2) and (tile.getY() == self.DIM / 2))) and  
+                        (tile.getX() >= self.BORDER and tile.getX() < (self.DIM - self.BORDER) and
+                        tile.getY() >= self.BORDER and tile.getY() < (self.DIM - self.BORDER))):
                         inner_tiles.append(tile)
-                        # print "adding tile "+str(tile)
-                        total_tile_count += 1
-                        # inner_grid.append(inner_col)
-            # print "inner grid has "+str(total_tile_count) +" tiles"
+                        #print "adding tile "+str(tile)
+                        total_tile_count += 1 
+                #inner_grid.append(inner_col)
+            #print "inner grid has "+str(total_tile_count) +" tiles"
             return inner_tiles
         else:
-            print()
-            "please call generate_tiles() first"
+            print("please call generate_tiles() first")
             return False
-
-    def generate_tiles(self, width=10, height=10):
+    
+    
+    def generate_tiles(self,width=10,height=10):
         '''
         Given the following parameters, returns a list of tiles:
         width (int)
@@ -106,7 +103,6 @@ class NBeaconGrid():
             for h in range(height):
                 TILE_COLUMN.append(Tile(w, h))
             TILE_GRID.append(TILE_COLUMN)
-
         # go through all tiles and set adjacent to
         adj_counts = 0
         for w1 in range(width):
@@ -122,7 +118,6 @@ class NBeaconGrid():
                             # do nothing
                             pass
         return TILE_GRID
-
     def generate_beacons(self, num_beacons=10):
         '''
           Generates the given number of beacons. For each beacon the following is generated:
@@ -134,7 +129,6 @@ class NBeaconGrid():
 
         BEACONS = []
         tiles_chosen = []
-
         for i in range(num_beacons):
             # get a random tile
             ran_tile = random.choice(self.get_inner_tile_grid())
@@ -145,44 +139,40 @@ class NBeaconGrid():
             BEACONS.append(Beacon(i, ran_tile))  # add type later
 
         return BEACONS
-
     def generate_quicksand(self, num__quicksand_spots=5):
         '''
         Quicksand will not be in the same tiles as beacons
         '''
         QUICKSAND_TILES = []
         for i in range(num__quicksand_spots):
-            i += 1
+            i+=1
             while len(QUICKSAND_TILES) < i:
-
+                
                 ran_tile = random.choice(self.get_inner_tile_grid())
-
+                 
                 if ran_tile not in [b.tile for b in self.BEACONS] and ran_tile not in QUICKSAND_TILES:
                     QUICKSAND_TILES.append(ran_tile)
-
+                    
         return QUICKSAND_TILES
-
     def get_STRIPS_str(self):
         '''
         Returns the grid in a STRIPS format, to be loaded by MIDCA
         
         NOTE: the order in which the lines are outputted is important (i.e.
               all the type declarations have to happen before predicates)
-        '''
-
+        '''    
+    
         if len(self.TILE_GRID) <= 0:
             raise Exception("Attempting to STRIPS str on empty TILE_GRID. Did you call generate() first?")
-
+    
         strips_result_str = ""
-
+    
         # add dimension
-        strips_result_str += "DIM(" + str(self.DIM) + ")\n"
-
+        strips_result_str += "DIM("+str(self.DIM)+")\n"
         # First, place all the tiles
         for t_row in self.TILE_GRID:
             for t in t_row:
                 strips_result_str += t.get_tile_STRIPS_str()
-
         # Second, do all the beacons
         for b in self.BEACONS:
             strips_result_str += b.get_STRIPS_str()
@@ -191,7 +181,6 @@ class NBeaconGrid():
         for t_row in self.TILE_GRID:
             for t in t_row:
                 strips_result_str += t.get_all_adjacent_STRIPS_str()
-
         # get all strings related to beacons
         for b in self.BEACONS:
             strips_result_str += b.get_all_STRIPS_str()
@@ -206,7 +195,6 @@ class NBeaconGrid():
         # add quicksand tiles
         for qs_tile in self.QUICKSAND:
             strips_result_str += "quicksand(" + str(qs_tile) + ")\n"
-
         return strips_result_str
 
 
@@ -231,8 +219,6 @@ class Beacon():
         s = ""
         s += "beacon-at(B" + str(self.id) + "," + str(self.tile) + ")\n"
         return s
-
-
 class Tile():
     X = -1
     Y = -1
@@ -286,7 +272,6 @@ class Tile():
         if dest.getX() < 0 or dest.getY() < 0:
             raise Exception(
                 "Tile " + str(dest) + " has invalid coordinates: x " + dest.getX() + " and y " + dest.getY())
-
         # 2) Check that tile is actually adjacent
         #    first get the x and y differences
         xdiff = self.X - dest.getX()
@@ -298,7 +283,6 @@ class Tile():
                 (abs(xdiff) != 1 and ydiff == 0)):
             raise Exception(
                 "Tile " + str(dest) + " is not adjacent, xdiff is " + str(xdiff) + ", ydiff is " + str(ydiff))
-
         # 3 & 4) Figure out what direction the tile is, and check not already set
         if xdiff != 0:
             if xdiff < 0:
@@ -340,7 +324,6 @@ class Tile():
 
     def get_tile_STRIPS_str(self):
         return "TILE(" + str(self) + ")\n"
-
     def get_all_adjacent_STRIPS_str(self):
         '''
         Returns all STRIPS strings for loading the state in MIDCA
@@ -358,6 +341,7 @@ class Tile():
 
     def __eq__(self, anotherTile):
         return self.X == anotherTile.getX() and self.Y == anotherTile.getY()
+
 
 
 def convert(midca_tile_str):
@@ -404,7 +388,6 @@ def pyhop_state_from_world(world, name="state"):
     # by default, make all beacons deactivated (if they are activated, will be changed below)        
     for bcn in beacons:
         s.activated[bcn] = False
-
     # now process atoms
     for atom in world.atoms:
         if atom.predicate.name == "beacon-at":
@@ -531,14 +514,12 @@ def drawNBeaconsScene(midcastate, rtn_str=False):
     agent_x = int(agentstr.split(',')[0])
     agent_y = int(agentstr.split(',')[1])
     grid[agent_y][agent_x] = AGENT
-
     # now go through each attribute of the state, changing the grid
     # ADD ALL BEACONS
     for beaconkey in list(pyhopState.activated.keys()):
         beaconstr = pyhopState.beaconlocs[beaconkey]
         x = int(beaconstr.split(",")[0])
         y = int(beaconstr.split(",")[1])
-
         if pyhopState.activated[beaconkey]:
             if pyhopState.beaconlocs[beaconkey] == pyhopState.agents['Curiosity']:
                 # Beacon is activated, with agent
@@ -566,7 +547,6 @@ def drawNBeaconsScene(midcastate, rtn_str=False):
         qs_str = qs
         x = int(qs_str.split(",")[0])
         y = int(qs_str.split(",")[1])
-
         if pyhopState.agents['Curiosity'] == qs:
             grid[y][x] = AGENT_WITH_QUICKSAND
         else:
@@ -587,7 +567,6 @@ def preferFree(goal1, goal2):
         return 1
 
     return 0
-
 
 if __name__ == "__main__":
     import os, inspect
@@ -611,5 +590,4 @@ if __name__ == "__main__":
     stateread.apply_state_str(world, state1_str)
 
     drawNBeaconsScene(world)
-
     print((env1.get_STRIPS_str()))

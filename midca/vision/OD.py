@@ -5,13 +5,11 @@ from _dbus_bindings import String
 cap = cv2.VideoCapture(0)
 from .baxter import *
 import time
-
 baxter = Baxter()
 
 import os
 import sys
 import argparse
-
 import rospy
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
@@ -28,13 +26,11 @@ def send_image_to_screen(cvimage):
     bridge = CvBridge()
 
     msg = bridge.cv2_to_imgmsg(cvimage, encoding="passthrough")
-
-    pub = rospy.Publisher('/robot/xdisplay', Image, queue_size=10)
-
+    
+    pub = rospy.Publisher('/robot/xdisplay', Image,  queue_size=10)
     pub.publish(msg)
     # Sleep to allow for image to be published.
     rospy.sleep(1)
-
 
 def Getmask(hsv, lower, upper):
     lower_color = np.array(lower, dtype=np.uint8)
@@ -134,55 +130,52 @@ def publish(color_location):
     msg = ""
     for color in color_location:
         point = color_location[color]
-        # (x0, y0, z0)
+        #(x0, y0, z0) 
         msg = msg + ";" + color + ":" + str(point[0]) + "," + str(point[1]) + "," + str(point[2])
-
+        
     if not rospy.is_shutdown():
         print(("Sending point command:", msg[1:]))
         pub.publish(msg[1:])
         time.sleep(2)
-
-
 def main():
-    # http://hslpicker.com/#570000
-    # dark green in the student unio"
-    # RGB: R:0 G:102 B:51
-    # darkgreen: 75,255,102
-
-    # dark red:
-    # RGB: 87 0 0
-    # [  0 255  87]
+    #http://hslpicker.com/#570000
+    #dark green in the student unio"
+    #RGB: R:0 G:102 B:51
+    #darkgreen: 75,255,102
+    
+    #dark red:
+    #RGB: 87 0 0
+    #[  0 255  87]
     print('Initializing node...')
-
+    
     rospy.init_node('rsdk_xdisplay_image', anonymous=True)
     baxter.enable()
-    boundaries = {'blue block': ([0, 150, 50], [10, 255, 255]),
-                  # 'pink block' : ([165,50,200], [175,255,255]),
-                  # 'darkgreen block': ([65,255,102], [85,255,102]),
-                  'green block': ([30, 100, 50], [80, 255, 255]),
-                  'red block': ([0, 150, 50], [10, 255, 255])
-                  # [30,100,50], [70,255,255]
-                  # 'darkred block':([0, 255, 87], [10, 255, 87]),
-                  # 'yellow block' :([20,100,100], [30,255,255]),
-                  # 'orange block':([5,100,100], [15,255,255]),
-
-                  #                 'green':([25, 146, 190], [62, 174, 250])
-                  }
-    #     boundaries = {'blue card':([40,100,50], [80,255,255]),
-    #                  'red card' : ([0,50,50], [10,255,255]),
-    # #                  'red2': ([0,50,50], [10, 100, 100])
-    # #                 'yellow':([25, 146, 190], [62, 174, 250]),
-    # #                 'green':([25, 146, 190], [62, 174, 250])
-    #                 }
-
-    while (1):
+    boundaries = {'blue block':([0,150,50], [10,255,255]),
+                 #'pink block' : ([165,50,200], [175,255,255]),
+                 #'darkgreen block': ([65,255,102], [85,255,102]),
+                 'green block': ([30,100,50], [80,255,255]),
+                 'red block':([0,150,50], [10,255,255])
+                 #[30,100,50], [70,255,255]
+                 #'darkred block':([0, 255, 87], [10, 255, 87]),
+                 #'yellow block' :([20,100,100], [30,255,255]),
+                 #'orange block':([5,100,100], [15,255,255]),
+                 
+#                 'green':([25, 146, 190], [62, 174, 250])
+                }
+#     boundaries = {'blue card':([40,100,50], [80,255,255]),
+#                  'red card' : ([0,50,50], [10,255,255]),
+# #                  'red2': ([0,50,50], [10, 100, 100])
+# #                 'yellow':([25, 146, 190], [62, 174, 250]),
+# #                 'green':([25, 146, 190], [62, 174, 250])
+#                 }
+    
+    while(1):
         # Take each frame
-        # _, frame = cap.read()
+        #_, frame = cap.read()
         color_location = {}
         image = baxter.getImageFromRightHandCamera()
         frame = baxter.getLastCvImage()
-        # send_image_to_screen(frame)
-
+        #send_image_to_screen(frame)
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         for color_name in boundaries:
@@ -198,9 +191,8 @@ def main():
 
 
 if __name__ == '__main__':
-    #     test()
     main()
-# green R:0 G:102 B:51
+    #green R:0 G:102 B:51
 #     green = np.uint8([[[0,0,87 ]]])
 #     hsv_green = cv2.cvtColor(green,cv2.COLOR_BGR2HSV)
 #     print hsv_green

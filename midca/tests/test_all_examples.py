@@ -7,7 +7,6 @@ This is a script that will run any script found in examples/ .
 Essentially, this tests whether or not initialization of MIDCA
 succeeded. 
 '''
-
 import glob, os
 import subprocess
 import time
@@ -23,7 +22,7 @@ FILES_TO_IGNORE = ['__init__', 'predicateworld', 'homography', 'baxter']  # will
 
 SKIP_COMMAND = 'skip 100'
 DEFAULT_RUN_DELAY = 8
-CUSTOM_RUN_DELAYS = {'nbeacons_aaai17_agent3': 60}
+CUSTOM_RUN_DELAYS = {'nbeacons_aaai17_agent3':60}
 
 i = 0
 
@@ -39,22 +38,21 @@ for script_file in script_files:
     for ign in FILES_TO_IGNORE:
         if ign in script_file:
             ignore_file = True
-
+        
     found_exception = False
-
+            
     if not ignore_file:
         i += 1
-        script_name = '{:.<60}'.format("examples/" + script_file)
+        script_name = '{:.<60}'.format("examples/"+script_file)
         sys.stdout.write(script_name)
-        # print "|=|=|=|=|=|=| "+str(script_file)+" |=|=|=|=|=|=|"
-        script = subprocess.Popen(['python ', '-u', EXAMPLES_DIRECTORY + script_file],
+        #print "|=|=|=|=|=|=| "+str(script_file)+" |=|=|=|=|=|=|"
+        script = subprocess.Popen(['python', '-u', EXAMPLES_DIRECTORY+script_file],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   bufsize=-1)
-
-        time.sleep(2)  # give MIDCA enough time to load all modules
-
+         
+        time.sleep(2) # give MIDCA enough time to load all modules
         # Read ten lines of stderr, if any exceptions or errors, failed!
         NUM_STDERR_LINES_TO_READ = 10
         i = 0
@@ -93,8 +91,7 @@ for script_file in script_files:
                     DELAY = v
             for i in range(DELAY):
                 time.sleep(1)
-                # sys.stdout.write(".")
-
+                #sys.stdout.write(".")
             i = 0
             while script.poll():
                 output_line = script.stderr.readline()

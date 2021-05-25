@@ -39,7 +39,6 @@ import rospy
 import baxter_interface
 from std_msgs.msg import Float32
 
-
 class HaloLed():
     def __init__(self):
         # rospy.init_node("Halo_set_color")
@@ -77,3 +76,4 @@ class HaloLed():
         rospy.sleep(0.3)
         self.setLed("red", 100)
         self.setLed("green", 0)
+

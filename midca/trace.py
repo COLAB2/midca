@@ -1,6 +1,6 @@
 
 import copy
-import shlex, subprocess  # used for generating a pdf of the trace
+import shlex, subprocess # used for generating a pdf of the trace
 from collections import OrderedDict
 
 """
@@ -10,8 +10,6 @@ How-To:
 """
 
 MAX_TRACE_SIZE = 100
-
-
 class CogTrace:
     # trace[<cycle>][<module-id>] returns a list of what happened in
     # that module in that cycle
@@ -31,22 +29,21 @@ class CogTrace:
             i = MAX_TRACE_SIZE - 50
             for j in range(i):
                 self.all_modules.popitem(last=False)
-
         trace_cycle_keys = list(self.trace.keys())
         if len(trace_cycle_keys) > MAX_TRACE_SIZE:
             min_key = min(trace_cycle_keys)
             del self.trace[min_key]
-
+             
         if cycle in list(self.trace.keys()):
             if len(self.trace[cycle]) > 0 and module in list(self.trace[cycle].keys()):
-                # print("Changing data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
+                #print("Changing data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
                 self.trace[cycle][module] = []
             else:
-                # print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
+                #print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
                 self.trace[cycle][module] = []
         else:
             self.trace[cycle] = OrderedDict()
-            # print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
+            #print("Fresh insert of data for module "+str(module)+" in cycle "+str(cycle)+ " to " + str(data))
             self.trace[cycle][module] = []
 
         self.cycle = cycle
@@ -185,7 +182,6 @@ class CogTrace:
                     prev_node_id = curr_node_id
 
         dotfilestr += "\n"
-
         dotfilestr += graphstr  # add dependency graph
 
         dotfilestr += "\n}\n"

@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def homography_floor_to_img(img_points, floor_points):
     """
     Return a 3x3 matrix that is the homography from points in the floor to

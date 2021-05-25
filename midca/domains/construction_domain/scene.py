@@ -9,8 +9,7 @@ class Scene:
         self.blocks = blocks
 
     def draw(self):
-        print()
-        self.layers_to_s(self._makelayers())
+        print(self.layers_to_s(self._makelayers()))
 
     def __str__(self):
         return self.layers_to_s(self._makelayers())
@@ -18,8 +17,8 @@ class Scene:
     def _makelayers(self):
         blockscopy = copy.deepcopy(self.blocks)
 
-        layers = []  # each new layer will be appended to layers
-        currentlayer = []  # layer currently being prepared
+        layers = []         # each new layer will be appended to layers
+        currentlayer = []   # layer currently being prepared
 
         # find table
         for i in range(len(blockscopy)):

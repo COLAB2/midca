@@ -4,7 +4,6 @@
 import argparse
 
 import sys
-
 import os, inspect
 
 import rospy
@@ -13,12 +12,10 @@ import rospkg
 from gazebo_msgs.srv import (
     SpawnModel,
     DeleteModel,
-
 )
 from geometry_msgs.msg import (
     Pose,
     Point,
-
 )
 from std_msgs.msg import (
     Header,
@@ -73,7 +70,6 @@ def load_gazebo_models(table_pose=Pose(position=Point(x=1.0, y=0.0, z=0.00)),
     block_xml3 = ''
     with open(model_path + "paper/model.urdf", "r") as block_file:
         block_xml3 = block_file.read().replace('\n', '')
-
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     try:
         spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
@@ -81,7 +77,6 @@ def load_gazebo_models(table_pose=Pose(position=Point(x=1.0, y=0.0, z=0.00)),
                              table_pose, table_reference_frame)
     except rospy.ServiceException as e:
         rospy.logerr("Spawn SDF service call failed: {0}".format(e))
-
     rospy.wait_for_service('/gazebo/spawn_urdf_model')
     try:
         spawn_urdf = rospy.ServiceProxy('/gazebo/spawn_urdf_model', SpawnModel)
@@ -89,7 +84,6 @@ def load_gazebo_models(table_pose=Pose(position=Point(x=1.0, y=0.0, z=0.00)),
                                block_pose, block_reference_frame)
     except rospy.ServiceException as e:
         rospy.logerr("Spawn URDF service call failed: {0}".format(e))
-
     rospy.wait_for_service('/gazebo/spawn_urdf_model')
     try:
         spawn_urdf = rospy.ServiceProxy('/gazebo/spawn_urdf_model', SpawnModel)
@@ -174,7 +168,6 @@ def delete_gazebo_models():
     except rospy.ServiceException as e:
         rospy.loginfo("Delete Model service call failed: {0}".format(e))
 
-
 def main():
     print("\nGetting models...")
     load_gazebo_models()
@@ -204,7 +197,6 @@ def main():
         rospy.signal_shutdown("Models finished.")
 
     print("Done.")
-
 
 if __name__ == '__main__':
     sys.exit(main())

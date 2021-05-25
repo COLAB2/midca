@@ -1,4 +1,5 @@
 
+
 from midca import base
 from midca.modules import simulator, perceive, guide, evaluate, intend, planning, act, note
 from midca.worldsim import domainread, stateread
@@ -38,7 +39,6 @@ GOAL_GRAPH_CMP_FUNC = None  # not used in this example
 # Load Domain Files  
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
-
 #world = pddlpy.DomainProblem(DOMAIN_FILE,STATE_FILE)
 #print(world)
 

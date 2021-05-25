@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 from midca import base, rosrun
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planningbroken, planning, act
 from midca.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
@@ -10,6 +10,14 @@ from midca.examples import Calibrate
 from geometry_msgs.msg import Point, PointStamped
 from midca.domains.blocksworld.plan import methods_broken, operators
 from midca.domains.blocksworld import util
+from MIDCA import base, rosrun
+from midca.modules.perceive import ROSObserver
+from midca.modules.plan import PyHopPlannerBroken
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import AsynchronousAct
+from midca.modules.interpret import InstructionReceiver
+from midca.modules.evaluate import EvalPointingFromFeedback
+from MIDCA.modules import simulator
 
 DECLARE_METHODS_FUNC = methods_broken.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
@@ -62,7 +70,6 @@ myMidca.mem.enableLogging(myMidca.logger)
 
 # calibration
 
-
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     # rosrun.CalibrationHandler("calibrate_done", myMidca),
     rosrun.threeObjectsLocationHandler("obj_pos", myMidca),
@@ -86,7 +93,6 @@ myMidca.mem.set(myMidca.mem.STACK_Z, -0.1097833784354784)
 myMidca.mem.set(myMidca.mem.STACK_3Z, -0.08517833784354784)
 myMidca.mem.set(myMidca.mem.UNSTACK_Z, -0.11434523370125365)
 myMidca.mem.set(myMidca.mem.UNSTACK_3Z, -0.05434523370125365)
-
 p = Point(x=0.6480168766398825, y=0.4782503847940384, z=0.289534050209461)
 # p = 
 myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
@@ -96,6 +102,5 @@ myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
 # lab_q =Point(0.7450848313136519, 0.11634406023548731, -0.15821251824917773)
 q = Point(0.7445881227726235, 0.13967133208903987, -0.15821251824917773)
 myMidca.mem.set(myMidca.mem.PUTTING_POINT, q)
-
 input('Enter ...')
 rosMidca.run_midca()

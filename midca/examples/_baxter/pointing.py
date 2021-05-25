@@ -21,7 +21,6 @@ from midca.modules._plan.asynch import asynch
 limb = None
 feedbackPub = None
 
-
 def point_joint_angles(target):
     '''
     target is a numpy array or python list containing the 3d location of the thing to be pointed at, using robot-centered coordinates.
@@ -43,8 +42,6 @@ def point_joint_angles(target):
     print("pointing: angles for joint right s1:", angles['right_s1'])
 
     return angles
-
-
 def check_range(target):
     '''
     target is a numpy array or python list containing the 3d location of the thing to be pointed at, using robot-centered coordinates.
@@ -59,8 +56,6 @@ def check_range(target):
     right_s1 = -math.atan2(targetnew[2], np.linalg.norm(targetnew[:2]))
 
     return right_s0 < 1.55 and right_s0 > -1.6 and right_s1 < 1 and right_s1 > -1.35
-
-
 def midca_feedback(**kwargs):
     msg = rosrun.dict_as_msg(kwargs)
     feedbackPub.publish(msg)
@@ -87,7 +82,6 @@ def fake_point(data):
     time.sleep(2)
     print("sending feedback")
     midca_feedback(cmd_id=d['cmd_id'], code=asynch.COMPLETE)
-
 
 def msg_callback(data):
     print("got msg:", data)

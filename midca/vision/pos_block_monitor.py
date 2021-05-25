@@ -6,15 +6,13 @@ import math
 cap = cv2.VideoCapture(0)
 from .baxter import *
 import time
-
 baxter = Baxter()
 
 import os
 import sys
 import argparse
-
+     
 import rospy
-
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
 
@@ -116,15 +114,6 @@ def findContour(frame, mask):
         return [centroidu, centroidv]
 
 
-def publish(msg, topic):
-    pub = rospy.Publisher(topic, String, queue_size=10)
-
-    if not rospy.is_shutdown():
-        print(("Sending point command:", "monitor fires"))
-        pub.publish(msg)
-        time.sleep(2)
-
-
 def monitor_pos_block(block_name='green block', pos='table'):
     print('monitoring pos')
 
@@ -142,20 +131,29 @@ def monitor_pos_block(block_name='green block', pos='table'):
         image = baxter.getImageFromRightHandCamera()
         frame = baxter.getLastCvImage()
         # send_image_to_screen(frame)
+            
 
+
+
+
+def publish(msg, topic):
+    pub = rospy.Publisher(topic, String, queue_size=10)
+
+    if not rospy.is_shutdown():
+        print(("Sending point command:", "monitor fires"))
+        pub.publish(msg)
+        time.sleep(2)
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         for color_name in boundaries:
             (lower, upper) = boundaries[color_name]
             mask = Getmask(hsv, lower, upper)
-
             p = findContour(frame, mask)
-            if (p != None):
-                color_location.update({color_name: (p[0], p[1], 0)})
+            if(p != None):
+                color_location.update({color_name : (p[0], p[1], 0)})
         time.sleep(2)
         pos_block = pos
         if len(color_location) >= 2:
-
             pos_green = 'table'
             pos_red = 'table'
             clear_green = 'clear'
@@ -182,6 +180,18 @@ def monitor_pos_block(block_name='green block', pos='table'):
 
 
 if __name__ == '__main__':
-    rospy.init_node('clear_block_monitor', anonymous=True)
-
-    monitor_pos_block('green block', 'table')
+                            #print("1")
+                            pos_block = obj
+                        else:
+                            #print("2")
+                            pos_block = 'table'    
+                    else:
+                            #print("3")
+                            pos_block = 'table'        
+        else:
+            pos_block = 'table'
+        #print(pos_block)
+        
+        if pos_block != pos:
+            print("state changed")
+            return pos_block

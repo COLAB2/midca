@@ -1,3 +1,4 @@
+
 # single block, a square, a triangle, or a table. These are the blocks of which
 # scenes are composed.
 # Possible predicates involving blocks:

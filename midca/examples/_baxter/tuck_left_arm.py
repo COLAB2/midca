@@ -213,14 +213,10 @@ class Tuck(object):
                 [pub.publish(Empty()) for pub in list(self._disable_pub.values())]
                 self._enable_pub.publish(False)
                 self._tuck_rate.sleep()
-
-
 def tuck_callback(data):
     tucker = Tuck(data.data)
     rospy.on_shutdown(tucker.clean_shutdown)
     tucker.supervised_tuck()
-
-
 def main():
     rospy.init_node('baxter_tuck_cmds')
     rospy.Subscriber("tuck_left_cmd", String, tuck_callback)

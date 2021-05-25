@@ -3,13 +3,21 @@ import midca
 from midca.worldsim import domainread, stateread
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 from midca.metamodules import monitor, control, interpret, metaintend, plan
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner
+from midca.modules.intend import SimpleIntend_construction
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import TFFire,\
+    SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
+from midca.modules.evaluate import SimpleEval, MortarScorer
+from midca.modules import simulator
+from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca.modules.gens import goaltransform
 from midca import base
 
 # Domain Specific Imports
 from midca.domains.construction_domain import util
 from midca.domains.construction_domain.plan import methods_construction, operators_construction
-
 import inspect, os, copy
 
 '''
@@ -25,7 +33,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 DOMAIN_ROOT = MIDCA_ROOT + "domains/construction_domain/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist_mortar_construction.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist_mortar_construction.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_construction.sim"
 
 DISPLAY_FUNC = util.asqiiDisplay
@@ -89,7 +97,6 @@ myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
 myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
 myMidca.append_meta_module("Control", control.MRSimpleControl1())
 '''
-
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True
 myMidca.initGoalGraph(GOAL_GRAPH_CMP_FUNC)

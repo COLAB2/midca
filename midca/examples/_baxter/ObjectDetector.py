@@ -30,14 +30,13 @@ points = []
 
 original_position = None
 current_position = None
-
+filename = "~/ros_ws/src/baxter_srv/scripts/calibration.txt"
 
 def initial_setup_baxter():
     """
     Enable and set up baxter.
 
     """
-
     print()
     'Initializing node...'
     rospy.init_node('baxter_or')
@@ -345,7 +344,6 @@ def calibrate_homography():
     global H, Hinv
     floor_points = get_floor_reference_points()
 
-
 #     img_points = get_img_reference_points()
 #     print img_points
 #     print floor_points
@@ -373,8 +371,8 @@ def main():
     initial_setup_baxter()
     calibrate_homography()
     position = getObjectPosition()
-    print()
-    position
+    print(position)
+
     # baxter.closeLeftGripper()
     # sendPoint(position)
 

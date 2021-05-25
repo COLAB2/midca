@@ -9,7 +9,6 @@ import copy
 NBeacons domain
 """
 
-
 def move(state, agent, dest):
     # print("we are in move with state:")
     # pyhop.print_state(state)
@@ -62,7 +61,6 @@ def move(state, agent, dest):
                 agent_dest_midca_str = "Tx" + str(x) + "y" + str(y + 1)
                 # print("going north")
                 return [('movenorth', agent, agent_midca_str, agent_dest_midca_str), ('navigate', agent, dest)]
-
         # if we get here that means we are exactly equidistant in all
         # directions from the destination, so pick a random direction
         # rando_num = randint(1,4)
@@ -74,64 +72,63 @@ def move(state, agent, dest):
         #     return [('moveeast', agent),('move', agent, dest)]
         # elif rando_num == 4:
         #     return [('movewest', agent),('move', agent, dest)]
-
+        
         return False
 
 
-def perimeterize(state, agent, beacon_locs):
+def perimeterize(state, agent, beacon_locs): 
     # if there are no more beacon locs we are done
-    # print('beacon_locs are '+str(beacon_locs))
-    # print("agent is "+str(agent))
-    # print("WOOOO WE ARE IN PERIMETERIZE!!!")
-    # print("beacon locs are "+str(beacon_locs))
-
+    #print('beacon_locs are '+str(beacon_locs))
+    #print("agent is "+str(agent))
+    #print("WOOOO WE ARE IN PERIMETERIZE!!!")
+    #print("beacon locs are "+str(beacon_locs))
+    
     # first check all the given beacon locs to make sure they are not already a
-    unactivated_beacon_locs = []
-    for (b_id, b_loc) in list(state.beaconlocs.items()):
+    unactivated_beacon_locs = [] 
+    for (b_id,b_loc) in list(state.beaconlocs.items()):
         if b_loc in beacon_locs:
             if not state.activated[b_id]:
                 unactivated_beacon_locs.append(b_loc)
-            # else:
-            # print("filtered out "+str((b_id,b_loc)))
+            #else:
+                #print("filtered out "+str((b_id,b_loc)))
             #    pass
-
-    beacon_locs = unactivated_beacon_locs
-    if len(beacon_locs) > 0:
-        # print("about to recur thru the HTN w/ beacon_locs = "+str(beacon_locs))
-
+    
+    beacon_locs = unactivated_beacon_locs  
+    if len(beacon_locs) > 0: 
+        #print("about to recur thru the HTN w/ beacon_locs = "+str(beacon_locs))
+        
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
-        agent_midca_str = "Tx" + str(x) + "y" + str(y)
-
+        agent_midca_str = "Tx"+str(x)+"y"+str(y)
+        
         b_x = beacon_locs[0].split(',')[0]
         b_y = beacon_locs[0].split(',')[1]
-        beacon_loc_midca_str = "Tx" + b_x + "y" + b_y
-        # print("about to get beacon_id")
-
-        # print("state.beacon_locs.items() = "+str(state.beaconlocs.items())+" and beacon_locs[0] = "+str(beacon_locs[0]))
-        beacon_id = [k for (k, v) in list(state.beaconlocs.items()) if v == beacon_locs[0]][0]
-        # print("beacon_id ="+str(beacon_id))
-
+        beacon_loc_midca_str = "Tx"+b_x+"y"+b_y
+        #print("about to get beacon_id")
+        
+        #print("state.beacon_locs.items() = "+str(state.beaconlocs.items())+" and beacon_locs[0] = "+str(beacon_locs[0]))
+        beacon_id = [k for (k,v) in list(state.beaconlocs.items()) if v == beacon_locs[0]][0]
+        #print("beacon_id ="+str(beacon_id))
+        
         # get the first beacon loc
-        # print("call activate beacon with "+beacon_loc_midca_str+" and "+beacon_id)
-        return [('navigate', agent, beacon_locs[0]),
+        #print("call activate beacon with "+beacon_loc_midca_str+" and "+beacon_id)
+        return [('navigate',agent,beacon_locs[0]),
                 ('activatebeacon', agent, beacon_loc_midca_str, beacon_id),
                 ('make_perimeter', agent, beacon_locs[1:])]
     elif len(beacon_locs) == 0:
-        # print("and we're done in perimterize")
-        return []  # done
-    else:
+        #print("and we're done in perimterize")
+        return [] # done
+    else: 
         return False
 
-
 def declare_methods():
-    pyhop.declare_methods('navigate', move)
-    pyhop.declare_methods('make_perimeter', perimeterize)
-# pyhop.declare_methods('movenorth',movenorth)
-# pyhop.declare_methods('moveeast',moveeast)
-# pyhop.declare_methods('movewest',movewest)
-# pyhop.declare_methods('movesouth',movesouth)
+    pyhop.declare_methods('navigate',move)
+    pyhop.declare_methods('make_perimeter',perimeterize)
+#pyhop.declare_methods('movenorth',movenorth)
+#pyhop.declare_methods('moveeast',moveeast)
+#pyhop.declare_methods('movewest',movewest)
+#pyhop.declare_methods('movesouth',movesouth)
 
 
 ######################################################################
@@ -167,12 +164,9 @@ def declare_methods():
 
 ## End vanilla, pure planning model
 ######################################################################
-
-
 ######################################################################
 # Old Content
 ######################################################################
-
 
 # """ This allows other methods to end with subtask 'deliver' and not
 #  recur infinitely if the package is already at destination """
@@ -181,7 +175,6 @@ def declare_methods():
 #                 return [] # done
 #         else:
 #                 return False
-
 # """ Transport package in same city with truck at start loc """
 # def incity_atstart(state, obj, truck, ap, fromloc, toloc):
 #     if (state.city[fromloc] == state.city[toloc] and 
@@ -215,7 +208,6 @@ def declare_methods():
 #             state.aprts[toloc] and  # do lookup
 #             state.pkgs[obj] == fromloc and # is this redundant? I think so
 #             state.aplns[ap] == fromloc):
-
 #                 return [('loadairplane',obj,ap),
 #                         ('flyairplane', ap, fromloc, toloc),
 #                         ('unloadairplane',obj,ap),
@@ -255,10 +247,8 @@ def declare_methods():
 #                         if state.city[airport] == state.city[fromloc]:
 #                                 start_city_airport = airport
 #                 if start_city_airport:
-
 #                         return [('deliver', obj, truck, ap, fromloc, start_city_airport),
 #                                 ('deliver', obj, truck, ap, start_city_airport, toloc)]
-
 #         return False
 
 # """ Transport package different cities and recur appropriately """
@@ -272,7 +262,6 @@ def declare_methods():
 #                                 start_city_airport = airport
 #                         elif state.city[airport] == state.city[toloc]:
 #                                 dest_city_airport = airport
-
 #                 # find a truck in the start city
 #                 start_city_truck = None
 #                 for tr_key in state.trucks.keys():
@@ -289,7 +278,6 @@ def declare_methods():
 #                 some_apln = None
 #                 if len(state.aplns) > 0:
 #                         some_apln = state.aplns.keys()[0]
-
 #                 # did we find airports? if so, return plan
 #                 if (start_city_airport and dest_city_airport and
 #                     start_city_truck and dest_city_truck and some_apln):                        
@@ -298,7 +286,6 @@ def declare_methods():
 #                                 ('deliver', obj, dest_city_truck, some_apln, dest_city_airport, toloc)]
 
 #         return False
-
 
 # pyhop.declare_methods('deliver', is_done_check, incity_atstart, 
 #                       incity_notatstart, diffcity_obj_ap_with_ap,

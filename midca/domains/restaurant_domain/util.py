@@ -7,8 +7,6 @@ from midca.modules._plan import pyhop
 
 def shopping_display(world):
     print(world)
-
-
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -21,8 +19,6 @@ def preferApprehend(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
-
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -31,7 +27,6 @@ def preferFire(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
 
 def pyhop_state_from_world_restaurant(world, name="state"):
     s = pyhop.State(name)

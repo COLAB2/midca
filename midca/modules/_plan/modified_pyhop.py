@@ -110,7 +110,6 @@ try:
 except ImportError:
     pass
 
-
 ############################################################
 # States and goals
 
@@ -130,10 +129,10 @@ class Goal():
 
 ### print_state and print_goal are identical except for the name
 
-def print_state(state, indent=4):
+def print_state(state,indent=4):
     """Print each variable in state, indented by indent spaces."""
     if state != False:
-        for (name, val) in list(vars(state).items()):
+        for (name,val) in list(vars(state).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(state.__name__ + '.' + name)
@@ -153,7 +152,6 @@ def print_goal(goal, indent=4):
     else:
         print('False')
 
-
 ############################################################
 # Helper functions that may be useful in domain models
 
@@ -163,7 +161,6 @@ def forall(seq, cond):
         if not cond(x): return False
     return True
 
-
 def find_if(cond, seq):
     """
     Return the first x in seq such that cond(x) holds, if there is one.
@@ -172,8 +169,6 @@ def find_if(cond, seq):
     for x in seq:
         if cond(x): return x
     return None
-
-
 ############################################################
 # Commands to tell Pyhop what the operators and methods are
 
@@ -182,8 +177,6 @@ methods = {}
 monitors_l = {}
 generated_monitors = []
 wait_time = None
-
-
 def declare_operators(*op_list):
     """
     Call this after defining the operators, to tell Pyhop what they are. 
@@ -211,8 +204,6 @@ def declare_monitors(task_name, *monitor_list):
     """
     monitors_l.update({task_name: list(monitor_list)})
     return monitors_l[task_name]
-
-
 ############################################################
 # Commands to find out what the operators and methods are
 
@@ -296,7 +287,6 @@ def seek_plan(state, tasks, plan, depth, verbose=0):
     if tasks == []:
         if verbose > 2: print('depth {} returns plan {}'.format(depth, plan))
         return plan
-
     task1 = tasks[0]
     fired_monitor = check_monitors()
     if fired_monitor:
@@ -349,23 +339,22 @@ def seek_plan(state, tasks, plan, depth, verbose=0):
                     solution = seek_plan(state, subtasks + tasks[1:], plan, depth + 1, verbose)
                     print("-----------------")
                     print(solution)
-
                     if solution == False:
                         if fired_monitor and fired_monitor.depth > depth:
                             print("fired-monitor")
                             print(plan)
                             fired_monitor.is_fired = False
-                            # generated_monitors.remove(fired_monitor)
-                            # replan
+                            #generated_monitors.remove(fired_monitor)
+                            #replan
                             del plan[:]
-                            solution = seek_plan(state, tasks[2:], plan, depth + 1, verbose)
-
-
+                            solution = seek_plan(state,tasks[2:],plan,depth+1, verbose)
+                            
+                            
                         else:
                             print("'" + task1[0] + "' was failed, it will choose another method--")
-                            # RemoveMonitors(task1[0])
-
+                            #RemoveMonitors(task1[0])
+                        
                     if solution != False:
                         return solution
-        if verbose > 2: print('depth {} returns failure'.format(depth))
+        if verbose>2: print('depth {} returns failure'.format(depth))
         return False

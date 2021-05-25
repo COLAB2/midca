@@ -5,7 +5,6 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 import sys
-
 sys.path.append("../")
 from midca.modules._plan import pyhop
 import random
@@ -110,8 +109,6 @@ def putoutfire(state, b):
         return state
     else:
         return False
-
-
 def apprehend(state, perp):
     if state.free[perp] == True:
         state.free[perp] = False
@@ -132,8 +129,6 @@ def get_from_store(state, b):
         return state
     else:
         return False
-
-
 """
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.

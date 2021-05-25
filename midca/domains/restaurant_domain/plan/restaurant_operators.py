@@ -1,6 +1,5 @@
 from midca.modules._plan import pyhop
 
-
 def take_order(state, person, dish):
     # add the order to the variable order_pending
     if person in state.order_received:

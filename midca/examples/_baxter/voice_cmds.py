@@ -11,7 +11,6 @@ while not rospy.is_shutdown():
     print("Sending voice command:")
     pub.publish("get the green block")
     time.sleep(2)
-
 # n = 0
 # while n < 20:
 # 	n += 1d

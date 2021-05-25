@@ -4,7 +4,6 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 import sys
-
 sys.path.append("../")
 from midca.modules._plan import pyhop
 
@@ -20,7 +19,6 @@ The blocks-world operators use three state variables:
 - clear[b] = False if a block is on b or the hand is holding b, else True.
 - holding = name of the block being held, or False if the hand is empty.
 """
-
 
 def pickup(state, b):
     if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
@@ -72,8 +70,6 @@ def putoutfire(state, b):
         return state
     else:
         return False
-
-
 def apprehend(state, perp):
     if state.free[perp] == True:
         state.free[perp] = False

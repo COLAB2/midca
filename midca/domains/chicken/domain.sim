@@ -1,0 +1,34 @@
+#Sample domain file using the MIDCA predicate world domain language.
+#These are comments. Multi-line comments are not supported.
+#This file will define a very simple domain where chickens can be on either the
+#left or right side of a road; e.g. state = {left(chicken1), right(chicken2)...}
+
+#create a new type. Convention is all caps for type. All values case-sensitive.
+type(CHICKEN)
+#creates a subtype.
+type(HEN, CHICKEN)
+
+#create new predicates. Format is (name, argNameList, argTypeList).
+predicate(onright, [chicken], [CHICKEN])
+predicate(onleft, [chicken], [CHICKEN])
+
+#'operator' takes (args, preconditions, results). These define how actions work.
+#args is list of (argName, argType)
+#preconditions and results are lists of conditions
+#a condition takes a predicateName, argNameList, and optional negate = False
+
+#crossing from left to right:
+#in this case, a chicken must be on the left to cross right, and as a result it
+#will no longer be on the left and will be on the right.
+operator(crossright,
+    args = [(chicken, CHICKEN)],
+    preconditions = [condition(onleft, [chicken])],
+    results = [condition(onright, [chicken]),
+               condition(onleft, [chicken], negate = True)])
+
+#crossing from right to left:
+operator(crossleft,
+    args = [(chicken, CHICKEN)],
+    preconditions = [condition(onright, [chicken])],
+    results = [condition(onleft, [chicken]),
+               condition(onright, [chicken], negate = True)])

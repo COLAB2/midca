@@ -5,7 +5,6 @@ from _dbus_bindings import String
 cap = cv2.VideoCapture(0)
 from .baxter import *
 import time
-
 baxter = Baxter()
 
 import os
@@ -31,11 +30,9 @@ def send_image_to_screen(cvimage):
     msg = bridge.cv2_to_imgmsg(cvimage, encoding="passthrough")
 
     pub = rospy.Publisher('/robot/xdisplay', Image, queue_size=10)
-
     pub.publish(msg)
     # Sleep to allow for image to be published.
     rospy.sleep(1)
-
 
 def Getmask(hsv, lower, upper):
     lower_color = np.array(lower, dtype=np.uint8)
@@ -113,23 +110,26 @@ def findContour(frame, mask):
             if diag > maxdiag:
                 pt1max = p1
                 pt2max = p2
-
+            
             # UPPER LEFT CORNER OF THE LARGEST RECTANGLE
         pt1 = pt1max
-        # LOWER RIGHT CORNER OF THE LARGEST RECTANGLE
+            # LOWER RIGHT CORNER OF THE LARGEST RECTANGLE
         pt2 = pt2max
+            
+        frame = cv2.rectangle(frame,tuple(pt1),tuple(pt2),(0,255,0),1)
+        
 
-        frame = cv2.rectangle(frame, tuple(pt1), tuple(pt2), (0, 255, 0), 1)
+            # HORIZON COORDINATE OF THE LARGEST RECTANGLE
+        centroidu = (pt1[0]+pt2[0])/2
+            # VERTICAL COORDINATE OF THE LARGEST RECTANGLE
+        centroidv = (pt1[1]+pt2[1])/2
+            #cv.Circle(cvimage,(centroidu,centroidv),5,0,-1)
 
-        # HORIZON COORDINATE OF THE LARGEST RECTANGLE
-        centroidu = (pt1[0] + pt2[0]) / 2
-        # VERTICAL COORDINATE OF THE LARGEST RECTANGLE
-        centroidv = (pt1[1] + pt2[1]) / 2
-        # cv.Circle(cvimage,(centroidu,centroidv),5,0,-1)
-
-        # frame = cv2.circle(frame,(centroidu,centroidv),(0,255,0),2)
-        frame = cv2.circle(frame, (centroidu, centroidv), 5, (0, 255, 0), -1)
+           
+            #frame = cv2.circle(frame,(centroidu,centroidv),(0,255,0),2)
+        frame = cv2.circle(frame,(centroidu,centroidv),5,(0,255,0),-1)
         return [centroidu, centroidv]
+
 
 
 def publish(color_location):
@@ -192,7 +192,6 @@ def main():
         image = baxter.getImageFromRightHandCamera()
         frame = baxter.getLastCvImage()
         # send_image_to_screen(frame)
-
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         for color_name in boundaries:

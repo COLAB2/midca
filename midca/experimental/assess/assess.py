@@ -1,7 +1,5 @@
 from .valence import *
 from .gngassess import *
-
-
 # imports include values of memory keys used below
 
 class Assessor:

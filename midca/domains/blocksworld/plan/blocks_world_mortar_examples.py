@@ -12,7 +12,6 @@ from pyhop import *
 import time
 
 from . import operators_mortar
-
 print('')
 operators_mortar.declare_ops()
 print_operators()

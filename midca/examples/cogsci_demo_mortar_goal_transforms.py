@@ -5,6 +5,17 @@ from midca.examples import predicateworld
 from midca.worldsim import domainread, stateread
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 from midca.metamodules import monitor, control, interpret, metaintend, plan
+#!/usr/bin/env python
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import TFFire,\
+    SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
+from midca.modules.evaluate import SimpleEval, MortarScorer
+from midca.worldsim import domainread, stateread
+from midca.modules import simulator
+from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca.modules.gens import goaltransform
 from midca import base
 
@@ -26,13 +37,12 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist_mortar.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist_mortar.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_mortar.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods_mortar.declare_methods
 DECLARE_OPERATORS_FUNC = operators_mortar.declare_ops
 GOAL_GRAPH_CMP_FUNC = util.preferApprehend
-
 extinguish = False
 mortar = True
 world = domainread.load_domain(DOMAIN_FILE)
@@ -91,6 +101,7 @@ myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
 myMidca.append_meta_module("Plan", plan.MRSimplePlanner())
 myMidca.append_meta_module("Control", control.MRSimpleControl1())
 '''
+
 
 # tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 myMidca.storeHistory = True

@@ -1,7 +1,19 @@
 
+
 import midca
 from midca import base, goals
 from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
+#!/usr/bin/env python
+import midca
+from midca import base, goals
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import HeuristicSearchPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import NBeaconsSimpleAct
+from midca.modules.interpret import NBeaconsGoalGenerator, SimpleNBeaconsExplain, UserGoalInput, \
+    StateDiscrepancyDetector
+from midca.modules.evaluate import NBeaconsDataRecorder
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 import inspect, os
 import random
@@ -15,16 +27,14 @@ Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Mu
 THIS IS THE START SCRIPT FOR THE GDA AGENT (no meta)
 
 '''
-wind_schedule = [[20, 1], [40, 2]]
+wind_schedule = [[20,1],[40,2]]
 
-goal_list = list(range(10)) * 10  # give 100 goals
+goal_list = list(range(10))*10 # give 100 goals 
 random.shuffle(goal_list)
-goal_list = [goals.Goal('B' + str(x), predicate="activated") for x in goal_list]
-print()
-"goal list is "
+goal_list = [goals.Goal('B'+str(x), predicate = "activated") for x in goal_list]
+print("goal list is ")
 for g in goal_list:
-    print()
-    "  " + str(g)
+    print("  "+str(g))
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -32,8 +42,8 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
-# STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
+DOMAIN_FILE = DOMAIN_ROOT + "nbeacons.sim"
+#STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
 DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators

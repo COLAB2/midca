@@ -1,6 +1,5 @@
 from midca import base
 
-
 class Example(base.BaseModule):
 
     def run(self, cycle, verbose):

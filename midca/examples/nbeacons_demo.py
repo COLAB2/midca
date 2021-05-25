@@ -2,6 +2,14 @@
 import midca
 from midca import base
 from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import HeuristicSearchPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import NBeaconsGoalGenerator, SimpleNBeaconsExplain, UserGoalInput, \
+    StateDiscrepancyDetector
+from midca.modules.evaluate import NBeaconsDataRecorder
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 import inspect, os
 
@@ -12,7 +20,7 @@ from midca.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 
-Notes: I will generate a state file instead of reading in from a file
+
 '''
 
 # Setup
@@ -21,8 +29,8 @@ MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons.sim"
-# STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
+DOMAIN_FILE = DOMAIN_ROOT + "nbeacons.sim"
+#STATE_FILE = DOMAIN_ROOT + "states/.sim" # state file is generated dynamically
 DISPLAY_FUNC = nbeacons_util.drawNBeaconsScene
 DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
 DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators

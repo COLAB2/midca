@@ -1,10 +1,9 @@
 '''
 A collection of functions that are domain specific, which different MIDCA components use
 '''
-import os, copy
+import os,copy
 from midca.domains.blocksworld import scene, blockstate
 from midca.modules._plan import pyhop
-
 
 def asqiiDisplay(world):
     '''
@@ -12,8 +11,6 @@ def asqiiDisplay(world):
     '''
     blocks = blockstate.get_block_list(world)
     print((str(scene.Scene(blocks))))
-
-
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -26,7 +23,6 @@ def preferApprehend(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
 
 def preferFire(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
@@ -47,7 +43,7 @@ def pyhop_state_from_world(world, name="state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.hasmortar = {}  # keys are 
+    s.hasmortar = {}  # keys are
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
@@ -98,12 +94,12 @@ def pyhop_state_from_world(world, name="state"):
             s.pos[block] = "in-arm"
         if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
-
     for mblock in mortarblocks:
         if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
 
     return s
+
 
 
 # note: str(arg) must evaluate to the name of the arg in the world representation for this method to work.

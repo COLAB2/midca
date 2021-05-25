@@ -46,12 +46,10 @@ def initial_setup_baxter():
     baxter.enable()
     baxter.calibrateLeftGripper()
 
-
 def on_mouse_click(event, x, y, flag, param):
     global n_clicks, points
     if event == cv2.EVENT_LBUTTONDOWN:
-        print()
-        'Point %s captured: (%s,%s)' % (n_clicks + 1, x, y)
+        print('Point %s captured: (%s,%s)' % (n_clicks+1,x,y))
         points.append([x, y])
         n_clicks += 1
 
@@ -132,7 +130,6 @@ def get_floor_reference_points():
     p2 = f.readline().split(' ')
     p3 = f.readline().split(' ')
     p4 = f.readline().split(' ')
-
     p1[0] = float(p1[0])
     p1[1] = float(p1[1])
     p2[0] = float(p2[0])
@@ -147,7 +144,6 @@ def get_floor_reference_points():
             [p3[0], p3[1]],
             [p4[0], p4[1]]]
 
-
 #    return [[0.5773763528146585, 0.3842165517841408],
 #     [0.7855928713464901, 0.37834930053240295],
 #     [0.76618765321789, -0.02885636412309065],
@@ -155,20 +151,18 @@ def get_floor_reference_points():
 
 def calibrate_homography():
     global H, Hinv
-    # floor_points = get_floor_reference_points()
+    #floor_points = get_floor_reference_points()
     img_points = get_img_reference_points()
-    print()
-    img_points
-    # print floor_points
+    print(img_points)
+    #print floor_points
     img_points = [[380, 136], [509, 143], [512, 324], [374, 318]]
     floor_points = [[0.5725, 0.2465], [0.8125, 0.2465], [0.8125, -0.10], [0.5725, -0.10]]
-    # print img_points
-    # print floor_points
+    #print img_points
+    #print floor_points
     input("Enter")
     H = homography_floor_to_img(img_points, floor_points)
     return H
-    # I need to send H in string format
-
+    #I need to send H in string format
 
 def sendPoint(msg, topic):
     pub = rospy.Publisher(topic, String, queue_size=10)
@@ -179,20 +173,18 @@ def sendPoint(msg, topic):
 
 
 def msg_as_string(H):
-    HtoString = ""
+    HtoString=""
     Q = np.linalg.inv(H)
-    HtoString = Q[0, 0]
-    HtoString = HtoString + "," + Q[0, 1]
-    HtoString = HtoString + "," + Q[0, 2]
-    HtoString = HtoString + "," + Q[1, 0]
-    HtoString = HtoString + "," + Q[1, 1]
-    HtoString = HtoString + "," + Q[1, 2]
-    HtoString = HtoString + "," + Q[2, 0]
-    HtoString = HtoString + "," + Q[2, 1]
-    HtoString = HtoString + "," + Q[2, 2]
+    HtoString = Q[0,0]
+    HtoString = HtoString+","+Q[0,1]
+    HtoString = HtoString+","+Q[0,2]
+    HtoString = HtoString+","+Q[1,0]
+    HtoString = HtoString+","+Q[1,1]
+    HtoString = HtoString+","+Q[1,2]
+    HtoString = HtoString+","+Q[2,0]
+    HtoString = HtoString+","+Q[2,1]
+    HtoString = HtoString+","+Q[2,2]
     return HtoString
-
-
 def calibrate():
     initial_setup_baxter()
     H = calibrate_homography()
@@ -207,7 +199,5 @@ def calibrate():
 def getZ():
     global Z
     return Z
-
-
 if __name__ == '__main__':
     calibrate()

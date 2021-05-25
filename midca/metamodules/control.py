@@ -1,3 +1,4 @@
+
 import os, copy,re
 import importlib
 from midca import base, goals, modules
@@ -17,7 +18,6 @@ class MRSimpleControl(base.BaseModule):
         plan = self.mem.get(self.mem.META_PLAN)
         self.prev_init_args = []
         failed = False
-
         if plan:
             for action in plan:
                 if not self.act(action):
@@ -68,14 +68,12 @@ class MRSimpleControl(base.BaseModule):
                 # print("-*-*- act():  phase = "+str(phase)+", module_index = "+str(module_index))
                 if phase and module_index > -1:
                     mod = self.mem.myMidca.remove_module(phase, module_index)
-                    print()
-                    "mod is " + str(mod)
+                    print("mod is " + str(mod))
                     self.prev_init_args = mod.get_init_args()  # TODO: only works for modules implementing get_init_args
-                    print()
-                    "got init args: " + str(self.prev_init_args)
+                    print("got init args: " + str(self.prev_init_args))
                     is_success = mod_str not in [x.__class__.__name__ for x in self.mem.myMidca.get_modules(phase)]
-                    if is_success: print((
-                        "    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
+                    if is_success: print(
+                        ("    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
                     return is_success
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
@@ -84,8 +82,7 @@ class MRSimpleControl(base.BaseModule):
                 planningModuleInstance = importlib.import_module("midca.modules.planning")
                 print(("loaded planning module, it has following attributes: " + str(dir(planningModuleInstance))))
                 # get the args used to init the old module and use them to init this one
-                print()
-                "init args is " + str(self.prev_init_args)
+                print("init args is " + str(self.prev_init_args))
 
                 # **** BEGIN: MAGIC! Transform the args *****
                 # This is where the real magic happens
@@ -133,7 +130,8 @@ class MRSimpleControl(base.BaseModule):
                 pyHopPlannerInstance = planningModuleInstance.AsynchPyhopPlanner(*corrected_args)
                 self.mem.myMidca.runtime_append_module("Plan",
                                                        pyHopPlannerInstance)  # TODO: hardcoded knowledge of Plan phase
-                is_success = "AsynchPyhopPlanner" in [x.__class__.__name__ for x in self.mem.myMidca.get_modules("Plan")]
+                is_success = "AsynchPyhopPlanner" in [x.__class__.__name__ for x in
+                                                      self.mem.myMidca.get_modules("Plan")]
                 if is_success: print(
                     "    Metareasoner added AsynchPyhopPlanner")  # report any actions metareasoner carried out
                 return is_success
@@ -277,8 +275,8 @@ class MRSimpleControl1(base.BaseModule):
                 if phase and module_index > -1:
                     self.mem.myMidca.remove_module(phase, module_index)
                     is_success = mod_str not in [x.__class__.__name__ for x in self.mem.myMidca.get_modules(phase)]
-                    if is_success: print((
-                        "    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
+                    if is_success: print(
+                        ("    Metareasoner removed " + mod_str))  # report any actions metareasoner carried out
                     return is_success
         elif action[0] == "ADD-MODULE":
             if action[2] == "PyHopPlanner":
@@ -894,4 +892,3 @@ class MRSimpleControl1(base.BaseModule):
 
             # and go top down
             # first, get the heights
-

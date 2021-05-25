@@ -1,6 +1,13 @@
 #!/usr/bin/env python 
 from midca import base, rosrun
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from midca.modules.perceive import ROSObserver
+from midca.modules.plan import AsynchPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import AsynchronousAct
+from midca.modules.interpret import InstructionReceiver
+from midca.modules.evaluate import EvalPointingFromFeedback
+from midca.modules import simulator
 from midca.modules._plan.asynch import asynch, operators, methods
 from midca.logging import Logger
 import inspect, os
@@ -33,7 +40,6 @@ myMidca = ros_style_midca()
 
 myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
-
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     rosrun.FixedObjectLocationHandler(OBJ_LOC_TOPIC, "quad", myMidca),
     rosrun.UtteranceHandler(UTTERANCE_TOPIC, myMidca),

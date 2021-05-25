@@ -1,0 +1,141 @@
+type(root)
+type(BLOCK,root)
+type(ARSONIST,root)
+type(MORTARBLOCK,root)
+type(A_,BLOCK)
+type(B_,BLOCK)
+type(C_,BLOCK)
+type(D_,BLOCK)
+
+
+ptype(root)
+ptype(on,root)
+ptype(stable-on,on)
+
+
+predicate(clear, [blk], [BLOCK])
+predicate(holding, [blk], [BLOCK])
+predicate(arm-empty, [], [])
+predicate(on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(stable-on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(on-table, [blk], [BLOCK])
+predicate(block, [blk], [BLOCK])
+predicate(triangle, [blk], [BLOCK])
+predicate(table, [blk], [BLOCK])
+predicate(onfire, [blk], [BLOCK])
+predicate(arsonist, [ars], [ARSONIST])
+predicate(free, [ars], [ARSONIST])
+predicate(hasmortar, [blk, mortar], [BLOCK, MORTARBLOCK])
+predicate(used, [mortar], [MORTARBLOCK])
+predicate(available, [mortar], [MORTARBLOCK])
+
+operator(stack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [btmblk]), 
+	condition(holding, [topblk])], 
+results = [
+	condition(clear, [btmblk], negate = True), 
+	condition(holding, [topblk], negate = True), 
+	condition(clear, [topblk]), 
+	condition(on, [topblk, btmblk]), 
+	condition(arm-empty, [])])
+
+operator(stack_mortared, 
+args = [(topblk, BLOCK), (btmblk, BLOCK), (mortar, MORTARBLOCK)], 
+preconditions = [
+	condition(clear, [btmblk]), 
+	condition(holding, [topblk]),
+	condition(available, [mortar])], 
+results = [
+	condition(clear, [btmblk], negate = True), 
+	condition(holding, [topblk], negate = True), 
+	condition(clear, [topblk]), 
+	condition(stable-on, [topblk, btmblk]),
+	condition(hasmortar, [btmblk, mortar]),
+	condition(used, [mortar]),
+	condition(available, [mortar], negate = True),
+	condition(arm-empty, [])])
+
+operator(unstack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [topblk]), 
+	condition(arm-empty), 
+	condition(on, [topblk, btmblk])],
+results = [
+	condition(clear, [topblk], negate = True), 
+	condition(holding, [topblk]), 
+	condition(arm-empty, [], negate = True), 
+	condition(on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False)])
+
+operator(unstack_mortared, 
+args = [(topblk, BLOCK), (btmblk, BLOCK), (mortar, MORTARBLOCK)], 
+preconditions = [
+	condition(clear, [topblk]), 
+	condition(arm-empty), 
+	condition(stable-on, [topblk, btmblk]),
+	condition(hasmortar, [btmblk, mortar]),
+	condition(used, [mortar])],
+results = [
+	condition(clear, [topblk], negate = True), 
+	condition(holding, [topblk]), 
+	condition(arm-empty, [], negate = True), 
+	condition(stable-on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False), 
+	condition(hasmortar, [btmblk, mortar], negate = True)])
+
+operator(putdown, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(holding, [blk])], 
+results = [
+	condition(holding, [blk], negate = True), 
+	condition(clear, [blk]), 
+	condition(on-table, [blk]),
+	condition(arm-empty, [])])
+
+operator(pickup, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(on-table, [blk]),
+	condition(clear, [blk]),
+	condition(arm-empty, [])],
+results = [
+	condition(holding, [blk]), 
+	condition(clear, [blk], negate = True),
+	condition(on-table, [blk], negate = True),
+	condition(arm-empty, [], negate = True)])
+
+operator(putoutfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk])],
+results = [
+	condition(onfire, [blk], negate = True)])
+
+operator(catchfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True)],
+results = [
+	condition(onfire, [blk])])
+
+operator(lightonfire,
+args = [(arsonist, ARSONIST), (blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True),
+	condition(free, [arsonist])],
+results = [
+	condition(onfire, [blk])])
+
+operator(apprehend,
+args = [(arsonist, ARSONIST)],
+preconditions = [
+	condition(free, [arsonist])],
+results = [
+	condition(free, [arsonist], negate = True)])
+	
+operator(searchfor,
+args = [(arsonist, ARSONIST)])

@@ -11,7 +11,6 @@ import rospy
 
 # baxter_interface - Baxter Python API
 import baxter_interface
-
 # Message carrying location of target
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
@@ -22,7 +21,6 @@ from midca.examples.baxter import *
 limb = None
 feedbackPub = None
 baxter = Baxter()  # The object that controls Baxter. Defined in baxter.py.
-
 
 def midca_feedback(**kwargs):
     msg = rosrun.dict_as_msg(kwargs)
@@ -43,12 +41,9 @@ def MoveArm(point):
 def Grasp():
     baxter.closeLeftGripper()
     return True
-
-
 def release():
     baxter.openLeftGripper()
     return True
-
 
 def point_2_callback(point, cmd_id='point_2_def_id'):
     if point.x == 0 and point.y == 0 and point.z == 0:
@@ -65,19 +60,14 @@ def point_2_callback(point, cmd_id='point_2_def_id'):
             midca_feedback(cmd_id=cmd_id, code=asynch.COMPLETE)
 
         # limb.move_to_joint_positions(angles) #blocking
-
-
 #     else:
 #         rospy.loginfo("Point: target out of pointing range " + str(data))
 #         midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
-
 def msg_callback(point, cmd_id='grasp_id'):
     Grasp()
 
     midca_feedback(cmd_id=cmd_id, code=asynch.COMPLETE)
     # limb.move_to_joint_positions(angles) #blocking
-
-
 #     else:
 #         rospy.loginfo("Point: target out of pointing range " + str(data))
 #         midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
@@ -95,6 +85,7 @@ def point_callback(point, cmd_id='point_def_id'):
     else:
         rospy.loginfo("Point: setting target to" + str(point))
 
+
         if (MoveArm(point) == None):
             rospy.loginfo("Point: target out of pointing range " + str(point))
             midca_feedback(cmd_id=cmd_id, code=asynch.FAILED)
@@ -102,8 +93,6 @@ def point_callback(point, cmd_id='point_def_id'):
         else:
             midca_feedback(cmd_id=cmd_id, code=asynch.COMPLETE)
         # limb.move_to_joint_positions(angles) #blocking
-
-
 #     else:
 #         rospy.loginfo("Point: target out of pointing range " + str(data))
 #         midca_feedback(cmd_id = cmd_id, code = asynch.FAILED)
@@ -126,8 +115,6 @@ def reaching_callback(data):
             midca_feedback(cmd_id=d['cmd_id'], code=asynch.FAILED)
             return
         point_callback(point, d['cmd_id'])
-
-
 def raising_callback(data):
     print("got msg:", data)
     msg = data.data
@@ -156,7 +143,6 @@ def releasing_callback(data):
     d = rosrun.msg_as_dict(msg)
 
     release_callback(msg, d['cmd_id'])
-
 
 def grabbing_callback(data):
     print("got msg:", data)

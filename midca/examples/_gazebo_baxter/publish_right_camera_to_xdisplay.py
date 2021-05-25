@@ -2,7 +2,6 @@
 import baxter_interface
 import rospy
 from sensor_msgs.msg import Image
-
 rospy.init_node("my_cam")
 display_pub = rospy.Publisher('/robot/xdisplay', Image, queue_size=10)
 

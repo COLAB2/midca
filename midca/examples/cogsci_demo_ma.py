@@ -1,7 +1,12 @@
 #!/usr/bin/env python 
 import midca
 from midca.examples import predicateworld
+
 from midca.modules import simulator, guide, evaluate, perceive, assess
+from midca.modules.perceive import MAReporter
+from midca.modules.interpret import TFStack, TFFire, MAQuery
+from midca.modules.evaluate import SimpleEval, Scorer
+from midca.modules import simulator
 import inspect, os
 
 # Domain Specific Imports
@@ -17,7 +22,6 @@ must be started and have opened sockets prior to launching MIDCA.
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
-
 writePort = 5150
 readPort = 5151
 DISPLAY_FUNC = util.asqiiDisplay
