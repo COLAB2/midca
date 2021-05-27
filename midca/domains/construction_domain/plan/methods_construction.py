@@ -51,19 +51,19 @@ def all_blocks(state):
 def get_by_value(dictionary,val):
     block = None
     for key, value in dictionary.items():
-	 if value == val:
-	 	block = key
+	    if value == val:
+	 	    block = key
     return block
      
 def check_all_blocks_in_goal(table_block,goal_pos,blocks):
     if not table_block == None:
-	#print(blocks)
-	blocks.append(table_block)
-	table_block = get_by_value(goal_pos,table_block)
-	#print(table_block)
-	return check_all_blocks_in_goal(table_block,goal_pos,blocks)
+        #print(blocks)
+        blocks.append(table_block)
+        table_block = get_by_value(goal_pos,table_block)
+        #print(table_block)
+        return check_all_blocks_in_goal(table_block,goal_pos,blocks)
     else:
-	return blocks
+	    return blocks
 
 def blocks_according_to_goal(state,goal):
     blocks = []
@@ -71,8 +71,8 @@ def blocks_according_to_goal(state,goal):
     table_block = get_by_value(goal.pos,"table")
     blocks = check_all_blocks_in_goal(table_block,goal.pos,blocks)
     for each in list(state.clear.keys()):
-	if not each in blocks:
-		blocks.append(each) 
+        if not each in blocks:
+            blocks.append(each)
     return blocks
 
 
@@ -94,7 +94,7 @@ def moveb_m(state,goal):
     blocks = blocks_according_to_goal(state,goal)
     #print(blocks)
     for b1 in blocks:
-	s = status(b1,state,goal)
+        s = status(b1,state,goal)
 #	print("status for block" + str(b1) + "is " + str(s))
         if s == 'move-to-table':
             return [('move_one',b1,'table'),('move_blocks',goal)]
@@ -102,7 +102,7 @@ def moveb_m(state,goal):
             return [('move_one',b1,goal.pos[b1]), ('move_blocks',goal)]
         elif s == 'move-to-block-with-mortar':
             return [('move_one_mortar',b1,goal.pos[b1]), ('move_blocks',goal)]
-	elif s == 'get-from-store':
+        elif s == 'get-from-store':
             return [('move_from_store',b1,goal.pos[b1]), ('move_blocks',goal)]
         else:
             continue
@@ -151,10 +151,10 @@ def move_store(state,b1,dest):
     if dest == "table":
         return [('get_from_store',b1)]
     else:
-	if(state.pos[dest] == "store"):
-		return [('get_from_store',dest), ('put', dest,'table') , ('get_from_store',b1)]
+	    if(state.pos[dest] == "store"):
+		    return [('get_from_store',dest), ('put', dest,'table') , ('get_from_store',b1)]
 
-	return [('get_from_store',b1)]
+    return [('get_from_store',b1)]
 
 ### methods for "get"
 

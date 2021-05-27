@@ -26,7 +26,6 @@ def prepare_order(state, person, dish):
         state.order_prepared[person].append(dish)
     else:
         state.order_prepared[person] = [dish]
-
     # print(state.order_received)
     return state
 

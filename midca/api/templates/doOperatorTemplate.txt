@@ -1,0 +1,60 @@
+class <operator>(AsynchAction):
+    
+    def __init__(self, mem, midcaAction, objectOrID, maxAllowedLag, maxDuration, topics,
+    msgID):
+        self.objectOrID = objectOrID
+        self.maxAllowedLag = maxAllowedLag
+        self.maxDuration = maxDuration
+        self.lastCheck = 0.0
+        self.topics = topics
+        self.complete = False
+        self.msgID = msgID
+		# TODO: fill in formats for each topic
+		# Reference {'x': x, 'y': y, 'z': z, 'time': self.startTime, 'cmd_id': self.msgID}
+		self.topicFormats = {<topicFormats>}
+		
+        executeAction = lambda mem, midcaAction, status: self.send_point()
+        completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
+        AsynchAction.__init__(self, mem, midcaAction, executeAction, 
+        completionCheck, True)
+    
+    
+        
+    def send_topic(self):
+
+		for topic in self.topics:
+			# Handle <topic>
+			self.msgDict = topicFormats[topic]
+        
+			print self.msgDict
+        
+			print "trying to send"
+			print topic
+        
+			sent = rosrun.send_msg(topic, rosrun.dict_as_msg(self.msgDict))
+			if not sent:
+				if verbose >= 1:
+					print "Fail"
+				self.status = FAILED
+    
+    def check_confirmation(self):
+        checkTime = self.lastCheck
+        self.lastCheck = midcatime.now()
+        feedback = self.mem.get(self.mem.FEEDBACK)
+        if not feedback:
+            return False
+        for item in reversed(feedback):
+            #if all items have been checked, either in this check or previous, return
+            if item['received_at'] - checkTime < 0:
+                return False
+            #else see if item is a completion or failure message with id == self.msgID
+            if item[CMD_ID_KEY] == self.msgID:
+                if item[FEEDBACK_KEY] == COMPLETE:
+                    return True
+                elif item[FEEDBACK_KEY] == FAILED:
+                    self.status = FAILED
+                    if verbose >= 1:
+                        print "MIDCA received feedback that action", self, "has failed"
+                    return False
+        return False
+		

@@ -1,6 +1,11 @@
-
 from midca import base
-from midca.modules import simulator, perceive, guide, evaluate, intend, planning, act
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import GenericPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import UserGoalInput
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 
 # domain specific imports
@@ -18,9 +23,11 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 ### Domain Specific Variables
+
 DOMAIN_ROOT = MIDCA_ROOT + "domains/chicken/"
 DOMAIN_FILE = DOMAIN_ROOT + "domain.sim"
 STATE_FILE = DOMAIN_ROOT + "states/initial_state.sim"
+
 DISPLAY_FUNC = print
 DECLARE_METHODS_FUNC = methods.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
@@ -39,13 +46,13 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.GenericPyhopPlanner(
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
+myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", GenericPyhopPlanner.GenericPyhopPlanner(
     DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 # Set world viewer to output text
 myMidca.set_display_function(DISPLAY_FUNC) 

@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 import midca
-from midca.examples import predicateworld
 #!/usr/bin/env python
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import PyHopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import TFFire,\
+    SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
+from midca.modules.evaluate import SimpleEval, MortarScorer
 from midca.worldsim import domainread, stateread
-from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
+from midca.modules import simulator
 from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca.modules.gens import goaltransform
 from midca import base
@@ -27,7 +33,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/arsonist_mortar.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "arsonist_mortar.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate_mortar.sim"
 DISPLAY_FUNC = util.asqiiDisplay
 DECLARE_METHODS_FUNC = methods_mortar.declare_methods
@@ -59,24 +65,24 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
     #add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", note.ADistanceAnomalyNoter())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
+myMidca.append_module("Interpret", ADistanceAnomalyNoter.ADistanceAnomalyNoter())
 #myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.PyHopPlanner(util.mortar_pyhop_state_from_world,
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner(util.mortar_pyhop_state_from_world,
                                                     util.mortar_pyhop_tasks_from_goals,
                                                     DECLARE_METHODS_FUNC,
                                                     DECLARE_OPERATORS_FUNC,
                                                     extinguish,
                                                     mortar))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance = 0.0, arsonStart = 10), 1)
 #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
-myMidca.insert_module('Interpret', guide.SimpleMortarGoalGen(), 1)
+myMidca.insert_module('Interpret', SimpleMortarGoalGen.SimpleMortarGoalGen(), 1)
 #myMidca.insert_module('Interpret', guide.TFFire(), 2)
-myMidca.insert_module('Interpret', guide.ReactiveApprehend(), 3)
-myMidca.insert_module('Eval', evaluate.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
+myMidca.insert_module('Interpret', ReactiveApprehend.ReactiveApprehend(), 3)
+myMidca.insert_module('Eval', MortarScorer.MortarScorer(), 1) # this needs to be a 1 so that Scorer happens AFTER SimpleEval
 
 # add meta layer phases
 #for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:

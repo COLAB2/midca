@@ -110,14 +110,13 @@ def searchfor(state, perp):
 	return state
 
 def get_from_store(state,b):
-	if state.pos[b] == 'store' and state.clear[b] == True and state.holding == False:
-        	state.pos[b] = 'in-arm'
-        	state.clear[b] = False
-        	state.holding = b
-        	return state
-    	else: 
-		return False
-
+    if state.pos[b] == 'store' and state.clear[b] == True and state.holding == False:
+        state.pos[b] = 'in-arm'
+        state.clear[b] = False
+        state.holding = b
+        return state
+    else:
+        return False
 """
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.

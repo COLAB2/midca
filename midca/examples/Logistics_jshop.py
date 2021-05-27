@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 from midca import base
-from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+from midca.modules.perceive import PerfectObserverWithThief
+from midca.modules.plan import JSHOP2Planner
+from midca.modules.intend import WarehouseIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import DeliverGoal, UserGoalInput
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 
 from midca.worldsim import domainread, stateread
 import inspect, os
@@ -24,7 +30,7 @@ print(MIDCA_ROOT)
 
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/logistics/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/domain2.sim"
+DOMAIN_FILE = DOMAIN_ROOT + "domain2.sim"
 STATE_FILE = DOMAIN_ROOT + "states/defstate2.sim"
 
 ### Domain Specific Variables for JSHOP planner
@@ -42,17 +48,17 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 #add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
 #myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.PerfectObserverWithThief())
-myMidca.append_module("Interpret", guide.DeliverGoal())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval2())
-myMidca.append_module("Intend", intend.WarehouseIntend())
-myMidca.append_module("Plan", planning.JSHOP2Planner(logistics_util.jshop2_state_from_world,
+myMidca.append_module("Perceive", PerfectObserverWithThief.PerfectObserverWithThief())
+myMidca.append_module("Interpret", DeliverGoal.DeliverGoal())
+#myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Eval", SimpleEval.SimpleEval2())
+myMidca.append_module("Intend", WarehouseIntend.WarehouseIntend())
+myMidca.append_module("Plan", JSHOP2Planner.JSHOP2Planner(logistics_util.jshop2_state_from_world,
                                                     logistics_util.jshop2_tasks_from_goals,
                                                     JSHOP_DOMAIN_FILE,
                                                     JSHOP_STATE_FILE
                                                     ))
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 
 
