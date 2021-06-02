@@ -48,3 +48,4 @@ def UserGoalsMidca(domainFile, stateFile, display=print, goalsFile = None, argsP
 #     myMidca.append_module("Plan", planning.PyHopPlanner())
 #     myMidca.append_module("Act", act.SimpleAct())
 #     return myMidca
+

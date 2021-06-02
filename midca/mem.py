@@ -259,4 +259,3 @@ class MemAccessEvent(Event):
 
 	def __str__(self):
 		return "Memory access at key " + str(self.memKey)
->>>>>>> 18d6b13e3d6b0d980cd3453196e82fad7302e79b

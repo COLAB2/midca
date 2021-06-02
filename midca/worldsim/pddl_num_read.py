@@ -482,7 +482,7 @@ def parseTypedArgList_names(argList):
     for arg in argList.args:
         n = objects
         parsed.append(str(arg.arg_name))
-    print('parsed',parsed)
+    #print('parsed',parsed)
     return parsed
 
 def parseTypedArgList_ground_names(argList):

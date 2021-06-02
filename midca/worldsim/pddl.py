@@ -315,7 +315,7 @@ class Action:
                         #print(y.getText())
                         a = y.getText().index(')')
                         u = re.findall("\(.*?\)", y.getText()[a + 1:])
-                        print(u)
+                        #print(u)
                         for i in u:
                             if 'and' in i:
                                 i = i[i.index('and') + 3:]

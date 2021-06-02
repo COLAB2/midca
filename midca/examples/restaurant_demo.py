@@ -17,7 +17,7 @@ from midca import base
 from midca.domains.restaurant_domain import util
 from midca.domains.restaurant_domain.plan import restaurant_methods, restaurant_operators
 
-import inspect, os, copy
+import inspect, os,copy
 
 '''
 Simulation of tower construction and arson prevention in blocksworld. Uses
@@ -42,18 +42,18 @@ GOAL_GRAPH_CMP_FUNC = util.preferApprehend
 world = domainread.load_domain(DOMAIN_FILE)
 
 # for state file, need to add number of mortar blocks to begin with
-state_str = open(STATE_FILE).read()  # first read file
+state_str = open(STATE_FILE).read() # first read file
 
 # now load the state    
 stateread.apply_state_str(world, state_str)
 stateread.apply_state_file(world, STATE_FILE)
 
 print(world)
-# creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4, metaEnabled=True)
+#creates a PhaseManager object, which wraps a MIDCA object
+myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4, metaEnabled=True)
 
 initial_world = copy.deepcopy(world)
-# add phases by name
+#add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
 

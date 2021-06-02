@@ -1,50 +1,44 @@
-
-
 from midca import base
-from midca.modules import simulator, perceive, guide, evaluate, intend, planning, act, note
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import GenericPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import UserGoalInput
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 
 # domain specific imports
-from midca.domains.blocksworld.plan import sample_methods, sample_operators
+from midca.domains.chicken.plan import methods, operators
 
-
-import inspect, os,pddlpy
-
+import inspect, os
 '''
 This script runs a simple version of MIDCA in a trivial domain where chickens cross the road.
 
-https://github.com/mclumd/MIDCA/wiki/Running-Example-Scripts
+https://github.com/COLAB2/MIDCA/wiki/Running-Example-Scripts
 '''
 
 # Setup
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIDCA_ROOT = thisDir + "/../"
-print(thisDir)
-print(MIDCA_ROOT)
-
 
 ### Domain Specific Variables
-DOMAIN_ROOT = MIDCA_ROOT + "domains/blocksworld/"
-DOMAIN_FILE = DOMAIN_ROOT + "domains/sample_domain.sim"
-STATE_FILE = DOMAIN_ROOT + "states/sample_state.sim"
-#DOMAIN_FILE = MIDCA_ROOT + "worldsim/domain_new.pddl"
-#EVENT_FILE = MIDCA_ROOT + "worldsim/domain_new.pddl"
-#STATE_FILE = MIDCA_ROOT + "worldsim/p01.pddl"
+
+DOMAIN_ROOT = MIDCA_ROOT + "domains/chicken/"
+DOMAIN_FILE = DOMAIN_ROOT + "domain.sim"
+STATE_FILE = DOMAIN_ROOT + "states/initial_state.sim"
 
 DISPLAY_FUNC = print
-DECLARE_METHODS_FUNC = sample_methods.declare_methods
-DECLARE_OPERATORS_FUNC = sample_operators.declare_ops
-GOAL_GRAPH_CMP_FUNC = None  # not used in this example
+DECLARE_METHODS_FUNC = methods.declare_methods
+DECLARE_OPERATORS_FUNC = operators.declare_ops
+GOAL_GRAPH_CMP_FUNC = None # not used in this example
 
 # Load Domain Files  
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
-#world = pddlpy.DomainProblem(DOMAIN_FILE,STATE_FILE)
-#print(world)
 
 # Creates a PhaseManager object, which wraps a MIDCA object
-myMidca = base.PhaseManager(world, display=DISPLAY_FUNC, verbose=4)
-print(myMidca)
+myMidca = base.PhaseManager(world, display = DISPLAY_FUNC, verbose=4)
 
 # Add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
@@ -52,16 +46,16 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.GenericPyhopPlanner(
-    DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC))  # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
+myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", GenericPyhopPlanner.GenericPyhopPlanner(
+    DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 # Set world viewer to output text
-myMidca.set_display_function(DISPLAY_FUNC)
+myMidca.set_display_function(DISPLAY_FUNC) 
 
 # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 # Note: Turning this on drastically increases MIDCA's running time.

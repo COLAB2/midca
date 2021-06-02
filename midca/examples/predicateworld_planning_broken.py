@@ -65,3 +65,4 @@ def guiMidca(domainFile, stateFile, goalsFile = None):
     myMidca.append_module("Plan", PyHopPlanner.PyHopPlanner())
     myMidca.append_module("Act", SimpleAct.SimpleAct())
     return myMidca
+

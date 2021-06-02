@@ -3,7 +3,6 @@ import subprocess
 
 from subprocess import Popen, PIPE, STDOUT
 
-<<<<<<< HEAD
 
 def jshop(tasks, DOMAIN_FIILE, STATE_FILE):
     thisDir = os.path.dirname(os.path.realpath(__file__))

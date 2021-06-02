@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 from midca import base
-from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+#from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+from midca.modules.perceive import RemoteObserver
+from midca.modules.interpret import GoalDiscrepancyDetector
+from midca.modules.evaluate import SimpleEval
+from midca.modules.intend import SimpleIntend
+from midca.modules.plan import fastdownPlanner
+from midca.modules.act import SimpleAct
 from midca.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from midca.worldsim import stateread
 from midca.worldsim import pddl_num_read as pddlread
@@ -43,9 +49,9 @@ MIDCA_ROOT = thisDir + "/../"
 #STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.1.pddl"
 DISPLAY_FUNC = print
 
-DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant-protection-actual.pddl"
-EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant-protection-actual.pddl"
-STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant_pro_actual.pddl"
+DOMAIN_FILE = MIDCA_ROOT + "domains/plant_protection_domain/plan/plant-protection-actual.pddl"
+EVENT_FILE = MIDCA_ROOT + "domains/plant_protection_domain/plan/plant-protection-actual.pddl"
+STATE_FILE = MIDCA_ROOT + "domains/plant_protection_domain/states/plant_pro_actual.pddl"
 
 
 
@@ -61,10 +67,10 @@ ratio=0.6 #ratio of number of native plants
 nat_num = round(ratio*b)
 inv_num = b - nat_num
 nat,inv = [],[]
-STATE_FILE_C = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant_pro_actual_2 (copy).pddl"
-DOMAIN_FILE_P = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant-protection-modif_nor.pddl"
-EVENT_FILE_P = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant-protection-modif_nor.pddl"
-STATE_FILE_P = MIDCA_ROOT + "domains/ffdomain/minecraft1/plant-pro_modif.pddl"
+STATE_FILE_C = MIDCA_ROOT + "domains/plant_protection_domain/states/plant_pro_actual_2 (copy).pddl"
+DOMAIN_FILE_P = MIDCA_ROOT + "domains/plant_protection_domain/plan/plant-protection-modif_nor.pddl"
+EVENT_FILE_P = MIDCA_ROOT + "domains/plant_protection_domain/plan/plant-protection-modif_nor.pddl"
+STATE_FILE_P = MIDCA_ROOT + "domains/plant_protection_domain/states/plant-pro_modif.pddl"
 
 for x in range(nat_num):
     temp = [random.choice(a),random.choice(a)]
@@ -129,55 +135,22 @@ write_file.close()
 
 #world = pddlpy.DomainProblem(DOMAIN_FILE,STATE_FILE)
 world = pddlread.load_domain(DOMAIN_FILE, state_file_2,EVENT_FILE)
-#world1= pddlread.load_domain(DOMAIN_FILE_P, STATE_FILE_C,EVENT_FILE_P)
-#a= pddl.parseGoalDescription(world)
-#print(a)
-
-#print(type(world))
-A= world.get_operators().get('move')
-#print(A)
-#print(A.postpredicates1,A.types)
-b= [A.types[0][0]]
-#A=worldsim.Predicate('invasive-at',['?to'],b).instantiate(['?to'])
-#B= worldsim.Condition('invasive-at(?no)',b)
-#print(B)
-
-#print(A.name,'ji',A.objnames,'hi',A.preconditions,'hi',A.precondorder,'hi',A.prePos,'hi',A.types,'hi',A.prefunc,'hi',A.postfunc,'hi',A.prefuncnames,'hi',A.postfuncnames,'hi',A.isevent,'hi',A.results,'hi',A.resultorder,'hi',A.postPos,'hi',A.prefuncpos,'hi',A.postfunpos)
-
-
-#stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
 # creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display='', verbose=4, metaEnabled=True)
 # add phases by name
 for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
     myMidca.append_phase(phase)
-
-# add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-#myMidca.append_module("Simulate", simulator.MidcaEventSimulator())
-#myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-#myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Perceive", perceive.RemoteObserver())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
-#myMidca.append_module("Interpret", guide.MultipleGoalGen())
-myMidca.append_module("Interpret", note.GoalDiscrepancyDetector(world))
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-#myMidca.append_module("Plan", planning.MetricFFPlanner(
-   # minecraft_util.ff_goals_from_midca_goals,
-   #minecraft_util.ff_state_from_midca_world,
-    #DOMAIN_FILE,
-    #STATE_FILE))
-myMidca.append_module("Plan", planning.fastdownPlanner(
+myMidca.append_module("Interpret", GoalDiscrepancyDetector.GoalDiscrepancyDetector(world))
+myMidca.append_module("Eval", SimpleEval.SimpleEval_plant_protection())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", fastdownPlanner.fastdownPlanner(
    minecraft_util.ff_goals_from_midca_goals,
     minecraft_util.ff_state_from_midca_world,
     DOMAIN_FILE_P,
     STATE_FILE_P,world))
-myMidca.append_module("Act", act.SimpleAct())
-# myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
-# myMidca.insert_module('Simulate', simulator.AttackSimulator(skeletonStart=2), 1)
-# myMidca.insert_module('Interpret', guide.TFFire(), 2)
-#myMidca.insert_module('Interpret', guide.ReactiveSurvive(), 3)
+myMidca.append_module("Act", SimpleAct.SimpleAct_plant_protection())
 
 for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
     myMidca.append_meta_phase(phase)

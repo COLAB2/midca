@@ -3,8 +3,7 @@ import os, copy,re
 import importlib
 from midca import base, goals, modules
 from midca.modules.gens import goaltransform
-from midca.metamodules.trimlogic.test import FamilyTreeTestCase_1
-
+from midca.metamodules.foil_python_master.src.trimlogic.test import FamilyTreeTestCase_1
 
 class MRSimpleControl(base.BaseModule):
     midca = None

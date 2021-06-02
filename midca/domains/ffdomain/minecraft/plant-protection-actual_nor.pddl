@@ -48,50 +48,33 @@
     )
     :effect
     (and
-	(agent-at ?to)
+	 (agent-at ?to)
 	(not (agent-at ?from))
 	
     )
 )
 (:action spray
-    :parameters (?to - mapgrid ?no - mapgrid ?so - mapgrid ?ea - mapgrid ?we - mapgrid ?noes - mapgrid  ?nows - mapgrid ?sows - mapgrid ?soes - mapgrid )
+    :parameters (?to - mapgrid )
     :precondition
     (and
             ;(invasive-at ?to)
             (agent-at ?to)
-            (ISADJ north ?to ?no)
-	    (ISADJ south ?to ?so)
-	    (ISADJ east ?to ?ea)
-	    (ISADJ west ?to ?we)
-            (ISADJ noes ?to ?noes)
-	    (ISADJ nows ?to ?nows)
-	    (ISADJ sows ?to ?sows)
-	    (ISADJ soes ?to ?soes)
+            
 
             
     )
     :effect
     (and
         (agent-at ?to)
-        ;(not (plant-at ?to))
-        (not (invasive-at ?to))
-        (not (invasive-at ?no))
-        (not (invasive-at ?so))
-        (not (invasive-at ?ea))
-        (not (invasive-at ?we))
-        (not (invasive-at ?noes))
-        (not (invasive-at ?nows))
-        (not (invasive-at ?sows))
-        (not (invasive-at ?soes))
-        (not (native-at ?to))
-        (not (native-at ?no))
-        (not (native-at ?so))
-        (not (native-at ?ea))
-        (not (native-at ?we))
-        (not (native-at ?noes))
-        (not (native-at ?nows))
-        (not (native-at ?sows))
-        (not (native-at ?soes))
+        (when (agent-at ?to) (and (not (native-at ?to))(not (invasive-at ?to)) ))
+        (when (ISADJ south ?to ?so) (and (not (native-at ?so))(not (invasive-at ?so)) ))
+        (when (ISADJ north ?to ?no) (and (not (native-at ?no))(not (invasive-at ?no)) ))
+        (when (ISADJ east ?to ?ea) (and (not (native-at ?ea))(not (invasive-at ?ea)) ))
+        (when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
+        (when (ISADJ noes ?to ?noes) (and (not (native-at ?noes))(not (invasive-at ?noes)) ))
+        (when (ISADJ nows ?to ?nows) (and (not (native-at ?nows))(not (invasive-at ?nows)) ))
+        (when (ISADJ soes ?to ?soes) (and (not (native-at ?soes))(not (invasive-at ?soes)) ))
+        (when (ISADJ soes ?to ?sows) (and (not (native-at ?sows))(not (invasive-at ?sows)) ))
         
 	    
     )

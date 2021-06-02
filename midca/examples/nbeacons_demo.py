@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import midca
 from midca import base
-from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
 from midca.modules.perceive import PerfectObserver
 from midca.modules.plan import HeuristicSearchPlanner
 from midca.modules.intend import SimpleIntend
@@ -20,6 +19,11 @@ from midca.domains.nbeacons.plan import methods_nbeacons, operators_nbeacons
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
 
+Some examples of goals to give during the interpret phase, when prompted for a goal:
+
+agent-at(Curiosity, Tx3y7)
+...
+agent-at(Curiosity, Tx15y2)
 
 '''
 
@@ -45,7 +49,7 @@ world = domainread.load_domain(DOMAIN_FILE)
 
 # Create Starting state
 state1 = nbeacons_util.NBeaconGrid()
-state1.generate(width=DIMENSION, height=DIMENSION, num_beacons=10, num_quicksand_spots=0)
+state1.generate(width=DIMENSION,height=DIMENSION,num_beacons=10,num_quicksand_spots=0)
 state1_str = state1.get_STRIPS_str()
 
 # Load state
@@ -59,26 +63,26 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
     myMidca.append_phase(phase)
 
 # Add the modules which instantiate basic operation
-# myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=False, wind_dir='off', dim=DIMENSION))
-# myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
+#myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
+myMidca.append_module("Simulate", simulator.NBeaconsActionSimulator(wind=False,wind_dir='off',dim=DIMENSION))
+#myMidca.append_module("Simulate", simulator.NBeaconsSimulator(beacon_fail_rate=BEACON_FAIL_RATE))
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.PerfectObserver())
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
 
-myMidca.append_module("Interpret", note.StateDiscrepancyDetector())
-myMidca.append_module("Interpret", assess.SimpleNBeaconsExplain())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.NBeaconsDataRecorder())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.HeuristicSearchPlanner())
-# myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
+myMidca.append_module("Interpret", StateDiscrepancyDetector.StateDiscrepancyDetector())
+myMidca.append_module("Interpret", SimpleNBeaconsExplain.SimpleNBeaconsExplain())
+myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Eval", NBeaconsDataRecorder.NBeaconsDataRecorder())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", HeuristicSearchPlanner.HeuristicSearchPlanner())
+#myMidca.append_module("Plan", planning.PyHopPlanner(nbeacons_util.pyhop_state_from_world,
 #                                                    nbeacons_util.pyhop_tasks_from_goals,
 #                                                    DECLARE_METHODS_FUNC,
 #                                                    DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 # Set world viewer to output text
-myMidca.set_display_function(nbeacons_util.drawNBeaconsScene)
+myMidca.set_display_function(nbeacons_util.drawNBeaconsScene) 
 
 # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
 # Note: Turning this on drastically increases MIDCA's running time.
