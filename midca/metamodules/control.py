@@ -78,7 +78,7 @@ class MRSimpleControl(base.BaseModule):
             if action[2] == "PyHopPlanner":
                 # print("current directory: "+str(os.getcwd()))
                 # print("str(dir(modules)) = "+str(dir(modules)))
-                planningModuleInstance = importlib.import_module("midca.modules.planning")
+                planningModuleInstance = importlib.import_module("midca.modules.plan")
                 print(("loaded planning module, it has following attributes: " + str(dir(planningModuleInstance))))
                 # get the args used to init the old module and use them to init this one
                 print("init args is " + str(self.prev_init_args))

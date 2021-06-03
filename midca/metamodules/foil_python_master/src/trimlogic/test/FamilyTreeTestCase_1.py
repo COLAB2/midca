@@ -1,12 +1,12 @@
 import logging
 import unittest
-from foil_python_master.src.trimlogic.test.helper import FoilTestCase
-from foil_python_master.src.trimlogic.predicate import KnowledgeBase
-from foil_python_master.src.trimlogic.predicate import RuleBasedPredicate
-from foil_python_master.src.trimlogic.predicate import VariableFactory, UniqueVariableFactory, AtomFactory
-from foil_python_master.src.trimlogic.foil import TrainingSet, find_gainful_and_determinate_literals, construct_clause_recursive, foil, find_partial_ordering_of_terms, determine_param_orderings
-from foil_python_master.src.trimlogic.algorithm import fol_bc_ask
-from foil_python_master.src.trimlogic.term import Atom,Position,Time
+from midca.metamodules.foil_python_master.src.trimlogic.test.helper import FoilTestCase
+from midca.metamodules.foil_python_master.src.trimlogic.predicate import KnowledgeBase
+from midca.metamodules.foil_python_master.src.trimlogic.predicate import RuleBasedPredicate
+from midca.metamodules.foil_python_master.src.trimlogic.predicate import VariableFactory, UniqueVariableFactory, AtomFactory
+from midca.metamodules.foil_python_master.src.trimlogic.foil import TrainingSet, find_gainful_and_determinate_literals, construct_clause_recursive, foil, find_partial_ordering_of_terms, determine_param_orderings
+from midca.metamodules.foil_python_master.src.trimlogic.algorithm import fol_bc_ask
+from midca.metamodules.foil_python_master.src.trimlogic.term import Atom,Position,Time
 global native,invasive,spray,no_native,no_invasive
 
 rule_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/rule.txt"

@@ -1,15 +1,4 @@
 #!/usr/bin/env python
-from midca import base, rosrun
-from midca.modules import simulator, perceive, note, guide, evaluate, intend, planningbroken, planning, act
-from midca.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
-from midca.metamodules import monitor, interpret, metaeval, metaintend, plan, control
-from midca.logging import Logger
-import inspect, os
-from std_msgs.msg import String
-from midca.examples import Calibrate
-from geometry_msgs.msg import Point, PointStamped
-from midca.domains.blocksworld.plan import methods_broken, operators
-from midca.domains.blocksworld import util
 from MIDCA import base, rosrun
 from midca.modules.perceive import ROSObserver
 from midca.modules.plan import PyHopPlannerBroken
@@ -18,6 +7,15 @@ from midca.modules.act import AsynchronousAct
 from midca.modules.interpret import InstructionReceiver
 from midca.modules.evaluate import EvalPointingFromFeedback
 from MIDCA.modules import simulator
+from MIDCA.modules._plan.asynch import asynch, operators_sr, methods_sr, monitors
+from MIDCA.metamodules import monitor, interpret, metaeval, metaintend, plan, control
+from MIDCA.logging import Logger
+import inspect, os
+from std_msgs.msg import String
+from MIDCA.examples._baxter import Calibrate
+from geometry_msgs.msg import Point, PointStamped
+from MIDCA.domains.blocksworld.plan import methods_broken, operators
+from MIDCA.domains.blocksworld import util
 
 DECLARE_METHODS_FUNC = methods_broken.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
@@ -29,19 +27,19 @@ def ros_style_midca():
     for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
         myMidca.append_phase(phase)
 
-    myMidca.append_module("Perceive", perceive.ROSObserver())
-    myMidca.append_module("Interpret", guide.InstructionReceiver())
-    myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
-    myMidca.append_module("Intend", intend.SimpleIntend())
-    # myMidca.append_module("Plan", planning.AsynchPyhopPlanner(DECLARE_METHODS_FUNC, 
+    myMidca.append_module("Perceive", ROSObserver.ROSObserver())
+    myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
+    myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
+    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+    # myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(DECLARE_METHODS_FUNC,
     #														 DECLARE_OPERATORS_FUNC))
 
-    myMidca.append_module("Plan", planningbroken.PyHopPlannerBroken(util.pyhop_state_from_world,
-                                                                    util.pyhop_tasks_from_goals,
-                                                                    DECLARE_METHODS_FUNC,
-                                                                    DECLARE_OPERATORS_FUNC,
-                                                                    extinguishers=False))
-    myMidca.append_module("Act", act.AsynchronousAct())
+    myMidca.append_module("Plan", PyHopPlannerBroken.PyHopPlannerBroken(util.pyhop_state_from_world,
+                                                                        util.pyhop_tasks_from_goals,
+                                                                        DECLARE_METHODS_FUNC,
+                                                                        DECLARE_OPERATORS_FUNC,
+                                                                        extinguishers=False))
+    myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
 
     # add meta layer phases
     # for phase in ["Monitor", "Interpret", "Eval", "Intend", "Plan", "Control"]:
@@ -70,6 +68,7 @@ myMidca.mem.enableLogging(myMidca.logger)
 
 # calibration
 
+
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     # rosrun.CalibrationHandler("calibrate_done", myMidca),
     rosrun.threeObjectsLocationHandler("obj_pos", myMidca),
@@ -93,8 +92,9 @@ myMidca.mem.set(myMidca.mem.STACK_Z, -0.1097833784354784)
 myMidca.mem.set(myMidca.mem.STACK_3Z, -0.08517833784354784)
 myMidca.mem.set(myMidca.mem.UNSTACK_Z, -0.11434523370125365)
 myMidca.mem.set(myMidca.mem.UNSTACK_3Z, -0.05434523370125365)
+
 p = Point(x=0.6480168766398825, y=0.4782503847940384, z=0.289534050209461)
-# p = 
+# p =
 myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
 # 0.6754473650020971, 0.3487005600746112
 # q = Point(x = 0.6754473650020971, y =   0.3487005600746112, z = -0.14113003072395247)
@@ -102,5 +102,6 @@ myMidca.mem.set(myMidca.mem.RAISING_POINT, p)
 # lab_q =Point(0.7450848313136519, 0.11634406023548731, -0.15821251824917773)
 q = Point(0.7445881227726235, 0.13967133208903987, -0.15821251824917773)
 myMidca.mem.set(myMidca.mem.PUTTING_POINT, q)
+
 input('Enter ...')
 rosMidca.run_midca()

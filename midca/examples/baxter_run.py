@@ -1,6 +1,5 @@
 #!/usr/bin/env python 
 from midca import base, rosrun
-from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 from midca.modules.perceive import ROSObserver
 from midca.modules.plan import AsynchPyhopPlanner
 from midca.modules.intend import SimpleIntend
@@ -22,13 +21,13 @@ def ros_style_midca():
     for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
         myMidca.append_phase(phase)
 
-    myMidca.append_module("Perceive", perceive.ROSObserver())
-    myMidca.append_module("Interpret", guide.InstructionReceiver())
-    myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
-    myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planning.AsynchPyhopPlanner(methods.declare_methods,
-                                                              operators.declare_ops))
-    myMidca.append_module("Act", act.AsynchronousAct())
+    myMidca.append_module("Perceive", ROSObserver.ROSObserver())
+    myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
+    myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
+    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+    myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(methods.declare_methods,
+                                                                        operators.declare_ops))
+    myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
     return myMidca
 
 
@@ -40,6 +39,7 @@ myMidca = ros_style_midca()
 
 myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
+
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     rosrun.FixedObjectLocationHandler(OBJ_LOC_TOPIC, "quad", myMidca),
     rosrun.UtteranceHandler(UTTERANCE_TOPIC, myMidca),

@@ -1,7 +1,7 @@
 # This file contains helpful functions for the nbeacons domain
 
 import os
-from MIDCA.modules._plan import pyhop
+from midca.modules._plan import pyhop
 
 '''
  translate MIDCA init state to problem file in JSHOP 

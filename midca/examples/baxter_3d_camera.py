@@ -1,6 +1,5 @@
 #!/usr/bin/env python 
 from MIDCA import base, rosrun
-from MIDCA.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 from midca.modules.perceive import ROSObserver
 from midca.modules.plan import AsynchPyhopPlanner
 from midca.modules.intend import SimpleIntend
@@ -13,9 +12,9 @@ from MIDCA.logging import Logger
 import inspect, os
 import rospy
 from std_msgs.msg import String
-from MIDCA.examples import Calibrate
+from MIDCA.examples._baxter import Calibrate
 from geometry_msgs.msg import Point, PointStamped
-from .baxter import *
+from midca.examples._baxter.baxter import *
 
 
 def ros_style_midca():
@@ -23,16 +22,16 @@ def ros_style_midca():
     for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
         myMidca.append_phase(phase)
 
-    myMidca.append_module("Perceive", perceive.ROSObserver())
-    myMidca.append_module("Interpret", guide.InstructionReceiver_sr())
-    myMidca.append_module("Eval", evaluate.EvalPointingFromFeedback())
-    myMidca.append_module("Intend", intend.SimpleIntend())
-    myMidca.append_module("Plan", planning.AsynchPyhopPlanner_3d_camera(methods_sr.declare_methods,
-                                                                        operators_sr.declare_ops,
-                                                                        monitors_sr.declare_monitors
+    myMidca.append_module("Perceive", ROSObserver.ROSObserver())
+    myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver_sr())
+    myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
+    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+    myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner_3d_camera(methods_sr.declare_methods,
+                                                                                  operators_sr.declare_ops,
+                                                                                  monitors_sr.declare_monitors
 
-                                                                        ))
-    myMidca.append_module("Act", act.AsynchronousAct())
+                                                                                  ))
+    myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
     return myMidca
 
 
@@ -41,6 +40,7 @@ thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()
 MIDCA_ROOT = thisDir + "/../"
 
 myMidca = ros_style_midca()
+
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
     # rosrun.CalibrationHandler("calibrate_done", myMidca),
     rosrun.MultipleObjectsLocationHandler("obj_pos", myMidca),
@@ -61,5 +61,6 @@ rosMidca.ros_connect()
 baxter = Baxter()
 baxter.enable()
 baxter.calibrateLeftGripper()
+
 input('Enter ...')
 rosMidca.run_midca()

@@ -1,5 +1,5 @@
 import logging
-from trimlogic.term import *
+from midca.metamodules.foil_python_master.src.trimlogic.term import *
 
 logger = logging.getLogger()
 

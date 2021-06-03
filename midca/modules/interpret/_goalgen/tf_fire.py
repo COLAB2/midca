@@ -3,6 +3,7 @@ import random
 from midca.domains.blocksworld.block import Block
 from midca.goals import Goal
 
+
 class InternalNode:
     def __init__(self, parent=None, childyes=None, childno=None):
         self.parent = parent
@@ -11,6 +12,7 @@ class InternalNode:
 
     def ground(self, blockset, groundings):
         pass
+
 
 # class([scen_001]) :- onfire(A), !.
 # % 2.0/2.0=1.0
@@ -39,13 +41,15 @@ class InternalNode1(InternalNode):
             if not A.onfire:
                 continue
             else:
-                return {'A':A}
+                return {'A': A}
 
         return {}
+
 
 '''
 LEAVES
 '''
+
 
 class Leaf:
     def __init__(self):
@@ -53,6 +57,7 @@ class Leaf:
 
     def evaluate(self, blockset):
         pass
+
 
 class Leaf1(Leaf):
 
@@ -63,14 +68,16 @@ class Leaf1(Leaf):
         for a in range(len(blockset)):
             onfireA = blockset[a].onfire
             if onfireA:
-                return Goal(blockset[a].id, negate = True, predicate = "onfire")
+                return Goal(blockset[a].id, negate=True, predicate="onfire")
         return None
+
 
 class Leaf2(Leaf):
 
     # no goal associated with absence of fire
     def evaluate(self, blockset):
         return None
+
 
 class Tree():
     def __init__(self):

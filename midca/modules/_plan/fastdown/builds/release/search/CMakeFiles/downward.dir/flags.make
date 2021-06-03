@@ -6,5 +6,5 @@ CXX_FLAGS =  -std=c++11 -g -Wall -Wextra -pedantic -Wnon-virtual-dtor -O3 -DNDEB
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/zahid/Downloads/midca-update-to-python36/midca/modules/_plan/fastdown/src/search/ext 
+CXX_INCLUDES = -I/home/zahid/Downloads/plant_protection/midca/modules/_plan/fastdown/src/search/ext 
 

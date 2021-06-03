@@ -8,8 +8,8 @@ def plist(l, Tail=None):
 
 def __define_list_predicates():
   import operator
-  from trimlogic.term import VariableFactory, Term
-  from trimlogic.predicate import RuleBasedPredicate, ListPredicate
+  from midca.metamodules.foil_python_master.src.trimlogic.term import VariableFactory, Term
+  from midca.metamodules.foil_python_master.src.trimlogic.predicate import RuleBasedPredicate, ListPredicate
   global dot, car, cdr, cons, append, reverse, components, spray, pos
   
   v = VariableFactory()
@@ -40,12 +40,12 @@ def __define_list_predicates():
                    Body=( reverse(v.T, v.Trev), append(v.Trev, plist([v.H]), v.Rev) ) )
   
 def __define_arithmetic_predicates():
-  from trimlogic.predicate import IsPredicate
+  from midca.metamodules.foil_python_master.src.trimlogic.predicate import IsPredicate
   global est
   est = IsPredicate()
   
 def __define_type_predicates():
-  from trimlogic.predicate import RuleBasedPredicate, create_python_boolean_predicate
+  from midca.metamodules.foil_python_master.src.trimlogic.predicate import RuleBasedPredicate, create_python_boolean_predicate
   global is_atom, is_integer, is_number, is_compound, is_list, is_variable, is_atomic
   is_atom = create_python_boolean_predicate(lambda x: not isinstance(x, Term) and not isinstance(x, int) and isinstance(x, str) , 'is_atom')
   is_integer = create_python_boolean_predicate(lambda x: isinstance(x, int), 'is_integer')
@@ -57,8 +57,8 @@ def __define_type_predicates():
         yield x
       
 def __define_algorithmetic_predicates():
-  from trimlogic.term import VariableFactory
-  from trimlogic.predicate import CutPredicate, FailPredicate, RuleBasedPredicate
+  from midca.metamodules.foil_python_master.src.trimlogic.term import VariableFactory
+  from midca.metamodules.foil_python_master.src.trimlogic.predicate import CutPredicate, FailPredicate, RuleBasedPredicate
   global fail, cut, neg, eql
   v = VariableFactory()
   cut = CutPredicate()

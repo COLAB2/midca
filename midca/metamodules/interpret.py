@@ -402,6 +402,7 @@ class MRSimpleGoalGen(base.BaseModule):
 
     def run(self,cycle,verbose=2):
         self.verbose = verbose
+        goals = self.mem.get(self.mem.META_GOALS)
         #print("[in MRSimpleGoalGen] self.mem.META_ANOMALIES are "+str(self.mem.get(self.mem.META_ANOMALIES)))
         if not self.mem.get(self.mem.META_GOALS):
             self.mem.set(self.mem.META_GOALS, [])

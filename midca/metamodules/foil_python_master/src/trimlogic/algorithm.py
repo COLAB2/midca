@@ -1,9 +1,9 @@
 import logging
-import trimlogic.predicate
+import midca.metamodules.foil_python_master.src.trimlogic.predicate
 from collections import deque
-from trimlogic.stdlib import cut
-from trimlogic.term import *
-from trimlogic.util import *
+from midca.metamodules.foil_python_master.src.trimlogic.stdlib import cut
+from midca.metamodules.foil_python_master.src.trimlogic.term import *
+from midca.metamodules.foil_python_master.src.trimlogic.util import *
 logger = logging.getLogger(__name__)
 
 def log_unify(unify_func):

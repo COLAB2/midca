@@ -1,4 +1,4 @@
-# Install script for directory: /home/zahid/Downloads/midca-update-to-python36/midca/modules/_plan/fastdown/src/search
+# Install script for directory: /home/zahid/Downloads/plant_protection/midca/modules/_plan/fastdown/src/search
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

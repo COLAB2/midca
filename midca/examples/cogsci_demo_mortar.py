@@ -8,7 +8,6 @@ from midca.modules.interpret import TFFire,\
     SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
 from midca.modules.evaluate import SimpleEval, MortarScorer
 from midca.modules import simulator
-from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca import base
 
 import inspect, os

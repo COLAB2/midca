@@ -1,13 +1,18 @@
 #!/usr/bin/env python
-from midca import base,mem
-from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
+from midca import base
+from midca.modules import simulator
+from midca.modules.perceive import RemoteObserver
+from midca.modules.interpret import GoalDiscrepancyDetector
+from midca.modules.evaluate import SimpleEval
+from midca.modules.intend import SimpleIntend
+from midca.modules.plan import fastdownPlanner
+from midca.modules.act import SimpleAct
+from midca.metamodules import monitor, interpret, metaeval, metaintend, plan, control
 from midca.worldsim import stateread
 from midca.worldsim import pddl_num_read as pddlread
-#from midca.experiments import multi2 as mu
 #from midca.modules._plan.fastdown import testing_purp
 #from midca.worldsim.DIRNAME import fast_downward
-import inspect, os, pddlpy,random,shutil,fileinput
-from midca.worldsim import pddl
+import inspect, os, pddlpy, random, fileinput, shutil,math
 
 
 # Domain Specific Imports
@@ -117,28 +122,11 @@ DOMAIN_FILE_nor = shutil.copyfile(DOMAIN_FILE,DOMAIN_FILE_NOR)
 STATE_FILE_nor = shutil.copyfile(state_file_2,STATE_FILE_NOR)
 EVENT_FILE_nor = shutil.copyfile(EVENT_FILE,EVENT_FILE_NOR)
 
-
-#print(DOMAIN_FILE)
-#DOMAIN_FILE = MIDCA_ROOT + "worldsim/dirname/plant-domain-mmm.pddl"
-#EVENT_FILE = MIDCA_ROOT + "worldsim/dirname/plant-domain-mmm.pddl"
-#STATE_FILE = MIDCA_ROOT + "worldsim/dirname/plant-mmmm.pddl"
-
-#DOMAIN_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_new.pddl"
-#EVENT_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/domain_new.pddl"
-#STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/p01.pddl"
-
 #world = pddlpy.DomainProblem(DOMAIN_FILE,STATE_FILE)
 world = pddlread.load_domain(DOMAIN_FILE, state_file_2,EVENT_FILE)
 world1= pddlread.load_domain(DOMAIN_FILE_P, STATE_FILE_C,EVENT_FILE_P)
 
 world_no_rebel = pddlread.load_domain(DOMAIN_FILE_nor,STATE_FILE_nor ,EVENT_FILE_nor)
-#world1_no_rebel = pddlread.load_domain(DOMAIN_FILE_pnor, STATE_FILE_pnor,EVENT_FILE_pnor)
-
-
-
-
-
-#stateread._apply_state_pddl(world, DOMAIN_FILE, STATE_FILE)
 # creates a PhaseManager object, which wraps a MIDCA object
 myMidca = base.PhaseManager(world, display='', verbose=4)
 myMidca2 = base.PhaseManager(world_no_rebel, display='', verbose=4)
@@ -150,32 +138,17 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-#myMidca.append_module("Simulate", simulator.MidcaEventSimulator())
-#myMidca.append_module("Simulate", simulator.ASCIIWorldViewer())
-#myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Perceive", perceive.RemoteObserver())
-#myMidca.append_module("Interpret", guide.UserGoalInput())
-#myMidca.append_module("Interpret", guide.MultipleGoalGen())
-myMidca.append_module("Interpret", note.GoalDiscrepancyDetector(world1))
+myMidca.append_module("Perceive", RemoteObserver.RemoteObserver())
 
-#myMidca.append_module("Interpret", note.GoalDiscrepancyDetector())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-#myMidca.append_module("Plan", planning.MetricFFPlanner(
-   # minecraft_util.ff_goals_from_midca_goals,
-   #minecraft_util.ff_state_from_midca_world,
-    #DOMAIN_FILE,
-    #STATE_FILE))
-myMidca.append_module("Plan", planning.fastdownPlanner(
+myMidca.append_module("Interpret", GoalDiscrepancyDetector.GoalDiscrepancyDetector(world1))
+myMidca.append_module("Eval", SimpleEval.SimpleEval_plant_protection())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", fastdownPlanner.fastdownPlanner(
    minecraft_util.ff_goals_from_midca_goals,
     minecraft_util.ff_state_from_midca_world,
     DOMAIN_FILE_P,
     STATE_FILE_P,world1))
-myMidca.append_module("Act", act.SimpleAct())
-# myMidca.insert_module('Simulate', simulator.ArrowSimulator(arrowStart=1), 1)
-# myMidca.insert_module('Simulate', simulator.AttackSimulator(skeletonStart=2), 1)
-# myMidca.insert_module('Interpret', guide.TFFire(), 2)
-#myMidca.insert_module('Interpret', guide.Informhuman(), 3)
+myMidca.append_module("Act", SimpleAct.SimpleAct_plant_protection())
 
 # Set world viewer to output text
 myMidca.set_display_function(DISPLAY_FUNC)

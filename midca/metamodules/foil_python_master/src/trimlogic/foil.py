@@ -1,11 +1,11 @@
 import math, logging, sys, itertools, operator, time
-from trimlogic.term import UniqueVariableFactory, VariableFactory, Var
-from trimlogic.term import Atom, Pred
-from trimlogic.algorithm import fol_bc_ask
-from trimlogic.counting import choose, permute
-from trimlogic.predicate import Rule, MutableRule
-from trimlogic.partialordering import find_ordering
-from trimlogic.partialordering import create_partial_comparator
+from midca.metamodules.foil_python_master.src.trimlogic.term import UniqueVariableFactory, VariableFactory, Var
+from midca.metamodules.foil_python_master.src.trimlogic.term import Atom, Pred
+from midca.metamodules.foil_python_master.src.trimlogic.algorithm import fol_bc_ask
+from midca.metamodules.foil_python_master.src.trimlogic.counting import choose, permute
+from midca.metamodules.foil_python_master.src.trimlogic.predicate import Rule, MutableRule
+from midca.metamodules.foil_python_master.src.trimlogic.partialordering import find_ordering
+from midca.metamodules.foil_python_master.src.trimlogic.partialordering import create_partial_comparator
 logger = logging.getLogger(__name__)
 
 ##############################################################################
