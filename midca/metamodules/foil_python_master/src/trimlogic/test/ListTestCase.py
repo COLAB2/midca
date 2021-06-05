@@ -23,7 +23,7 @@ class ListTestCase(FoilTestCase):
     logging.getLogger("foil_profiling").setLevel(logging.DEBUG)
   
   def testMemberPredicate(self):
-    print ""
+    print("")
     v, a = VariableFactory(), AtomFactory()
     kb = KnowledgeBase()
     kb.add(components)

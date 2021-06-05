@@ -172,7 +172,7 @@ class MAReporter:
 				res.append(objectname)
 		return res
 
-    def run(self, cycle, verbose = 2):
+	def run(self, cycle, verbose = 2):
 		world = None
 		lastWorld = None
 		try:
