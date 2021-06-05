@@ -5,10 +5,11 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 import pyhop
+
+
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
-
 
 def is_done(b1,state,goal):
     if b1 == 'table': return True
@@ -37,10 +38,9 @@ def all_blocks(state):
 In each Pyhop planning method, the first argument is the current state (this is analogous to Python methods, in which the first argument is the class instance). The rest of the arguments must match the arguments of the task that the method is for. For example, ('pickup', b1) has a method get_m(state,b1), as shown below.
 """
 
-
 ### methods for "move_blocks"
 
-def moveb_m(state, goal):
+def moveb_m(state,goal):
     """
     This method implements the following block-stacking algorithm:
     If there's a block that can be moved to its final position, then
@@ -55,7 +55,6 @@ def moveb_m(state, goal):
             return [('move_one',b1,'table'),('move_blocks',goal)]
         elif s == 'move-to-block':
             return [('move_one',b1,goal.pos[b1]), ('move_blocks',goal)]
-
         else:
             continue
     #
@@ -63,10 +62,10 @@ def moveb_m(state, goal):
     b1 = pyhop.find_if(lambda x: status(x,state,goal) == 'waiting', all_blocks(state))
     if b1 != None:
         return [('move_one',b1,'table'), ('move_blocks',goal)]
-
     #
     # if we get here, there are no blocks that need moving
     return []
+
 """
 declare_methods must be called once for each taskname. Below, 'declare_methods('get',get_m)' tells Pyhop that 'get' has one method, get_m. Notice that 'get' is a quoted string, and get_m is the actual function.
 """
@@ -120,7 +119,6 @@ pyhop.declare_methods('unstack_task',unstack_m)
 
 ### methods for "put"
 
-
 def put_m(state,b1,b2):
     """
     Generate either a putdown or a stack subtask for b1.
@@ -135,3 +133,5 @@ def put_m(state,b1,b2):
         return False
 
 pyhop.declare_methods('put',put_m)
+
+

@@ -1,11 +1,12 @@
 from midca.experimental.baxter import baxter, ik_matt as ik
 import rospy, baxter_interface
+
 class BaxterWave:
 
 	'''
 	MIDCA module which causes connected Baxter robot to wave its right arm. Note: baxter must be turned on, and the baxter.sh file should be sourced to connect to baxter.
 	'''
-    def __init__(self, leftArmPositions, rightArmPositions):
+	def __init__(self, leftArmPositions, rightArmPositions):
 		self.leftPositions = leftArmPositions
 		self.rightPositions = rightArmPositions
 	
@@ -50,3 +51,4 @@ def test():
 
 if __name__ == "__main__":
 	test()
+		

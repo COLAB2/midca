@@ -2,8 +2,9 @@ import rospy
 
 import baxter_interface
 from baxter_interface import CHECK_VERSION
+
 def enable_robot(nodeEnabled = False):
-    if not nodeEnabled:
+	if not nodeEnabled:
 		rospy.init_node('rsdk_robot_enable')
 	rs = baxter_interface.RobotEnable(CHECK_VERSION)
 	try:

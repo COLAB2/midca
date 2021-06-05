@@ -18,7 +18,7 @@ myMidca.insert_module('Interpret', guide.TFStack(), 1)
 myMidca.insert_module('Interpret', guide.TFFire(), 2)
 
 def preferFire(goal1, goal2):
-    if 'predicate' not in goal1 or 'predicate' not in goal2:
+	if 'predicate' not in goal1 or 'predicate' not in goal2:
 		return 0
 	elif goal1['predicate'] == 'onfire' and goal2['predicate'] != 'onfire':
 		return -1

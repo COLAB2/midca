@@ -1,7 +1,7 @@
 '''
 A collection of functions that are domain specific, which different MIDCA components use
 '''
-import os, copy
+import os,copy
 from midca.modules._plan import pyhop
 
 
@@ -28,7 +28,9 @@ def preferFire(goal1, goal2):
         return 1
     return 0
 
-def pyhop_state_from_world_restaurant(world, name="state"):
+
+
+def pyhop_state_from_world_restaurant(world, name = "state"):
     s = pyhop.State(name)
     # these are the states for the domain
     s.order_received = {}

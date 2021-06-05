@@ -28,6 +28,49 @@ class Baxter:
     def __init__(self):
         pass
     
+    
+ 
+    
+    
+#     def inverseKinematics(self, limb, point, orientation):
+#         #ns = "/sdk/robot/limb/" + limb + "/solve_ik_position"
+#         ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
+#         rospy.wait_for_service(ns)
+#         iksvc = rospy.ServiceProxy(ns, SolvePositionIK)
+#         ikreq = SolvePositionIKRequest()
+#         hdr = Header(stamp=rospy.Time.now(), frame_id='base')
+#         pose = PoseStamped(
+#                     header=hdr,
+#                     pose=Pose(
+#                     position=Point(
+#                         x=point[0],
+#                         y=point[1],
+#                         z=point[2],
+#                     ),
+#                     orientation=Quaternion(
+#                         x=orientation[0],
+#                         y=orientation[1],
+#                         z=orientation[2],
+#                         w=orientation[3],
+#                     )
+#                 )
+#             );
+#         ikreq.pose_stamp.append(pose)
+#         try:
+#             resp = iksvc(ikreq)
+#         except rospy.ServiceException,e :
+#             rospy.loginfo("Service call failed: %s" % (e,))
+#         if (resp.isValid[0]):
+#             #print("SUCCESS - Valid Joint Solution Found:")
+#             # Format solution into Limb API-compatible dictionary
+#             limb_joints = dict(zip(resp.joints[0].names, resp.joints[0].angles))
+#             #print limb_joints
+#             return limb_joints
+#         else:
+#             print("INVALID POSE - No Valid Joint Solution Found.")
+#             return None
+ # Gripper Methods:
+    
     def calibrateLeftGripper(self):
         self.leftGripper.calibrate()
         
@@ -43,12 +86,13 @@ class Baxter:
         iksvc = rospy.ServiceProxy(ns, SolvePositionIK)
         ikreq = SolvePositionIKRequest()
         hdr = Header(stamp=rospy.Time.now(), frame_id='base')
+    
+    
         poses = {
             'left': PoseStamped(
                 header=hdr,
                 pose=Pose(
                     position=Point(
-
 #                         x=0.657579481614,
 #                         y=0.851981417433,
 #                         z=0.0388352386502,
@@ -81,13 +125,17 @@ class Baxter:
                 ),
             ),
         }
+         
         ikreq.pose_stamp.append(poses[limb])
+    
+    
         try:
             rospy.wait_for_service(ns, 5.0)
             resp = iksvc(ikreq)
         except (rospy.ServiceException, rospy.ROSException) as e:
             rospy.logerr("Service call failed: %s" % (e,))
             return 1
+    
     
         if (resp.isValid[0]):
             print("SUCCESS - Valid Joint Solution Found:")
@@ -99,13 +147,17 @@ class Baxter:
             print("INVALID POSE - No Valid Joint Solution Found.")
          
         return 0
-
+        
+            
     def ik(self, point, orientation):
+        
         angles = self.inverseKinematics('left', point, orientation)
         if not angles:
             return False
         else:
             return True
+            
+        
     def moveLeftArm(self, point, orientation):
         angles = self.inverseKinematics('left', point, orientation)
         if not angles:
@@ -119,6 +171,8 @@ class Baxter:
         print(angles)
             
         self.leftArm.move_to_joint_positions(angles) # 15 secs timeout default.
+    
+    
     def enable(self):
         print("start")
         self.robotEnable = baxter_interface.RobotEnable()
@@ -129,12 +183,14 @@ class Baxter:
         rospy.wait_for_service('last_image')
         self.rightHandCamera = rospy.ServiceProxy('last_image', ImageSrv)
         self.leftGripper = baxter_interface.Gripper('left')
+        
     def getLeftArmPosition(self):
         position = self.leftArm.endpoint_pose()
         x = position['position'].x
         y = position['position'].y
         z = position['position'].z
         return [x,y,z]
+    
     def getLeftArmOrientation(self):
         orientation = self.leftArm.endpoint_pose()
         x = orientation['orientation'].x
@@ -142,6 +198,7 @@ class Baxter:
         z = orientation['orientation'].z
         w = orientation['orientation'].w
         return [x,y,z,w]
+    
     def getImageFromRightHandCamera(self):
         """
         This method returns a numpy array of the image that was captured from
@@ -159,9 +216,11 @@ class Baxter:
         self.last_cvimage = cvimage
         cvimage_array = np.asarray(cvimage, dtype=np.uint8)
         return cvimage_array
+        
     def getLastCvImage(self):
         return self.last_cvimage
+    
     def getLastArrayImage(self):
         cvimage_array = np.asarray(self.last_cvimage, dtype=np.uint8)
         return cvimage_array
-
+    

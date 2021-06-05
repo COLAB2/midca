@@ -8,6 +8,7 @@ from midca.modules.interpret import TFFire,\
     SimpleMortarGoalGen, ReactiveApprehend, UserGoalInput, ADistanceAnomalyNoter
 from midca.modules.evaluate import SimpleEval, MortarScorer
 from midca.modules import simulator
+from midca.metamodules import monitor, control, interpret, metaintend,  plan
 from midca import base
 
 import inspect, os
@@ -46,7 +47,7 @@ state_str = open(STATE_FILE).read() # first read file
 for i in range(MORTAR_COUNT):
     state_str+="MORTARBLOCK(M"+str(i)+")\n"
     state_str+="available(M"+str(i)+")\n"
-# now load the state
+# now load the state    
 stateread.apply_state_str(world, state_str)
 
 stateread.apply_state_file(world, STATE_FILE)

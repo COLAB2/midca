@@ -27,7 +27,7 @@ def generalization(mem, goal, canexec):
     if preconditions['pre'](world, goal.get_pred(), goal.get_args()) and preconditions['pre2'](mem):
         if canexec:
             world.cltree['checked'].append(p1.predicate)
-        return result_goal
+            return result_goal
     else:
         return False
 

@@ -1,4 +1,5 @@
 from midca import midcatime
+
 class Location:
 	
 	def __init__(self, x, y, z):
@@ -151,7 +152,7 @@ class SimpleWorld:
 			return self.pos[object]
 		
 	def all_objects(self):
-         return self.objectsByID
+		return self.objectsByID
 		
 	def location_history(self, objectOrID):
 		'''

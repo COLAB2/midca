@@ -1,6 +1,4 @@
 # MIDCA: The Metacognitive Integrated Dual-Cycle Architecture.
-
-
 MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dual-Cycle Architecture (https://tinyurl.com/midcadoc)
 
 0. (Recommended, but optional) Use a virtualenv before installing MIDCA:
@@ -15,7 +13,6 @@ MIDCA Version 1.4: User manual and tutorial for the Metacognitive Integrated Dua
 
 
 1. To install MIDCA, run the setup.py file: 
-
     ```
     python setup.py install
     ```

@@ -58,6 +58,7 @@ MIDCA_ROOT = thisDir + "/../"
 ### Domain Specific Variables
 DOMAIN_ROOT = MIDCA_ROOT + "domains/nbeacons/"
 DOMAIN_FILE = DOMAIN_ROOT + "domains/nbeacons_avoid_mud.sim"
+
 def singlerun_output_str(run_id, num_cycles, curr_midca, agent_type, wind_dir, wind_strength):
     # num times planning from scratch
     planning_count = curr_midca.mem.get(curr_midca.mem.PLANNING_COUNT)
@@ -72,6 +73,7 @@ def singlerun_output_str(run_id, num_cycles, curr_midca, agent_type, wind_dir, w
               + "\""+str(goals_actions_achieved) + "\"\n")
     print("result = " + str(result))
     return result
+    
 def singlerun(args):
     run_id = args[0]
     agent_type = args[1]
@@ -79,6 +81,7 @@ def singlerun(args):
     wind_strength = args[3]
     start_state = args[4]
     goal_list = args[5]
+    
     midca_inst = MIDCAInstance(agent_type=agent_type,
                                wind_dir=wind_dir,
                                wind_strength=wind_strength,
@@ -112,6 +115,7 @@ def runexperiment():
     SCENARIO_FILENAME = DATADIR+"NBeaconsScenario"+NOW_STR+".txt"
     
     runs = []
+    
     # generate goals randomly, such that no goal is repeated twice
     num_goals = 1000
     goal_list = []
@@ -223,7 +227,7 @@ class MIDCAInstance():
         scenario_str = nbeacons_util.drawNBeaconsScene(world,rtn_str=True)
         
         # the first time, save to file
-        if not os.path.isfile(SCENARIO_FILENAME):
+        if not os.path.isfile(SCENARIO_FILENAME): 
             fs = open(SCENARIO_FILENAME, 'w')
             fs.write(str(scenario_str))
             fs.flush()
@@ -260,7 +264,8 @@ class MIDCAInstance():
         myMidca.append_module("Act", act.NBeaconsSimpleAct())
         
         # Set world viewer to output text
-        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene)
+        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene) 
+        
         # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
         # Note: Turning this on drastically increases MIDCA's running time.
         myMidca.storeHistory = False
@@ -318,7 +323,8 @@ class MIDCAInstance():
         myMidca.append_module("Act", act.NBeaconsSimpleAct())
         
         # Set world viewer to output text
-        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene)
+        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene) 
+        
         # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
         # Note: Turning this on drastically increases MIDCA's running time.
         myMidca.storeHistory = False
@@ -334,6 +340,7 @@ class MIDCAInstance():
         DECLARE_METHODS_FUNC = methods_nbeacons.declare_methods
         DECLARE_OPERATORS_FUNC = operators_nbeacons.declare_operators
         GOAL_GRAPH_CMP_FUNC = nbeacons_util.preferFree
+        
         WIND_ENABLED = True
         
         # Load domain
@@ -386,11 +393,13 @@ class MIDCAInstance():
         myMidca.append_meta_module("Control", control.MRSimpleControl())
         
         # Set world viewer to output text
-        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene)
+        myMidca.set_display_function(nbeacons_util.drawNBeaconsScene) 
+        
         # Tells the PhaseManager to copy and store MIDCA states so they can be accessed later.
         # Note: Turning this on drastically increases MIDCA's running time.
         myMidca.storeHistory = False
         myMidca.mem.logEachAccess = False
+        
         # Initialize and start running!
         
         myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
@@ -399,13 +408,14 @@ class MIDCAInstance():
     def run_cycles(self, num, meta=False):
         if meta:
             for cycle in range(num):
-       #if cycle % 200 == 0:
+                #if cycle % 200 == 0:
                     #gc.collect()
                     #print("$$$$$$$$$$$$$$ JUST RAN GARBAGE COLLECTION $$$$$$$$$$$$$$$$")
                 self.myMidca.one_cycle_with_meta_intrlvd(verbose=0,pause=0)
         else:
             for cycle in range(num):
                 self.myMidca.one_cycle(verbose = 0, pause = 0)
+            
     def getMIDCAObj(self):
         return self.myMidca
 
@@ -417,6 +427,7 @@ class MIDCAInstance():
             return s
         else:
             return 'not-initialized'
+
 ###########
 ## Graph ##
 ###########
@@ -431,14 +442,16 @@ def multiple_goalsperaction(n_files):
     DATADIR = "C:\\Users\\Dustin\\Desktop\\first_average_ten_runs_data\\"
 
     files = sorted([f for f in os.listdir(DATADIR) if f.endswith(".csv")])
-    datafiles = [DATADIR + f for f in files[-(n_files):]]
+    datafiles = [DATADIR+f for f in files[-(n_files):]]
 
     goal_action_sums_vanilla = collections.OrderedDict()
     goal_action_sums_gda = collections.OrderedDict()
     goal_action_sums_meta = collections.OrderedDict()
 
     all_max_goal_values = []
-    def process_data_into_dicts(agent_type, goals_achieved, actions_executed):
+
+
+    def process_data_into_dicts(agent_type,goals_achieved,actions_executed):
         if agent_type == 'v':
             for g_i in range(len(goals_achieved)):
                 if g_i in list(goal_action_sums_vanilla.keys()):
@@ -458,7 +471,7 @@ def multiple_goalsperaction(n_files):
                 else:
                     goal_action_sums_meta[g_i] = [actions_executed_data[g_i]]
         else:
-            raise Exception("invalid agent_type " + str(agent_type))
+            raise Exception ("invalid agent_type "+str(agent_type))
 
     # go through each file, and for the goal_id, store the score in the list
     # in the dict
@@ -488,6 +501,7 @@ def multiple_goalsperaction(n_files):
                     actions_executed_data = [t[2] for t in goals_action_data]
 
                     process_data_into_dicts(agent_type,goals_achieved_data,actions_executed_data)
+                    
                     all_max_goal_values.append(max(goals_achieved_data))
 
                     if agent_type == 'v':
@@ -499,6 +513,7 @@ def multiple_goalsperaction(n_files):
                     elif agent_type == 'm':
                         agent_name = 'Meta'
                         print("  Finished processing meta data")
+            
     min_of_all_the_maxes = min(all_max_goal_values)
 
     goal_action_final_val_vanilla = collections.OrderedDict()
@@ -512,6 +527,7 @@ def multiple_goalsperaction(n_files):
         goal_action_final_val_gda[k] = sum(goal_action_sums_gda[k]) / float(len(goal_action_sums_gda[k]))
     for k in list(goal_action_sums_meta.keys()):
         goal_action_final_val_meta[k] = sum(goal_action_sums_meta[k]) / float(len(goal_action_sums_meta[k]))
+
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
@@ -545,6 +561,7 @@ def multiple_goalsperaction(n_files):
     #ax.yaxis.label.set_size(20)
     #ax.title.label.set_size(40)
     plt.show()
+    
 
 def graph_each(n_files):
     import matplotlib.pyplot as plt
@@ -671,6 +688,7 @@ def bargraph(prev_file):
     import matplotlib.pyplot as plt
     from matplotlib import cm
     import numpy as np
+    
     # get the most recent filename
     files = sorted([f for f in os.listdir(DATADIR)])
     datafile = DATADIR + files[-(prev_file+1)]
@@ -682,7 +700,7 @@ def bargraph(prev_file):
     
     with open(datafile,'r') as f:
         for line in f.readlines():
-            if header:
+            if header: 
                 header = False
             else:
                 row = line.strip().split(',')
@@ -703,6 +721,7 @@ def bargraph(prev_file):
     ax.legend((rects1[0], rects2[0], rects3[0]), ('Goals Achieved', 'Actions Executed', "# Replanning"))
     plt.legend(loc=2)
     plt.show()
+
 def graph(prev_file):
     '''
     Produce the graph
@@ -721,7 +740,7 @@ def graph(prev_file):
     
     with open(datafile,'r') as f:
         for line in f.readlines():
-            if header:
+            if header: 
                 header = False
             else:
                 row = line.strip().split(',')
@@ -742,6 +761,7 @@ def graph(prev_file):
     ax.set_ylabel("Resources")
     ax.set_zlabel("Score")
     plt.show()
+
 def graph_slices_hardcoded():
     '''
     Produce the graph
@@ -750,6 +770,7 @@ def graph_slices_hardcoded():
     # they correspond to the data files sorted by most recent first
     prev_file_goal_trans = 6
     prev_file_no_goal_trans = 5
+    
     from mpl_toolkits.mplot3d import Axes3D
     import matplotlib.pyplot as plt
     from matplotlib import cm
@@ -778,13 +799,14 @@ def graph_slices_hardcoded():
                 gt_cycles_xs.append(num_cycles)
         print(("There were "+str(count)+" data points collected that will be used for this graph"))
     print(("-- About to read in non-goal transform data from "+str(datafile_goal_trans)))
+    
     no_gt_mortar_ys = []
     no_gt_cycles_xs = []
     no_gt_score_zs = []
     header = True
     with open(datafile_no_goal_trans,'r') as f:
         for line in f.readlines():
-            if header:
+            if header: 
                 header = False
             else:
                 row = line.strip().split(',')
@@ -800,7 +822,7 @@ def graph_slices_hardcoded():
     
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_cycles = []
+    gt_cycles = [] 
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -812,6 +834,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_cycles = []
+    
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -840,7 +863,7 @@ def graph_slices_hardcoded():
 
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_mortar = []
+    gt_mortar = [] 
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -852,6 +875,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_mortar = []
+    
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -859,7 +883,6 @@ def graph_slices_hardcoded():
         if curr_cycles == cycles_hold:
             no_gt_score.append(curr_score)
             no_gt_mortar.append(curr_mortar)
-
     
     # now graph slice where x-axis is number of goals
     
@@ -901,3 +924,4 @@ if __name__ == "__main__":
             runexperiment()
             #time.sleep(5) # let my cpu rest a little bit
             exp_num+=1
+            

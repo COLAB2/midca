@@ -1,4 +1,3 @@
-
 from midca.modules._robot_world import world_repr
 from midca import midcatime
 import math
@@ -281,7 +280,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
 
         
         if color_location_dic and ('red block' in list(color_location_dic.keys())) and ('green block' in list(color_location_dic.keys())) and ('blue block' in list(color_location_dic.keys())):
-
             pos_green = 'table'
             pos_red = 'table'
             pos_blue = 'table'
@@ -304,7 +302,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             ydistance = [color_location_dic['red block'].y,color_location_dic['blue block'].y ,color_location_dic['green block'].y]
             xdistance = [color_location_dic['red block'].x,color_location_dic['blue block'].x ,color_location_dic['green block'].x]
             y1distance = [ydistancerg,ydistancerb,ydistancegb]
-
             '''
             print("xdistancerg" + str(xdistancerg))
             print("xdistancerb" + str(xdistancerb))
@@ -498,7 +495,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             b = (color_location_dic['blue block'].x, color_location_dic['blue block'].y)
             xdistancerb = math.fabs(color_location_dic['red block'].x - color_location_dic['blue block'].x)
             ydistancerb = math.fabs(color_location_dic['red block'].y - color_location_dic['blue block'].y)
-
             '''
             print("xdistancerg" + str(xdistancerg))
             print("xdistancerb" + str(xdistancerb))
@@ -512,7 +508,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             print("red + blue e" + str(distancerb) );
             print("blue + green e" + str(distancegb) );
             '''
-
             if ((xdistancerb <= 13) and (ydistancerb <= 28.5)):
                 if (color_location_dic['red block'].y > color_location_dic['blue block'].y):
                     pos_red = 'table'
@@ -549,7 +544,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
             b = (color_location_dic['blue block'].x , color_location_dic['blue block'].y)
             xdistancegb= math.fabs(color_location_dic['green block'].x - color_location_dic['blue block'].x)
             ydistancegb= math.fabs(color_location_dic['green block'].y - color_location_dic['blue block'].y)
-
             '''
             print("xdistancerg" + str(xdistancerg))
             print("xdistancerb" + str(xdistancerb))
@@ -585,13 +579,6 @@ class threeObjectsLocationHandler(IncomingMsgHandler):
                          world_repr.pos_block(id="green block", position=pos_green, isclear=clear_green))
             self.mem.add(self.mem.ROS_OBJS_STATE,
                          world_repr.pos_block(id="blue block", position=pos_blue, isclear=clear_blue))
-
-
-
-
-
-
-
         elif len(color_location) == 1:
             color_block = list(color_location_dic.keys())[0]
             pos = 'table'
@@ -705,13 +692,12 @@ class CalibrationHandler(IncomingMsgHandler):
     and midca object to whose memory observations will be stored. Optionally the memory
     key to be stored to can also be specified.
     '''
-
-    def __init__(self, topic, midcaObject, memKey=None):
+    
+    def __init__(self, topic, midcaObject, memKey = None):
         callback = lambda msg: self.store_calibrate_matrix(msg)
         msgType = String
         super(CalibrationHandler, self).__init__(topic, msgType, callback,
-                                                 midcaObject)
-
+        midcaObject)
         if memKey:
             self.memKey = memKey
         else:
@@ -723,7 +709,6 @@ class CalibrationHandler(IncomingMsgHandler):
 
 
 class UtteranceHandler(IncomingMsgHandler):
-
     def __init__(self, topic, midcaObject, memKey=None):
         callback = lambda strMsg: self.store_utterance(strMsg)
         msgType = String
@@ -739,7 +724,6 @@ class UtteranceHandler(IncomingMsgHandler):
             rospy.logerr("Trying to store data to a nonexistent MIDCA object.")
         self.mem.add(self.memKey, world_repr.UtteranceEvent(utterance.data.strip()))
 
-
 class FeedbackHandler(IncomingMsgHandler):
     '''
     Handler that accepts feedback from ROS about commands issued. String is formatted as:
@@ -750,7 +734,6 @@ class FeedbackHandler(IncomingMsgHandler):
     sent the command as reported by MIDCA), ('code': code representing success,
     different failure types, in-progress, etc.)
     '''
-
     def __init__(self, topic, midcaObject, memKey=None):
         callback = lambda strMsg: self.store_feedback(strMsg)
         msgType = String

@@ -6,6 +6,7 @@ Created on Jul 16, 2015
 
 import time
 from multiprocessing import Pool
+
 class Experiment():
     '''
     The Experiment object is used to set up and run experiments where
@@ -35,6 +36,7 @@ class Experiment():
             self.filenames.append(filename)
         else:
             raise Exception("Tried to use output data file that is NOT a .csv file: "+filename)
+
 
     def appendRun(self, midca, num_cycles):
         '''
@@ -75,6 +77,7 @@ class Experiment():
         Executes all the runs from appendRun and sends the resulting midca
         objects to each data writing function added by addWriteDataFunc()
         '''
+        
         # func for Pool.map() (there are some restrictions on the kinds of functions it can take)
         def singlerun(args):
             run_id = args[0]
@@ -96,6 +99,7 @@ class Experiment():
         results = pool.map(singlerun, self.runs, chunksize=1)
         print(("Experiment finished. We've obtained "+str(len(results))+" data points"))
         return results
+        
 #         
 #         print "Running experiment: " + self.name
 #         for run_id in range(len(self.runs)):
@@ -120,3 +124,5 @@ class Experiment():
 #         # run destruct functions
 #         for dfunc in self.destructfuncs:
 #             dfunc()
+
+

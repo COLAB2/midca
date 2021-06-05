@@ -1,6 +1,5 @@
 import pyhop
 
-
 def achieve_goals(state, goals):
     '''
     Go through each goal and create an order for each goal

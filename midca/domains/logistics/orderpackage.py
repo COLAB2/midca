@@ -4,7 +4,6 @@ class Order:
         self.id = id
         self.location = None
         self.destination = None
-
     def __str__(self):
     	return self.id
     

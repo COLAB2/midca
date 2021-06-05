@@ -20,12 +20,11 @@ def movesouth(state, agent, start, dest):
         else:
             new_y = y - 1
 
-        new_xy_str = str(x) + ',' + str(new_y)
+        new_xy_str = str(x)+','+str(new_y)
         state.agents[agent] = new_xy_str
         return state
     else:
         return False
-
 
 """ move up """
 def movenorth(state, agent, start, dest):
@@ -34,12 +33,12 @@ def movenorth(state, agent, start, dest):
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_y = y
-        if y == state.dim['dim'] - 1:
+        if y == state.dim['dim']-1:
             return False
         else:
             new_y = y + 1
 
-        new_xy_str = str(x) + ',' + str(new_y)
+        new_xy_str = str(x)+','+str(new_y)
         state.agents[agent] = new_xy_str
         return state
     else:
@@ -57,12 +56,11 @@ def movewest(state, agent, start, dest):
         else:
             new_x = x - 1
 
-        new_xy_str = str(new_x) + ',' + str(y)
+        new_xy_str = str(new_x)+','+str(y)
         state.agents[agent] = new_xy_str
         return state
     else:
         return False
-
 
 """ move right """
 def moveeast(state, agent, start, dest):
@@ -71,12 +69,12 @@ def moveeast(state, agent, start, dest):
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
         new_x = x
-        if x == state.dim['dim'] - 1:
+        if x == state.dim['dim']-1:
             return False
         else:
             new_x = x + 1
 
-        new_xy_str = str(new_x) + ',' + str(y)
+        new_xy_str = str(new_x)+','+str(y)
         state.agents[agent] = new_xy_str
         return state
     else:
@@ -87,24 +85,23 @@ def activatebeacon(state, agent, loc, bcn_id):
     beacon_key = None
     for beaconstr, beaconlocstr in list(state.beaconlocs.items()):
         if state.agents[agent] == beaconlocstr:
-            # print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
+            #print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
             agent_at_beacon = True
             beacon_key = beaconstr
             break
-
-    # print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
-    beacon_exists = beacon_key in list(state.activated.keys())
+    
+    #print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
+    beacon_exists = beacon_key in list(state.activated.keys()) 
     if agent_at_beacon:
         if beacon_exists and state.activated[beacon_key]:
-            return False  # already activated
+            return False # already activated
         else:
             state.activated[beacon_key] = True
             return state
     else:
-        return False
+        return False   
 
-    # from IJCAI-15 work
-
+# from IJCAI-15 work
 # def activatebeacon(state, agent):
 #     if state.agents[agent]:
 #         xy_str = state.agents[agent]
@@ -120,9 +117,13 @@ def activatebeacon(state, agent, loc, bcn_id):
 #         else:
 #             return False # there is no beacon here
 #     else:
-#         return False
+#         return False    
+    
 def declare_operators():
     pyhop.declare_operators(movenorth, movesouth, moveeast, movewest, activatebeacon)
+
+
+
 # def loadtruck(state, obj, truck):
 #     if state.trucks[truck] == state.pkgs[obj]:
 #         state.pkgs[obj] = truck

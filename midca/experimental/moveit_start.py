@@ -3,8 +3,9 @@ import signal
 import sys
 
 processes = []
+
 def signal_handler(signal, frame):
-    for process in processes:
+	for process in processes:
 		try:
 			process.kill()
 		except OSError:
@@ -27,3 +28,4 @@ for process in processes:
 		pass
 subprocess.Popen(["rosrun", "baxter_tools", "enable_robot.py", "-d"])  
 '''
+

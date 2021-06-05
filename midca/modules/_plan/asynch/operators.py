@@ -1,5 +1,7 @@
 from midca.modules._plan import pyhop
 
+
+
 def block_until_seen(state, objectID):
 	'''
 	blocks until the given object is observed. Parameters defining how recently the 
@@ -110,7 +112,7 @@ def get_last_clear_status(state, objectOrID):
 
 def set_clear_status(state, objectOrID, newClearStatus):
 	
-    positions = state.all_pos(objectOrID)
+	positions = state.all_pos(objectOrID)
 	if not positions:
 		return None
 	else:
@@ -121,6 +123,8 @@ def set_clear_status(state, objectOrID, newClearStatus):
 	return None
 
 
+
 def declare_ops():
 	pyhop.declare_operators(block_until_seen, point_to, block_until_complete,
 						 grab, raising, putdown, reach_to_pickup, reach_to_unstack, stack, release, raising_arm)
+

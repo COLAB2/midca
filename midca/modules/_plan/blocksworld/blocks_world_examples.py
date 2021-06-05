@@ -12,9 +12,10 @@ print('')
 print_operators()
 
 import blocks_world_methods
-
 print('')
 print_methods()
+
+
 #############     beginning of tests     ################
 
 
@@ -31,9 +32,9 @@ A state is a collection of all of the state variables and their values. Every st
 """
 
 state1 = State('state1')
-state1.pos = {'a': 'b', 'b': 'table', 'c': 'table'}
-state1.clear = {'c': True, 'b': False, 'a': True}
-state1.holding = False
+state1.pos={'a':'b', 'b':'table', 'c':'table'}
+state1.clear={'c':True, 'b':False,'a':True}
+state1.holding=False
 
 print_state(state1)
 print('')
@@ -130,6 +131,7 @@ print('')
 pyhop(state2,[('move_blocks', goal2a)], verbose=1)
 pyhop(state2,[('move_blocks', goal2b)], verbose=1)
 
+
 print("""
 ****************************************
 Test pyhop on planning problem bw_large_d from the SHOP distribution.
@@ -156,8 +158,8 @@ goal3.clear = {17:True, 15:True, 12:True}
 print_goal(goal3)
 print('')
 
-
 pyhop(state3,[('move_blocks', goal3)], verbose=1)
+
 
 print("""
 ****************************************
@@ -185,6 +187,8 @@ pyhop(state1,[('get', 'c')], verbose=2)
 print("""\n=== This time it should fail.===\n""")
 
 pyhop(state1,[('get', 'b')], verbose=2)
+
+
 
 print("""
 ****************************************
@@ -218,4 +222,3 @@ print_goal(goal4)
 print('')
 
 pyhop(state4,[('move_blocks', goal4)], verbose=1)
-

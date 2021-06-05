@@ -39,3 +39,4 @@ myMidca.run()
 for i in range(20):
 	print myMidca.history[i].mem.get(myMidca.midca.mem.CURRENT_GOALS)
 '''
+

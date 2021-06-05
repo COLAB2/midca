@@ -1,18 +1,18 @@
 from midca.modules._plan import pyhop
 
-
 def point_at_m(state, objectID):
-    return [("block_until_seen", objectID), ("point_to", objectID)]
+	return [("block_until_seen", objectID), ("point_to", objectID)]
 def pickup(state, objectID):
-    #if get_last_position(state, objectID) == "table":
-    return [("reach", objectID), ("grab", objectID), ("raising", objectID)]
+	#if get_last_position(state, objectID) == "table":
+	return [("reach", objectID), ("grab", objectID), ("raising", objectID)]
 	#return [("block_until_seen", objectID), ("reach", objectID)]
 def unstack_task(state, b1, b2):
 	#if get_last_position(state, b1)== b2:
 	return [("unstack", b1, b2), ("grab", b1), ("putdown", b1)]
 
 def get_last_position(state, objectOrID):
-    positions = state.all_pos(objectOrID)
+	
+	positions = state.all_pos(objectOrID)
 	if not positions:
 		return None
 	else:

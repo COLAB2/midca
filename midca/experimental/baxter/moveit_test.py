@@ -2,7 +2,9 @@ import subprocess, sys, time
 from moveit_commander import MoveGroupCommander
 import moveit_msgs.msg
 import geometry_msgs.msg
+
 class BaxterWave:
+	
 	def __init__(self, leftArmPositions, rightArmPositions):
 		self.leftPositions = leftArmPositions
 		self.rightPositions = rightArmPositions

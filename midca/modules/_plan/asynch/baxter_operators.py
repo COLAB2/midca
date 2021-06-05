@@ -11,14 +11,14 @@ def block_until_seen(state, objectID):
 	return state
 
 def point_to(state, objectID):
-    return state
+	return state
 
 def block_until_complete(state):
 	'''
 	blocks until the action preceding this one is complete. If this action begins a plan,
 	it will have no effect. 
 	'''
-    return state
+	return state
 
 
 def reach(state, objectID):
@@ -37,3 +37,5 @@ def unstack(state, b1, b2):
 
 def declare_ops():
 	pyhop.declare_operators(block_until_seen, point_to, block_until_complete, reach, grab, raising, unstack, putdown)
+
+

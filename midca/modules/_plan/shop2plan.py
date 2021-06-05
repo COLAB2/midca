@@ -9,6 +9,7 @@ from plan.midcaplan import *
 SHOP2_IN_F = "shop2in.lisp"
 SHOP2_DOMAIN_F = "./examples/htn/blocks/domains/blocks-htn-fire.lisp"
 SHOP2_OUT_F = "shop2out.lisp"
+
 def shop2_str(blockset, goals):
 	s = ""
 	s += ";;-------------------------------\n"
@@ -47,7 +48,7 @@ def shop2_str(blockset, goals):
 	return s
 
 def parse_shop2_plan(filename):
-    text = open(filename).read()
+	text = open(filename).read()
 	if "--plan :" in text:
 		if "(" not in text:
 			print(text)
@@ -124,3 +125,4 @@ class Shop2Planner:
 		#save plan
 		self.mem.add(midca_inst.MEM_PLANS, plan)
 		self.mem.set(self.mem.CURR_PLAN, plan)
+		

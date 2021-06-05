@@ -171,7 +171,7 @@ class MAReporter:
 			if world.is_true("onfire", [objectname]) and world.objects[objectname].type.name == "BLOCK" and objectname != "table":
 				res.append(objectname)
 		return res
-	
+
     def run(self, cycle, verbose = 2):
 		world = None
 		lastWorld = None

@@ -1,6 +1,5 @@
 try:
     import colorama
-
     colorama.init()
 except:
     print() 

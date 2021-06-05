@@ -38,6 +38,7 @@ def singlerun_output_str(run_id, curr_midca, curr_mortar_count, num_cycles):
     numMortars = curr_mortar_count
     result = str(run_id) + "," + str(numMortars) + "," + str(towersCompleted) + "," + str(towersScore) + "," + str(num_cycles) + "\n"
     return result
+    
 def singlerun(args):
     run_id = args[0]
     curr_mortar_count = args[1]
@@ -52,7 +53,7 @@ def singlerun(args):
     result_str = singlerun_output_str(run_id,curr_midca,curr_mortar_count, num_cycles)
     return result_str 
 
-def runexperiment():
+def runexperiment():  
     runs = []
     curr_mortar_count = MORTAR_QUANTITY_START
     run_id = 0
@@ -82,6 +83,7 @@ def runexperiment():
         f.write(r)
     print(("-- Data written to file "+str(DATA_FILENAME)))
     print("-- Experiment complete!")
+
 def asqiiDisplay(world):
     '''
     Creates an asqii representation for blocksworld.
@@ -138,6 +140,7 @@ class MIDCAInstance():
         myMidca.append_module("Intend", intend.SimpleIntend())
         myMidca.append_module("Plan", planning.PyHopPlanner(extinguish, mortar))
         myMidca.append_module("Act", act.SimpleAct())
+
         #myMidca.insert_module('Simulate', simulator.ArsonSimulator(arsonChance=self.arsonChanceArg, arsonStart=10), 1)
         #myMidca.insert_module('Simulate', simulator.FireReset(), 0)
         myMidca.insert_module('Interpret', guide.TFStack(), 1)
@@ -154,6 +157,7 @@ class MIDCAInstance():
     def run_cycles(self, num):
         for cycle in range(num):
             self.myMidca.one_cycle(verbose = 0, pause = 0)
+            
     def getMIDCAObj(self):
         return self.myMidca
 
@@ -165,6 +169,7 @@ class MIDCAInstance():
             return s
         else:
             return 'not-initialized'
+
 ###########
 ## Graph ##
 ###########
@@ -175,6 +180,7 @@ def get_max_score_for_cycles(cycle):
     '''
     max_scores = {10:6,20:10,30:20,40:26,50:30,60:40,70:46,80:50,90:60,100:66}
     return max_scores[cycle]
+
 def graph(prev_file):
     '''
     Produce the graph
@@ -193,7 +199,7 @@ def graph(prev_file):
     
     with open(datafile,'r') as f:
         for line in f.readlines():
-            if header:
+            if header: 
                 header = False
             else:
                 row = line.strip().split(',')
@@ -215,6 +221,7 @@ def graph(prev_file):
     ax.set_ylabel("Resources")
     ax.set_zlabel("Score")
     plt.show()
+
 def graph_slices_hardcoded():
     '''
     Produce the graph
@@ -223,6 +230,7 @@ def graph_slices_hardcoded():
     # they correspond to the data files sorted by most recent first
     prev_file_goal_trans = 6
     prev_file_no_goal_trans = 5
+    
     from mpl_toolkits.mplot3d import Axes3D
     import matplotlib.pyplot as plt
     from matplotlib import cm
@@ -251,13 +259,14 @@ def graph_slices_hardcoded():
                 gt_cycles_xs.append(num_cycles)
         print(("There were "+str(count)+" data points collected that will be used for this graph"))
     print(("-- About to read in non-goal transform data from "+str(datafile_goal_trans)))
+    
     no_gt_mortar_ys = []
     no_gt_cycles_xs = []
     no_gt_score_zs = []
     header = True
     with open(datafile_no_goal_trans,'r') as f:
         for line in f.readlines():
-            if header:
+            if header: 
                 header = False
             else:
                 row = line.strip().split(',')
@@ -273,7 +282,7 @@ def graph_slices_hardcoded():
     
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_cycles = []
+    gt_cycles = [] 
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -285,6 +294,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_cycles = []
+    
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -313,7 +323,7 @@ def graph_slices_hardcoded():
 
     # now get all data points where mortar is the hold value
     gt_score = []
-    gt_mortar = []
+    gt_mortar = [] 
 
     for i in range(len(gt_mortar_ys)):
         curr_mortar = gt_mortar_ys[i]
@@ -325,6 +335,7 @@ def graph_slices_hardcoded():
 
     no_gt_score = []
     no_gt_mortar = []
+    
     for i in range(len(no_gt_mortar_ys)):
         curr_mortar = no_gt_mortar_ys[i]
         curr_score = no_gt_score_zs[i]
@@ -360,3 +371,4 @@ if __name__ == "__main__":
         graph_slices_hardcoded()
     else:   
         runexperiment()
+          

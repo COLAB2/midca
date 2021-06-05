@@ -3,13 +3,16 @@ import rospy, baxter_interface
 import math
 
 from baxter_pykdl import baxter_kinematics
+
 def distance(p1, p2):
     return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2 + (p1[2] - p2[2]) ** 2)
 
 class Range:
+	
     def __init__(self, min, max):
     	self.min = min
     	self.max = max
+	
     def __contains__(self, val):
     	return val >= self.min and val <= self.max
     
@@ -38,7 +41,7 @@ def getSolution(target, startAngles, limb, threshold = 0.01, delta = 0.005, verb
     movesUp = {name: 0 for name in list(curAngles.keys())}
     movesDown = {name: 0 for name in list(curAngles.keys())}
     while distance(curPosition, target) > threshold:
-        n += 1
+    	n += 1
     	if n > 10000:
     		if verbose:
     			print("Reached 10000 steps. Position:", curPosition)
@@ -101,8 +104,8 @@ def getSolutionAStar(target, startAngles, threshold = 0.01, delta = 0.01, verbos
     stateQ = []
     visited = set()
     curPosition = kin.forward_position_kinematics(startAngles)
-    if verbose:
-        print("Starting IK engine - starting pose:", curPosition)
+    if verbose:	
+    	print("Starting IK engine - starting pose:", curPosition)
     curAngles = {name: angleRanges[name].midpoint() for name in list(startAngles.keys())}
     curPosition = kin.forward_position_kinematics(curAngles)
     heappush(stateQ, (distance(curPosition, target), dict(curAngles)))
@@ -158,3 +161,4 @@ def test():
     	
 if __name__ == "__main__":
 	test()
+	

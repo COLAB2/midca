@@ -193,7 +193,6 @@ class AsynchAction:
                 print("Error executing action", self, ":\n", traceback.format_exc(), end=' ') 
                 "\n\nAction assumed to be failed"
             self.status = FAILED
-
     def check_complete(self):
         if not self.startTime:
             self.startTime = midcatime.now()
@@ -584,7 +583,7 @@ class DoStack(AsynchAction):
             return
         if t - lastLocReport[1] > self.maxAllowedLag:
             if verbose >= 1:
-                print("Last object location report is too old -", end=' ') 
+                print("Last object location report is too old -", end=' ')
                 str((t - lastLocReport[1]).total_seconds()), "seconds - so action:", self,
                 "will fail."
             self.status = FAILED

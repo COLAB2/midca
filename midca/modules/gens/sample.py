@@ -1,30 +1,34 @@
-from . import cl, goaltransform
+from . import cl,goaltransform
+
 
 
 def main():
-    # print("Enter Class Hierarchy in Tree Structure: ")
+    #print("Enter Class Hierarchy in Tree Structure: ")
     tree = cl.Tree()
     objecttree = cl.ObjectTree()
     fname = "/home/sravya/Documents/midca/worldsim/domains/shopping.sim"
-    cl.implement(fname, tree, objecttree)
+    cl.implement(fname,tree,objecttree)
     tree.printtree()
     objecttree.printtree()
-    # goal = raw_input('Enter your desired Goal:')
+    #goal = raw_input('Enter your desired Goal:')
 
+    
     while True:
         goal = input('Enter your desired Goal:')
-        # identity
-        identity_res = goaltransform.identity(goal, 1)
-from . import cl,goaltransform
+        #identity
+        identity_res = goaltransform.identity(goal,1)
         print(identity_res)
 
         print("--------- Genralization Phase ----------")
-        res = goaltransform.generalization(goal, 1)
+
+        res = goaltransform.generalization(goal,1)
         print(res)
 
+
         print("--------- Specailization Phase ----------")
-        res = goaltransform.specailization(goal, 1)
+        res = goaltransform.specailization(goal,1)
         print(res)
+
         print("--------- Choose Phase ----------")
         res = goaltransform.choose(goal)
         print(("Choose Output Final " + res))

@@ -106,14 +106,12 @@ def moveb_m(state,goal):
             continue
     #
     # if we get here, no blocks can be moved to their final locations
-
     b1 = pyhop.find_if(lambda x: status(x,state,goal) == 'waiting', all_blocks(state))
     if b1 != None:
         return [('move_one',b1,'table'), ('move_blocks',goal)]
     #
     # if we get here, there are no blocks that need moving
     return []
-
 
 """
 declare_methods must be called once for each taskname. Below, 'declare_methods('get',get_m)' tells Pyhop that 'get' has one method, get_m. Notice that 'get' is a quoted string, and get_m is the actual function.
@@ -244,7 +242,6 @@ def long_apprehend_m(state, perp):
         return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
     else:
         return []
-
 
 def declare_methods(longApprehend = True):
     if longApprehend:

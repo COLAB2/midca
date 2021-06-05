@@ -5,6 +5,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 import pyhop
+
 def travel_by_foot(state,a,x,y):
     if state.dist[x][y] <= 2:
         return [('walk',a,x,y)]

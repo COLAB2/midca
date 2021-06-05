@@ -27,6 +27,7 @@ DECLARE_METHODS_FUNC = methods_extinguish.declare_methods
 DECLARE_OPERATORS_FUNC = operators_extinguish.declare_ops
 GOAL_GRAPH_CMP_FUNC = util.preferFire
 
+
 world = domainread.load_domain(DOMAIN_FILE)
 stateread.apply_state_file(world, STATE_FILE)
     #creates a PhaseManager object, which wraps a MIDCA object

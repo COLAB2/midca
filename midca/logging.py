@@ -2,7 +2,9 @@
 from datetime import datetime
 import os, sys, copy
 import platform, string
+
 class Logger:
+
     logFolderOptions = ["log", "_log"]
 
     def __init__(self, keys = [], filesStayOpen = False, verbose=2):
@@ -27,12 +29,14 @@ class Logger:
         self.working = False
         self.startTime = datetime.now()
 
+
         self.timeStr = str(self.startTime)
         if self.startTime.microsecond > 0:
             self.timeStr = self.timeStr[:-7].replace(":", "_")
 
         if "window" in this_os.lower():
             self.timeStr = string.replace(self.timeStr, ':', '_').replace("-", "_")
+
         #create log dir if it does not exist. If there is a file at ./log, try ./_log. If neither works, fail and print an error message.
         folderFound = False
         self.cwd = os.getcwd()
@@ -90,7 +94,7 @@ class Logger:
 
     def logEvent(self, event):
         if not self.working:
-            return
+            return 
         event.time = datetime.now()
         if event.loggable:
             if not hasattr(event, 'keys') or not event.keys:
@@ -243,12 +247,14 @@ class ModuleStartEvent(Event):
             return s[:s.rindex("instance") - 1]
         else:
             return s
+
 class ModuleEndEvent(Event):
 
     def __init__(self, module):
         self.module = module
         self.keys = []
         self.loggable = False
+
 def test():
     l = Logger(["f1", "f2"])
     l._write("hello!", "f1")

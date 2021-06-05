@@ -1,11 +1,11 @@
-
-ACCESS = "Access"  # when could read, write, or both
+ACCESS = "Access" #when could read, write, or both
 READ = "Read"
 WRITE = "Write"
 
 EVENT = "Event"
 START = "Process Start"
 END = "Process End"
+
 class Event:
 	
 	def __init__(self, eventType = EVENT, **kwargs):
@@ -59,7 +59,7 @@ class ProcessEnd(Event):
 		newKwargs['process'] = process
 		Event.__init__(self, eventType = END, **newKwargs)
 	
-    def __str__(self):
+	def __str__(self):
 		return "Ending " + str(self.process)
 		
 	

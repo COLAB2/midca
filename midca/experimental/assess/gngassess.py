@@ -9,9 +9,10 @@ ANOMALY_STATE_KEY = "anomaly state"
 A_DIST_KEY = "A-Distance memory"
 ANOMALY_TYPE_KEY = "anomaly type"
 GNG_NODES = "GNG nodes"
+
 class AnomalyAnalyzer:
 
-    def init(self, world, mem, wp = 0):
+	def init(self, world, mem, wp = 0):
 		self.mem = mem
 		self.numUpdates = 0	
 		self.gng = None
@@ -58,7 +59,7 @@ class AnomalyAnalyzer:
 		node = self.last_node()
 		index = node.location.index(max(node.location))
 		return self.trace.prednames[index]
-
+	
 	def anomaly_intensity(self, i = None):
 		node = self.last_node()
 		if i:
@@ -72,3 +73,5 @@ class AnomalyAnalyzer:
 		for i in range(len(self.nodes[0])):
 			pairs.append(self.trace.prednames[i], self.anomaly_intensity(i))
 		return pairs
+	
+	

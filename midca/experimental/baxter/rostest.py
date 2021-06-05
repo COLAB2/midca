@@ -5,7 +5,7 @@ import time
 cmd = subprocess.Popen(['bash'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
 poll = select.poll()
-poll.register(cmd.stdout.fileno(), select.POLLIN)
+poll.register(cmd.stdout.fileno(),select.POLLIN)
 
 # Write the first command
 command = "cd ~/baxter_ws\n"

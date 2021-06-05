@@ -12,7 +12,8 @@ class Traverser:
     # Returns: (frame, operator, effect) triplet if an operator, frame, and effect are found which remedies the anomaly. If none are found, returns (None, None, None)
     def traverse(self):
         # Want search in a BFS manner
-        queue = []  # queue for BFS
+        queue = []          # queue for BFS
+
 
         # Find anomaly center
         center = None
@@ -20,7 +21,7 @@ class Traverser:
             if f.iscenter:
                 center = f
 
-        covered = []  # do not re-search nodes
+        covered = []        # do not re-search nodes
         queue.append(center)
         while len(queue) > 0:
             node = queue.pop(0)
@@ -29,6 +30,7 @@ class Traverser:
                 for rn in set(role.facetvalue + role.facetrelation):
                     if self.frames[rn] not in covered and self.frames[rn] not in queue:
                         queue.append(self.frames[rn])
+
 
             # searches for CRIMINAL-VOLITIONAL-AGENT and splits the number associated to it
             # So that it will work with any instance of CRIMINAL-VOLITIONAL-AGENT
@@ -61,12 +63,11 @@ class Traverser:
                         for role in list(frame.roles.values()):
                             for rn in set(role.facetvalue + role.facetrelation):
                                 if self.frames[rn] in negated and not frame in negated:
-                                    if frame.iscenter:
+                                    if frame.iscenter:  
                                         return True
                                     negated.append(frame)
                                     expanded = True
         return False
-
 
 if __name__ == "__main__":
     # get text
@@ -79,8 +80,8 @@ if __name__ == "__main__":
     frames = p.makeframegraph(text)
 
     # create mapping
-    noem = {}  # Node Operator Effect Mapping
-    # Keys are node/frame names, values are lists of [operatorname, effect] pairs
+    noem = {}   # Node Operator Effect Mapping
+                # Keys are node/frame names, values are lists of [operatorname, effect] pairs
 
     noem['CRIMINAL-VOLITIONAL-AGENT.4697'] = [['apprehend', OPERATOR_EFFECT_NEGATION]]
 
@@ -88,9 +89,7 @@ if __name__ == "__main__":
     t = Traverser(frames, noem)
     (frame, operator, effect) = t.traverse()
 
-    print(
-    "Frame: " + frame.name)
-    print(
-    "Operator: " + operator)
-    print(
-    "Effect: " + str(effect))
+    print("Frame: " + frame.name)
+    print("Operator: " + operator)
+    print("Effect: " + str(effect))
+

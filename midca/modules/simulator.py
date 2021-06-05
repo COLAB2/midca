@@ -1,25 +1,17 @@
 import sys, random
 from midca import worldsim, goals, base
 from midca.domains.nbeacons import nbeacons_util
-import time
-import itertools
-import copy,pddlpy
-from midca.worldsim import pddl
+import copy 
 
 class MidcaActionSimulator:
 
     def init(self, world, mem):
         self.mem = mem
         self.world = world
-        self.mem.set(self.mem.MIDCA_CYCLES, 0)
-        self.mem.set(self.mem.ACTIONS_EXECUTED, 0)
 
-
-    def run(self, cycle, verbose=2):
+    def run(self, cycle, verbose = 2):
         try:
-            self.mem.set(self.mem.MIDCA_CYCLES, 1 + self.mem.get(self.mem.MIDCA_CYCLES))
-            #print(pddl.Action)
-            # get selected actions for this cycle. This is set in the act phase.
+            #get selected actions for this cycle. This is set in the act phase.
             actions = self.mem.get(self.mem.ACTIONS)[-1]
         except TypeError as IndexError:
             if verbose >= 1:
@@ -30,8 +22,6 @@ class MidcaActionSimulator:
                 if self.world.midca_action_applicable(action):
                     if verbose >= 2:
                         print("simulating MIDCA action:", action)
-                    self.mem.set(self.mem.ACTIONS_EXECUTED, 1 + self.mem.get(self.mem.ACTIONS_EXECUTED))
-                    #print(type(action))
                     self.world.apply_midca_action(action)
                 else:
                     if verbose >= 1:
@@ -40,173 +30,8 @@ class MidcaActionSimulator:
             if verbose >= 2:
                 print("No actions selected this cycle by MIDCA.")
 
-
-class MidcaEventSimulator:
-
-    def init(self, world, mem):
-        self.mem = mem
-        self.world = world
-
-    def run(self, cycle, verbose=2):
-        try:
-            # get all events in this domain
-            events = list(self.world.operators())
-
-        except TypeError as IndexError:
-            if verbose >= 1:
-                print("Simulator: no events.")
-            return
-        if events:
-            for __event in events:
-                inst_operators = self.get_all_instantiations(self.world, __event)
-                for inst_op in inst_operators:
-                    self.world.apply(inst_op)
-
-                    func = self.world.functions["player-current-health"]
-                    a = next((x for x in self.world.atoms if x.func == func), None)
-                    # 15 is a threshold here;
-                    # print("the result:")
-                    # print(a.val)
-                    # if a.val and a.val < 20:
-                    #     self.mem.set(self.mem.AGENT_HEALTH, a.val)
-
-                    if not self.mem.get(self.mem.AGENT_DEAD_CYCLE) and a.val <= 0:
-                        print("THE AGENT DIED")
-                        self.mem.set(self.mem.AGENT_DEAD_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
-
-                    # func = self.world.functions["thing-available"]
-                    # a = next((x for x in self.world.atoms if x.func == func and x.args and x.args[0] == "wood"), None)
-                    # if a.val and a.val ==5:
-                    #     self.mem.set(self.mem.ACHIEVED_CYCLE, self.mem.get(self.mem.MIDCA_CYCLES))
-
-                    if verbose >= 2:
-                        print("simulating MIDCA event:", __event)
-                    # except:
-                    #     print("something went wrong...")
-
-
-                # if self.get_all_instantiations(self.world,__event):
-                #     print("it is applicable")
-
-
-
-                    # self.world.apply_midca_action(__event)
-
-        else:
-            if verbose >= 2:
-                print("No events.")
-
-
-    def get_all_instantiations(self, world, operator):
-        '''
-        Returns all possible operator instantiations
-        Note: If the state is more than 50 or so atoms,
-              this could be a slow and expensive
-              function
-        '''
-
-        # need to preserve order of elements of the following lists
-        arg_names = []
-        arg_types = []
-
-        # initialize with objnames
-        for o in operator.objnames:
-            arg_names.append(o)
-            arg_types.append(None)
-
-        # find the correct types
-        for precond in operator.preconditions:
-            args = list(map(str, precond.arg1.args))
-            for i in range(len(args)):
-                if args[i] in arg_names:
-                    arg_names_i = arg_names.index(args[i])
-                    if arg_types[arg_names_i] is None:
-                        arg_types[arg_names_i] = precond.argtypes[i]
-
-        def get_type(t):
-            return world.get_objects_by_type(t)
-
-        # get all objects that match each type
-        possible_bindings = list(map(get_type, arg_types))
-
-        # generate all possible arrangements
-        permutations = itertools.product(*possible_bindings)
-
-        # now run through all possible bindings
-        applicable_permutations = []
-        num_permutations = 0
-        for c in permutations:
-            num_permutations += 1
-            op_inst = operator.instantiate(list(c))
-            op_inst.set_args(list(c))
-
-            if world.is_applicable(op_inst):
-                applicable_permutations.append(op_inst)
-                break # uncomment this line if you just want to get the first valid instantiation
-
-        return applicable_permutations
-
-
-    def event_applicable(self, world, operator):
-        values = {}
-        a = list(operator.preconditions.keys())
-        # for p in range(len(a)):
-        #     print(a[p])
-        #     print(a[p].atom.predicate.name)
-        var_values_dict = {}
-        for p in operator.preconditions.keys():
-            for arg in p.atom.args:
-                possible_values = (x for x in world.objects if x.type == arg.type)
-                if not arg in var_values_dict:
-                    var_values_dict.update({arg: possible_values})
-
-
-
-
-    #TODO: Zohreh fix this later for the efficiency
-    def seek_var(self, k, preconditions, values):
-
-        if k < len(preconditions):
-            p = preconditions[k]
-            print(p)
-            for atom in self.world.atoms:
-                flag = 0
-                if atom.predicate and atom.predicate.name == p.atom.predicate.name:
-
-                    for i in range(len(p.atom.args)):
-
-                        print(p.atom.args[i])
-                        if p.atom.args[i].name in values.keys() and values[p.atom.args[i].name] == atom.args[i].name:
-                            flag = flag + 1
-                            print("++")
-                            print(atom.args[i].name)
-                            continue
-                         #test next atom
-                        if p.atom.args[i].name in values.keys() and values[p.atom.args[i].name] != atom.args[i].name:
-
-                            break
-
-                        if not p.atom.args[i].name in values.keys():
-                            print("**")
-                            print(p.atom.args[i].name)
-                            flag = flag + 1
-                if(flag > 0):
-                    print(flag)
-                if flag == (len(p.atom.args)):
-                    for i in range(len(p.atom.args)):
-                        if not p.atom.args[i].name in values.keys():
-                            values.update({p.atom.args[i].name: atom.args[i].name})
-
-                    self.seek_var(k+1, preconditions, values)
-
-        else:
-            return
-
-
-
-
-
 ARSONIST_VICTORY_ACTIVITIES = ["enjoys a glass of champagne", "stays home", "bites his thumb at MIDCA"]
+
 class ASCIIWorldViewer(base.BaseModule):
 
     def __init__(self, display=None):
@@ -254,155 +79,16 @@ class WorldChanger:
                     atom = self.world.midcaGoalAsAtom(goal)
                     if self.world.atom_true(atom):
                         self.world.remove_atom(atom)
-                        print(
-                        "Atom", atom, "was true and is now false")
+                        print("Atom", atom, "was true and is now false")
                     else:
                         self.world.add_atom(atom)
-                        print(
-                        "Atom", atom, "was false and is now true")
+                        print("Atom", atom, "was false and is now true")
                 except ValueError:
-                    print()
-                    "The value entered does not appear to be a valid atom. Please check the number and type of arguments."
-
-class MinecraftEventSimulator:
-
-    def __init__(self, zombieStart=2):
-
-        self.start = zombieStart
-
-    def getZombieChance(self):
-        return self.chance
-
-    def init(self, world, mem):
-        self.mem = mem
-        self.world = world
-
-
-    def run(self, cycle, verbose=2):
-
-        if cycle == self.start:
-            try:
-                self.world.apply_event("zombie_damage", ["m1-2"])
-                if verbose >= 2:
-                    print("zombie (at m1-2) attacks")
-            except Exception:
-                if verbose >= 1:
-                        print("Action invalid")
-
-class ArrowSimulator:
-
-    def __init__(self, arrowStart=2):
-
-        self.start = arrowStart
-
-    def init(self, world, mem):
-        self.mem = mem
-        self.world = world
-
-    def run(self, cycle, verbose=2):
-        if cycle == self.start:
-            try:
-                self.world.apply_event("arrow_damage")
-
-            except Exception:
-                if verbose >= 1:
-                        print("Action invalid")
-
-class AttackSimulator:
-    def __init__(self, skeletonChance=0.5, skeletonStart=2):
-        self.chance = skeletonChance
-        self.start = skeletonStart
-
-    def getSkeletonChance(self):
-        return self.chance
-
-    def init(self, world, mem):
-        self.mem = mem
-        self.world = world
-
-    def exist_skeleton(self):
-        for atom in self.world.atoms:
-            if atom.predicate and atom.predicate.name == "thing-at":
-                if atom.args[0].name == "skeleton":
-                    return atom.args[0].name
-        return False
-
-    def run(self, cycle, verbose=2):
-        skeleton = self.exist_skeleton()
-        if skeleton and cycle == self.start:
-            try:
-                self.world.apply_event("thing-at-map", [skeleton, "m0_1"])
-                if verbose >= 1:
-                    print("Simulating event: skeleton spawn(" + str(skeleton) + ", " + str("m0_1") + ")")
-            except Exception:
-                if verbose >= 1:
-                    print("failed")
-
-
-class BadWorkingConditionSimulator:
-
-    def __init__(self, badconditionChance=0.9, start=2):
-        self.chance = badconditionChance
-        self.start = start
-
-    def getBadConditionChance(self):
-        return self.chance
-
-    def init(self, world, mem):
-        self.mem = mem
-        self.world = world
-
-    def has_cigarette(self):
-        for atom in self.world.atoms:
-            if atom.predicate.name == "has_cigarette":
-                if atom.args[0].type.name == "WORKER":
-                    return atom.args[0].name
-        return False
-
-    def cigronfloor(self):
-        for atom in self.world.atoms:
-            if atom.predicate.name == "onfloor":
-                if atom.args[0].type.name == "CIGARETTE":
-                    return atom.args[0].name
-        return False
-
-    def get_unlit_blocks(self):
-        res = []
-        for objectname in self.world.objects:
-            if not self.world.is_true("onfire", [objectname]) and self.world.objects[objectname].type.name == "BLOCK"\
-                    and objectname != "table":
-                res.append(objectname)
-        return res
-
-    def find_sigarbutt(self):
-        for atom in self.world.atoms:
-            if atom.predicate.name == "looking":
-                self.world.apply_event("cigbutt_found")
-
-    def run(self, cycle, verbose=2):
-        worker = self.has_cigarette()
-        cigr = self.cigronfloor()
-        if worker and cycle > self.start and random.random() < self.chance:
-            try:
-                block = random.choice(self.get_unlit_blocks())
-                try:
-                    self.world.apply_named_action("cigarette_butt_start_fire", [worker, block, cigr])
-                    if verbose >= 2:
-                        print("Simulating event: cigarette butt cause fire(" + str(block) + ")")
-
-                except Exception:
-                    if verbose >= 1:
-                        print("Action lightonfire(", str(block), ") invalid.")
-            except IndexError:
-                if verbose >= 1:
-                    print("All blocks on fire.", worker, random.choice(ARSONIST_VICTORY_ACTIVITIES))
-
-
-
+                    print("The value entered does not appear to be a valid atom. Please check the number and type of arguments.")
 
 class ArsonSimulator:
 
-    def __init__(self, arsonChance=0.9, arsonStart=10):
+    def __init__(self, arsonChance = 0.5, arsonStart = 10):
         self.chance = arsonChance
         self.start = arsonStart
 
@@ -445,8 +131,8 @@ class ArsonSimulator:
 
 SCORE = "Score"
 
-
 class FireReset:
+
     '''
     MIDCA module that puts out all fires whenever MIDCA's score is updated to indicate that a tower has been completed. Note that this module will do nothing unless the the SCORE memory value is being updated by evaluate.Scorer.
     '''
@@ -458,6 +144,7 @@ class FireReset:
 
     def put_out_fires(self):
         self.world.atoms = [atom for atom in self.world.atoms if atom.predicate.name != "onfire"]
+
     def run(self, cycle, verbose = 2):
         score = self.mem.get(SCORE)
         if not score:
@@ -486,6 +173,7 @@ class NBeaconsSimulator:
     def init(self, world, mem):
         self.mem = mem
         self.world = world
+
     def run(self, cycle, verbose = 2):
         self.verbose = verbose
         # deactivate beacons according to fail rate
@@ -531,10 +219,12 @@ class NBeaconsActionSimulator:
             self.wind = False
             self.wind_strength = 0
             #raise Exception("Turning wind on requires a wind direction of "+str(['east','west','north','south']))
+    
     def init(self, world, mem):
         self.mem = mem
         self.world = world
         self.mem.set(self.mem.MIDCA_CYCLES, 0)
+
     def get_subsequent_action(self,action,dir):
         '''
         Does not return a midcaAction, instead just returns an array
@@ -563,6 +253,7 @@ class NBeaconsActionSimulator:
                 return subsequent_action
         
         return False
+            
     def execute_action(self, action):
         '''
         Simulates the execution of an action and performs all updates
@@ -596,6 +287,7 @@ class NBeaconsActionSimulator:
                 if self.world.is_true('free',['Curiosity']):
                     if self.verbose >= 1: print("Agent is free, moving away from quicksand")
                     # remove free
+                    
                     # self.world.remove_fact('free',['Curiosity'])
                     # actually perform move action, assuming applicable
                     if self.world.midca_action_applicable(action):
@@ -670,6 +362,7 @@ class NBeaconsActionSimulator:
                 if self.filehandle: self.filehandle.write("action "+str(action)+" is not applicable"+"\n")
         if self.filehandle: self.filehandle.write("did not execute action"+str(action)+" \n")
         return False
+    
     def check_agent_in_mud(self):
         '''
         Returns true if agent stuck in mud, false otherwise.
@@ -757,27 +450,24 @@ class NBeaconsActionSimulator:
             return
 
         # generate wind actions if applicable, and going in the same direction
-        remaining_actions = []  # these will be wind pushes
+        remaining_actions = [] # these will be wind pushes
         pushes_needed = 0
-
+        
         # add subsequent actions depending on wind strength
         if self.wind and self.wind_dir in str(first_action):
             # check to see how far this move is
-            start_x, start_y = list(map(int, str(first_action.args[1])[2:].split(
-                'y')))  # hacky - relies on tiles represented as 'Tx2y3'
-            end_x, end_y = list(map(int, str(first_action.args[-1])[2:].split('y')))  # same kind of hackyness
-            move_dist = (abs(end_x - start_x) + abs(end_y - start_y))
-            if self.verbose >= 1: print()
-            "move_dist is " + str(move_dist)
-
-            pushes_needed = self.wind_strength + 1 - move_dist
-            if self.verbose >= 1: print()
-            "  -->> pushes needed is " + str(pushes_needed)
-            if self.filehandle: self.filehandle.write("  -->> pushes needed is " + str(pushes_needed) + "\n")
+            start_x, start_y = list(map(int,str(first_action.args[1])[2:].split('y'))) #hacky - relies on tiles represented as 'Tx2y3'
+            end_x, end_y = list(map(int,str(first_action.args[-1])[2:].split('y'))) # same kind of hackyness
+            move_dist = (abs(end_x - start_x)+abs(end_y-start_y))
+            if self.verbose >= 1: print("move_dist is "+str(move_dist))
+            
+            pushes_needed = self.wind_strength+1 - move_dist
+            if self.verbose >= 1: print("  -->> pushes needed is "+str(pushes_needed))
+            if self.filehandle: self.filehandle.write("  -->> pushes needed is "+str(pushes_needed)+"\n")
 
         # now start execution by executing the first action
         if not self.execute_action(first_action):
-            if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world, rtn_str=True) + "\n")
+            if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
             if self.filehandle: self.filehandle.write("----------------------------------------------\n")
             if self.filehandle: self.filehandle.flush()
             return
@@ -793,33 +483,35 @@ class NBeaconsActionSimulator:
         # now loop through the rest of the wind actions, unless the agent gets stuck in mud
         while pushes_needed > 0 and not agent_stuck_in_mud:
             # get next action
-            # next_wind_action = remaining_actions[0]
-            # remaining_actions = remaining_actions[1:]
+            #next_wind_action = remaining_actions[0]
+            #remaining_actions = remaining_actions[1:]
             # execute action
             try:
-                # print "About to apply named action "+str(next_wind_action)
-                # self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
+                #print "About to apply named action "+str(next_wind_action)
+                #self.world.apply_named_action(next_wind_action[0],next_wind_action[1:])
                 self.sim_action_push()
                 pushes_needed -= 1
-                if self.verbose >= 1: print()
-                "Wind has blown the agent in the " + str(self.wind_dir) + " direction"
-                if self.filehandle: self.filehandle.write(
-                    "Wind has blown the agent in the " + str(self.wind_dir) + " direction\n")
+                if self.verbose >= 1: print("Wind has blown the agent in the "+str(self.wind_dir)+" direction")
+                if self.filehandle: self.filehandle.write("Wind has blown the agent in the "+str(self.wind_dir)+" direction\n")
             except:
-                if self.verbose >= 1: print()
-                "Error executing sim push action : " + str(sys.exc_info()[0])
-                if self.filehandle: self.filehandle.write(
-                    "Error executing sim push action : " + str(sys.exc_info()[0]) + "\n")
+                if self.verbose >= 1: print("Error executing sim push action : "+ str(sys.exc_info()[0]))
+                if self.filehandle: self.filehandle.write("Error executing sim push action : "+ str(sys.exc_info()[0])+"\n")
                 break
             # check to see if agent in mud
             agent_stuck_in_mud = self.check_agent_in_mud()
-        if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world, rtn_str=True) + "\n")
+        if self.filehandle: self.filehandle.write(nbeacons_util.drawNBeaconsScene(self.world,rtn_str=True)+"\n")
         if self.filehandle: self.filehandle.write("----------------------------------------------\n")
         if self.filehandle: self.filehandle.flush()
+
 class CustomRunSimulator:
     '''
     This class is used to provide various kinds of commands to be used in customrun xml files (files that make it easier to run MIDCA experiments and control inputs, outputs, etc). For more information about using customrun config files, see customrun/customrun.py. Feel free to add any functions you need here.
     '''
-    def writeDataToCSV(self, filename):
+
+    def writeDataToCSV(self,filename):
         ''' '''
         pass
+
+
+
+
