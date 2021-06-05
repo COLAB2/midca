@@ -212,7 +212,7 @@ def monitor_clear_block_asus(block_n='red block', topic='clear_block'):
     	msg = rospy.wait_for_message(topic, String)
     	obj,loc = m_asus(msg,block_name)
     	if obj:
-		return obj,loc	    
+            return obj,loc
 	  
 def m_asus(data,block_name):
 
@@ -229,24 +229,24 @@ def m_asus(data,block_name):
 
 
     if color_location_dic :
-		for each_block in color_location_dic:
-			pos = 'table'
-			clear = 'clear'
-			cmp_block = block_name
-			if not cmp_block in color_location_dic:
-				break
-			if not each_block == cmp_block:
-				# check stack condition
-				x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
-				y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
-				z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
-				if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
-					if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
-						clear = 'not clear'
-					else:
-						pos = cmp_block;
-						block_pos = each_block
-						return each_block,color_location_dic[each_block]
+        for each_block in color_location_dic:
+            pos = 'table'
+            clear = 'clear'
+            cmp_block = block_name
+            if not cmp_block in color_location_dic:
+                break
+            if not each_block == cmp_block:
+                # check stack condition
+                x_difference = abs(color_location_dic[each_block].x - color_location_dic[cmp_block].x)
+                y_difference = abs(color_location_dic[each_block].y - color_location_dic[cmp_block].y)
+                z_difference = abs(color_location_dic[each_block].z - color_location_dic[cmp_block].z)
+                if ( x_difference < 0.03 and y_difference < 0.01 and z_difference > 0.02 and z_difference < 0.06):
+                    if (color_location_dic[each_block].z < color_location_dic[cmp_block].z):
+                        clear = 'not clear'
+                    else:
+                        pos = cmp_block;
+                        block_pos = each_block
+                        return each_block,color_location_dic[each_block]
             
 
 

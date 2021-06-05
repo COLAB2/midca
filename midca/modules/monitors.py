@@ -47,5 +47,3 @@ class Monitor():
                 return
             
             time.sleep(3)
-            
->>>>>>> origin/master

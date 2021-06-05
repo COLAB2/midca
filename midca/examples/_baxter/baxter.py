@@ -98,7 +98,6 @@ class Baxter:
     
         if (resp.isValid[0]):
             print("SUCCESS - Valid Joint Solution Found:")
-                # Format solution into Limb API-compatible dictionary
             limb_joints = dict(list(zip(resp.joints[0].name, resp.joints[0].position)))
             
             return limb_joints
@@ -130,9 +129,6 @@ class Baxter:
         return True
     
     def enable(self):
-#         print "start"
-#         self.robotEnable = baxter_interface.RobotEnable()
-#         self.robotEnable.enable()
         self.leftArm = baxter_interface.Limb('left')
         self.rightArm = baxter_interface.Limb('right')
         # Waits for the image service of right hand camera to become available.
@@ -206,4 +202,3 @@ class Baxter:
     def getLastArrayImage(self):
         cvimage_array = np.asarray(self.last_cvimage, dtype=np.uint8)
         return cvimage_array
-    

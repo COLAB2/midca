@@ -272,7 +272,7 @@ def check_location_clear(mem,point,iterations):
             lastLocReport = get_last_location(mem, each)
             x = lastLocReport[0].x 
             y = lastLocReport[0].y
-	    z = lastLocReport[0].z
+            z = lastLocReport[0].z
             d_point = (x , y,z)
             d1_point = (x1,y1,z1)
             total_distance = distance.euclidean(d_point,d1_point)
@@ -288,7 +288,7 @@ def check_location_clear(mem,point,iterations):
                     return point
             
         
-    return point
+        return point
 
 
 
