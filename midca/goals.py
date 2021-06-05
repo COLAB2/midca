@@ -1,7 +1,6 @@
 import copy
 import shlex, subprocess
 
-
 class Goal:
 
     def __init__(self, *args, **kwargs):
@@ -21,6 +20,7 @@ class Goal:
             except TypeError:
                 #not an index
                 raise KeyError(str(val) + " is not a valid key or index.")
+
     def __contains__(self, item):
         try:
             val = self[item]
@@ -45,6 +45,7 @@ class Goal:
         would return [A_,B_] as the args
         '''
         return self.args
+    
     def get_pred(self):
         '''
         Return the predicate for this goal.
@@ -53,29 +54,16 @@ class Goal:
         would return 'on' as the args
         '''
         return self.kwargs['predicate']
-    def get_func(self):
-
-        return self.kwargs['func']
-    def get_val(self):
-
-        return self.kwargs['val']
-
-    def get_subgoal(self):
-
-        return self.kwargs['subgoals']
-
-    def get_probability(self):
-        return self.kwargs['probability']
 
     def __str__(self):
-        s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join(
-            [str(key) + ": " + str(value) + ", " for key, value in list(self.kwargs.items())])
+        s = "Goal(" + "".join([str(arg) + ", " for arg in self.args]) + "".join([str(key) + ": " + str(value) + ", " for key, value in list(self.kwargs.items())])
         if self.args or self.kwargs:
             return s[:-2] + ")"
         else:
             return s + ")"
 
 class GoalNode:
+
     id = 1
 
     def __init__(self, goal):
@@ -98,6 +86,7 @@ class GoalNode:
         return str(self.goal)
 
 class GoalGraph:
+
     '''
     A graph that maintains a partial ordering of goals. Note that, at present, cycle checking is not complete, so partial orderings can be created that would never allow a goal to be accomplished.
     The single constructor argument gives a function that takes two goals as input and should return a +/- value indicating precedence. If goal1 should be achieved before goal2, goalCompareFunction(goal1, goal2) < 0.
@@ -126,7 +115,6 @@ class GoalGraph:
 
     def add(self, goal):
         self.insert(goal)
-
 
     #inserts a goal into the graph using the graph's comparator
     def insert(self, goal):
@@ -169,16 +157,13 @@ class GoalGraph:
         self._removeNode(delNode)
 
     def addPlan(self, plan):
-        print(type(plan))
-        #for i in len(plan):
-         #   self.plans.add(plan[i])
         self.plans.add(plan)
 
-    # removes all goals associated with given plan. Not super efficient right now, but the expectation is that the number of goals will not be huge.
-
+    #removes all goals associated with given plan. Not super efficient right now, but the expectation is that the number of goals will not be huge.
     def removePlanGoals(self, plan):
         for goal in plan.goals:
             self.remove(goal)
+
     #will raise KeyError if plan is not in plan set.
     def removePlan(self, plan):
         self.plans.remove(plan)
@@ -240,6 +225,7 @@ class GoalGraph:
                 elif len(bestChoice.goals) > len(plan.goals):
                     bestChoice = plan
         return bestChoice
+
     #returns the plan, if any is available, that achieves the most goals in the given goalset. If more than one does, tries to achieve the fewest extraneous goals. Ties are broken arbitrarily. Returns None if no plan is found that achieves any of the given goals.
     #note that this method is a generalization of getMatchingPlan() (i.e. will return a best matching plan if there is any), but is less efficient.
     def getBestPlan(self, goals):
@@ -395,3 +381,4 @@ class GoalGraph:
         #print "dot_output = " + str(dot_output)
         #subprocess.call(shlex.split("del "+dotfilename))
         print("Drawing of current goal graph written to " + pdf_filename)
+

@@ -27,10 +27,6 @@ from cv_bridge import CvBridge, CvBridgeError
 class Baxter:
     def __init__(self):
         pass
-
-
-
-
     
 #     def inverseKinematics(self, limb, point, orientation):
 #         #ns = "/sdk/robot/limb/" + limb + "/solve_ik_position"
@@ -91,9 +87,9 @@ class Baxter:
                 header=hdr,
                 pose=Pose(
                     position=Point(
-                        #                         x=0.657579481614,
-                        #                         y=0.851981417433,
-                        #                         z=0.0388352386502,
+#                         x=0.657579481614,
+#                         y=0.851981417433,
+#                         z=0.0388352386502,
                         x=point.x,
                         y=point.y,
                         z=point.z,
@@ -123,7 +119,7 @@ class Baxter:
                 ),
             ),
         }
-
+         
         ikreq.pose_stamp.append(poses[limb])
         try:
             rospy.wait_for_service(ns, 5.0)
@@ -131,20 +127,21 @@ class Baxter:
         except (rospy.ServiceException, rospy.ROSException) as e:
             rospy.logerr("Service call failed: %s" % (e,))
             return 1
-
+    
+    
         if (resp.isValid[0]):
             print("SUCCESS - Valid Joint Solution Found:")
-            # Format solution into Limb API-compatible dictionary
+                # Format solution into Limb API-compatible dictionary
             limb_joints = dict(list(zip(resp.joints[0].name, resp.joints[0].position)))
-
+            
             return limb_joints
         else:
             print("INVALID POSE - No Valid Joint Solution Found.")
-
+         
         return 0
-
+        
+            
     def ik(self, point, orientation):
-
         angles = self.inverseKinematics('left', point, orientation)
         if not angles:
             return False
@@ -181,11 +178,11 @@ class Baxter:
         self.leftArm = baxter_interface.Limb('left')
         self.rightArm = baxter_interface.Limb('right')
         # Waits for the image service of right hand camera to become available.
-        # rospy.wait_for_service('last_image')
-        # self.rightHandCamera = rospy.ServiceProxy('last_image', ImageSrv)
-        self.bridge = CvBridge()
-        camera_name = "right_hand_camera"
-        self.rightHandCamera = rospy.Subscriber('/cameras/' + camera_name + "/image", Image, self.image_callback)
+        #rospy.wait_for_service('last_image')
+        #self.rightHandCamera = rospy.ServiceProxy('last_image', ImageSrv)
+	self.bridge = CvBridge()
+	camera_name = "right_hand_camera"
+        self.rightHandCamera = rospy.Subscriber('/cameras/' + camera_name + "/image", Image,self.image_callback)
         self.leftGripper = baxter_interface.Gripper('left')
 
     def initiate(self):
@@ -197,36 +194,36 @@ class Baxter:
         x = position['position'].x
         y = position['position'].y
         z = position['position'].z
-        return [x, y, z]
+        return [x,y,z]
     def getLeftArmOrientation(self):
         orientation = self.leftArm.endpoint_pose()
         x = orientation['orientation'].x
         y = orientation['orientation'].y
         z = orientation['orientation'].z
         w = orientation['orientation'].w
-        return [x, y, z, w]
+        return [x,y,z,w]
     def getImageFromRightHandCamera(self):
         """
         This method returns a numpy array of the image that was captured from
         Baxter's right hand camera.
         
         """
-        # request = self.rightHandCamera()
-        self.bridge = CvBridge()
-        camera_name = "right_hand_camera"
-        cvimage_array = rospy.Subscriber('/cameras/' + camera_name + "/image", Image, self.image_callback)
-        # cvimage = bridge.imgmsg_to_cv(imgmsg,'bgr8')
-        # msg = cv_bridge.CvBridge().cv2_to_imgmsg(frame, encoding="bgr8")
-        # cvimage = bridge.imgmsg_to_cv2(imgmsg, "bgr8")
-        # cvimage = bridge.imgmsg_to_cv()
+        #request = self.rightHandCamera()
+	self.bridge = CvBridge()
+	camera_name = "right_hand_camera"
+        cvimage_array = rospy.Subscriber('/cameras/' + camera_name + "/image", Image,self.image_callback)
+        #cvimage = bridge.imgmsg_to_cv(imgmsg,'bgr8')
+        #msg = cv_bridge.CvBridge().cv2_to_imgmsg(frame, encoding="bgr8")
+        #cvimage = bridge.imgmsg_to_cv2(imgmsg, "bgr8")
+        #cvimage = bridge.imgmsg_to_cv()
         # Save the last image captured.
-        # self.last_cvimage = cvimage
-        # cvimage_array = np.asarray(cvimage, dtype=np.uint8)
+        #self.last_cvimage = cvimage
+        #cvimage_array = np.asarray(cvimage, dtype=np.uint8)
         return cvimage_array
-
+        
     def getLastCvImage(self):
         return self.last_cvimage
-
+    
     def getLastArrayImage(self):
         cvimage_array = np.asarray(self.last_cvimage, dtype=np.uint8)
         return cvimage_array

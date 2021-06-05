@@ -5,9 +5,12 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 import pyhop
+
+
 """
 Here are some helper functions that are used in the methods' preconditions.
 """
+
 def is_done(b1,state,goal):
     if b1 == 'table': return True
     if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
@@ -132,4 +135,5 @@ def put_m(state,b1,b2):
         return False
 
 pyhop.declare_methods('put',put_m)
+
 

@@ -19,7 +19,6 @@ The blocks-world operators use three state variables:
 - holding = name of the block being held, or False if the hand is empty.
 """
 
-
 def pickup(state,b):
     if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
         state.pos[b] = 'hand'

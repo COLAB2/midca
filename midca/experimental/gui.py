@@ -15,7 +15,8 @@ class StdoutDirector:
         pass
 
 class MidcaDisplay(tk.Frame):
-    def __init__(self, master, phaseManager):
+	
+	def __init__(self, master, phaseManager):
 		tk.Frame.__init__(self, master)
 		self.phaseManager = phaseManager
 		self.textArea = tk.Text(self, height=30, width=80,bg='light cyan')
@@ -69,3 +70,4 @@ display = MidcaDisplay(root, myMidca)
 display.pack()
 
 root.mainloop()
+

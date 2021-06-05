@@ -11,7 +11,9 @@ baxter = Baxter()
 import os
 import sys
 import argparse
+     
 import rospy
+   
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
 
@@ -23,6 +25,7 @@ from sensor_msgs.msg import (
 def Getmask(hsv, lower, upper):
     lower_color = np.array(lower, dtype=np.uint8)
     upper_color = np.array(upper, dtype=np.uint8)
+    
     mask = cv2.inRange(hsv, lower_color, upper_color)
     
     return mask
@@ -90,7 +93,6 @@ def findContour(frame, mask):
             if diag > maxdiag:
                 pt1max = p1
                 pt2max = p2
-
             
             # UPPER LEFT CORNER OF THE LARGEST RECTANGLE
         pt1 = pt1max
@@ -129,17 +131,22 @@ def monitor_clear_block(block_n='red block', topic='clear_block'):
 #     rospy.init_node('clear_block_monitoring_____...')
     block_name = block_n
     handler.subscriber = rospy.Subscriber("obj_pos", String, m_callback)
+
 def m_callback(data):
     print("got data!")
     strMsg = str(data.data).strip()
     color_locations = strMsg.split(";")
     color_location_dic = {}
     for msg in color_locations:
+            
         color_location = msg.split(":");
             
         pointstr = color_location[1].split(",")
         p = Point(x = int(pointstr[0]), y = int(pointstr[1]), z = int(pointstr[2]))
         color_location_dic.update({color_location[0]: p})
+            
+    
+    
     if len(color_location) >= 2:
             pos_green = 'table'
             pos_red = 'table'
@@ -169,12 +176,14 @@ def monitor_clear_block2(block_name='red block', topic='clear_block'):
         image = baxter.getImageFromRightHandCamera()
         frame = baxter.getLastCvImage()
         #send_image_to_screen(frame)
-
+    
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         for color_name in boundaries:
             (lower, upper) = boundaries[color_name]
             mask = Getmask(hsv, lower, upper)
+            
+                
             p = findContour(frame, mask)
             if(p != None):
                 color_location.update({color_name : (p[0], p[1], 0)})
@@ -200,12 +209,13 @@ def monitor_clear_block_asus(block_n='red block', topic='clear_block'):
     #rospy.init_node('clear_block_monitoring...')
     block_name = block_n
     while(1):
-        msg = rospy.wait_for_message(topic, String)
-        obj,loc = m_asus(msg,block_name)
-        if obj:
+    	msg = rospy.wait_for_message(topic, String)
+    	obj,loc = m_asus(msg,block_name)
+    	if obj:
 		return obj,loc	    
 	  
 def m_asus(data,block_name):
+
     #print("got data!")
     strMsg = str(data.data).strip()
     color_locations = strMsg.split(";")
@@ -217,8 +227,9 @@ def m_asus(data,block_name):
         p = Point(x = float(pointstr[0]), y = float(pointstr[1]), z = float(pointstr[2]))
         color_location_dic.update({color_location[0]: p})
 
+
     if color_location_dic :
-        for each_block in color_location_dic:
+		for each_block in color_location_dic:
 			pos = 'table'
 			clear = 'clear'
 			cmp_block = block_name
@@ -236,5 +247,12 @@ def m_asus(data,block_name):
 						pos = cmp_block;
 						block_pos = each_block
 						return each_block,color_location_dic[each_block]
+            
+
+
+
+
+
 if __name__ == '__main__':
+
     main()

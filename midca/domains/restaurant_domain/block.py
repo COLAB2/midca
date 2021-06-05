@@ -8,7 +8,7 @@
 #   -clear(x)
 #   -on(x,y)
 class Block:
-    SQUARE = 1  # constant
+    SQUARE = 1          # constant
     TRIANGLE = 2
     TABLE = 3
 
@@ -32,16 +32,16 @@ class Block:
 
     # set the block to clear
     def clear(self):
-        self.isclear = True
-
+        self.isclear = True  
+        
     def __str__(self):
-        return self.id
-
+    	return self.id
+    
     def __hash__(self):
-        return hash(self.id)
-
+    	return hash(self.id)
+    
     def __eq__(self, other):
-        try:
-            return self.id == other.id
-        except Exception:
-            return False
+    	try:
+    		return self.id == other.id
+    	except Exception:
+    		return False

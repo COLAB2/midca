@@ -1,16 +1,15 @@
 from midca import base
-from midca import goals, base
-import inspect,os
+import inspect 
 from midca.worldsim import domainread
-rule_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/rule.txt"
 
 class MentalExpectation:
     '''
     An expectation about a mental state (a mental state is a collection of variable bindings)
     '''
-
+    
     def __init__(self):
         self.vars_and_funcs = {}
+        
     def add_var_expectaiton(self, varname, func):
         '''
         Adds an expectation about a single variable
@@ -19,13 +18,13 @@ class MentalExpectation:
         varname = 'CURRENT GOALS'
         func = lambda x: len(x) > 0
         '''
-
+    
         self.vars_and_funcs[varname] = func
-
+    
     def get_vars_and_funcs(self):
         return self.vars_and_funcs
-
-    def apply_expectation(self, var_vals):
+    
+    def apply_expectation(self,var_vals):
         '''
         Given a segment of length 1 of a trace, return a dict of the variable
         names and the results of calling the functions on the values of those variables
@@ -34,32 +33,33 @@ class MentalExpectation:
         '''
         all_true = True
         at_least_one_true = False
-        for [var, val] in var_vals:
+        for [var,val] in var_vals:
             if var in list(self.vars_and_funcs.keys()):
                 if self.vars_and_funcs[var](val):
                     at_least_one_true = True
                 else:
                     all_true = False
-
+        
         if all_true and at_least_one_true:
-            # print "========>>>>>>> EXPECTATIONS HAVE BEEN MET"
+            #print "========>>>>>>> EXPECTATIONS HAVE BEEN MET"
             return True
         elif at_least_one_true:
-            # print "========>>>>>>> AT LEAST ONE, BUT NOT ALL, OF THE EXPECTATIONS WERE MET"
+            #print "========>>>>>>> AT LEAST ONE, BUT NOT ALL, OF THE EXPECTATIONS WERE MET"
             pass
         else:
-            # print "========>>>>>>> NONE OF THE EXPECTATIONS WERE MET"
+            #print "========>>>>>>> NONE OF THE EXPECTATIONS WERE MET"
             pass
-
+    
+    
         return False
-        # print "trace segment is "+str(trace_seg)
+        #print "trace segment is "+str(trace_seg)
 
 class PrimitiveExpectationOfCognition():
     '''
     An expectation of cognition involving one mental action (a single cognitive process)
     '''
-
-    def __init__(self, action, priorMentalExp=None, postMentalExp=None, verbose=2):
+    
+    def __init__(self, action, priorMentalExp=None,postMentalExp=None, verbose=2):
         '''
         action refers to the mental action, and should be the string name of a module, like
         'PyHopPlanner' or 'SimpleNBeaconsExplain'
@@ -67,7 +67,6 @@ class PrimitiveExpectationOfCognition():
         self.verbose = verbose
         if (priorMentalExp is None and postMentalExp is None):
             raise Exception("Cannot create primitive expectation of cognition with no mental expectations")
-
         
         self.action = action
         self.priorMentalExp = priorMentalExp
@@ -78,19 +77,21 @@ class PrimitiveExpectationOfCognition():
         Returns true if expectation met, and false otherwise using the current trace stored in memory
         '''     
         trace = mem.trace
+        
         # get the current data from the trace
         post = trace.get_n_prev_phase()
         # get the 2nd most
         prior = trace.get_n_prev_phase(n=1)
-
+        
         if prior is None or post is None:
-            return False
-
+            return False 
+        
         prior_result = self.priorMentalExp.apply_expectation(prior[1])
         post_result = self.postMentalExp.apply_expectation(post[1])
-
-        # print "    Prior result is "+str(prior_result)
-        # print "    Post result is "+str(post_result)
+        
+        #print "    Prior result is "+str(prior_result)
+        #print "    Post result is "+str(post_result)
+        
         if prior_result and not post_result:
             # print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
             return True
@@ -120,6 +121,7 @@ class MRSimpleDetect(base.BaseModule):
         self.updated_to_move2 = False
         self.updated_to_move3 = False #hacky i know
         self.updated_to_move4 = False #hacky i know
+    
     def createAlwaysExplanationExp(self):
         ''' 
         creates the expectation that there is always an explanation following a 
@@ -145,6 +147,7 @@ class MRSimpleDetect(base.BaseModule):
         Given the strength of the wind, this function will return the new operator that will take
         wind into account. 
         '''
+        
         mud = True
         new_op_str = ""
         if wind_str == 1:
@@ -235,6 +238,7 @@ class MRSimpleDetect(base.BaseModule):
                             condition(agent-at, [agnt, start], negate = TRUE), \
                             condition(agent-at, [agnt, dest])])'
     
+    
         elif wind_str == 4:
             print("wind_str = "+str(wind_str))
             if mud:
@@ -278,6 +282,7 @@ class MRSimpleDetect(base.BaseModule):
         exp_violation = self.exp1.apply_on_curr_trace(self.mem)
         
         if exp_violation:
+            
             # get the distance the wind pushed the agent from its start location
             # agents last action:
             last_actions = None
@@ -304,6 +309,7 @@ class MRSimpleDetect(base.BaseModule):
                 
             except:
                 raise Exception("Problem getting last action in meta interpret")
+            
             # hack, just go ahead and update the operator here
             # always assume move east, just update it assuming
             new_move_op_str = ""
@@ -312,6 +318,7 @@ class MRSimpleDetect(base.BaseModule):
             try:
                 # 1. get the current world state
                 #world = self.mem.get(self.mem.STATES)[-1]
+                
                 # 2. find the old operator moveeast
                 prev_move_opname = ''
                 for op in list(self.world.get_operators().values()):
@@ -343,10 +350,12 @@ class MRSimpleDetect(base.BaseModule):
                 if self.verbose >= 1: 
                     for op_k,op_v in list(self.world.operators.items()):
                         print("    op["+str(op_k)+"] = "+str(op_v))
+    
             except:
                 pass
 
 
+    
 class MRSimpleDetectOld(base.BaseModule):
     '''
     Used to detect the PyHopPlanner class has failed to produce a plan
@@ -378,8 +387,7 @@ class MRSimpleDetectOld(base.BaseModule):
                 print(("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum)))
 
                 if prev_phase_datum[0] in list(relevant_neg_exp.keys()):
-                    print(("-*-*- detect(): prev_phase_datum[0]: " + str(prev_phase_datum[0]) + " found in " + str(
-                        relevant_neg_exp)))
+                    print(("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neg_exp)))
 
                     exp_to_check = relevant_neg_exp[prev_phase_datum[0]]
 
@@ -395,41 +403,25 @@ class MRSimpleDetectOld(base.BaseModule):
 
 class MRSimpleGoalGen(base.BaseModule):
     '''
-
     This class generates a goal to swap out the cognitive level plan module.
     '''
     anoms_to_goals = {"IMPASSE":["SWAP-MODULE","?phase"]}
 
     def run(self,cycle,verbose=2):
         self.verbose = verbose
-        goals = self.mem.get(self.mem.META_GOALS)
         #print("[in MRSimpleGoalGen] self.mem.META_ANOMALIES are "+str(self.mem.get(self.mem.META_ANOMALIES)))
         if not self.mem.get(self.mem.META_GOALS):
             self.mem.set(self.mem.META_GOALS, [])
+
         if self.mem.get(self.mem.META_ANOMALIES):
             goals = self.mem.get(self.mem.META_GOALS)
             for anomaly in self.mem.get(self.mem.META_ANOMALIES):
                 new_goal = self.gen_goal(anomaly)
                 goals.append(new_goal)
-
                 self.mem.set(self.mem.META_GOALS, goals)
-        #print(self.mem.META_GOALS)
-        if (self.mem.DISCREPANCY is True):
-            #adding the learning goal to the goal graph
-            goal=[]
-            predicateName = "learned"
-            last_actions = self.mem.get(self.mem.ACTIONS)[-1][0]
-
-            args = [str(last_actions).split('(')[0]]
-            goal.append(goals.Goal(*args, predicate=predicateName))
-            self.mem.set(self.mem.META_GOALS, goal)
-
-            print('in meta-interpret phase')
-            #os.chdir('/home/zahid/Downloads//foil-python-master/src/trimlogic/test')
-            #os.system('python -m unittest trimlogic.test.FamilyTreeTestCase_1')
-            #f = open(rule_file, "r")
-
-        # print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
+                
+        #print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
+        
     def gen_goal(self, anomaly):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
@@ -439,6 +431,7 @@ class MRSimpleGoalGen(base.BaseModule):
             grounded_goal.append(item)
 
         return grounded_goal
+
 class MRSimpleGoalGenForGoalTrans(base.BaseModule):
     '''
     This class generates a goal to transform the goal when the planner fails.
@@ -458,6 +451,7 @@ class MRSimpleGoalGenForGoalTrans(base.BaseModule):
                 goals.append(new_goal)
                 self.mem.set(self.mem.META_GOALS, goals)
         #print("mem.META_GOALS is now: "+str(self.mem.get(self.mem.META_GOALS)))
+        
     def gen_goal(self, anomaly, verbose=2):
         ungrounded_goal = self.anoms_to_goals[anomaly]
         grounded_goal = []
@@ -466,15 +460,15 @@ class MRSimpleGoalGenForGoalTrans(base.BaseModule):
                 item = self.mem.trace.module
             if item == "?goal":
                 # get the most recent goal sent to planner from the trace
-                if verbose >= 2: print(("self.mem.trace.module = " + str(self.mem.trace)))
-                if verbose >= 2: print((
-                    "self.mem.trace.get_current_phase_data() = " + str(self.mem.trace.get_current_phase_data())))
-                goals = self.mem.trace.get_current_phase_data()[1][1:][0]  # ugly, i know
-                if verbose >= 2: print(("goals are = " + str(list(map(str, goals)))))
+                if verbose >= 2: print(("self.mem.trace.module = "+str(self.mem.trace)))
+                if verbose >= 2: print(("self.mem.trace.get_current_phase_data() = "+str(self.mem.trace.get_current_phase_data())))
+                goals = self.mem.trace.get_current_phase_data()[1][1:][0] # ugly, i know
+                if verbose >= 2: print(("goals are = "+str(list(map(str, goals)))))
                 item = goals
             grounded_goal.append(item)
-        if verbose >= 2: print(("grounded_goal = " + str(grounded_goal)))
+        if verbose >= 2: print(("grounded_goal = "+str(grounded_goal)))
         return grounded_goal
+
 class MRSimpleDetect_construction(base.BaseModule):
     '''
     Used to detect the PyHopPlanner class has failed to produce a plan
@@ -507,7 +501,7 @@ class MRSimpleDetect_construction(base.BaseModule):
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
-                            # print("-*-*- detect(): adding anomaly: "+str(exp[1]))
+                            #print("-*-*- detect(): adding anomaly: "+str(exp[1]))
                             anomalies.append(exp[1])
 
                     # for data in last_phase_data:
@@ -517,6 +511,11 @@ class MRSimpleDetect_construction(base.BaseModule):
                     #             if data[1] == exp[0]:
                     #             # anomaly detected in negative expectations
 
+
         # TODO: implement pos_expectations
         if (self.verbose >= 2): print(("    Found anomalies: "+str(anomalies)))
         self.mem.set(self.mem.META_ANOMALIES, anomalies)
+
+
+
+

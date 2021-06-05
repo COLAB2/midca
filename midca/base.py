@@ -21,6 +21,7 @@ class Phase:
 
     def __hash__(self):
         return hash(self.name)
+
 class BaseModule:
 
     def init(self, mem, world = None):
@@ -81,6 +82,7 @@ class MIDCA:
                     self.logger.logOutput()
                 self.mem.enableLogging(self.logger)
                 self.mem.logEachAccess = logMemory
+
     def phase_by_name(self, name, meta = False):
         phases = self.phases
         if meta:
@@ -90,6 +92,7 @@ class MIDCA:
             if phase.name == name:
                 return phase
         return None
+
     def insert_phase(self, phase, phaseOrIndex, meta = False):
         phases = self.phases
         modules = self.modules
@@ -137,6 +140,7 @@ class MIDCA:
 
     def runtime_append_module(self, phase, module):
         self.runtime_insert_module(phase, module, MAX_MODULES_PER_PHASE)
+
     #note: error handling should be cleaned up - if a phase cannot be found by name, the error will report the phase name as "None" instead of whatever was given. True for removeModule as well.
     def insert_module(self, phase, module, i, meta=False):
         phases = self.phases
@@ -183,6 +187,7 @@ class MIDCA:
             raise IndexError("index " + str(i) + " is outside the range of the module list for phase " + str(phase))
         else:
             return modules.pop(i)
+                
     def clearPhase(self, phaseOrName):
         if isinstance(phaseOrName, str):
             phase = self.phase_by_name(phaseOrName)
@@ -325,6 +330,7 @@ class MIDCA:
         newCopy.initialized = self.initialized
         newCopy.phaseNum = self.phaseNum
         return newCopy
+
 class PhaseManager:
 
     def __init__(self, world = None, verbose = 2, display = None, storeHistory = False, metaEnabled = False):
@@ -431,6 +437,7 @@ class PhaseManager:
                     self.twoSevenWarning = True
                 time.sleep(pause)
 
+    
     def one_cycle(self, verbose = 1, pause = 0.5, meta=False, noInterface=True):
         '''
         Runs one cycle of midca. If meta == True, it will run one cycle of metacognition, otherwise
@@ -474,6 +481,7 @@ class PhaseManager:
 
     def applyStateChange(self, stateStr):
         stateread.apply_state_str(self.midca.world, stateStr)
+
     #function which runs MIDCA with a text UI
     def run(self,usingInterface=True, phaseDelay=0):
         if not self.midca.initialized:
@@ -631,5 +639,6 @@ class PhaseManager:
                 if self.mem.metaEnabled:
                     if metaval == "continue":
                         self.next_meta_phase() # TODO - not sure when this gets called
+
 
         print("MIDCA is quitting.")

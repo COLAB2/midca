@@ -3,6 +3,7 @@ from midca.trace import CogTrace
 import threading
 
 class Memory:
+
     '''
     To do: in theory, a lock could be deleted in between when its existence is checked
     and when it is acquired. At some point this needs to be fixed.

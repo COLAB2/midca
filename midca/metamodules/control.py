@@ -1,4 +1,5 @@
 
+
 import os, copy,re
 import importlib
 from midca import base, goals, modules
@@ -78,7 +79,7 @@ class MRSimpleControl(base.BaseModule):
             if action[2] == "PyHopPlanner":
                 # print("current directory: "+str(os.getcwd()))
                 # print("str(dir(modules)) = "+str(dir(modules)))
-                planningModuleInstance = importlib.import_module("midca.modules.plan")
+                planningModuleInstance = importlib.import_module("midca.modules.planning")
                 print(("loaded planning module, it has following attributes: " + str(dir(planningModuleInstance))))
                 # get the args used to init the old module and use them to init this one
                 print("init args is " + str(self.prev_init_args))
@@ -344,6 +345,7 @@ class MRSimpleControl1(base.BaseModule):
 
             # and go top down
             # first, get the heights
+
 from midca.worldsim.pddl import Predicate
 import inspect, os, pddlpy, random, fileinput, shutil,math
 from midca.worldsim import pddl_num_read as pddlread

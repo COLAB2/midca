@@ -4,6 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
+
 from midca.modules._plan import modified_pyhop
 from _io import open
 import time
@@ -12,8 +13,8 @@ import rospy
 from std_msgs.msg import String
 import uuid
 
-
 class Monitor():
+    
     def __init__(self, name, block, depth):
         self.name = name
         self.block = block
@@ -102,6 +103,7 @@ def clear_block_stack(state, depth, task):
 
 
 def set_clear_status(state, objectOrID, newClearStatus):
+    
     positions = state.all_pos(objectOrID)
     if not positions:
         return None
@@ -111,7 +113,9 @@ def set_clear_status(state, objectOrID, newClearStatus):
                 state_pos.isclear = newClearStatus
                 return state
     return None
+
 def set_position(state, objectOrID, newPos):
+    
     positions = state.all_pos(objectOrID)
     if not positions:
         return None
@@ -134,10 +138,12 @@ def pos_of_block(state, depth, task):
         #print "monitor is already running for " + b
     else:
         #print "monitor for position was added"
+        
         m = Monitor(pos_of_block, b, depth)
         m.add_task(task_name)
         m.change_state = change_state
         modified_pyhop.generated_monitors.append(m)
+        
         c = get_last_position(state, b)
         new_pos = pos_block_monitor.monitor_pos_block(b, c)
         if new_pos:
@@ -148,6 +154,7 @@ def pos_of_block(state, depth, task):
         
         
 def get_last_position(state, objectOrID):
+    
     positions = state.all_pos(objectOrID)
     if not positions:
         return None
@@ -173,4 +180,4 @@ def declare_monitors(longApprehend = True):
     #pyhop.declare_monitors('reach_to_pickup', clear_block)      
 #     #get
 #     modified_pyhop.declare_monitors('stack', clear_block_stack)
-#
+#     

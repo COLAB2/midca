@@ -41,12 +41,12 @@ from std_msgs.msg import Float32
 
 class HaloLed():
     def __init__(self):
-        # rospy.init_node("Halo_set_color")
+    #rospy.init_node("Halo_set_color")
         self.pub = {}
-        self.pub["red"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_red_level", Float32, queue_size=1)
-        self.pub["green"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_green_level", Float32, queue_size=1)
+        self.pub["red"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_red_level",Float32,queue_size = 1)
+        self.pub["green"] = rospy.Publisher("/robot/sonar/head_sonar/lights/set_green_level",Float32,queue_size = 1)
 
-    def setLed(self, color, intensity):
+    def setLed(self,color, intensity):
         """
             Set an intensity value for the halo led
             
@@ -58,22 +58,24 @@ class HaloLed():
         try:
             self.pub[color].publish(Float32(intensity))
         except Exception as e:
-            rospy.logwarn("%s", str(e))
+            rospy.logwarn("%s",str(e))
+#####
+# The code below has 3 different settings available, NOT all def are needed
+# to operate this code.  The colors are Green, Red and Yellow to pick from.
+# Only one color is needed but the def reset is always needed
+#
+#####
 
-    #####
-    # The code below has 3 different settings available, NOT all def are needed
-    # to operate this code.  The colors are Green, Red and Yellow to pick from.
-    # Only one color is needed but the def reset is always needed
-    #
-    #####
+
+
 
     def setGreen(self):
         rospy.sleep(0.3)
-        self.setLed("green", 100)
-        self.setLed("red", 0)
-
+        self.setLed("green",100)
+        self.setLed("red",0)
+        
     def setRed(self):
         rospy.sleep(0.3)
-        self.setLed("red", 100)
-        self.setLed("green", 0)
+        self.setLed("red",100)
+        self.setLed("green",0)
 

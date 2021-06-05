@@ -5,7 +5,6 @@ from midca.examples._baxter.homography import *
 import math
 import copy
 import numpy as np
-
 try:
     from geometry_msgs.msg import PointStamped
     from geometry_msgs.msg import Point
@@ -14,7 +13,6 @@ try:
     from scipy.spatial import distance
 except:
     pass #if ROS is not installed, an error message will already have been generated.
-
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
 NS_COLOR_CODE = END_COLOR_CODE
@@ -48,6 +46,7 @@ def allowed_sighting_wait(objectID):
     returns the amount of midcatime MIDCA should wait to see an object before giving up.
     '''
     return MAX_SIGHTING_WAIT
+
 
 
 '''
@@ -161,12 +160,12 @@ class AsynchPlan(plans.Plan):
                 s += F_COLOR_CODE
             elif action.status == COMPLETE:
                 s += C_COLOR_CODE
-
+            
             s += str(action) + " "
         return s[:-1] + END_COLOR_CODE
 
-
 class AsynchAction:
+    
     nextID = 0
     def __init__(self, mem, midcaAction, executeFunc, isComplete, blocks):
         self.status = NOT_STARTED
@@ -244,8 +243,6 @@ def get_last_location(mem, objectOrID):
             if detectionEvent.loc:
                 return (detectionEvent.loc, detectionEvent.time)
     return None
-
-
 def check_2height_stack(mem,objectOrID):
     print("it is in check 3 height " )
     print(objectOrID)
@@ -412,8 +409,6 @@ class DoPoint(AsynchAction):
 #                 "assumed failed."
                 print("fail!!!!!")
             self.status = FAILED
-    
-
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -554,8 +549,6 @@ class DoReach(AsynchAction):
         return False
 
 class DoUnstack(AsynchAction):
-    
-
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -881,9 +874,6 @@ class DoPut(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-        
-    
-
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()

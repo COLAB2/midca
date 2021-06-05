@@ -1,13 +1,13 @@
-
-# this one uses moveit to move Baxter' arm
+#this one uses moveit to move Baxter' arm
 
 from midca import base
 from midca.experimental.baxter import moveit_test, baxter
+
 def print_func(s):
-    print(s)
+	print(s)
 
 def baxter_midca():
-    world = "Baxter World"
+	world = "Baxter World"
 	print('I am here')	
 	myMidca = base.PhaseManager(world, display = print_func)
 	for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:

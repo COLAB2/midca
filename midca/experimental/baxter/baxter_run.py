@@ -1,10 +1,11 @@
 from midca import base
 from midca.experimental.baxter import baxter_module, baxter
+
 def print_func(s):
 	print(s)
 
 def baxter_midca():
-    world = "Baxter World"
+	world = "Baxter World"
 	myMidca = base.PhaseManager(world, display = print_func)
 	for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
 		myMidca.append_phase(phase)

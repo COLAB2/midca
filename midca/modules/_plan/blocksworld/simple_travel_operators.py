@@ -5,6 +5,7 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 import pyhop
+
 def walk(state,a,x,y):
     if state.loc[a] == x:
         state.loc[a] = y
@@ -29,3 +30,5 @@ def pay_driver(state,a,x,y):
     else: return False
 
 pyhop.declare_operators(walk, call_taxi, ride_taxi, pay_driver)
+
+

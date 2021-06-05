@@ -15,11 +15,9 @@ import inspect, os
 # Use other util files for other domains
 from midca.domains.blocksworld import util
 from midca.domains.blocksworld.plan import methods, operators
-
 '''
 Simulation of tower construction 
 '''
-
 ###-Make sure put the domain file for jshop planner in JSHOP_DOMAIN_FILE.
 
 ###-util.jshop_state_from_world transfers the state file in MIDCA to state file for JSHOP. You can find the 

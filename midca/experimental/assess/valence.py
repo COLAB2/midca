@@ -8,6 +8,7 @@ experimental MIDCA module that categorizes the type of an anomaly detected using
 '''
 
 VALENCE_KEY = "valence"
+
 class PredChange:
 	
 	def __init__(self, difs, fractiondifs, predname = None):
@@ -136,3 +137,4 @@ class PredicateChangeAssessor:
 		self.mem._update(VALENCE_KEY, valence)
 		if verbose >= 1:
 			print("anomaly valence: ", valence)
+		

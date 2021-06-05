@@ -167,7 +167,7 @@ def get_last_position(state, objectOrID):
     
 #
 """for each task we know what kind of monitors we should run"""
-    
+
 def declare_monitors(longApprehend = True):
     #pyhop.declare_monitors('pickup_task',clear_block)
 #     #unstack_task 
@@ -181,4 +181,3 @@ def declare_monitors(longApprehend = True):
     #pyhop.declare_monitors('reach_to_pickup', clear_block)      
 #     #get
 #     modified_pyhop.declare_monitors('stack', clear_block_stack)
-#

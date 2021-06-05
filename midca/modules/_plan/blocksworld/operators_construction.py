@@ -21,7 +21,6 @@ The blocks-world operators use three state variables:
 - clear[b] = False if a block is on b or the in-arm is holding b, else True.
 - holding = name of the block being held, or False if the in-arm is empty.
 """
-
 def pickup(state, b):
     if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
         state.pos[b] = 'in-arm'
@@ -48,7 +47,6 @@ def unstack(state,b,c):
         
         return state
     else: return False
-    
 def unstack_mortared(state,b,c,m):
     ''' m is for mortar '''
     if state.pos[b] == c and c != 'table' and state.clear[b] == True and state.holding == False:

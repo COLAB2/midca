@@ -391,7 +391,6 @@ def status(b1,state,goal):
 In each Pyhop planning method, the first argument is the current state (this is analogous to Python methods, in which the first argument is the class instance). The rest of the arguments must match the arguments of the task that the method is for. For example, ('pickup', b1) has a method get_m(state,b1), as shown below.
 """
 
-
 ### methods for "move_blocks"
 
 def moveb_m(state,goal):
@@ -444,7 +443,6 @@ def moveb_m(state,goal):
 declare_methods must be called once for each taskname. Below, 'declare_methods('get',get_m)' tells Pyhop that 'get' has one method, get_m. Notice that 'get' is a quoted string, and get_m is the actual function.
 """
 
-
 ### methods for "move_one"
 
 def move1(state,b1,dest):
@@ -466,7 +464,6 @@ def move1(state,b1,dest):
 
 
 ### methods for "get"
-
 
 def get_by_unstack(state,b1):
     """Generate a pickup subtask."""

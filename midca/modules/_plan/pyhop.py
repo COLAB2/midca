@@ -148,7 +148,6 @@ def forall(seq, cond):
     for x in seq:
         if not cond(x): return False
     return True
-
 def find_if(cond, seq):
     """
     Return the first x in seq such that cond(x) holds, if there is one.
@@ -213,7 +212,6 @@ def copy_state(state):
     except AttributeError:
         return copy.deepcopy(state)
 
-
 def seek_plan(state, tasks, plan, depth, verbose=0):
     """
     Workhorse for pyhop. state and tasks are as in pyhop.
@@ -221,33 +219,33 @@ def seek_plan(state, tasks, plan, depth, verbose=0):
     - depth is the recursion depth, for use in debugging
     - verbose is whether to print debugging messages
     """
-    if verbose > 1: print('depth {} tasks {}'.format(depth, tasks))
+    if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
-        if verbose > 2: print('depth {} returns plan {}'.format(depth, plan))
+        if verbose>2: print('depth {} returns plan {}'.format(depth,plan))
         return plan
     task1 = tasks[0]
     if task1[0] in operators:
-        if verbose > 2: print('depth {} action {}'.format(depth, task1))
+        if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
-        newstate = operator(copy_state(state), *task1[1:])
-        if verbose > 2:
+        newstate = operator(copy_state(state),*task1[1:])
+        if verbose>2:
             print('depth {} new state:'.format(depth))
             print_state(newstate)
         if newstate:
-            solution = seek_plan(newstate, tasks[1:], plan + [task1], depth + 1, verbose)
+            solution = seek_plan(newstate,tasks[1:],plan+[task1],depth+1,verbose)
             if solution != False:
                 return solution
     if task1[0] in methods:
-        if verbose > 2: print('depth {} method instance {}'.format(depth, task1))
+        if verbose>2: print('depth {} method instance {}'.format(depth,task1))
         relevant = methods[task1[0]]
         for method in relevant:
-            subtasks = method(state, *task1[1:])
+            subtasks = method(state,*task1[1:])
             # Can't just say "if subtasks:", because that's wrong if subtasks == []
-            if verbose > 2:
-                print('depth {} new tasks: {}'.format(depth, subtasks))
+            if verbose>2:
+                print('depth {} new tasks: {}'.format(depth,subtasks))
             if subtasks != False:
-                solution = seek_plan(state, subtasks + tasks[1:], plan, depth + 1, verbose)
+                solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
                 if solution != False:
                     return solution
-    if verbose > 2: print('depth {} returns failure'.format(depth))
+    if verbose>2: print('depth {} returns failure'.format(depth))
     return False

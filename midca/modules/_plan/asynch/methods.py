@@ -1,4 +1,5 @@
 from midca.modules._plan import pyhop
+
 def point_at_m(state, objectID):
 	return [("block_until_seen", objectID), ("point_to", objectID)]
 
@@ -78,6 +79,7 @@ def achieve_goals_m(state, goals):
 Here are some helper functions that are used in the methods' preconditions.
 """
 goal_pos_dic = {}
+
 def get_goal_pos(goal):
 	poses = goal["pos"]
 	goal_pos_dic.update({poses.split(":")[0]: poses.split(":")[1]})
@@ -121,15 +123,14 @@ def status(b1,state,goal):
 		return 'waiting'
 
 
+
 """
 In each Pyhop planning method, the first argument is the current state (this is analogous to Python methods, in which the first argument is the class instance). The rest of the arguments must match the arguments of the task that the method is for. For example, ('pickup', b1) has a method get_m(state,b1), as shown below.
 """
 
-
 ### methods for "move_blocks"
 
 def moveb_m(state,goal):
-
     """
     This method implements the following block-stacking algorithm:
     If there's a block that can be moved to its final position, then
@@ -234,4 +235,3 @@ def declare_methods():
 	pyhop.declare_methods('get',get_m)
 	pyhop.declare_methods('move_one',move1)
 	pyhop.declare_methods('move_blocks',moveb_m)
-

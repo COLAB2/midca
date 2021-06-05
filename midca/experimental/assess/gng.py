@@ -1,4 +1,5 @@
 import math
+
 def euclidian_distance(v1, v2):
 	assert len(v1) == len(v2)
 	total = 0.0
@@ -205,3 +206,4 @@ class GNG:
 				self.edges.append(Edge(self.nodes[-1], closest))
 		for node in self.nodes:
 			node.error *= self.errorDecay
+		

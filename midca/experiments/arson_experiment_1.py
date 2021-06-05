@@ -15,12 +15,14 @@ import copy
 from functools import partial
 
 DATADIR = "experiments/ArsonCogSciDemo/data/"
+
 def asqiiDisplay(world):
     '''
     Creates an asqii representation for blocksworld.
     '''
     blocks = blockstate.get_block_list(world)
     print(str(scene.Scene(blocks)))
+
 class ArsonCogSciDemo():
     '''
     This is a custom experiment where MIDCA is run by varying the following:
@@ -113,10 +115,12 @@ class ArsonCogSciDemo():
 
 
 
+
             curr_arson_chance -= ARSON_CHANCE_DECREMENT
         print("Running each MIDCA instance...")
         # time.sleep(0.5)
         ex.run()
+
 class MIDCAInstance():
     '''
     This class creates a specific instance of MIDCA given certain parameters.
@@ -218,3 +222,4 @@ class MIDCAInstance():
 
 if __name__ == "__main__":
     ArsonCogSciDemo()
+

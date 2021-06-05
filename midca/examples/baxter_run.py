@@ -15,22 +15,20 @@ from std_msgs.msg import String
 OBJ_LOC_TOPIC = "quad_pos"
 UTTERANCE_TOPIC = "cmds_received"
 
-
 def ros_style_midca():
-    myMidca = base.MIDCA(None, verbose=2)
-    for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
-        myMidca.append_phase(phase)
+	myMidca = base.MIDCA(None, verbose = 2)
+	for phase in ["Perceive", "Interpret", "Eval", "Intend", "Plan", "Act"]:
+		myMidca.append_phase(phase)
 
-    myMidca.append_module("Perceive", ROSObserver.ROSObserver())
-    myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
-    myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
-    myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
-    myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(methods.declare_methods,
-                                                                        operators.declare_ops))
-    myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
-    return myMidca
-
-
+	myMidca.append_module("Perceive", ROSObserver.ROSObserver())
+	myMidca.append_module("Interpret", InstructionReceiver.InstructionReceiver())
+	myMidca.append_module("Eval", EvalPointingFromFeedback.EvalPointingFromFeedback())
+	myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+	myMidca.append_module("Plan", AsynchPyhopPlanner.AsynchPyhopPlanner(methods.declare_methods,
+	operators.declare_ops))
+	myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
+	return myMidca
+	
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
@@ -40,10 +38,10 @@ myMidca = ros_style_midca()
 myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
-rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers=[
-    rosrun.FixedObjectLocationHandler(OBJ_LOC_TOPIC, "quad", myMidca),
-    rosrun.UtteranceHandler(UTTERANCE_TOPIC, myMidca),
-    rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
-                           outgoingMsgHandlers=[rosrun.OutgoingMsgHandler(asynch.POINT_TOPIC, String)])
+rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
+	rosrun.FixedObjectLocationHandler(OBJ_LOC_TOPIC, "quad", myMidca),
+	rosrun.UtteranceHandler(UTTERANCE_TOPIC, myMidca),
+	rosrun.FeedbackHandler(rosrun.FEEDBACK_TOPIC, myMidca)],
+	outgoingMsgHandlers = [rosrun.OutgoingMsgHandler(asynch.POINT_TOPIC, String)])
 rosMidca.ros_connect()
 rosMidca.run_midca()

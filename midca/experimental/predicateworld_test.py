@@ -2,8 +2,9 @@ from midca import base
 from midca.worldsim import domainread, stateread, worldsim, blockstate, scene
 from midca.modules import simulator, perceive, note, guide, evaluate, intend, planning, act
 import os, inspect
+
 def asqiiDisplay(world):
-    blocks = blockstate.get_block_list(world)
+	blocks = blockstate.get_block_list(world)
 	print(str(scene.Scene(blocks)))
 
 def UserGoalsMidca(domainFile, stateFile, goalsFile = None, extinguish = False):

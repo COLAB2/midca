@@ -16,13 +16,13 @@ print('')
 pyhop.print_methods()
 
 state1 = pyhop.State('state1')
-state1.loc = {'me': 'home'}
-state1.cash = {'me': 20}
+state1.loc = {'me':'home'}
+state1.cash = {'me':20}
 
 # To get multidimensional tables in Python,
 # you have to use nested lists
 # (or in this case, nested dictionaries)
-state1.dist = {'home': {'park': 8}}
+state1.dist = {'home':{'park':8}}
 
 print("""
 ****************************************
@@ -32,13 +32,14 @@ with different levels of verbosity
 """)
 
 print('- verbosity 0:')
-pyhop.pyhop(state1, [('travel', 'me', 'home', 'park')])
+pyhop.pyhop(state1,[('travel','me','home','park')])
 
 print('- verbosity 1:')
-pyhop.pyhop(state1, [('travel', 'me', 'home', 'park')], verbose=1)
+pyhop.pyhop(state1,[('travel','me','home','park')],verbose=1)
 
 print('- verbosity 2:')
-pyhop.pyhop(state1, [('travel', 'me', 'home', 'park')], verbose=2)
+pyhop.pyhop(state1,[('travel','me','home','park')],verbose=2)
 
 print('- verbosity 3:')
-pyhop.pyhop(state1, [('travel', 'me', 'home', 'park')], verbose=3)
+pyhop.pyhop(state1,[('travel','me','home','park')],verbose=3)
+

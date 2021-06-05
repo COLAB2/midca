@@ -1,16 +1,14 @@
 import copy
 from midca.domains.blocksworld.block import Block
 
-
 class Scene:
-    blocks = []  # contains all blocks
+    blocks = []         # contains all blocks
 
     def __init__(self, blocks):
         self.blocks = blocks
 
     def draw(self):
         print(self.layers_to_s(self._makelayers()))
-
     def __str__(self):
         return self.layers_to_s(self._makelayers())
 
@@ -31,8 +29,7 @@ class Scene:
         # while there are more blocks above the current layer
         while len(blockscopy) > 0:
             nextlayer = []
-
-            # print len(currentlayer), len(blockscopy)
+            #print len(currentlayer), len(blockscopy)
             for i in range(len(currentlayer)):
                 for j in range(len(blockscopy)):
                     if blockscopy[j].on == currentlayer[i]:
@@ -68,14 +65,14 @@ class Scene:
                     if layers[i][k].on == asciisquares[-4][j][1]:
                         written = True
                         if layers[i][k].type == Block.TRIANGLE:
-                            if layers[i][k].onfire:
-                                asciisquares[-1][j] = ("          / \\  ", layers[i][k])
-                                asciisquares[-2][j] = ("         / * \\ ", layers[i][k])
-                                asciisquares[-3][j] = ("        / *" + str(layers[i][k].id) + "*\\", layers[i][k])
-                            else:
-                                asciisquares[-1][j] = ("          / \\  ", layers[i][k])
-                                asciisquares[-2][j] = ("         /   \\ ", layers[i][k])
-                                asciisquares[-3][j] = ("        /  " + str(layers[i][k].id) + " \\", layers[i][k])
+                        	if layers[i][k].onfire:
+                        		asciisquares[-1][j] = ("          / \\  ", layers[i][k])
+                        		asciisquares[-2][j] = ("         / * \\ ", layers[i][k])
+                        		asciisquares[-3][j] = ("        / *" + str(layers[i][k].id) + "*\\", layers[i][k])
+                        	else:
+                        		asciisquares[-1][j] = ("          / \\  ", layers[i][k])
+                        		asciisquares[-2][j] = ("         /   \\ ", layers[i][k])
+                        		asciisquares[-3][j] = ("        /  " + str(layers[i][k].id) + " \\", layers[i][k])
                         elif layers[i][k].type == Block.SQUARE:
                             if layers[i][k].onfire and layers[i][k].hasmortar:
                                 asciisquares[-1][j] = ("        +++++++", layers[i][k])
@@ -101,7 +98,7 @@ class Scene:
                     asciisquares[-3][j] = ("              ", None)
 
         toprint = ""
-        for i in range(len(asciisquares) - 1, -1, -1):
+        for i in range(len(asciisquares)-1, -1, -1):
             for segment in asciisquares[i]:
                 toprint += segment[0]
             toprint += "\n"
