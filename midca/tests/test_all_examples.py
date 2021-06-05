@@ -18,7 +18,7 @@ NUM_PROCESSES = 1 # number of python processes to run in parallel
 FILES_TO_IGNORE = ['__init__','predicateworld',
                    'homography','baxter',
                    'ObjectDetector', 'cogsci_demo_ma',
-                   "Calibrate", "nbeacons_aaai17_agent3"] # will ignore any file containing one of these
+                   "Calibrate"] # will ignore any file containing one of these
 
 # WARNING: if the run delay is ever too short (i.e. it takes longer than the delay for midca to execute
 # the skip command, this whole script will deadlock. Therefore the CUSTOM_RUN_DELAYS should be used for
@@ -50,7 +50,7 @@ for script_file in script_files:
         script_name = '{:.<60}'.format("examples/"+script_file)
         sys.stdout.write(script_name)
         #print "|=|=|=|=|=|=| "+str(script_file)+" |=|=|=|=|=|=|"
-        script = subprocess.Popen(['python', '-u', EXAMPLES_DIRECTORY+script_file],
+        script = subprocess.Popen(['python3', '-u', EXAMPLES_DIRECTORY+script_file],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
