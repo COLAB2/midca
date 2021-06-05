@@ -12,7 +12,7 @@ from midca.worldsim import stateread
 from midca.worldsim import pddl_num_read as pddlread
 #from midca.modules._plan.fastdown import testing_purp
 #from midca.worldsim.DIRNAME import fast_downward
-import inspect, os, pddlpy, random, fileinput, shutil,math
+import inspect, os, random, fileinput, shutil,math
 from midca.worldsim import pddl,worldsim
 
 

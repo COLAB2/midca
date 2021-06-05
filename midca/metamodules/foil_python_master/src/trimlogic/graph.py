@@ -4,8 +4,8 @@ from trimlogic.predicate import *
 from trimlogic.stdlib import *
 
 def consult(query):
-  print str(query)
-  for answer in fol_bc_ask(query, {}): print "Answer: " + str(answer)
+  print (str(query))
+  for answer in fol_bc_ask(query, {}): print ("Answer: " + str(answer))
 
 v = VariableFactory()
 edge_list = ( (0,1), (1,2), (0,3), (3,2), (3,4), (4,5), (4,6), (7,6), (6,8), (7,8) )

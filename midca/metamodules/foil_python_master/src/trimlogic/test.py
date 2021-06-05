@@ -81,7 +81,7 @@ def testOOP():
   parent.add_rule(Head=(X, Y), Body=(pred(mother, X, Y),))
   parent.add_rule(Head=(X, Y), Body=(pred(father, X, Y),))
   logging.debug("running algorithm")
-  for answer in fol_bc_ask([parent(Z, 'john')], {}): print "Answer: " + str(answer)
+  for answer in fol_bc_ask([parent(Z, 'john')], {}): print ("Answer: " + str(answer))
   logging.debug("done")
 
 def testReverseList():
@@ -91,11 +91,11 @@ def testReverseList():
   """
   X = Var("X")
   for query in ([reverse(plist([1,2]), X)],):
-    print query 
-    for answer in fol_bc_ask(query, {}): print "Answer: " + str(answer)
+    print (query)
+    for answer in fol_bc_ask(query, {}): print ("Answer: " + str(answer))
   
 def testOOP01():
-  for answer in fol_bc_ask([est(Var('X'), func(int.__add__, 1, 2))], {}): print str(answer)  
+  for answer in fol_bc_ask([est(Var('X'), func(int.__add__, 1, 2))], {}): print (str(answer))
   
 if __name__ == '__main__':
   unittest.main()

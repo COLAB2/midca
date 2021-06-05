@@ -347,7 +347,7 @@ class MRSimpleControl1(base.BaseModule):
             # first, get the heights
 
 from midca.worldsim.pddl import Predicate
-import inspect, os, pddlpy, random, fileinput, shutil,math
+import inspect, os, random, fileinput, shutil,math
 from midca.worldsim import pddl_num_read as pddlread
 from midca.worldsim import worldsim
 class MRSimpleControl2(base.BaseModule):
