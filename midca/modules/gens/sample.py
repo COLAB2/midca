@@ -44,8 +44,8 @@ def main():
 
         print(' press "x" to exit ')
         key = input()
-        if key is "x":
-                        return 0
+        if key == "x":
+                return 0
 
 if __name__ == "__main__":
     main()
