@@ -13,7 +13,7 @@ from midca.worldsim import pddl_num_read as pddlread
 #from midca.modules._plan.fastdown import testing_purp
 #from midca.worldsim.DIRNAME import fast_downward
 import inspect, os, random, fileinput, shutil,math
-from midca.worldsim import pddl,worldsim
+from midca.worldsim import pddl,worldsim_pddl
 
 
 
@@ -62,7 +62,7 @@ STATE_FILE = MIDCA_ROOT + "domains/plant_protection_domain/states/plant_pro_actu
 
 a = list(range(1,5))
 b = 7
-print(a,b)
+#print(a,b)
 ratio=0.6 #ratio of number of native plants
 nat_num = round(ratio*b)
 inv_num = b - nat_num

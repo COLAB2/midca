@@ -14,6 +14,16 @@ class Obj:
 	def __str__(self):
 		return self.name
 
+class Constant:
+    def __init__(self, val):
+        self.val = val
+
+    def __str__(self):
+        return str(self.val)
+
+    def __eq__(self, other):
+        return isinstance(other, Constant) and self.val == other.val
+
 class Type:
 	
 	def __init__(self, name, parents = []):

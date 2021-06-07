@@ -13,7 +13,7 @@
 # clone https://github.com/karpase/pythonpddl
 # follow the steps in the the link above
 
-import midca.worldsim.worldsim as worldsim
+import midca.worldsim.worldsim_pddl as worldsim
 
 from midca.worldsim import pddl
 from midca.worldsim.pddl import FExpression, FHead, ConstantNumber, Formula, Predicate
@@ -35,7 +35,6 @@ hidden = []
 def load_domain(domainfile, problemfile,event_file):
     (dom, prob) = pddl.parseDomainAndProblem(domainfile, problemfile)
     (event_dom, pp) = pddl.parseDomainAndProblem(event_file, problemfile)
-    #print(dom,prob)
     #print(prob.goal)
     #print("helooooooo")
     #a=pddl.parseGoalDescription(prob)
@@ -107,7 +106,7 @@ def parseAction(dom):
     for a in dom.actions:
         #print(a.get_eff)
         actions_args = parseTypedArgList(a.parameters)
-        #print(a.parameters)
+        #print(actions_args)
         prepredicatesfunc = []
         postpredicatesfunc = []
         prepredicates = []
@@ -124,9 +123,8 @@ def parseAction(dom):
         postfunctypes = []
         prefuncpos = []
         postfuncpos = []
-        #print(a.cond_eff)
         for pre in a.get_pre(True):
-            #print(pre)
+
             # a.args is typedArgList
             if type(pre) is Formula:
                 #print(pre.asPDDL())
@@ -215,9 +213,8 @@ def parseAction(dom):
                 preobjtypes.append(pre_args_type)
 
         for eff in a.get_eff(True):
-            #print('hi23',type(eff))
+
             if type(eff) is Formula:
-                #print('hi hello')
                 args = []
                 tempargs = []
                 temptypes = []
@@ -250,19 +247,15 @@ def parseAction(dom):
 
             elif type(eff) is Predicate:
                 # a.args is typedArgList
-                #print(type(eff))
                 postpos.append(True)
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
-                #print(eff.name,type(eff_args_name),type(eff_args_type),a.cond_eff)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
-                #print(postpredicates)
+                # print(eff_args_name)
 
         for eff in a.get_eff(False):
-            #print('hi3',type(eff))
             if type(eff) is Formula:
-                #print('hi')
                 args = []
                 tempargs = []
                 temptypes = []
@@ -297,14 +290,12 @@ def parseAction(dom):
 
                 postpos.append(False)
                 eff.name, eff_args_name, eff_args_type = parsePredicate(eff, actions_args)
-                #print(type(eff_args_name),type(eff.name),type(eff_args_type))
+                #print('hi',eff_args_name)
                 postpredicates.append(worldsim.Predicate(eff.name, eff_args_name, eff_args_type))
-
                 postobjnames.append(eff_args_name)
                 postobjtypes.append(eff_args_type)
                 # print(eff_args_name)
-        #postpredicates.append(worldsim.Predicate(str('invasive-at'), ['?from'], ['mapgrid']))
-        #print('hi ra',postpredicates)
+
         operators.update({a.name: worldsim.Operator(a.name, list(actions_args.keys()), prepredicates, preobjnames,
                                                     preobjtypes, prepos,
                                                     postpredicates, postobjnames, postobjtypes, postpos,
@@ -314,9 +305,8 @@ def parseAction(dom):
 
 def parsePredicate(pre, actions_args):
     args_names = parseTypedArgList_names(pre.args)
-    #print(actions_args)
     args_types = parseTypedArgList_types(pre.args, actions_args)
-    #print(pre.name,args_names,type(args_types))
+    #print(pre.name,args_names,args_types)
 
     return pre.name, args_names, args_types
 
@@ -482,7 +472,6 @@ def parseTypedArgList_names(argList):
     for arg in argList.args:
         n = objects
         parsed.append(str(arg.arg_name))
-    #print('parsed',parsed)
     return parsed
 
 def parseTypedArgList_ground_names(argList):
@@ -585,3 +574,4 @@ if __name__ == "__main__":
     ff_STATE_FILE = MIDCA_ROOT + "domains/ffdomain/minecraft/wood.75.pddl"
 
     load_domain(ff_DOMAIN_FILE, ff_STATE_FILE)
+
