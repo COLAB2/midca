@@ -1,0 +1,92 @@
+.000347 - Goal Graph initialized.
+
+.002276 - [cognitive] Initializing Simulate module 1 SendRemoteMidcaActionSimulator...done.
+
+.002479 - [cognitive] Initializing Perceive module 1 URecieveRemoteMidcaWorld...done.
+
+.002737 - [cognitive] Initializing Perceive module 2 PerfectObserver...done.
+
+.002947 - [cognitive] Initializing Perceive module 3 RecieveRequests...done.
+
+.003166 - [cognitive] Initializing Perceive module 4 AutomaticGoalInput...done.
+
+.003311 - [cognitive] Initializing Interpret module 1 InterpretRequests...done.
+
+.003444 - [cognitive] Initializing Interpret module 2 GenerateRequests...done.
+
+.003612 - [cognitive] Initializing Interpret module 3 EvaluateRequests...done.
+
+.003747 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.003894 - [cognitive] Initializing Eval module 2 SimpleEvalSuspend...done.
+
+.004079 - [cognitive] Initializing Intend module 1 SimpleIntendMultipleGoalsSuspend...done.
+
+.004420 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.004627 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.004958 - Starting cycle 0
+
+.005146 - ****** Starting Simulate Phase ******
+
+.005473 - Simulator: no actions selected yet by MIDCA.
+
+.506630 - ****** Starting Perceive Phase ******
+
+.508171 - World observed.
+
+.516364 - Goal Recieved.
+
+.516653 - Updated States 
+
+.516945 - exists(human)
+GOAL(on[A_;B_])
+requested(human,neo,on[A_;B_])
+
+1.024122 - ****** Starting Interpret Phase ******
+
+1.025259 - 
+Midca generated a goal : Goal(neo, human, on[A_;B_], predicate: committed)
+
+1.025525 - 
+Midca generated a goal : Goal(A_, B_, predicate: on)
+
+1.528742 - ****** Starting Eval Phase ******
+
+1.540572 - No current goals. Skipping eval
+
+1.549651 - No current goals. Skipping eval
+
+2.050529 - ****** Starting Intend Phase ******
+
+2.098165 - Selecting goal(s): Goal(neo, human, on[A_;B_], predicate: committed)
+
+2.599125 - ****** Starting Plan Phase ******
+
+2.612215 - Planning...
+
+2.614024 - Planning complete.
+
+2.614508 - Plan: 
+
+2.614907 -   inform(neo, human, on[A_;B_], accepted)
+
+2.615305 -   commit(neo, human, on[A_;B_], accepted)
+
+3.117505 - ****** Starting Act Phase ******
+
+3.326303 - ------------------------------------------------------------------------------------
+
+3.326484 - The goal on(A_,B_) is accepted 
+
+3.326587 - ------------------------------------------------------------------------------------
+
+3.326841 - Action inform(neo, human, on[A_;B_], accepted) complete.
+
+3.827899 - Starting cycle 1
+
+3.828478 - ****** Starting Simulate Phase ******
+
+3.829086 - list index out of range
+

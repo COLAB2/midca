@@ -151,7 +151,6 @@ class AsynchAction:
     def __str__(self):
         return str(self.action)
 
-
 class Commit(AsynchAction):
 
     '''
@@ -287,7 +286,7 @@ class Inform(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
+        self.memkey = self.mem.ZMQ_OUTGOING_REQS
         self.action = midcaAction
         self.skip = True
         self.complete = False
@@ -359,7 +358,9 @@ class Inform(AsynchAction):
                 print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is accepted ")
                 print ("------------------------------------------------------------------------------------")
             else:
-                self.publisher.send_string("commit: " +  self.parsable_construct_to_goal(self.action.args[2]))
+                #self.publisher.send_string(self.action.args[1]+";commit: " +  self.parsable_construct_to_goal(self.action.args[2]))
+                msg = self.action.args[1]+";commit: " +  self.parsable_construct_to_goal(self.action.args[2])
+                self.mem.add(self.memkey, msg)
         else:
             # if the world is achieved
             predicate, args = self.parse_to_atom(self.action.args[2])
@@ -369,15 +370,19 @@ class Inform(AsynchAction):
                     print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("tell: " +  self.parsable_construct_to_goal(self.action.args[2]))
-
+                    time.sleep(0.5)
+                    #self.publisher.send_string(self.action.args[1]+";tell: " +  self.parsable_construct_to_goal(self.action.args[2]))
+                    msg = self.action.args[1]+";tell: " +  self.parsable_construct_to_goal(self.action.args[2])
+                    self.mem.add(self.memkey, msg)
             else:
                 if self.action.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
                     print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected ")
                     print ("------------------------------------------------------------------------------------")
                 else:
-                    self.publisher.send_string("reject: " +  self.parsable_construct_to_goal(self.action.args[2]))
+                    #self.publisher.send_string(self.action.args[1]+";reject: " +  self.parsable_construct_to_goal(self.action.args[2]))
+                    msg = self.action.args[1]+";reject: " +  self.parsable_construct_to_goal(self.action.args[2])
+                    self.mem.add(self.memkey, msg)
         pass
 
     def check_confirmation(self):
@@ -392,7 +397,7 @@ class Request(AsynchAction):
     def __init__(self, mem, midcaAction):
         # initialize memory
         self.mem = mem
-        self.publisher = self.mem.get(self.mem.CONNECTIONS)["publish"]
+        self.memkey = self.mem.ZMQ_OUTGOING_REQS
         self.action = midcaAction
         self.skip = True
         self.complete = False
@@ -418,7 +423,9 @@ class Request(AsynchAction):
 
 
     def implement_action(self):
-        self.publisher.send_string("achieve: " + self.parsable_construct_to_goal(self.action.args[2]))
+        msg = self.action.args[1]+";achieve: " + self.parsable_construct_to_goal(self.action.args[2])
+        self.mem.add(self.memkey, msg)
+        #self.publisher.send_string(self.action.args[1]+";achieve: " + self.parsable_construct_to_goal(self.action.args[2]))
         print ("------------------------------------------------------------------------------------")
         print (self.action.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.action.args[2])+ " to " +self.action.args[1] )
         print ("------------------------------------------------------------------------------------")
@@ -474,8 +481,6 @@ class wait(AsynchAction):
                 return True
         return False
 
-
-
 class GraceCommunicate(AsynchAction):
     '''
     Action that communicates it's depth to fumin
@@ -505,14 +510,9 @@ class GraceCommunicate(AsynchAction):
         # which is the to go location for grace collectdata(grace, sensordata, Tx4y4)
         location = self.parse_tile(argnames[2])
         tagworld = self.interface
-        tagworld.sendHotspot(location)
+        #tagworld.sendHotspot(location)
 
     def check_confirmation(self):# read a file output by program chechinkg for surface and return true or false
-        if self.skip:
-            self.skip = False
-            return False
-
-
         return True
 
 class GraceAscend(AsynchAction):
@@ -545,7 +545,6 @@ class GraceAscend(AsynchAction):
             return False
         return True
 
-
 class GraceDescend(AsynchAction):
     '''
     Action that communicates it's depth to fumin
@@ -575,7 +574,6 @@ class GraceDescend(AsynchAction):
             self.skip = False
             return False
         return True
-
 
 class MoveToCell(AsynchAction):
     '''
@@ -784,7 +782,6 @@ class DeepSurveyCell(AsynchAction):
             return True
         return False
 
-
 class SurveyCellErgodic(AsynchAction):
     '''
     Action to make grace reach surface
@@ -967,7 +964,11 @@ class GraceInspect(AsynchAction):
     def check_confirmation(self):
         tagworld = self.interface
         status = tagworld.searchComplete()
-        if status == str("True"):
+        argnames = [str(arg) for arg in self.action.args]
+        start = self.parse_tile(argnames[1])
+        end =   self.parse_tile(argnames[2])
+        partial_block = tagworld.isPartialblock(start, end)
+        if status == str("True") and partial_block == False:
             world = self.mem.get(self.mem.INTERFACE_WORLD)
             argnames = [str(arg) for arg in self.action.args]
             start = argnames[1]
@@ -979,5 +980,7 @@ class GraceInspect(AsynchAction):
                         and atom.args[0].name == start \
                         and atom.args[1].name == end:
                         world.remove_atom(atom)
+            return True
+        if status == str("True") and partial_block:
             return True
         return False

@@ -111,9 +111,10 @@ class AsyncGraceObserver(base.BaseModule):
     modify the observe method so that it returns an object representing the current known
     world state.
     '''
-    def __init__(self, simulator):
+    def __init__(self, simulator, name):
         #import simulator
         self.sim = simulator
+        self.agentName = name
 
     def init(self, world, mem):
         base.BaseModule.init(self, mem)
@@ -236,7 +237,7 @@ class AsyncGraceObserver(base.BaseModule):
 
                 arguments = ", ".join([str(tag_data), adj_position_tile])
                 states += "NUM(" + str(tag_data) + ")\n"
-                states += "estuniqueTagCount(grace, " + arguments + ")\n"
+                states += "estuniqueTagCount(" +self.agentName+ ", " + arguments + ")\n"
                 positions.append(adj_position_tile)
                 del tag
 
@@ -343,7 +344,6 @@ class AsyncGraceObserver(base.BaseModule):
             self.mem.set(self.mem.GETDATA, False)
             #time.sleep(0.1)
             tag = self.sim#.TagWorld()
-            tag_data = None
             tag_data = tag.get_tags(position)
             return tag_data
         else:
@@ -366,7 +366,7 @@ class AsyncGraceObserver(base.BaseModule):
     def get_remaining_time(self):
         tag = self.sim#.TagWorld()
         time = tag.timeRemaining()
-        return time
+        return int(time)
 
     def kill_simulator(self):
         tag = self.sim.TagWorld()
@@ -497,36 +497,41 @@ class AsyncGraceObserver(base.BaseModule):
 
 
     def run(self, cycle, verbose = 2):
+        #print (self.world)
         states = ""
 
         position = self.get_agent_position()
 
         hotspot_data = None
         if position:
-            states += "agent-at(grace," + position + ")\n"
+            states += "agent-at(" + self.agentName + "," + position + ")\n"
 
             # get if it is a hotspot or not
             hotspot_data = self.get_hotspot_data(self.parse_tile(position))
             #get the remaining simulation time
             time = self.get_remaining_time()
             if time:
+                if time < 0:
+                    time = 0
+                #pass
                 states += "NUM("+ str(time) + ")\n"
                 states += "timeRemaining(" + str(time) + ")\n"
                 self.remove_corresponding_atoms(["timeRemaining"])
 
         #calculate atoms related to bloc radius
         #states = self.blocRadius(position, states)
-        states += "QblocRadius(grace," + position + ", HIGH)\n"
+        states += "QblocRadius(" + self.agentName + "," + position + ", HIGH)\n"
 
         # get the tag data
         tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
 
         if tag_data:
+
             row,col = self.getdimensions()
             self.display_tag(tag_data, position , [row, col])
             arguments = ", ".join([str(tag_data), position])
             states += "NUM(" + str(tag_data) + ")\n"
-            states += "uniqueTagCount(grace, " + arguments + ")\n"
+            states += "uniqueTagCount(" + self.agentName + "," + arguments + ")\n"
 
             #get adjacent position
             states = self.get_adjacent_position_tags(position, states , [row,col])
@@ -542,26 +547,26 @@ class AsyncGraceObserver(base.BaseModule):
         mode = self.get_mode()
         if mode:
             # first remove the previous state
-            self.remove_corresponding_atoms(["agent-mode", "grace"])
+            self.remove_corresponding_atoms(["agent-mode", self.agentName])
             # update the state
             states += "MODE("+ mode + ")\n"
-            states += "agent-mode(grace," + mode +")\n"
+            states += "agent-mode(" + self.agentName + "," + mode +")\n"
 
             # grace is not free as it is not operating at regular mode
             if not mode == "m1":
-                self.remove_corresponding_atoms(["free", "grace"])
+                self.remove_corresponding_atoms(["free", self.agentName])
             else:
-                self.remove_corresponding_atoms(["free", "grace"])
-                states += "free(grace)\n"
+                self.remove_corresponding_atoms(["free", self.agentName])
+                states += "free(" + self.agentName + ")\n"
 
-        #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+        hotspot_data = tag_data if tag_data > 30 else None #self.get_hotspot_data(self.parse_tile(position))
 
         if hotspot_data:
-            states += "hotspot-detected(grace, " + position + ")\n"
+            states += "hotspot-detected(" + self.agentName + "," + position + ")\n"
             states += "NUM(" + str(hotspot_data) + ")\n"
-            states += "hotspot-detected-count(grace, " + str(hotspot_data) + ", " + position +")\n"
-            self.remove_corresponding_atoms(["hotspot-detected-count", "grace", position])
-            self.remove_corresponding_atoms(["hotspot-detected", "grace", position])
+            states += "hotspot-detected-count(" + self.agentName + "," + str(hotspot_data) + ", " + position +")\n"
+            self.remove_corresponding_atoms(["hotspot-detected-count", self.agentName, position])
+            self.remove_corresponding_atoms(["hotspot-detected", self.agentName, position])
 
         #if tag_data > 40:
         #    states += "hotspot-detected(grace, " + position + ")\n"
@@ -579,7 +584,7 @@ class AsyncGraceObserver(base.BaseModule):
                 # remove agent location
                 atoms = copy.deepcopy(world.atoms)
                 for atom in atoms:
-                    if atom.predicate.name == "agent-at":
+                    if atom.predicate.name == "agent-at" and atom.args[0].name == self.agentName:
                         world.atoms.remove(atom)
                         self.world.atoms.remove(atom)
                     elif atom.predicate.name == "uniqueTagCount" and \
@@ -594,7 +599,7 @@ class AsyncGraceObserver(base.BaseModule):
             elif position:
                 atoms = copy.deepcopy(world.atoms)
                 for atom in atoms:
-                    if atom.predicate.name == "agent-at":
+                    if atom.predicate.name == "agent-at" and atom.args[0].name == self.agentName:
                         world.atoms.remove(atom)
                         self.world.atoms.remove(atom)
 
@@ -757,20 +762,21 @@ class HumanGoalInput(base.BaseModule):
         states = ""
         human_goals = [[
             goals.Goal(*["grace", "Tx0y2"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx0y1"], predicate='surveyed'),
+            #goals.Goal(*["grace", "Tx0y1"], predicate='surveyed'),
             #goals.Goal(*["grace", "Tx0y2"], predicate='surveyed')
             ],
             [
-            goals.Goal(*["grace", "Tx1y1"], predicate='surveyed'),
+            goals.Goal(*["franklin", "Tx1y1"], predicate='surveyed'),
+            goals.Goal(*["franklin", "Tx2y0"], predicate='surveyed'),
             #goals.Goal(*["grace", "Tx1y1"], predicate='surveyed'),
             #goals.Goal(*["grace", "Tx1y2"], predicate='surveyed')
             ],
             [
-            goals.Goal(*["grace", "Tx2y0"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx2y1"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx2y2"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx1y0"], predicate='surveyed'),
-            goals.Goal(*["grace", "Tx0y0"], predicate='surveyed'),
+            goals.Goal(*["remus", "Tx2y0"], predicate='surveyed'),
+            goals.Goal(*["remus", "Tx2y1"], predicate='surveyed'),
+            goals.Goal(*["remus", "Tx2y2"], predicate='surveyed'),
+            goals.Goal(*["remus", "Tx1y0"], predicate='surveyed'),
+            goals.Goal(*["remus", "Tx0y0"], predicate='surveyed'),
             ]]
 
         if self.name == "grace":
@@ -779,6 +785,7 @@ class HumanGoalInput(base.BaseModule):
             human_goals = human_goals[1]
         else:
             human_goals = human_goals[2]
+            """
             start= "Tx2y2"
             end = "Tx1y2"
             atoms = self.world.get_atoms([start, end])
@@ -788,7 +795,7 @@ class HumanGoalInput(base.BaseModule):
                         and atom.args[0].name == start \
                         and atom.args[1].name == end:
                         self.world.remove_atom(atom)
-
+            """
         for goal in human_goals:
             #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
             #print "Goal Recieved."

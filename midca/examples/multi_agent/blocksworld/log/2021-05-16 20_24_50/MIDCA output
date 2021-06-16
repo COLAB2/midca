@@ -1,0 +1,181 @@
+.001759 - Goal Graph initialized.
+
+.009036 - [cognitive] Initializing Simulate module 1 SendRemoteMidcaActionSimulator...done.
+
+.009692 - [cognitive] Initializing Perceive module 1 URecieveRemoteMidcaWorld...done.
+
+.010585 - [cognitive] Initializing Perceive module 2 PerfectObserver...done.
+
+.011371 - [cognitive] Initializing Perceive module 3 RecieveRequests...done.
+
+.011949 - [cognitive] Initializing Perceive module 4 AutomaticGoalInput...done.
+
+.012512 - [cognitive] Initializing Interpret module 1 InterpretRequests...done.
+
+.013280 - [cognitive] Initializing Interpret module 2 GenerateRequests...done.
+
+.013822 - [cognitive] Initializing Interpret module 3 EvaluateRequests...done.
+
+.014165 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.014526 - [cognitive] Initializing Eval module 2 SimpleEvalSuspend...done.
+
+.014934 - [cognitive] Initializing Intend module 1 SimpleIntendMultipleGoalsSuspend...done.
+
+.015806 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.016195 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.016988 - Starting cycle 0
+
+.017477 - ****** Starting Simulate Phase ******
+
+.017969 - No actions selected this cycle by MIDCA.
+
+.519351 - ****** Starting Perceive Phase ******
+
+.521128 - World observed.
+
+.542258 - Goal Recieved.
+
+.542626 - Updated States 
+
+.542897 - exists(human)
+GOAL(on[A_;B_])
+requested(human,neo,on[A_;B_])
+
+1.057938 - ****** Starting Interpret Phase ******
+
+1.062708 - 
+Midca generated a goal : Goal(neo, human, on[A_;B_], predicate: committed)
+
+1.063792 - 
+Midca generated a goal : Goal(A_, B_, predicate: on)
+
+1.569297 - ****** Starting Eval Phase ******
+
+1.588940 - No current goals. Skipping eval
+
+1.606402 - No current goals. Skipping eval
+
+2.109480 - ****** Starting Intend Phase ******
+
+2.110692 - Selecting goal(s): Goal(neo, human, on[A_;B_], predicate: committed)
+
+2.611923 - ****** Starting Plan Phase ******
+
+2.626548 - Planning...
+
+2.627947 - Planning complete.
+
+2.628169 - Plan: 
+
+2.628402 -   inform(neo, human, on[A_;B_], accepted)
+
+2.628692 -   commit(neo, human, on[A_;B_], accepted)
+
+3.130032 - ****** Starting Act Phase ******
+
+3.345900 - ------------------------------------------------------------------------------------
+
+3.346885 - The goal on(A_,B_) is accepted 
+
+3.347500 - ------------------------------------------------------------------------------------
+
+3.348539 - Action inform(neo, human, on[A_;B_], accepted) complete.
+
+3.850998 - Starting cycle 1
+
+3.851360 - ****** Starting Simulate Phase ******
+
+3.851967 - No actions selected this cycle by MIDCA.
+
+4.354019 - ****** Starting Perceive Phase ******
+
+4.356335 - World observed.
+
+4.897624 - ****** Starting Interpret Phase ******
+
+5.400572 - ****** Starting Eval Phase ******
+
+5.416720 - Not all goals achieved; Goal(neo, human, on[A_;B_], predicate: committed) is not true.
+
+5.432219 - No current goals. Skipping eval
+
+5.933304 - ****** Starting Intend Phase ******
+
+5.935066 - No goals selected.
+
+6.436162 - ****** Starting Plan Phase ******
+
+6.455429 - Old plan retrieved. Checking validity... valid.
+
+6.456469 - checking to see if all goals are achieved... yes
+
+6.957556 - ****** Starting Act Phase ******
+
+7.177623 - ------------------------------------------------------------------------------------
+
+7.178176 - The goal on(A_,B_) is committed to achieve 
+
+7.178512 - ------------------------------------------------------------------------------------
+
+7.179333 - Action commit(neo, human, on[A_;B_], accepted) complete.
+
+7.681444 - Starting cycle 2
+
+7.682089 - ****** Starting Simulate Phase ******
+
+7.682863 - No actions selected this cycle by MIDCA.
+
+8.183962 - ****** Starting Perceive Phase ******
+
+8.185105 - World observed.
+
+8.717726 - ****** Starting Interpret Phase ******
+
+9.220904 - ****** Starting Eval Phase ******
+
+9.237289 - All current goals achieved. Removing them from goal graph
+
+9.237934 - ('REMOVED GOAL : ', 'Goal(neo, human, on[A_;B_], predicate: committed)')
+
+9.238668 - removing 1 plans that no longer apply.
+
+9.256041 - No current goals. Skipping eval
+
+9.757160 - ****** Starting Intend Phase ******
+
+9.758533 - The goal Goal(A_, B_, predicate: on) is suspended due to lack of resources
+
+9.759277 - No goals selected.
+
+10.260377 - ****** Starting Plan Phase ******
+
+10.278074 - No goals received by planner. Skipping planning.
+
+10.779380 - ****** Starting Act Phase ******
+
+10.780711 - No valid plan found that achieves any current goals.
+
+10.796784 - MIDCA will not select an action this cycle.
+
+11.298104 - Starting cycle 3
+
+11.298773 - ****** Starting Simulate Phase ******
+
+11.299499 - No actions selected this cycle by MIDCA.
+
+11.800542 - ****** Starting Perceive Phase ******
+
+11.801731 - World observed.
+
+12.338229 - ****** Starting Interpret Phase ******
+
+12.340772 - 
+Midca generated a goal : Goal(neo, morpheus, on[A_;B_], predicate: requested)
+
+12.843290 - ****** Starting Eval Phase ******
+
+12.861767 - No current goals. Skipping eval
+

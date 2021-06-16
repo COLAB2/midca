@@ -146,14 +146,14 @@ def preprocess(text):
 	return corrected.replace("\"False\"", "False").replace("\"True\"", "True") 
 
 def load_domain(filename):
-	f = open(filename)
-	exec preprocess(f.read())
+	f = open(filename, "r")
+	exec (preprocess(f.read()))
 	f.close()
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values(),cltree,obtree)
 	return world
 
 def load_domain_str(str):
-	exec preprocess(str)
+	exec (preprocess(str), {})
 	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
 	return world
 

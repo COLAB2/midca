@@ -130,7 +130,9 @@ class SendRemoteMidcaActionSimulator:
     def run(self, cycle, verbose = 2):
         try:
             #get selected actions for this cycle. This is set in the act phase.
-            actions = self.mem.get(self.mem.ACTIONS)[-1]
+            actions = self.mem.get(self.mem.ACTIONS)
+            if actions:
+                actions = actions[-1]
         except TypeError, IndexError:
             if verbose >= 1:
                 print "Simulator: no actions selected yet by MIDCA."

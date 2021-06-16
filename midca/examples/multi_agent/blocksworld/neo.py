@@ -3,7 +3,7 @@ from midca import base, ZmqInterface
 from midca.modules import simulator, guide, evaluate, perceive, note, intend, planning, act
 from midca.modules._plan.asynch import asynch_communication
 from midca.worldsim import domainread, stateread
-import inspect, os
+import inspect, os, json
 
 # Domain Specific Imports
 from midca.domains.blocksworld import util, handlers
@@ -43,10 +43,10 @@ other_agent_name = "morpheus"
 #add the modules which instantiate basic blocksworld operation
 myMidca.append_module("Simulate", simulator.SendRemoteMidcaActionSimulator())
 myMidca.append_module("Perceive", perceive.URecieveRemoteMidcaWorld(world, stateread))
-myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
+#myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.PerfectObserver())
 myMidca.append_module("Perceive", perceive.RecieveRequests(agent_name, other_agent_name))
-myMidca.append_module("Perceive", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
+#myMidca.append_module("Perceive", simulator.ASCIIWorldViewer(display=DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.AutomaticGoalInput(agent_name))
 myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
 myMidca.append_module("Interpret", guide.GenerateRequests(agent_name, other_agent_name))

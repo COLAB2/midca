@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import midca
-from midca import base
+from midca import base, ZmqInterface
 from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
 from midca.worldsim import domainread, stateread
 from midca.modules._plan.asynch import asynch_grace
-import inspect, os
+import inspect, os, json
 import threading
 
 # Domain Specific Imports
@@ -13,7 +13,7 @@ from midca.domains.grace import grace_util as nbeacons_util
 from midca.domains.grace.interface import tagworld
 
 # Domain Specific Imports
-from midca.domains.blocksworld import util
+from midca.domains.blocksworld import util, handlers
 from midca.domains.blocksworld.plan import methods_multiAgent as methods, operators_multiAgent as operators
 
 
@@ -26,9 +26,6 @@ interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:7999",
 
 agent_name = "franklin"
 other_agent_name = "grace"
-
-publish = "tcp://127.0.0.1:4000"
-subscribe = "tcp://127.0.0.1:5000"
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -84,7 +81,7 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface))
-myMidca.append_module("Perceive", perceive.RecieveRequests(publish, subscribe, agent_name, other_agent_name))
+myMidca.append_module("Perceive", perceive.RecieveRequests(agent_name, other_agent_name))
 myMidca.append_module("Perceive", perceive.HumanGoalInput(agent_name))
 #myMidca.append_module("Perceive", perceive.GraceObserver())
 #myMidca.append_module("Interpret", guide.GraceGoalInputNSF(interface))
@@ -127,7 +124,30 @@ myMidca.mem.logEachAccess = False
 myMidca.init()
 myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
 
+def read_config(filename = "config.json"):
+        """
+        input: filename
+        :return: json object
+        """
+        config = None
+        with open(filename) as f:
+            config = json.load(f)
+        return config
+
+config = read_config()
+agent_topic = config["agents"]["neo"]["address"]["requests"]
+interface_topic = config["publish_interface"]
+zmqMidca = ZmqInterface.ZmqMidca(myMidca, incomingMsgHandlers = [
+                                 handlers.RequestHandler(agent_topic, "bind", "sub", myMidca)],
+                                 outgoingMsgHandlers = [
+                                  handlers.OutReqHandler(interface_topic, "connect", "pub", myMidca),
+                                 ])
+
+zmqMidca.connect()
+zmqMidca.run_midca()
+
+
 #tag = TagWorldDemo.TagWorld()
 #tag.move_cell([0,0], [0,0])
 
-myMidca.run(usingInterface=False)
+#myMidca.run(usingInterface=False)

@@ -1,0 +1,883 @@
+.000779 - Goal Graph initialized.
+
+.000430 - Goal Graph initialized.
+
+.020979 - [cognitive] Initializing Simulate module 1 SendRemoteMidcaActionSimulator...done.
+
+.021246 - [cognitive] Initializing Perceive module 1 URecieveRemoteMidcaWorld...done.
+
+.021547 - [cognitive] Initializing Perceive module 2 PerfectObserver...done.
+
+.021774 - [cognitive] Initializing Perceive module 3 RecieveRequests...done.
+
+.022045 - [cognitive] Initializing Perceive module 4 ASCIIWorldViewer...done.
+
+.022332 - [cognitive] Initializing Interpret module 1 InterpretRequests...done.
+
+.022559 - [cognitive] Initializing Interpret module 2 GenerateRequests...done.
+
+.022844 - [cognitive] Initializing Interpret module 3 EvaluateRequests...done.
+
+.023054 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.023227 - [cognitive] Initializing Intend module 1 SimpleIntendMultipleGoals...done.
+
+.023781 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.023977 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.024469 - Starting cycle 0
+
+.024747 - ****** Starting Simulate Phase ******
+
+.025088 - Simulator: no actions selected yet by MIDCA.
+
+.020879 - [cognitive] Initializing Simulate module 1 SendRemoteMidcaActionSimulator...done.
+
+.021246 - [cognitive] Initializing Simulate module 2 ASCIIWorldViewer...done.
+
+.021496 - [cognitive] Initializing Perceive module 1 URecieveRemoteMidcaWorld...done.
+
+.021729 - [cognitive] Initializing Perceive module 2 PerfectObserver...done.
+
+.022018 - [cognitive] Initializing Perceive module 3 RecieveRequests...done.
+
+.022288 - [cognitive] Initializing Perceive module 4 ASCIIWorldViewer...done.
+
+.022512 - [cognitive] Initializing Perceive module 5 AutomaticGoalInput...done.
+
+.022714 - [cognitive] Initializing Interpret module 1 InterpretRequests...done.
+
+.023030 - [cognitive] Initializing Interpret module 2 GenerateRequests...done.
+
+.023196 - [cognitive] Initializing Interpret module 3 EvaluateRequests...done.
+
+.023430 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.023964 - [cognitive] Initializing Eval module 2 SimpleEvalSuspend...done.
+
+.024384 - [cognitive] Initializing Intend module 1 SimpleIntendMultipleGoalsSuspend...done.
+
+.024798 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.025024 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.025632 - Starting cycle 0
+
+.026000 - ****** Starting Simulate Phase ******
+
+.026398 - Simulator: no actions selected yet by MIDCA.
+
+.027237 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+.526123 - ****** Starting Perceive Phase ******
+
+.527084 - World observed.
+
+.536309 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+.528241 - ****** Starting Perceive Phase ******
+
+.529228 - World observed.
+
+.536523 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+.536946 - Goal Recieved.
+
+.537243 - Updated States 
+
+.537827 - exists(human)
+GOAL(on[A_;B_])
+requested(human,neo,on[A_;B_])
+
+1.037258 - ****** Starting Interpret Phase ******
+
+1.046104 - ****** Starting Interpret Phase ******
+
+1.047155 - 
+Midca generated a goal : Goal(neo, human, on[A_;B_], predicate: committed)
+
+1.047476 - 
+Midca generated a goal : Goal(A_, B_, predicate: on)
+
+1.539257 - ****** Starting Eval Phase ******
+
+1.546354 - No current goals. Skipping eval
+
+1.549263 - ****** Starting Eval Phase ******
+
+1.559287 - No current goals. Skipping eval
+
+1.566628 - No current goals. Skipping eval
+
+2.047286 - ****** Starting Intend Phase ******
+
+2.048139 - No Goals in Goal graph. Intend will do nothing.
+
+2.067549 - ****** Starting Intend Phase ******
+
+2.548620 - ****** Starting Plan Phase ******
+
+2.556835 - No goals received by planner. Skipping planning.
+
+2.569156 - ****** Starting Plan Phase ******
+
+2.575450 - No goals received by planner. Skipping planning.
+
+3.057837 - ****** Starting Act Phase ******
+
+3.058735 - No valid plan found that achieves any current goals.
+
+3.065767 - MIDCA will not select an action this cycle.
+
+3.076276 - ****** Starting Act Phase ******
+
+3.077712 - No valid plan found that achieves any current goals.
+
+3.084211 - MIDCA will not select an action this cycle.
+
+3.566354 - Starting cycle 1
+
+3.566991 - ****** Starting Simulate Phase ******
+
+3.567883 - Simulator: no actions selected yet by MIDCA.
+
+3.585193 - Starting cycle 1
+
+3.585646 - ****** Starting Simulate Phase ******
+
+3.586296 - Simulator: no actions selected yet by MIDCA.
+
+3.587521 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+4.068799 - ****** Starting Perceive Phase ******
+
+4.069819 - World observed.
+
+4.076356 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+4.088561 - ****** Starting Perceive Phase ******
+
+4.089491 - World observed.
+
+4.095860 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+4.577356 - ****** Starting Interpret Phase ******
+
+4.602445 - ****** Starting Interpret Phase ******
+
+5.080098 - ****** Starting Eval Phase ******
+
+5.085888 - No current goals. Skipping eval
+
+5.106280 - ****** Starting Eval Phase ******
+
+5.113961 - No current goals. Skipping eval
+
+5.121681 - No current goals. Skipping eval
+
+5.586713 - ****** Starting Intend Phase ******
+
+5.587536 - No Goals in Goal graph. Intend will do nothing.
+
+5.622634 - ****** Starting Intend Phase ******
+
+6.088247 - ****** Starting Plan Phase ******
+
+6.094025 - No goals received by planner. Skipping planning.
+
+6.124235 - ****** Starting Plan Phase ******
+
+6.129899 - No goals received by planner. Skipping planning.
+
+6.595047 - ****** Starting Act Phase ******
+
+6.596385 - No valid plan found that achieves any current goals.
+
+6.601545 - MIDCA will not select an action this cycle.
+
+6.630737 - ****** Starting Act Phase ******
+
+6.631591 - No valid plan found that achieves any current goals.
+
+6.639298 - MIDCA will not select an action this cycle.
+
+7.102440 - Starting cycle 2
+
+7.102886 - ****** Starting Simulate Phase ******
+
+7.103300 - Simulator: no actions selected yet by MIDCA.
+
+7.140225 - Starting cycle 2
+
+7.140740 - ****** Starting Simulate Phase ******
+
+7.141126 - Simulator: no actions selected yet by MIDCA.
+
+7.141732 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+7.604180 - ****** Starting Perceive Phase ******
+
+7.607292 - World observed.
+
+7.614088 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+7.642675 - ****** Starting Perceive Phase ******
+
+7.643629 - World observed.
+
+7.649778 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+8.115025 - ****** Starting Interpret Phase ******
+
+8.156384 - ****** Starting Interpret Phase ******
+
+8.617212 - ****** Starting Eval Phase ******
+
+8.624340 - No current goals. Skipping eval
+
+8.658493 - ****** Starting Eval Phase ******
+
+8.665821 - No current goals. Skipping eval
+
+8.671004 - No current goals. Skipping eval
+
+9.125262 - ****** Starting Intend Phase ******
+
+9.125836 - No Goals in Goal graph. Intend will do nothing.
+
+9.171590 - ****** Starting Intend Phase ******
+
+9.626821 - ****** Starting Plan Phase ******
+
+9.633472 - No goals received by planner. Skipping planning.
+
+9.673405 - ****** Starting Plan Phase ******
+
+9.678726 - No goals received by planner. Skipping planning.
+
+10.134359 - ****** Starting Act Phase ******
+
+10.135194 - No valid plan found that achieves any current goals.
+
+10.143977 - MIDCA will not select an action this cycle.
+
+10.179682 - ****** Starting Act Phase ******
+
+10.180537 - No valid plan found that achieves any current goals.
+
+10.187376 - MIDCA will not select an action this cycle.
+
+10.644824 - Starting cycle 3
+
+10.645385 - ****** Starting Simulate Phase ******
+
+10.645782 - Simulator: no actions selected yet by MIDCA.
+
+10.687761 - Starting cycle 3
+
+10.688206 - ****** Starting Simulate Phase ******
+
+10.688530 - Simulator: no actions selected yet by MIDCA.
+
+10.689467 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+11.146899 - ****** Starting Perceive Phase ******
+
+11.147943 - World observed.
+
+11.154273 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+11.190466 - ****** Starting Perceive Phase ******
+
+11.191502 - World observed.
+
+11.197800 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+11.655286 - ****** Starting Interpret Phase ******
+
+11.704710 - ****** Starting Interpret Phase ******
+
+12.157430 - ****** Starting Eval Phase ******
+
+12.163736 - No current goals. Skipping eval
+
+12.207103 - ****** Starting Eval Phase ******
+
+12.214319 - No current goals. Skipping eval
+
+12.221013 - No current goals. Skipping eval
+
+12.664548 - ****** Starting Intend Phase ******
+
+12.665167 - No Goals in Goal graph. Intend will do nothing.
+
+12.722095 - ****** Starting Intend Phase ******
+
+13.166083 - ****** Starting Plan Phase ******
+
+13.173077 - No goals received by planner. Skipping planning.
+
+13.223580 - ****** Starting Plan Phase ******
+
+13.231672 - No goals received by planner. Skipping planning.
+
+13.673808 - ****** Starting Act Phase ******
+
+13.674863 - No valid plan found that achieves any current goals.
+
+13.682158 - MIDCA will not select an action this cycle.
+
+13.732634 - ****** Starting Act Phase ******
+
+13.734158 - No valid plan found that achieves any current goals.
+
+13.741209 - MIDCA will not select an action this cycle.
+
+14.183105 - Starting cycle 4
+
+14.183526 - ****** Starting Simulate Phase ******
+
+14.184088 - Simulator: no actions selected yet by MIDCA.
+
+14.241632 - Starting cycle 4
+
+14.242126 - ****** Starting Simulate Phase ******
+
+14.242565 - Simulator: no actions selected yet by MIDCA.
+
+14.243747 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+14.685223 - ****** Starting Perceive Phase ******
+
+14.686588 - World observed.
+
+14.698722 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+14.744643 - ****** Starting Perceive Phase ******
+
+14.745594 - World observed.
+
+14.754100 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+15.199570 - ****** Starting Interpret Phase ******
+
+15.259569 - ****** Starting Interpret Phase ******
+
+15.701961 - ****** Starting Eval Phase ******
+
+15.708494 - No current goals. Skipping eval
+
+15.762124 - ****** Starting Eval Phase ******
+
+15.769761 - No current goals. Skipping eval
+
+15.775705 - No current goals. Skipping eval
+
+16.209475 - ****** Starting Intend Phase ******
+
+16.210319 - No Goals in Goal graph. Intend will do nothing.
+
+16.276671 - ****** Starting Intend Phase ******
+
+16.711284 - ****** Starting Plan Phase ******
+
+16.719960 - No goals received by planner. Skipping planning.
+
+16.778417 - ****** Starting Plan Phase ******
+
+16.785085 - No goals received by planner. Skipping planning.
+
+17.220872 - ****** Starting Act Phase ******
+
+17.221741 - No valid plan found that achieves any current goals.
+
+17.227772 - MIDCA will not select an action this cycle.
+
+17.285986 - ****** Starting Act Phase ******
+
+17.286822 - No valid plan found that achieves any current goals.
+
+17.294270 - MIDCA will not select an action this cycle.
+
+17.728665 - Starting cycle 5
+
+17.729094 - ****** Starting Simulate Phase ******
+
+17.729440 - Simulator: no actions selected yet by MIDCA.
+
+17.795040 - Starting cycle 5
+
+17.795321 - ****** Starting Simulate Phase ******
+
+17.795662 - Simulator: no actions selected yet by MIDCA.
+
+17.796450 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+18.230322 - ****** Starting Perceive Phase ******
+
+18.231246 - World observed.
+
+18.239208 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+18.297376 - ****** Starting Perceive Phase ******
+
+18.298164 - World observed.
+
+18.304169 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+18.740159 - ****** Starting Interpret Phase ******
+
+18.811640 - ****** Starting Interpret Phase ******
+
+19.242590 - ****** Starting Eval Phase ******
+
+19.249878 - No current goals. Skipping eval
+
+19.314106 - ****** Starting Eval Phase ******
+
+19.319859 - No current goals. Skipping eval
+
+19.325283 - No current goals. Skipping eval
+
+19.750726 - ****** Starting Intend Phase ******
+
+19.751589 - No Goals in Goal graph. Intend will do nothing.
+
+19.826133 - ****** Starting Intend Phase ******
+
+20.252477 - ****** Starting Plan Phase ******
+
+20.261120 - No goals received by planner. Skipping planning.
+
+20.327687 - ****** Starting Plan Phase ******
+
+20.333724 - No goals received by planner. Skipping planning.
+
+20.762053 - ****** Starting Act Phase ******
+
+20.762930 - No valid plan found that achieves any current goals.
+
+20.767761 - MIDCA will not select an action this cycle.
+
+20.834631 - ****** Starting Act Phase ******
+
+20.835532 - No valid plan found that achieves any current goals.
+
+20.840481 - MIDCA will not select an action this cycle.
+
+21.268585 - Starting cycle 6
+
+21.268982 - ****** Starting Simulate Phase ******
+
+21.269401 - Simulator: no actions selected yet by MIDCA.
+
+21.341345 - Starting cycle 6
+
+21.341879 - ****** Starting Simulate Phase ******
+
+21.342340 - Simulator: no actions selected yet by MIDCA.
+
+21.343480 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+21.770357 - ****** Starting Perceive Phase ******
+
+21.771190 - World observed.
+
+21.777990 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+21.844497 - ****** Starting Perceive Phase ******
+
+21.845299 - World observed.
+
+21.853638 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+22.278930 - ****** Starting Interpret Phase ******
+
+22.362090 - ****** Starting Interpret Phase ******
+
+22.781251 - ****** Starting Eval Phase ******
+
+22.787714 - No current goals. Skipping eval
+
+22.864257 - ****** Starting Eval Phase ******
+
+22.872558 - No current goals. Skipping eval
+
+22.879146 - No current goals. Skipping eval
+
+23.288576 - ****** Starting Intend Phase ******
+
+23.289258 - No Goals in Goal graph. Intend will do nothing.
+
+23.380154 - ****** Starting Intend Phase ******
+
+23.790152 - ****** Starting Plan Phase ******
+
+23.795981 - No goals received by planner. Skipping planning.
+
+23.881723 - ****** Starting Plan Phase ******
+
+23.894402 - No goals received by planner. Skipping planning.
+
+24.296775 - ****** Starting Act Phase ******
+
+24.297526 - No valid plan found that achieves any current goals.
+
+24.303297 - MIDCA will not select an action this cycle.
+
+24.395409 - ****** Starting Act Phase ******
+
+24.396201 - No valid plan found that achieves any current goals.
+
+24.403659 - MIDCA will not select an action this cycle.
+
+24.804186 - Starting cycle 7
+
+24.804616 - ****** Starting Simulate Phase ******
+
+24.805041 - Simulator: no actions selected yet by MIDCA.
+
+24.904318 - Starting cycle 7
+
+24.904778 - ****** Starting Simulate Phase ******
+
+24.905115 - Simulator: no actions selected yet by MIDCA.
+
+24.906125 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+25.305947 - ****** Starting Perceive Phase ******
+
+25.306853 - World observed.
+
+25.313175 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+25.406636 - ****** Starting Perceive Phase ******
+
+25.407374 - World observed.
+
+25.413349 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+25.814035 - ****** Starting Interpret Phase ******
+
+25.918738 - ****** Starting Interpret Phase ******
+
+26.316370 - ****** Starting Eval Phase ******
+
+26.324958 - No current goals. Skipping eval
+
+26.421085 - ****** Starting Eval Phase ******
+
+26.428591 - No current goals. Skipping eval
+
+26.434712 - No current goals. Skipping eval
+
+26.825982 - ****** Starting Intend Phase ******
+
+26.826855 - No Goals in Goal graph. Intend will do nothing.
+
+26.935599 - ****** Starting Intend Phase ******
+
+27.327495 - ****** Starting Plan Phase ******
+
+27.334267 - No goals received by planner. Skipping planning.
+
+27.437633 - ****** Starting Plan Phase ******
+
+27.443254 - No goals received by planner. Skipping planning.
+
+27.835268 - ****** Starting Act Phase ******
+
+27.836321 - No valid plan found that achieves any current goals.
+
+27.843786 - MIDCA will not select an action this cycle.
+
+27.944117 - ****** Starting Act Phase ******
+
+27.945191 - No valid plan found that achieves any current goals.
+
+27.954162 - MIDCA will not select an action this cycle.
+
+28.344673 - Starting cycle 8
+
+28.345244 - ****** Starting Simulate Phase ******
+
+28.345751 - Simulator: no actions selected yet by MIDCA.
+
+28.455130 - Starting cycle 8
+
+28.455562 - ****** Starting Simulate Phase ******
+
+28.455917 - Simulator: no actions selected yet by MIDCA.
+
+28.456702 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+28.846626 - ****** Starting Perceive Phase ******
+
+28.847835 - World observed.
+
+28.855814 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+28.957603 - ****** Starting Perceive Phase ******
+
+28.965961 - World observed.
+
+28.971914 -           / \                
+         /   \               
+        /  D_ \              
+        -------              
+       |  B_  |              
+        -------              
+        -------        -------
+       |  A_  |       |  C_  |
+        -------        -------
+------------------------------------------
+
+29.357740 - ****** Starting Interpret Phase ******
+
+29.479611 - ****** Starting Interpret Phase ******
+
+29.860102 - ****** Starting Eval Phase ******
+
+29.867210 - No current goals. Skipping eval
+
+29.982075 - ****** Starting Eval Phase ******
+
+29.988962 - No current goals. Skipping eval
+
+29.994934 - No current goals. Skipping eval
+

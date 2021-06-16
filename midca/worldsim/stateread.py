@@ -56,7 +56,7 @@ def apply_state_str(world, s):
 	_apply_state(world, lines)
 
 def apply_state_file(world, filename):
-	lines = open(filename).readlines()
+	lines = open(filename, "r").readlines()
 	_apply_state(world, lines)				
 
 def set_state(world, filename):

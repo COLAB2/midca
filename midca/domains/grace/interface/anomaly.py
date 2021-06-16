@@ -6,7 +6,7 @@ import time
 
 class Anomalies:
 
-    def __init__(self, simtime, time_step, seed, E, publisher):
+    def __init__(self, simtime, time_step, seed, E, publisher, draw=False):
         self.publisher = publisher
         self.simtime = simtime
         self.row_dimension = 5
@@ -17,8 +17,10 @@ class Anomalies:
         self.flow_occurance = None
         self.blocked_cells = None
         self.time_anomaly = None
+        self.draw = draw
         #self.flow_anomaly(60)
-        self.block_anomaly(10)
+        self.block_anomaly(15, 8)
+
 
 
 
@@ -75,7 +77,7 @@ class Anomalies:
 
         self.flow_occurance = flow_occurance
 
-    def block_anomaly(self, number_block_cells):
+    def block_anomaly(self, number_block_cells, temporary_blocks):
         blocked_cells = {}
         cells = []
         position_cells = []
@@ -95,11 +97,42 @@ class Anomalies:
             #print (i)
 
         self.blocked_cells = blocked_cells
-        self.draw_markers()
+        self.temporary_blocks = random.sample(range(1,number_block_cells), temporary_blocks-1)
+        if self.draw:
+            self.draw_markers()
+
+    def allow_temporary_blocks(self, initial_position, dest_position):
+        agent_x, agent_y = initial_position[0], initial_position[1]
+        agent_dest_x, agent_dest_y = dest_position[0], dest_position[1]
+        if self.blocked_cells:
+            for key,cells in self.blocked_cells.items():
+                myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
+                myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
+                if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
+                  if key in self.temporary_blocks:
+                    del self.blocked_cells[key]
+                  return True
+                elif (cells[1] == [myx, myy] and cells[0] == [myx_dest, myy_dest]):
+                  if key in self.temporary_blocks:
+                    del self.blocked_cells[key]
+                  return True
+
+    def isPartialblock(self, initial_position, dest_position):
+        agent_x, agent_y = initial_position[0], initial_position[1]
+        agent_dest_x, agent_dest_y = dest_position[0], dest_position[1]
+        if self.blocked_cells:
+            for key,cells in self.blocked_cells.items():
+                myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
+                myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
+                if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
+                  return False
+                elif (cells[1] == [myx, myy] and cells[0] == [myx_dest, myy_dest]):
+                  return False
+            return True
 
     def draw_markers(self):
 
-        def send_markers(publisher, position, index, direction):
+        def send_markers(publisher, position, index, direction, color="green"):
             positions = []
             if direction[0]:
                 positions.append(position)
@@ -135,7 +168,7 @@ class Anomalies:
                 message = [b"AddMarker",
                            b"type=gateway,"
                            b"x="+str(position[0])+",y="+str(position[1])+","+
-                            "scale=4.3,label=block"+str(index)+str(i)+",color=green,width=4.5"]
+                            "scale=4.3,label=block"+str(index)+str(i)+",color="+color+",width=4.5"]
                 time.sleep(0.1)
                 self.publisher.send_multipart(message)
 
@@ -147,7 +180,10 @@ class Anomalies:
             x1, y1 = self.E.grid_to_sim(blockade[1][0], blockade[1][1])
             position = (x+x1)/2 , (y+y1)/2
             direction = self.get_threshold(blockade)
-            send_markers(self.publisher, position, index, direction)
+            color = "red"
+            if index in self.temporary_blocks:
+                color = "green"
+            send_markers(self.publisher, position, index, direction, color)
 
 
 
@@ -169,29 +205,30 @@ class Anomalies:
 
     def identify_anomaly(self,agent_x, agent_y, agent_dest_x, agent_dest_y, current_time):
 
-        for cells in self.blocked_cells.values():
-            myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
-            myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
-            if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
-                x,y = self.E.grid_to_sim(agent_x, agent_y)
-                x1, y1 = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
-                print (x,y)
-                print (x1,y1)
-                position = (x+x1)/2 , (y+y1)/2
-                threshold = self.get_threshold(cells)
-                position = map(operator.sub, position, threshold)
-                #position = list(set(position) - set(threshold))
-                return position, "block"
-            elif (cells[1] == [myx, myy] and cells[0] == [myx_dest, myy_dest]):
-                x,y = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
-                x1, y1 = self.E.grid_to_sim(agent_x, agent_y)
-                print (x,y)
-                print (x1,y1)
-                position = (x+x1)/2 , (y+y1)/2
-                threshold = [each * -1 for each in  self.get_threshold(cells)]
-                position = map(operator.sub, position, threshold)
-                #position = list(set(position) - set(threshold))
-                return position, "block"
+        if self.blocked_cells:
+            for cells in self.blocked_cells.values():
+                myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
+                myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
+                if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
+                    x,y = self.E.grid_to_sim(agent_x, agent_y)
+                    x1, y1 = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
+                    print (x,y)
+                    print (x1,y1)
+                    position = (x+x1)/2 , (y+y1)/2
+                    threshold = self.get_threshold(cells)
+                    position = map(operator.sub, position, threshold)
+                    #position = list(set(position) - set(threshold))
+                    return position, "block"
+                elif (cells[1] == [myx, myy] and cells[0] == [myx_dest, myy_dest]):
+                    x,y = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
+                    x1, y1 = self.E.grid_to_sim(agent_x, agent_y)
+                    print (x,y)
+                    print (x1,y1)
+                    position = (x+x1)/2 , (y+y1)/2
+                    threshold = [each * -1 for each in  self.get_threshold(cells)]
+                    position = map(operator.sub, position, threshold)
+                    #position = list(set(position) - set(threshold))
+                    return position, "block"
 
         """
         if current_time in self.flow_occurance:

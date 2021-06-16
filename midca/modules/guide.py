@@ -1329,6 +1329,8 @@ class GraceGoalInputNSF(UserGoalInput):
                 #sys.exit()
 
         else:
+            pass
+            """
             # get hotspot information from observations
             # get communicated hotspots from state
             # generate goals for hotspots that are not communicated
@@ -1362,14 +1364,15 @@ class GraceGoalInputNSF(UserGoalInput):
                         if not g in self.mem.get(self.mem.GOAL_GRAPH):
                                 self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                                 print("Midca generated a goal : " + str(g))
-
+            """
 class GraceAnomalyDetection(UserGoalInput):
     '''
     Todo: This class should make use of explanation patterns
     '''
-    def __init__(self, interface, experiment="None"):
+    def __init__(self, interface, name, experiment="None"):
         self.interface = interface
         self.experiment = experiment
+        self.agentName = name
 
     def get_anomaly(self):
         anomaly = self.interface.get_anomaly()
@@ -1377,19 +1380,20 @@ class GraceAnomalyDetection(UserGoalInput):
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
-        observation = world.get_atoms(["agent-mode", "grace"])
-
+        observation = world.get_atoms(["agent-mode", self.agentName])
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)
         if observation:
             if not observation[0].args[1].name == "m1" \
                     and not observation[0].args[1].name == "m3":
-                g = goals.Goal(*["grace"], predicate='free')
+                g = goals.Goal(*[self.agentName], predicate='free', type="crisis")
                 # if the goal is not in goal graph
                 if not g in self.mem.get(self.mem.GOAL_GRAPH):
-                    self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
-                    self.mem.set(self.mem.EXPLANATION, "remora")
                     print("An anomaly is detected regarding the mode of operation : ")
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                     print("Midca generated a goal : " + str(g))
+                    self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
+                    self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
+                    self.mem.set(self.mem.EXPLANATION, "remora")
 
         # detect block anomaly
         """
@@ -1433,10 +1437,13 @@ class GraceAnomalyDetection(UserGoalInput):
                     if actions:
                         if actions[-1]:
                             actions = actions[-1]
+                            if actions[-1]:
+                                actions = actions[-1]
                     arguments = list(actions.args)
                     g = goals.Goal(*arguments, predicate='inspected', type="crisis")
                     if not g in self.mem.get(self.mem.GOAL_GRAPH):
                         self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
+                        self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
                         self.mem.set(self.mem.EXPLANATION, "block")
                         print("A block anomaly is detected regarding the mode of operation : ")
                         self.mem.get(self.mem.GOAL_GRAPH).insert(g)
@@ -1455,6 +1462,7 @@ class GraceChangeDetection(UserGoalInput):
         world = self.mem.get(self.mem.STATES)[-1]
         observation = world.get_atoms(["agent-at", "grace"])
         delegated_goals = world.get_atoms(["requested", "grace", "franklin"])
+        current_goals = self.mem.get(self.mem.CURRENT_GOALS)
         if delegated_goals:
             self.threshold = 20
         if observation:
@@ -1470,9 +1478,10 @@ class GraceChangeDetection(UserGoalInput):
                             g = goals.Goal(*["grace", position], predicate='Deepsurveyed', type="achievement")
                             print("Midca changed the goal : " + str(goal)),
                             self.mem.set(self.mem.CHANGED_GOALS, [[g]])
+                            self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
                             #self.mem.get(self.mem.GOAL_GRAPH).change(goal,*["grace", position], predicate='Deepsurveyed')
                             #self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
-                            print(" to : " + str(goal))
+                            print(" to : " + str(g))
 
 class InterpretRequests(base.BaseModule):
 
@@ -1645,6 +1654,8 @@ class GenerateRequests(base.BaseModule):
             raise Exception("World is not initialized.")
 
         suspended_goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+        if suspended_goals:
+            suspended_goals = suspended_goals[-1]
         goals_generated  = []
         if suspended_goals:
             for goal in suspended_goals:

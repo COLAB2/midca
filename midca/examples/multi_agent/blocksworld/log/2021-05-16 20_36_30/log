@@ -1,0 +1,254 @@
+.000546 - Memory access at key __goals
+.000678 - Goal Graph initialized.
+
+.010507 - [cognitive] Initializing Simulate module 1 SendRemoteMidcaActionSimulator...done.
+
+.011595 - [cognitive] Initializing Perceive module 1 URecieveRemoteMidcaWorld...done.
+
+.012650 - [cognitive] Initializing Perceive module 2 PerfectObserver...done.
+
+.013820 - [cognitive] Initializing Perceive module 3 RecieveRequests...done.
+
+.014727 - [cognitive] Initializing Perceive module 4 AutomaticGoalInput...done.
+
+.015494 - [cognitive] Initializing Interpret module 1 InterpretRequests...done.
+
+.016289 - [cognitive] Initializing Interpret module 2 GenerateRequests...done.
+
+.017198 - [cognitive] Initializing Interpret module 3 EvaluateRequests...done.
+
+.017960 - [cognitive] Initializing Eval module 1 SimpleEval...done.
+
+.018568 - [cognitive] Initializing Eval module 2 SimpleEvalSuspend...done.
+
+.019028 - [cognitive] Initializing Intend module 1 SimpleIntendMultipleGoalsSuspend...done.
+
+.019933 - Memory access at key __PlanningCount
+.020749 - [cognitive] Initializing Plan module 1 PyHopPlanner...done.
+
+.021377 - [cognitive] Initializing Act module 1 SimpleAct...done.
+
+.021903 - Memory access at key __goals
+.022681 - Starting cycle 0
+
+.023379 - ****** Starting Simulate Phase ******
+
+.024097 - No actions selected this cycle by MIDCA.
+
+.525263 - ****** Starting Perceive Phase ******
+
+.525907 - Memory access at key __world states
+.526183 - Memory access at key __world states
+.526485 - World observed.
+
+.541765 - Goal Recieved.
+
+.541957 - Updated States 
+
+.542208 - exists(human)
+GOAL(on[A_;B_])
+requested(human,neo,on[A_;B_])
+
+.542570 - Memory access at key __world states
+1.053635 - ****** Starting Interpret Phase ******
+
+1.054088 - Memory access at key __world states
+1.054417 - Memory access at key __goals
+1.054695 - 
+Midca generated a goal : Goal(neo, human, on[A_;B_], predicate: committed)
+
+1.055017 - 
+Midca generated a goal : Goal(A_, B_, predicate: on)
+
+1.055294 - Memory access at key __goals
+1.055625 - Memory access at key __world states
+1.055844 - Memory access at key __world states
+1.055982 - Memory access at key __goals
+1.557033 - ****** Starting Eval Phase ******
+
+1.557731 - Memory access at key __world states
+1.573745 - No current goals. Skipping eval
+
+1.574212 - Memory access at key __world states
+1.585694 - No current goals. Skipping eval
+
+2.087217 - ****** Starting Intend Phase ******
+
+2.088586 - Memory access at key __goals
+2.089684 - Memory access at key __current goals
+2.090380 - Selecting goal(s): Goal(neo, human, on[A_;B_], predicate: committed)
+
+2.591906 - ****** Starting Plan Phase ******
+
+2.592466 - Memory access at key __world states
+2.592646 - Memory access at key __current goals
+2.609775 - Memory access at key __goals
+2.610164 - Planning...
+
+2.610537 - Memory access at key __PlanningCount
+2.610691 - Memory access at key __PlanningCount
+2.611699 - Planning complete.
+
+2.611900 - Plan: 
+
+2.612109 -   inform(neo, human, on[A_;B_], accepted)
+
+2.612291 -   commit(neo, human, on[A_;B_], accepted)
+
+2.612499 - Memory access at key __goals
+3.113701 - ****** Starting Act Phase ******
+
+3.114865 - Memory access at key __world states
+3.115229 - Memory access at key __current goals
+3.115666 - Memory access at key __goals
+3.346020 - Memory access at key __world states
+3.346570 - Memory access at key __goals
+3.347061 - ------------------------------------------------------------------------------------
+
+3.347642 - The goal on(A_,B_) is accepted 
+
+3.348127 - ------------------------------------------------------------------------------------
+
+3.348491 - Memory access at key __actions
+3.349002 - Action inform(neo, human, on[A_;B_], accepted) complete.
+
+3.349314 - Memory access at key __actions
+3.349731 - Memory access at key __actions
+3.851170 - Starting cycle 1
+
+3.851726 - ****** Starting Simulate Phase ******
+
+3.852059 - Memory access at key __actions
+3.852298 - No actions selected this cycle by MIDCA.
+
+4.354085 - ****** Starting Perceive Phase ******
+
+4.400369 - Memory access at key __world states
+4.400535 - Memory access at key __world states
+4.400715 - World observed.
+
+4.949346 - ****** Starting Interpret Phase ******
+
+4.949759 - Memory access at key __world states
+4.950216 - Memory access at key __world states
+4.950512 - Memory access at key __world states
+4.950671 - Memory access at key __goals
+5.451902 - ****** Starting Eval Phase ******
+
+5.452187 - Memory access at key __world states
+5.452333 - Memory access at key __current goals
+5.462796 - Not all goals achieved; Goal(neo, human, on[A_;B_], predicate: committed) is not true.
+
+5.463110 - Memory access at key __world states
+5.477905 - No current goals. Skipping eval
+
+5.979605 - ****** Starting Intend Phase ******
+
+5.980153 - Memory access at key __goals
+5.980514 - Memory access at key __current goals
+5.980695 - Memory access at key __current goals
+5.980921 - No goals selected.
+
+6.481982 - ****** Starting Plan Phase ******
+
+6.482705 - Memory access at key __world states
+6.483266 - Memory access at key __current goals
+6.503121 - Memory access at key __goals
+6.504411 - Old plan retrieved. Checking validity... valid.
+
+6.505453 - checking to see if all goals are achieved... yes
+
+7.006691 - ****** Starting Act Phase ******
+
+7.007228 - Memory access at key __world states
+7.007358 - Memory access at key __current goals
+7.007500 - Memory access at key __goals
+7.219843 - ------------------------------------------------------------------------------------
+
+7.220471 - The goal on(A_,B_) is committed to achieve 
+
+7.220762 - ------------------------------------------------------------------------------------
+
+7.221138 - Memory access at key __actions
+7.221740 - Action commit(neo, human, on[A_;B_], accepted) complete.
+
+7.222155 - Memory access at key __actions
+7.222504 - Memory access at key __actions
+7.724091 - Starting cycle 2
+
+7.725113 - ****** Starting Simulate Phase ******
+
+7.726025 - Memory access at key __actions
+7.726515 - No actions selected this cycle by MIDCA.
+
+8.227732 - ****** Starting Perceive Phase ******
+
+8.228388 - Memory access at key __world states
+8.228553 - Memory access at key __world states
+8.228691 - World observed.
+
+8.767443 - ****** Starting Interpret Phase ******
+
+8.768167 - Memory access at key __world states
+8.769135 - Memory access at key __world states
+8.769667 - Memory access at key __world states
+8.770096 - Memory access at key __goals
+9.271410 - ****** Starting Eval Phase ******
+
+9.273659 - Memory access at key __world states
+9.273857 - Memory access at key __current goals
+9.300580 - All current goals achieved. Removing them from goal graph
+
+9.301013 - Memory access at key __goals
+9.301609 - ('REMOVED GOAL : ', 'Goal(neo, human, on[A_;B_], predicate: committed)')
+
+9.302247 - Memory access at key __goals
+9.302688 - removing 1 plans that no longer apply.
+
+9.302947 - Memory access at key __current goals
+9.303262 - Memory access at key __world states
+9.319841 - No current goals. Skipping eval
+
+9.821556 - ****** Starting Intend Phase ******
+
+9.823668 - Memory access at key __goals
+9.823909 - Memory access at key __suspended_goals
+9.824109 - The goal Goal(A_, B_, predicate: on) is suspended due to lack of resources
+
+9.824311 - Memory access at key __current goals
+9.824537 - Memory access at key __current goals
+9.824703 - No goals selected.
+
+10.325677 - ****** Starting Plan Phase ******
+
+10.327182 - Memory access at key __world states
+10.327834 - Memory access at key __current goals
+10.352651 - No goals received by planner. Skipping planning.
+
+10.853692 - ****** Starting Act Phase ******
+
+10.854330 - Memory access at key __world states
+10.854570 - Memory access at key __current goals
+10.855703 - Memory access at key __goals
+10.856545 - No valid plan found that achieves any current goals.
+
+10.875416 - MIDCA will not select an action this cycle.
+
+11.376738 - Starting cycle 3
+
+11.377199 - ****** Starting Simulate Phase ******
+
+11.377530 - Memory access at key __actions
+11.377675 - No actions selected this cycle by MIDCA.
+
+11.878589 - ****** Starting Perceive Phase ******
+
+11.879052 - Memory access at key __world states
+11.879209 - Memory access at key __world states
+11.879464 - World observed.
+
+12.401170 - ****** Starting Interpret Phase ******
+
+12.401534 - Memory access at key __world states
+12.402002 - Memory access at key __world states
+12.402200 - Memory access at key __suspended_goals

@@ -24,10 +24,7 @@ interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:7997",
                               name="grace", start_index=int(sys.argv[1]))
 
 agent_name = "grace"
-other_agent_name = "franklin"
 
-publish = "tcp://127.0.0.1:5000"
-subscribe = "tcp://127.0.0.1:4000"
 
 '''
 Simulation of the NBEACONS domain (adapted from marsworld in [Dannenhauer and Munoz-Avila 2015]).
@@ -83,23 +80,16 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
-myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface))
-myMidca.append_module("Perceive", perceive.RecieveRequests(publish, subscribe, agent_name, other_agent_name))
+myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface, agent_name))
 #myMidca.append_module("Perceive", perceive.HumanGoalInput(agent_name))
-#myMidca.append_module("Perceive", perceive.GraceObserver())
 myMidca.append_module("Interpret", guide.GraceGoalInputNSF(interface))
-myMidca.append_module("Interpret", guide.InterpretRequests(agent_name))
-#myMidca.append_module("Interpret", guide.GenerateRequests(agent_name, other_agent_name))
-myMidca.append_module("Interpret", guide.EvaluateRequests(agent_name, other_agent_name))
-
-myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface, "smart"))
+myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface, agent_name, "smart"))
 myMidca.append_module("Interpret", guide.GraceChangeDetection())
+myMidca.append_module("Eval", evaluate.GraceReport(agent_name, int(sys.argv[1])))
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
-myMidca.append_module("Eval", evaluate.SimpleEvalSuspend())
-myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF("smart"))
-myMidca.append_module("Intend", intend.PriorityIntend())
+myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF(agent_name, "smart"))
+#myMidca.append_module("Intend", intend.PriorityIntend())
 myMidca.append_module("Intend", intend.MetaIntendOps())
-#myMidca.append_module("Intend", intend.SimpleIntendMultipleGoalsSuspend())
 myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,
@@ -107,12 +97,6 @@ myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_f
                                                         monitors= nbeacons_util.monitor,
                                                         helper = nbeacons_util.get_plan,
                                                     ))
-
-#myMidca.append_module("Plan", planning.PyHopPlanner(util.pyhop_state_from_world,
-#                                                    util.pyhop_tasks_from_goals,
-#                                                    DECLARE_METHODS_FUNC,
-#                                                    DECLARE_OPERATORS_FUNC))
-
 myMidca.append_module("Act", act.SimpleAct(DECLARE_ACTIONS))
 
 
@@ -127,8 +111,4 @@ myMidca.mem.logEachAccess = False
 # Initialize and start running!
 myMidca.init()
 myMidca.initGoalGraph(cmpFunc = GOAL_GRAPH_CMP_FUNC)
-
-#tag = TagWorldDemo.TagWorld()
-#tag.move_cell([0,0], [0,0])
-
 myMidca.run(usingInterface=False)

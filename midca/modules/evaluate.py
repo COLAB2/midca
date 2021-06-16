@@ -1,6 +1,8 @@
 from midca import base
 from midca import midcatime
+import pandas as pd
 import copy
+import os
 try:
     from midca.examples._gazebo_baxter import halo_color
 except ImportError:
@@ -244,6 +246,50 @@ class SimpleEval2(base.BaseModule):
 
         for g in randomgoals:
             f.write("obj-at" + " " + str(g.args[0]) + " " + str(g.args[2])+"\n")
+
+class GraceReport(base.BaseModule):
+
+    def __init__(self, agent_name, index):
+        self.agentName = agent_name
+        self.index = index
+
+    def CreateReport(self, world):
+        report = {"Hotspots(#)": 0,
+                  "Hotspots(Positions)": "",
+                  "SurveyedGoals(#)": 0,
+                  "SurveyedGoals(Positions)": "",
+                  "DeepSurveyedGoals(#)": 0,
+                  "DeepSurveyedGoals(Positions)": "",
+                  "index":self.index,
+                  }
+        hotspots = world.get_atoms(["hotspot-detected-count", self.agentName])
+        SurveyedGoals = world.get_atoms(["surveyed", self.agentName])
+        DeepSurveyedGoals = world.get_atoms(["DeepSurveyed", self.agentName])
+
+        report["Hotspots(#)"] = len(hotspots)
+        report["SurveyedGoals(#)"] = len(SurveyedGoals)
+        report["DeepSurveyedGoals(#)"] = len(DeepSurveyedGoals)
+        if hotspots:
+            report["Hotspots(Positions)"] = ";".join([atom.args[2].name for atom in hotspots])
+        if SurveyedGoals:
+            report["SurveyedGoals(Positions)"]  = ";".join([atom.args[1].name for atom in SurveyedGoals])
+        if DeepSurveyedGoals:
+            report["DeepSurveyedGoals(Positions)"]  = ";".join([atom.args[1].name for atom in DeepSurveyedGoals])
+
+        df = pd.DataFrame(data=report, index=["index"])
+        if os.path.exists('./results/'+self.agentName+'.csv'):
+            df.to_csv('results/'+self.agentName+'.csv', mode='a', header=False)
+        else:
+            df.to_csv('results/'+self.agentName+'.csv')
+
+    def run(self, cycle, verbose = 2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        timeRemainingAtom = world.get_atoms(["timeRemaining"])
+        if timeRemainingAtom:
+            timeRemaing = float (timeRemainingAtom[0].args[0].name)
+        if timeRemaing <= 0.0:
+            self.CreateReport(world)
+            os._exit(0)
 
 class SimpleEvalAsync(base.BaseModule):
 

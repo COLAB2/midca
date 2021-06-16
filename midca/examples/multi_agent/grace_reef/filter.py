@@ -22,6 +22,13 @@ class Filter:
 
         return self.config["agents"][agent_name]["address"]["agent"]
 
+    def getAgentReqAddress(self, agent_name):
+        """
+        param msg: agent_name
+        reutrn: agents publisher
+        """
+        return self.config["agents"][agent_name]["address"]["requests"]
+
     def filterSimulatorMsgs(self, messages):
         """
         :param messages: messages in string format
@@ -39,10 +46,28 @@ class Filter:
                 self.connection.publish_messages(msg, agent_address)
 
 
-    def recieveAgentMsgs(self, messages):
+    def filterAgentMsgs(self, messages):
         """
         :param messages: messages in string format
         :return: None
-        :functionality: Filter messages from agent and send it to appropriate simulator
+        :functionality: Filter messages from simulator and send it to appropriate agent
         """
-        pass
+        if messages:
+            if len(messages) >= 2:
+                match_percentage = SequenceMatcher(None, messages[-1], messages[-2]).ratio()*100
+                if match_percentage ==100:
+                    messages = messages[-1:]
+
+            for msg in messages:
+                print (msg)
+                if "simulator" in msg:
+                    msg = msg.replace("simulator:", "")
+                    print ("simulator", msg)
+                    simulator_address = self.getSimulatorAddress()
+                    self.connection.publish_messages(msg, simulator_address)
+                else:
+                    msg = msg.split(";")
+                    agent_name, msg = msg[0], msg[1]
+                    agent_address = self.getAgentReqAddress(agent_name)
+                    print (agent_name, msg)
+                    self.connection.publish_messages(msg, agent_address)

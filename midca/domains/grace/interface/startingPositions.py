@@ -1,3 +1,8 @@
+from simulator import Simulator
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+np.random.seed(555)
 
 start_pos = [(4.361675414742551382e+00, 1.458277069766090328e+01),
              (1.545820006278236569e+01, 6.457247090829543623e+00),
@@ -40,4 +45,47 @@ start_pos = [(4.361675414742551382e+00, 1.458277069766090328e+01),
 positions = [((each[0]/4)*80 + -141, (each[1]/4)*80 + -324) for each in start_pos]
 
 
-#print (positions[1])
+if __name__ == "__main__":
+    """
+    # print positions
+    simulator_coordinates = []
+    simulator = Simulator(start_x=-141, start_y=76, side=80, size_m=5, size_n = 5)
+    for each in positions:
+        x,y = simulator.sim_to_grid(each[0],each[1])
+        simulator_coordinates.append([x,y])
+
+    first_agent_coordinates = simulator_coordinates[:]
+    second_agent_coordinates = simulator_coordinates[:]
+    third_agent_coordinates = simulator_coordinates[:]
+    np.random.shuffle(first_agent_coordinates)
+    np.random.shuffle(second_agent_coordinates)
+    np.random.shuffle(third_agent_coordinates)
+
+    percentage_goals_achieved = [
+    ]
+
+    flow_locations = [[[0,2], [2, 0]]]*100
+
+    location_data = pd.DataFrame(
+    {'grace': first_agent_coordinates,
+     'franklin': second_agent_coordinates,
+     'remus': third_agent_coordinates,
+     'flow_locations': flow_locations
+    })
+
+    print (location_data.head(5))
+    location_data.to_csv("data.csv",index=False)
+    """
+    results = pd.read_csv('data.csv')
+    results["baseline"] = (results["baseline"]/25) * 100
+    results["total_goals_delegated_agent"] = (results["total_goals_delegated_agent"]/25)*100
+    print (results.head())
+    results.plot(kind='bar')
+    plt.xlabel("Number of Experiments")
+    plt.ylabel("Percentage of goals achieved")
+    plt.show()
+
+
+
+
+

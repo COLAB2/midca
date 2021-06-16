@@ -249,7 +249,7 @@ class SimpleAct(base.BaseModule):
                 #asynchAction.execute()
                 #time.sleep(0.2)
                 #asynchAction.execute()
-                self.mem.add(self.mem.ACTIONS, midcaaction)
+                self.mem.add(self.mem.ACTIONS, [midcaaction])
                 """
                 # print statements
                 if verbose == 1:
@@ -335,7 +335,7 @@ class SimpleAct(base.BaseModule):
                     else:
                         # print the whole plan
                         print "Selected action", action, "from plan:\n", plan
-                self.mem.add(self.mem.ACTIONS, action)
+                self.mem.add(self.mem.ACTIONS, [action])
                 actions = self.mem.get(self.mem.ACTIONS)
                 if len(actions) > 400:
                     actions = actions[200:] # trim off old stale actions

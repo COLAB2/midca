@@ -4,6 +4,8 @@ import numpy as np
 import time
 import zmq
 import threading
+import traceback
+import os
 
 class ZmqMidca:
 
@@ -23,16 +25,22 @@ class ZmqMidca:
             threading.Thread(target=handler.run).start()
 
     def run_midca(self, cycleRate = 0.5, maxPhaseLength = 30):
-        self.midca.init()
+        #self.midca.init()
         while True:
             try:
                 self.midca.next_phase(verbose = self.midca.verbose)
                 if self.midca.mem.metaEnabled:
                         metaval = self.midca.one_cycle(verbose = self.midca.verbose, pause=0.01, meta=True)
+                time.sleep(cycleRate)
+            except KeyboardInterrupt:
+                print ("KeyboardInterrupt")
+                os._exit(0)
+
             except Exception as e:
                 print (e)
-                break
-            time.sleep(cycleRate)
+                traceback.print_exc()
+                os._exit(0)
+
 
     def subscriber_connection(self, ip_address, connection="connect", connection_type = "sub"):
         """

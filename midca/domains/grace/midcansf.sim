@@ -88,9 +88,9 @@ preconditions = [
 	condition(adjacent-north, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
-	condition(agent-at, [agnt, dest]),
-	condition(certainblocRadius, [agnt, dest]),
-	condition(certainblocRadius, [agnt, start], negate = True)])
+	#condition(certainblocRadius, [agnt, dest]),
+	#condition(certainblocRadius, [agnt, start], negate = True),
+	condition(agent-at, [agnt, dest])])
 
 operator(movesouth,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
@@ -101,9 +101,9 @@ preconditions = [
 	condition(adjacent-south, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
-	condition(agent-at, [agnt, dest]),
-	condition(certainblocRadius, [agnt, dest]),
-	condition(certainblocRadius, [agnt, start], negate = True)])
+	#condition(certainblocRadius, [agnt, dest]),
+	#condition(certainblocRadius, [agnt, start], negate = True),
+	condition(agent-at, [agnt, dest])])
 
 operator(moveeast,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
@@ -114,9 +114,9 @@ preconditions = [
 	condition(adjacent-east, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
-	condition(agent-at, [agnt, dest]),
-	condition(certainblocRadius, [agnt, dest]),
-	condition(certainblocRadius, [agnt, start], negate = True)])
+	#condition(certainblocRadius, [agnt, dest]),
+	#condition(certainblocRadius, [agnt, start], negate = True),
+	condition(agent-at, [agnt, dest])])
 
 operator(movewest,
 args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
@@ -127,9 +127,9 @@ preconditions = [
 	condition(adjacent-west, [start, dest])],
 results = [
 	condition(agent-at, [agnt, start], negate = TRUE),
-	condition(agent-at, [agnt, dest]),
-	condition(certainblocRadius, [agnt, dest]),
-	condition(certainblocRadius, [agnt, start], negate = True)])
+	#condition(certainblocRadius, [agnt, dest]),
+	#condition(certainblocRadius, [agnt, start], negate = True),
+	condition(agent-at, [agnt, dest])])
 
 operator(moveto,
 args = [(agnt, AGENT), (dest, TILE)],
@@ -198,8 +198,8 @@ operator(ascend,
 args = [(agnt, AGENT), (loc, TILE)],
 preconditions = [condition(atSurface, [agnt], negate = True)],
 results = [condition(atSurface, [agnt]),
-           condition(atBottom, [agnt], negate = True),
-           condition(certainblocRadius, [agnt, loc])])
+           #condition(certainblocRadius, [agnt, loc]),
+           condition(atBottom, [agnt], negate = True)])
 
 operator(descend,
 args = [(agnt, AGENT), (loc, TILE)],

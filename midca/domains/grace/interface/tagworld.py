@@ -16,7 +16,8 @@ class TagWorld():
 
     def __init__(self, sub_ip = "tcp://127.0.0.1:4999",
                  sub_mine_ip = "tcp://127.0.0.1:4998",
-                 pub_ip = "tcp://127.0.0.1:5999", name="grace", start_index = 0 ):
+                 pub_ip = "tcp://127.0.0.1:5999", name="grace", start_index = 0,
+                 experiment_time=300):
 
         context = zmq.Context()
         self.subscriber_remus = context.socket(zmq.SUB)
@@ -45,6 +46,7 @@ class TagWorld():
         #search complete
         self.searching = "false"
         self.speed = 0
+        self.make_agent_speed = 1
         self.position = None
 
         #mines
@@ -67,15 +69,18 @@ class TagWorld():
         self.blown_out = False
 
         # move to starting location
-        #self.initial_location(positions[start_index])
+        self.initial_location(positions[start_index])
 
         #time
-        self.experiment_time = 250
+        self.experiment_time = experiment_time
         self.time = 0
         self.start_time = self.set_initial_time()
 
         if self.anomalies_d:
-            self.discrepency = anomaly.Anomalies(self.time, 0.5, 555, self.simulator, self.publisher)
+            draw = False
+            if self.name == "grace":
+                draw = False
+            self.discrepency = anomaly.Anomalies(self.time, 0.5, 555, self.simulator, self.publisher, draw)
             #threading.Thread(target=self.exit).start()
             threading.Thread(target=self.attacks).start()
             #anomalies.start()
@@ -91,7 +96,7 @@ class TagWorld():
 
         x,y = position[0], position[1]
         # construct the message
-        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= 1.0"]
+        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= "+str(self.make_agent_speed)]
 
         time.sleep(0.1)
         # send the message
@@ -144,8 +149,6 @@ class TagWorld():
         self.lock.release()
 
 
-
-
     def TagWorld(self):
         return self
 
@@ -159,9 +162,9 @@ class TagWorld():
         pass
 
     def get_mode(self):
-        if self.mode == "m3":
-            return "m3"
+        return self.mode
 
+        """
         if self.searchComplete() == str(False) and self.speed < 0.7 and self.speed >=0.0:
             if self.timeElapsed:
                 wait_time = time.time() - self.timeElapsed
@@ -183,7 +186,7 @@ class TagWorld():
             self.timeElapsed = False
             self.timeElapsedM3 = False
             return "m1"
-
+        """
     def move_cell(self, initial_position, final_destination):
         self.lock.acquire()
 
@@ -208,7 +211,7 @@ class TagWorld():
             x,y = self.simulator.grid_to_sim(final_destination[0], final_destination[1])
 
         # construct the message
-        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= 1.0"]
+        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= "+str(self.make_agent_speed)]
 
         # send the message
         self.publisher.send_multipart(message)
@@ -244,7 +247,7 @@ class TagWorld():
         points = points[:-1] + "}"
 
         # create message
-        message = [b"Vehicle", points + "# speed= "+str(speed)]
+        message = [b"Vehicle", points + "# speed= "+str(str(self.make_agent_speed))]
 
         self.publisher.send_multipart(message)
 
@@ -265,7 +268,7 @@ class TagWorld():
         points = points[:-1] + b"}"
 
         # create message
-        message = [b"Vehicle", points + b"# speed= "+str(speed).encode('ascii')]
+        message = [b"Vehicle", points + b"# speed= "+str(str(self.make_agent_speed)).encode('ascii')]
 
         self.publisher.send_multipart(message)
 
@@ -281,7 +284,10 @@ class TagWorld():
         x, y = self.simulator.grid_to_sim(position[0], position[1])
 
         # create message
-        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 70,lane_width=10, rows=north-south,degs=0 # speed =0.8"]
+        speed = 0.8
+        if self.make_agent_speed <= 0.8:
+            speed = self.make_agent_speed
+        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 70,lane_width=10, rows=north-south,degs=0 # speed ="+str(speed)]
 
         self.publisher.send_multipart(message)
 
@@ -491,9 +497,9 @@ class TagWorld():
         speed = 0.5
         count = 1
         #switchprob = 1/100.0
-        switchprob = 0.65/100
+        switchprob = 0/100
         if self.name == "franklin":
-            switchprob = 100/100
+            switchprob = 0/100
         if self.name == "grace":
             switchprob = 1/100
         #else:
@@ -519,20 +525,24 @@ class TagWorld():
             if self.anomalies:
                     if temp < switchprob:
                             count += 1
-                            speed -= count * 0.2
+                            self.make_agent_speed -= count * 0.1
+                            if self.make_agent_speed < 0.5:
+                                self.mode = "m2"
                             #speed = 0.5
-                            if speed < 0.2:
-                                speed = 0.01
+                            if self.make_agent_speed < 0.2:
+                                self.make_agent_speed = 0.01
+                                self.mode = "m2"
 
                     #if temp < breakprob:
                     #        wreck = True
                     if self.searchComplete() == str(False):
 
                         # construct the message
-                        message = [b"Vehicle", b"speed= "+str(speed)]
+                        message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
 
                         # send the message
                         self.publisher.send_multipart(message)
+                        """
                         time.sleep(0.1)
                         index = self.position[0] + self.position[1]
                         message = [b"AddMarker",
@@ -542,14 +552,14 @@ class TagWorld():
                         self.publisher.send_multipart(message)
 
                         #time.sleep(0.1)
-
+                        """
 
 
             else:
                 if temp < switchprob:
                     self.anomalies = True
                 count = 0
-                speed = 0.5
+                self.make_agent_speed = 1
             self.lock.release()
             time.sleep(0.1)
 
@@ -557,7 +567,7 @@ class TagWorld():
         if flag == 1:
             time.sleep(4)
             # construct the message
-            message = [b"Vehicle", b"speed=0"]
+            message = [b"Vehicle", b"speed="+str(self.make_agent_speed)]
             # send the message
             self.publisher.send_multipart(message)
             time.sleep(0.1)
@@ -583,7 +593,6 @@ class TagWorld():
 
     def remove_remora(self):
         self.lock.acquire()
-
         # construct the message
         message = [b"Vehicle", b"speed= 0"]
         # send the message
@@ -596,13 +605,14 @@ class TagWorld():
 
     def remove_remora_status(self):
         self.lock.acquire()
+        self.mode = "m1"
         self.anomalies = False
-        speed = 1.0
+        self.make_agent_speed = 1.0
         self.timeElapsed = False
 
         if self.searchComplete() == str(False):
             # construct the message
-            message = [b"Vehicle", b"speed= "+str(speed)]
+            message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
 
             # send the message
             self.publisher.send_multipart(message)
@@ -617,7 +627,7 @@ class TagWorld():
         return type
 
     def inspect(self, initial_position, dest_position):
-        time.sleep(4)
+        time.sleep(2)
         [agent_x, agent_y] = initial_position
         [agent_dest_x, agent_dest_y] = dest_position
         x,y = self.simulator.grid_to_sim(agent_x, agent_y)
@@ -634,6 +644,10 @@ class TagWorld():
             way_point1 = map(operator.add, position, [0, 30])
             self.send([way_point0, way_point1])
         self.anomaly_type = ""
+        self.discrepency.allow_temporary_blocks(initial_position, dest_position)
+
+    def isPartialblock(self, start, end):
+        return self.discrepency.isPartialblock(start, end)
 
     def get_hotspot(self, position):
         return 0
@@ -642,8 +656,11 @@ class TagWorld():
         return
 
     def timeRemaining(self):
-        return (self.experiment_time - (time.time() - self.start_time))
-
+        remaining_time = (self.experiment_time - (time.time() - self.start_time))
+        if remaining_time < 0:
+            return -1
+        else:
+            return remaining_time
 
 if __name__ == "__main__":
 

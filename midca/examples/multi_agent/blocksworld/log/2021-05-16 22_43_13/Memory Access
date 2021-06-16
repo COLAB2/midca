@@ -1,0 +1,218 @@
+.001256 - Memory access at key __goals
+.011825 - Memory access at key __PlanningCount
+.012633 - Memory access at key __goals
+.013073 - Starting cycle 0
+
+.013616 - ****** Starting Simulate Phase ******
+
+.514718 - ****** Starting Perceive Phase ******
+
+.515553 - Memory access at key __world states
+.515839 - Memory access at key __world states
+.536528 - Memory access at key __world states
+1.055457 - ****** Starting Interpret Phase ******
+
+1.055978 - Memory access at key __world states
+1.056463 - Memory access at key __goals
+1.057424 - Memory access at key __goals
+1.057824 - Memory access at key __world states
+1.058315 - Memory access at key __world states
+1.058620 - Memory access at key __goals
+1.559864 - ****** Starting Eval Phase ******
+
+1.560304 - Memory access at key __world states
+1.577099 - Memory access at key __world states
+2.095248 - ****** Starting Intend Phase ******
+
+2.096127 - Memory access at key __goals
+13.063903 - Memory access at key __current goals
+13.565135 - ****** Starting Plan Phase ******
+
+13.565632 - Memory access at key __world states
+13.565855 - Memory access at key __current goals
+13.581939 - Memory access at key __goals
+13.583358 - Memory access at key __PlanningCount
+13.583620 - Memory access at key __PlanningCount
+13.586276 - Memory access at key __goals
+14.087405 - ****** Starting Act Phase ******
+
+14.088002 - Memory access at key __world states
+14.088212 - Memory access at key __current goals
+14.088443 - Memory access at key __goals
+14.306204 - Memory access at key __world states
+14.306647 - Memory access at key __goals
+14.308408 - Memory access at key __actions
+14.309128 - Memory access at key __actions
+14.309581 - Memory access at key __actions
+14.810723 - Starting cycle 1
+
+14.811305 - ****** Starting Simulate Phase ******
+
+14.812826 - Memory access at key __actions
+15.314465 - ****** Starting Perceive Phase ******
+
+15.315283 - Memory access at key __world states
+15.315556 - Memory access at key __world states
+15.852466 - ****** Starting Interpret Phase ******
+
+15.852953 - Memory access at key __world states
+15.853568 - Memory access at key __world states
+15.853935 - Memory access at key __world states
+15.854191 - Memory access at key __goals
+16.355452 - ****** Starting Eval Phase ******
+
+16.356068 - Memory access at key __world states
+16.356346 - Memory access at key __current goals
+16.374677 - Memory access at key __world states
+16.902127 - ****** Starting Intend Phase ******
+
+16.948301 - Memory access at key __goals
+16.948732 - Memory access at key __current goals
+16.949031 - Memory access at key __current goals
+17.450447 - ****** Starting Plan Phase ******
+
+17.451286 - Memory access at key __world states
+17.451626 - Memory access at key __current goals
+17.472194 - Memory access at key __goals
+17.975530 - ****** Starting Act Phase ******
+
+17.976014 - Memory access at key __world states
+17.976417 - Memory access at key __current goals
+17.976637 - Memory access at key __goals
+18.204668 - Memory access at key __actions
+18.205398 - Memory access at key __actions
+18.205667 - Memory access at key __actions
+18.706889 - Starting cycle 2
+
+18.707535 - ****** Starting Simulate Phase ******
+
+18.707983 - Memory access at key __actions
+19.209486 - ****** Starting Perceive Phase ******
+
+19.210143 - Memory access at key __world states
+19.210416 - Memory access at key __world states
+19.741503 - ****** Starting Interpret Phase ******
+
+19.742008 - Memory access at key __world states
+19.742692 - Memory access at key __world states
+19.743112 - Memory access at key __world states
+19.743362 - Memory access at key __goals
+20.244722 - ****** Starting Eval Phase ******
+
+20.245509 - Memory access at key __world states
+20.245749 - Memory access at key __current goals
+20.261752 - Memory access at key __goals
+20.262650 - Memory access at key __goals
+20.263270 - Memory access at key __current goals
+20.263568 - Memory access at key __world states
+20.781679 - ****** Starting Intend Phase ******
+
+20.782407 - Memory access at key __goals
+20.782728 - Memory access at key __suspended_goals
+20.783290 - Memory access at key __current goals
+1:09.662675 - Memory access at key __current goals
+1:10.164467 - ****** Starting Plan Phase ******
+
+1:10.164985 - Memory access at key __world states
+1:10.165178 - Memory access at key __current goals
+1:10.684696 - ****** Starting Act Phase ******
+
+1:10.685217 - Memory access at key __world states
+1:10.685434 - Memory access at key __current goals
+1:10.685870 - Memory access at key __goals
+1:11.203029 - Starting cycle 3
+
+1:11.203648 - ****** Starting Simulate Phase ******
+
+1:11.205001 - Memory access at key __actions
+1:11.706303 - ****** Starting Perceive Phase ******
+
+1:11.707082 - Memory access at key __world states
+1:11.707385 - Memory access at key __world states
+1:12.262618 - ****** Starting Interpret Phase ******
+
+1:12.263122 - Memory access at key __world states
+1:12.263804 - Memory access at key __world states
+1:12.264074 - Memory access at key __suspended_goals
+1:12.264508 - Memory access at key __goals
+1:12.265300 - Memory access at key __goals
+1:12.265924 - Memory access at key __world states
+1:12.266159 - Memory access at key __goals
+1:12.767640 - ****** Starting Eval Phase ******
+
+1:12.768125 - Memory access at key __world states
+1:12.768322 - Memory access at key __current goals
+1:12.785324 - Memory access at key __world states
+1:12.785592 - Memory access at key __suspended_goals
+1:13.304005 - ****** Starting Intend Phase ******
+
+1:13.304792 - Memory access at key __goals
+1:13.305162 - Memory access at key __suspended_goals
+1:13.305426 - Memory access at key __current goals
+1:13.305663 - Memory access at key __current goals
+1:43.100223 - Memory access at key __current goals
+1:43.601615 - ****** Starting Plan Phase ******
+
+1:43.602166 - Memory access at key __world states
+1:43.602368 - Memory access at key __current goals
+1:43.618460 - Memory access at key __goals
+1:43.619124 - Memory access at key __PlanningCount
+1:43.619315 - Memory access at key __PlanningCount
+1:43.626891 - Memory access at key __goals
+1:44.127908 - ****** Starting Act Phase ******
+
+1:44.128479 - Memory access at key __world states
+1:44.128779 - Memory access at key __current goals
+1:44.129159 - Memory access at key __goals
+1:44.351417 - Memory access at key __zmqOutgoingReqs
+1:44.352177 - Memory access at key __zmqOutgoingReqs
+1:44.353597 - Memory access at key __actions
+1:44.354431 - Memory access at key __actions
+1:44.354641 - Memory access at key __actions
+1:44.855366 - Starting cycle 4
+
+1:44.855913 - ****** Starting Simulate Phase ******
+
+1:44.856462 - Memory access at key __actions
+1:45.357585 - ****** Starting Perceive Phase ******
+
+1:45.358137 - Memory access at key __world states
+1:45.358423 - Memory access at key __world states
+1:45.893213 - ****** Starting Interpret Phase ******
+
+1:45.893914 - Memory access at key __world states
+1:45.894587 - Memory access at key __world states
+1:45.895041 - Memory access at key __suspended_goals
+1:45.895429 - Memory access at key __goals
+1:45.895879 - Memory access at key __goals
+1:45.896445 - Memory access at key __world states
+1:45.896692 - Memory access at key __goals
+1:46.397546 - ****** Starting Eval Phase ******
+
+1:46.398160 - Memory access at key __world states
+1:46.398381 - Memory access at key __current goals
+1:46.415037 - Memory access at key __world states
+1:46.415327 - Memory access at key __suspended_goals
+1:46.932356 - ****** Starting Intend Phase ******
+
+1:46.933227 - Memory access at key __goals
+1:46.933498 - Memory access at key __suspended_goals
+1:46.933783 - Memory access at key __current goals
+1:46.934017 - Memory access at key __current goals
+1:47.435271 - ****** Starting Plan Phase ******
+
+1:47.435844 - Memory access at key __world states
+1:47.436062 - Memory access at key __current goals
+1:47.451361 - Memory access at key __goals
+1:47.959322 - ****** Starting Act Phase ******
+
+1:47.959818 - Memory access at key __world states
+1:47.960029 - Memory access at key __current goals
+1:47.960252 - Memory access at key __goals
+1:48.184852 - Memory access at key __actions
+1:48.185287 - Memory access at key __world states
+1:48.687448 - Starting cycle 5
+
+1:48.687831 - ****** Starting Simulate Phase ******
+
+1:48.688282 - Memory access at key __actions

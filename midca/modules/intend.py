@@ -118,7 +118,9 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
                 print "Goal graph not initialized. Intend will do nothing."
             return
         # get all the goals from the root of the goal graph
-        goals = goalGraph.getUnrestrictedGoals()
+        goals = self.mem.get(self.mem.CURRENT_GOALS)
+        if goals:
+            goals = goals[-1]
 
         if not goals:
             if verbose >= 1:
@@ -129,17 +131,19 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
         #goals = [goals[0]]
         # add it to the current goal in memory
         predicates = ["committed", "rejected", "requested"]
-        suspended_goal = self.mem.get(self.mem.SUSPENDED_GOALS)
-        if not suspended_goal:
-            for goal in goals:
+        suspended_goals = self.mem.get(self.mem.SUSPENDED_GOALS)
+        if not suspended_goals:
+            copy_goals = goals[:]
+            for goal in copy_goals:
                 if not goal['predicate'] in predicates:
-                    self.mem.set(self.mem.SUSPENDED_GOALS, [goal])
+                    self.mem.add(self.mem.SUSPENDED_GOALS, [goal])
                     if verbose >= 2:
                         print "The goal " + str(goal) + " is suspended due to lack of resources"
                     goals.remove(goal)
         else:
-            if suspended_goal[0] in goals:
-                goals.remove(suspended_goal[0])
+            for suspended_goal in suspended_goals:
+                if suspended_goal[0] in goals:
+                    goals.remove(suspended_goal[0])
 
         # current goals as a stack
         if self.mem.get(self.mem.CURRENT_GOALS) :
@@ -811,6 +815,8 @@ class SimpleIntend_Restaurant(base.BaseModule):
                 for goal in goals:
                     print goal,
                 print
+
+
 
 class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
@@ -1533,10 +1539,11 @@ class SimpleIntend_construction(base.BaseModule):
 
 class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
-    def __init__(self, experiment="None"):
+    def __init__(self, name, experiment="None"):
         # for hill climbing
         self.previous_goal = []
         self.experiment = experiment
+        self.agentName = name
 
     def displayEachGoalTrajectory(self, GoalTrajectory):
         print ("*******************STATES*******************")
@@ -1744,7 +1751,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
         """
 
         # get the current state of the agent
-        [atom] = world.get_atoms(["agent-at", "grace"])
+        [atom] = world.get_atoms(["agent-at", self.agentName])
         start_goal = None
 
         # get the start goal from where the agent is in
@@ -1759,7 +1766,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             # create a dummy goal where the agent is
             # so that you will have better connected graph
             # since that goal is dummy add it in visited
-            start_goal = dummygoalgen.Goal(*["grace", atom.args[1].name], predicate='surveyed')
+            start_goal = dummygoalgen.Goal(*[self.agentName, atom.args[1].name], predicate='surveyed')
             goals.append(start_goal)
             graph = self.createGraph(goals)
             visited = self.dfs(graph, start_goal, visited=[])
@@ -1926,7 +1933,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             return [start_goal]
         """
         if not self.previous_goal:
-            [atom] = world.get_atoms(["agent-at", "grace"])
+            [atom] = world.get_atoms(["agent-at", self.agentName])
             start_goal = self.min_distance_goal(goals, atom)
             self.previous_goal.append(copy.deepcopy(start_goal))
             return [start_goal]
@@ -1964,7 +1971,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             goal = self.hillclimbing(graph, score_graph, actual_score_graph, previous_goals, start_goal)
 
             if goal == None:
-                [atom] = world.get_atoms(["agent-at", "grace"])
+                [atom] = world.get_atoms(["agent-at", self.agentName])
                 goal = self.min_distance_goal(original_goals, atom)
                 self.previous_goal.append(copy.deepcopy(goal))
             else:
@@ -2038,7 +2045,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             exec_goals = self.filter(current_goals, "surveyed")
             if exec_goals:
                 #check if any of it is in the same agent location
-                [atom] = world.get_atoms(["agent-at", "grace"])
+                [atom] = world.get_atoms(["agent-at", self.agentName])
                 for goal in exec_goals:
                     if goal.args[1] == atom.args[1].name:
                         need_for_hillclimbing_flag = False
@@ -2763,7 +2770,7 @@ class MetaIntend(base.BaseModule):
 
 class MetaIntendOps(base.BaseModule):
 
-    def __init__(self):
+    def __init__(self, method = "smart"):
         self.ontology = {
                         "block" : {
                         "agent_threat": 0,
@@ -2778,6 +2785,7 @@ class MetaIntendOps(base.BaseModule):
                         },
         }
         self.time = midcatime.now()
+        self.method = method
 
 
     def parse_tile_to_x_y(self, tile):
@@ -2892,22 +2900,22 @@ class MetaIntendOps(base.BaseModule):
 
 
 
-    def calculate_anomaly_repeat(self, anomaly, threshold = 20):
+    def calculate_anomaly_repeat(self, anomaly, threshold = 40):
         time = midcatime.now() - self.time
         self.ontology[anomaly]["repeat"].append(time)
         repeat_times = self.ontology[anomaly]["repeat"]
         if len(repeat_times) > 1:
-            time_diff = [(repeat_times[i] - repeat_times[i-1])
-                         for i in range(len(repeat_times)-1, 0, -1)]
-
-            time_diff = time_diff[-2:]
-            mean = sum(time_diff)/ len(time_diff)
+            #time_diff = [(repeat_times[i] - repeat_times[i-1])
+            #             for i in range(len(repeat_times)-1, 0, -1)]
+            time_diff = repeat_times[-1] - repeat_times[-2]
+            #time_diff = time_diff[-2:]
+            #mean = sum(time_diff)/ len(time_diff)
+            mean = time_diff
             if mean < threshold:
                 return 1
-
         return 0
 
-    def IsGoalFormulationPriority(self, anomaly):
+    def IsGoalFormulationPriority(self, current_goal, anomaly):
         """
         param : anomaly
         functionality:
@@ -2918,7 +2926,7 @@ class MetaIntendOps(base.BaseModule):
         """
         #self.ontology[anomaly]["mission_threat"] += 1
         agent_threat = self.ontology[anomaly]["agent_threat"]
-        mission_threat = self.calculate_mission_threat()
+        mission_threat = self.calculate_mission_threat(current_goal)
         repeat_frequency = self.calculate_anomaly_repeat(anomaly)
 
         return max(agent_threat, mission_threat, repeat_frequency)
@@ -2931,24 +2939,24 @@ class MetaIntendOps(base.BaseModule):
         reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
         formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
         changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
+        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
+        current_goal = []
+        if current_goals:
+            current_goal = current_goals[-1][0]
         if not (formulated_goals or changed_goals):
             return
         else:
-            if reselected_goals:
-                if len(reselected_goals) >= 2:
-                    current_goal = reselected_goals[-2][0]
-                else:
-                    current_goal = reselected_goals[-1][0]
-
             self.mem.set(self.mem.FORMULATED_GOALS, [])
             self.mem.set(self.mem.CHANGED_GOALS, [])
+            self.mem.set(self.mem.PREVIOUS_GOALS, [])
+
 
             # priority to formulation
             if formulated_goals:
                 formulated_goal = formulated_goals[-1][0]
                 # get the anomaly
                 anomaly = self.mem.get(self.mem.EXPLANATION)
-                if self.IsGoalFormulationPriority(anomaly):
+                if self.IsGoalFormulationPriority(current_goal, anomaly):
                     goals = [formulated_goal]
                     if current_goal:
                         current_goal.status = True
@@ -2957,14 +2965,112 @@ class MetaIntendOps(base.BaseModule):
             # priority to change
             if not goals and changed_goals:
                 changed_goal = changed_goals[-1][0]
-                if self.calculate_mission_threat():
-                    self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goal, changed_goal.args, predicate=changed_goal['Deepsurveyed'])
+                if self.calculate_mission_threat(current_goal):
+                    self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goals[-1][0], changed_goal.args, predicate=changed_goal['Deepsurveyed'])
                     self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
                 # current goals as a stack
                 #self.mem.set(self.mem.CURRENT_GOALS, [[current_goal]])
 
             # priority to goal selection
             if not goals and reselected_goals:
+                reselected_goal = reselected_goals[-1][0]
+                goals = [reselected_goal]
+
+        # current goals as a stack
+        if self.mem.get(self.mem.CURRENT_GOALS):
+            current_goals = self.mem.get(self.mem.CURRENT_GOALS)
+            if not current_goals[-1] == goals:
+                current_goals.append(goals)
+                self.mem.set(self.mem.CURRENT_GOALS, current_goals)
+        else:
+            self.mem.set(self.mem.CURRENT_GOALS, [goals])
+
+        if trace:
+            trace.add_data("GOALS", goals)
+
+        if not goals:
+            if verbose >= 2:
+                print "No goals selected."
+        else:
+            if verbose >= 2:
+                print "Selecting goal(s):",
+                for goal in goals:
+                    print goal,
+                print
+
+class RandomMetaIntendOps(base.BaseModule):
+
+    def __init__(self):
+        random.seed(555)
+
+    def parse_tile_to_x_y(self, tile):
+        y_index = tile.index('y')
+        return [int(tile[2:y_index]) , int(tile[y_index+1:])]
+
+    def get_agent_location(self):
+
+        # get state
+        world = self.mem.get(self.mem.STATES)[-1]
+        agent_atom = world.get_atoms(["agent-at"])
+        if agent_atom:
+            return agent_atom[-1].args[1].name
+
+
+    def run(self, cycle, verbose=2):
+        trace = self.mem.trace
+        # reselected goals
+        goals = []
+        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
+        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
+        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
+        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
+        current_goal = []
+        if current_goals:
+            current_goal = current_goals[-1][0]
+        if not (formulated_goals or changed_goals):
+            return
+        else:
+            self.mem.set(self.mem.FORMULATED_GOALS, [])
+            self.mem.set(self.mem.CHANGED_GOALS, [])
+            self.mem.set(self.mem.PREVIOUS_GOALS, [])
+
+            choices = []
+
+            if formulated_goals:
+                choices.append("formulation")
+            if changed_goals:
+                choices.append("change")
+            if reselected_goals:
+                choices.append("selection")
+
+            choice = random.choice(choices)
+
+            if choice == "change":
+                formulated_goals = None
+            elif choice == "selection":
+                formulated_goals = None
+                changed_goals = None
+            else:
+                pass
+
+            # priority to formulation
+            if formulated_goals and choice =="formulation":
+                formulated_goal = formulated_goals[-1][0]
+                goals = [formulated_goal]
+                if current_goal:
+                    current_goal.status = True
+
+            # priority to change
+            elif changed_goals and choice =="change":
+                changed_goal = changed_goals[-1][0]
+                goals = [changed_goal]
+                #self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goals[-1][0], changed_goal.args, predicate=changed_goal['Deepsurveyed'])
+                #self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                # current goals as a stack
+                #self.mem.set(self.mem.CURRENT_GOALS, [[current_goal]])
+
+            # priority to goal selection
+            elif reselected_goals and choice =="selection":
                 reselected_goal = reselected_goals[-1][0]
                 goals = [reselected_goal]
 
@@ -3185,7 +3291,7 @@ class HGNSelection(base.BaseModule):
                 print
 
 
-class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
+class SimpleIntendMultipleGoalsSuspendGrace(base.BaseModule):
 
     def run(self, cycle, verbose = 2):
         trace = self.mem.trace
