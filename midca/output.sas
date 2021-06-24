@@ -261,8 +261,8 @@ begin_variable
 var36
 -1
 2
-Atom invasive-at(pos5-5)
-NegatedAtom invasive-at(pos5-5)
+Atom invasive-at(pos1-1)
+NegatedAtom invasive-at(pos1-1)
 end_variable
 0
 begin_state
@@ -308,7 +308,7 @@ begin_goal
 1
 36 1
 end_goal
-221
+228
 begin_operator
 move east pos0-0 pos1-0
 0
@@ -2070,9 +2070,65 @@ move west pos5-5 pos4-5
 1
 end_operator
 begin_operator
-spray8 pos5-5 pos5-4 pos4-5 pos4-4
+spray pos1-1 pos1-2 pos1-0 pos2-1 pos0-1 pos2-2 pos0-2 pos0-0 pos2-0
 1
-3 0
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray2 pos1-1 pos1-0 pos2-1 pos1-2 pos2-2 pos2-0
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray3 pos1-1 pos1-2 pos2-1 pos0-1 pos2-2 pos0-2
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray4 pos1-1 pos1-2 pos1-0 pos0-1 pos0-2 pos0-0
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray5 pos1-1 pos1-0 pos2-1 pos2-0
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray6 pos1-1 pos1-2 pos2-1 pos2-2
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray7 pos1-1 pos1-2 pos0-1 pos0-2
+1
+15 0
+1
+0 36 -1 1
+1
+end_operator
+begin_operator
+spray8 pos1-1 pos1-0 pos0-1 pos0-0
+1
+15 0
 1
 0 36 -1 1
 1
