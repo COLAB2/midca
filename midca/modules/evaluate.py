@@ -3,6 +3,7 @@ from midca import midcatime
 import pandas as pd
 import copy
 import os
+import numpy as np
 try:
     from midca.examples._gazebo_baxter import halo_color
 except ImportError:
@@ -252,6 +253,30 @@ class GraceReport(base.BaseModule):
     def __init__(self, agent_name, index):
         self.agentName = agent_name
         self.index = index
+        self.TrackAnomalyCount = None
+        self.TrackGoalCount = None
+        self.remora = 0
+        self.block = 0
+
+        self.Anomalyreport = { "index":[],
+          "Anomalies(#)":[],
+          "RemoraAttacks(#)":[],
+          "Blockade(#)":[],
+          "Time":[],
+          }
+
+        self.Goalreport = { "index":[],
+          "Goals(#)":[],
+          "SurveyedGoals(#)":[],
+          "DeepSurveyedGoals(#)":[],
+          "SurveyedGoals(Positions)": [],
+          "DeepSurveyedGoals(Positions)": [],
+          "Anomalies(#)":[],
+          "RemoraAttacks(#)":[],
+          "Blockade(#)":[],
+          "Hotspots(Positions)":[],
+          "Time":[],
+          }
 
     def CreateReport(self, world):
         report = {"Hotspots(#)": 0,
@@ -261,10 +286,31 @@ class GraceReport(base.BaseModule):
                   "DeepSurveyedGoals(#)": 0,
                   "DeepSurveyedGoals(Positions)": "",
                   "index":self.index,
+                  "Anomalies(#)":0,
+                  "RemoraAttacks(#)":0,
+                  "Blockade(#)":0,
+                  "Change(#)":0,
                   }
+
         hotspots = world.get_atoms(["hotspot-detected-count", self.agentName])
         SurveyedGoals = world.get_atoms(["surveyed", self.agentName])
-        DeepSurveyedGoals = world.get_atoms(["DeepSurveyed", self.agentName])
+        SurveyedGoals = [atom for atom in SurveyedGoals if atom.predicate.name=="surveyed"]
+        DeepSurveyedGoals = world.get_atoms(["Deepsurveyed", self.agentName])
+        DeepSurveyedGoals = [atom for atom in DeepSurveyedGoals if atom.predicate.name=="Deepsurveyed"]
+        anomalies = self.mem.get(self.mem.ReportAnomalies)
+
+        if anomalies:
+            total_count = 0
+            if "remora" in anomalies:
+                report["RemoraAttacks(#)"] = anomalies["remora"]
+                total_count += anomalies["remora"]
+            if "block" in anomalies:
+                report["Blockade(#)"] = anomalies["block"]
+                total_count += anomalies["block"]
+            if "change" in anomalies:
+                report["Change(#)"] = anomalies["change"]
+
+            report["Anomalies(#)"] = total_count
 
         report["Hotspots(#)"] = len(hotspots)
         report["SurveyedGoals(#)"] = len(SurveyedGoals)
@@ -282,11 +328,90 @@ class GraceReport(base.BaseModule):
         else:
             df.to_csv('results/'+self.agentName+'.csv')
 
+        df = pd.DataFrame(data=self.Anomalyreport)
+        if os.path.exists('./results/'+self.agentName+'_anomalies.csv'):
+            df.to_csv('results/'+self.agentName+'_anomalies.csv', mode='a', header=False)
+        else:
+            df.to_csv('results/'+self.agentName+'_anomalies.csv')
+
+        df = pd.DataFrame(data=self.Goalreport)
+        if os.path.exists('./results/'+self.agentName+'_goals.csv'):
+            df.to_csv('results/'+self.agentName+'_goals.csv', mode='a', header=False)
+        else:
+            df.to_csv('results/'+self.agentName+'_goals.csv')
+
+    def CreateReportAnomalies(self, timeRemaining):
+
+        report = self.Anomalyreport
+        anomalies = self.mem.get(self.mem.ReportAnomalies)
+        total_anomalies = 0
+        if anomalies:
+            if "remora" in anomalies:
+                total_anomalies += anomalies["remora"]
+                self.remora = anomalies["remora"]
+
+            if "block" in anomalies:
+                total_anomalies += anomalies["block"]
+                self.block = anomalies["block"]
+
+        if not self.TrackAnomalyCount == total_anomalies:
+            self.TrackAnomalyCount = total_anomalies
+            report["index"].append(self.index)
+            report["Anomalies(#)"].append(total_anomalies)
+            report["RemoraAttacks(#)"].append(self.remora)
+            report["Blockade(#)"].append(self.block)
+            report["Time"].append(timeRemaining)
+
+
+
+    def CreateReportGoals(self, world, timeRemaining):
+
+        report = self.Goalreport
+        hotspots = world.get_atoms(["hotspot-detected-count", self.agentName])
+        SurveyedGoals = world.get_atoms(["surveyed", self.agentName])
+        SurveyedGoals = [atom for atom in SurveyedGoals if atom.predicate.name=="surveyed"]
+        DeepSurveyedGoals = world.get_atoms(["Deepsurveyed", self.agentName])
+        DeepSurveyedGoals = [atom for atom in DeepSurveyedGoals if atom.predicate.name=="Deepsurveyed"]
+        total_goals = (len(SurveyedGoals) + len(DeepSurveyedGoals))
+        total_anomalies = self.remora + self.block
+
+        if not self.TrackGoalCount == total_goals:
+            report["index"].append(self.index)
+            report["Goals(#)"].append(total_goals)
+            report["SurveyedGoals(#)"].append(len(SurveyedGoals))
+            report["DeepSurveyedGoals(#)"].append(len(DeepSurveyedGoals))
+            report["Time"].append(timeRemaining)
+            self.TrackGoalCount = total_goals
+
+            if SurveyedGoals:
+                report["SurveyedGoals(Positions)"].append(";".join([atom.args[1].name for atom in SurveyedGoals]))
+            else:
+                report["SurveyedGoals(Positions)"].append(np.nan)
+
+            if DeepSurveyedGoals:
+                report["DeepSurveyedGoals(Positions)"].append(";".join([atom.args[1].name for atom in DeepSurveyedGoals]))
+            else:
+                report["DeepSurveyedGoals(Positions)"].append(np.nan)
+
+            if hotspots:
+                report["Hotspots(Positions)"].append(";".join([atom.args[2].name for atom in hotspots]))
+            else:
+                report["Hotspots(Positions)"].append(np.nan)
+
+            report["Anomalies(#)"].append(total_anomalies)
+            report["RemoraAttacks(#)"].append(self.remora)
+            report["Blockade(#)"].append(self.block)
+
+
+
     def run(self, cycle, verbose = 2):
         world = self.mem.get(self.mem.STATES)[-1]
         timeRemainingAtom = world.get_atoms(["timeRemaining"])
         if timeRemainingAtom:
             timeRemaing = float (timeRemainingAtom[0].args[0].name)
+            self.CreateReportAnomalies(timeRemaing)
+            self.CreateReportGoals(world, timeRemaing)
+
         if timeRemaing <= 0.0:
             self.CreateReport(world)
             os._exit(0)

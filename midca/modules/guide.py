@@ -1318,7 +1318,6 @@ class GraceGoalInputNSF(UserGoalInput):
             g = goals.Goal(*["grace", "Tx4y4"], predicate='surveyed')
             self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             print("Midca generated a goal : " + str(g))
-
             self.stopexperimentflag = True
 
         elif len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0 and \
@@ -1374,9 +1373,29 @@ class GraceAnomalyDetection(UserGoalInput):
         self.experiment = experiment
         self.agentName = name
 
+    def init(self, world, mem):
+        self.mem = mem
+        self.mem.set(self.mem.FORMULATED_GOALS, [])
+        self.mem.set(self.mem.PREVIOUS_GOALS, [])
+
     def get_anomaly(self):
         anomaly = self.interface.get_anomaly()
+        if anomaly:
+            self.interface.reset_anomaly()
         return anomaly
+
+    def reportAnomaly(self, anomaly):
+        trackanomalies = self.mem.get(self.mem.ReportAnomalies)
+        if not trackanomalies:
+            trackanomalies = {}
+
+        if anomaly in trackanomalies:
+            trackanomalies[anomaly] +=1
+        else:
+            trackanomalies[anomaly] = 1
+
+        self.mem.set(self.mem.ReportAnomalies, trackanomalies)
+
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1389,11 +1408,12 @@ class GraceAnomalyDetection(UserGoalInput):
                 # if the goal is not in goal graph
                 if not g in self.mem.get(self.mem.GOAL_GRAPH):
                     print("An anomaly is detected regarding the mode of operation : ")
+                    self.reportAnomaly("remora")
                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                     print("Midca generated a goal : " + str(g))
-                    self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
-                    self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
-                    self.mem.set(self.mem.EXPLANATION, "remora")
+                    self.mem.add(self.mem.FORMULATED_GOALS, [[g]])
+                    self.mem.add(self.mem.PREVIOUS_GOALS, current_goals)
+                    self.mem.add(self.mem.EXPLANATION, "remora")
 
         # detect block anomaly
         """
@@ -1432,19 +1452,21 @@ class GraceAnomalyDetection(UserGoalInput):
                                 self.mem.set(self.mem.SUSPENDED_GOALS, [[goal]])
         """
         if self.experiment == "formulation" or self.experiment == "smart":
-                if self.get_anomaly() == "block":
+                if current_goals and \
+                        current_goals[-1][0].status == False and \
+                        self.get_anomaly() == "block":
                     actions = self.mem.get(self.mem.ACTIONS)
                     if actions:
-                        if actions[-1]:
-                            actions = actions[-1]
-                            if actions[-1]:
-                                actions = actions[-1]
-                    arguments = list(actions.args)
+                        action = actions[-1][-1]
+                        if not action.op.startswith("move"):
+                            return
+                    arguments = list(action.args)
                     g = goals.Goal(*arguments, predicate='inspected', type="crisis")
                     if not g in self.mem.get(self.mem.GOAL_GRAPH):
-                        self.mem.set(self.mem.FORMULATED_GOALS, [[g]])
-                        self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
-                        self.mem.set(self.mem.EXPLANATION, "block")
+                        self.reportAnomaly("block")
+                        self.mem.add(self.mem.FORMULATED_GOALS, [[g]])
+                        self.mem.add(self.mem.PREVIOUS_GOALS, current_goals)
+                        self.mem.add(self.mem.EXPLANATION, "block")
                         print("A block anomaly is detected regarding the mode of operation : ")
                         self.mem.get(self.mem.GOAL_GRAPH).insert(g)
                         print("Midca generated a goal : " + str(g))
@@ -1456,7 +1478,23 @@ class GraceChangeDetection(UserGoalInput):
     Todo: This class should make use of explanation patterns
     '''
     def __init__(self):
-        self.threshold = 14
+        self.threshold = 65
+
+    def init(self, world, mem):
+        self.mem = mem
+        self.mem.set(self.mem.CHANGED_GOALS, [])
+
+    def reportAnomaly(self, anomaly):
+        trackanomalies = self.mem.get(self.mem.ReportAnomalies)
+        if not trackanomalies:
+            trackanomalies = {}
+
+        if anomaly in trackanomalies:
+            trackanomalies[anomaly] +=1
+        else:
+            trackanomalies[anomaly] = 1
+
+        self.mem.set(self.mem.ReportAnomalies, trackanomalies)
 
     def run(self, cycle, verbose=2):
         world = self.mem.get(self.mem.STATES)[-1]
@@ -1464,7 +1502,7 @@ class GraceChangeDetection(UserGoalInput):
         delegated_goals = world.get_atoms(["requested", "grace", "franklin"])
         current_goals = self.mem.get(self.mem.CURRENT_GOALS)
         if delegated_goals:
-            self.threshold = 20
+            self.threshold = 65
         if observation:
             position = observation[0].args[1].name
             observation = world.get_atoms(["uniqueTagCount", "grace", position])
@@ -1476,9 +1514,10 @@ class GraceChangeDetection(UserGoalInput):
                         if goal["predicate"] == "surveyed" and \
                             goal.args[1] == position:
                             g = goals.Goal(*["grace", position], predicate='Deepsurveyed', type="achievement")
-                            print("Midca changed the goal : " + str(goal)),
-                            self.mem.set(self.mem.CHANGED_GOALS, [[g]])
-                            self.mem.set(self.mem.PREVIOUS_GOALS, current_goals)
+                            self.reportAnomaly("change")
+                            print("Midca Identified an oppertunity to change the goal : " + str(goal)),
+                            self.mem.add(self.mem.CHANGED_GOALS, [[g]])
+                            self.mem.add(self.mem.PREVIOUS_GOALS, current_goals)
                             #self.mem.get(self.mem.GOAL_GRAPH).change(goal,*["grace", position], predicate='Deepsurveyed')
                             #self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
                             print(" to : " + str(g))

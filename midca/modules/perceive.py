@@ -125,7 +125,6 @@ class AsyncGraceObserver(base.BaseModule):
         self.mem.set(self.mem.INTERFACE_WORLD, self.world)
 
 
-
     #perfect observation
     def observe(self):
         return self.world.copy()
@@ -161,6 +160,28 @@ class AsyncGraceObserver(base.BaseModule):
                     y = "0"
                 position = "Tx" + x + "y" + y
                 return position
+
+    def get_agent_position_w_action(self):
+        """
+        create an object for Tagworld and call get_pos
+        :return: the position in Tile format
+        """
+        actions = self.mem.get(self.mem.ACTIONS)
+        if actions:
+            action = actions[-1][-1]
+            if action.op.startswith("move"):
+                # return previous world state position
+                return self.world.get_atoms(["agent-at", self.agentName])[-1].args[1].name
+
+        while(True):
+                #tag = self.sim#.TagWorld()
+                position = self.sim.get_cell()
+                if position:
+                    [x, y] = position.split(",")
+                    if int(y) < 0:
+                        y = "0"
+                    position = "Tx" + x + "y" + y
+                    return position
 
     def add_prev_tag(self, tag_data, position):
         """
@@ -500,14 +521,14 @@ class AsyncGraceObserver(base.BaseModule):
         #print (self.world)
         states = ""
 
-        position = self.get_agent_position()
+        position = self.get_agent_position_w_action()
 
         hotspot_data = None
         if position:
             states += "agent-at(" + self.agentName + "," + position + ")\n"
 
             # get if it is a hotspot or not
-            hotspot_data = self.get_hotspot_data(self.parse_tile(position))
+            #hotspot_data = self.get_hotspot_data(self.parse_tile(position))
             #get the remaining simulation time
             time = self.get_remaining_time()
             if time:
@@ -559,7 +580,7 @@ class AsyncGraceObserver(base.BaseModule):
                 self.remove_corresponding_atoms(["free", self.agentName])
                 states += "free(" + self.agentName + ")\n"
 
-        hotspot_data = tag_data if tag_data > 30 else None #self.get_hotspot_data(self.parse_tile(position))
+        hotspot_data = tag_data if tag_data > 65 else None #self.get_hotspot_data(self.parse_tile(position))
 
         if hotspot_data:
             states += "hotspot-detected(" + self.agentName + "," + position + ")\n"
@@ -612,7 +633,7 @@ class AsyncGraceObserver(base.BaseModule):
         # drop old memory states if not being used
         # this should help with high memory costs
         states = self.mem.get(self.mem.STATES)
-        if len(states) > 5:
+        if len(states) > 3:
             #print "trimmed off 200 old stale states"
             states = states[2:]
             self.mem.set(self.mem.STATES, states)

@@ -66,6 +66,8 @@ class Memory:
 	GETDATA = "__getdata"
 	GRID = "__grid"
 	ESTGRID = "__estgrid"
+	ReportAnomalies = "__reportanomalies"
+
 	#ZMQ constants
 	ZMQ_OBJS_DETECTED = "__zmqdetectedobjects"
 	ZMQ_REQS_DETECTED = "__zmqAgentRequests"

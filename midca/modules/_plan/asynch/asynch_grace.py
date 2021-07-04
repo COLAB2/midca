@@ -633,9 +633,11 @@ class MoveToCell(AsynchAction):
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
+            #tagworld.reset_anomaly()
         elif confirmation == str(False):
             return False
         else:
+            #pass
             if timediff > 1:
                 self.implement_action()
             #else:
@@ -709,16 +711,22 @@ class SurveyCell(AsynchAction):
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
+            #tagworld.reset_anomaly()
             return False
-        if confirmation == str(True) and timediff < 2:
+        if confirmation == str(True) and timediff < 3:
             self.implement_action()
-            #time.sleep(7)
-            #self.skiponce += -1
             return False
+        #     self.implement_action()
+        #    #time.sleep(7)
+        #    #self.skiponce += -1
+
         if confirmation == str(True):
-            self.mem.set(self.mem.GETDATA, True)
-            #time.sleep(1)
-            return True
+            confirmation = tagworld.searchComplete()
+            if confirmation == str(True):
+                self.mem.set(self.mem.GETDATA, True)
+                #time.sleep(1)
+                return True
+            return False
         return False
 
 class DeepSurveyCell(AsynchAction):
@@ -754,32 +762,21 @@ class DeepSurveyCell(AsynchAction):
         tagworld.deepsearch(go_to_location)
 
     def check_confirmation(self):
-        # skip 5 cells
-        if self.skip:
-            self.skip -= 1
-            return False
-
-        #world = self.mem.get(self.mem.STATES)[-1]
-        #argnames = [str(arg) for arg in self.action.args]
-        #atoms = world.get_atoms(filters=["certainblocRadius", "grace", argnames[2]])
-        #if not atoms:
-        #    self.status = FAILED
-        #    return False
-
+        timediff = midcatime.now() - self.time
         tagworld = self.interface
         confirmation = tagworld.searchComplete()
         if confirmation == "Failed":
             self.status = FAILED
+            #tagworld.reset_anomaly()
             return False
-
-        if confirmation == str(True) and self.skiponce:
-            #time.sleep(7)
-            self.skiponce += -1
+        elif confirmation == str(True) and timediff < 3:
+            self.implement_action()
             return False
-        if confirmation == str(True):
+        elif confirmation == str(True):
             self.mem.set(self.mem.GETDATA, True)
             #time.sleep(1)
             return True
+
         return False
 
 class SurveyCellErgodic(AsynchAction):
@@ -831,6 +828,7 @@ class SurveyCellErgodic(AsynchAction):
         confirmation = tagworld.searchErgodicComplete()
         if confirmation == "Failed":
             self.status = FAILED
+            #tagworld.reset_anomaly()
             return False
         if confirmation == str(True) and self.skiponce:
             #time.sleep(7)
@@ -909,18 +907,24 @@ class GraceGlide(AsynchAction):
                               completionCheck, True)
 
     def implement_action(self):
+        self.time = midcatime.now()
         tagworld = self.interface
         tagworld.remove_remora()
         #time.sleep(0.2)
         pass
 
     def check_confirmation(self):
+        timediff = midcatime.now() - self.time
         if self.skip:
             self.skip = False
             return False
 
         tagworld = self.interface
         status = tagworld.remove_remora_status()
+
+        if status == "True" and timediff < 3:
+            return False
+
         if status == "True":
             return True
 
@@ -953,6 +957,7 @@ class GraceInspect(AsynchAction):
         return output
 
     def implement_action(self):
+        self.time = midcatime.now()
         tagworld = self.interface
         argnames = [str(arg) for arg in self.action.args]
         start = self.parse_tile(argnames[1])
@@ -962,8 +967,12 @@ class GraceInspect(AsynchAction):
         pass
 
     def check_confirmation(self):
+        timediff = midcatime.now() - self.time
         tagworld = self.interface
         status = tagworld.searchComplete()
+        if status == str(True) and timediff < 1:
+            self.implement_action()
+            return False
         argnames = [str(arg) for arg in self.action.args]
         start = self.parse_tile(argnames[1])
         end =   self.parse_tile(argnames[2])

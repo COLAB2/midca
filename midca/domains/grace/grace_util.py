@@ -719,10 +719,10 @@ def preferFree(goal1, goal2):
         return -1
     elif goal1['predicate'] != 'achieved' and goal2['predicate'] == 'achieved':
         return 1
-    elif goal1['predicate'] == 'Deepsurveyed' and goal2['predicate'] != 'Deepsurveyed':
-        return -1
-    elif goal1['predicate'] != 'Deepsurveyed' and goal2['predicate'] == 'Deepsurveyed':
-        return 1
+    #elif goal1['predicate'] == 'Deepsurveyed' and goal2['predicate'] != 'Deepsurveyed':
+    #    return -1
+    #elif goal1['predicate'] != 'Deepsurveyed' and goal2['predicate'] == 'Deepsurveyed':
+    #    return 1
 
     return 0
 

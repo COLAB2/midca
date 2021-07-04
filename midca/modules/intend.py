@@ -1,9 +1,12 @@
+from __future__ import division
 from midca import base,midcatime
 import copy,itertools,operator
 import random
 import time as ctime
 import numpy as np
 from numpy.linalg import norm
+from scipy.stats import poisson
+import pandas as pd
 import math
 
 
@@ -2024,6 +2027,8 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             suspended_goals = [goal for goal in filtered_goals if goal.status == False]
             if not goals and suspended_goals:
                 goals = suspended_goals
+                for goal in goals:
+                    goal.status = True
 
         if not goals:
             if verbose >= 1:
@@ -2801,15 +2806,15 @@ class MetaIntendOps(base.BaseModule):
         tile1 = goal.args[1]
         tile2 = agent_location
         factor = 1
-        speed = 2
+        speed = 1
         distance = self.eucledian_distance(tile1, tile2)
         time_taken =  (distance*factor/speed)
         if goal["predicate"] == "surveyed":
-            search_time = 10
+            search_time = 25
             time_taken += search_time
             return time_taken
         elif goal["predicate"] == "deepsurveyed":
-            search_time = 30
+            search_time = 45
             time_taken += search_time
             return time_taken
 
@@ -2859,7 +2864,7 @@ class MetaIntendOps(base.BaseModule):
         res = K[n][W]
         return(res)
 
-    def calculate_goals_estimate(self, eliminate_goal=None):
+    def calculate_goals_estimate(self, eliminate_goal=None, include_goal=None):
 
         knowledge_about_goals = {"surveyed":self.computeSurveyedTime,
                                  "deepsurveyed":self.computeSurveyedTime}
@@ -2870,6 +2875,11 @@ class MetaIntendOps(base.BaseModule):
         goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
         goals = goalGraph.getAllGoals()
         time_to_complete = []
+
+        if include_goal:
+            time = self.compute_time(include_goal, knowledge_about_goals, agent_location)
+            time_to_complete.append(time)
+
         for goal in goals:
             time = self.compute_time(goal, knowledge_about_goals, agent_location)
             if not goal == eliminate_goal:
@@ -2884,7 +2894,7 @@ class MetaIntendOps(base.BaseModule):
 
 
         percentage_goals_prior = self.calculate_goals_estimate()
-        percentage_goals_after = self.calculate_goals_estimate(current_goal)
+        percentage_goals_after = self.calculate_goals_estimate(eliminate_goal=current_goal)
 
         if (percentage_goals_prior - percentage_goals_after) > threshold:
             return 1
@@ -2898,21 +2908,58 @@ class MetaIntendOps(base.BaseModule):
         #else:
         #    return 0
 
+    def calculate_bins(self, repeat_times, interval=300, verbose=1):
+        max_value = max(repeat_times)
+        bins = [i for i in range(0,int(max_value+interval), interval)]
+        if verbose > 2:
+            print ("The Bin Intervals are", bins)
+        return bins
 
+    def binning(self, repeat_times, bins, verbose=1):
+        result =  pd.cut(repeat_times, bins, retbins=False)
+        if verbose >2:
+            print ("Result after binning is", result)
+        return result
 
-    def calculate_anomaly_repeat(self, anomaly, threshold = 40):
+    def CalculateLambda(self, bins, verbose=1):
+        time_intervals = { }
+        for each in bins:
+            if each in time_intervals:
+                time_intervals[each] +=1
+            else:
+                time_intervals[each] = 1
+        # calculate lambda
+        avg_rate = sum(time_intervals.values())/len(time_intervals)
+        if verbose >2:
+            print ("The Lambda for Poisson is", avg_rate)
+        return avg_rate
+
+    def negative_slopes(self, poisson_rates, verbose=1):
+        for i in range(1, len(poisson_rates)):
+            if poisson_rates[i-1] > poisson_rates[i]:
+                if verbose > 2:
+                    print ("The Negative Slope is ", i-1)
+                return i-1
+        return len(poisson_rates)
+
+    def calculate_anomaly_repeat(self, anomaly, threshold = 3):
         time = midcatime.now() - self.time
         self.ontology[anomaly]["repeat"].append(time)
         repeat_times = self.ontology[anomaly]["repeat"]
         if len(repeat_times) > 1:
-            #time_diff = [(repeat_times[i] - repeat_times[i-1])
-            #             for i in range(len(repeat_times)-1, 0, -1)]
-            time_diff = repeat_times[-1] - repeat_times[-2]
-            #time_diff = time_diff[-2:]
-            #mean = sum(time_diff)/ len(time_diff)
-            mean = time_diff
-            if mean < threshold:
+            bin_interval = self.calculate_bins(repeat_times)
+            bins = self.binning(repeat_times, bin_interval)
+            rate = self.CalculateLambda(bins)
+
+            # calculate poisson rates
+            poisson_rates = [poisson.pmf(i, rate) for i in range(10)]
+
+            # identify the negative slope
+            repetition_peak = self.negative_slopes(poisson_rates)
+
+            if repetition_peak >= threshold:
                 return 1
+
         return 0
 
     def IsGoalFormulationPriority(self, current_goal, anomaly):
@@ -2936,38 +2983,74 @@ class MetaIntendOps(base.BaseModule):
         trace = self.mem.trace
         # reselected goals
         goals = []
-        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
-        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
-        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
-        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
         current_goal = []
+
+        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
+
+        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
+        if formulated_goals:
+            remove_last_goal = formulated_goals[:-1]
+            self.mem.set(self.mem.FORMULATED_GOALS, remove_last_goal)
+            formulated_goals = formulated_goals[-1]
+
+        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
+        if changed_goals:
+            remove_last_goal = changed_goals[:-1]
+            self.mem.set(self.mem.CHANGED_GOALS, remove_last_goal)
+            changed_goals = changed_goals[-1]
+
+        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
+        if current_goals:
+            remove_last_goal = current_goals[:-1]
+            self.mem.set(self.mem.PREVIOUS_GOALS, remove_last_goal)
+            current_goals = current_goals[-1]
+
         if current_goals:
             current_goal = current_goals[-1][0]
+
         if not (formulated_goals or changed_goals):
             return
         else:
-            self.mem.set(self.mem.FORMULATED_GOALS, [])
-            self.mem.set(self.mem.CHANGED_GOALS, [])
-            self.mem.set(self.mem.PREVIOUS_GOALS, [])
-
-
             # priority to formulation
             if formulated_goals:
                 formulated_goal = formulated_goals[-1][0]
                 # get the anomaly
                 anomaly = self.mem.get(self.mem.EXPLANATION)
+                if anomaly:
+                    remove_last_goal = anomaly[:-1]
+                    self.mem.set(self.mem.EXPLANATION, remove_last_goal)
+                    anomaly = anomaly[-1]
+
                 if self.IsGoalFormulationPriority(current_goal, anomaly):
                     goals = [formulated_goal]
                     if current_goal:
                         current_goal.status = True
                     self.ontology[anomaly]["mission_threat"] -= 1
 
+                else:
+                    self.mem.get(self.mem.GOAL_GRAPH).remove(formulated_goal)
+
             # priority to change
+            # check if the goal types are same
+            # if they are different give priority to crisis, preservation and achievement
+            if not goals and (changed_goals and reselected_goals):
+                changed_goal = changed_goals[-1][0]
+                reselected_goal = reselected_goals[-1][0]
+                if changed_goal.type == reselected_goal.type:
+                    pass
+                else:
+                    pass
+                    #goal = self.campareGoalTypes(changed_goal, reselected_goal)
+                    #goals = [goal]
+
             if not goals and changed_goals:
                 changed_goal = changed_goals[-1][0]
-                if self.calculate_mission_threat(current_goal):
-                    self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goals[-1][0], changed_goal.args, predicate=changed_goal['Deepsurveyed'])
-                    self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                if self.calculate_goals_estimate(include_goal=changed_goal) > 90:
+                    self.mem.get(self.mem.GOAL_GRAPH).insert(changed_goal)
+                    if current_goal in self.mem.get(self.mem.GOAL_GRAPH):
+                        self.mem.get(self.mem.GOAL_GRAPH).remove(current_goal)
+                        self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
+                    goals = [changed_goal]
                 # current goals as a stack
                 #self.mem.set(self.mem.CURRENT_GOALS, [[current_goal]])
 
@@ -3020,59 +3103,74 @@ class RandomMetaIntendOps(base.BaseModule):
         trace = self.mem.trace
         # reselected goals
         goals = []
-        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
-        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
-        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
-        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
         current_goal = []
+
+        reselected_goals = self.mem.get(self.mem.CURRENT_GOALS)
+
+        formulated_goals = self.mem.get(self.mem.FORMULATED_GOALS)
+        if formulated_goals:
+            remove_last_goal = formulated_goals[:-1]
+            self.mem.set(self.mem.FORMULATED_GOALS, remove_last_goal)
+            formulated_goals = formulated_goals[-1]
+
+        changed_goals = self.mem.get(self.mem.CHANGED_GOALS)
+        if changed_goals:
+            remove_last_goal = changed_goals[:-1]
+            self.mem.set(self.mem.CHANGED_GOALS, remove_last_goal)
+            changed_goals = changed_goals[-1]
+
+        current_goals = self.mem.get(self.mem.PREVIOUS_GOALS)
+        if current_goals:
+            remove_last_goal = current_goals[:-1]
+            self.mem.set(self.mem.PREVIOUS_GOALS, remove_last_goal)
+            current_goals = current_goals[-1]
+
         if current_goals:
             current_goal = current_goals[-1][0]
+
         if not (formulated_goals or changed_goals):
             return
+
+        choices = []
+
+        if formulated_goals:
+            choices.append("formulation")
+        if changed_goals:
+            choices.append("change")
+        if reselected_goals:
+            choices.append("selection")
+
+        choice = random.choice(choices)
+
+        if choice == "change":
+            formulated_goals = None
+        elif choice == "selection":
+            formulated_goals = None
+            changed_goals = None
         else:
-            self.mem.set(self.mem.FORMULATED_GOALS, [])
-            self.mem.set(self.mem.CHANGED_GOALS, [])
-            self.mem.set(self.mem.PREVIOUS_GOALS, [])
+            pass
 
-            choices = []
+        # priority to formulation
+        if formulated_goals and choice =="formulation":
+            formulated_goal = formulated_goals[-1][0]
+            goals = [formulated_goal]
+            if current_goal:
+                current_goal.status = True
 
-            if formulated_goals:
-                choices.append("formulation")
-            if changed_goals:
-                choices.append("change")
-            if reselected_goals:
-                choices.append("selection")
+        # priority to change
+        elif changed_goals and choice =="change":
+            changed_goal = changed_goals[-1][0]
+            goals = [changed_goal]
+            # ToDo: add change functionality in goalGraph Later
+            self.mem.get(self.mem.GOAL_GRAPH).insert(changed_goal)
+            if current_goal in self.mem.get(self.mem.GOAL_GRAPH):
+                self.mem.get(self.mem.GOAL_GRAPH).remove(current_goal)
+                self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
 
-            choice = random.choice(choices)
-
-            if choice == "change":
-                formulated_goals = None
-            elif choice == "selection":
-                formulated_goals = None
-                changed_goals = None
-            else:
-                pass
-
-            # priority to formulation
-            if formulated_goals and choice =="formulation":
-                formulated_goal = formulated_goals[-1][0]
-                goals = [formulated_goal]
-                if current_goal:
-                    current_goal.status = True
-
-            # priority to change
-            elif changed_goals and choice =="change":
-                changed_goal = changed_goals[-1][0]
-                goals = [changed_goal]
-                #self.mem.get(self.mem.GOAL_GRAPH).change(reselected_goals[-1][0], changed_goal.args, predicate=changed_goal['Deepsurveyed'])
-                #self.mem.get(self.mem.GOAL_GRAPH).removeOldPlans()
-                # current goals as a stack
-                #self.mem.set(self.mem.CURRENT_GOALS, [[current_goal]])
-
-            # priority to goal selection
-            elif reselected_goals and choice =="selection":
-                reselected_goal = reselected_goals[-1][0]
-                goals = [reselected_goal]
+        # priority to goal selection
+        elif reselected_goals and choice =="selection":
+            reselected_goal = reselected_goals[-1][0]
+            goals = [reselected_goal]
 
         # current goals as a stack
         if self.mem.get(self.mem.CURRENT_GOALS):

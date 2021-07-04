@@ -9,7 +9,7 @@ import geniosDataProcess
 import operator
 import os
 from startingPositions import positions
-
+import time as midcatime
 np.random.seed(555)
 
 class TagWorld():
@@ -17,7 +17,7 @@ class TagWorld():
     def __init__(self, sub_ip = "tcp://127.0.0.1:4999",
                  sub_mine_ip = "tcp://127.0.0.1:4998",
                  pub_ip = "tcp://127.0.0.1:5999", name="grace", start_index = 0,
-                 experiment_time=300):
+                 experiment_time=200):
 
         context = zmq.Context()
         self.subscriber_remus = context.socket(zmq.SUB)
@@ -60,7 +60,7 @@ class TagWorld():
         # initialize anomaly chance
         self.anomalies = False
         self.anomaly_type = ""
-        self.anomalies_d = True
+        self.anomalies_d = False
 
         #for report
         self.anomaly_history = []
@@ -102,7 +102,7 @@ class TagWorld():
         # send the message
         self.publisher.send_multipart(message)
 
-        time.sleep(1)
+        time.sleep(2)
 
         while ( self.searchComplete() == str(False) ):
             # wait for the vehicle to move to starting point
@@ -164,33 +164,10 @@ class TagWorld():
     def get_mode(self):
         return self.mode
 
-        """
-        if self.searchComplete() == str(False) and self.speed < 0.7 and self.speed >=0.0:
-            if self.timeElapsed:
-                wait_time = time.time() - self.timeElapsed
-                if (wait_time) > 0:
-                    self.timeElapsedM3 = False
-                    return "m2"
-            else:
-                self.timeElapsed = time.time()
-
-        elif self.speed < 0.1:
-            if self.timeElapsedM3:
-                wait_time = time.time() - self.timeElapsedM3
-                if (wait_time) > 30:
-                    self.mode = "m3"
-                    return "m3"
-            else:
-                self.timeElapsedM3 = time.time()
-        else:
-            self.timeElapsed = False
-            self.timeElapsedM3 = False
-            return "m1"
-        """
     def move_cell(self, initial_position, final_destination):
         self.lock.acquire()
 
-        time.sleep(0.25)
+
 
         position = None
         if self.anomalies_d:
@@ -213,20 +190,20 @@ class TagWorld():
         # construct the message
         message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= "+str(self.make_agent_speed)]
 
+        time.sleep(0.1)
         # send the message
         self.publisher.send_multipart(message)
 
-        time.sleep(0.05)
+        time.sleep(0.1)
+        self.publisher.send_multipart(message)
 
         self.lock.release()
 
     def search(self, position, speed=1):
         self.lock.acquire()
         if self.blown_out:
-            time.sleep(2)
+            #time.sleep(2)
             return
-
-        time.sleep(0.25)
 
         x, y = self.simulator.grid_to_sim(position[0], position[1])
         side = self.simulator.side
@@ -249,15 +226,17 @@ class TagWorld():
         # create message
         message = [b"Vehicle", points + "# speed= "+str(str(self.make_agent_speed))]
 
+        time.sleep(0.1)
+        self.publisher.send_multipart(message)
+        time.sleep(0.1)
         self.publisher.send_multipart(message)
 
-        time.sleep(0.25)
+
 
         self.lock.release()
 
     def send(self, way_points, speed=1):
         self.lock.acquire()
-        time.sleep(0.25)
 
         points = b"points = pts={"
 
@@ -270,16 +249,16 @@ class TagWorld():
         # create message
         message = [b"Vehicle", points + b"# speed= "+str(str(self.make_agent_speed)).encode('ascii')]
 
+        time.sleep(0.1)
+        self.publisher.send_multipart(message)
+        time.sleep(0.1)
         self.publisher.send_multipart(message)
 
-        time.sleep(0.25)
 
         self.lock.release()
 
     def deepsearch(self, position, speed = 0.8):
         self.lock.acquire()
-
-        time.sleep(0.25)
 
         x, y = self.simulator.grid_to_sim(position[0], position[1])
 
@@ -287,11 +266,12 @@ class TagWorld():
         speed = 0.8
         if self.make_agent_speed <= 0.8:
             speed = self.make_agent_speed
-        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 70,lane_width=10, rows=north-south,degs=0 # speed ="+str(speed)]
+        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 60,lane_width=10, rows=north-south,degs=0 # speed ="+str(speed)]
 
+        time.sleep(0.1)
         self.publisher.send_multipart(message)
-
-        time.sleep(0.25)
+        time.sleep(0.1)
+        self.publisher.send_multipart(message)
 
         self.lock.release()
 
@@ -352,7 +332,7 @@ class TagWorld():
             # value should be 1 because we should try again even if we hit
             # duplicate mine -- maybe sim returns duplicate mines in this
             # for unknown technical reasons
-            print ('hit duplicate mine return...')
+            #print ('hit duplicate mine return...')
             return 1
         except Exception as e:
             #begin added code DO
@@ -363,14 +343,16 @@ class TagWorld():
             #end added code DO
             pass
         #added safety return value DO
-        return 0
+        return 1
 
     def get_tags(self, position):
 
         # update the mines
         #Adding while loop to detect all mines placed DO
-        while (self.update_mines() == 1):
-                pass
+        for _ in range(2):
+            while (self.update_mines() == 1):
+                    pass
+            #time.sleep(0.5)
 
         key = ",".join([str(pos) for pos in position])
         if key in self.mines:
@@ -391,6 +373,7 @@ class TagWorld():
 
         try:
             self.Recvlock.acquire()
+            midcatime.sleep(0.01)
             # get the message from the ip address
             position = self.subscriber_remus.recv()
             x, y, speed, direction,status,mission,time,name = position.split(",")
@@ -501,7 +484,7 @@ class TagWorld():
         if self.name == "franklin":
             switchprob = 0/100
         if self.name == "grace":
-            switchprob = 1/100
+            switchprob = 0.00005/100
         #else:
         #    breakprob = 0
         while True:
@@ -516,43 +499,48 @@ class TagWorld():
                     # construct the message
                     message = [b"Vehicle", b"speed= "+str(speed)]
 
+                    time.sleep(0.1)
                     # send the message
                     self.publisher.send_multipart(message)
-
+                    time.sleep(0.1)
+                    self.publisher.send_multipart(message)
                     stop = True
 
 
             if self.anomalies:
                     if temp < switchprob:
-                            count += 1
+                            count = 1
                             self.make_agent_speed -= count * 0.1
-                            if self.make_agent_speed < 0.5:
+                            if self.make_agent_speed < 0.7:
                                 self.mode = "m2"
                             #speed = 0.5
                             if self.make_agent_speed < 0.2:
                                 self.make_agent_speed = 0.01
                                 self.mode = "m2"
 
-                    #if temp < breakprob:
-                    #        wreck = True
-                    if self.searchComplete() == str(False):
+                            #if temp < breakprob:
+                            #        wreck = True
+                            if self.searchComplete() == str(False):
 
-                        # construct the message
-                        message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
+                                # construct the message
+                                message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
 
-                        # send the message
-                        self.publisher.send_multipart(message)
-                        """
-                        time.sleep(0.1)
-                        index = self.position[0] + self.position[1]
-                        message = [b"AddMarker",
-                           b"type=diamond,"
-                           b"x="+str(self.position[0])+",y="+str(self.position[1])+","+
-                            "scale=4,label=remora"+str(index)+",color=yellow,width=4.5"]
-                        self.publisher.send_multipart(message)
-
-                        #time.sleep(0.1)
-                        """
+                                # send the message
+                                time.sleep(0.1)
+                                self.publisher.send_multipart(message)
+                                time.sleep(0.1)
+                                self.publisher.send_multipart(message)
+                                """
+                                #time.sleep(0.1)
+                                index = self.position[0] + self.position[1]
+                                message = [b"AddMarker",
+                                   b"type=diamond,"
+                                   b"x="+str(self.position[0])+",y="+str(self.position[1])+","+
+                                    "scale=4,label=remora"+str(index)+",color=yellow,width=4.5"]
+                                self.publisher.send_multipart(message)
+        
+                                ##time.sleep(0.1)
+                                """
 
 
             else:
@@ -561,18 +549,18 @@ class TagWorld():
                 count = 0
                 self.make_agent_speed = 1
             self.lock.release()
-            time.sleep(0.1)
+            #time.sleep(0.1)
 
     def attack_blow(self, flag=0):
         if flag == 1:
-            time.sleep(4)
+            #time.sleep(4)
             # construct the message
             message = [b"Vehicle", b"speed="+str(self.make_agent_speed)]
             # send the message
             self.publisher.send_multipart(message)
-            time.sleep(0.1)
+            #time.sleep(0.1)
             self.publisher.send_multipart(message)
-            time.sleep(0.1)
+            #time.sleep(0.1)
             self.publisher.send_multipart(message)
             os._exit(1)
             #return flag
@@ -580,10 +568,10 @@ class TagWorld():
         cell = self.get_cell()
         if cell == "0,1" and not flag:
            message = [b"Vehicle",b"points = format=ellipse, label=golf, x=-164, y=-199, degs=45, pts=7, snap=10,major=70,minor=100# speed =1"]
-           time.sleep(0.1)
+           #time.sleep(0.1)
            self.publisher.send_multipart(message)
            flag = 1
-           #time.sleep(2)
+           ##time.sleep(2)
            self.blown_out = True
 
 
@@ -596,9 +584,10 @@ class TagWorld():
         # construct the message
         message = [b"Vehicle", b"speed= 0"]
         # send the message
+        time.sleep(0.1)
         self.publisher.send_multipart(message)
-
-        time.sleep(2)
+        time.sleep(0.1)
+        self.publisher.send_multipart(message)
 
         self.lock.release()
         return True
@@ -612,11 +601,15 @@ class TagWorld():
 
         if self.searchComplete() == str(False):
             # construct the message
+            print ("****************** Still Searching *********************")
             message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
-
+            print ("****************** Still Searching *********************")
             # send the message
+            time.sleep(0.1)
             self.publisher.send_multipart(message)
-
+            #self.publisher.send_multipart(message)
+            time.sleep(0.1)
+            self.publisher.send_multipart(message)
         self.lock.release()
 
         return str(True)
@@ -626,8 +619,11 @@ class TagWorld():
         #self.anomaly_type = ""
         return type
 
+    def reset_anomaly(self):
+        self.anomaly_type = ""
+
     def inspect(self, initial_position, dest_position):
-        time.sleep(2)
+        #time.sleep(2)
         [agent_x, agent_y] = initial_position
         [agent_dest_x, agent_dest_y] = dest_position
         x,y = self.simulator.grid_to_sim(agent_x, agent_y)
@@ -673,7 +669,7 @@ if __name__ == "__main__":
         #print (way_points)
         #x,y = -134,-267
         #message = [b"Vehicle",b"points = format=ellipse, label=golf, x=-164, y=-199, degs=45, pts=7, snap=10,major=70,minor=100# speed =2"]
-        #time.sleep(0.1)
+        ##time.sleep(0.1)
         #tag.publisher.send_multipart(message)
         #while(True):
         #    print (tag.get_cell())

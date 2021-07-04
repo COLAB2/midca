@@ -18,7 +18,8 @@ def split_files(path, filename, index):
                 flag = False
                 result[-1].append(line)
     for i in range(len(result)):
-        write_file(path+index[i], result[i])
+        if result[i]:
+            write_file(path+index[i], result[i])
 
 
 
@@ -30,17 +31,20 @@ def process():
     try:
         path = "genios_midca/"
 
-        split_files(path, "genios_out_loc_latest.txt", index = ['loc.txt', 'actual_trajectory.txt'])
+        #split_files(path, "genios_out_loc_latest.txt", index = ['loc.txt', 'actual_trajectory.txt'])
         # reading csv file
-        loaded_values = pd.read_csv(path + "loc.txt",
-                    delimiter=',',names = ['longitude', 'latitude', 'time_stamp'], skiprows=1,
-                                    usecols=[0,1,2])
+        loaded_values = pd.read_csv(path + "genios_out_loc_latest.txt",
+                    delimiter=',', skiprows=1, names = ['longitude', 'latitude', 'time_stamp', 'tag_detection'],
+                                    usecols=[0,1,2,3])
         #print(loaded_values)
-        loaded_values = loaded_values.fillna(-999)
+        #loaded_values = loaded_values.fillna(-999)
 
         lat = loaded_values['latitude']
         long = loaded_values['longitude']
         time_stamp = loaded_values['time_stamp']
+        tag_count = loaded_values['tag_detection']
+
+        print ("Tags Detected: ", tag_count)
 
         xylist = []
 
@@ -59,11 +63,11 @@ def searchprocess():
 
     try:
         path = "genios_midca/"
-        split_files(path, "genios_out_search_loc_latest.txt", index = ['loc.txt', 'search.txt', 'actual_trajectory.txt'])
+        #split_files(path, "genios_out_search_loc_latest.txt", index = ['loc.txt', 'search.txt'])
         # reading csv file
-        loaded_values = pd.read_csv(path + "search.txt",
-                    delimiter=',',names = ['target_position', 'actual_time'], skiprows=1,
-                                    usecols=[0,1])
+        loaded_values = pd.read_csv(path + "genios_out_search_latest.txt",
+                    delimiter=',',names = ['target_position', 'predicted_time', 'actual_time', 'tag_detection'], skiprows=1,
+                                    usecols=[0,1,2,3])
 
         total_search_locations = len(loaded_values)
         loaded_values = loaded_values[loaded_values.actual_time != -1]
