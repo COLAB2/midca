@@ -61,14 +61,6 @@
                     
     )
     :effect (and
-;(forall (?pos - mapgrid)(when (and (ISADJ east ?to ?ea)(ISADJ north ?ea ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(when (ISADJ east ?to ?ea) (and (not (native-at ?ea))(not (invasive-at ?ea)) ))
-;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ south ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(forall (?pos - mapgrid)(when (and (ISADJ east ?to ?ea)(ISADJ nows ?ea ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ north ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(forall (?pos - mapgrid)(when (and (ISADJ east ?to ?ea)(ISADJ south ?ea ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(forall (?pos - mapgrid)(when (and (ISADJ west ?to ?we)(ISADJ soes ?we ?pos))(and (not (native-at ?pos))(not (invasive-at ?pos)) )))
-;(when (ISADJ west ?to ?we) (and (not (native-at ?we))(not (invasive-at ?we)) ))
         (not (invasive-at ?to))
         (not (native-at ?to)) 
 

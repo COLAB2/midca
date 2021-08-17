@@ -1,11 +1,11 @@
 from midca import base
 import os,inspect
 
-thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-MIDCA_ROOT = thisDir + "/../"
-DATA_FILENAME = MIDCA_ROOT + "metamodules/sas_plan"
-original_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/FamilyTreeTestCase.py"
-learning_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/FamilyTreeTestCase_1.py"
+#thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+#MIDCA_ROOT = thisDir + "/../"
+#DATA_FILENAME = MIDCA_ROOT + "metamodules/sas_plan"
+#original_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/FamilyTreeTestCase.py"
+#learning_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/FamilyTreeTestCase_1.py"
 
 class MRSimpleMonitor(base.BaseModule):
 
@@ -26,7 +26,7 @@ class MRSimpleMonitor(base.BaseModule):
 
 
 class MRSimpleMonitor_plant:
-    def __init__(self, nat , inv):
+    def __init__(self):
         self.native = nat
         self.invasive = inv
         pass

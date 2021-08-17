@@ -97,32 +97,30 @@ class MRfastdownPlanner(base.BaseModule):
             import os, subprocess
             import os
             from midca.modules._plan.fastdown import fast_downward
-            if (self.mem.DISCREPANCY is True):
-                #os.chdir('/home/zahid/Downloads/midca-update-to-python36/midca/modules/_plan/fastdown')
-                #running fastdownward planner with meta domain file and state file
-                try:
-                    fast_downward.plan(self.domainfile,self.statefile, "--search", "lazy_greedy([ff])")
-                except:
-                    pass
-                f = open("sas_plan", "r")
-                ffplan = f.read().split()
-                for i in range(len(ffplan)):
-                    ffplan[i] = ffplan[i].replace("(", "")
-                    ffplan[i] = ffplan[i].replace(")", "")
-                ffplan = ffplan[:-6]
-                ffPlan1=[]
-                for i in range(len(ffplan)):
-                    if (ffplan[i] == "run-foil"):
-                        # print(ffplan)
-                        ffPlan1.append(tuple([ffplan[i], ffplan[i + 1]]))
-                        i=i+2
-                ffplan=ffPlan1
-                print(ffplan)
-                if ffplan:
-                    self.mem.set(self.mem.META_PLAN, ffplan)
-                    #print(self.mem.get(self.mem.META_PLAN))
+            #if (self.mem.DISCREPANCY is True):
 
-                    if self.verbose >= 1: print(("    Selected plan: " + str(ffplan)))
+            try:
+                fast_downward.plan(self.domainfile,self.statefile, "--search", "lazy_greedy([ff])")
+            except:
+                pass
+            f = open("sas_plan", "r")
+            ffplan = f.read().split()
+            for i in range(len(ffplan)):
+                ffplan[i] = ffplan[i].replace("(", "")
+                ffplan[i] = ffplan[i].replace(")", "")
+            ffplan = ffplan[:-6]
+            ffPlan1=[]
+            for i in range(len(ffplan)):
+                if (ffplan[i] == "run-foil"):
+                    # print(ffplan)
+                    ffPlan1.append(tuple([ffplan[i], ffplan[i + 1]]))
+                    i=i+2
+            ffplan=ffPlan1
+            print(ffplan)
+            if ffplan:
+                self.mem.set(self.mem.META_PLAN, ffplan)
+
+                if self.verbose >= 1: print(("    Selected plan: " + str(ffplan)))
 
     def plan_for_goal(self, goal):
         print(("-*-*- plan_for_goal(): goal = " + str(goal) + ", self.goals_to_plans = " + str(self.goals_to_plans)))

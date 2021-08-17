@@ -17,6 +17,7 @@ class GoalDiscrepancyDetector:
     def init(self, world, mem):
         self.world = world
         self.mem = mem
+        self.DISCREPANCY=False
 
     def run(self, cycle, verbose=2):
 
@@ -24,6 +25,7 @@ class GoalDiscrepancyDetector:
         if trace:
             trace.add_module(cycle, self.__class__.__name__)
             trace.add_data("GOALGRAPH", copy.deepcopy(self.mem.GOAL_GRAPH))
+
 
 
         
@@ -98,7 +100,9 @@ class GoalDiscrepancyDetector:
                     goalGraph.remove(goals1[i])
                     k.append(i)
                         #print(goalGraph)
-                    self.mem.DISCREPANCY = True
+                    #self.mem.DISCREPANCY = True
+                    self.DISCREPANCY=True
+
                 else:
                     pass
             try:
@@ -113,7 +117,7 @@ class GoalDiscrepancyDetector:
 
             try:
                 #checking for the rebellion condition before performing spray
-                if(self.mem.DISCREPANCY is True and str(plans.get_next_step())[:5] == "spray"):
+                if(self.DISCREPANCY is True and str(plans.get_next_step())[:5] == "spray"):
                     a = str(plans.get_next_step()).split(', ')
                     if (a[0][6] == '('):
                         self.mem.LOCATION = a[0][7:]
@@ -131,3 +135,7 @@ class GoalDiscrepancyDetector:
                                     self.mem.get(self.mem.GOAL_GRAPH).insert(g)
             except:
                 return
+
+            if trace:
+                trace.add_data("DISCREPANCY", self.DISCREPANCY)
+                trace.add_data("EXPLANATION", False)

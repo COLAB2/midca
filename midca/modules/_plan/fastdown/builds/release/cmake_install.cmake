@@ -1,4 +1,4 @@
-# Install script for directory: /home/zahid/Downloads/plant_protection/midca/modules/_plan/fastdown/src
+# Install script for directory: /home/zahid/Music/midca/midca/modules/_plan/fastdown/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/zahid/Downloads/plant_protection/midca/modules/_plan/fastdown/builds/release/search/cmake_install.cmake")
+  include("/home/zahid/Music/midca/midca/modules/_plan/fastdown/builds/release/search/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zahid/Downloads/plant_protection/midca/modules/_plan/fastdown/builds/release/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zahid/Music/midca/midca/modules/_plan/fastdown/builds/release/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -9,7 +9,7 @@ from midca.metamodules.foil_python_master.src.trimlogic.algorithm import fol_bc_
 from midca.metamodules.foil_python_master.src.trimlogic.term import Atom,Position,Time
 global native,invasive,spray,no_native,no_invasive
 
-rule_file = "/home/zahid/Downloads//foil-python-master/src/trimlogic/test/rule.txt"
+rule_file = "/home/zahid/Music/midca/midca/metamodules/foil-python-master/src/trimlogic/test/rule.txt"
 
 class FamilyMemberFactory:
   
@@ -136,7 +136,7 @@ class FamilyTreeTestCase(FoilTestCase):
     self.spray.param_orderings = None
     self.ISADJ_time.param_orderings= None
     #map(self.native.add_rule,[(p.p1_0, t.t1), (p.p1_1, t.t1), (p.p3_3, t.t1), (p.p1_0, t.t2), (p.p1_1, t.t2), (p.p3_3, t.t2), (p.p1_0, t.t3), (p.p1_1, t.t3)])
-    map(self.plant.add_rule,[(p.p6_6,t.t1),(p.p3_3,t.t1),(p.p6_6,t.t2),(p.p4_3,t.t1)])
+    map(self.plant.add_rule,[(p.p2_3,t.t1),(p.p1_3,t.t1),(p.p2_2,t.t1),(p.p4_4,t.t1),(p.p2_3,t.t2),(p.p1_3,t.t2),(p.p4_4,t.t2),(p.p1_2,t.t1),(p.p4_3,t.t1),(p.p2_1,t.t1),(p.p1_2,t.t2),(p.p4_3,t.t2)])
     map(self.ISADJ_time.add_rule,[( t.t1,t.t2), (t.t2,t.t3),(t.t3,t.t4), (t.t4,t.t5),(t.t5,t.t6),(t.t6,t.t7)])
     #map(self.adjacent.add_rule,[(p.p0_0,p.p0_1),(p.p0_0,p.p1_0),(p.p0_0,p.p1_1),(p.p1_0,p.p0_0),(p.p1_0,p.p0_1),(p.p1_0,p.p1_1),(p.p1_0,p.p2_1),(p.p1_0,p.p2_2),(p.p2_0,p.p1_0),(p.p2_0,p.p1_1),(p.p2_0,p.p2_1),(p.p2_0,p.p3_1),(p.p2_0,p.p3_0),(p.p3_0,p.p2_0),(p.p3_0,p.p2_1),(p.p3_0,p.p3_1),(p.p3_0,p.p4_1),(p.p3_0,p.p4_0),(p.p4_0,p.p3_0),(p.p4_0,p.p3_1),(p.p4_0,p.p4_1),(p.p0_1,p.p0_0),(p.p0_1,p.p0_2),(p.p0_1,p.p1_2),(p.p0_1,p.p1_1),(p.p0_1,p.p1_0),(p.p1_1,p.p0_0),(p.p1_1,p.p0_1),(p.p1_1,p.p0_2),(p.p1_1,p.p1_2),(p.p1_1,p.p1_0),(p.p1_1,p.p2_2),(p.p1_1,p.p2_1),(p.p1_1,p.p2_0),(p.p2_1,p.p1_0),(p.p2_1,p.p1_1),(p.p2_1,p.p1_2),(p.p2_1,p.p2_2),(p.p2_1,p.p2_0),(p.p2_1,p.p3_0),(p.p2_1,p.p3_1),(p.p2_1,p.p3_2),(p.p3_1,p.p2_0),(p.p3_1,p.p2_1),(p.p3_1,p.p2_2),(p.p3_1,p.p3_2),(p.p3_1,p.p3_0),(p.p3_1,p.p4_0),(p.p3_1,p.p4_1),(p.p3_1,p.p4_2),(p.p4_1,p.p3_0),(p.p4_1,p.p3_1),(p.p4_1,p.p3_2),(p.p4_1,p.p4_0),(p.p4_1,p.p4_2),(p.p0_2,p.p0_3),(p.p0_2,p.p0_1),(p.p0_2,p.p1_3),(p.p0_2,p.p1_2),(p.p0_2,p.p1_1),(p.p1_2,p.p0_1),(p.p1_2,p.p0_2),(p.p1_2,p.p0_3),(p.p1_2,p.p1_1),(p.p1_2,p.p1_3),(p.p1_2,p.p2_1),(p.p1_2,p.p2_2),(p.p1_2,p.p2_3),(p.p2_2,p.p1_1),(p.p2_2,p.p1_2),(p.p2_2,p.p1_3),(p.p2_2,p.p2_1),(p.p2_2,p.p2_3),(p.p2_2,p.p3_1),(p.p2_2,p.p3_2),(p.p2_2,p.p3_3),(p.p3_2,p.p2_1),(p.p3_2,p.p2_2),(p.p3_2,p.p2_3),(p.p3_2,p.p3_1),(p.p3_2,p.p3_3),(p.p3_2,p.p4_1),(p.p3_2,p.p4_2),(p.p3_2,p.p4_3),(p.p4_2,p.p3_1),(p.p4_2,p.p3_2),(p.p4_2,p.p3_3),(p.p4_2,p.p4_1),(p.p4_2,p.p4_3),(p.p0_3,p.p0_2),(p.p0_3,p.p0_4),(p.p0_3,p.p1_2),(p.p0_3,p.p1_3),(p.p0_3,p.p1_3),(p.p1_3,p.p0_2),(p.p1_3,p.p0_3),(p.p1_3,p.p0_4),(p.p1_3,p.p1_2),(p.p1_3,p.p1_4),(p.p1_3,p.p2_2),(p.p1_3,p.p2_3),(p.p1_3,p.p2_4),(p.p2_3,p.p1_2),(p.p2_3,p.p1_3),(p.p2_3,p.p1_4),(p.p2_3,p.p2_2),(p.p2_3,p.p2_4),(p.p2_3,p.p3_2),(p.p2_3,p.p3_3),(p.p2_3,p.p3_4),(p.p3_3,p.p2_2),(p.p3_3,p.p2_3),(p.p3_3,p.p2_4),(p.p3_3,p.p3_2),(p.p3_3,p.p3_4),(p.p3_3,p.p4_2),(p.p3_3,p.p4_3),(p.p3_3,p.p4_4),(p.p4_3,p.p3_2),(p.p4_3,p.p3_3),(p.p4_3,p.p3_4),(p.p4_3,p.p4_2),(p.p4_3,p.p4_4),(p.p0_4,p.p0_3),(p.p0_4,p.p1_3),(p.p0_4,p.p1_4),(p.p1_4,p.p0_3),(p.p1_4,p.p0_4),(p.p1_4,p.p1_3),(p.p1_4,p.p2_3),(p.p1_4,p.p2_4),(p.p2_4,p.p1_3),(p.p2_4,p.p1_4),(p.p2_4,p.p2_3),(p.p2_4,p.p3_3),(p.p2_4,p.p3_4),(p.p3_4,p.p2_3),(p.p3_4,p.p2_4),(p.p3_4,p.p3_3),(p.p3_4,p.p4_3),(p.p3_4,p.p4_4),(p.p4_4,p.p3_3),(p.p4_4,p.p3_4),(p.p4_4,p.p4_3)])
     map(self.ISADJ_south.add_rule,
@@ -223,7 +223,7 @@ class FamilyTreeTestCase(FoilTestCase):
         (p.p1_8, p.p0_8),(p.p2_8, p.p1_8),(p.p3_8, p.p2_8),(p.p4_8, p.p3_8),(p.p5_8, p.p4_8),(p.p6_8, p.p5_8),(p.p7_8, p.p6_8),(p.p8_8, p.p7_8),(p.p9_8, p.p8_8),
         (p.p1_9, p.p0_9),(p.p2_9, p.p1_9),(p.p3_9, p.p2_9),(p.p4_9, p.p3_9),(p.p5_9, p.p4_9),(p.p6_9, p.p5_9),(p.p7_9, p.p6_9),(p.p8_9, p.p7_9),(p.p9_9, p.p8_9),])
 
-    map(self.spray.add_rule,[(p.p4_3,t.t1)])
+    map(self.spray.add_rule,[(p.p2_1,t.t1)])
   
   def setUp(self):
     self.v, self.a = VariableFactory(), FamilyMemberFactory()
@@ -260,8 +260,8 @@ class FamilyTreeTestCase(FoilTestCase):
     #self.kb.add(discrepancy_not_native)
     #self.kb.add(discrepancy_not_invasive)
     self.kb.add(spray_actual)
-    positive_tuples=[[p.p3_3,t.t2]]
-    negative_tuples=[[p.p6_6,t.t1],[p.p3_3,t.t1],[p.p6_6,t.t2],[p.p4_3,t.t1],[p.p4_3,t.t2]]
+    positive_tuples=[[p.p2_2,t.t2]]
+    negative_tuples=[[p.p2_3,t.t1],[p.p1_3,t.t1],[p.p2_2,t.t1],[p.p4_4,t.t1],[p.p2_3,t.t2],[p.p1_3,t.t2],[p.p4_4,t.t2],[p.p1_2,t.t1],[p.p4_3,t.t1],[p.p2_1,t.t1],[p.p1_2,t.t2],[p.p4_3,t.t2],[p.p2_1,t.t2]]
 
 
 

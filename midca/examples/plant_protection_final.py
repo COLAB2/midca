@@ -13,7 +13,8 @@ from midca.worldsim import pddl_num_read as pddlread
 #from midca.modules._plan.fastdown import testing_purp
 #from midca.worldsim.DIRNAME import fast_downward
 import inspect, os, random, fileinput, shutil,math
-from midca.worldsim import pddl,worldsim_pddl
+from midca.worldsim import pddl
+from midca.worldsim import *
 
 
 
@@ -158,12 +159,12 @@ myMidca.append_module("Act", SimpleAct.SimpleAct_plant_protection())
 for phase in ["Monitor", "Interpret", "Intend", "Plan", "Control"]:
     myMidca.append_meta_phase(phase)
 
-myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor_plant(nat,inv))
-myMidca.append_meta_module("Interpret", interpret.MRSimpleDetectOld())
+myMidca.append_meta_module("Monitor", monitor.MRSimpleMonitor())
+myMidca.append_meta_module("Interpret", interpret.MRSimpleDetect_Plant_Protection())
 myMidca.append_meta_module("Interpret", interpret.MRSimpleGoalGen())
 myMidca.append_meta_module("Intend", metaintend.MRSimpleIntend())
 myMidca.append_meta_module("Plan", plan.MRfastdownPlanner(domain_file,state_file))
-myMidca.append_meta_module("Control", control.MRSimpleControl2())
+myMidca.append_meta_module("Control", control.MRSimpleControl2(nat,inv))
 
 
 
@@ -175,7 +176,7 @@ myMidca.set_display_function(DISPLAY_FUNC)
 myMidca.storeHistory = True
 myMidca.initGoalGraph(cmpFunc=GOAL_GRAPH_CMP_FUNC)
 myMidca.init()
-myMidca.run()
+myMidca.run(usingInterface=False)
 '''for i in range(10):
     myMidca.one_cycle()'''
 
