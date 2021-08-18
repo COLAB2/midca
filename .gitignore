@@ -49,3 +49,8 @@ examples/log/**
 **/venv
 **/.env
 
+#ignore builds
+**/builds
+builds/**
+
+

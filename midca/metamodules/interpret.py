@@ -1,4 +1,6 @@
+
 from midca import base,goals
+
 import inspect 
 from midca.worldsim import domainread
 
@@ -85,7 +87,6 @@ class PrimitiveExpectationOfCognition():
         
         if prior is None or post is None:
             return False
-
         
         prior_result = self.priorMentalExp.apply_expectation(prior[1])
         post_result = self.postMentalExp.apply_expectation(post[1])
