@@ -23,11 +23,9 @@ speech = LiveSpeech(
 
 start = ['GET' , 'STACK' , 'PUT']
 
-
 rospy.init_node('baxter_pointing_test')
 
 pub = rospy.Publisher('cmds_received', String, queue_size=10)
-
 
 #tuck_cmd
 
@@ -68,8 +66,7 @@ while not rospy.is_shutdown():
 	#pub.publish("stack the green block on the blue block")
 	
 	
-	
-   
+
 # n = 0
 # while n < 20:
 # 	n += 1d
@@ -78,4 +75,3 @@ while not rospy.is_shutdown():
 # #	p = points[1]
 # 	print("Sending point command:", p)
 # 	pub.publish(p)
-

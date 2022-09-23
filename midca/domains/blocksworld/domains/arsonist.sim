@@ -1,0 +1,95 @@
+
+type(BLOCK)
+type(ARSONIST)
+
+predicate(clear, [blk], [BLOCK])
+predicate(holding, [blk], [BLOCK])
+predicate(arm-empty, [], [])
+predicate(on, [blk1, blk2], [BLOCK, BLOCK])
+predicate(on-table, [blk], [BLOCK])
+predicate(block, [blk], [BLOCK])
+predicate(triangle, [blk], [BLOCK])
+predicate(table, [blk], [BLOCK])
+predicate(onfire, [blk], [BLOCK])
+predicate(arsonist, [ars], [ARSONIST])
+predicate(free, [ars], [ARSONIST])
+predicate(hasmortar, [blk], [BLOCK])
+
+operator(stack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [btmblk]), 
+	condition(holding, [topblk])], 
+results = [
+	condition(clear, [btmblk], negate = True), 
+	condition(holding, [topblk], negate = True), 
+	condition(clear, [topblk]), 
+	condition(on, [topblk, btmblk]), 
+	condition(arm-empty, [])])
+
+operator(unstack, 
+args = [(topblk, BLOCK), (btmblk, BLOCK)], 
+preconditions = [
+	condition(clear, [topblk]), 
+	condition(arm-empty), 
+	condition(on, [topblk, btmblk])],
+results = [
+	condition(clear, [topblk], negate = True), 
+	condition(holding, [topblk]), 
+	condition(arm-empty, [], negate = True), 
+	condition(on, [topblk, btmblk], negate = True), 
+	condition(clear, [btmblk], negate = False)])
+
+operator(putdown, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(holding, [blk])], 
+results = [
+	condition(holding, [blk], negate = True), 
+	condition(clear, [blk]), 
+	condition(on-table, [blk]),
+	condition(arm-empty, [])])
+
+operator(pickup, 
+args = [(blk, BLOCK)], 
+preconditions = [ 
+	condition(on-table, [blk]),
+	condition(clear, [blk]),
+	condition(arm-empty, [])],
+results = [
+	condition(holding, [blk]), 
+	condition(clear, [blk], negate = True),
+	condition(on-table, [blk], negate = True),
+	condition(arm-empty, [], negate = True)])
+
+operator(putoutfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk])],
+results = [
+	condition(onfire, [blk], negate = True)])
+
+operator(catchfire,
+args = [(blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True)],
+results = [
+	condition(onfire, [blk])])
+
+operator(lightonfire,
+args = [(arsonist, ARSONIST), (blk, BLOCK)],
+preconditions = [
+	condition(onfire, [blk], negate = True),
+	condition(free, [arsonist])],
+results = [
+	condition(onfire, [blk])])
+
+operator(apprehend,
+args = [(arsonist, ARSONIST)],
+preconditions = [
+	condition(free, [arsonist])],
+results = [
+	condition(free, [arsonist], negate = True)])
+	
+operator(searchfor,
+args = [(arsonist, ARSONIST)])

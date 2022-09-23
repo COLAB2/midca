@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 from MIDCA import base, rosrun
 from midca.modules.perceive import ROSObserver
 from midca.modules.plan import PyHopPlannerBroken
@@ -19,7 +19,6 @@ from MIDCA.domains.blocksworld import util
 
 DECLARE_METHODS_FUNC = methods_broken.declare_methods
 DECLARE_OPERATORS_FUNC = operators.declare_ops
-
 def ros_style_midca():
 	#myMidca = base.MIDCA(None, verbose = 2)
 	myMidca = base.PhaseManager(None, verbose=4, metaEnabled=True)
@@ -54,7 +53,6 @@ def ros_style_midca():
 	myMidca.append_meta_module("Control", control.MRSimpleControl())
 
 	return myMidca
-	
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
@@ -65,8 +63,6 @@ myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
 # calibration
-
-
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
 	#rosrun.CalibrationHandler("calibrate_done", myMidca),
 	rosrun.threeObjectsLocationHandler("obj_pos", myMidca),
@@ -91,7 +87,6 @@ myMidca.mem.set(myMidca.mem.STACK_Z, -0.1097833784354784)
 myMidca.mem.set(myMidca.mem.STACK_3Z, -0.08517833784354784)
 myMidca.mem.set(myMidca.mem.UNSTACK_Z, -0.11434523370125365)
 myMidca.mem.set(myMidca.mem.UNSTACK_3Z, -0.05434523370125365)
-
 
 p = Point(x = 0.6480168766398825, y =  0.4782503847940384, z = 0.289534050209461)
 #p = 

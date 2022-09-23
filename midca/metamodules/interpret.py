@@ -1,4 +1,6 @@
-from midca import base
+
+from midca import base,goals
+
 import inspect 
 from midca.worldsim import domainread
 
@@ -84,7 +86,7 @@ class PrimitiveExpectationOfCognition():
         prior = trace.get_n_prev_phase(n=1)
         
         if prior is None or post is None:
-            return False 
+            return False
         
         prior_result = self.priorMentalExp.apply_expectation(prior[1])
         post_result = self.postMentalExp.apply_expectation(post[1])
@@ -95,6 +97,9 @@ class PrimitiveExpectationOfCognition():
         if prior_result and not post_result:
             # print "*^*^*^*^*^*^*^* WE HAVE AN EXPECTATION VIOLATION!!!!! *^*^*^*^*^*^*^*^*^*"
             return True
+        elif post_result:
+            return True
+
         else:
             # if self.verbose >= 1: print "    ALL GOOD SIR: Expectations have been met"
             return False
@@ -399,6 +404,69 @@ class MRSimpleDetectOld(base.BaseModule):
         # TODO: implement pos_expectations
         if (self.verbose >= 2): print(("    Found anomalies: "+str(anomalies)))
         self.mem.set(self.mem.META_ANOMALIES, anomalies)
+
+
+class MRSimpleDetect_Plant_Protection(base.BaseModule):
+
+    def init(self, world, mem):
+        self.world = world
+        self.mem = mem
+        self.verbose = 0  # set at zero, change later during run()
+        self.exp1 = self.createAlwaysExplanationExp()
+
+    def createAlwaysExplanationExp(self):
+        '''
+        creates the expectation that there is always an explanation following a
+        discrepancy at the cognitive level
+        '''
+
+        priorExpectation = MentalExpectation()
+        # discrepancyExists = lambda d: not (d is None) or (len(d[0]) > 0 or len(d[1]) > 0)
+        discrepancyExists = lambda d: d  # identity for now
+        priorExpectation.add_var_expectaiton('DISCREPANCY', discrepancyExists)
+
+        postExpectation = MentalExpectation()
+        hasExplanation = lambda e: e  # identity
+        postExpectation.add_var_expectaiton('EXPLANATION', hasExplanation)
+
+        # encode action
+        action = 'GoalDiscrepancyDetector'
+
+        return PrimitiveExpectationOfCognition(action, priorExpectation, postExpectation, verbose=self.verbose)
+
+    def goal_generation(self):
+        '''
+        generates meta learning goal
+        :return:
+        '''
+        if not self.mem.get(self.mem.META_GOALS):
+            self.mem.set(self.mem.META_GOALS, [])
+        #trace=self.mem.trace
+        #if(trace.DISCREPANCY is True):
+            #if (self.mem.DISCREPANCY is True):
+                # adding the learning goal to the goal graph
+        goal = []
+        predicateName = "learned"
+        last_actions = self.mem.get(self.mem.ACTIONS)[-1][0]
+        args = [str(last_actions).split('(')[0]]
+        goal.append(goals.Goal(*args, predicate=predicateName))
+        if goal[0] not in self.mem.get(self.mem.META_GOALS):
+            self.mem.set(self.mem.META_GOALS, goal)
+            print(self.mem.META_GOALS)
+
+
+
+    def run(self, cycle, verbose=2):
+        self.verbose = verbose
+
+        exp_violation = self.exp1.apply_on_curr_trace(self.mem)
+
+        if exp_violation:
+            print('discrepancy___')
+            self.goal_generation()
+            pass
+            #TODO my code for goal generation
+
 
 
 class MRSimpleGoalGen(base.BaseModule):

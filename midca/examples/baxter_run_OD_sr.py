@@ -30,7 +30,6 @@ def ros_style_midca():
 	))
 	myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
 	return myMidca
-	
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
@@ -41,7 +40,6 @@ myMidca.logger.logOutput()
 myMidca.mem.enableLogging(myMidca.logger)
 
 # calibration
-
 
 rosMidca = rosrun.RosMidca(myMidca, incomingMsgHandlers = [
 	#rosrun.CalibrationHandler("calibrate_done", myMidca),
@@ -82,3 +80,4 @@ myMidca.mem.set(myMidca.mem.PUTTING_POINT, q)
 
 input('Enter ...')
 rosMidca.run_midca()
+

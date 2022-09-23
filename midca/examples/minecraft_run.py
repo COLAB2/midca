@@ -1,11 +1,16 @@
 import midca
 from midca import base
-from midca.modules import simulator, guide, evaluate, perceive, intend, planning, act, note, assess
+from midca.modules.perceive import PerfectObserver
+from midca.modules.plan import GenericPyhopPlanner
+from midca.modules.intend import SimpleIntend
+from midca.modules.act import SimpleAct
+from midca.modules.interpret import UserGoalInput
+from midca.modules.evaluate import SimpleEval
+from midca.modules import simulator
 from midca.worldsim import domainread, stateread
 import inspect, os
 
 # Domain Specific Imports
-from midca.domains.minecraft import minecraft_util
 # TODO: This will have to be reworked when the file system is updated. I do not have access to my office and whiteboard drawings
 from midca.domains.minecraft.plan import methods_minecraft, operators_minecraft  
 
@@ -42,13 +47,13 @@ for phase in ["Simulate", "Perceive", "Interpret", "Eval", "Intend", "Plan", "Ac
 # TODO: Update the module references to be domain specific functions
 # Add the modules which instantiate basic operation
 myMidca.append_module("Simulate", simulator.MidcaActionSimulator())
-myMidca.append_module("Perceive", perceive.PerfectObserver())
-myMidca.append_module("Interpret", guide.UserGoalInput())
-myMidca.append_module("Eval", evaluate.SimpleEval())
-myMidca.append_module("Intend", intend.SimpleIntend())
-myMidca.append_module("Plan", planning.GenericPyhopPlanner(
+myMidca.append_module("Perceive", PerfectObserver.PerfectObserver())
+myMidca.append_module("Interpret", UserGoalInput.UserGoalInput())
+myMidca.append_module("Eval", SimpleEval.SimpleEval())
+myMidca.append_module("Intend", SimpleIntend.SimpleIntend())
+myMidca.append_module("Plan", GenericPyhopPlanner.GenericPyhopPlanner(
     DECLARE_METHODS_FUNC, DECLARE_OPERATORS_FUNC)) # set up planner for sample domain
-myMidca.append_module("Act", act.SimpleAct())
+myMidca.append_module("Act", SimpleAct.SimpleAct())
 
 # Set world viewer with your specified DISPLAY_FUNC
 myMidca.set_display_function(DISPLAY_FUNC) 

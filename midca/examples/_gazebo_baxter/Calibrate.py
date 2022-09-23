@@ -44,10 +44,6 @@ def initial_setup_baxter():
     #rospy.init_node('baxter_or')
     baxter.enable()
     baxter.calibrateLeftGripper()
-    
-   
-
-   
 
 def on_mouse_click(event, x, y, flag, param):
     global n_clicks, points
@@ -82,7 +78,7 @@ def get_img_reference_points():
         cv2.waitKey(1000)
     
     #print points
-    cv2.destroyAllWindows()    
+    cv2.destroyAllWindows()
     return points
 
 
@@ -132,7 +128,6 @@ def get_floor_reference_points():
     p2 = f.readline().split(' ')
     p3 = f.readline().split(' ')
     p4 = f.readline().split(' ')
-    
     p1[0] = float(p1[0])
     p1[1] = float(p1[1])
     p2[0] = float(p2[0])
@@ -146,12 +141,10 @@ def get_floor_reference_points():
      [p2[0], p2[1]],
      [p3[0], p3[1]],
      [p4[0], p4[1]]]
-    
 #    return [[0.5773763528146585, 0.3842165517841408],
 #     [0.7855928713464901, 0.37834930053240295],
 #     [0.76618765321789, -0.02885636412309065],
 #     [0.5568000497983868, -0.01377416902917198]]
-    
 def calibrate_homography():
     global H, Hinv
     #floor_points = get_floor_reference_points()
@@ -173,7 +166,6 @@ def sendPoint(msg, topic):
     if not rospy.is_shutdown():
         time.sleep(2)
         pub.publish(msg)
-        
 
 def msg_as_string(H):
     HtoString=""
@@ -188,7 +180,6 @@ def msg_as_string(H):
     HtoString = HtoString+","+Q[2,1]
     HtoString = HtoString+","+Q[2,2]        
     return HtoString
-    
 def calibrate():
     initial_setup_baxter()
     H = calibrate_homography()
@@ -201,7 +192,5 @@ def calibrate():
 def getZ():
     global Z
     return Z
-    
-    
 if __name__ == '__main__':
     calibrate()

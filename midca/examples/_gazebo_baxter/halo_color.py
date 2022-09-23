@@ -78,11 +78,4 @@ class HaloLed():
         rospy.sleep(0.3)
         self.setLed("red",100)
         self.setLed("green",0)
-        
-
-
-
-
-
-
 

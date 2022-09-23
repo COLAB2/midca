@@ -1,0 +1,46 @@
+# Simple Minecraft domain 
+
+type(TILE)
+type(AGENT)
+type(ITEM)
+type(RESROURCE)
+type(FOOD)
+
+predicate(agent-at, [agnt, loc], [AGENT, TILE])
+predicate(resource-at, [resource, loc], [RESROURCE, TILE])
+predicate(in-hand, [tool], [TOOL])
+predicate(harvest_by, [resource, tool], [RESROURCE, TOOL])
+predicate(has_item, [agnt, item], [AGENT, ITEM])
+predicate(has_rsrc, [agnt, rsrc], [AGENT, RESROURCE])
+
+operator(move,
+args = [(agnt, AGENT), (start, TILE), (dest, TILE)],
+preconditions = [
+	condition(agent-at, [agnt, start])],
+results = [
+	condition(agent-at, [agnt, start], negate = TRUE),
+	condition(agent-at, [agnt, dest])])
+	
+operator(harvest,
+args = [(agnt, AGENT), (loc, TILE), (rsrc, RESROURCE), (tool, TOOL)],
+preconditions = [
+	condition(agent-at, [agnt, loc]),
+	condition(rsrc-at, [rsrc, loc]),
+	condition(harvest_by, [rsrc,tool]),
+	condition(in-hand, [tool])
+	],
+results = [
+	condition(has_resource, [agnt, rsrc])
+	])
+	
+operator(craft-wood-plank,
+args = [(rsrc, RESROURCE), (tool, TOOL)],
+preconditions = [
+	condition(has_resource, [rsrc]),
+	condition(craft_rsr_tool, [rsrc, tool])
+	],
+results = [
+	condition(has_item, [agnt, item])
+	])
+	
+	

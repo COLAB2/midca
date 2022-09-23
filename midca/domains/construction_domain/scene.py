@@ -9,7 +9,6 @@ class Scene:
 
     def draw(self):
         print(self.layers_to_s(self._makelayers()))
-    
     def __str__(self):
         return self.layers_to_s(self._makelayers())
 
@@ -30,7 +29,6 @@ class Scene:
         # while there are more blocks above the current layer
         while len(blockscopy) > 0:
             nextlayer = []
-
             #print len(currentlayer), len(blockscopy)
             for i in range(len(currentlayer)):
                 for j in range(len(blockscopy)):
@@ -87,7 +85,7 @@ class Scene:
                             elif layers[i][k].hasmortar:
                                 asciisquares[-1][j] = ("        +++++++", layers[i][k])
                                 asciisquares[-2][j] = ("       |  " + str(layers[i][k].id) + "  |", layers[i][k])
-                                asciisquares[-3][j] = ("        -------", layers[i][k])        
+                                asciisquares[-3][j] = ("        -------", layers[i][k])
                             else:
                                 asciisquares[-1][j] = ("        -------", layers[i][k])
                                 asciisquares[-2][j] = ("       |  " + str(layers[i][k].id) + "  |", layers[i][k])
@@ -106,6 +104,3 @@ class Scene:
             toprint += "\n"
 
         return toprint
-    
-
-    

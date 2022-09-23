@@ -11,7 +11,6 @@ import rospy
 
 # baxter_interface - Baxter Python API
 import baxter_interface
-
 #Message carrying location of target
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
@@ -46,9 +45,7 @@ def Grasp():
 def release():
     baxter.openLeftGripper()
     return True
-
 def point_2_callback(point, cmd_id = 'point_2_def_id'):
-    
     if point.x == 0 and point.y == 0 and point.z == 0:
         rospy.loginfo("Point: got a stop command (all zeros)")
     else:
@@ -84,7 +81,6 @@ def release_callback(point, cmd_id = 'r_id'):
         midca_feedback(cmd_id = cmd_id, code = asynch.COMPLETE)
 
 def point_callback(point, cmd_id = 'point_def_id'):
-    
     if point.x == 0 and point.y == 0 and point.z == 0:
         rospy.loginfo("Point: got a stop command (all zeros)")
     else:
@@ -119,7 +115,6 @@ def reaching_callback(data):
             midca_feedback(cmd_id = d['cmd_id'], code = asynch.FAILED)
             return
         point_callback(point, d['cmd_id'])
-        
 def raising_callback(data):
     print("got msg:", data)
     msg = data.data
@@ -148,7 +143,6 @@ def releasing_callback(data):
     d = rosrun.msg_as_dict(msg)
     
     release_callback(msg, d['cmd_id'])
-   
 
 def grabbing_callback(data):
     print("got msg:", data)
@@ -156,7 +150,6 @@ def grabbing_callback(data):
     d = rosrun.msg_as_dict(msg)
     
     msg_callback(msg, d['cmd_id'])
-    
 
     
 def start_node(targetTopic, limbName = 'left'):
@@ -164,7 +157,7 @@ def start_node(targetTopic, limbName = 'left'):
     print("start node")
     rospy.loginfo("Reading point commands from topic " + targetTopic)
     #rospy.Subscriber(targetTopic, String, fake_point) 
-    rospy.Subscriber("loc_cmd", String, reaching_callback)    
+    rospy.Subscriber("loc_cmd", String, reaching_callback)
     rospy.Subscriber("grabbing_cmd", String, grabbing_callback)
     rospy.Subscriber("raise_cmd", String, raising_callback)
     rospy.Subscriber("release_cmd", String, releasing_callback)
@@ -182,6 +175,7 @@ def start_node(targetTopic, limbName = 'left'):
 if __name__ == '__main__':
     #test_angle_finder()
     #sys.exit()
+
     if len(sys.argv) > 2:
         raise Exception("Usage: 1 optional argument giving the topic on which commands are broadcast.")
     elif len(sys.argv) == 2:

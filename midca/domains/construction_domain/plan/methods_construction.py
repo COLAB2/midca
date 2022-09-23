@@ -30,7 +30,6 @@ def status(b1,state,goal):
         return 'done'
 #    elif not (state.clear[b1] or state.pos[b1] == "in-arm"):
 #        return 'inaccessible'
-   
     elif (b1 in goal.pos) and state.pos[b1] == 'store':
         return 'get-from-store'
     elif not (b1 in goal.pos) or goal.pos[b1] == 'table':
@@ -81,7 +80,6 @@ In each Pyhop planning method, the first argument is the current state (this is 
 """
 
 ### methods for "move_blocks"
-
 def moveb_m(state,goal):
     """
     This method implements the following block-stacking algorithm:
@@ -121,7 +119,6 @@ declare_methods must be called once for each taskname. Below, 'declare_methods('
 
 
 ### methods for "move_one"
-
 def move1(state,b1,dest):
     """
     Generate subtasks to get b1 and put it at dest.
@@ -229,26 +226,21 @@ def put_m_mortar(state,b1,b2):
             return False
     else:
         return False
-            
-        
 def put_out_m(state, b1):
     if state.fire[b1]:
         return [("putoutfire", b1)]
     else:
         return []
-
 def quick_apprehend_m(state, perp):
     if state.free[perp]:
         return [("apprehend", perp)]
     else:
         return []
-
 def long_apprehend_m(state, perp):
     if state.free[perp]:
         return [("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("searchfor", perp), ("apprehend", perp)]
     else:
         return []
-
 def declare_methods(longApprehend = True):
     if longApprehend:
         pyhop.declare_methods("catch_arsonist", long_apprehend_m)

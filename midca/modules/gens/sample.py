@@ -29,7 +29,6 @@ def main():
         res = goaltransform.specailization(goal,1)
         print(res)
 
-
         print("--------- Choose Phase ----------")
         res = goaltransform.choose(goal)
         print(("Choose Output Final " + res))
@@ -45,10 +44,8 @@ def main():
 
         print(' press "x" to exit ')
         key = input()
-        if key is "x":
-                        return 0
-	
-	
+        if key == "x":
+                return 0
 
 if __name__ == "__main__":
     main()

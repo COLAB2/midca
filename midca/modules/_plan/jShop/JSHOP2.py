@@ -2,7 +2,6 @@ import inspect, os
 import subprocess
 import sys
 from subprocess import Popen, PIPE, STDOUT
-
 ###Make sure that Java is installed fully on your computer.
 ###set the CLASSPATH
 ###environment variable to include (replacing JSHOP2_DIRECTORY with the directory
@@ -86,7 +85,6 @@ def jshop(tasks, DOMAIN_FIILE,STATE_FILE):
     
      
     return midcaplan
-
 def parenthetic_contents(string):
     """Generate parenthesized contents in string as pairs (level, contents)."""
     stack = []
@@ -117,6 +115,3 @@ if __name__ == "__main__":
 #     #DOMAIN_FIILE = JSHOP_ROOT + "domains/jshop_domains/blocks_world/blocksworld.shp"
     STATE_FILE = MIDCA_ROOT + "domains/jshop_domains/logistics/problem"
     jshop("tasks", DOMAIN_FIILE, STATE_FILE)
-            
-            
-            

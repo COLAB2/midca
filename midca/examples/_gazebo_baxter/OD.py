@@ -12,7 +12,7 @@ import sys
 import argparse
      
 import rospy
-from .homography import *     
+from .homography import *
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import String
 
@@ -32,7 +32,6 @@ def send_image_to_screen(cvimage):
     msg = bridge.cv2_to_imgmsg(cvimage, encoding="passthrough")
     
     pub = rospy.Publisher('/robot/xdisplay', Image,  queue_size=10)
-    
     pub.publish(msg)
     # Sleep to allow for image to be published.
     rospy.sleep(1)
@@ -133,7 +132,6 @@ def findContour(frame, mask):
 
 
 def publish(color_location):
-   
     pub = rospy.Publisher('obj_pos', String, queue_size=10)
     msg = ""
     for color in color_location:
@@ -195,8 +193,6 @@ def main():
         frame = baxter.getImageFromRightHandCamera()
         #frame = baxter.getLastCvImage()
         #send_image_to_screen(frame)
-	
-        
         # Convert BGR to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         for color_name in boundaries:
@@ -229,8 +225,7 @@ if __name__ == '__main__':
 #     green = np.uint8([[[0,0,87 ]]])
 #     hsv_green = cv2.cvtColor(green,cv2.COLOR_BGR2HSV)
 #     print hsv_green
-
  
  
  #darkgreen  60 255 100
- #light green 41 143 107       
+ #light green 41 143 107

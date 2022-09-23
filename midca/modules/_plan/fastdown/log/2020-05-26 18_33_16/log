@@ -1,0 +1,68 @@
+.009897 - Selected action spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest) from plan:
+
+.011117 -  [spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)] move(nows, pos3-2, pos2-3) move(west, pos2-3, pos1-3) spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.000262 - length of objnames 17
+
+.318204 - length of objnames 17
+
+.002118 - simulating MIDCA action: spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.320021 - simulating MIDCA action: spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.003739 - length of objnames 17
+
+.321635 - length of objnames 17
+
+.005230 - Simulator: no events.
+
+.323133 - Simulator: no events.
+
+.002919 - World observed.
+
+.437256 - World observed.
+
+.755190 - World observed.
+
+.365153 - length of objnames 17
+
+.799455 - length of objnames 17
+
+1.117340 - length of objnames 17
+
+.367241 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+.801533 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+1.119416 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+.368543 - invasive-at(pos3-1)
+
+.802831 - invasive-at(pos3-1)
+
+1.120713 - invasive-at(pos3-1)
+
+.369783 - native-at(pos4-3)
+
+.804073 - native-at(pos4-3)
+
+1.121956 - native-at(pos4-3)
+
+.371532 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+.805822 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+1.123705 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+.772751 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+1.207043 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+1.524926 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+.775324 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+1.209613 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+1.527495 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+

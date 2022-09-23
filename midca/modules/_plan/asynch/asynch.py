@@ -5,8 +5,6 @@ from midca.examples._baxter.homography import *
 import math
 import copy
 import numpy as np
-
-
 try:
     from geometry_msgs.msg import PointStamped
     from geometry_msgs.msg import Point
@@ -15,8 +13,6 @@ try:
     from scipy.spatial import distance
 except:
     pass #if ROS is not installed, an error message will already have been generated.
-
-
 END_COLOR_CODE = '\033[0m'
 NOT_STARTED = 0
 NS_COLOR_CODE = END_COLOR_CODE
@@ -34,32 +30,32 @@ LOC_TOPIC = "loc_cmd"
 GRAB_TOPIC = "grabbing_cmd"
 RAISE_TOPIC = "raise_cmd"
 RELEASE_TOPIC = "release_cmd"
-#set this to change output for all asynch actions.
+# set this to change output for all asynch actions.
 verbose = 2
 
 MAX_SIGHTING_LAG = 3.0
 MAX_SIGHTING_WAIT = 5.0
-
 def allowed_sighting_lag(objectID):
     '''
     returns how long ago an object can have been seen before MIDCA stops considering its
     location known
     '''
     return MAX_SIGHTING_LAG
-
 def allowed_sighting_wait(objectID):
     '''
     returns the amount of midcatime MIDCA should wait to see an object before giving up.
     '''
     return MAX_SIGHTING_WAIT
-    
+
+
+
 '''
 '''
+
 
 def get_asynch_action(midcaAction):
-    raise ArgumentException("midca action " + str(midcaAction)  + " does not translate to a \
+    raise ArgumentException("midca action " + str(midcaAction) + " does not translate to a \
     valid asynchronous action.")
-
 def asynch_plan(mem, midcaPlan):
     '''
     returns an asynchronous plan that corresponds to the given MIDCA plan.
@@ -128,7 +124,6 @@ class AsynchPlan(plans.Plan):
     '''
     subclass of MIDCA Plan class that uses asynchronous actions.
     '''
-    
     def finished(self):
         '''
         overrides plan.finished(). Declares a plan complete if all its actions report
@@ -138,7 +133,6 @@ class AsynchPlan(plans.Plan):
             if action.status != COMPLETE and action.status != FAILED:
                 return False
         return True
-    
     @property
     def status(self):
         '''
@@ -155,7 +149,6 @@ class AsynchPlan(plans.Plan):
             elif action.status == IN_PROGRESS:
                 status = IN_PROGRESS
         return status
-    
     def __str__(self):
         s = ""
         for action in self.actions:
@@ -174,7 +167,6 @@ class AsynchPlan(plans.Plan):
 class AsynchAction:
     
     nextID = 0
-    
     def __init__(self, mem, midcaAction, executeFunc, isComplete, blocks):
         self.status = NOT_STARTED
         self.mem = mem
@@ -185,7 +177,6 @@ class AsynchAction:
         self.startTime = None
         self.id = AsynchAction.nextID
         AsynchAction.nextID += 1
-    
     def execute(self):
         if not self.startTime:
             self.startTime = midcatime.now()
@@ -199,7 +190,6 @@ class AsynchAction:
                 print("Error executing action", self, ":\n", traceback.format_exc(), end=' ') 
                 "\n\nAction assumed to be failed"
             self.status = FAILED
-    
     def check_complete(self):
         if not self.startTime:
             self.startTime = midcatime.now()
@@ -219,7 +209,6 @@ class AsynchAction:
                 print("Error checking completion status for action", self, " - Assuming \
                  failure:\n", traceback.format_exc())
             self.status = FAILED
-    
     def ros_msg(self, topic, d):
         '''
         arg d should be a dictionary that contains the key/value pairs to be sent.
@@ -244,7 +233,6 @@ def get_last_position(mem, objectOrID):
             if state_pos.position:
                 return (state_pos.position)
     return None
-
 def get_last_location(mem, objectOrID):
     world = mem.get(mem.STATE)
     sightings = world.all_sightings(objectOrID)
@@ -255,7 +243,6 @@ def get_last_location(mem, objectOrID):
             if detectionEvent.loc:
                 return (detectionEvent.loc, detectionEvent.time)
     return None
-
 def check_2height_stack(mem,objectOrID):
     print("it is in check 3 height " )
     print(objectOrID)
@@ -269,13 +256,11 @@ def check_2height_stack(mem,objectOrID):
     return False
 
 def check_location_clear(mem,point,iterations):
-
     world = mem.get(mem.STATE)
     allobject = world.all_objects()
     x1 = point.x
     y1 = point.y
     z1 = point.z
-    
     for each in allobject:
         lastLocReport = get_last_location(mem, each)
         '''
@@ -299,18 +284,18 @@ def check_location_clear(mem,point,iterations):
     for each in allobject:
         if (get_last_position(mem, each) == 'table'):
             lastLocReport = get_last_location(mem, each)
-            x = lastLocReport[0].x 
+            x = lastLocReport[0].x
             y = lastLocReport[0].y
             if mem.get(mem.CALIBRATION_MATRIX).any():
                 H = mem.get(mem.CALIBRATION_MATRIX)
                 z = mem.get(mem.CALIBRATION_Z)
-                floor_point = pixel_to_floor(H,[x, y])
+                floor_point = pixel_to_floor(H, [x, y])
                 x = floor_point[0]
                 y = floor_point[1]
 
-                d_point = (x , y,z)
-                d1_point = (x1,y1,z1)
-                total_distance = distance.euclidean(d_point,d1_point)
+                d_point = (x, y, z)
+                d1_point = (x1, y1, z1)
+                total_distance = distance.euclidean(d_point, d1_point)
 
             '''
             if iterations == 1:
@@ -352,12 +337,7 @@ def check_location_clear(mem,point,iterations):
             
         
     return point
-
-
-
-
 class AwaitCurrentLocation(AsynchAction):
-
     '''
     Action that blocks until there is a current (within last maxAllowedLag seconds)
     observation of the object's location.
@@ -371,12 +351,11 @@ class AwaitCurrentLocation(AsynchAction):
         completionCheck = lambda mem, midcaAction, status: self.completion_check()
         AsynchAction.__init__(self, mem, midcaAction, executeAction, 
         completionCheck, True)
-    
     def completion_check(self):
         t = midcatime.now()
         if t - self.startTime > self.maxDuration:
             if verbose >= 1:
-                print("max midcatime exceeded for action:", self, "- changing status to failed.") 
+                print("max midcatime exceeded for action:", self, "- changing status to failed.")
             self.status = FAILED
             return False
         lastLocReport = get_last_location(self.mem, self.objectOrID)
@@ -386,7 +365,6 @@ class AwaitCurrentLocation(AsynchAction):
 
 
 class DoPoint(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -406,7 +384,6 @@ class DoPoint(AsynchAction):
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
         AsynchAction.__init__(self, mem, midcaAction, executeAction, 
         completionCheck, True)
-    
     def send_point(self):
         lastLocReport = get_last_location(self.mem, self.objectOrID)
         t = midcatime.now()
@@ -432,7 +409,6 @@ class DoPoint(AsynchAction):
 #                 "assumed failed."
                 print("fail!!!!!")
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -458,7 +434,6 @@ class DoPoint(AsynchAction):
 
 
 class DoReach(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -478,9 +453,6 @@ class DoReach(AsynchAction):
         completionCheck = lambda mem, midcaAction, status: self.check_confirmation()
         AsynchAction.__init__(self, mem, midcaAction, executeAction, 
         completionCheck, True)
-    
-    
-        
     def send_point(self):
         lastLocReport = get_last_location(self.mem, self.objectOrID)
         check2stack = check_2height_stack(self.mem, self.objectOrID)
@@ -508,7 +480,6 @@ class DoReach(AsynchAction):
         x = lastLocReport[0].x
         y = lastLocReport[0].y
         z = lastLocReport[0].z
-        
         if self.mem.get(self.mem.CALIBRATION_MATRIX).any():
             H = self.mem.get(self.mem.CALIBRATION_MATRIX)
             z = self.mem.get(self.mem.CALIBRATION_Z)
@@ -556,7 +527,6 @@ class DoReach(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -579,7 +549,6 @@ class DoReach(AsynchAction):
         return False
 
 class DoUnstack(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -682,7 +651,6 @@ class DoUnstack(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -705,7 +673,6 @@ class DoUnstack(AsynchAction):
         return False    
 
 class DoStack(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -760,10 +727,6 @@ class DoStack(AsynchAction):
         z = self.mem.get(self.mem.STACK_Z)
 #        y=y+0.01
             #print("the z is " + str(z))
-
-        
-
-        
         '''
         print(z)
         print("z3")
@@ -806,7 +769,6 @@ class DoStack(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -830,7 +792,6 @@ class DoStack(AsynchAction):
 
 
 class DoPut(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -880,7 +841,6 @@ class DoPut(AsynchAction):
             y = point1.y
         
 #        raw_input("enter")
-        
         '''
         print(point1)
         print("given point is ")
@@ -914,9 +874,6 @@ class DoPut(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-        
-    
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -939,7 +896,6 @@ class DoPut(AsynchAction):
         return False    
 
 class DoRaise(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -978,7 +934,6 @@ class DoRaise(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -1001,7 +956,6 @@ class DoRaise(AsynchAction):
         return False
     
 class DoGrab(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -1032,7 +986,6 @@ class DoGrab(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -1055,7 +1008,6 @@ class DoGrab(AsynchAction):
         return False
 
 class DoRelease(AsynchAction):
-    
     '''
     Action that orders a point action. To 
     ensure success, an AwaitCurrentLocation action with <= the same maxAllowedLag and the 
@@ -1086,7 +1038,6 @@ class DoRelease(AsynchAction):
 #                 print "Unable to send msg; ", msg, "on topic", topic, " Action", self,  
 #                 "assumed failed."
             self.status = FAILED
-    
     def check_confirmation(self):
         checkTime = self.lastCheck
         self.lastCheck = midcatime.now()
@@ -1107,4 +1058,3 @@ class DoRelease(AsynchAction):
                         print("MIDCA received feedback that action", self, "has failed")
                     return False
         return False
-

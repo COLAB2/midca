@@ -35,7 +35,8 @@ layout: default
 4. To see how the MIDCA instantiation used in `cogsci_demo.py` is created and populated, see `examples/cogsci_demo.py`
 
 5. For an overview of MIDCA and more details about how it works, see the github wiki
-   (https://github.com/colab2/MIDCA/wiki) and/or docs folder.
+   (https://github.com/mclumd/MIDCA/wiki) and/or docs folder.
+
 
 6. Questions and comments are welcome, please email wsri-midca-help@wright.edu
 

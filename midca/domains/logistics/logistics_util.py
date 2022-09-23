@@ -10,7 +10,6 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
 #     thisDir =  os.path.dirname(os.path.realpath(__file__))
 #     MIDCA_ROOT = thisDir + "/../"
 #     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problems.shp"
-    
     f = open(STATE_FILE, 'w')
     f.write('\n')
     f.write('(defproblem log-ran-10-1 logistics')
@@ -21,7 +20,6 @@ def jshop_state_from_world(world, STATE_FILE, name = "state"):
             f.write("(SAIRPLANE " + obj + ")\n")
         elif world.objects[obj].type.name == "AIRPLANE":
             f.write("(AIRPLANE " + obj + ")\n")
-        
         elif world.objects[obj].type.name == "LOCATION":
             f.write("(LOCATION " + obj + ")\n")
         elif world.objects[obj].type.name == "CITY":
@@ -72,7 +70,6 @@ def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
 #     MIDCA_ROOT = thisDir + "/../"
 #     STATE_FILE = MIDCA_ROOT + "jshop_domains/logistics/problems.shp"
     f = open(STATE_FILE, 'a')
-    
     alltasks = []
     blkgoals = pyhop.Goal("goals")
     blkgoals.pos = {}
@@ -92,8 +89,6 @@ def jshop_tasks_from_goals(goals,pyhopState, STATE_FILE):
             args.pop(0)
         if predicate == "obj-at":
             f.write("(obj-at " +  args[0] + " " +  args[1] + ")\n")
-        
-        
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" ))))")
@@ -115,9 +110,6 @@ def jshop2_state_from_world(world, STATE_FILE, name = "state"):
         
         if world.objects[obj].type.name == "AIRPORT":
             f.write("(AIRPORT " + obj + ")\n")
-   
-              
-    
     for atom in world.atoms:
         
         if atom.predicate.name == "airplane-at":
@@ -166,10 +158,7 @@ def jshop2_tasks_from_goals(goals,pyhopState, STATE_FILE):
             args.pop(0)
         if predicate == "obj-at":
             f.write("(obj-at " +  args[0] + " " +  args[1] + ")\n")
-        
-        
         else:
             raise Exception("No task corresponds to predicate " + predicate)
     f.write(" ))")
     f.close()
-   

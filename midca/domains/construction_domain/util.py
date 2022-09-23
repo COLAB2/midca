@@ -11,7 +11,6 @@ def asqiiDisplay(world):
     '''
     blocks = blockstate.get_block_list(world)
     print((str(scene.Scene(blocks))))
-
 def preferApprehend(goal1, goal2):
     if 'predicate' not in goal1 or 'predicate' not in goal2:
         return 0
@@ -33,7 +32,6 @@ def preferFire(goal1, goal2):
     elif goal1['predicate'] != 'onfire' and goal2['predicate'] == 'onfire':
         return 1
     return 0
-
     
 def pyhop_state_from_world(world, name = "state"):
     s = pyhop.State(name)
@@ -44,7 +42,7 @@ def pyhop_state_from_world(world, name = "state"):
     s.free = {}
     s.fire_ext_avail = set()
     s.holdingfireext = None
-    s.hasmortar = {} # keys are 
+    s.hasmortar = {} # keys are
     s.mortaravailable = {}
     mortarblocks = []
     blocks = []
@@ -85,7 +83,6 @@ def pyhop_state_from_world(world, name = "state"):
             s.hasmortar[atom.args[0].name] = atom.args[1].name
         elif atom.predicate.name == "in_store":
             s.pos[atom.args[0].name]= "store"
-	
     for block in blocks:
         if block not in s.clear:
             s.clear[block] = False
@@ -95,7 +92,6 @@ def pyhop_state_from_world(world, name = "state"):
             s.pos[block] = "in-arm"
         if block not in list(s.hasmortar.keys()):
             s.hasmortar[block] = False
-    
     for mblock in mortarblocks:
         if mblock not in list(s.mortaravailable.keys()):
             s.mortaravailable[mblock] = False
@@ -128,7 +124,7 @@ def pyhop_tasks_from_goals(goals, pyhopState):
             blkgoals.pos[args[0]] = args[1]
         elif predicate == "stable-on":
             blkgoals.pos[args[0]] = args[1]
-            blkgoals.hasmortar[args[1]] = True  
+            blkgoals.hasmortar[args[1]] = True
         elif predicate == 'on-table':
             blkgoals.pos[args[0]] = 'table'
         elif predicate == "onfire" and 'negate' in goal and goal['negate'] == True:

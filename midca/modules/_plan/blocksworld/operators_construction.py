@@ -3,13 +3,11 @@ Blocks World domain definition for Pyhop 1.1.
 Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
-
-
-
 import sys
+
 sys.path.append("../")
 import pyhop
-import random 
+import random
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
 the current state, and the others are the planning operator's usual arguments.
@@ -23,8 +21,7 @@ The blocks-world operators use three state variables:
 - clear[b] = False if a block is on b or the in-arm is holding b, else True.
 - holding = name of the block being held, or False if the in-arm is empty.
 """
-
-def pickup(state,b):
+def pickup(state, b):
     if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
         state.pos[b] = 'in-arm'
         state.clear[b] = False
@@ -50,8 +47,7 @@ def unstack(state,b,c):
         
         return state
     else: return False
-    
-def unstack_mortared(state,b,c,m):    
+def unstack_mortared(state,b,c,m):
     ''' m is for mortar '''
     if state.pos[b] == c and c != 'table' and state.clear[b] == True and state.holding == False:
         state.pos[b] = 'in-arm'
@@ -110,7 +106,7 @@ def searchfor(state, perp):
 	return state
 
 def get_from_store(state,b):
-	if state.pos[b] == 'store' and state.clear[b] == True and state.holding == False:
+    if state.pos[b] == 'store' and state.clear[b] == True and state.holding == False:
         	state.pos[b] = 'in-arm'
         	state.clear[b] = False
         	state.holding = b

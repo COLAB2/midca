@@ -32,13 +32,11 @@ def ros_style_midca():
 	))
 	myMidca.append_module("Act", AsynchronousAct.AsynchronousAct())
 	return myMidca
-	
 thisDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 MIDCA_ROOT = thisDir + "/../"
 
 myMidca = ros_style_midca()
-
 
 
 
@@ -66,7 +64,5 @@ baxter.enable()
 baxter.calibrateLeftGripper()
 
 
-
 input('Enter ...')
 rosMidca.run_midca()
-

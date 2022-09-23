@@ -1,0 +1,20 @@
+#Sample state file using the MIDCA predicate world state definition language.
+#These are comments. Multi-line comments are not supported.
+#This file will define a state in the simple chicken crossing the road domain.
+#This domain is defined in worldsim/domains/sample_domain.sim
+
+#note: in state files, the "functions" - e.g. CHICKEN, HEN, onright, onleft -
+#are type names or predicate names defined in the domain file. A type name
+#creates an object of that type with the given name. A predicate name creates
+#a predicate
+
+#Create a chicken. Argument is the chicken's name.
+CHICKEN(clucky)
+
+#Create a hen (subtype of chicken):
+HEN(lady cluck)
+
+#place the two chickens on opposite sides of the road. Argument is the name of
+#a chicken which has been created above.
+onright(clucky)
+onleft(lady cluck)

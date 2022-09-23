@@ -1,0 +1,440 @@
+.009014 - Old plan retrieved. Checking validity...
+
+.020866 - length of objnames 3
+
+.021656 - length of objnames 3
+
+.022339 - length of objnames 3
+
+.022855 - length of objnames 3
+
+.023546 - length of objnames 17
+
+.024331 - length of objnames 17
+
+.025116 - length of objnames 3
+
+.025780 - length of objnames 3
+
+.026421 - length of objnames 3
+
+.026861 - length of objnames 3
+
+.027604 - length of objnames 17
+
+.028405 - length of objnames 17
+
+.034872 - checking to see if all goals are achieved...
+
+.047498 - length of objnames 3
+
+.048271 - length of objnames 3
+
+.048942 - length of objnames 3
+
+.049592 - length of objnames 3
+
+.050287 - length of objnames 17
+
+.051860 - length of objnames 17
+
+.052642 - length of objnames 3
+
+.053297 - length of objnames 3
+
+.053970 - length of objnames 3
+
+.054641 - length of objnames 3
+
+.055027 - length of objnames 17
+
+.055795 - length of objnames 17
+
+.056581 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+.057252 - Goal(pos3-2, predicate: invasive-at, negate: True) invasive-at
+
+.057896 - Goal(pos4-3, predicate: native-at) native-at
+
+.062294 - Goal(pos1-4, predicate: native-at) native-at
+
+.062906 - no. Goals achieved: {'Goal(pos1-3, predicate: invasive-at, negate: True)', 'Goal(pos3-2, predicate: invasive-at, negate: True)'}
+
+.063517 - Planning...
+
+.064881 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+.238322 - xaxa move
+
+.238927 - asxbsa ('east', 'pos1-1', 'pos2-1')
+
+.239612 - xaxa move
+
+.240247 - asxbsa ('noes', 'pos2-1', 'pos3-2')
+
+.240905 - xaxa spray
+
+.241555 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+.242190 - xaxa move
+
+.242657 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+.250862 - xaxa move
+
+.251546 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+.252183 - xaxa spray
+
+.252827 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+.253400 - Planning complete.
+
+.254005 - Plan: 
+
+.254894 - move(east, pos1-1, pos2-1)
+
+.256609 - move(noes, pos2-1, pos3-2)
+
+.257508 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.259430 - move(nows, pos3-2, pos2-3)
+
+.260043 - move(west, pos2-3, pos1-3)
+
+.262239 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+.262821 - <class 'midca.plans.Plan'>
+
+.008496 - The Selected action move(east, pos1-1, pos2-1) from plan:
+
+.705542 - The Selected action move(east, pos1-1, pos2-1) from plan:
+
+.311435 - length of objnames 3
+
+1.008102 - length of objnames 3
+
+.312153 - simulating MIDCA action: move(east, pos1-1, pos2-1)
+
+1.008809 - simulating MIDCA action: move(east, pos1-1, pos2-1)
+
+.312840 - length of objnames 3
+
+1.009494 - length of objnames 3
+
+.313478 - Simulator: no events.
+
+1.010135 - Simulator: no events.
+
+.663273 - World observed.
+
+1.359933 - World observed.
+
+1.000015 - length of objnames 3
+
+1.696673 - length of objnames 3
+
+1.001147 - [] []
+
+1.697801 - [] []
+
+1.002102 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+1.698764 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+1.391545 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+2.088225 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+1.397493 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+2.094165 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+1.797288 - No goals selected.
+
+2.493988 - No goals selected.
+
+2.121405 - Old plan retrieved. Checking validity...
+
+2.818062 - Old plan retrieved. Checking validity...
+
+2.136235 - length of objnames 3
+
+2.832909 - length of objnames 3
+
+2.137167 - false
+
+2.833820 - false
+
+2.138018 - agent-at(pos1-1)
+
+2.834673 - agent-at(pos1-1)
+
+2.139726 - Planning...
+
+2.836390 - Planning...
+
+2.141367 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+2.838022 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+2.320260 - xaxa move
+
+3.016921 - xaxa move
+
+2.321381 - asxbsa ('noes', 'pos2-1', 'pos3-2')
+
+3.018038 - asxbsa ('noes', 'pos2-1', 'pos3-2')
+
+2.330746 - xaxa spray
+
+3.027402 - xaxa spray
+
+2.331735 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+3.028389 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+2.332680 - xaxa move
+
+3.029334 - xaxa move
+
+2.333619 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+3.030273 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+2.334514 - xaxa move
+
+3.031169 - xaxa move
+
+2.335515 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+3.032171 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+2.336515 - xaxa spray
+
+3.033169 - xaxa spray
+
+2.338281 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+3.034935 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+2.342253 - Planning complete.
+
+3.038909 - Planning complete.
+
+2.343575 - Plan: 
+
+3.040230 - Plan: 
+
+2.344559 - move(noes, pos2-1, pos3-2)
+
+3.041213 - move(noes, pos2-1, pos3-2)
+
+2.349103 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+3.045759 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+2.350815 - move(nows, pos3-2, pos2-3)
+
+3.047472 - move(nows, pos3-2, pos2-3)
+
+2.358385 - move(west, pos2-3, pos1-3)
+
+3.055002 - move(west, pos2-3, pos1-3)
+
+2.359091 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+3.055746 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+2.360011 - <class 'midca.plans.Plan'>
+
+3.056668 - <class 'midca.plans.Plan'>
+
+2.458822 - The Selected action move(noes, pos2-1, pos3-2) from plan:
+
+3.155478 - The Selected action move(noes, pos2-1, pos3-2) from plan:
+
+2.939228 - length of objnames 3
+
+3.635924 - length of objnames 3
+
+2.940913 - simulating MIDCA action: move(noes, pos2-1, pos3-2)
+
+3.637588 - simulating MIDCA action: move(noes, pos2-1, pos3-2)
+
+2.943248 - length of objnames 3
+
+3.639902 - length of objnames 3
+
+2.944238 - Simulator: no events.
+
+3.640891 - Simulator: no events.
+
+3.240201 - World observed.
+
+3.936859 - World observed.
+
+3.535660 - length of objnames 3
+
+4.232336 - length of objnames 3
+
+3.537835 - [] []
+
+4.234510 - [] []
+
+3.539704 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+4.236413 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+3.865855 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+4.562512 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+3.867053 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+4.563708 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+4.221554 - No goals selected.
+
+4.918231 - No goals selected.
+
+4.540611 - Old plan retrieved. Checking validity...
+
+5.237268 - Old plan retrieved. Checking validity...
+
+4.551187 - length of objnames 3
+
+5.247842 - length of objnames 3
+
+4.552380 - false
+
+5.249034 - false
+
+4.553491 - agent-at(pos1-1)
+
+5.250144 - agent-at(pos1-1)
+
+4.554686 - Planning...
+
+5.251339 - Planning...
+
+4.556561 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+5.253219 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+4.721218 - xaxa spray
+
+5.417883 - xaxa spray
+
+4.725568 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+5.422225 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+4.730166 - xaxa move
+
+5.426825 - xaxa move
+
+4.731517 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+5.428170 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+4.735437 - xaxa move
+
+5.432093 - xaxa move
+
+4.738963 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+5.435621 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+4.740909 - xaxa spray
+
+5.437565 - xaxa spray
+
+4.744995 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+5.441652 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+4.747000 - Planning complete.
+
+5.443655 - Planning complete.
+
+4.748172 - Plan: 
+
+5.444827 - Plan: 
+
+4.749369 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+5.446023 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+4.750278 - move(nows, pos3-2, pos2-3)
+
+5.446931 - move(nows, pos3-2, pos2-3)
+
+4.751462 - move(west, pos2-3, pos1-3)
+
+5.448116 - move(west, pos2-3, pos1-3)
+
+4.756306 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+5.452964 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+4.760915 - <class 'midca.plans.Plan'>
+
+5.457578 - <class 'midca.plans.Plan'>
+
+5.242389 - Selected action spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest) from plan:
+
+5.939006 - Selected action spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest) from plan:
+
+5.251883 -  [spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)] move(nows, pos3-2, pos2-3) move(west, pos2-3, pos1-3) spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+5.948540 -  [spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)] move(nows, pos3-2, pos2-3) move(west, pos2-3, pos1-3) spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+5.550906 - length of objnames 17
+
+6.247568 - length of objnames 17
+
+5.552695 - simulating MIDCA action: spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+6.249355 - simulating MIDCA action: spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+5.554267 - length of objnames 17
+
+6.250928 - length of objnames 17
+
+5.555696 - Simulator: no events.
+
+6.252350 - Simulator: no events.
+
+5.991711 - World observed.
+
+6.688391 - World observed.
+
+6.349899 - length of objnames 17
+
+7.046553 - length of objnames 17
+
+6.351969 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+7.048622 - [] [<midca.worldsim.worldsim.Atom object at 0x7f41c11b64a8>, <midca.worldsim.worldsim.Atom object at 0x7f41c0cc4e48>]
+
+6.353274 - invasive-at(pos3-1)
+
+7.049926 - invasive-at(pos3-1)
+
+6.354847 - native-at(pos4-3)
+
+7.051508 - native-at(pos4-3)
+
+6.356292 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+7.052947 - <midca.modules.guide.ReactiveSurvive object at 0x7f41c0b8e0f0>
+
+6.757490 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+7.454160 - Goal(pos1-3, predicate: invasive-at, negate: True) invasive-at
+
+6.760038 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+
+7.456692 - Not all goals achieved; Goal(pos1-3, predicate: invasive-at, negate: True) is not true.
+

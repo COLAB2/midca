@@ -93,7 +93,7 @@ class Tuck(object):
                  Empty, queue_size=10)
         }
         self._rs = baxter_interface.RobotEnable(CHECK_VERSION)
-        self._enable_pub = rospy.Publisher('robot/set_super_enable', 
+        self._enable_pub = rospy.Publisher('robot/set_super_enable',
                                            Bool, queue_size=10)
 
     def _update_collision(self, data, limb):
@@ -262,6 +262,5 @@ def main():
     tucker.supervised_tuck()
     rospy.loginfo("Finished tuck")
     rospy.sleep(1)
-
 if __name__ == "__main__":
     main()

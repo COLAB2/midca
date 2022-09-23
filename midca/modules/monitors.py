@@ -47,4 +47,3 @@ class Monitor():
                 return
             
             time.sleep(3)
-            

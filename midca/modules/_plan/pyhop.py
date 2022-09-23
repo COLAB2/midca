@@ -101,7 +101,7 @@ Pyhop provides the following classes and functions:
 
 
 
-import copy,sys, pprint
+import copy, sys, pprint
 
 ############################################################
 # States and goals
@@ -137,18 +137,18 @@ def print_goal(goal,indent=4):
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(goal.__name__ + '.' + name)
                 print(' =', val)
-    else: print('False')
+    else:
+        print('False')
 
 ############################################################
 # Helper functions that may be useful in domain models
 
-def forall(seq,cond):
+def forall(seq, cond):
     """True if cond(x) holds for all x in seq, otherwise False."""
     for x in seq:
         if not cond(x): return False
     return True
-
-def find_if(cond,seq):
+def find_if(cond, seq):
     """
     Return the first x in seq such that cond(x) holds, if there is one.
     Otherwise return None.
@@ -156,7 +156,6 @@ def find_if(cond,seq):
     for x in seq:
         if cond(x): return x
     return None
-
 ############################################################
 # Commands to tell Pyhop what the operators and methods are
 
@@ -168,18 +167,18 @@ def declare_operators(*op_list):
     Call this after defining the operators, to tell Pyhop what they are. 
     op_list must be a list of functions, not strings.
     """
-    operators.update({op.__name__:op for op in op_list})
+    operators.update({op.__name__: op for op in op_list})
     return operators
 
-def declare_methods(task_name,*method_list):
+
+def declare_methods(task_name, *method_list):
     """
     Call this once for each task, to tell Pyhop what the methods are.
     task_name must be a string.
     method_list must be a list of functions, not strings.
     """
-    methods.update({task_name:list(method_list)})
+    methods.update({task_name: list(method_list)})
     return methods[task_name]
-
 ############################################################
 # Commands to find out what the operators and methods are
 
@@ -187,16 +186,18 @@ def print_operators(olist=operators):
     """Print out the names of the operators"""
     print('OPERATORS:', ', '.join(olist))
 
+
 def print_methods(mlist=methods):
     """Print out a table of what the methods are for each task"""
-    print('{:<14}{}'.format('TASK:','METHODS:'))
+    print('{:<14}{}'.format('TASK:', 'METHODS:'))
     for task in mlist:
         print('{:<14}'.format(task) + ', '.join([f.__name__ for f in mlist[task]]))
+
 
 ############################################################
 # The actual planner
 
-def pyhop(state,tasks,verbose=0):
+def pyhop(state, tasks, verbose=0):
     """
     Try to find a plan that accomplishes tasks in state. 
     If successful, return the plan. Otherwise return False.
@@ -205,14 +206,13 @@ def pyhop(state,tasks,verbose=0):
     result = seek_plan(state,tasks,[],0,verbose)
     if verbose>0: print('** result =',result,'\n')
     return result
-
 def copy_state(state):
     try:
         return state.copy()
     except AttributeError:
         return copy.deepcopy(state)
 
-def seek_plan(state,tasks,plan,depth,verbose=0):
+def seek_plan(state, tasks, plan, depth, verbose=0):
     """
     Workhorse for pyhop. state and tasks are as in pyhop.
     - plan is the current partial plan.

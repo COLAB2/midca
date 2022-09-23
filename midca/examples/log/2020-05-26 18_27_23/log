@@ -1,0 +1,84 @@
+.000343 - <midca.modules.guide.ReactiveSurvive object at 0x7f4504f525c0>
+
+3.181609 - No current goals. Skipping eval
+
+3.746765 - Selecting goal(s):
+
+3.746983 - Goal(pos1-3, predicate: invasive-at, negate: True)
+
+3.747205 - Goal(pos3-2, predicate: invasive-at, negate: True)
+
+3.747393 - Goal(pos4-3, predicate: native-at)
+
+3.747580 - Goal(pos1-4, predicate: native-at)
+
+4.433555 - Planning...
+
+4.434736 - /home/zahid/Downloads/midca-update-to-python36/midca/examples/../domains/ffdomain/minecraft/plant-protection-modif.pddl
+
+4.591231 - xaxa move
+
+4.591596 - asxbsa ('noes', 'pos0-0', 'pos1-1')
+
+4.591906 - xaxa move
+
+4.592231 - asxbsa ('east', 'pos1-1', 'pos2-1')
+
+4.592564 - xaxa move
+
+4.592878 - asxbsa ('noes', 'pos2-1', 'pos3-2')
+
+4.593214 - xaxa spray
+
+4.593538 - asxbsa ('pos3-2', 'pos3-3', 'pos3-1', 'pos4-2', 'pos2-2', 'pos4-3', 'pos2-3', 'pos2-1', 'pos4-1', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+4.593852 - xaxa move
+
+4.594188 - asxbsa ('nows', 'pos3-2', 'pos2-3')
+
+4.594505 - xaxa move
+
+4.594809 - asxbsa ('west', 'pos2-3', 'pos1-3')
+
+4.595136 - xaxa spray
+
+4.595451 - asxbsa ('pos1-3', 'pos1-4', 'pos1-2', 'pos2-3', 'pos0-3', 'pos2-4', 'pos0-4', 'pos0-2', 'pos2-2', 'nort', 'sout', 'eas', 'wes', 'norest', 'norwst', 'souwst', 'souest')
+
+4.595731 - Planning complete.
+
+4.595994 - Plan: 
+
+4.596294 - move(noes, pos0-0, pos1-1)
+
+4.596557 - move(east, pos1-1, pos2-1)
+
+4.596558 - move(noes, pos2-1, pos3-2)
+
+4.596852 - spray(pos3-2, pos3-3, pos3-1, pos4-2, pos2-2, pos4-3, pos2-3, pos2-1, pos4-1, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+4.597128 - move(nows, pos3-2, pos2-3)
+
+4.597403 - move(west, pos2-3, pos1-3)
+
+4.597613 - spray(pos1-3, pos1-4, pos1-2, pos2-3, pos0-3, pos2-4, pos0-4, pos0-2, pos2-2, nort, sout, eas, wes, norest, norwst, souwst, souest)
+
+4.597910 - <class 'midca.plans.Plan'>
+
+5.626169 - The Selected action move(noes, pos0-0, pos1-1) from plan:
+
+7.339418 - length of objnames 3
+
+7.340057 - simulating MIDCA action: move(noes, pos0-0, pos1-1)
+
+7.340801 - length of objnames 3
+
+7.341496 - Simulator: no events.
+
+8.036330 - World observed.
+
+8.474045 - length of objnames 3
+
+8.475601 - [] [<midca.worldsim.worldsim.Atom object at 0x7f4504954940>]
+
+8.476231 - <midca.modules.guide.ReactiveSurvive object at 0x7f4504f525c0>
+

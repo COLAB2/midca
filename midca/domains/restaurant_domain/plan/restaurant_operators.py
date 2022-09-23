@@ -1,6 +1,5 @@
 from midca.modules._plan import pyhop
 
-
 def take_order(state,person,dish):
     # add the order to the variable order_pending
     if person in state.order_received:
@@ -47,4 +46,4 @@ def serve_order(state,person,dish):
     return state
 
 def declare_ops():
-	pyhop.declare_operators(take_order,prepare_order,serve_order)	
+	pyhop.declare_operators(take_order,prepare_order,serve_order)

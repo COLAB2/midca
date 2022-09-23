@@ -26,7 +26,7 @@ class SimpleIntend(base.BaseModule):
             return
 
         # take the first goal
-        goals = [goals[0]]
+        #goals = [goals[0]]
         # add it to the current goal in memory
 
         # current goals as a stack

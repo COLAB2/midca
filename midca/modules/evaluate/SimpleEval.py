@@ -301,3 +301,109 @@ class SimpleEval_construction(base.BaseModule):
                 print("No current goals. Skipping eval")
 
         if trace and goals_changed: trace.add_data("GOALS",goals)
+
+class SimpleEval_plant_protection(base.BaseModule):
+
+    def init(self, world,mem):
+        self.world = world
+        self.mem = mem
+
+    def run(self, cycle, verbose=2):
+        world = self.mem.get(self.mem.STATES)[-1]
+        try:
+            goals = self.mem.get(self.mem.CURRENT_GOALS)[-1]
+        except:
+            goals = []
+
+        trace = self.mem.trace
+        if trace:
+            trace.add_module(cycle, self.__class__.__name__)
+            trace.add_data("WORLD", copy.deepcopy(world))
+            trace.add_data("GOALS", copy.deepcopy(goals))
+        #print(self.mem.Goal_initial)
+        if self.mem.get(self.mem.Goal_initial):
+            num_goal_achieved = 0
+            print ("-------------------------------------------",self.mem.get(self.mem.Goal_initial))
+            #value = []
+            #self.mem.set(self.mem.Goal_initial, value)
+            #print(self.mem.Goal_initial)
+            for goal in self.mem.get(self.mem.Goal_initial)[0]:
+                achieved = self.world.atom_true(self.world.midcaGoalAsAtom(goal))
+                if 'negate' in goal and goal['negate']:
+                    achieved = not achieved
+                if(achieved):
+                    num_goal_achieved = num_goal_achieved +1
+            #self.mem.set(self.mem.Goal_final_achieved,num_goal_achieved)
+            self.mem.Goal_final_achieved = num_goal_achieved
+            print("+++++++++++++++++++++++++++++++++++++++++++++",self.mem.Goal_final_achieved)
+            #print("afshab",self.mem.Goal_final_achieved)
+
+
+        goals_changed = False  # for trace
+        if goals:
+            for goal in goals:
+                if(type(goal) is not str):
+                    try:
+                        #goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+                        #print("hi",type(str(goalGraph)))
+                        achieved = world.atom_true(world.midcaGoalAsAtom(goal))
+                        if 'func' in goal.kwargs:
+                            achieved = world.atom_val_true(world.midcaGoalAsAtom(goal))
+                        if 'negate' in goal and goal['negate']:
+                            achieved = not achieved
+                        if not achieved:
+                            if verbose >= 2:
+                                print("Not all goals achieved;", goal, "is not true.")
+                                #print("hi mem", self.mem.Goal_initial)
+                            return
+                    except ValueError:
+                        if verbose >= 1:
+                            print("Could not test goal", goal, ". It does not seem to be a valid world state")
+                        return
+            if verbose >= 1:
+                print("All current goals achieved. Removing them from goal graph",self.mem.get(self.mem.Goal_initial))
+
+                try:
+
+                    self.mem.GOAL_ACHIEVED = len(goals)
+                    #print(self.mem.GOAL_ACHIEVED)
+                except:
+                    return
+            goalGraph = self.mem.get(self.mem.GOAL_GRAPH)
+            #self.mem.GOAL_ACHIEVED = len(goalGraph)
+            #print("hi",goalGraph)
+            try:
+                #checking if a goal has been achieved and removing from goal graph
+                for goal in goals:
+                    if(goal.args[0] == 'human1'):
+                        for each in self.mem.GOAL_NEEDED:
+                            if each.args[0] == self.mem.LOCATION :
+                                rebelgoal=each
+                    goalGraph.remove(goal)
+                    goalGraph.remove(rebelgoal)
+                    if trace: trace.add_data("REMOVED GOAL", goal)
+                    goals_changed = True
+            except:
+                for goal in goals:
+                    goalGraph.remove(goal)
+                    if trace: trace.add_data("REMOVED GOAL", goal)
+                    goals_changed = True                
+            numPlans = len(goalGraph.plans)
+            goalGraph.removeOldPlans()
+            newNumPlans = len(goalGraph.plans)
+            if numPlans != newNumPlans and verbose >= 1:
+                print(
+                "removing", numPlans - newNumPlans, "plans that no longer apply.")
+                goals_changed = True
+            #print(goals,type(goals))
+            del goals[-1]
+            self.mem.set(self.mem.CURRENT_GOALS, goals)
+            #print(goals,self.mem.CURRENT_GOALS)
+            #print("hi",goalGraph)
+        else:
+            if verbose >= 2:
+                print(
+                "No current goals. Skipping eval")
+
+
+        if trace and goals_changed: trace.add_data("GOALS", goals)

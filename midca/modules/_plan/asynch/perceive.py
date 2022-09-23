@@ -156,7 +156,6 @@ ma.actions.append(["unstack", "block1", "block2"])
 ma.actions.append(["catchfire", "block1"])
 print ma
 '''
-
 class MAReporter:
 	
 	'''
@@ -172,7 +171,7 @@ class MAReporter:
 			if world.is_true("onfire", [objectname]) and world.objects[objectname].type.name == "BLOCK" and objectname != "table":
 				res.append(objectname)
 		return res
-	
+
 	def run(self, cycle, verbose = 2):
 		world = None
 		lastWorld = None
@@ -201,4 +200,3 @@ class MAReporter:
 				if block not in lastBurning or block in blocksPutOut:
 					report.actions.append(["burns", block])
 		#report is finished, send to Meta-AQUA
-			
