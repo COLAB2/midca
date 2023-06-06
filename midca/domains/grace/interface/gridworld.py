@@ -57,11 +57,11 @@ class Grid:
         if xbins==None:
             self.x_bins = np.array([0., 1., 2., 3., 4.])*self.x_range/5.0
         else:
-            self.x_bins = np.array(range(xbins))*self.x_range/xbins
+            self.x_bins = np.array(list(range(xbins)))*self.x_range/xbins
         if ybins==None:
             self.y_bins = np.array([0., 1., 2., 3., 4.])*self.y_range/5.0
         else:
-            self.y_bins = np.array(range(ybins))*self.y_range/ybins
+            self.y_bins = np.array(list(range(ybins)))*self.y_range/ybins
 
         # specifies tag density for each cell (hotspot probabilities?)
         self.p = np.array([0.1, 0.1, 0.4, 0.6, 0.2,
@@ -88,7 +88,7 @@ class Grid:
     def loadTagList(self,fname="tags"):
         f=open(fname+".csv",'r')
         taglist=[]
-        from AcousticTag import AcousticTag
+        from .AcousticTag import AcousticTag
         for line in f.readlines():
             last_ping,posx,posy,posz,delay,ID,bin=line.split(',')
             tag = AcousticTag(ID,last_ping=float(last_ping),ping_delay=float(delay))
@@ -142,7 +142,7 @@ class Grid:
 
 
 if __name__ == '__main__':
-	from AcousticTag import AcousticTag
+	from .AcousticTag import AcousticTag
 	taglist=[]
 	N=1000
 	for i in range(N):
@@ -186,4 +186,4 @@ if __name__ == '__main__':
 	# print('method 2 tau=',tau)
 	# print(np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=100),decimals=2))
 	tau=2
-	print(np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=50),decimals=2))
+	print((np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=50),decimals=2)))

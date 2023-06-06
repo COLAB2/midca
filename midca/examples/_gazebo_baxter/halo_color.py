@@ -57,7 +57,7 @@ class HaloLed():
         """
         try:
             self.pub[color].publish(Float32(intensity))
-        except Exception,e:
+        except Exception as e:
             rospy.logwarn("%s",str(e))
 #####
 # The code below has 3 different settings available, NOT all def are needed
@@ -66,16 +66,13 @@ class HaloLed():
 #
 #####
 
-
-
-
     def setGreen(self):
-	rospy.sleep(0.3)
+        rospy.sleep(0.3)
         self.setLed("green",100)
         self.setLed("red",0)
         
     def setRed(self):
-	rospy.sleep(0.3)
+        rospy.sleep(0.3)
         self.setLed("red",100)
         self.setLed("green",0)
         

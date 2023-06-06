@@ -186,7 +186,7 @@ class GNG:
 				nodes[edge.node2] = True
 			if len(self.nodes) != len(nodes):
 				pass#print "Removing node"
-			self.nodes = nodes.keys()
+			self.nodes = list(nodes.keys())
 		else: #new del method
 			newnodes = [node for node in self.nodes if node.importance > 0]
 			#for node in self.nodes:
@@ -197,7 +197,7 @@ class GNG:
 		#add node - old method
 		if self.addmode != "new":
 			if len(self.nodes) < self.maximumNodes and self.numUpdates % self.newNodeInterval == 0:
-				print "adding"
+				print("adding")
 				self.add_node()
 		else:
 			#add node - new method

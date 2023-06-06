@@ -1,4 +1,4 @@
-from __future__ import division
+
 from midca import base,midcatime
 import copy,itertools,operator
 import random
@@ -22,14 +22,14 @@ class SimpleIntend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
 
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         # take the first goal
@@ -52,13 +52,13 @@ class SimpleIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class SimpleIntendMultipleGoals(base.BaseModule):
 
@@ -72,14 +72,14 @@ class SimpleIntendMultipleGoals(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
 
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         # current goals as a stack
@@ -98,13 +98,13 @@ class SimpleIntendMultipleGoals(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
 
@@ -118,7 +118,7 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -127,7 +127,7 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
 
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         # take the first goal
@@ -141,7 +141,7 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
                 if not goal['predicate'] in predicates:
                     self.mem.add(self.mem.SUSPENDED_GOALS, [goal])
                     if verbose >= 2:
-                        print "The goal " + str(goal) + " is suspended due to lack of resources"
+                        print("The goal " + str(goal) + " is suspended due to lack of resources")
                     goals.remove(goal)
         else:
             for suspended_goal in suspended_goals:
@@ -164,13 +164,13 @@ class SimpleIntendMultipleGoalsSuspend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class WarehouseIntend(base.BaseModule):
 
@@ -184,7 +184,7 @@ class WarehouseIntend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         goals = goalGraph.getUnrestrictedGoals()
         goals_selected = []
@@ -219,13 +219,13 @@ class WarehouseIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals_selected:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class SimpleIntend_Restaurant(base.BaseModule):
 
@@ -444,16 +444,16 @@ class SimpleIntend_Restaurant(base.BaseModule):
                 p = goals_combinations[each][0]
                 t = goals_combinations[each][1]
                 print("")
-                print ("For the Person " + goal.args[0] + ": P/T ratio (" + str(p)+"/"+str(t) + ")  = " + str(float(p)/float(t)))
+                print(("For the Person " + goal.args[0] + ": P/T ratio (" + str(p)+"/"+str(t) + ")  = " + str(float(p)/float(t))))
                 expected_score = self.compute_score_expectation(each)
                 expected_cost = self.compute_cost_expectation(each)
                 total_score = expected_score + total_score
                 total_cost = expected_cost + total_cost
-                print("\t\t   Expected Score : " + str(expected_score))
-                print("\t\t   Expected Cost : " + str(expected_cost))
+                print(("\t\t   Expected Score : " + str(expected_score)))
+                print(("\t\t   Expected Cost : " + str(expected_cost)))
                 break
-        print("Expected Total Score : " + str(total_score))
-        print("Expected Total Cost : " + str(total_cost))
+        print(("Expected Total Score : " + str(total_score)))
+        print(("Expected Total Cost : " + str(total_cost)))
         print("")
         self.write_expected_to_memory(total_score,total_cost)
         self.write_selected_to_memory(selected_goals)
@@ -629,7 +629,7 @@ class SimpleIntend_Restaurant(base.BaseModule):
         '''
         print("")
         print("Not all Current goals achieved ,")
-        print("Processing : "),
+        print(("Processing : "), end=' ')
         self.print_goals(self.mem.get(self.mem.CURRENT_GOALS))
         print("")
         return self.mem.get(self.mem.CURRENT_GOALS)
@@ -646,9 +646,9 @@ class SimpleIntend_Restaurant(base.BaseModule):
             cost_taken,score = self.calculate_cost_remaining()
             if self.check_cost(cost_taken):
                 self.mem.set(self.mem.MONEY, (money - cost_taken))
-                print("actual_cost" +str(self.actual_cost))
-                print("actual_score" + str(self.actual_score))
-                print("Amount Spent for previous dish order : " + str(cost_taken))
+                print(("actual_cost" +str(self.actual_cost)))
+                print(("actual_score" + str(self.actual_score)))
+                print(("Amount Spent for previous dish order : " + str(cost_taken)))
         if self.mem.get(self.mem.CURRENT_GOALS):
             return self.get_current_goals()
         if not self.selected_goals == [()]:
@@ -666,16 +666,16 @@ class SimpleIntend_Restaurant(base.BaseModule):
         total_cost = 0
         for each in goals :
             for goal in each:
-                print ("For the Person " + goal.args[0] )
+                print(("For the Person " + goal.args[0] ))
                 expected_score = self.compute_score_expectation(each)
                 expected_cost = self.compute_cost_expectation(each)
                 total_score = expected_score + total_score
                 total_cost = expected_cost + total_cost
-                print("\t\t   Expected Score : " + str(expected_score))
-                print("\t\t   Expected Cost : " + str(expected_cost))
+                print(("\t\t   Expected Score : " + str(expected_score)))
+                print(("\t\t   Expected Cost : " + str(expected_cost)))
                 break
-        print("Expected Total Score : " + str(total_score))
-        print("Expected Total Cost : " + str(total_cost))
+        print(("Expected Total Score : " + str(total_score)))
+        print(("Expected Total Cost : " + str(total_cost)))
         print("")
         self.write_expected_to_memory(total_score,total_cost)
         self.write_selected_to_memory(goals)
@@ -750,7 +750,7 @@ class SimpleIntend_Restaurant(base.BaseModule):
         goals = None
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
 
         # if there is no money remaining then intend does nothing
@@ -760,7 +760,7 @@ class SimpleIntend_Restaurant(base.BaseModule):
                 self.mem.set(self.mem.MONEY, 0)
                 self.actual_score = 0
                 self.actual_cost = 0
-                print "Money Insufficient. Intend will do nothing."
+                print("Money Insufficient. Intend will do nothing.")
                 return
 
         # for selection_method we need to check whether the remaining goals can be done with time
@@ -772,12 +772,12 @@ class SimpleIntend_Restaurant(base.BaseModule):
                 for goal in self.selected_goals[0]:
                     cost = cost + self.cost_dishes[goal.args[1]]
                 if cost > money:
-                    print("Remaining goals for the order " + str(self.selected_goals[0][0].args[0]) + " Cannot be done")
+                    print(("Remaining goals for the order " + str(self.selected_goals[0][0].args[0]) + " Cannot be done"))
                     self.selected_goals[:] = []
                     self.actual_score = 0
                     self.mem.set(self.mem.CURRENT_GOALS, None)
-                    print("cost" + str(self.actual_cost))
-                    print("score" + str(self.actual_score))
+                    print(("cost" + str(self.actual_cost)))
+                    print(("score" + str(self.actual_score)))
 
         # if there are current goals or pending goals then execute them
         # else folow selection
@@ -797,10 +797,10 @@ class SimpleIntend_Restaurant(base.BaseModule):
 
         # Time remaining
         if goals:
-            print("Money Remaining: " + str(self.mem.get(self.mem.MONEY)))
+            print(("Money Remaining: " + str(self.mem.get(self.mem.MONEY))))
         else:
             self.mem.set(self.mem.CURRENT_GOALS, [])
-            print("Money Remaining: " + str(self.mem.get(self.mem.MONEY)))
+            print(("Money Remaining: " + str(self.mem.get(self.mem.MONEY))))
             self.mem.set(self.mem.MONEY, 0)
             self.selected_goals[:] = []
             self.actual_score = 0
@@ -811,13 +811,13 @@ class SimpleIntend_Restaurant(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 
 
@@ -911,7 +911,7 @@ class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
         if not goalGraph or not goals:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
                 if not self.mem.get(self.mem.TIME_CONSTRUCTION):
                     self.goals_goalgraph[:] = []
                     self.building_list[:] = []
@@ -960,13 +960,13 @@ class SimpleIntend_construction_goal_transformation(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class SimpleIntend_construction(base.BaseModule):
 
@@ -1071,12 +1071,12 @@ class SimpleIntend_construction(base.BaseModule):
 
         if len(self.mem.get(self.mem.GOAL_GRAPH).getAllGoals()) == 0:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
                 return
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
 
 
@@ -1124,10 +1124,10 @@ class SimpleIntend_construction(base.BaseModule):
                     if temp_build:
                         temp_build.append(len(self.mem.get(self.mem.CURRENT_GOALS)))
                         self.mem.set(self.mem.EXECUTED_BUILDING_LIST , temp_build )
-                        print(self.mem.get(self.mem.EXECUTED_BUILDING_LIST))
+                        print((self.mem.get(self.mem.EXECUTED_BUILDING_LIST)))
                     else:
                         self.mem.set(self.mem.EXECUTED_BUILDING_LIST , [len(self.mem.get(self.mem.CURRENT_GOALS))])
-                        print(self.mem.get(self.mem.EXECUTED_BUILDING_LIST))
+                        print((self.mem.get(self.mem.EXECUTED_BUILDING_LIST)))
 
 
 
@@ -1138,9 +1138,9 @@ class SimpleIntend_construction(base.BaseModule):
                     random.seed(i)
                     action_score = random.uniform(1 - time_variation*1,1 + time_variation*1)
                     action_time = random.uniform(self.t_copy[i] - time_variation*self.t_copy[i], self.t_copy[i] + time_variation*self.t_copy[i])
-                    print("Actual Time Taken For Previous Action :" + str(action_time))
-                    print("Expected Time Taken For Previous Action :" + str(self.t_copy[i]))
-                    print("Actual Score for Previous Action : " + str(action_score))
+                    print(("Actual Time Taken For Previous Action :" + str(action_time)))
+                    print(("Expected Time Taken For Previous Action :" + str(self.t_copy[i])))
+                    print(("Actual Score for Previous Action : " + str(action_score)))
 
                     #raw_input("enter")
                     self.actual_scores = self.actual_scores + action_score
@@ -1161,7 +1161,7 @@ class SimpleIntend_construction(base.BaseModule):
 
                     if self.check_current_goals_cant_be_acheived():
                         if self.implement:
-                            if self.implement is "selection":
+                            if self.implement == "selection":
                                 self.p_list = []
                                 self.t_list = []
                                 self.mem.set(self.mem.CURRENT_GOALS , [])
@@ -1237,7 +1237,7 @@ class SimpleIntend_construction(base.BaseModule):
 
 
 
-        print("Time Remaining : " + str(self.T))
+        print(("Time Remaining : " + str(self.T)))
 
 
 
@@ -1246,7 +1246,7 @@ class SimpleIntend_construction(base.BaseModule):
             self.T = random.uniform(0.7*(self.T), self.T)
             #self.time_change = True
             print("")
-            print("Time is changed & Time Remaining is: " + str(self.T))
+            print(("Time is changed & Time Remaining is: " + str(self.T)))
             self.mem.set(self.mem.TIME_CONSTRUCTION, self.T)
             print("")
 
@@ -1263,7 +1263,7 @@ class SimpleIntend_construction(base.BaseModule):
         if  self.mem.get(self.mem.CURRENT_GOALS) :
             if not len(self.mem.get(self.mem.CURRENT_GOALS)) == 0:
                 print("Not all Current goals achieved ,")
-                print("Processing" + str(self.mem.get(self.mem.CURRENT_GOALS)))
+                print(("Processing" + str(self.mem.get(self.mem.CURRENT_GOALS))))
                 return
 
         # This function gets the goals as the building goals, and writes to the complete_building_list
@@ -1278,7 +1278,7 @@ class SimpleIntend_construction(base.BaseModule):
         print ("Given Building Goals")
         for i in range(0,len(self.building_list)):
             print("")
-            print("Tower " + self.building_list[i][0].args[0])
+            print(("Tower " + self.building_list[i][0].args[0]))
             print ("[")
             for j in self.building_list[i]:
                 print(j)
@@ -1303,7 +1303,7 @@ class SimpleIntend_construction(base.BaseModule):
         # self.T is the time that you specify on Midca/examples/cogsci_demo_mortar_construction.py
 
 
-        if self.implement is "stack":
+        if self.implement == "stack":
             temp = []
             towers = []
             score = 0
@@ -1337,13 +1337,13 @@ class SimpleIntend_construction(base.BaseModule):
                 for i in range(0,len(self.selected_buildings)):
                     score = score + len(self.selected_buildings[i])
                     time = time + self.t[len(self.selected_buildings[i])-1]
-                print("Selected Towers are : " + str(towers))
+                print(("Selected Towers are : " + str(towers)))
                 print("")
                 length = [len(each) for each in self.selected_buildings]
                 if not self.mem.get(self.mem.SELECTED_BUILDING_LIST):
                     self.mem.set(self.mem.SELECTED_BUILDING_LIST , length)
-                print("Overall Score : " + str(score))
-                print("Overall Time is : " + str(time))
+                print(("Overall Score : " + str(score)))
+                print(("Overall Time is : " + str(time)))
                 if not self.mem.get(self.mem.EXPECTED_TIME_CONSTRUCTION):
                     self.mem.set(self.mem.EXPECTED_TIME_CONSTRUCTION , time)
                 print("")
@@ -1374,7 +1374,7 @@ class SimpleIntend_construction(base.BaseModule):
             # Finally the selected buildings are the one's stored in temp
             self.selected_buildings = temp
             self.selected_goals = self.selected_buildings[0]
-            print("Selected Towers are : " + str(towers))
+            print(("Selected Towers are : " + str(towers)))
             print("")
 
         # when there is  time limit
@@ -1383,7 +1383,7 @@ class SimpleIntend_construction(base.BaseModule):
             a = []
             for i in range(0,len(self.buildings_scores['t'])):
                 a.append(i)
-            for i in xrange(1,len(a)+1):
+            for i in range(1,len(a)+1):
                 c = list(itertools.combinations(a,i))
                 for every in c:
                     sum=0
@@ -1394,7 +1394,7 @@ class SimpleIntend_construction(base.BaseModule):
                     name = name[:-1]
                     if not (sum > self.T):
                         self.combinations_t[name] = sum
-            sorted_x = sorted(self.combinations_t.items(), key=operator.itemgetter(1))
+            sorted_x = sorted(list(self.combinations_t.items()), key=operator.itemgetter(1))
 
             max_length = 0
             for every in sorted_x:
@@ -1412,7 +1412,7 @@ class SimpleIntend_construction(base.BaseModule):
                     self.combinations_b[every[0]] = sum
 
 
-            sorted_x = sorted(self.combinations_b.items(), key=operator.itemgetter(1))
+            sorted_x = sorted(list(self.combinations_b.items()), key=operator.itemgetter(1))
 
             if(len(sorted_x) == 0):
                 print("No Goals are selected due to less time . Removing all goals from Goal Graph During Next Evaluate Phase.")
@@ -1465,9 +1465,9 @@ class SimpleIntend_construction(base.BaseModule):
             if not self.mem.get(self.mem.SELECTED_BUILDING_LIST):
                 self.mem.set(self.mem.SELECTED_BUILDING_LIST , length)
             self.selected_buildings = temp
-            print("Selected Towers are : " + str(towers))
-            print("Overall Score : " + str(score))
-            print("Overall Time is : " + str(time))
+            print(("Selected Towers are : " + str(towers)))
+            print(("Overall Score : " + str(score)))
+            print(("Overall Time is : " + str(time)))
             if not self.mem.get(self.mem.EXPECTED_TIME_CONSTRUCTION):
                 self.mem.set(self.mem.EXPECTED_TIME_CONSTRUCTION , time)
             print("")
@@ -1502,31 +1502,31 @@ class SimpleIntend_construction(base.BaseModule):
 
         if not self.selected_goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print("Time is " + str(self.T))
+                print(("Time is " + str(self.T)))
                 print("")
-                print "Selecting Tower(s):",
+                print("Selecting Tower(s):", end=' ')
                 #print("")
 
 
                 for i in range(0,len(self.selected_buildings)):
                     print("")
-                    print("Tower " + self.selected_buildings[i][0].args[0] ),
+                    print(("Tower " + self.selected_buildings[i][0].args[0] ), end=' ')
                     if(len(self.selected_buildings[i]) == 1):
-                        print("(" + str(len(self.selected_buildings[i])) + " Block)"),
+                        print(("(" + str(len(self.selected_buildings[i])) + " Block)"), end=' ')
                     else:
-                        print("(" + str(len(self.selected_buildings[i])) + " Blocks)"),
-                    print(" with priority : " + str(i+1)),
-                    print ("["),
+                        print(("(" + str(len(self.selected_buildings[i])) + " Blocks)"), end=' ')
+                    print((" with priority : " + str(i+1)), end=' ')
+                    print(("["), end=' ')
                     #for goals in self.selected_buildings[i]:
                     #       print(goals)
                     #print("]")
                     #print("")
-                    print("Time(T) :" + str(self.t[len(self.selected_buildings[i])-1]) + ","),
-                    print("Score(P) :" + str(len(self.selected_buildings[i])) + ","),
-                    print("P/T :" + str(len(self.selected_buildings[i])/self.t[len(self.selected_buildings[i])-1]) + " ]"),
+                    print(("Time(T) :" + str(self.t[len(self.selected_buildings[i])-1]) + ","), end=' ')
+                    print(("Score(P) :" + str(len(self.selected_buildings[i])) + ","), end=' ')
+                    print(("P/T :" + str(len(self.selected_buildings[i])/self.t[len(self.selected_buildings[i])-1]) + " ]"), end=' ')
                 print("")
 
 
@@ -1551,10 +1551,10 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
     def displayEachGoalTrajectory(self, GoalTrajectory):
         print ("*******************STATES*******************")
         for atom in GoalTrajectory[0]:
-            print atom
+            print(atom)
         print ("*******************GOALS*******************")
         for goal in GoalTrajectory[1]:
-            print goal
+            print(goal)
         print("**********************************************")
 
     def displayGoalTrajectory(self):
@@ -1650,7 +1650,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 if goal.args[1] == atom.args[2].name:
                     return float(atom.args[1].name)
 
-        #return 0
+        return 0
 
     def createScoreGraph(self, goals, world):
         """
@@ -1677,7 +1677,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 if goal.args[1] == atom.args[2].name:
                     return float(atom.args[1].name)
 
-        #return 0
+        return 0
 
     def createActualScoreGraph(self, goals, world):
         """
@@ -2016,7 +2016,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the goal graph
         goals = goalGraph.getUnrestrictedGoals()
@@ -2032,7 +2032,7 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
 
         if not goals:
             if verbose >= 1:
-                print "No Survey goals. Intend will not select goals via hillclimbing."
+                print("No Survey goals. Intend will not select goals via hillclimbing.")
             return
 
         current_goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -2075,14 +2075,14 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
                 self.mem.set(self.mem.CURRENT_GOALS, [goals])
             else:
                 if verbose >= 1:
-                    print "Intend could not select a goal."
+                    print("Intend could not select a goal.")
 
         if trace:
             trace.add_data("GOALS", goals)
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             # add it to goaltrajectory for representation
             #world = self.mem.get(self.mem.STATES)[-1]
@@ -2090,10 +2090,10 @@ class BestHillClimbingIntendGraceNSF(base.BaseModule):
             # self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
             # self.displayGoalTrajectory()
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
 
@@ -2104,10 +2104,10 @@ class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
     def displayEachGoalTrajectory(self, GoalTrajectory):
         print ("*******************STATES*******************")
         for atom in GoalTrajectory[0]:
-            print atom
+            print(atom)
         print ("*******************GOALS*******************")
         for goal in GoalTrajectory[1]:
-            print goal
+            print(goal)
         print("**********************************************")
 
     def displayGoalTrajectory(self):
@@ -2503,13 +2503,13 @@ class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the goal graph
         goals = goalGraph.getAllGoals()
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         # current goals as a stack
@@ -2526,7 +2526,7 @@ class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             pass
             # add it to goaltrajectory for representation
@@ -2535,10 +2535,10 @@ class BestHillClimbingIntendGraceNSFOld(base.BaseModule):
             # self.mem.add(self.mem.GoalTrajectory, [copy.deepcopy(get_atoms), copy.deepcopy(goals)])
             # self.displayGoalTrajectory()
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class PriorityIntend(base.BaseModule):
 
@@ -2552,14 +2552,14 @@ class PriorityIntend(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
 
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         current_goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -2599,13 +2599,13 @@ class PriorityIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class MetaIntend(base.BaseModule):
 
@@ -2765,13 +2765,13 @@ class MetaIntend(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class MetaIntendOps(base.BaseModule):
 
@@ -2912,13 +2912,13 @@ class MetaIntendOps(base.BaseModule):
         max_value = max(repeat_times)
         bins = [i for i in range(0,int(max_value+interval), interval)]
         if verbose > 2:
-            print ("The Bin Intervals are", bins)
+            print(("The Bin Intervals are", bins))
         return bins
 
     def binning(self, repeat_times, bins, verbose=1):
         result =  pd.cut(repeat_times, bins, retbins=False)
         if verbose >2:
-            print ("Result after binning is", result)
+            print(("Result after binning is", result))
         return result
 
     def CalculateLambda(self, bins, verbose=1):
@@ -2931,14 +2931,14 @@ class MetaIntendOps(base.BaseModule):
         # calculate lambda
         avg_rate = sum(time_intervals.values())/len(time_intervals)
         if verbose >2:
-            print ("The Lambda for Poisson is", avg_rate)
+            print(("The Lambda for Poisson is", avg_rate))
         return avg_rate
 
     def negative_slopes(self, poisson_rates, verbose=1):
         for i in range(1, len(poisson_rates)):
             if poisson_rates[i-1] > poisson_rates[i]:
                 if verbose > 2:
-                    print ("The Negative Slope is ", i-1)
+                    print(("The Negative Slope is ", i-1))
                 return i-1
         return len(poisson_rates)
 
@@ -3073,13 +3073,13 @@ class MetaIntendOps(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 class RandomMetaIntendOps(base.BaseModule):
 
@@ -3186,13 +3186,13 @@ class RandomMetaIntendOps(base.BaseModule):
 
         if not goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 
 class HGNSelection(base.BaseModule):
@@ -3348,7 +3348,7 @@ class HGNSelection(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
 
         current_goals = self.mem.get(self.mem.CURRENT_GOALS)
@@ -3380,13 +3380,13 @@ class HGNSelection(base.BaseModule):
 
         if not modified_current_goals:
             if verbose >= 2:
-                print "No goals selected."
+                print("No goals selected.")
         else:
             if verbose >= 2:
-                print "Selecting goal(s):",
+                print("Selecting goal(s):", end=' ')
                 for goal in modified_current_goals:
-                    print goal,
-                print
+                    print(goal, end=' ')
+                print()
 
 
 class SimpleIntendMultipleGoalsSuspendGrace(base.BaseModule):
@@ -3401,14 +3401,14 @@ class SimpleIntendMultipleGoalsSuspendGrace(base.BaseModule):
 
         if not goalGraph:
             if verbose >= 1:
-                print "Goal graph not initialized. Intend will do nothing."
+                print("Goal graph not initialized. Intend will do nothing.")
             return
         # get all the goals from the root of the goal graph
         goals = goalGraph.getUnrestrictedGoals()
 
         if not goals:
             if verbose >= 1:
-                print "No Goals in Goal graph. Intend will do nothing."
+                print("No Goals in Goal graph. Intend will do nothing.")
             return
 
         world = self.mem.get(self.mem.STATES)[-1]
@@ -3426,7 +3426,7 @@ class SimpleIntendMultipleGoalsSuspendGrace(base.BaseModule):
                     if not goal['predicate'] in predicates and not goal.args[1] == "Tx0y1":
                         suspended_goals.append(goal)
                         if verbose >= 2:
-                            print "The goal " + str(goal) + " is suspended due to lack of resources"
+                            print("The goal " + str(goal) + " is suspended due to lack of resources")
                         goals.remove(goal)
                 self.mem.set(self.mem.SUSPENDED_GOALS, suspended_goals)
             else:
@@ -3451,11 +3451,11 @@ class SimpleIntendMultipleGoalsSuspendGrace(base.BaseModule):
 
             if not goals:
                 if verbose >= 2:
-                    print "No goals selected."
+                    print("No goals selected.")
             else:
                 if verbose >= 2:
-                    print "Selecting goal(s):",
+                    print("Selecting goal(s):", end=' ')
                     for goal in goals:
-                        print goal,
-                    print
+                        print(goal, end=' ')
+                    print()
 

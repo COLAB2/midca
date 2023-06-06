@@ -113,10 +113,10 @@ class Tuck(object):
                       for joint in self._arms[limb].joint_names()]
 
             # Check if in a goal position
-            untuck_goal = map(diff_check, angles,
-                              self._joint_moves['untuck'][limb])
-            tuck_goal = map(diff_check, angles[0:2],
-                            self._joint_moves['tuck'][limb][0:2])
+            untuck_goal = list(map(diff_check, angles,
+                              self._joint_moves['untuck'][limb]))
+            tuck_goal = list(map(diff_check, angles[0:2],
+                            self._joint_moves['tuck'][limb][0:2]))
             if all(untuck_goal):
                 self._arm_state['tuck'][limb] = 'untuck'
             elif all(tuck_goal):
@@ -139,7 +139,7 @@ class Tuck(object):
         rospy.loginfo("Moving head to neutral position")
         while not at_goal() and not rospy.is_shutdown():
             if start_disabled:
-                [pub.publish(Empty()) for pub in self._disable_pub.values()]
+                [pub.publish(Empty()) for pub in list(self._disable_pub.values())]
             if not self._rs.state().enabled:
                 self._enable_pub.publish(True)
             head.set_pan(0.0, 0.5, timeout=0)
@@ -147,15 +147,15 @@ class Tuck(object):
 
         if start_disabled:
             while self._rs.state().enabled == True and not rospy.is_shutdown():
-                [pub.publish(Empty()) for pub in self._disable_pub.values()]
+                [pub.publish(Empty()) for pub in list(self._disable_pub.values())]
                 self._enable_pub.publish(False)
                 self._tuck_rate.sleep()
 
     def _move_to(self, tuck, disabled):
         if any(disabled.values()):
-            [pub.publish(Empty()) for pub in self._disable_pub.values()]
+            [pub.publish(Empty()) for pub in list(self._disable_pub.values())]
         while (any(self._arm_state['tuck'][limb] != goal
-                   for limb, goal in tuck.viewitems())
+                   for limb, goal in tuck.items())
                and not rospy.is_shutdown()):
             if self._rs.state().enabled == False:
                 self._enable_pub.publish(True)
@@ -163,9 +163,9 @@ class Tuck(object):
                 if disabled[limb]:
                     self._disable_pub[limb].publish(Empty())
                 if limb in tuck:
-                    self._arms[limb].set_joint_positions(dict(zip(
+                    self._arms[limb].set_joint_positions(dict(list(zip(
                                       self._arms[limb].joint_names(),
-                                      self._joint_moves[tuck[limb]][limb])))
+                                      self._joint_moves[tuck[limb]][limb]))))
             self._check_arm_state()
             self._tuck_rate.sleep()
 
@@ -239,7 +239,7 @@ class Tuck(object):
             rospy.logwarn('Aborting: Shutting down safely...')
         if any(self._arm_state['collide'].values()):
             while self._rs.state().enabled != False:
-                [pub.publish(Empty()) for pub in self._disable_pub.values()]
+                [pub.publish(Empty()) for pub in list(self._disable_pub.values())]
                 self._enable_pub.publish(False)
                 self._tuck_rate.sleep()
 

@@ -34,7 +34,7 @@ while True:
 	#print(os.path.exists(str(i)+fname),str(i)+fname)
 	if os.path.exists(str(i)+fname):
 	#if  moddate != last:
-		print(str(i)+fname)
+		print((str(i)+fname))
 		time.sleep(.1)
 		#last=moddate
 		try:
@@ -84,4 +84,4 @@ Ydata.shape=(spacing,spacing)
 drawFig(Xdata,Ydata,mean,label='gp mean')
 drawFig(Xdata,Ydata,var,fig=2,colormap='inferno',label='gp variance')
 drawFig(Xdata,Ydata,EIDvals,fig=3,colormap='inferno',label='EID')
-input()
+eval(input())

@@ -18,7 +18,7 @@ class BaxterWave:
 		baxter.enable_robot(nodeEnabled = True)
 		right = baxter_interface.Limb('right')
 		left = baxter_interface.Limb('left')
-		print "calculating inverse kinematics solutions"
+		print("calculating inverse kinematics solutions")
 		solutionsRight = []
 		solutionsLeft = []
 		for pos in self.rightPositions:
@@ -27,14 +27,14 @@ class BaxterWave:
 				solutionsRight.append(solution)
 			else:	
 				if verbose >= 1:
-					print "unable to generate solution for ", str(pos), ", Skipping"
+					print("unable to generate solution for ", str(pos), ", Skipping")
 		for pos in self.leftPositions:
 			solution = ik.getSolution(pos, left.joint_angles(), 'left', verbose = False)
 			if solution:
 				solutionsLeft.append(solution)
 			else:	
 				if verbose >= 1:
-					print "unable to generate solution for ", str(pos), ", Skipping"
+					print("unable to generate solution for ", str(pos), ", Skipping")
 		for i in range(max(len(solutionsRight), len(solutionsLeft))):
 			try:
 				right.move_to_joint_positions(solutionsRight[i])

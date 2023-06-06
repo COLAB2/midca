@@ -2,10 +2,10 @@
 
 
 import random
-from WindowPair import WindowPair
-from Interval import Interval
-from ADistance import ADistance
-from ChangeFinder import ChangeFinder
+from .WindowPair import WindowPair
+from .Interval import Interval
+from .ADistance import ADistance
+from .ChangeFinder import ChangeFinder
 
 
 #
@@ -19,7 +19,7 @@ data = []
 for i in range(100):
     data.append(random.uniform(0.0, 1.0));
 ad.addProportional(data, 0.1, 0.5)
-print ad
+print(ad)
 
 # ad.add(Interval(-2, -1))
 # ad.add(Interval(-1, 0))
@@ -45,11 +45,11 @@ for item in ad.uniformSample(1000):
     cf.addData(item)
     i = i + 1
     if cf.detectChange():
-        print 'Change detected at sample ' + str(i)
+        print('Change detected at sample ' + str(i))
 
 # Process another 1000 samples from a slightly different distribution
 for item in ad.uniformSample(1000):
     cf.addData(item + 1.0)
     i = i + 1
     if cf.detectChange():
-        print 'Change detected at sample ' + str(i)
+        print('Change detected at sample ' + str(i))

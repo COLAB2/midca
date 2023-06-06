@@ -1,11 +1,11 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-import gridworld
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from . import gridworld
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 import socket
 import threading
 
@@ -36,7 +36,7 @@ def ComLink():
 				_,utemp=wp_track(agent.getPos(),np.array([x_range/2,y_range/2]))
 				u=np.clip(np.array([np.cos(utemp), np.sin(utemp)]),-0.1,0.1)
 			#print(st,u)
-			print(t,round(st[0],1),round(st[1],1),round(st[2],3),round(st[3],3),u)
+			print((t,round(st[0],1),round(st[1],1),round(st[2],3),round(st[3],3),u))
 
 	
 '''
@@ -255,19 +255,19 @@ sock.send("end ".encode('utf-8'))
 	
 for i in range(len(agentList)):
 	agent=agentList[i]
-	print("agent ",i," rate estimates")
+	print(("agent ",i," rate estimates"))
 	agent.belief_map.shape=(5,5)
-	print(np.flip(agent.belief_map,0))
+	print((np.flip(agent.belief_map,0)))
 	print("and measurements taken per cell")
 	agent.belief_count.shape=(5,5)
-	print(np.flip(agent.belief_count,0))
+	print((np.flip(agent.belief_count,0)))
 	
 print("True probability density  map")
 E.p.shape=(5,5)
-print(np.flip(E.p,0))
+print((np.flip(E.p,0)))
 #spacing=(50,50)
 spacing=(1,1)
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 #print(np.round(approx,decimals=2))
 plt.figure(2)
@@ -286,7 +286,7 @@ plt.xticks(np.arange(0,x_range,spacing[0]))
 plt.yticks(np.arange(0,y_range,spacing[1]))
 plt.draw()
 plt.pause(0.00001)
-input('done')
+eval(input('done'))
 
 
 

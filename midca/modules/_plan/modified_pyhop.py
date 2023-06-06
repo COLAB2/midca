@@ -100,7 +100,7 @@ Pyhop provides the following classes and functions:
 # of how to use Pyhop. To run it, launch python and type 'import examples'.
 
 
-from __future__ import print_function
+
 import copy,sys, pprint
 from threading import Thread
 import time
@@ -129,7 +129,7 @@ class Goal():
 def print_state(state,indent=4):
     """Print each variable in state, indented by indent spaces."""
     if state != False:
-        for (name,val) in vars(state).items():
+        for (name,val) in list(vars(state).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(state.__name__ + '.' + name)
@@ -139,7 +139,7 @@ def print_state(state,indent=4):
 def print_goal(goal,indent=4):
     """Print each variable in goal, indented by indent spaces."""
     if goal != False:
-        for (name,val) in vars(goal).items():
+        for (name,val) in list(vars(goal).items()):
             if name != '__name__':
                 for x in range(indent): sys.stdout.write(' ')
                 sys.stdout.write(goal.__name__ + '.' + name)
@@ -244,6 +244,7 @@ def pyhop(state,tasks,verbose=0):
     return result
 
 fired_monitor = None
+
 def seek_plan(state,tasks,plan,depth,verbose=0):
     global fired_monitor
     global wait_time
@@ -251,7 +252,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     
 #    print('depth {} tasks {}'.format(depth,tasks))
 
-    raw_input("enter...")
+    input("enter...")
 #     for task in tasks:
 #         for elm in task:
 #             print(elm + " ")
@@ -263,18 +264,16 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     - verbose is whether to print debugging messages
     """
     if depth == 1 and not wait_time:
-	time.sleep(0)
-	wait_time = 1
-	try:
-		hallo = halo_color.HaloLed()
-		# set hallo to red as a sign for monitors
-		hallo.setRed()
-		    
-	finally:
-		    print("robot stuff")  
-
-
-
+        time.sleep(0)
+        wait_time = 1
+    
+    try:
+        hallo = halo_color.HaloLed()
+        # set hallo to red as a sign for monitors
+        hallo.setRed() 
+    finally:
+        print("robot stuff")  
+    
     if verbose>1: print('depth {} tasks {}'.format(depth,tasks))
     if tasks == []:
         if verbose>2: print('depth {} returns plan {}'.format(depth,plan))

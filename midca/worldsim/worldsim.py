@@ -53,7 +53,7 @@ class Atom:
 
         self.predicate = predicate
         self.args = args
-        self.hash = hash(predicate.name + str(map(str,args))) # little expensive because of map, but only
+        self.hash = hash(predicate.name + str(list(map(str,args)))) # little expensive because of map, but only
         self.id = id(self)                                                                                     # happens at initialization
 
     def __getitem__(self, item):
@@ -301,7 +301,7 @@ class Tree:
             return 0
         if not root.predicate in printed:
             printed.append(root.predicate)
-            print(space + root.predicate)
+            print((space + root.predicate))
             space =  space[0:4] + space
         else:
             space = space[0:-4]
@@ -379,7 +379,7 @@ class ObjectTree:
 
         if not root.predicate in printed:
             printed.append(root.predicate)
-            print(space + root.predicate)
+            print((space + root.predicate))
             space =  space[0:4] + space
         else:
 
@@ -505,7 +505,7 @@ class World:
 						if (not filter_matches[filter_str]) and filter_str in part.name:
 							filter_matches[filter_str] = True
 							
-				if not (False in filter_matches.values()): # check to see they are all True
+				if not (False in list(filter_matches.values())): # check to see they are all True
 					relevant_atoms.append(atom)
 					#print("Just added "+str(atom)+" to relevant atoms")
 				# reset filter matches
@@ -515,7 +515,7 @@ class World:
 
 	def get_objects_names_by_type(self, typename):
 		objs = []
-		for each_obj in self.objects.keys():
+		for each_obj in list(self.objects.keys()):
 			if(str(self.obj_type(each_obj)) == str(typename)):
 				objs.append(each_obj)
 		return objs
@@ -553,7 +553,7 @@ class World:
 		if not type(self.atoms) is set:
 			self.atoms = set(self.atoms)
 			
-		return World(self.operators.values(), self.predicates.values(), self.atoms.copy(), self.types.copy(), self.objects.values())
+		return World(list(self.operators.values()), list(self.predicates.values()), self.atoms.copy(), self.types.copy(), list(self.objects.values()))
 	
 	def is_true(self, predname, argnames = []):
 		for atom in self.atoms:
@@ -623,7 +623,7 @@ class World:
 		return False
 	
 	def get_possible_objects(self, predicate, arg):
-		return self.objects.values() #not, obviously, a good implementation
+		return list(self.objects.values()) #not, obviously, a good implementation
 	
 	def get_objects_by_type(self, some_type):
 		if type(some_type) is str:
@@ -634,7 +634,7 @@ class World:
 				raise Exception("Trying to get object of type "+str(some_type)+" but not a valid type")
 			
 		objs = []
-		for obj in self.objects.values():
+		for obj in list(self.objects.values()):
 			if obj.is_a(some_type):
 				objs.append(obj)
 		
@@ -776,7 +776,7 @@ class World:
 		return self.operators
 	
 	def remove_operator(self, opname):
-		if opname in self.operators.keys():
+		if opname in list(self.operators.keys()):
 			del self.operators[opname]
 			return True
 		return False

@@ -1,6 +1,6 @@
-from gridworld import Grid
-from AcousticTag import AcousticTag
-from mine_layer import Minelayer
+from .gridworld import Grid
+from .AcousticTag import AcousticTag
+from .mine_layer import Minelayer
 import numpy as np
 
 np.random.seed(555)

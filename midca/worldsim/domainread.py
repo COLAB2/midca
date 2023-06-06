@@ -1,4 +1,4 @@
-import worldsim
+import midca.worldsim.worldsim as worldsim
 
 types = {"obj": worldsim.Type("obj", [])}
 objects = {}
@@ -13,7 +13,7 @@ def type(name, parentnames = ["obj"]):
 	temp = [name]
 	if not parentnames == ["obj"]:
 		temp.append(parentnames)
-	if isinstance(parentnames, basestring):
+	if isinstance(parentnames, str):
 		parentnames = [parentnames]
 	parents = []
 	for parent in parentnames:
@@ -149,12 +149,12 @@ def load_domain(filename):
 	f = open(filename, "r")
 	exec (preprocess(f.read()))
 	f.close()
-	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values(),cltree,obtree)
+	world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()),cltree,obtree)
 	return world
 
 def load_domain_str(str):
 	exec (preprocess(str), {})
-	world = worldsim.World(operators.values(), predicates.values(), atoms, types, objects.values())
+	world = worldsim.World(list(operators.values()), list(predicates.values()), atoms, types, list(objects.values()))
 	return world
 
 def operator_no_side_effect(name, args = [], preconditions = [], results = []):
@@ -251,7 +251,7 @@ def get_outer_tokens(text):
 
 def tokenize(outertoken):
 	tokens = get_tokens(outertoken)
-	if isinstance(tokens, basestring):
+	if isinstance(tokens, str):
 		tokens = tokens.split(" ")
 		for token in range(len(tokens)):
 			tokens[token] = tokens[token].strip()

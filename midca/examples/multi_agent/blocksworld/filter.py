@@ -57,7 +57,7 @@ class Filter:
 
             for msg in messages:
                 agent_address = self.getAgentAddress(agent)
-                print (agent, msg)
+                print((agent, msg))
                 self.connection.publish_messages(msg, agent_address)
 
     def filterAgentMsgs(self, messages):
@@ -76,14 +76,14 @@ class Filter:
                 print (msg)
                 if "simulator" in msg:
                     msg = msg.replace("simulator:", "")
-                    print ("simulator", msg)
+                    print(("simulator", msg))
                     simulator_address = self.getSimulatorAddress()
                     self.connection.publish_messages(msg, simulator_address)
                 else:
                     msg = msg.split(";")
                     agent_name, msg = msg[0], msg[1]
                     agent_address = self.getAgentReqAddress(agent_name)
-                    print (agent_name, msg)
+                    print((agent_name, msg))
                     self.connection.publish_messages(msg, agent_address)
 
     def recieveAgentMsgs(self, messages):

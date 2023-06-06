@@ -1,12 +1,12 @@
-from __future__ import division
+
 import time
-from simulator import Simulator
+from .simulator import Simulator
 import threading
 import numpy as np
-import loc
+from . import loc
 import json
-import send_email, receive_email
-from geniosDataProcess import process, searchprocess
+from . import send_email, receive_email
+from .geniosDataProcess import process, searchprocess
 
 np.random.seed(555)
 
@@ -81,7 +81,7 @@ class TagWorld():
 
     def searchComplete(self, destination):
         x,y = self.get_cell()
-        print ("The agent is at: ", x,y)
+        print(("The agent is at: ", x,y))
         if [x,y] == destination:
             print ("The agent reached the destination")
             return True
@@ -95,7 +95,7 @@ class TagWorld():
             receive_email.recieve()
             completed = searchprocess()
             self.Recvlock.release()
-            print ("search", completed)
+            print(("search", completed))
             if completed:
                 return True
             else:
@@ -114,8 +114,8 @@ class TagWorld():
             #    json.dump(data, outfile)
             #send_email.send(data["Request"])
             receive_email.recieve()
-            lat, long, timestamp = process()
-            x,y = loc.LatLong2LocalGrid(lat,long)
+            lat, int, timestamp = process()
+            x,y = loc.LatLong2LocalGrid(lat,int)
             x,y = self.simulator.sim_to_grid(x,y)
 
             self.Recvlock.release()
@@ -145,7 +145,7 @@ def test():
         #tag.move_cell([0,1], [0,2])
         #time.sleep(120)
         #tag.searchComplete([0,2])
-        print ("Time elapsed", (time.time() - start_time))
+        print(("Time elapsed", (time.time() - start_time)))
     
         #tag.search([0,2])
         """

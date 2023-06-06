@@ -4,7 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-from __future__ import print_function
+
 import pyhop
 
 import simple_travel_operators

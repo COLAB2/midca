@@ -1,4 +1,4 @@
-from simulator import Simulator
+from .simulator import Simulator
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     results = pd.read_csv('data.csv')
     results["baseline"] = (results["baseline"]/25) * 100
     results["total_goals_delegated_agent"] = (results["total_goals_delegated_agent"]/25)*100
-    print (results.head())
+    print((results.head()))
     results.plot(kind='bar')
     plt.xlabel("Number of Experiments")
     plt.ylabel("Percentage of goals achieved")

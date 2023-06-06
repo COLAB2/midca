@@ -1,11 +1,11 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-import gridworld
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from . import gridworld
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 import socket
 import threading
 
@@ -20,12 +20,12 @@ def find_max_5_values_avg(time):
         else:
             a[each] = 1
 
-    values = a.values()
+    values = list(a.values())
     print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
-        print (values[:5])
-        print (sum(values[:5]))
+        print((values[:5]))
+        print((sum(values[:5])))
         return float(sum(values[:5])) / 5
     else:
         return 0
@@ -73,7 +73,7 @@ def MidcaComLink():
                 myx, myy = E.getCellXY(pos[0], pos[1])
                 bin2 = 5 * (y - 1) + (x - 1)
                 clientsocket.send(str.encode(str(x == myx and y == myy)))
-                print(bin, bin2)
+                print((bin, bin2))
 
             if cmd[0] == 'getCell':
                 agent = agentList[0]
@@ -259,7 +259,7 @@ def MidcaComLink():
                 """
 
             if cmd[0] == 'cell_lambda':
-                print allDetectionData
+                print(allDetectionData)
                 agent = agentList[0]
                 if len(cmd) < 2:
                     pos = agent.getPos()
@@ -303,7 +303,7 @@ def ErgodicComLink():
                 _, utemp = wp_track(agent.getPos(), np.array([x_range / 2, y_range / 2]))
                 u = np.clip(np.array([np.cos(utemp), np.sin(utemp)]), -0.1, 0.1)
             # print(st,u)
-            print(t, round(st[0], 1), round(st[1], 1), round(st[2], 3), round(st[3], 3), u)
+            print((t, round(st[0], 1), round(st[1], 1), round(st[2], 3), round(st[3], 3), u))
 
 
 '''
@@ -499,8 +499,8 @@ for i in range(N):
 if field == fields[1]:
     nx_bins = int(x_range / spacing[0])
     ny_bins = int(y_range / spacing[1])
-    x_bins = np.array(range(nx_bins)) * x_range / nx_bins
-    y_bins = np.array(range(ny_bins)) * y_range / ny_bins
+    x_bins = np.array(list(range(nx_bins))) * x_range / nx_bins
+    y_bins = np.array(list(range(ny_bins))) * y_range / ny_bins
     plottingPoints = [
         (idx + spacing[0] / 2.0, idy + spacing[1] / 2.0, gaussianSum(idx + spacing[0] / 2.0, idy + spacing[1] / 2.0))
         for idx in x_bins for idy in y_bins]
@@ -509,8 +509,8 @@ if field == fields[1]:
 if field == fields[2]:
     nx_bins = int(x_range / spacing[0])
     ny_bins = int(y_range / spacing[1])
-    x_bins = np.array(range(nx_bins)) * x_range / nx_bins
-    y_bins = np.array(range(ny_bins)) * y_range / ny_bins
+    x_bins = np.array(list(range(nx_bins))) * x_range / nx_bins
+    y_bins = np.array(list(range(ny_bins))) * y_range / ny_bins
     plottingPoints = [
         (idx + spacing[0] / 2.0, idy + spacing[1] / 2.0, rosenbrock(idx + spacing[0] / 2.0, idy + spacing[1] / 2.0)) for
         idx in x_bins for idy in y_bins]
@@ -519,8 +519,8 @@ if field == fields[2]:
 if field == fields[3]:
     nx_bins = int(x_range / spacing[0])
     ny_bins = int(y_range / spacing[1])
-    x_bins = np.array(range(nx_bins)) * x_range / nx_bins
-    y_bins = np.array(range(ny_bins)) * y_range / ny_bins
+    x_bins = np.array(list(range(nx_bins))) * x_range / nx_bins
+    y_bins = np.array(list(range(ny_bins))) * y_range / ny_bins
     plottingPoints = [
         (idx + spacing[0] / 2.0, idy + spacing[1] / 2.0, rastrigin(idx + spacing[0] / 2.0, idy + spacing[1] / 2.0)) for
         idx in x_bins for idy in y_bins]
@@ -627,18 +627,18 @@ if method == searchMethods[2]:
 if field == fields[0]:
     for i in range(len(agentList)):
         agent = agentList[i]
-        print("agent ", i, " rate estimates")
+        print(("agent ", i, " rate estimates"))
         agent.belief_map.shape = (5, 5)
-        print(np.flip(agent.belief_map, 0))
+        print((np.flip(agent.belief_map, 0)))
         print("and measurements taken per cell")
         agent.belief_count.shape = (5, 5)
-        print(np.flip(agent.belief_count, 0))
+        print((np.flip(agent.belief_count, 0)))
 
     print("True probability density  map")
     E.p.shape = (5, 5)
-    print(np.flip(E.p, 0))
+    print((np.flip(E.p, 0)))
     # spacing=(50,50)
-    print("Rate field approximation for sensor with range", sensorRange, " spaced at intervals of", spacing)
+    print(("Rate field approximation for sensor with range", sensorRange, " spaced at intervals of", spacing))
     approx, pnts = E.approximateField(measurement_time, spacing=spacing, sensorRange=sensorRange, get_points=True)
     # print(np.round(approx,decimals=2))
     plt.figure(2)
@@ -665,7 +665,7 @@ plt.xticks(np.arange(0, x_range, spacing[0]))
 plt.yticks(np.arange(0, y_range, spacing[1]))
 plt.draw()
 plt.pause(0.00001)
-input('done')
+eval(input('done'))
 
 
 

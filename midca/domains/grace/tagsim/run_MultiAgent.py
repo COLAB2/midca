@@ -1,10 +1,10 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 '''
 psuedo code
 create grid world
@@ -158,8 +158,8 @@ while t<=simtime: #change to better simulation stopping criteria
 			agent.belief_count[bin]+=1
 			agent.belief_map[bin]= iterative_average(rate_meas,agent.belief_count[bin],agent.belief_map[bin])  #iteratively average rate measurement
 			if len(agent.sensor.detectionSet)>0:
-				print("agent ",i,", rate = ",rate_meas,",average rate = ",agent.belief_map[bin], " in bin ", bin)
-				print(last_meas,t,dtSet)
+				print(("agent ",i,", rate = ",rate_meas,",average rate = ",agent.belief_map[bin], " in bin ", bin))
+				print((last_meas,t,dtSet))
 				agent.sensor.detectionSet=set()	
 		posx[i]=pos[0]
 		posy[i]=pos[1]
@@ -177,22 +177,22 @@ while t<=simtime: #change to better simulation stopping criteria
 	
 for i in range(len(agentList)):
 	agent=agentList[i]
-	print("agent ",i," rate estimates")
+	print(("agent ",i," rate estimates"))
 	agent.belief_map.shape=(5,5)
-	print(np.flip(agent.belief_map,0))
+	print((np.flip(agent.belief_map,0)))
 	print("and measurements taken per cell")
 	agent.belief_count.shape=(5,5)
-	print(np.flip(agent.belief_count,0))
+	print((np.flip(agent.belief_count,0)))
 	
 
-print("rate map for lambda with tau = ",measurement_time)
-print(np.round(E.groundTruth(measurement_time),decimals=2))
+print(("rate map for lambda with tau = ",measurement_time))
+print((np.round(E.groundTruth(measurement_time),decimals=2)))
 print("True probability density  map")
 E.p.shape=(5,5)
-print(np.flip(E.p,0))
+print((np.flip(E.p,0)))
 spacing=(25,25)
 sensorRange=50
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 #print(np.round(approx,decimals=2))
 plt.figure(2)
@@ -211,7 +211,7 @@ plt.xticks(np.arange(0,1000,max(spacing[0],50)))
 plt.yticks(np.arange(0,1000,max(spacing[1],50)))
 plt.draw()
 plt.pause(0.00001)
-input('done')
+eval(input('done'))
 
 
 

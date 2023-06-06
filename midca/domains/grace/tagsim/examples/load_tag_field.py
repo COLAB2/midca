@@ -48,4 +48,4 @@ draw((posx,posy),fig=2)
 plt.title("from tagData")
 plt.pause(0.00001)
 
-input("press enter to end")
+eval(input("press enter to end"))

@@ -93,7 +93,7 @@ class NBeaconGrid():
             #print "inner grid has "+str(total_tile_count) +" tiles"
             return inner_tiles
         else:
-            print "please call generate_tiles() first"
+            print("please call generate_tiles() first")
             return False
     
     
@@ -162,7 +162,7 @@ class NBeaconGrid():
                 
                 ran_tile = random.choice(self.get_inner_tile_grid())
                  
-                if ran_tile not in map(lambda b: b.tile, self.BEACONS) and ran_tile not in QUICKSAND_TILES:
+                if ran_tile not in [b.tile for b in self.BEACONS] and ran_tile not in QUICKSAND_TILES:
                     QUICKSAND_TILES.append(ran_tile)
                     
         return QUICKSAND_TILES
@@ -419,7 +419,7 @@ def pyhop_state_from_world(world, name = "state"):
         
             
     # convert tile names to pyhop operators
-    for (k,v) in s.beaconlocs.items():
+    for (k,v) in list(s.beaconlocs.items()):
         s.beaconlocs[k] = convert(v)
             
     #print("at the end of nbeacons_pyhop_state_from_world:")
@@ -457,10 +457,10 @@ def pyhop_tasks_from_goals(goals,pyhopState):
 
     # important, only one goal for all activated beacons
     if perimeter_goal_locs:
-        alltasks.append(("make_perimeter",pyhopState.agents.keys()[0],perimeter_goal_locs))
+        alltasks.append(("make_perimeter",list(pyhopState.agents.keys())[0],perimeter_goal_locs))
         
     if agent_at_goal_locs:
-        alltasks.append(("navigate",pyhopState.agents.keys()[0],agent_at_goal_locs))
+        alltasks.append(("navigate",list(pyhopState.agents.keys())[0],agent_at_goal_locs))
     
     return alltasks
 
@@ -604,7 +604,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
      
     # now go through each attribute of the state, changing the grid
     # ADD ALL BEACONS
-    for beaconkey in pyhopState.activated.keys():
+    for beaconkey in list(pyhopState.activated.keys()):
         beaconstr = pyhopState.beaconlocs[beaconkey]
         x = int(beaconstr.split(",")[0]) 
         y = int(beaconstr.split(",")[1]) 
@@ -624,7 +624,7 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
                 # Beacon is unactivated, no agent
                 beacon_id = ""
                 #pyhop.print_state(pyhopState)
-                for (k,v) in pyhopState.beaconlocs.items():
+                for (k,v) in list(pyhopState.beaconlocs.items()):
                     if v == str(x)+","+str(y):
                         beacon_id = k[1:] # remove the 'B'
                 
@@ -645,14 +645,14 @@ def drawNBeaconsScene(midcastate,rtn_str=False):
     if rtn_str:
         return asciiframestr(grid) 
     else:
-        print(asciiframestr(grid))
+        print((asciiframestr(grid)))
 
 def drawlistinlists(grid):
     s = [[str(e) for e in row] for row in grid]
-    lens = [max(map(len, col)) for col in zip(*s)]
+    lens = [max(list(map(len, col))) for col in zip(*s)]
     fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
     table = [fmt.format(*row) for row in s]
-    print '\n'.join(table)
+    print('\n'.join(table))
 
 def drawFishTags(midcastate):
 
@@ -777,8 +777,8 @@ def monitor(world, mem, plan, verbose=2):
                                     plans.Action("communicate", "grace", "fumin", atom.args[1].name),
                                     plans.Action("descend", "grace", atom.args[1].name)]
                     if verbose >=2:
-                        print ("\n Monitor Fired because of state: " + str(atom))
-                        print ("Added action :" + str(addedActions))
+                        print(("\n Monitor Fired because of state: " + str(atom)))
+                        print(("Added action :" + str(addedActions)))
         if addedActions:
                 plan.actions.insert(index, asynch_grace.GraceAscend(mem, addedActions[0]))
                 plan.actions.insert(index+1, asynch_grace.GraceCommunicate(mem, addedActions[1]))
@@ -820,7 +820,7 @@ if __name__ == "__main__":
             row.append(".")
         grid.append(row)
 
-    print(asciiframestr(grid))
+    print((asciiframestr(grid)))
 
 def filter(goals):
     for goal in goals:

@@ -62,7 +62,7 @@ class TagWorld():
                 position = ",".join(position)
             return position
         except Exception as e:
-            print e
+            print(e)
 
     # position = [x, y]  # x and y are the coordinates of the grid cell
     def search_and_get_tags2(self, position):
@@ -138,7 +138,7 @@ class TagWorld():
             time = msg.decode('utf-8')
             return float(time)
         except Exception as e:
-            print e
+            print(e)
 
     def close(self):
         self.sock.shutdown(1)
@@ -164,7 +164,7 @@ if __name__ == "__main__":
         tag.search([0,1])
 
         tag = TagWorld()
-        print (tag.get_measurement())
+        print((tag.get_measurement()))
 
         #print (tag.simtime())
         #tag.search([0, 3])

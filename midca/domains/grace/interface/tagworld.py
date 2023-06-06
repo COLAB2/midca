@@ -1,14 +1,15 @@
-from __future__ import division
+
 import zmq
 import time
-from simulator import Simulator
+import traceback
+from .simulator import Simulator
 import threading
 import numpy as np
-import anomaly
-import geniosDataProcess
+from . import anomaly
+from . import geniosDataProcess
 import operator
 import os
-from startingPositions import positions
+from .startingPositions import positions
 import time as midcatime
 np.random.seed(555)
 
@@ -60,7 +61,7 @@ class TagWorld():
         # initialize anomaly chance
         self.anomalies = False
         self.anomaly_type = ""
-        self.anomalies_d = False
+        self.anomalies_d = True
 
         #for report
         self.anomaly_history = []
@@ -79,7 +80,7 @@ class TagWorld():
         if self.anomalies_d:
             draw = False
             if self.name == "grace":
-                draw = False
+                draw = True
             self.discrepency = anomaly.Anomalies(self.time, 0.5, 555, self.simulator, self.publisher, draw)
             #threading.Thread(target=self.exit).start()
             threading.Thread(target=self.attacks).start()
@@ -96,7 +97,7 @@ class TagWorld():
 
         x,y = position[0], position[1]
         # construct the message
-        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= "+str(self.make_agent_speed)]
+        message = [b"Vehicle", f"point = {x},{y} # speed= {self.make_agent_speed}".encode()]
 
         time.sleep(0.1)
         # send the message
@@ -129,7 +130,7 @@ class TagWorld():
         hotspot_count = []
 
         #prepare report
-        for key, value in self.mines.iteritems():
+        for key, value in self.mines.items():
             if len(value) > 40:
                 hotspots.append(self.bin(key))
                 hotspot_count.append(len(value))
@@ -166,9 +167,6 @@ class TagWorld():
 
     def move_cell(self, initial_position, final_destination):
         self.lock.acquire()
-
-
-
         position = None
         if self.anomalies_d:
             position, discrepency = self.discrepency.identify_anomaly(initial_position[0], initial_position[1],
@@ -188,7 +186,7 @@ class TagWorld():
             x,y = self.simulator.grid_to_sim(final_destination[0], final_destination[1])
 
         # construct the message
-        message = [b"Vehicle", b"point = "+str(x)+","+str(y)+" # speed= "+str(self.make_agent_speed)]
+        message = [b"Vehicle", f"point = {x},{y} # speed= {self.make_agent_speed}".encode()]
 
         time.sleep(0.1)
         # send the message
@@ -215,7 +213,7 @@ class TagWorld():
                        [x-factor/2, y+factor/2]
                      ]
 
-        points = b"points = pts={"
+        points = "points = pts={"
 
         for point in way_points:
             points = points + str(point[0]) + "," + str(point[1]) + ":"
@@ -224,7 +222,7 @@ class TagWorld():
         points = points[:-1] + "}"
 
         # create message
-        message = [b"Vehicle", points + "# speed= "+str(str(self.make_agent_speed))]
+        message = [b"Vehicle", f"{points}# speed= {self.make_agent_speed}".encode()]
 
         time.sleep(0.1)
         self.publisher.send_multipart(message)
@@ -241,13 +239,12 @@ class TagWorld():
         points = b"points = pts={"
 
         for point in way_points:
-            points = points + str(point[0]).encode('ascii') + b"," + str(point[1]).encode('ascii') + b":"
+            points = f"{points}{point[0]},{point[1]}:"
 
         # remove the column(:) from the end of the points string and add flower braces
-        points = points[:-1] + b"}"
+        points = points[:-1] + "}"
 
-        # create message
-        message = [b"Vehicle", points + b"# speed= "+str(str(self.make_agent_speed)).encode('ascii')]
+        message = [b"Vehicle", f"{points}# speed= {self.make_agent_speed}".encode()]
 
         time.sleep(0.1)
         self.publisher.send_multipart(message)
@@ -266,7 +263,8 @@ class TagWorld():
         speed = 0.8
         if self.make_agent_speed <= 0.8:
             speed = self.make_agent_speed
-        message = [b"Vehicle",b" points=format=lawnmower,label=dedley_survey, x="+str(x)+", y="+str(y)+", width=60, height = 60,lane_width=10, rows=north-south,degs=0 # speed ="+str(speed)]
+        message = [b"Vehicle",
+                   f" points=format=lawnmower,label=dedley_survey, x={x}, y={y}, width=60, height = 60,lane_width=10, rows=north-south,degs=0 # speed ={speed}".encode()]
 
         time.sleep(0.1)
         self.publisher.send_multipart(message)
@@ -310,11 +308,12 @@ class TagWorld():
         # 1 = mine added
         #ret = 0
         try:
-            mine_report = self.subscriber_mine.recv()
+            mine_report = str(self.subscriber_mine.recv())
             mine_x, mine_y, mine_label,time = mine_report.split(":")[1].split(",")
             mine_x = float(mine_x.split("=")[1])
             mine_y = float(mine_y.split("=")[1])
             mine_label = mine_label.split("=")[1]
+            time = time.replace("'", "")
             time = float(time.split("=")[1]) #- self.start_time
             #print 'label of mine at x =', mine_x, 'y =', mine_y, 'is', mine_label, 'time', time
 
@@ -375,9 +374,8 @@ class TagWorld():
             self.Recvlock.acquire()
             midcatime.sleep(0.01)
             # get the message from the ip address
-            position = self.subscriber_remus.recv()
+            position = str(self.subscriber_remus.recv())
             x, y, speed, direction,status,mission,time,name = position.split(",")
-
             # convert to midca coordinates
             # the content is of the form "X:-101.008305,Y:-44.089216,SPEED:0.000000,HEADING:4.079004,STATUS:NothingToDo"
             x = float(x.split(":")[1])
@@ -395,6 +393,7 @@ class TagWorld():
         except Exception as e:
             self.Recvlock.release()
             print(e)
+            traceback.print_exc()
 
     def kill_simulator(self):
         try:
@@ -459,8 +458,8 @@ class TagWorld():
                     pass
 
 
-        print (time)
-        print (count)
+        #print (time)
+        #print (count)
         result = [each/6 for each in count]
 
         return result
@@ -497,7 +496,7 @@ class TagWorld():
                 speed = 0.0
                 if not stop:
                     # construct the message
-                    message = [b"Vehicle", b"speed= "+str(speed)]
+                    message = [b"Vehicle", f"speed= {speed}".encode()]
 
                     time.sleep(0.1)
                     # send the message
@@ -523,7 +522,7 @@ class TagWorld():
                             if self.searchComplete() == str(False):
 
                                 # construct the message
-                                message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
+                                message = [b"Vehicle", f"speed= {self.make_agent_speed}".encode()]
 
                                 # send the message
                                 time.sleep(0.1)
@@ -555,7 +554,7 @@ class TagWorld():
         if flag == 1:
             #time.sleep(4)
             # construct the message
-            message = [b"Vehicle", b"speed="+str(self.make_agent_speed)]
+            message = [b"Vehicle", f"speed={self.make_agent_speed}".encode()]
             # send the message
             self.publisher.send_multipart(message)
             #time.sleep(0.1)
@@ -602,7 +601,7 @@ class TagWorld():
         if self.searchComplete() == str(False):
             # construct the message
             print ("****************** Still Searching *********************")
-            message = [b"Vehicle", b"speed= "+str(self.make_agent_speed)]
+            message = [b"Vehicle", f"speed= {self.make_agent_speed}".encode()]
             print ("****************** Still Searching *********************")
             # send the message
             time.sleep(0.1)
@@ -630,14 +629,14 @@ class TagWorld():
         x1, y1 = self.simulator.grid_to_sim(agent_dest_x, agent_dest_y)
         position = (x+x1)/2 , (y+y1)/2
         threshold = self.discrepency.get_threshold([initial_position, dest_position])
-        position = map(operator.sub, position, threshold)
+        position = list(map(operator.sub, position, threshold))
         if threshold[0] == 0:
-            way_point0 = map(operator.add, position, [-30, 0])
-            way_point1 = map(operator.add, position, [30, 0])
+            way_point0 = list(map(operator.add, position, [-30, 0]))
+            way_point1 = list(map(operator.add, position, [30, 0]))
             self.send([way_point0, way_point1])
         else:
-            way_point0 = map(operator.add, position, [0, -30])
-            way_point1 = map(operator.add, position, [0, 30])
+            way_point0 = list(map(operator.add, position, [0, -30]))
+            way_point1 = list(map(operator.add, position, [0, 30]))
             self.send([way_point0, way_point1])
         self.anomaly_type = ""
         self.discrepency.allow_temporary_blocks(initial_position, dest_position)

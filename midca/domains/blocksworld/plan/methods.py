@@ -16,7 +16,7 @@ def is_done(b1,state,goal):
     if b1 in goal.pos and goal.pos[b1] != state.pos[b1]:
         return False
     if state.pos[b1] == 'table': return True
-    if state.pos[b1] in goal.pos.values() and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
+    if state.pos[b1] in list(goal.pos.values()) and (b1 not in goal.pos or goal.pos[b1] != state.pos[b1]):
         return False
     return is_done(state.pos[b1],state,goal)
 
@@ -33,7 +33,7 @@ def status(b1,state,goal):
         return 'waiting'
 
 def all_blocks(state):
-    return state.clear.keys()
+    return list(state.clear.keys())
 
 
 """

@@ -1,4 +1,4 @@
-from __future__ import division
+
 import math
 import numpy as np
 import json
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     x, y = LatLong2LocalGrid(31.39229159500367, -80.88748335930771)
 
     #print ("latitude :" +str(lat) + " longitude :" +str(long))
-    print ("x :" +str(x) + "y :" +str(y))
+    print(("x :" +str(x) + "y :" +str(y)))
 
     #data = {}
     #lat, long = LocalGrid2LatLong(10,-6272)

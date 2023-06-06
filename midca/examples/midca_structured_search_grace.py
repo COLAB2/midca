@@ -21,8 +21,9 @@ from midca.domains.blocksworld.plan import methods_multiAgent as methods, operat
 interface = tagworld.TagWorld(sub_ip = "tcp://127.0.0.1:7997",
                               sub_mine_ip = "tcp://127.0.0.1:6997" ,
                               pub_ip = "tcp://127.0.0.1:5997",
-                              name="grace", start_index=int(sys.argv[1]),
-                               experiment_time=600)
+                              name="grace", 
+                              start_index=int(sys.argv[1]),
+                              experiment_time=600)
 
 agent_name = "grace"
 
@@ -84,14 +85,14 @@ myMidca.append_module("Simulate", simulator.ASCIIWorldViewer(DISPLAY_FUNC))
 myMidca.append_module("Perceive", perceive.AsyncGraceObserver(interface, agent_name))
 #myMidca.append_module("Perceive", perceive.HumanGoalInput(agent_name))
 myMidca.append_module("Interpret", guide.GraceGoalInputNSF(interface))
-#myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface, agent_name, "smart"))
+myMidca.append_module("Interpret", guide.GraceAnomalyDetection(interface, agent_name, "smart"))
 #myMidca.append_module("Interpret", guide.GraceChangeDetection())
 myMidca.append_module("Eval", evaluate.GraceReport(agent_name, int(sys.argv[1])))
 myMidca.append_module("Eval", evaluate.SimpleEvalAsync())
 myMidca.append_module("Intend", intend.BestHillClimbingIntendGraceNSF(agent_name, "smart"))
-#myMidca.append_module("Intend", intend.PriorityIntend())
+myMidca.append_module("Intend", intend.PriorityIntend())
 #myMidca.append_module("Intend", intend.RandomMetaIntendOps())
-#myMidca.append_module("Intend", intend.MetaIntendOps())
+myMidca.append_module("Intend", intend.MetaIntendOps())
 myMidca.append_module("Plan", planning.JSHOPPlanner(nbeacons_util.jshop2_state_from_world,
                                                         nbeacons_util.jshop2_tasks_from_goals,
                                                         JSHOP_DOMAIN_FILE,

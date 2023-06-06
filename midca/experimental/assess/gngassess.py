@@ -1,4 +1,4 @@
-import gng
+from . import gng
 
 '''
 A MIDCA module that uses growing neural gas to classify anomalies generated using A-distance. Note that this module requires the gng file located in the experimental folder, or a later version. GNG requires some calibration to be used effectively in different domains.
@@ -42,11 +42,11 @@ class AnomalyAnalyzer:
 			self.mem.add(GNG_NODES, (self.last_node(), self.numUpdates))
 			self.mem.add(ANOMALY_TYPE_KEY, self.anomaly_type())
 			if verbose >= 1:
-				print "Anomaly type = " + str(self.anomaly_type())
+				print("Anomaly type = " + str(self.anomaly_type()))
 			if verbose >= 2:
-				print str(self.last_node())
+				print(str(self.last_node()))
 		elif verbose >= 2:
-			print "No anomaly: Skipping Assess."
+			print("No anomaly: Skipping Assess.")
 	
 	def nodes(self):
 		return self.gng.nodes

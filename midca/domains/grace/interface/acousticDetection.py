@@ -1,7 +1,7 @@
 import numpy as np
-from AcousticTag import AcousticTag
-from gridworldAcoustic import Grid
-import loc
+from .AcousticTag import AcousticTag
+from .gridworldAcoustic import Grid
+from . import loc
 
 
 def initialize_tags(N):

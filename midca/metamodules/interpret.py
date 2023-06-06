@@ -34,7 +34,7 @@ class MentalExpectation:
         all_true = True
         at_least_one_true = False
         for [var,val] in var_vals:
-            if var in self.vars_and_funcs.keys():
+            if var in list(self.vars_and_funcs.keys()):
                 if self.vars_and_funcs[var](val):
                     at_least_one_true = True
                 else:
@@ -102,10 +102,10 @@ class PrimitiveExpectationOfCognition():
     def __str__(self):
         s = 'Prim. Exp. of Cog. for '+str(self.action)+":\n"
         s += '  Prior Mental State Exp. :\n'
-        for var,func in self.priorMentalExp.get_vars_and_funcs().items():
+        for var,func in list(self.priorMentalExp.get_vars_and_funcs().items()):
             s += '    '+str(var).strip()+": "+ str(inspect.getsource(func)).strip()+"\n"
         s += '  Post Mental State Exp. :\n'
-        for var,func in self.postMentalExp.get_vars_and_funcs().items():
+        for var,func in list(self.postMentalExp.get_vars_and_funcs().items()):
             s += '    '+str(var).strip()+": "+ str(inspect.getsource(func)).strip()+"\n"
         return s
 
@@ -205,7 +205,7 @@ class MRSimpleDetect(base.BaseModule):
                             condition(agent-at, [agnt, dest])])'
                             
         elif wind_str == 3:
-            print "wind_str = "+str(wind_str)
+            print("wind_str = "+str(wind_str))
             if mud:
                 new_op_str = 'operator_no_side_effect(moveeast4, \
                         args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (mid3, TILE), (dest, TILE)], \
@@ -223,7 +223,7 @@ class MRSimpleDetect(base.BaseModule):
                         results = [ \
                             condition(agent-at, [agnt, start], negate = TRUE), \
                             condition(agent-at, [agnt, dest])])'
-                print "new op str is now moveast4"
+                print("new op str is now moveast4")
             else:
                 raise Exception("SHOULD NOT BE HERE - move east 4 with no mud")
                 new_op_str = 'operator_no_side_effect(moveeast3, \
@@ -240,7 +240,7 @@ class MRSimpleDetect(base.BaseModule):
     
     
         elif wind_str == 4:
-            print "wind_str = "+str(wind_str)
+            print("wind_str = "+str(wind_str))
             if mud:
                 new_op_str = 'operator_no_side_effect(moveeast5, \
                         args = [(agnt, AGENT), (start, TILE), (mid, TILE), (mid2, TILE), (mid3, TILE), (mid4, TILE), (dest, TILE)], \
@@ -260,7 +260,7 @@ class MRSimpleDetect(base.BaseModule):
                         results = [ \
                             condition(agent-at, [agnt, start], negate = TRUE), \
                             condition(agent-at, [agnt, dest])])'
-                print "new op str is now moveast5"
+                print("new op str is now moveast5")
     
             else:
                 raise Exception("WHY IS MUD FALSE?????? ")
@@ -305,7 +305,7 @@ class MRSimpleDetect(base.BaseModule):
                 #print "here"
                 dist = (abs(start_x - agent_x)+abs(start_y-agent_y))
                 self.wind_str = dist-1
-                print "Recorded a wind strength of "+str(self.wind_str)
+                print("Recorded a wind strength of "+str(self.wind_str))
                 
             except:
                 raise Exception("Problem getting last action in meta interpret")
@@ -321,16 +321,16 @@ class MRSimpleDetect(base.BaseModule):
                 
                 # 2. find the old operator moveeast
                 prev_move_opname = ''
-                for op in self.world.get_operators().values():
+                for op in list(self.world.get_operators().values()):
                     if 'moveeast' in op.name:
-                        if self.verbose >= 1: print "Found operator moveeast: \n"
-                        if self.verbose >= 1: print "  "+str(op)
+                        if self.verbose >= 1: print("Found operator moveeast: \n")
+                        if self.verbose >= 1: print("  "+str(op))
                         prev_move_opname = op.name
                 
                 # 3. Remove the old move operator
                 rem_succes = self.world.remove_operator(prev_move_opname)
                 
-                print "The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes)
+                print("The removal of operator "+str(prev_move_opname)+" was successful: "+str(rem_succes))
                     
                     
                 # 4. replace with new moveeast operator
@@ -344,12 +344,12 @@ class MRSimpleDetect(base.BaseModule):
                 #print "Saving world into memory"    
                 #self.mem.add(self.mem.STATES, self.world)
                 self.already_switched_moveeast = True
-                print "Successfully added in the new operator "+str(worldsim_op.name)
+                print("Successfully added in the new operator "+str(worldsim_op.name))
                 
-                if self.verbose >= 1: print "The following operators are available for planning: "
+                if self.verbose >= 1: print("The following operators are available for planning: ")
                 if self.verbose >= 1: 
-                    for op_k,op_v in self.world.operators.items():
-                        print "    op["+str(op_k)+"] = "+str(op_v)
+                    for op_k,op_v in list(self.world.operators.items()):
+                        print("    op["+str(op_k)+"] = "+str(op_v))
     
             except:
                 pass
@@ -380,24 +380,24 @@ class MRSimpleDetectOld(base.BaseModule):
         anomalies = []
         
         # see if any expectations exist for this phase
-        if last_phase_name in self.neg_expectations.keys():
+        if last_phase_name in list(self.neg_expectations.keys()):
             relevant_neg_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
-                print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
+                print(("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum)))
 
-                if prev_phase_datum[0] in relevant_neg_exp.keys():
-                    print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neg_exp))
+                if prev_phase_datum[0] in list(relevant_neg_exp.keys()):
+                    print(("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neg_exp)))
 
                     exp_to_check = relevant_neg_exp[prev_phase_datum[0]]
 
                     for exp in exp_to_check:
                         if prev_phase_datum[1] == exp[0]:
-                            print("-*-*- detect(): adding anomaly: "+str(exp[1]))
+                            print(("-*-*- detect(): adding anomaly: "+str(exp[1])))
                             anomalies.append(exp[1])
 
         # TODO: implement pos_expectations
-        if (self.verbose >= 2): print("    Found anomalies: "+str(anomalies))
+        if (self.verbose >= 2): print(("    Found anomalies: "+str(anomalies)))
         self.mem.set(self.mem.META_ANOMALIES, anomalies)
 
 
@@ -460,13 +460,13 @@ class MRSimpleGoalGenForGoalTrans(base.BaseModule):
                 item = self.mem.trace.module
             if item == "?goal":
                 # get the most recent goal sent to planner from the trace
-                if verbose >= 2: print("self.mem.trace.module = "+str(self.mem.trace))
-                if verbose >= 2: print("self.mem.trace.get_current_phase_data() = "+str(self.mem.trace.get_current_phase_data()))
+                if verbose >= 2: print(("self.mem.trace.module = "+str(self.mem.trace)))
+                if verbose >= 2: print(("self.mem.trace.get_current_phase_data() = "+str(self.mem.trace.get_current_phase_data())))
                 goals = self.mem.trace.get_current_phase_data()[1][1:][0] # ugly, i know
-                if verbose >= 2: print("goals are = "+str(map(str, goals)))
+                if verbose >= 2: print(("goals are = "+str(list(map(str, goals)))))
                 item = goals
             grounded_goal.append(item)
-        if verbose >= 2: print("grounded_goal = "+str(grounded_goal))
+        if verbose >= 2: print(("grounded_goal = "+str(grounded_goal)))
         return grounded_goal
 
 class MRSimpleDetect_construction(base.BaseModule):
@@ -488,13 +488,13 @@ class MRSimpleDetect_construction(base.BaseModule):
         last_phase_name, last_phase_data = self.mem.get(self.mem.TRACE_SEGMENT)
         anomalies = []
         # see if any expectations exist for this phase
-        if last_phase_name in self.neg_expectations.keys():
+        if last_phase_name in list(self.neg_expectations.keys()):
             relevant_neq_exp = self.neg_expectations[last_phase_name]
 
             for prev_phase_datum in last_phase_data:
                 #print("-*-*- detect(): prev_phase_datum is " + str(prev_phase_datum))
 
-                if prev_phase_datum[0] in relevant_neq_exp.keys():
+                if prev_phase_datum[0] in list(relevant_neq_exp.keys()):
                     #print("-*-*- detect(): prev_phase_datum[0]: "+str(prev_phase_datum[0])+" found in " + str(relevant_neq_exp))
 
                     exp_to_check = relevant_neq_exp[prev_phase_datum[0]]
@@ -513,7 +513,7 @@ class MRSimpleDetect_construction(base.BaseModule):
 
 
         # TODO: implement pos_expectations
-        if (self.verbose >= 2): print("    Found anomalies: "+str(anomalies))
+        if (self.verbose >= 2): print(("    Found anomalies: "+str(anomalies)))
         self.mem.set(self.mem.META_ANOMALIES, anomalies)
 
 

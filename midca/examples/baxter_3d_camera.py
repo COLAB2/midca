@@ -8,7 +8,7 @@ import rospy
 from std_msgs.msg import String
 from MIDCA.examples import Calibrate
 from geometry_msgs.msg import Point, PointStamped
-from baxter import *
+from .baxter import *
 
 
 def ros_style_midca():
@@ -61,6 +61,6 @@ baxter.calibrateLeftGripper()
 
 
 
-raw_input('Enter ...')
+input('Enter ...')
 rosMidca.run_midca()
 

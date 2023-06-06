@@ -1,10 +1,10 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 import socket
 import threading
 
@@ -256,14 +256,14 @@ while t<=simtime or running: #change to better simulation stopping criteria
 	
 for i in range(len(agentList)):
 	agent=agentList[i]
-	print("agent ",i," rate estimates")
-	print(agent.belief_map)
+	print(("agent ",i," rate estimates"))
+	print((agent.belief_map))
 	print("and measurements taken per cell")
-	print(agent.belief_count)
+	print((agent.belief_count))
 	
 print("True probability density  map")
-print(E.p)
-input('done')
+print((E.p))
+eval(input('done'))
 
 
 

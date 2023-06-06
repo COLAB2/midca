@@ -3,7 +3,7 @@ from midca.worldsim import domainread, stateread
 from midca import rosrun, midcatime, base, goals
 import copy
 import os
-import socket, zmq,cPickle
+import socket, zmq,pickle
 
 try:
     # baxter robot requirements
@@ -101,7 +101,7 @@ class ROSObserver:
 
 
         if verbose > 1:
-            print "World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)"
+            print("World observed:", len(detectionEvents), "new detection event(s),", len(utteranceEvents), "utterance(s) and", len(feedback), "feedback msg(s)")
 
 class AsyncGraceObserver(base.BaseModule):
 
@@ -300,12 +300,12 @@ class AsyncGraceObserver(base.BaseModule):
                     states += "NUM(" + str(prior_radius) + ")\n"
                     states += "priorblocRadius(grace," + str(prior_radius) + ")\n"
                     self.remove_corresponding_atoms(["priorblocRadius", "grace"])
-                    print ("The prior Radius is : " + str(prior_radius))
+                    print(("The prior Radius is : " + str(prior_radius)))
                 else:
                     states += "NUM(" + str(prior_radius) + ")\n"
                     states += "priorblocRadius(grace," + str(prior_radius) + ")\n"
                     self.remove_corresponding_atoms(["priorblocRadius", "grace"])
-                    print ("The prior Radius is : " + str(prior_radius))
+                    print(("The prior Radius is : " + str(prior_radius)))
 
 
                 if prior_radius > 6:
@@ -461,7 +461,7 @@ class AsyncGraceObserver(base.BaseModule):
 
         #display
         print ("---------------Tag Data------------\n")
-        print (self.drawlistinlists(grid))
+        print((self.drawlistinlists(grid)))
         print ("-----------------------------------\n")
 
     def display_est_tag(self, tag_data=None, position=None, dim=[5,5]):
@@ -493,7 +493,7 @@ class AsyncGraceObserver(base.BaseModule):
 
         #display
         print ("---------------Estimated Tag Data------------\n")
-        print (self.drawlistinlists(grid))
+        print((self.drawlistinlists(grid)))
         print ("-----------------------------------\n")
 
     def getdimensions(self):
@@ -547,7 +547,6 @@ class AsyncGraceObserver(base.BaseModule):
         tag_data = self.get_fish_tags_wo_action(self.parse_tile(position))
 
         if tag_data:
-
             row,col = self.getdimensions()
             self.display_tag(tag_data, position , [row, col])
             arguments = ", ".join([str(tag_data), position])
@@ -640,7 +639,7 @@ class AsyncGraceObserver(base.BaseModule):
         # End Memory Usage Optimization
 
         if verbose >= 1:
-            print "World observed."
+            print("World observed.")
 
         trace = self.mem.trace
         if trace:
@@ -702,25 +701,25 @@ class RecieveRequests(base.BaseModule):
             goaltext = message[1]
 
             if performative == "achieve":
-                print "Request Recieved."
+                print("Request Recieved.")
                 goal = self.goal_to_parsable_construct(goaltext)
                 states += "GOAL(" +goal + ")\n"
                 states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
             elif performative == "reject":
-                print "Request Recieved."
+                print("Request Recieved.")
                 goal = self.goal_to_parsable_construct(goaltext)
                 states += "GOAL(" +goal + ")\n"
                 states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
             elif performative == "commit":
-                print "Request Recieved."
+                print("Request Recieved.")
                 goal = self.goal_to_parsable_construct(goaltext)
                 states += "GOAL(" +goal + ")\n"
                 states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
             elif performative == "tell":
-                print "Request Recieved."
+                print("Request Recieved.")
                 goal = self.goal_to_parsable_construct(goaltext)
                 states += "GOAL(" +goal + ")\n"
                 states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
@@ -879,7 +878,7 @@ class PerfectObserver(base.BaseModule):
         # End Memory Usage Optimization
 
         if verbose >= 1:
-            print "World observed."
+            print("World observed.")
 
         trace = self.mem.trace
         if trace:
@@ -931,26 +930,26 @@ class RecieveRequests(base.BaseModule):
 
                 if performative == "achieve":
                     print ("----------------------")
-                    print "Request Recieved."
+                    print("Request Recieved.")
                     print ("----------------------")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "GOAL(" +goal + ")\n"
                     states += "requested(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
                 elif performative == "reject":
-                    print "Request Recieved."
+                    print("Request Recieved.")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "GOAL(" +goal + ")\n"
                     states += "rejected(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
                 elif performative == "commit":
-                    print "Request Recieved."
+                    print("Request Recieved.")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "GOAL(" +goal + ")\n"
                     states += "committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
 
                 elif performative == "tell":
-                    print "Request Recieved."
+                    print("Request Recieved.")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "GOAL(" +goal + ")\n"
                     states += "!committed(" + self.other_agent_name + "," + self.name+ "," +goal+")\n"
@@ -1062,7 +1061,7 @@ class RecieveRemoteMidcaWorld(base.BaseModule):
             if e.errno == zmq.EAGAIN:
                 pass # no message was ready (yet!)
 
-        except cPickle.UnpicklingError as e:
+        except pickle.UnpicklingError as e:
             pass # not the intended message
 
 
@@ -1106,7 +1105,7 @@ class PerfectObserverWithThief(base.BaseModule):
             for atom in world.atoms:
                 if atom.predicate.name == item[0] and atom.args[0].name == item[1]:
                     world.atoms.remove(atom)
-                    print("removed:" + atom.args[0].name)
+                    print(("removed:" + atom.args[0].name))
                     break
 
         self.mem.add(self.mem.STATES, world)
@@ -1122,7 +1121,7 @@ class PerfectObserverWithThief(base.BaseModule):
         # End Memory Usage Optimization
 
         if verbose >= 1:
-            print "World observed."
+            print("World observed.")
 
         trace = self.mem.trace
         if trace:
@@ -1148,7 +1147,7 @@ class UserGoalInput(base.BaseModule):
 
     def parseGoal(self, txt):
         if not txt.endswith(")"):
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
         try:
             if txt.startswith('!'):
@@ -1168,14 +1167,14 @@ class UserGoalInput(base.BaseModule):
                 goal = goals.Goal(*args, predicate = predicateName)
             return goal
         except Exception:
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
 
     def objectNames(self, world):
-        return world.objects.keys()
+        return list(world.objects.keys())
 
     def predicateNames(self, world):
-        return world.predicates.keys()
+        return list(world.predicates.keys())
 
     def validGoal(self, goal, world):
         try:
@@ -1205,7 +1204,7 @@ class UserGoalInput(base.BaseModule):
         goals_entered = []
         states = ""
         while True:
-            val = raw_input("Please input a goal if desired. Otherwise, press enter to continue\n")
+            val = input("Please input a goal if desired. Otherwise, press enter to continue\n")
             if not val:
                 break
             elif val == 'q':
@@ -1214,10 +1213,10 @@ class UserGoalInput(base.BaseModule):
             goal = self.parseGoal(val.strip())
             if goal:
                 if not self.validGoal(goal, self.world):
-                    print str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world)
+                    print(str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world))
                 else:
                     #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-                    print "Goal Recieved."
+                    print("Goal Recieved.")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "exists(human)\n"
                     states += "GOAL(" +goal + ")\n"
@@ -1257,7 +1256,7 @@ class AutomaticGoalInput(base.BaseModule):
 
     def parseGoal(self, txt):
         if not txt.endswith(")"):
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
         try:
             if txt.startswith('!'):
@@ -1277,14 +1276,14 @@ class AutomaticGoalInput(base.BaseModule):
                 goal = goals.Goal(*args, predicate = predicateName)
             return goal
         except Exception:
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
 
     def objectNames(self, world):
-        return world.objects.keys()
+        return list(world.objects.keys())
 
     def predicateNames(self, world):
-        return world.predicates.keys()
+        return list(world.predicates.keys())
 
     def validGoal(self, goal, world):
         try:
@@ -1318,10 +1317,10 @@ class AutomaticGoalInput(base.BaseModule):
             goal = self.parseGoal(val.strip())
             if goal:
                 if not self.validGoal(goal, self.world):
-                    print str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world)
+                    print(str(goal), "is not a valid goal\nPossible predicates:", self.predicateNames(self.world), "\nPossible arguments", self.objectNames(self.world))
                 else:
                     #self.mem.get(self.mem.GOAL_GRAPH).insert(goal)
-                    print "Goal Recieved."
+                    print("Goal Recieved.")
                     goal = self.goal_to_parsable_construct(goaltext)
                     states += "exists(human)\n"
                     states += "GOAL(" +goal + ")\n"
@@ -1485,9 +1484,9 @@ class MAReporter(base.BaseModule):
                 #report contains actions and state,
                 #for every action there will be the state attached to it
         if verbose >= 1:
-            print "Sending report to Meta-AQUA",
+            print("Sending report to Meta-AQUA", end=' ')
             if verbose >= 2:
-                print ":\n", report
+                print(":\n", report)
         if not str(report ) == "incomplete":
             self.writeS.send(str(report))
 

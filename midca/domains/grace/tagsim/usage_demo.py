@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from gridworld import Grid
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 '''
 psuedo code
 create grid world
@@ -133,7 +133,7 @@ while t<=simtime: #change to better simulation stopping criteria
 		state=simulate_dynamics(agent,.3, [0,time_step],.1)
 		dets=agent.updateAgent(state,t)
 		if dets>0:
-			print(dets,' detections',t,state)
+			print((dets,' detections',t,state))
 		pos=agent.getPos()
 		posx[i]=pos[0]
 		posy[i]=pos[1]
@@ -154,19 +154,19 @@ while t<=simtime: #change to better simulation stopping criteria
 	
 draw((tagx,tagy))	
 drawAgent((posx,posy))
-print(agent.sensor.detectionSet)
-print('detections:',len(agent.sensor.detectionList),', unique detections:',len(agent.sensor.detectionSet),)
+print((agent.sensor.detectionSet))
+print(('detections:',len(agent.sensor.detectionList),', unique detections:',len(agent.sensor.detectionSet),))
 #print(agent.sensor.detectionList)
 
 print("True probability density  map")
 E.p.shape=(5,5)
-print(np.flip(E.p,0))
+print((np.flip(E.p,0)))
 spacing=(50,50)
 #spacing=(25,25)
 #spacing=(1,1)
 sensorRange=50
 measurement_time=3
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 #print(np.round(approx,decimals=2))
 plt.figure(2)
@@ -186,6 +186,6 @@ plt.xticks(np.arange(0,E.x_range,spacing[0]))
 plt.yticks(np.arange(0,E.y_range,spacing[1]))
 plt.draw()
 plt.pause(0.00001)
-input('done')
+eval(input('done'))
 
 

@@ -4,7 +4,7 @@ from _dbus_bindings import String
 import math
 
 cap = cv2.VideoCapture(0)
-from baxter import *
+from .baxter import *
 import time
 baxter = Baxter()
 
@@ -29,7 +29,7 @@ def publish(msg, topic):
 
     if not rospy.is_shutdown():
        
-        print("Sending point command:", "monitor fires")
+        print(("Sending point command:", "monitor fires"))
         pub.publish(msg)
         time.sleep(2)
     
@@ -37,7 +37,7 @@ def publish(msg, topic):
        
     
 def monitor_clear_block(block_name='red block', topic='clear_block'):
-   print "monitoring... "
+   print("monitoring... ")
                 
 
 

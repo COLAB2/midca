@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from gridworld import Grid
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 '''
 psuedo code
 create grid world
@@ -112,7 +112,7 @@ while t<=simtime:
 		state=simulate_dynamics(agent,.3, [0,time_step],.1)
 		dets=agent.updateAgent(state,t)
 		if dets>0:
-			print(dets,' detections',t,state)
+			print((dets,' detections',t,state))
 		pos=agent.getPos()
 		posx[i]=pos[0]
 		posy[i]=pos[1]
@@ -125,11 +125,11 @@ while t<=simtime:
 	plt.pause(.001)
 	
 	
-print(agent.sensor.detectionSet)
-print('detections:',len(agent.sensor.detectionList),', unique detections:',len(agent.sensor.detectionSet),)
+print((agent.sensor.detectionSet))
+print(('detections:',len(agent.sensor.detectionList),', unique detections:',len(agent.sensor.detectionSet),))
 
 #print(agent.sensor.detectionList)
-input('done')
+eval(input('done'))
 
 
 

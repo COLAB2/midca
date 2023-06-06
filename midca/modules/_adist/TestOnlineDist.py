@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
 
-from WindowPair import WindowPair
-from Interval import Interval
-from OnlineDist import OnlineDist
-from ChangeFinder import ChangeFinder
+from .WindowPair import WindowPair
+from .Interval import Interval
+from .OnlineDist import OnlineDist
+from .ChangeFinder import ChangeFinder
 import random
 
 
@@ -31,7 +31,7 @@ for k in range(1000):
     cf.addData(item)
     i = i + 1
     if cf.detectChange():
-        print 'Change detected at sample ' + str(i)
+        print('Change detected at sample ' + str(i))
 
 # Process another 1000 samples from a slightly different distribution
 for k in range(1000):
@@ -39,4 +39,4 @@ for k in range(1000):
     cf.addData(item)
     i = i + 1
     if cf.detectChange():
-        print 'Change detected at sample ' + str(i)
+        print('Change detected at sample ' + str(i))

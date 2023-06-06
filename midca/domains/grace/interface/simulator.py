@@ -1,4 +1,4 @@
-from __future__ import division
+
 import math
 
 
@@ -49,5 +49,5 @@ class Simulator:
 
 if __name__ == "__main__":
     sim = Simulator(start_x=0, start_y=0, side=1600, size_m=4, size_n = 3)
-    print (sim.grid_to_sim(0,1))
+    print((sim.grid_to_sim(0,1)))
     #print (sim.sim_to_grid(2300, -5586))

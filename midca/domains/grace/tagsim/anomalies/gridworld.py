@@ -191,8 +191,8 @@ class Grid:
         nx_bins = int(self.x_range/spacing[0])
         ny_bins = int(self.y_range/spacing[1])
         bin_rates=np.zeros((nx_bins,ny_bins))
-        x_bins=np.array(range(nx_bins))*self.x_range/nx_bins
-        y_bins=np.array(range(ny_bins))*self.y_range/ny_bins
+        x_bins=np.array(list(range(nx_bins)))*self.x_range/nx_bins
+        y_bins=np.array(list(range(ny_bins)))*self.y_range/ny_bins
        
         bin_counts=0
         bin_lens=np.zeros_like(bin_rates)
@@ -265,8 +265,8 @@ class Grid:
         nx_bins = int(self.x_range/spacing[0])
         ny_bins = int(self.y_range/spacing[1])
         bin_rates=np.ones((nx_bins,ny_bins))*0.0
-        x_bins=np.array(range(nx_bins))*self.x_range/nx_bins
-        y_bins=np.array(range(ny_bins))*self.y_range/ny_bins
+        x_bins=np.array(list(range(nx_bins)))*self.x_range/nx_bins
+        y_bins=np.array(list(range(ny_bins)))*self.y_range/ny_bins
        
         bin_counts=0
         bin_lens=np.zeros_like(bin_rates)
@@ -409,5 +409,5 @@ if __name__ == '__main__':
 	# print('method 2 tau=',tau)
 	# print(np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=100),decimals=2))
 	tau=2
-	print(np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=50),decimals=2))
+	print((np.round(grid.approximateField(tau,spacing=(200,200),sensorRange=50),decimals=2)))
 	

@@ -1,4 +1,5 @@
-import worldsim as plan, domainread as domain_read
+import midca.worldsim as plan
+import midca.worldsim.domainread as domain_read
 
 #Note: this algorithm does not handle many potential user errors.
 def _apply_state(world, lines):

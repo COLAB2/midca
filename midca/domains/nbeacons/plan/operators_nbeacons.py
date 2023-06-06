@@ -10,7 +10,7 @@ from midca.modules._plan import pyhop
 # start and dest are only to help conversion to MIDCA operators, they are not used in 
 # PyHop Planning
 def movesouth(state, agent, start, dest):
-    if state.agents[agent] not in state.mud.values():
+    if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
@@ -28,7 +28,7 @@ def movesouth(state, agent, start, dest):
 
 """ move up """
 def movenorth(state, agent, start, dest):
-    if state.agents[agent] not in state.mud.values():
+    if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
@@ -46,7 +46,7 @@ def movenorth(state, agent, start, dest):
 
 """ move left """
 def movewest(state, agent, start, dest):
-    if state.agents[agent] not in state.mud.values():
+    if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
@@ -64,7 +64,7 @@ def movewest(state, agent, start, dest):
 
 """ move right """
 def moveeast(state, agent, start, dest):
-    if state.agents[agent] not in state.mud.values():
+    if state.agents[agent] not in list(state.mud.values()):
         xy_str = state.agents[agent]
         x = int(xy_str.split(',')[0])
         y = int(xy_str.split(',')[1])
@@ -83,7 +83,7 @@ def moveeast(state, agent, start, dest):
 def activatebeacon(state, agent, loc, bcn_id):
     agent_at_beacon = False
     beacon_key = None
-    for beaconstr, beaconlocstr in state.beaconlocs.items():
+    for beaconstr, beaconlocstr in list(state.beaconlocs.items()):
         if state.agents[agent] == beaconlocstr:
             #print("     [" + beaconstr + "] = "+beaconlocstr + " (and state.agents[agent] = "+state.agents[agent])
             agent_at_beacon = True
@@ -91,7 +91,7 @@ def activatebeacon(state, agent, loc, bcn_id):
             break
     
     #print("beaconstr = "+str(beaconstr)+", state.activated.keys() = "+str(state.activated.keys())+" agent at beacon = "+str(agent_at_beacon))
-    beacon_exists = beacon_key in state.activated.keys() 
+    beacon_exists = beacon_key in list(state.activated.keys()) 
     if agent_at_beacon:
         if beacon_exists and state.activated[beacon_key]:
             return False # already activated

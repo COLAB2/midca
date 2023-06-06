@@ -39,8 +39,8 @@ def asynch_action(mem, midcaAction):
         return uncommit(mem, midcaAction)
     else:
         if verbose >= 1:
-            print "MIDCA action", midcaAction, "does not correspond to an asynch",\
-                "action. "
+            print("MIDCA action", midcaAction, "does not correspond to an asynch",\
+                "action. ")
 
     return None
 
@@ -69,7 +69,7 @@ class AsynchAction:
             self.executeFunc(self.mem, self.action, self.status)
         except:
             if verbose >= 2:
-                print "Error executing action", self, ":\n", traceback.format_exc(),
+                print("Error executing action", self, ":\n", traceback.format_exc(), end=' ')
                 "\n\nAction assumed to be failed"
             self.status = FAILED
 
@@ -79,16 +79,16 @@ class AsynchAction:
         try:
             complete = self.isComplete(self.mem, self.action, self.status)
             if verbose >= 2 and not complete:
-                print "Action", self, "not complete."
+                print("Action", self, "not complete.")
             if verbose >= 1 and complete:
-                print "Action", self, "complete."
+                print("Action", self, "complete.")
             if complete:
                 self.status = COMPLETE
             return complete
         except:
             if verbose >= 1:
-                print "Error checking completion status for action", self, " - Assuming \
-                 failure:\n", traceback.format_exc()
+                print("Error checking completion status for action", self, " - Assuming \
+                 failure:\n", traceback.format_exc())
             self.status = FAILED
 
     def __str__(self):
@@ -129,7 +129,7 @@ class Commit(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is committed to achieve ")
+        print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is committed to achieve "))
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -170,7 +170,7 @@ class uncommit(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved and the agent is no longer committed to the goal")
+        print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved and the agent is no longer committed to the goal"))
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -212,7 +212,7 @@ class Reject(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected ")
+        print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected "))
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -239,7 +239,7 @@ class Inform(AsynchAction):
 
     def parseGoal(self, txt):
         if not txt.endswith(")"):
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
         try:
             if txt.startswith('!'):
@@ -259,7 +259,7 @@ class Inform(AsynchAction):
                 goal = goals.Goal(*args, predicate = predicateName)
             return goal
         except Exception:
-            print "Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world"
+            print("Error reading goal. Goal must be given in the form: predicate(arg1, arg2,...,argi-1,argi), where each argument is the name of an object in the world")
             return None
 
     def parsable_construct_to_goal(self, goal):
@@ -297,7 +297,7 @@ class Inform(AsynchAction):
         if goal in goalGraph:
             if self.action.args[1] == "human":
                 print ("------------------------------------------------------------------------------------")
-                print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is accepted ")
+                print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is accepted "))
                 print ("------------------------------------------------------------------------------------")
             else:
                 #self.publisher.send_string(self.action.args[1]+";commit: " +  self.parsable_construct_to_goal(self.action.args[2]))
@@ -309,7 +309,7 @@ class Inform(AsynchAction):
             if world.is_true(predicate, args):
                 if self.action.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
-                    print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved ")
+                    print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is achieved "))
                     print ("------------------------------------------------------------------------------------")
                 else:
                     time.sleep(0.5)
@@ -319,7 +319,7 @@ class Inform(AsynchAction):
             else:
                 if self.action.args[1] == "human":
                     print ("------------------------------------------------------------------------------------")
-                    print ("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected ")
+                    print(("The goal " +self.parsable_construct_to_goal(self.action.args[2])+ " is rejected "))
                     print ("------------------------------------------------------------------------------------")
                 else:
                     #self.publisher.send_string(self.action.args[1]+";reject: " +  self.parsable_construct_to_goal(self.action.args[2]))
@@ -369,7 +369,7 @@ class Request(AsynchAction):
         self.mem.add(self.memkey, msg)
         #self.publisher.send_string(self.action.args[1]+";achieve: " + self.parsable_construct_to_goal(self.action.args[2]))
         print ("------------------------------------------------------------------------------------")
-        print (self.action.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.action.args[2])+ " to " +self.action.args[1] )
+        print((self.action.args[0] + " requests the goal " +self.parsable_construct_to_goal(self.action.args[2])+ " to " +self.action.args[1] ))
         print ("------------------------------------------------------------------------------------")
         pass
 
@@ -411,7 +411,7 @@ class wait(AsynchAction):
 
     def implement_action(self):
         print ("------------------------------------------------------------------------------------")
-        print ("The agent is waiting for : " + self.action.args[1])
+        print(("The agent is waiting for : " + self.action.args[1]))
         print ("------------------------------------------------------------------------------------")
 
     def check_confirmation(self):

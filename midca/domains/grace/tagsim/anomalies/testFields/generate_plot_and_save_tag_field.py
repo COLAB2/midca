@@ -77,11 +77,11 @@ plt.pause(0.00001)
 
 #plot detection rate for a specific settings
 grid.p.shape=(5,5)
-print(np.flip(grid.p,0))
+print((np.flip(grid.p,0)))
 spacing=(.05*grid.x_range,.05*grid.y_range)
 sensorRange=.1*grid.x_range
 measurement_time=2
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=grid.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 plt.figure(3)
 plt.axis('scaled')
@@ -94,4 +94,4 @@ plt.ylim([0, grid.y_range])
 plt.xticks(np.arange(0,grid.x_range,grid.x_range/5.0))
 plt.yticks(np.arange(0,grid.y_range,grid.y_range/5.0))
 plt.pause(0.00001)
-input("press enter to end")
+eval(input("press enter to end"))

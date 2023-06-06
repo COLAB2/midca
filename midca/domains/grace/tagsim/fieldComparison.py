@@ -1,11 +1,11 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-import gridworld
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from . import gridworld
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 import socket
 import threading
 
@@ -30,7 +30,7 @@ def find_max_5_values_avg(time):
         else:
             a[each] = 1
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -48,7 +48,7 @@ def find_max_7_values_avg_measurement(time, data):
         else:
             a[each] = data[index]
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -486,7 +486,7 @@ def ErgodicComLink():
                 _,utemp=wp_track(agent.getPos(),np.array([x_range/2,y_range/2]))
                 u=np.clip(np.array([np.cos(utemp), np.sin(utemp)]),-0.1,0.1)
             #print(st,u)
-            print(t,round(st[0],1),round(st[1],1),round(st[2],3),round(st[3],3),u)
+            print((t,round(st[0],1),round(st[1],1),round(st[2],3),round(st[3],3),u))
         syncVar=True
 
 def ErgodicComLink2():
@@ -516,7 +516,7 @@ def ErgodicComLink2():
                 _,utemp=wp_track(agent.getPos(),np.array([x_range/2,y_range/2]))
                 u=np.clip(np.array([np.cos(utemp), np.sin(utemp)]),-0.1,0.1)
             #print(st,u)
-            print(t,round(st[0],1),round(st[1],1),u)
+            print((t,round(st[0],1),round(st[1],1),u))
 
 def doubleIntegratorErgodicControl(agent,update):
     global run,t
@@ -670,7 +670,7 @@ def MidcaIntegrator(agent,update):
         myx, myy = E.getCellXY(pos[0], pos[1])
         clientsocket.send(str.encode(str(myx) + "," + str(myy)))
     elif cmd[0] == 'search':
-        print ("The time started is" + str(t))
+        print(("The time started is" + str(t)))
         x = int(cmd[1]) - 1
         y = int(cmd[2]) - 1
         center = np.array([x * x_range / 5.0, y * y_range / 5.0]) + np.array(
@@ -696,7 +696,7 @@ def MidcaIntegrator(agent,update):
 
     elif cmd[0] == 'searchComplete':
         if searchComplete:
-            print ("The time stopped is" + str(t))
+            print(("The time stopped is" + str(t)))
         clientsocket.send(str.encode(str(searchComplete)))
 
     elif cmd[0] == 'get_tags':
@@ -1213,24 +1213,24 @@ for i in range(len(taglist)):
 if field == fields[1]:
     nx_bins = int(x_range/spacing[0])
     ny_bins = int(y_range/spacing[1])
-    x_bins=np.array(range(nx_bins))*x_range/nx_bins
-    y_bins=np.array(range(ny_bins))*y_range/ny_bins
+    x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+    y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
     plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,gaussianSum(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
     plottingPoints =  np.array(plottingPoints)
     plottingPoints.shape=(nx_bins,ny_bins,3)
 if field == fields[2]:
     nx_bins = int(x_range/spacing[0])
     ny_bins = int(y_range/spacing[1])
-    x_bins=np.array(range(nx_bins))*x_range/nx_bins
-    y_bins=np.array(range(ny_bins))*y_range/ny_bins
+    x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+    y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
     plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,rosenbrock(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
     plottingPoints =  np.array(plottingPoints)
     plottingPoints.shape=(nx_bins,ny_bins,3)
 if field == fields[3]:
     nx_bins = int(x_range/spacing[0])
     ny_bins = int(y_range/spacing[1])
-    x_bins=np.array(range(nx_bins))*x_range/nx_bins
-    y_bins=np.array(range(ny_bins))*y_range/ny_bins
+    x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+    y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
     plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,rastrigin(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
     plottingPoints =  np.array(plottingPoints)
     plottingPoints.shape=(nx_bins,ny_bins,3)
@@ -1424,18 +1424,18 @@ if field == fields[0]:
     drawAgent((posx,posy),r=sensorRange)
     for i in range(len(agentList)):
         agent=agentList[i]
-        print("agent ",i," rate estimates")
+        print(("agent ",i," rate estimates"))
         agent.belief_map.shape=(5,5)
-        print(np.flip(agent.belief_map,0))
+        print((np.flip(agent.belief_map,0)))
         print("and measurements taken per cell")
         agent.belief_count.shape=(5,5)
-        print(np.flip(agent.belief_count,0))
+        print((np.flip(agent.belief_count,0)))
 
     print("True probability density  map")
     E.p.shape=(5,5)
-    print(np.flip(E.p,0))
+    print((np.flip(E.p,0)))
     #spacing=(50,50)
-    print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+    print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
     approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
     #print(np.round(approx,decimals=2))
     plt.figure(2)
@@ -1468,7 +1468,7 @@ if logData:
     f=open("log.txt",'a')
     f.write(field+","+str(t)+","+str(agent.getPos())+","+str(latestMeas)+"\n")
     f.close()
-print(str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas)
+print((str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas))
 print('done')
 
 

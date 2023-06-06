@@ -1,11 +1,11 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-from gridworld import Grid
-import gridworld
-from AcousticTag import AcousticTag
-from Agent import Agent
-from AcousticReciever import AcousticReciever
+from .gridworld import Grid
+from . import gridworld
+from .AcousticTag import AcousticTag
+from .Agent import Agent
+from .AcousticReciever import AcousticReciever
 import socket
 import threading
 		  
@@ -132,7 +132,7 @@ def wp_track(x,wp_list):
 	global  searchComplete
 	e = np.array(wp_list[0])-x
 	if np.linalg.norm(e) < x_range/50.0 and len(wp_list) > 1:
-		print("waypoint list",np.linalg.norm(e) < x_range/50.0,len(wp_list) > 1,wp_list)
+		print(("waypoint list",np.linalg.norm(e) < x_range/50.0,len(wp_list) > 1,wp_list))
 		del wp_list[0]
                    
 	if len(wp_list) == 1:
@@ -260,24 +260,24 @@ for i in range(len(taglist)):
 if field == fields[1]:
 	nx_bins = int(x_range/spacing[0])
 	ny_bins = int(y_range/spacing[1])
-	x_bins=np.array(range(nx_bins))*x_range/nx_bins
-	y_bins=np.array(range(ny_bins))*y_range/ny_bins
+	x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+	y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
 	plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,gaussianSum(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
 	plottingPoints =  np.array(plottingPoints)
 	plottingPoints.shape=(nx_bins,ny_bins,3)
 if field == fields[2]:
 	nx_bins = int(x_range/spacing[0])
 	ny_bins = int(y_range/spacing[1])
-	x_bins=np.array(range(nx_bins))*x_range/nx_bins
-	y_bins=np.array(range(ny_bins))*y_range/ny_bins
+	x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+	y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
 	plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,rosenbrock(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
 	plottingPoints =  np.array(plottingPoints)
 	plottingPoints.shape=(nx_bins,ny_bins,3)
 if field == fields[3]:
 	nx_bins = int(x_range/spacing[0])
 	ny_bins = int(y_range/spacing[1])
-	x_bins=np.array(range(nx_bins))*x_range/nx_bins
-	y_bins=np.array(range(ny_bins))*y_range/ny_bins
+	x_bins=np.array(list(range(nx_bins)))*x_range/nx_bins
+	y_bins=np.array(list(range(ny_bins)))*y_range/ny_bins
 	plottingPoints = [(idx+spacing[0]/2.0,idy+spacing[1]/2.0,rastrigin(idx+spacing[0]/2.0,idy+spacing[1]/2.0)) for idx in x_bins for idy in y_bins]
 	plottingPoints =  np.array(plottingPoints)
 	plottingPoints.shape=(nx_bins,ny_bins,3)
@@ -371,7 +371,7 @@ while t<=simtime:#or running: #change to better simulation stopping criteria
 		posx[i]=pos[0]
 		posy[i]=pos[1]
 	plt.clf()
-	print(t,pos,u,latestMeas)
+	print((t,pos,u,latestMeas))
 	if last_meas+measurement_time<=t:
 		last_meas=t
 	if field == fields[0]:
@@ -411,18 +411,18 @@ if field == fields[0]:
 	drawAgent((posx,posy),r=sensorRange)
 	for i in range(len(agentList)):
 		agent=agentList[i]
-		print("agent ",i," rate estimates")
+		print(("agent ",i," rate estimates"))
 		agent.belief_map.shape=(5,5)
-		print(np.flip(agent.belief_map,0))
+		print((np.flip(agent.belief_map,0)))
 		print("and measurements taken per cell")
 		agent.belief_count.shape=(5,5)
-		print(np.flip(agent.belief_count,0))
+		print((np.flip(agent.belief_count,0)))
 		
 	print("True probability density  map")
 	E.p.shape=(5,5)
-	print(np.flip(E.p,0))
+	print((np.flip(E.p,0)))
 	#spacing=(50,50)
-	print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+	print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 	approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 	#print(np.round(approx,decimals=2))
 	plt.figure(2)
@@ -455,8 +455,8 @@ if logData:
 	f=open("log.txt",'+a')
 	f.write(field+","+str(t)+","+str(agent.getPos())+","+str(latestMeas)+"\n")
 	f.close()
-print(str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas)
-input('done')
+print((str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas))
+eval(input('done'))
 
 
 

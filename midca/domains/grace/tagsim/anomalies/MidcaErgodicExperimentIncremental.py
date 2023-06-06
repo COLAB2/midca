@@ -47,7 +47,7 @@ def find_max_5_values_avg(time):
         else:
             a[each] = 1
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -65,7 +65,7 @@ def find_max_7_values_avg_measurement(time, data):
         else:
             a[each] = data[index]
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -777,11 +777,11 @@ while t<=simtime:#or running:
                 anomaly_history.append(mode)
                 anomaly_time_history.append(t)
                 stop_ergodic_time = static_ergodic_time + 0.5 *static_ergodic_time
-            print(t,"explanation set: ",explanation,", ",agent.remoraAttacks," attacks, speedMultiplier: ",agent.speedMultiplier, ", removal success probability: ",agent.removalSuccessMultiplier*removalRate)
+            print((t,"explanation set: ",explanation,", ",agent.remoraAttacks," attacks, speedMultiplier: ",agent.speedMultiplier, ", removal success probability: ",agent.removalSuccessMultiplier*removalRate))
         if (method==searchMethods[0]) and not searchMIDCAErgodic:
             wp_list[i], u = wp_track(np.array(pos), wp_list[i])
             MidcaIntegrator(agent, updateGP)
-            print(t, pos, u, latestMeas)
+            print((t, pos, u, latestMeas))
             if updateGP:
                 updateGP = False
         if method == searchMethods[1]:
@@ -841,7 +841,7 @@ while t<=simtime:#or running:
                 else:
                     hotspots_detected_count[bin] +=1
                 #endSim = True
-            print(t,latestMeas)
+            print((t,latestMeas))
             # to stop in cell
             #pos = agent.getPos()
             #myx, myy = E.getCellXY(pos[0], pos[1])
@@ -882,19 +882,19 @@ draw((tagx,tagy))
 drawAgent((posx,posy),r=sensorRange)
 for i in range(len(agentList)):
     agent=agentList[i]
-    print("agent ",i," rate estimates")
+    print(("agent ",i," rate estimates"))
     agent.belief_map.shape=(5,5)
-    print(np.flip(agent.belief_map,0))
+    print((np.flip(agent.belief_map,0)))
     print("and measurements taken per cell")
     agent.belief_count.shape=(5,5)
-    print(np.flip(agent.belief_count,0))
+    print((np.flip(agent.belief_count,0)))
     
 
 print("True probability density  map")
 E.p.shape=(5,5)
-print(np.flip(E.p,0))
+print((np.flip(E.p,0)))
 #spacing=(50,50)
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 #print(np.round(approx,decimals=2))
 plt.figure(2)
@@ -927,5 +927,5 @@ if cfg.logData:
     #f.write("Number of hotspots, Detected time, postion, bin pos, fieldmax, anomaly_count, anomaly_history, anomaly_time_history, hotspots_each_count\n"  )
     f.write(str(len(hotspots_detected))+"," +str(times) + "," + str(position) + "," + str(bin_pos) + "," + str(latestMeas) + "," + str(anomaly_count) + "," + str(anomaly_history) + "," + str(anomaly_time_history) + "," + str(hotspots_count) + ", " + str(midca_hotspots) +"\n")
     f.close()
-print(str(len(hotspots_detected))+"," +str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas)
+print((str(len(hotspots_detected))+"," +str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas))
 print('done')

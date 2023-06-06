@@ -1,5 +1,5 @@
 import pandas as pd
-from loc import LatLong2LocalGrid
+from .loc import LatLong2LocalGrid
 
 def write_file(filename, items):
     with open(filename, "w") as file:
@@ -44,7 +44,7 @@ def process():
         time_stamp = loaded_values['time_stamp']
         tag_count = loaded_values['tag_detection']
 
-        print ("Tags Detected: ", tag_count)
+        print(("Tags Detected: ", tag_count))
 
         xylist = []
 
@@ -52,7 +52,7 @@ def process():
         #for i in range(len(lat)):
         #    xylist.append(LatLong2LocalGrid(lat[i],long[i]))
 
-        return lat[0], long[0], time_stamp[0]
+        return lat[0], int[0], time_stamp[0]
     except IOError:
         return -1,-1,-1
 
@@ -84,4 +84,4 @@ if __name__ == '__main__':
     #path = "genios_midca/"
     #filename = path + "genios_out_loc_latest.txt"
     #split_files(path, filename)
-    print(searchprocess())
+    print((searchprocess()))

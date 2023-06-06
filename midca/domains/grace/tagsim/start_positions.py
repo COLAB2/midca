@@ -9,8 +9,8 @@ def initial_points(row, col, scale=4, filename = "initial_positions"):
             x2 = (i+1)*scale
             y1 = j*scale
             y2 = (j+1)*scale
-            print("(" + str(float((x1+x2)/2)) +", "
-                   + str(float((y1+y2)/2)) +")" + ","),
+            print(("(" + str(float((x1+x2)/2)) +", "
+                   + str(float((y1+y2)/2)) +")" + ","), end=' ')
         print("")
 
 def main():

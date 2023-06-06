@@ -93,7 +93,7 @@ class Anomalies:
 
     def identify_anomaly(self,agent_x, agent_y, agent_dest_x, agent_dest_y, current_time):
 
-        for cells in self.blocked_cells.values():
+        for cells in list(self.blocked_cells.values()):
             myx, myy = self.E.getCellXY(agent_x, agent_y)
             #myx, myy = agent_x,agent_y
             myx_dest, myy_dest = self.E.getCellXY(agent_dest_x, agent_dest_y)
@@ -141,4 +141,4 @@ class Anomalies:
 if __name__ == "__main__":
     E = Grid([],x_range=20, y_range=20)
     anomaly = Anomalies(600, 0.5, 100, E)
-    print (anomaly.identify_anomaly(2,1,3,1,0.0))
+    print((anomaly.identify_anomaly(2,1,3,1,0.0)))

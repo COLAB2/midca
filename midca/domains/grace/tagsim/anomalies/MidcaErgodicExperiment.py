@@ -39,7 +39,7 @@ def find_max_5_values_avg(time):
         else:
             a[each] = 1
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -57,7 +57,7 @@ def find_max_7_values_avg_measurement(time, data):
         else:
             a[each] = data[index]
 
-    values = a.values()
+    values = list(a.values())
     #print ("best 5 values: ")
     if values:
         values.sort(reverse=True)
@@ -630,7 +630,7 @@ while t <= simtime:  # or running:
                     stop_ergodic_time = static_ergodic_time
                     faultyMode = False
                     explanation = ""
-                    print(t, "removing remora sucessful")
+                    print((t, "removing remora sucessful"))
                 lost_steps[i] = 0
                 removeRemoraAction = False
         if temp < switchProb:
@@ -748,19 +748,19 @@ draw((tagx,tagy))
 drawAgent((posx,posy),r=sensorRange)
 for i in range(len(agentList)):
     agent=agentList[i]
-    print("agent ",i," rate estimates")
+    print(("agent ",i," rate estimates"))
     agent.belief_map.shape=(5,5)
-    print(np.flip(agent.belief_map,0))
+    print((np.flip(agent.belief_map,0)))
     print("and measurements taken per cell")
     agent.belief_count.shape=(5,5)
-    print(np.flip(agent.belief_count,0))
+    print((np.flip(agent.belief_count,0)))
     
 
 print("True probability density  map")
 E.p.shape=(5,5)
-print(np.flip(E.p,0))
+print((np.flip(E.p,0)))
 #spacing=(50,50)
-print("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing)
+print(("Rate field approximation for sensor with range",sensorRange," spaced at intervals of",spacing))
 approx,pnts=E.approximateField(measurement_time,spacing=spacing,sensorRange=sensorRange,get_points=True)
 #print(np.round(approx,decimals=2))
 plt.figure(2)
@@ -783,5 +783,5 @@ if cfg.logData:
     f = open(method + "log.txt", 'a')
     f.write(str(t) + "," + str(agent.getPos()) + "," + str(latestMeas) + "," + str(anomaly_count) + "," + str(anomaly_history) +"\n")
     f.close()
-print(str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas)
+print((str(t)+","+str(agent.getPos())+","+str(latestMeas),", max val: ",maxMeas))
 print('done')

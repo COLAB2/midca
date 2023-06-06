@@ -269,7 +269,7 @@ def move_and_search(position, position1):
         time.sleep(0.01)
 
     tag = TagWorld()
-    print (tag.get_tags(position))
+    print((tag.get_tags(position)))
 
 
 

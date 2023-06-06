@@ -1,4 +1,4 @@
-import settings
-import frame
-import parser
-import traverser
+from . import settings
+from . import frame
+from . import parser
+from . import traverser

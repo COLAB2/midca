@@ -25,9 +25,10 @@ def jshop(tasks, DOMAIN_FIILE, STATE_FILE, verbose=1):
 
 
     for line in p.stdout:
+        line = line.decode()
         if verbose > 1:
             #time.sleep(1)
-            print line
+            print(line)
         if(line.startswith(" ( (!")):
             plan = line
             break

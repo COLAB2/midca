@@ -1,5 +1,5 @@
 import random
-from gridworld import Grid
+from .gridworld import Grid
 import numpy as np
 import operator
 import time
@@ -97,7 +97,7 @@ class Anomalies:
             #print (i)
 
         self.blocked_cells = blocked_cells
-        self.temporary_blocks = random.sample(range(1,number_block_cells), temporary_blocks-1)
+        self.temporary_blocks = random.sample(list(range(1,number_block_cells)), temporary_blocks-1)
         if self.draw:
             self.draw_markers()
 
@@ -105,7 +105,7 @@ class Anomalies:
         agent_x, agent_y = initial_position[0], initial_position[1]
         agent_dest_x, agent_dest_y = dest_position[0], dest_position[1]
         if self.blocked_cells:
-            for key,cells in self.blocked_cells.items():
+            for key,cells in list(self.blocked_cells.items()):
                 myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
                 myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
                 if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
@@ -121,7 +121,7 @@ class Anomalies:
         agent_x, agent_y = initial_position[0], initial_position[1]
         agent_dest_x, agent_dest_y = dest_position[0], dest_position[1]
         if self.blocked_cells:
-            for key,cells in self.blocked_cells.items():
+            for key,cells in list(self.blocked_cells.items()):
                 myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
                 myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
                 if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
@@ -165,16 +165,15 @@ class Anomalies:
                 positions.append(position1)
 
             for i, position in enumerate(positions):
+
                 message = [b"AddMarker",
-                           b"type=gateway,"
-                           b"x="+str(position[0])+",y="+str(position[1])+","+
-                            "scale=4.3,label=block"+str(index)+str(i)+",color="+color+",width=4.5"]
+                           f"type=gateway,x={position[0]},y={position[1]},scale=4.3,label=block{index}{i},color={color},width=4.5".encode()]
                 time.sleep(0.1)
                 self.publisher.send_multipart(message)
 
 
 
-        for index,blockade in self.blocked_cells.items():
+        for index,blockade in list(self.blocked_cells.items()):
             #print (blockade)
             x,y = self.E.grid_to_sim(blockade[0][0], blockade[0][1])
             x1, y1 = self.E.grid_to_sim(blockade[1][0], blockade[1][1])
@@ -199,34 +198,34 @@ class Anomalies:
 
 
     def get_threshold(self, cells):
-        threshold = map(self.subract, cells[0], cells[1])
+        threshold = list(map(self.subract, cells[0], cells[1]))
         return threshold
 
 
     def identify_anomaly(self,agent_x, agent_y, agent_dest_x, agent_dest_y, current_time):
 
         if self.blocked_cells:
-            for cells in self.blocked_cells.values():
+            for cells in list(self.blocked_cells.values()):
                 myx, myy = agent_x, agent_y#self.E.grid_to_sim(agent_x, agent_y)
                 myx_dest, myy_dest = agent_dest_x, agent_dest_y #self.E.grid_to_sim(agent_dest_x, agent_dest_y)
                 if (cells[0] == [myx, myy] and cells[1] == [myx_dest, myy_dest]) :
                     x,y = self.E.grid_to_sim(agent_x, agent_y)
                     x1, y1 = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
-                    print (x,y)
-                    print (x1,y1)
+                    print((x,y))
+                    print((x1,y1))
                     position = (x+x1)/2 , (y+y1)/2
                     threshold = self.get_threshold(cells)
-                    position = map(operator.sub, position, threshold)
+                    position = list(map(operator.sub, position, threshold))
                     #position = list(set(position) - set(threshold))
                     return position, "block"
                 elif (cells[1] == [myx, myy] and cells[0] == [myx_dest, myy_dest]):
                     x,y = self.E.grid_to_sim(agent_dest_x, agent_dest_y)
                     x1, y1 = self.E.grid_to_sim(agent_x, agent_y)
-                    print (x,y)
-                    print (x1,y1)
+                    print((x,y))
+                    print((x1,y1))
                     position = (x+x1)/2 , (y+y1)/2
                     threshold = [each * -1 for each in  self.get_threshold(cells)]
-                    position = map(operator.sub, position, threshold)
+                    position = list(map(operator.sub, position, threshold))
                     #position = list(set(position) - set(threshold))
                     return position, "block"
 
@@ -260,4 +259,4 @@ class Anomalies:
 if __name__ == "__main__":
     E = Grid([],x_range=20, y_range=20)
     anomaly = Anomalies(600, 0.5, 100, E)
-    print (anomaly.identify_anomaly(2,1,3,1,0.0))
+    print((anomaly.identify_anomaly(2,1,3,1,0.0)))
